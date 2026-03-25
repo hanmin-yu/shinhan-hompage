@@ -1,0 +1,76 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <ellipse cx="810" cy="784" rx="610" ry="126" fill="url(#groundGlow)"/>
+  <g opacity="0.45" filter="url(#blur)">
+    <circle cx="226" cy="180" r="180" fill="#D9EBFF"/>
+    <circle cx="1382" cy="252" r="164" fill="#C8E4FF"/>
+  </g>
+  <g opacity="0.95">
+    <path d="M190 708L294 456H410L508 708H190Z" fill="url(#towerLeft)"/>
+    <path d="M230 708L314 494H390L470 708H230Z" fill="#244B8E"/>
+    <path d="M290 708V420H406V708H290Z" fill="#17396B"/>
+    <g opacity="0.9">
+      <rect x="312" y="448" width="16" height="188" fill="#95BDF4"/>
+      <rect x="338" y="448" width="16" height="188" fill="#95BDF4"/>
+      <rect x="364" y="448" width="16" height="188" fill="#95BDF4"/>
+    </g>
+  </g>
+  <g opacity="0.97">
+    <path d="M560 708L652 352H928L1016 708H560Z" fill="url(#centerTower)"/>
+    <path d="M706 708V218H860V708H706Z" fill="url(#centerCore)"/>
+    <path d="M730 218L782 128H786L838 218H730Z" fill="#2A5EA9"/>
+    <path d="M770 128L783 58H789L802 128H770Z" fill="#0F2442"/>
+    <rect x="744" y="256" width="20" height="318" fill="#D5E9FF"/>
+    <rect x="778" y="256" width="20" height="318" fill="#D5E9FF"/>
+    <rect x="812" y="256" width="20" height="318" fill="#D5E9FF"/>
+    <g opacity="0.8">
+      <rect x="690" y="384" width="16" height="230" fill="#8BB3EB"/>
+      <rect x="860" y="384" width="16" height="230" fill="#8BB3EB"/>
+    </g>
+  </g>
+  <g opacity="0.92">
+    <path d="M1098 708L1186 410H1358L1444 708H1098Z" fill="url(#towerRight)"/>
+    <path d="M1186 708V328H1312V708H1186Z" fill="#1A3E73"/>
+    <g opacity="0.88">
+      <rect x="1210" y="362" width="14" height="214" fill="#A2C7FB"/>
+      <rect x="1238" y="362" width="14" height="214" fill="#A2C7FB"/>
+      <rect x="1266" y="362" width="14" height="214" fill="#A2C7FB"/>
+    </g>
+  </g>
+  <g opacity="0.9">
+    <rect x="108" y="716" width="1384" height="16" rx="8" fill="#C2DBFB"/>
+    <rect x="154" y="738" width="1292" height="10" rx="5" fill="#D4E7FF"/>
+  </g>
+  <defs>
+    <linearGradient id="sky" x1="800" y1="0" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="0.44" stop-color="#EDF5FF"/>
+      <stop offset="1" stop-color="#DBECFF"/>
+    </linearGradient>
+    <linearGradient id="groundGlow" x1="810" y1="658" x2="810" y2="910" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C1DEFF" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#EAF4FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="towerLeft" x1="349" y1="456" x2="349" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7EA8E8"/>
+      <stop offset="1" stop-color="#1B3F75"/>
+    </linearGradient>
+    <linearGradient id="centerTower" x1="788" y1="352" x2="788" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9AC2FA"/>
+      <stop offset="1" stop-color="#183B71"/>
+    </linearGradient>
+    <linearGradient id="centerCore" x1="783" y1="218" x2="783" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2D63B3"/>
+      <stop offset="1" stop-color="#0E2443"/>
+    </linearGradient>
+    <linearGradient id="towerRight" x1="1271" y1="410" x2="1271" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8CB6F1"/>
+      <stop offset="1" stop-color="#163967"/>
+    </linearGradient>
+    <filter id="blur" x="-134" y="-180" width="1870" height="776" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="90" result="effect1_foregroundBlur_1_2"/>
+    </filter>
+  </defs>
+</svg>
