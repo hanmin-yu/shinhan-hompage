@@ -1,0 +1,33 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="960" cy="540" r="286" fill="#0B1833" stroke="#66C9FF" stroke-width="4" opacity="0.7"/>
+  <circle cx="960" cy="540" r="168" fill="#10254A" stroke="#7BE8D4" stroke-width="4" opacity="0.86"/>
+  <circle cx="960" cy="540" r="60" fill="#E9F8FF" opacity="0.9"/>
+  <g opacity="0.92">
+    <path d="M960 254V104" stroke="#66C9FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M960 976V826" stroke="#66C9FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M674 540H524" stroke="#66C9FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1396 540H1246" stroke="#66C9FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1164 336L1290 210" stroke="#7BE8D4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M756 744L630 870" stroke="#7BE8D4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M756 336L630 210" stroke="#7BE8D4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1164 744L1290 870" stroke="#7BE8D4" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g fill="#0D1C39" stroke-width="8">
+    <circle cx="960" cy="78" r="30" fill="#0D1C39" stroke="#66C9FF"/>
+    <circle cx="960" cy="1002" r="30" fill="#0D1C39" stroke="#66C9FF"/>
+    <circle cx="498" cy="540" r="30" fill="#0D1C39" stroke="#66C9FF"/>
+    <circle cx="1422" cy="540" r="30" fill="#0D1C39" stroke="#66C9FF"/>
+    <circle cx="1312" cy="188" r="30" fill="#0D1C39" stroke="#7BE8D4"/>
+    <circle cx="608" cy="892" r="30" fill="#0D1C39" stroke="#7BE8D4"/>
+    <circle cx="608" cy="188" r="30" fill="#0D1C39" stroke="#7BE8D4"/>
+    <circle cx="1312" cy="892" r="30" fill="#0D1C39" stroke="#7BE8D4"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09101F"/>
+      <stop offset="0.55" stop-color="#102549"/>
+      <stop offset="1" stop-color="#1D1859"/>
+    </linearGradient>
+  </defs>
+</svg>

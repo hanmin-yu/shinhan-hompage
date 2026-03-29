@@ -1,0 +1,41 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect y="688" width="1920" height="392" fill="url(#sea)"/>
+  <path d="M0 792C210 764 400 770 618 816C798 854 938 884 1118 876C1293 868 1458 824 1632 804C1751 790 1846 792 1920 808V1080H0V792Z" fill="url(#dock)"/>
+  <circle cx="1460" cy="190" r="140" fill="#FFF3D2" opacity="0.82"/>
+  <g opacity="0.92">
+    <path d="M410 578H1418L1518 662H514L410 578Z" fill="#17395F"/>
+    <rect x="486" y="492" width="804" height="90" rx="10" fill="#2B5885"/>
+    <rect x="566" y="516" width="116" height="42" fill="#D36A45"/>
+    <rect x="692" y="516" width="116" height="42" fill="#E1A454"/>
+    <rect x="818" y="516" width="116" height="42" fill="#5E92BF"/>
+    <rect x="944" y="516" width="116" height="42" fill="#D95A4F"/>
+    <rect x="1070" y="516" width="116" height="42" fill="#C7A661"/>
+  </g>
+  <g opacity="0.82">
+    <path d="M212 336L330 336L368 740L248 740L212 336Z" fill="#234B73"/>
+    <path d="M314 218H356V336H314V218Z" fill="#17334F"/>
+    <path d="M334 218H648" stroke="#17334F" stroke-width="18" stroke-linecap="round"/>
+    <path d="M578 244L712 748" stroke="#17334F" stroke-width="20" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.64">
+    <path d="M1506 390L1618 390L1654 738L1540 738L1506 390Z" fill="#305B85"/>
+    <path d="M1602 262H1642V390H1602V262Z" fill="#1C3955"/>
+    <path d="M1622 262H1820" stroke="#1C3955" stroke-width="18" stroke-linecap="round"/>
+    <path d="M1778 286L1868 744" stroke="#1C3955" stroke-width="20" stroke-linecap="round"/>
+  </g>
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="688" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7F4FF"/>
+      <stop offset="1" stop-color="#90B9DD"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="960" y1="688" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4179AC"/>
+      <stop offset="1" stop-color="#112A45"/>
+    </linearGradient>
+    <linearGradient id="dock" x1="960" y1="792" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4A070"/>
+      <stop offset="1" stop-color="#65482D"/>
+    </linearGradient>
+  </defs>
+</svg>

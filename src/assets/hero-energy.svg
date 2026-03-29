@@ -1,0 +1,52 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <circle cx="1448" cy="210" r="156" fill="#FFF3C6" opacity="0.9"/>
+  <path d="M0 682C147 614 286 592 438 610C607 630 747 702 918 718C1101 735 1283 673 1457 648C1638 622 1782 629 1920 678V1080H0V682Z" fill="url(#fieldA)"/>
+  <path d="M0 798C192 744 364 740 531 770C720 804 852 854 1031 854C1188 854 1357 814 1530 798C1691 784 1817 789 1920 816V1080H0V798Z" fill="url(#fieldB)"/>
+  <path d="M0 878C177 850 341 864 536 902C704 934 840 964 1014 960C1190 956 1340 916 1515 900C1670 886 1805 892 1920 918V1080H0V878Z" fill="url(#road)"/>
+  <g opacity="0.94">
+    <rect x="428" y="424" width="14" height="332" rx="7" fill="#E9F1F8"/>
+    <path d="M435 430L342 376C326 367 315 350 313 332C311 315 317 298 329 287L435 374V430Z" fill="#F8FCFF"/>
+    <path d="M436 430L530 375C545 366 557 350 558 333C560 316 554 299 542 287L436 374V430Z" fill="#F3F9FF"/>
+    <path d="M435 430L393 540C387 556 373 567 357 572C341 576 324 573 310 563L404 484L435 430Z" fill="#EDF6FF"/>
+  </g>
+  <g opacity="0.88">
+    <rect x="848" y="300" width="18" height="468" rx="9" fill="#EDF3F7"/>
+    <path d="M857 308L724 232C702 219 688 196 686 171C684 147 692 124 708 108L857 226V308Z" fill="#FFFFFF"/>
+    <path d="M857 308L989 232C1011 219 1025 196 1027 171C1029 147 1021 124 1005 108L857 226V308Z" fill="#F7FBFF"/>
+    <path d="M857 308L796 468C787 491 766 507 743 513C720 519 695 515 675 500L810 385L857 308Z" fill="#F0F8FF"/>
+  </g>
+  <g opacity="0.82">
+    <rect x="1284" y="372" width="14" height="344" rx="7" fill="#EAF2F8"/>
+    <path d="M1291 378L1190 320C1173 310 1163 292 1161 273C1159 255 1165 238 1178 225L1291 315V378Z" fill="#FBFDFF"/>
+    <path d="M1291 378L1392 320C1408 310 1419 292 1421 273C1423 255 1417 238 1404 225L1291 315V378Z" fill="#F2F8FD"/>
+    <path d="M1291 378L1244 499C1238 516 1223 530 1206 535C1189 539 1170 535 1156 523L1258 435L1291 378Z" fill="#ECF6FF"/>
+  </g>
+  <g opacity="0.78">
+    <rect x="260" y="736" width="204" height="18" rx="6" fill="#243B2C"/>
+    <rect x="490" y="724" width="204" height="18" rx="6" fill="#243B2C"/>
+    <rect x="720" y="708" width="204" height="18" rx="6" fill="#243B2C"/>
+    <rect x="950" y="720" width="204" height="18" rx="6" fill="#243B2C"/>
+    <rect x="1180" y="736" width="204" height="18" rx="6" fill="#243B2C"/>
+    <rect x="1410" y="750" width="204" height="18" rx="6" fill="#243B2C"/>
+  </g>
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7F5FF"/>
+      <stop offset="0.52" stop-color="#C9DCF0"/>
+      <stop offset="1" stop-color="#85A0BE"/>
+    </linearGradient>
+    <linearGradient id="fieldA" x1="960" y1="610" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D3B47C"/>
+      <stop offset="1" stop-color="#7A5A36"/>
+    </linearGradient>
+    <linearGradient id="fieldB" x1="960" y1="770" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9CB36A"/>
+      <stop offset="1" stop-color="#425B2D"/>
+    </linearGradient>
+    <linearGradient id="road" x1="960" y1="878" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C19A64" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#614526" stop-opacity="0.72"/>
+    </linearGradient>
+  </defs>
+</svg>

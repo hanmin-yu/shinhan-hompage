@@ -1,0 +1,56 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="1448" cy="170" r="170" fill="white" opacity="0.28"/>
+  <circle cx="320" cy="210" r="120" fill="#B6D7FF" opacity="0.22"/>
+  <path d="M0 816C198 752 394 734 590 760C761 783 889 841 1060 850C1231 859 1392 800 1558 772C1689 750 1809 750 1920 780V1080H0V816Z" fill="url(#ground)"/>
+  <g opacity="0.95">
+    <rect x="184" y="236" width="248" height="524" rx="10" fill="url(#towerA)"/>
+    <rect x="228" y="278" width="28" height="482" fill="#15355E" opacity="0.58"/>
+    <rect x="278" y="278" width="28" height="482" fill="#15355E" opacity="0.35"/>
+    <rect x="328" y="278" width="28" height="482" fill="#15355E" opacity="0.58"/>
+  </g>
+  <g opacity="0.94">
+    <rect x="470" y="154" width="338" height="646" rx="12" fill="url(#towerB)"/>
+    <path d="M522 218H756" stroke="#E4F5FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 284H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 350H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 416H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 482H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 548H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 614H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M522 680H756" stroke="#D0EAFF" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.9">
+    <rect x="1196" y="120" width="384" height="700" rx="14" fill="url(#towerC)"/>
+    <path d="M1262 202H1514" stroke="#F2F9FF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 280H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 358H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 436H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 514H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 592H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1262 670H1514" stroke="#D9EEFF" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF6FF"/>
+      <stop offset="0.48" stop-color="#BCD8F0"/>
+      <stop offset="1" stop-color="#4D6B93"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="960" y1="760" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7E9BBE" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#11243F" stop-opacity="0.82"/>
+    </linearGradient>
+    <linearGradient id="towerA" x1="308" y1="236" x2="308" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6F5FF"/>
+      <stop offset="1" stop-color="#476B96"/>
+    </linearGradient>
+    <linearGradient id="towerB" x1="639" y1="154" x2="639" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5FBFF"/>
+      <stop offset="1" stop-color="#355881"/>
+    </linearGradient>
+    <linearGradient id="towerC" x1="1388" y1="120" x2="1388" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF9FF"/>
+      <stop offset="1" stop-color="#355B85"/>
+    </linearGradient>
+  </defs>
+</svg>

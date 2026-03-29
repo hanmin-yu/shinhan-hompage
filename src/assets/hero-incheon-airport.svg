@@ -1,0 +1,32 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect y="700" width="1920" height="380" fill="url(#runway)"/>
+  <path d="M0 596C244 528 432 520 640 560C842 600 994 676 1202 690C1402 704 1604 646 1920 580V700H0V596Z" fill="url(#horizon)"/>
+  <g opacity="0.94">
+    <path d="M286 508H1498L1644 656H432L286 508Z" fill="#2F4F71"/>
+    <path d="M540 398H1294L1498 508H286L540 398Z" fill="#4C7AA4"/>
+  </g>
+  <g opacity="0.98">
+    <path d="M1182 318L1488 420L1182 520L1116 636L1054 520L748 420L1054 318L1116 188L1182 318Z" fill="#E8F4FF"/>
+    <path d="M1118 250V730" stroke="#D5E9F8" stroke-width="18" stroke-linecap="round"/>
+    <path d="M992 420H1242" stroke="#D5E9F8" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.52">
+    <path d="M226 840H1688" stroke="#F7FBFF" stroke-width="8" stroke-linecap="round" stroke-dasharray="30 26"/>
+    <path d="M226 930H1688" stroke="#F7FBFF" stroke-width="8" stroke-linecap="round" stroke-dasharray="30 26"/>
+  </g>
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DFF1FF"/>
+      <stop offset="1" stop-color="#92BDE1"/>
+    </linearGradient>
+    <linearGradient id="horizon" x1="960" y1="520" x2="960" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B7C4CF" stop-opacity="0.76"/>
+      <stop offset="1" stop-color="#6887A2" stop-opacity="0.94"/>
+    </linearGradient>
+    <linearGradient id="runway" x1="960" y1="700" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6A7886"/>
+      <stop offset="1" stop-color="#2F3944"/>
+    </linearGradient>
+  </defs>
+</svg>

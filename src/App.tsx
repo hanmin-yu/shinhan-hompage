@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Global } from '@emotion/react';
 import styled from '@emotion/styled';
+import koreaMapAsset from './assets/map-korea.svg';
+import vietnamMapAsset from './assets/map-vietnam.svg';
 type HeaderLink = {
   label: string;
   href: string;
@@ -21,6 +23,29 @@ type Member = {
   image?: string;
 };
 
+type HeroSlide = {
+  label: string;
+  image: string;
+  objectPosition?: string;
+  mobileObjectPosition?: string;
+};
+
+type OfficeBranch = {
+  id: string;
+  label: string;
+  shortLabel: string;
+  region: string;
+  summary: string;
+  address: string;
+  tel: string;
+  fax?: string;
+  accent: string;
+  x: number;
+  y: number;
+  labelX: number;
+  labelY: number;
+};
+
 const headerLinks: HeaderLink[] = [
   {
     label: '신한소개',
@@ -32,8 +57,6 @@ const headerLinks: HeaderLink[] = [
       { label: '오시는 길', href: '#offices' },
     ],
   },
-  { label: 'IT', href: '#it' },
-  { label: '업무분야', href: '#practice' },
   {
     label: '구성원',
     href: '#members',
@@ -43,10 +66,15 @@ const headerLinks: HeaderLink[] = [
     ],
   },
   {
+    label: '업무분야',
+    href: '#practice',
+  },
+  { label: 'IT', href: '#it' },
+  {
     label: '소식/자료',
     href: '#news',
     children: [
-      { label: '최근 관세동향', href: '#news' },
+      { label: '이슈 리포트', href: '#issue-report' },
       { label: '소식지', href: '#news' },
       { label: '세미나', href: '#news' },
       { label: '블로그', href: '#news' },
@@ -97,51 +125,230 @@ const members: Member[] = [
   },
 ];
 
-const officeCities = ['본사', '부산', '공항', '경기', '인비스타', '코드파트너스', '시스템즈', '베트남'];
-
 const utilityLinks = ['Contact Us', '채용', 'KOR', '찾아오시는 길'];
 
 const footerLinks = ['서비스 이용약관', '개인정보처리방침', '면책공고', '이메일무단수집거부'];
 const brandMarkPath = '/brand-mark.png';
+const apparelHeroAsset = new URL('./assets/4a68c8298f3c035fa15ba27546d15473.jpg', import.meta.url).href;
+const semiconductorHeroAsset = new URL('./assets/robotic-arm-placing-chip-circuit-board.jpg', import.meta.url).href;
+
+const heroSlides: HeroSlide[] = [
+  {
+    label: '반도체',
+    image: semiconductorHeroAsset,
+    objectPosition: 'center 52%',
+    mobileObjectPosition: '56% center',
+  },
+  {
+    label: '자동차 부품',
+    image: '/hero/auto-parts.jpg',
+    objectPosition: 'center 46%',
+    mobileObjectPosition: '62% center',
+  },
+  {
+    label: '의류',
+    image: apparelHeroAsset,
+    objectPosition: 'center 48%',
+    mobileObjectPosition: '54% center',
+  },
+  {
+    label: '제약',
+    image: '/hero/pharma.jpg',
+    objectPosition: 'center 42%',
+    mobileObjectPosition: '58% center',
+  },
+  {
+    label: '부산항',
+    image: '/hero/busan-port.jpg',
+    objectPosition: 'center 44%',
+    mobileObjectPosition: '58% center',
+  },
+];
+
+const officeBranches: OfficeBranch[] = [
+  {
+    id: 'seoul',
+    label: '서울본사',
+    shortLabel: '본사',
+    region: '서울 강남',
+    summary: '컨설팅본부와 통관본부를 중심으로 전국 화주사 대응, 기업심사, 조사 대응, FTA 및 통관 자문을 총괄하는 메인 허브입니다.',
+    address: '서울시 강남구 논현로 704',
+    tel: '02-542-1181',
+    fax: '02-540-2323',
+    accent: '#1c4f96',
+    x: 34,
+    y: 30,
+    labelX: 12,
+    labelY: 31,
+  },
+  {
+    id: 'airport',
+    label: '인천공항지사',
+    shortLabel: '공항',
+    region: '인천공항 물류권역',
+    summary: '항공 화물 중심의 수출입통관, 긴급 통관, 공항 물류 연계 대응에 강점을 가진 현장 밀착형 지사입니다.',
+    address: '인천광역시 중구 공항동로 295번길 77-11, 217호',
+    tel: '032-744-9961~2',
+    fax: '032-744-9960',
+    accent: '#2f78bf',
+    x: 28,
+    y: 23,
+    labelX: 61,
+    labelY: 18,
+  },
+  {
+    id: 'incheon',
+    label: '인천경기지사',
+    shortLabel: '경기',
+    region: '인천항 · 수도권',
+    summary: '인천항과 수도권 제조·유통 기업을 대상으로 수출입통관, 관세환급, 요건 대응을 함께 지원하는 권역 거점입니다.',
+    address: '인천항 및 수도권 화주사 대응 거점 운영',
+    tel: '032-772-1181',
+    accent: '#3c6ca8',
+    x: 27,
+    y: 31,
+    labelX: 12,
+    labelY: 43,
+  },
+  {
+    id: 'busan',
+    label: '부산지사',
+    shortLabel: '부산',
+    region: '부산항',
+    summary: '해상 수출입통관과 항만 물류 흐름에 강점을 가진 남부권 핵심 지사로, 부산항 기반 고객 대응을 빠르게 수행합니다.',
+    address: '부산광역시 중구 충장대로 9번길 11 미광빌딩 501호',
+    tel: '051-463-1181',
+    fax: '051-465-1181',
+    accent: '#0f5a8f',
+    x: 58,
+    y: 66,
+    labelX: 72,
+    labelY: 72,
+  },
+  {
+    id: 'cheongju',
+    label: '청주지사',
+    shortLabel: '청주',
+    region: '충북 내륙권',
+    summary: '청주·충북 지역 제조기업의 통관, 검역/요건, 환급 업무를 밀착 지원하는 중부권 실무 거점입니다.',
+    address: '충청북도 청주시 흥덕구 직지대로 530, 1동 청주테크노 S타워 2층 216호, 221호',
+    tel: '043-273-3160~1',
+    fax: '043-273-3162',
+    accent: '#5a7fb2',
+    x: 43,
+    y: 46,
+    labelX: 14,
+    labelY: 57,
+  },
+  {
+    id: 'gumi',
+    label: '구미지사',
+    shortLabel: '구미',
+    region: '경북 산업벨트',
+    summary: '전자·부품 제조업체가 밀집한 경북권 고객사를 대상으로 수출입통관과 기업 맞춤형 현장 대응을 지원합니다.',
+    address: '경상북도 구미시 1공단로 182 금오빌딩 504호',
+    tel: '054-464-1133',
+    fax: '054-464-1131',
+    accent: '#4a73a2',
+    x: 53,
+    y: 50,
+    labelX: 74,
+    labelY: 51,
+  },
+  {
+    id: 'invista',
+    label: '신한인비스타',
+    shortLabel: '인비스타',
+    region: '김포공항 물류권역',
+    summary: '국제물류, 창고 운영, 3PL, 내륙운송까지 통관 이후의 물류 실행력을 연결하는 실무형 물류 법인입니다.',
+    address: '서울시 강서구 하늘길 210, 김포공항 화물청사 3·6게이트 8-4',
+    tel: '02-2663-1181',
+    fax: '02-2665-9114',
+    accent: '#2f689b',
+    x: 24,
+    y: 21,
+    labelX: 12,
+    labelY: 14,
+  },
+  {
+    id: 'vietnam',
+    label: '신한 베트남 관세법인',
+    shortLabel: '베트남',
+    region: '하노이',
+    summary: '베트남 현지 통관 규정 대응, 해외 법인 운영 지원, 수출입 구조 검토까지 연결하는 해외 현지 법인입니다.',
+    address: '5F, Star Tower, Duong Dinh Nghe street, Cau Giay New Urban Area, Yen Hoa Ward, Cau Giay District, Hanoi city, Vietnam',
+    tel: '+84-(0)24-7300-8630',
+    accent: '#2f84ae',
+    x: 54,
+    y: 40,
+    labelX: 58,
+    labelY: 104,
+  },
+  {
+    id: 'kord',
+    label: 'KORD Partners',
+    shortLabel: 'KORD',
+    region: '서울 강남',
+    summary: '관세·통관 프로젝트와 연계되는 전문 파트너 조직으로, 협업형 자문과 운영 지원 기능을 담당합니다.',
+    address: '서울시 강남구 논현로 704',
+    tel: '070-4343-7791',
+    fax: '02-3448-1184',
+    accent: '#365c92',
+    x: 37,
+    y: 33,
+    labelX: 63,
+    labelY: 35,
+  },
+];
 
 const practiceAreaDetails = [
   {
-    title: '수입통관',
-    body: '수입신고, 세번 검토, 요건 확인, 보완 대응까지 수입 프로세스를 안정적으로 설계합니다.',
+    id: 'practice-import-export',
+    title: '수출입통관',
+    body: '수입신고와 수출신고, 세번 검토, 요건 확인, 보완 대응까지 통관 전 과정을 안정적으로 설계합니다.',
   },
   {
-    title: '관세',
-    body: '세율 적용, 과세가격 검토, 관세평가 이슈를 실무 흐름에 맞춰 자문합니다.',
+    id: 'practice-refund',
+    title: '환급',
+    body: '관세환급 가능 항목 검토부터 증빙 준비, 신청 절차, 사후 관리까지 실무 흐름에 맞춰 지원합니다.',
   },
   {
-    title: '검역 요건',
+    id: 'practice-quarantine',
+    title: '검역/요건',
     body: '품목별 검역, 인증, 수입요건을 사전에 점검해 통관 지연과 보완 리스크를 줄입니다.',
   },
   {
+    id: 'practice-fta',
     title: 'FTA',
     body: '원산지 판정, 원산지 확인서, 사후검증 대응까지 FTA 운영 체계를 지원합니다.',
   },
   {
+    id: 'practice-aeo',
     title: 'AEO',
     body: 'AEO 준비자료, 내부통제, 심사 대응 항목을 단계별로 정리합니다.',
   },
   {
-    title: '관세환급',
-    body: '환급 가능 항목 검토와 서류 준비, 사후 관리까지 연결합니다.',
+    id: 'practice-investigation',
+    title: '관세조사',
+    body: '기업심사, 세관조사, 사후검증 대응 과정에서 필요한 자료 정리와 쟁점 대응을 체계적으로 지원합니다.',
   },
   {
+    id: 'practice-it',
     title: 'IT',
     body: '통관 관리 시스템, 고객 포털, 업무 대시보드로 관세 실무를 디지털화합니다.',
   },
   {
-    title: '관세사 연관사업',
-    body: '연관 자문과 협업 서비스를 통해 실무 범위를 넓히는 확장형 구조입니다.',
+    id: 'practice-logistics',
+    title: '물류',
+    body: '반출기간 관리, 보관 이슈, 운송 흐름 점검까지 통관과 연결되는 물류 리스크를 함께 관리합니다.',
   },
   {
-    title: '비즈니스',
-    body: '해외 진출, 운영 구조, 거래 흐름에 맞춘 수출입 비즈니스 자문을 제공합니다.',
+    id: 'practice-vietnam',
+    title: '베트남',
+    body: '베트남 수출입통관, 현지 규정 변화, 거래 구조 검토 등 해외 현지 실무에 맞춘 자문을 제공합니다.',
   },
   {
+    id: 'practice-fda',
     title: '미국 FDA',
     body: '미국 수출 시 필요한 FDA 관련 체크포인트와 준비 서류 흐름을 정리합니다.',
   },
@@ -211,27 +418,20 @@ const itServices = [
 
 const newsItems = [
   {
-    category: '최신 동향',
-    title: '3월 관세·통상 브리핑',
-    body: '최근 통상 정책과 수입 규제, 통관 단계에서 주의해야 할 핵심 쟁점을 한 번에 요약합니다.',
-  },
-  {
     category: '소식지',
     title: '원산지 검증 대응 레터',
     body: '실무 담당자가 준비해야 할 증빙 자료와 자주 반복되는 오류 포인트를 담았습니다.',
+  },
+  {
+    category: '블로그',
+    title: '관세 실무 인사이트 아카이브',
+    body: '현장에서 자주 마주치는 통관, 품목분류, 원산지 검토 이슈를 이해하기 쉽게 정리한 콘텐츠를 모았습니다.',
   },
   {
     category: '세미나',
     title: '인증·검역 이슈 리포트',
     body: '식품, 소비재, 의료기기 수입 단계에서 반복되는 규제 이슈를 보기 쉽게 정리했습니다.',
   },
-];
-
-const stats = [
-  { label: '월간 사건수임건수', value: '1,200 +', note: '* 2026년 1월 변호사협회 경유증표 발급 기준' },
-  { label: '주요 구성원', value: '290 +', note: '* 변호사 · 관세사 · 외국변호사' },
-  { label: '업무협약/자문 체결기업수', value: '420 +', note: '* 2025년 6월까지 기준' },
-  { label: '전 세계 사무소', value: '30 +', note: '* 국내외 협업 네트워크 포함' },
 ];
 
 const GlobalStyle = () => (
@@ -300,12 +500,47 @@ const UtilityBar = styled.div`
   }
 `;
 
+const UtilityBarInner = styled.div`
+  position: relative;
+`;
+
 const UtilityInner = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0;
   min-height: 40px;
+`;
+
+const UtilityBrandBadge = styled.div`
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+`;
+
+const UtilityBrandLead = styled.span`
+  color: rgba(255, 255, 255, 0.72);
+  font-style: italic;
+`;
+
+const UtilityBrandName = styled.span`
+  font-size: 1.05rem;
+  font-weight: 700;
+`;
+
+const UtilityLinks = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
 `;
 
 const UtilityLink = styled.a`
@@ -332,15 +567,15 @@ const Header = styled.header`
   position: sticky;
   top: 40px;
   z-index: 25;
-  background: rgba(233, 238, 244, 0.26);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
-  box-shadow: 0 10px 28px rgba(18, 48, 102, 0.05);
-  backdrop-filter: blur(14px);
+  background: rgba(240, 244, 249, 0.88);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 28px rgba(18, 48, 102, 0.1);
+  backdrop-filter: blur(20px);
 
   @media (max-width: 768px) {
     top: 0;
-    background: rgba(233, 238, 244, 0.22);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(240, 244, 249, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   }
 `;
 
@@ -350,6 +585,10 @@ const HeaderInner = styled(Container)`
   justify-content: space-between;
   gap: 24px;
   min-height: 96px;
+
+  @media (max-width: 1200px) {
+    gap: 16px;
+  }
 
   @media (max-width: 1024px) {
     min-height: 82px;
@@ -363,8 +602,9 @@ const MenuArea = styled.div`
   justify-content: center;
   flex: 1;
   min-height: 96px;
+  min-width: 0;
 
-  @media (max-width: 1120px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -413,6 +653,10 @@ const BrandText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  @media (max-width: 1100px) {
+    gap: 2px;
+  }
 `;
 
 const BrandTitle = styled.strong`
@@ -420,25 +664,42 @@ const BrandTitle = styled.strong`
   line-height: 1;
   letter-spacing: 0.04em;
   color: #103c83;
+
+  @media (max-width: 1100px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const BrandSub = styled.span`
   color: #4e617e;
   font-size: 1rem;
+
+  @media (max-width: 1100px) {
+    font-size: 0.92rem;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  gap: 38px;
-  font-size: 1.08rem;
+  gap: 16px;
+  font-size: 1.24rem;
   color: #153c7b;
+
+  @media (max-width: 1200px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 980px) {
+    gap: 4px;
+  }
 `;
 
 const NavItem = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 96px;
 
   &:hover .nav-dropdown {
@@ -447,18 +708,81 @@ const NavItem = styled.div`
     transform: translateY(0);
     pointer-events: auto;
   }
+
+  @media (max-width: 1024px) {
+    min-height: 82px;
+  }
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.a<{ hasChildren?: boolean }>`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 96px;
+  padding: 0 14px;
+  position: relative;
   color: #153c7b;
-  font-weight: 700;
-  transition: color 0.2s ease;
+  font-size: 1.24rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  @media (max-width: 1200px) {
+    gap: 6px;
+    padding: 0 10px;
+    font-size: 1.08rem;
+  }
+
+  @media (max-width: 1024px) {
+    min-height: 82px;
+    padding: 0 8px;
+    font-size: 0.98rem;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 18px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #114ea8, #2d74dc);
+    transform: scaleX(0.35);
+    transform-origin: center;
+    opacity: 0;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  ${({ hasChildren }) =>
+    hasChildren
+      ? `
+    &::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      margin-top: -2px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      opacity: 0.65;
+    }
+  `
+      : ''}
 
   &:hover {
     color: #0f67d0;
+    background: rgba(17, 78, 168, 0.06);
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+    opacity: 1;
   }
 `;
 
@@ -466,9 +790,11 @@ const NavDropdown = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translate(-50%, 8px);
-  min-width: 200px;
-  padding: 14px 0;
+  width: max-content;
+  min-width: 184px;
+  max-width: 240px;
+  transform: translateX(-50%) translateY(10px);
+  padding: 12px 0;
   border-radius: 0 0 18px 18px;
   background: rgba(228, 234, 241, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.46);
@@ -488,17 +814,18 @@ const NavDropdown = styled.div`
 const NavDropdownList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
 `;
 
 const NavDropdownLink = styled.a`
   display: flex;
   align-items: center;
-  min-height: 40px;
-  padding: 0 20px;
+  min-height: 46px;
+  padding: 0 22px;
   color: #5b6c86;
   font-size: 0.98rem;
   line-height: 1.5;
+  white-space: nowrap;
   transition:
     color 0.2s ease,
     background-color 0.2s ease;
@@ -512,7 +839,7 @@ const NavDropdownLink = styled.a`
 const HeaderTools = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex: 0 0 auto;
 
   @media (max-width: 768px) {
@@ -524,42 +851,27 @@ const ContactButton = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  min-height: 46px;
   padding: 0 18px;
-  border: 1px solid rgba(17, 78, 168, 0.2);
+  border: 1px solid rgba(17, 78, 168, 0.16);
   border-radius: 999px;
-  font-size: 0.96rem;
-  font-weight: 600;
   color: #ffffff;
   background: linear-gradient(90deg, #1458bb, #0e6ddb);
-  box-shadow: 0 12px 24px rgba(16, 84, 177, 0.2);
+  box-shadow: 0 12px 24px rgba(16, 84, 177, 0.18);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+
+  @media (max-width: 1100px) {
+    min-height: 42px;
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
 
   @media (max-width: 768px) {
     min-height: 38px;
     padding: 0 14px;
-    border-color: rgba(17, 78, 168, 0.18);
-    color: #ffffff;
-    background: linear-gradient(90deg, #1458bb, #0e6ddb);
     font-size: 0.88rem;
-  }
-`;
-
-const ToolLink = styled.a`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 12px;
-  border-radius: 999px;
-  color: #60708a;
-  font-size: 0.94rem;
-
-  @media (max-width: 768px) {
-    color: #586274;
-  }
-
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -766,86 +1078,140 @@ const HeroFrame = styled.section`
 `;
 
 const HeroBanner = styled.div`
-  min-height: min(920px, calc(100vh + 40px));
-  background:
-    linear-gradient(180deg, rgba(8, 8, 8, 0.16), rgba(8, 8, 8, 0.08) 24%, rgba(8, 14, 26, 0.22) 100%),
-    linear-gradient(180deg, rgba(128, 147, 173, 0.18), rgba(55, 45, 55, 0.42) 100%),
-    url('https://d1tgonli21s4df.cloudfront.net/main_new/bg1.webp');
-  background-size: cover, cover, cover;
-  background-position: center, center, center bottom;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 232px 24px 118px;
+  min-height: clamp(640px, 78vh, 780px);
+  padding: 168px 24px 88px;
   position: relative;
   overflow: hidden;
-  
+  background:
+    radial-gradient(circle at 50% 18%, rgba(52, 104, 185, 0.16), transparent 28%),
+    linear-gradient(180deg, #091426 0%, #0c1b32 48%, #122643 100%);
+
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    height: auto;
     background:
-      linear-gradient(180deg, rgba(82, 87, 95, 0.12), rgba(82, 87, 95, 0.1) 20%, rgba(255, 255, 255, 0.04) 34%, rgba(18, 30, 54, 0.16) 100%);
+      linear-gradient(180deg, rgba(6, 18, 38, 0.24), rgba(10, 30, 58, 0.08) 28%, rgba(6, 18, 36, 0.28) 100%);
     pointer-events: none;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 50% 26%, rgba(255, 255, 255, 0.36), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(8, 16, 30, 0.06));
-    pointer-events: none;
+    z-index: 1;
   }
 
   @media (max-width: 1120px) {
-    min-height: min(820px, calc(100vh + 20px));
+    min-height: clamp(620px, 76vh, 720px);
+    padding: 160px 24px 76px;
   }
 
   @media (max-width: 768px) {
-    min-height: calc(100vh + 20px);
-    padding: 154px 18px 92px;
-    background-position: center, center, 60% bottom;
+    min-height: min(760px, calc(100vh - 24px));
+    padding: 150px 18px 74px;
   }
 `;
 
 const HeroGlow = styled.div`
-  position: absolute;
-  inset: 138px 50% auto auto;
-  width: 1080px;
-  height: 360px;
-  transform: translateX(50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.56), rgba(223, 234, 250, 0.2) 54%, transparent 74%);
-  filter: blur(24px);
-  pointer-events: none;
+  display: none;
 `;
 
 const HeroContent = styled.div`
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 24px;
   align-items: center;
   justify-content: center;
-  max-width: 1240px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 168px 24px 88px;
   text-align: center;
-  color: #0f1728;
+  color: #ffffff;
+
+  @media (max-width: 1120px) {
+    padding: 160px 24px 76px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 150px 18px 74px;
+  }
 `;
 
 const HeroContentPanel = styled.div`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  max-width: 1120px;
+  align-items: center;
   padding: 0;
   border-radius: 0;
   background: transparent;
   backdrop-filter: none;
   box-shadow: none;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+`;
+
+const HeroBackdropLayer = styled.img<{
+  active: boolean;
+  objectPosition?: string;
+  mobileObjectPosition?: string;
+}>`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: ${({ objectPosition }) => objectPosition ?? 'center'};
+  opacity: ${({ active }) => (active ? 1 : 0)};
+  transform: ${({ active }) => (active ? 'scale(1.03)' : 'scale(1.07)')};
+  transition:
+    opacity 1.2s ease,
+    transform 2.4s ease,
+    filter 0.8s ease;
+  filter: saturate(0.75) contrast(1.04) brightness(0.28) blur(8px);
+  z-index: 0;
+
+  @media (max-width: 768px) {
+    object-position: ${({ mobileObjectPosition, objectPosition }) => mobileObjectPosition ?? objectPosition ?? 'center'};
+  }
+`;
+
+const HeroVisualStage = styled.div`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+`;
+
+const HeroBackgroundLayer = styled.img<{
+  active: boolean;
+  objectPosition?: string;
+  mobileObjectPosition?: string;
+}>`
+  position: relative;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(1400px, calc(100vw - 40px));
+  height: min(78vh, 760px);
+  object-fit: contain;
+  object-position: ${({ objectPosition }) => objectPosition ?? 'center'};
+  opacity: ${({ active }) => (active ? 1 : 0)};
+  transform: translate(-50%, -50%) scale(${({ active }) => (active ? 1 : 1.015)});
+  transition:
+    opacity 1.2s ease,
+    transform 2.4s ease;
+  z-index: 1;
+  filter: saturate(1) contrast(1.02) brightness(0.98);
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 24px);
+    height: min(60vh, 520px);
+    object-position: ${({ mobileObjectPosition, objectPosition }) => mobileObjectPosition ?? objectPosition ?? 'center'};
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -855,6 +1221,9 @@ const HeroTitle = styled.h1`
   line-height: 1.08;
   letter-spacing: -0.03em;
   color: #ffffff;
+  text-shadow:
+    0 14px 34px rgba(3, 14, 32, 0.48),
+    0 2px 10px rgba(3, 14, 32, 0.34);
 `;
 
 const HeroBody = styled.p`
@@ -862,45 +1231,49 @@ const HeroBody = styled.p`
   max-width: 820px;
   font-size: 1.08rem;
   line-height: 1.72;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 6px 22px rgba(3, 14, 32, 0.34);
 `;
 
 const HeroSearch = styled.div`
   width: min(1040px, calc(100vw - 180px));
-  min-height: 80px;
+  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 0 30px 0 34px;
-  background: rgba(16, 39, 54, 0.4);
-  border: 1px solid rgba(189, 189, 189, 0.72);
-  color: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(6px);
+  gap: 20px;
+  padding: 0 26px 0 30px;
+  background: rgba(8, 27, 52, 0.66);
+  border: 1px solid rgba(220, 236, 255, 0.26);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: none;
+  box-shadow: 0 18px 36px rgba(6, 18, 36, 0.18);
 
   @media (max-width: 900px) {
     width: 100%;
-    min-height: 68px;
-    padding: 0 20px;
-    gap: 18px;
+    min-height: 62px;
+    padding: 0 18px;
+    gap: 16px;
   }
 `;
 
 const HeroSearchText = styled.span`
-  font-size: clamp(1rem, 2vw, 1.75rem);
-  line-height: 1.4;
+  font-size: clamp(0.95rem, 1.45vw, 1.18rem);
+  line-height: 1.45;
   text-align: left;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 2px 10px rgba(4, 18, 38, 0.22);
 
   @media (max-width: 768px) {
-    font-size: 0.96rem;
+    font-size: 0.92rem;
     line-height: 1.5;
   }
 `;
 
 const HeroSearchIcon = styled.div`
-  width: 66px;
-  height: 66px;
-  border: 3px solid rgba(255, 255, 255, 0.96);
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.96);
   border-radius: 50%;
   position: relative;
   flex: 0 0 auto;
@@ -908,26 +1281,26 @@ const HeroSearchIcon = styled.div`
   &::after {
     content: '';
     position: absolute;
-    width: 26px;
-    height: 4px;
+    width: 18px;
+    height: 3px;
     background: rgba(255, 255, 255, 0.96);
     border-radius: 999px;
-    right: -12px;
-    bottom: 6px;
+    right: -8px;
+    bottom: 5px;
     transform: rotate(45deg);
     transform-origin: center;
   }
 
   @media (max-width: 768px) {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-width: 2px;
 
     &::after {
-      width: 16px;
+      width: 14px;
       height: 3px;
-      right: -8px;
-      bottom: 4px;
+      right: -7px;
+      bottom: 3px;
     }
   }
 `;
@@ -1108,31 +1481,32 @@ const PracticeShowcaseSection = styled.section`
   padding: 108px 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.36), transparent 26%),
-    radial-gradient(circle at 86% 18%, rgba(135, 175, 224, 0.24), transparent 24%),
-    linear-gradient(180deg, rgba(219, 229, 241, 0.94), rgba(202, 216, 233, 0.92)),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.3), transparent 42%);
+    radial-gradient(circle at 82% 20%, rgba(26, 82, 165, 0.11), transparent 18%),
+    radial-gradient(circle at 14% 78%, rgba(27, 102, 201, 0.06), transparent 18%),
+    linear-gradient(180deg, rgba(246, 249, 253, 0.96), rgba(255, 255, 255, 0.98)),
+    #ffffff;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.44), transparent 42%),
-      linear-gradient(320deg, rgba(21, 60, 123, 0.08), transparent 38%);
+      linear-gradient(90deg, transparent, rgba(27, 102, 201, 0.08), transparent);
+    top: 46px;
+    bottom: auto;
+    height: 1px;
     pointer-events: none;
   }
 
   &::after {
     content: '';
     position: absolute;
-    left: -6%;
-    bottom: -18%;
-    width: 34%;
-    height: 48%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(239, 244, 249, 0.18));
-    clip-path: polygon(0 32%, 100% 100%, 0 100%);
-    opacity: 0.7;
+    right: -90px;
+    bottom: -40px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(27, 102, 201, 0.08), transparent 68%);
   }
 
   @media (max-width: 768px) {
@@ -1145,12 +1519,74 @@ const PracticeShowcaseInner = styled(Container)`
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 46px;
+  gap: 40px;
 `;
 
 const PracticeShowcaseHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 34px 32px;
   color: #143c79;
-  max-width: 340px;
+  max-width: 360px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(19, 63, 139, 0.1);
+  border-top: 2px solid #1b66c9;
+  box-shadow: 0 16px 34px rgba(19, 55, 109, 0.08);
+
+  @media (max-width: 768px) {
+    max-width: none;
+    padding: 24px 22px;
+    border-radius: 22px;
+  }
+`;
+
+const PracticeShowcaseEyebrow = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #8ea0bb;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: rgba(27, 102, 201, 0.28);
+  }
+`;
+
+const PracticeShowcaseMeta = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+`;
+
+const PracticeShowcaseMetaCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 88px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.98), rgba(242, 247, 253, 0.98));
+  border: 1px solid rgba(20, 60, 121, 0.07);
+`;
+
+const PracticeShowcaseMetaValue = styled.strong`
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #143c79;
+`;
+
+const PracticeShowcaseMetaLabel = styled.span`
+  color: rgba(20, 60, 121, 0.68);
+  font-size: 0.9rem;
+  line-height: 1.45;
 `;
 
 const PracticeShowcaseTitle = styled.h2`
@@ -1160,17 +1596,16 @@ const PracticeShowcaseTitle = styled.h2`
 `;
 
 const PracticeShowcaseBody = styled.p`
-  margin: 18px 0 0;
-  max-width: 320px;
-  color: rgba(20, 60, 121, 0.78);
+  margin: 0;
+  color: rgba(20, 60, 121, 0.72);
   font-size: 1.08rem;
   line-height: 1.7;
 `;
 
 const PracticeDetailGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 0 46px;
+  grid-template-columns: minmax(260px, 0.92fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
   align-items: start;
 
   @media (max-width: 1080px) {
@@ -1182,44 +1617,64 @@ const PracticeDetailGrid = styled.div`
 const PracticeColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0;
-  border-left: 1px solid rgba(20, 60, 121, 0.16);
+  gap: 16px;
 
   @media (max-width: 1080px) {
-    border-left: 0;
-    border-top: 1px solid rgba(20, 60, 121, 0.14);
+    gap: 14px;
   }
 `;
 
 const PracticeDetailCard = styled.article`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
-  min-height: 98px;
-  padding: 0 0 0 44px;
+  gap: 22px;
+  min-height: 168px;
+  padding: 26px 26px 24px;
   color: #143c79;
-  border-bottom: 1px solid rgba(20, 60, 121, 0.12);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 249, 253, 0.98));
+  border: 1px solid rgba(20, 60, 121, 0.1);
+  box-shadow: 0 14px 28px rgba(19, 55, 109, 0.06);
+  position: relative;
   transition:
-    background-color 0.24s ease,
-    transform 0.24s ease;
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 0;
+    width: 56px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #1b66c9, #7aa8dd);
+  }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.34);
-    transform: translateX(6px);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 36px rgba(19, 55, 109, 0.09);
+    border-color: rgba(27, 102, 201, 0.18);
   }
 
   &:hover .practice-arrow {
-    transform: translateX(10px);
-    color: #0f67d0;
+    transform: translateX(6px);
+    color: #ffffff;
+    background: linear-gradient(135deg, #1b66c9, #3f88e7);
+    border-color: transparent;
   }
 
   @media (max-width: 1080px) {
-    padding: 22px 0;
+    min-height: auto;
+    padding: 24px 22px 22px;
   }
 `;
 
 const PracticeDetailTitle = styled.strong`
+  display: block;
+  margin-bottom: 12px;
   font-size: 1.18rem;
   line-height: 1.2;
   color: #143c79;
@@ -1227,120 +1682,29 @@ const PracticeDetailTitle = styled.strong`
 
 const PracticeDetailText = styled.p`
   margin: 0;
-  color: rgba(20, 60, 121, 0.72);
-  line-height: 1.6;
-  max-width: 360px;
+  color: rgba(20, 60, 121, 0.68);
+  line-height: 1.68;
+  max-width: 372px;
 `;
 
 const PracticeDetailArrow = styled.span`
-  color: rgba(20, 60, 121, 0.8);
-  font-size: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(20, 60, 121, 0.14);
+  background: rgba(245, 248, 253, 0.96);
+  color: rgba(20, 60, 121, 0.82);
+  font-size: 1.55rem;
   line-height: 1;
   flex: 0 0 auto;
   transition:
     transform 0.24s ease,
-    color 0.24s ease;
-`;
-
-const StatsSection = styled.section`
-  position: relative;
-  padding: 64px 0 24px;
-  margin-top: -6px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(225, 233, 244, 0.78), rgba(255, 255, 255, 0.92)),
-      url('https://d1tgonli21s4df.cloudfront.net/main_new/counting_bg_md.webp');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.62;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.46), transparent 22%),
-      linear-gradient(90deg, rgba(24, 57, 110, 0.06), transparent 40%, rgba(24, 57, 110, 0.04) 100%);
-    pointer-events: none;
-  }
-`;
-
-const StatsInner = styled(Container)`
-  position: relative;
-  z-index: 1;
-`;
-
-const StatsGrid = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  padding: 50px 0 58px;
-  background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 36px;
-  }
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    padding: 34px 0 40px;
-    row-gap: 28px;
-  }
-`;
-
-const StatCard = styled.article`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 16px;
-  padding: 0 24px;
-`;
-
-const StatLabel = styled.strong`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.38rem;
-  line-height: 1.35;
-  letter-spacing: -0.04em;
-  color: #171717;
-
-  &::after {
-    content: '→';
-    color: #171717;
-    font-weight: 700;
-  }
-`;
-
-const StatValue = styled.span`
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: #2a466f;
-`;
-
-const StatNote = styled.span`
-  color: #8f8f8f;
-  font-size: 0.92rem;
-  line-height: 1.5;
-`;
-
-const StatsDisclaimer = styled.p`
-  margin: 14px 6px 0 0;
-  text-align: right;
-  color: #6c6c6c;
-  font-size: 0.92rem;
+    color 0.24s ease,
+    background-color 0.24s ease,
+    border-color 0.24s ease;
 `;
 
 const LandingSection = styled.section`
@@ -1450,6 +1814,17 @@ const LandingSectionInner = styled(Container)`
   display: flex;
   flex-direction: column;
   gap: 44px;
+`;
+
+const SectionAnchor = styled.div`
+  position: relative;
+  top: -148px;
+  height: 0;
+  visibility: hidden;
+
+  @media (max-width: 768px) {
+    top: -92px;
+  }
 `;
 
 const LandingSectionTop = styled.div`
@@ -1848,6 +2223,11 @@ const CardHeadline = styled.h3`
   color: #111111;
 `;
 
+const DarkCardHeadline = styled(CardHeadline)`
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+`;
+
 const CardText = styled.p`
   margin: 0;
   color: #797979;
@@ -1941,71 +2321,395 @@ const NewsletterList = styled.div`
   gap: 18px;
 `;
 
-const OfficesOverview = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: 32px;
-  align-items: center;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const OfficesHero = styled.div`
-  min-height: 360px;
-  padding: 34px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 14px;
-  color: #ffffff;
-  background:
-    linear-gradient(180deg, rgba(9, 16, 31, 0.28), rgba(9, 16, 31, 0.78)),
-    url('https://d1tgonli21s4df.cloudfront.net/main_new/newyork_night_pc.webp');
-  background-size: cover;
-  background-position: center;
-
-  @media (max-width: 768px) {
-    min-height: 260px;
-    padding: 24px 20px;
-  }
-`;
-
-const OfficesHeroTitle = styled.strong`
-  font-size: clamp(1.8rem, 3vw, 2.7rem);
-  line-height: 1.2;
-  letter-spacing: -0.04em;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
-`;
-
-const OfficesChips = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-`;
-
 const MemberName = styled.strong`
   font-size: 1.2rem;
 `;
 
-const OfficeChip = styled.span`
+const OfficesSectionLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+`;
+
+const OfficesSelectorGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const OfficesSelectorButton = styled.button<{ active: boolean }>`
+  min-height: 54px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid ${({ active }) => (active ? 'transparent' : 'rgba(19, 63, 139, 0.14)')};
+  background: ${({ active }) =>
+    active
+      ? 'linear-gradient(90deg, #144e9f, #1b66c9)'
+      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(242, 246, 251, 0.88))'};
+  color: ${({ active }) => (active ? '#ffffff' : '#30507c')};
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: ${({ active }) =>
+    active ? '0 16px 30px rgba(20, 78, 159, 0.22)' : '0 8px 20px rgba(19, 63, 139, 0.05)'};
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+const OfficesContentGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
+  gap: 24px;
+  align-items: stretch;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const OfficesFeatureCard = styled.article<{ accent: string }>`
+  position: relative;
+  overflow: hidden;
+  padding: 34px 34px 30px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.22), transparent 24%),
+    linear-gradient(180deg, ${({ accent }) => accent}, #10284c 82%);
+  color: #ffffff;
+  box-shadow: 0 24px 60px rgba(11, 24, 43, 0.16);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: auto -6% -34% auto;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.24), transparent 68%);
+  }
+
+  @media (max-width: 768px) {
+    padding: 28px 22px 24px;
+    border-radius: 24px;
+  }
+`;
+
+const OfficesFeatureTop = styled.div`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const OfficesBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const OfficesFeatureTitle = styled.h3`
+  margin: 0;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.14;
+  letter-spacing: -0.04em;
+`;
+
+const OfficesFeatureBody = styled.p`
+  margin: 0;
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.08rem;
+  line-height: 1.72;
+`;
+
+const OfficesFactsGrid = styled.div`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const OfficesFactCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 110px;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+`;
+
+const OfficesFactLabel = styled.span`
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+const OfficesFactValue = styled.strong`
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: #ffffff;
+  word-break: break-word;
+`;
+
+const OfficesMapCard = styled.aside`
+  position: relative;
+  overflow: hidden;
+  padding: 26px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(243, 247, 252, 0.94)),
+    rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(19, 63, 139, 0.1);
+  box-shadow: 0 20px 44px rgba(19, 63, 139, 0.08);
+  backdrop-filter: blur(16px);
+`;
+
+const OfficesMapHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+`;
+
+const OfficesMapTitle = styled.strong`
+  font-size: 1.24rem;
+  color: #163d77;
+`;
+
+const OfficesMapBody = styled.p`
+  margin: 0;
+  color: #60708a;
+  line-height: 1.65;
+`;
+
+const OfficesMiniMap = styled.div`
+  position: relative;
+  min-height: 420px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #f7fbff, #eef4fb);
+  border: 1px solid rgba(19, 63, 139, 0.08);
+  overflow: hidden;
+`;
+
+const OfficesMiniMapKoreaZone = styled.div`
+  position: absolute;
+  inset: 5% 20% 6% 6%;
+`;
+
+const OfficesMiniMapKoreaImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.58;
+  filter: saturate(0.48) brightness(1.02) contrast(0.92);
+`;
+
+const OfficesMiniMapVietnamZone = styled.div`
+  position: absolute;
+  right: 5%;
+  bottom: 6%;
+  width: 21%;
+  height: 36%;
+  padding: 12px 12px 12px;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 248, 253, 0.9)),
+    rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(20, 60, 121, 0.08);
+  box-shadow: 0 18px 34px rgba(29, 63, 114, 0.08);
+  backdrop-filter: blur(10px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 68px;
+    background: linear-gradient(180deg, rgba(33, 72, 128, 0.08), rgba(33, 72, 128, 0));
+    pointer-events: none;
+  }
+`;
+
+const OfficesMiniMapInsetLabel = styled.span`
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #214880;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  z-index: 2;
+`;
+
+const OfficesMiniMapVietnamImage = styled.img`
+  position: absolute;
+  inset: 16% 16% 22%;
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 32%);
+  max-height: calc(100% - 38%);
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.72;
+  filter: saturate(0.56) brightness(1.02) contrast(0.94);
+`;
+
+const OfficesMapLines = styled.svg`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+`;
+
+const OfficesMapAnchor = styled.button<{ x: number; y: number; active: boolean; accent: string }>`
+  position: absolute;
+  left: ${({ x }) => `${x}%`};
+  top: ${({ y }) => `${y}%`};
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+`;
+
+const OfficesMapAnchorDot = styled.span<{ active: boolean; accent: string }>`
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: ${({ active, accent }) => (active ? accent : '#2e6dcc')};
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.82),
+    0 10px 18px rgba(20, 60, 121, 0.14);
+`;
+
+const OfficesMapLabel = styled.button<{ x: number; y: number; active: boolean; accent: string }>`
+  position: absolute;
+  left: ${({ x }) => `${x}%`};
+  top: ${({ y }) => `${y}%`};
+  transform: translate(-50%, -50%);
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  gap: 8px;
+  min-height: 38px;
   padding: 0 14px;
+  border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid rgba(19, 63, 139, 0.12);
-  color: #36507c;
-  backdrop-filter: blur(10px);
+  background: ${({ active, accent }) =>
+    active ? `linear-gradient(180deg, ${accent}, #3f74b7)` : 'rgba(255, 255, 255, 0.88)'};
+  color: ${({ active }) => (active ? '#ffffff' : '#36557e')};
+  font-size: 0.88rem;
+  font-weight: 800;
+  box-shadow: ${({ active }) =>
+    active ? '0 12px 24px rgba(41, 86, 145, 0.18)' : '0 8px 16px rgba(19, 63, 139, 0.06)'};
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
 
-  @media (max-width: 768px) {
-    min-height: 38px;
-    padding: 0 12px;
-    font-size: 0.9rem;
+  &:hover {
+    transform: translate(-50%, calc(-50% - 1px));
   }
+`;
+
+const OfficesMapLabelDot = styled.span<{ active: boolean; accent: string }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: ${({ active, accent }) => (active ? 'rgba(255, 255, 255, 0.94)' : accent)};
+  flex: 0 0 auto;
+`;
+
+const OfficesMapInsetLabelButton = styled(OfficesMapLabel)`
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.82rem;
+  box-shadow: 0 10px 18px rgba(19, 63, 139, 0.1);
+`;
+
+const OfficesMiniMapInsetMeta = styled.div`
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+`;
+
+const OfficesMiniMapInsetTitle = styled.span`
+  color: #6c7c95;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+const OfficesMiniMapInsetCity = styled.span`
+  color: #123b75;
+  font-size: 1.08rem;
+  font-weight: 800;
+`;
+
+const OfficesMapHint = styled.p`
+  margin: 16px 0 0;
+  color: #6c7c95;
+  font-size: 0.92rem;
+  line-height: 1.6;
 `;
 
 const Footer = styled.footer`
@@ -2112,7 +2816,9 @@ const FooterCopyright = styled.p`
 
 function App() {
   const [activeIssue, setActiveIssue] = useState(0);
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedOfficeId, setSelectedOfficeId] = useState(officeBranches[0].id);
   const [brandMarkMissing, setBrandMarkMissing] = useState(false);
 
   useEffect(() => {
@@ -2123,7 +2829,18 @@ function App() {
     return () => window.clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6200);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   const currentIssue = issueReports[activeIssue];
+  const selectedOffice = officeBranches.find((office) => office.id === selectedOfficeId) ?? officeBranches[0];
+  const domesticOffices = officeBranches.filter((office) => office.id !== 'vietnam');
+  const vietnamOffice = officeBranches.find((office) => office.id === 'vietnam');
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const brandMarkNode = !brandMarkMissing ? (
     <BrandMarkImage
@@ -2145,13 +2862,21 @@ function App() {
       <GlobalStyle />
       <Page>
         <UtilityBar>
-          <UtilityInner>
-            {utilityLinks.map((label) => (
-              <UtilityLink key={label} href="#top">
-                {label}
-              </UtilityLink>
-            ))}
-          </UtilityInner>
+          <UtilityBarInner>
+            <UtilityBrandBadge aria-label="Established 1965 SHINHAN Customs Service Inc.">
+              <UtilityBrandLead>Established 1965</UtilityBrandLead>
+              <UtilityBrandName>SHINHAN Customs Service Inc.</UtilityBrandName>
+            </UtilityBrandBadge>
+            <UtilityInner>
+              <UtilityLinks>
+                {utilityLinks.map((label) => (
+                  <UtilityLink key={label} href="#top">
+                    {label}
+                  </UtilityLink>
+                ))}
+              </UtilityLinks>
+            </UtilityInner>
+          </UtilityBarInner>
         </UtilityBar>
 
         <Header>
@@ -2168,7 +2893,9 @@ function App() {
               <Nav>
                 {headerLinks.map((item) => (
                   <NavItem key={item.label}>
-                    <NavLink href={item.href}>{item.label}</NavLink>
+                    <NavLink href={item.href} hasChildren={Boolean(item.children?.length)}>
+                      {item.label}
+                    </NavLink>
                     {item.children ? (
                       <NavDropdown className="nav-dropdown">
                         <NavDropdownList>
@@ -2187,9 +2914,6 @@ function App() {
 
             <HeaderTools>
               <ContactButton href="#offices">02-3448-1181</ContactButton>
-              <ToolLink href="#news">통합검색</ToolLink>
-              <ToolLink href="#practice">전체메뉴</ToolLink>
-              <ToolLink href="#offices">한국어</ToolLink>
               <MobileIconButton type="button" kind="search" aria-label="검색" />
               <MobileIconButton
                 type="button"
@@ -2244,17 +2968,40 @@ function App() {
           <HeroSection>
             <HeroFrame>
               <HeroBanner>
+                {heroSlides.map((slide, index) => (
+                  <HeroBackdropLayer
+                    key={`${slide.label}-backdrop`}
+                    src={slide.image}
+                    alt=""
+                    active={activeHeroSlide === index}
+                    objectPosition={slide.objectPosition}
+                    mobileObjectPosition={slide.mobileObjectPosition}
+                    aria-hidden="true"
+                  />
+                ))}
+                <HeroVisualStage aria-hidden="true">
+                  {heroSlides.map((slide, index) => (
+                    <HeroBackgroundLayer
+                      key={slide.label}
+                      src={slide.image}
+                      alt=""
+                      active={activeHeroSlide === index}
+                      objectPosition={slide.objectPosition}
+                      mobileObjectPosition={slide.mobileObjectPosition}
+                    />
+                  ))}
+                </HeroVisualStage>
                 <HeroGlow />
                 <HeroContent>
                   <HeroContentPanel>
                     <HeroTitle>
-                      Your Case. Your Rights.
+                      WE MAKE THE DIFFERENCE
                       <br />
-                      Our Fight.
+                      FOR YOUR SUCCESSFUL BUSINESS
                     </HeroTitle>
                     <HeroBody>
-                      관세, 통상, 원산지, 수출입 규제 이슈를 빠르게 정리하고 실제 대응까지 연결하는 실무형 자문
-                      파트너입니다.
+                      신한관세법인은 국내외 수출입통관 및 분야별 관세·무역 컨설팅, 물류서비스까지 All-in-One
+                      Service를 제공합니다.
                     </HeroBody>
                     <HeroSearchLink href="#news">
                       <HeroSearch>
@@ -2291,21 +3038,33 @@ function App() {
             </QuickMenuBody>
           </QuickMenu>
 
-          <PracticeShowcaseSection id="about">
+          <SectionAnchor id="about" />
+          <PracticeShowcaseSection id="practice">
             <PracticeShowcaseInner>
               <PracticeDetailGrid>
                 <PracticeShowcaseHeader>
+                  <PracticeShowcaseEyebrow>Practice Areas</PracticeShowcaseEyebrow>
                   <PracticeShowcaseTitle>업무분야</PracticeShowcaseTitle>
                   <PracticeShowcaseBody>
                     신한관세법인의 핵심 업무를 중심으로 수출입통관, 환급, FTA, AEO, 미국 FDA, IT 연계 서비스까지
                     한 번에 안내하는 소개 영역입니다.
                   </PracticeShowcaseBody>
+                  <PracticeShowcaseMeta>
+                    <PracticeShowcaseMetaCard>
+                      <PracticeShowcaseMetaValue>10+</PracticeShowcaseMetaValue>
+                      <PracticeShowcaseMetaLabel>핵심 자문 분야를 한 화면에 정리</PracticeShowcaseMetaLabel>
+                    </PracticeShowcaseMetaCard>
+                    <PracticeShowcaseMetaCard>
+                      <PracticeShowcaseMetaValue>All-in-One</PracticeShowcaseMetaValue>
+                      <PracticeShowcaseMetaLabel>통관, FTA, 환급, IT 연계 서비스</PracticeShowcaseMetaLabel>
+                    </PracticeShowcaseMetaCard>
+                  </PracticeShowcaseMeta>
                 </PracticeShowcaseHeader>
 
                 {[practiceAreaDetails.slice(0, 5), practiceAreaDetails.slice(5)].map((column, columnIndex) => (
                   <PracticeColumn key={columnIndex}>
                     {column.map((item) => (
-                      <PracticeDetailCard key={item.title}>
+                      <PracticeDetailCard key={item.title} id={item.id}>
                         <div>
                           <PracticeDetailTitle>{item.title}</PracticeDetailTitle>
                           <PracticeDetailText>{item.body}</PracticeDetailText>
@@ -2318,21 +3077,6 @@ function App() {
               </PracticeDetailGrid>
             </PracticeShowcaseInner>
           </PracticeShowcaseSection>
-
-          <StatsSection>
-            <StatsInner>
-              <StatsGrid>
-                {stats.map((item) => (
-                  <StatCard key={item.label}>
-                    <StatLabel>{item.label}</StatLabel>
-                    <StatValue>{item.value}</StatValue>
-                    <StatNote>{item.note}</StatNote>
-                  </StatCard>
-                ))}
-              </StatsGrid>
-              <StatsDisclaimer>*대한변협 광고 규정 제4조 제1호 준수</StatsDisclaimer>
-            </StatsInner>
-          </StatsSection>
 
           <LandingSection id="issue-report">
             <LandingSectionInner>
@@ -2467,7 +3211,7 @@ function App() {
                 <CaseFeatured>
                   <CaseCategory>{itServices[0].category}</CaseCategory>
                   <CaseMeta>통관 운영 / 고객 포털 / 실무 자동화</CaseMeta>
-                  <CardHeadline>{itServices[0].title}</CardHeadline>
+                  <DarkCardHeadline>{itServices[0].title}</DarkCardHeadline>
                   <DarkCardText>{itServices[0].body}</DarkCardText>
                   <LandingLink href="#it">IT 상세보기</LandingLink>
                 </CaseFeatured>
@@ -2524,17 +3268,167 @@ function App() {
                 <LandingLink href="#offices">오시는 길</LandingLink>
               </LandingSectionTop>
 
-              <OfficesOverview>
-                <OfficesHero>
-                  <OfficesHeroTitle>국내외 사무소와 협업 네트워크를 통해 빠르게 연결합니다.</OfficesHeroTitle>
-                  <DarkCardText>본사, 지역 거점, 해외 협업 네트워크까지 한 화면에서 확인할 수 있도록 구성했습니다.</DarkCardText>
-                </OfficesHero>
-                <OfficesChips>
-                  {officeCities.map((city) => (
-                    <OfficeChip key={city}>{city}</OfficeChip>
+              <OfficesSectionLayout>
+                <OfficesSelectorGrid>
+                  {officeBranches.map((office) => (
+                    <OfficesSelectorButton
+                      key={office.id}
+                      type="button"
+                      active={selectedOffice.id === office.id}
+                      onClick={() => setSelectedOfficeId(office.id)}
+                    >
+                      {office.label}
+                    </OfficesSelectorButton>
                   ))}
-                </OfficesChips>
-              </OfficesOverview>
+                </OfficesSelectorGrid>
+
+                <OfficesContentGrid>
+                  <OfficesFeatureCard accent={selectedOffice.accent}>
+                    <OfficesFeatureTop>
+                      <OfficesBadge>{selectedOffice.region}</OfficesBadge>
+                      <OfficesFeatureTitle>{selectedOffice.label}</OfficesFeatureTitle>
+                      <OfficesFeatureBody>{selectedOffice.summary}</OfficesFeatureBody>
+                    </OfficesFeatureTop>
+
+                    <OfficesFactsGrid>
+                      <OfficesFactCard>
+                        <OfficesFactLabel>Address</OfficesFactLabel>
+                        <OfficesFactValue>{selectedOffice.address}</OfficesFactValue>
+                      </OfficesFactCard>
+                      <OfficesFactCard>
+                        <OfficesFactLabel>Contact</OfficesFactLabel>
+                        <OfficesFactValue>TEL. {selectedOffice.tel}</OfficesFactValue>
+                        {selectedOffice.fax ? <OfficesFactValue>FAX. {selectedOffice.fax}</OfficesFactValue> : null}
+                      </OfficesFactCard>
+                    </OfficesFactsGrid>
+                  </OfficesFeatureCard>
+
+                  <OfficesMapCard>
+                    <OfficesMapHeader>
+                      <OfficesMapTitle>지사 미니맵</OfficesMapTitle>
+                      <OfficesMapBody>
+                        국내 지사와 베트남 법인을 한눈에 확인하고, 각 라벨을 눌러 상세 정보를 볼 수 있습니다.
+                      </OfficesMapBody>
+                    </OfficesMapHeader>
+
+                    <OfficesMiniMap>
+                      <OfficesMiniMapKoreaZone>
+                        <OfficesMiniMapKoreaImage src={koreaMapAsset} alt="대한민국 지사 지도" />
+                        <OfficesMapLines viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                          {domesticOffices.map((office) => (
+                            <line
+                              key={office.id}
+                              x1={office.x}
+                              y1={office.y}
+                              x2={office.labelX}
+                              y2={office.labelY}
+                              stroke={
+                                selectedOffice.id === office.id ? 'rgba(54, 92, 146, 0.36)' : 'rgba(54, 92, 146, 0.18)'
+                              }
+                              strokeWidth={selectedOffice.id === office.id ? 0.7 : 0.45}
+                              strokeLinecap="round"
+                            />
+                          ))}
+                        </OfficesMapLines>
+                        {domesticOffices.map((office) => (
+                          <OfficesMapAnchor
+                            key={office.id}
+                            type="button"
+                            active={selectedOffice.id === office.id}
+                            accent={office.accent}
+                            x={office.x}
+                            y={office.y}
+                            onClick={() => setSelectedOfficeId(office.id)}
+                            aria-label={`${office.label} 보기`}
+                          >
+                            <OfficesMapAnchorDot
+                              active={selectedOffice.id === office.id}
+                              accent={office.accent}
+                            />
+                          </OfficesMapAnchor>
+                        ))}
+                        {domesticOffices.map((office) => (
+                          <OfficesMapLabel
+                            key={`${office.id}-label`}
+                            type="button"
+                            x={office.labelX}
+                            y={office.labelY}
+                            active={selectedOffice.id === office.id}
+                            accent={office.accent}
+                            onClick={() => setSelectedOfficeId(office.id)}
+                            aria-label={`${office.label} 보기`}
+                          >
+                            <OfficesMapLabelDot
+                              active={selectedOffice.id === office.id}
+                              accent={office.accent}
+                            />
+                            {office.shortLabel}
+                          </OfficesMapLabel>
+                        ))}
+                      </OfficesMiniMapKoreaZone>
+
+                      {vietnamOffice ? (
+                        <OfficesMiniMapVietnamZone>
+                          <OfficesMiniMapInsetLabel>베트남 법인</OfficesMiniMapInsetLabel>
+                          <OfficesMiniMapVietnamImage src={vietnamMapAsset} alt="베트남 법인 지도" />
+                          <OfficesMiniMapInsetMeta>
+                            <OfficesMiniMapInsetTitle>Vietnam Office</OfficesMiniMapInsetTitle>
+                            <OfficesMiniMapInsetCity>Hanoi</OfficesMiniMapInsetCity>
+                          </OfficesMiniMapInsetMeta>
+                          <OfficesMapLines viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <line
+                              x1={vietnamOffice.x}
+                              y1={vietnamOffice.y}
+                              x2={vietnamOffice.labelX}
+                              y2={vietnamOffice.labelY}
+                              stroke={
+                                selectedOffice.id === vietnamOffice.id
+                                  ? 'rgba(54, 92, 146, 0.34)'
+                                  : 'rgba(54, 92, 146, 0.18)'
+                              }
+                              strokeWidth={selectedOffice.id === vietnamOffice.id ? 0.9 : 0.6}
+                              strokeLinecap="round"
+                            />
+                          </OfficesMapLines>
+                          <OfficesMapAnchor
+                            type="button"
+                            active={selectedOffice.id === vietnamOffice.id}
+                            accent={vietnamOffice.accent}
+                            x={vietnamOffice.x}
+                            y={vietnamOffice.y}
+                            onClick={() => setSelectedOfficeId(vietnamOffice.id)}
+                            aria-label={`${vietnamOffice.label} 보기`}
+                          >
+                            <OfficesMapAnchorDot
+                              active={selectedOffice.id === vietnamOffice.id}
+                              accent={vietnamOffice.accent}
+                            />
+                          </OfficesMapAnchor>
+                          <OfficesMapInsetLabelButton
+                            type="button"
+                            x={vietnamOffice.labelX}
+                            y={vietnamOffice.labelY}
+                            active={selectedOffice.id === vietnamOffice.id}
+                            accent={vietnamOffice.accent}
+                            onClick={() => setSelectedOfficeId(vietnamOffice.id)}
+                            aria-label={`${vietnamOffice.label} 보기`}
+                          >
+                            <OfficesMapLabelDot
+                              active={selectedOffice.id === vietnamOffice.id}
+                              accent={vietnamOffice.accent}
+                            />
+                            {vietnamOffice.shortLabel}
+                          </OfficesMapInsetLabelButton>
+                        </OfficesMiniMapVietnamZone>
+                      ) : null}
+                    </OfficesMiniMap>
+
+                    <OfficesMapHint>
+                      선택 지사: <strong>{selectedOffice.label}</strong> · {selectedOffice.region}
+                    </OfficesMapHint>
+                  </OfficesMapCard>
+                </OfficesContentGrid>
+              </OfficesSectionLayout>
             </LandingSectionInner>
           </LandingSection>
         </Main>

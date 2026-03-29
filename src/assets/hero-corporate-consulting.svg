@@ -1,0 +1,36 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect x="192" y="144" width="1536" height="792" rx="36" fill="url(#panel)"/>
+  <circle cx="1428" cy="238" r="118" fill="#D7EEFF" opacity="0.42"/>
+  <g opacity="0.94">
+    <rect x="304" y="246" width="542" height="540" rx="24" fill="#F4F8FC"/>
+    <path d="M382 356H754" stroke="#CFDCE8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M382 446H676" stroke="#CFDCE8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M382 536H716" stroke="#CFDCE8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M382 626H614" stroke="#CFDCE8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M430 730L522 590L612 656L742 456" stroke="#2D5C8B" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="430" cy="730" r="16" fill="#2D5C8B"/>
+    <circle cx="522" cy="590" r="16" fill="#2D5C8B"/>
+    <circle cx="612" cy="656" r="16" fill="#2D5C8B"/>
+    <circle cx="742" cy="456" r="16" fill="#2D5C8B"/>
+  </g>
+  <g opacity="0.96">
+    <rect x="938" y="286" width="574" height="418" rx="28" fill="#EDF4FA"/>
+    <circle cx="1126" cy="468" r="108" fill="#D7EAF8"/>
+    <circle cx="1328" cy="468" r="108" fill="#C6DFF2"/>
+    <circle cx="1228" cy="592" r="94" fill="#B8D5EC"/>
+    <path d="M1088 414L1164 490" stroke="#456C96" stroke-width="14" stroke-linecap="round"/>
+    <path d="M1368 414L1292 490" stroke="#456C96" stroke-width="14" stroke-linecap="round"/>
+    <path d="M1228 648V736" stroke="#456C96" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2F7FB"/>
+      <stop offset="1" stop-color="#B9CAD9"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="960" y1="144" x2="960" y2="936" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.94"/>
+      <stop offset="1" stop-color="#DCE7F0" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+</svg>
