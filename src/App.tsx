@@ -1105,6 +1105,16 @@ const HeroBanner = styled.div`
     min-height: min(760px, calc(100vh - 24px));
     padding: 150px 18px 74px;
   }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    min-height: clamp(620px, 76vh, 700px);
+    padding: 150px 24px 64px;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    min-height: clamp(580px, 74vh, 660px);
+    padding: 138px 24px 54px;
+  }
 `;
 
 const HeroGlow = styled.div`
@@ -1132,6 +1142,16 @@ const HeroContent = styled.div`
   @media (max-width: 768px) {
     padding: 150px 18px 74px;
   }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    justify-content: flex-start;
+    padding: 166px 24px 64px;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    justify-content: flex-start;
+    padding: 150px 24px 56px;
+  }
 `;
 
 const HeroContentPanel = styled.div`
@@ -1148,6 +1168,14 @@ const HeroContentPanel = styled.div`
 
   @media (max-width: 768px) {
     padding: 0;
+  }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    gap: 20px;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    gap: 16px;
   }
 `;
 
@@ -1212,6 +1240,16 @@ const HeroBackgroundLayer = styled.img<{
     height: min(60vh, 520px);
     object-position: ${({ mobileObjectPosition, objectPosition }) => mobileObjectPosition ?? objectPosition ?? 'center'};
   }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    width: min(1280px, calc(100vw - 56px));
+    height: min(68vh, 640px);
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    width: min(1180px, calc(100vw - 72px));
+    height: min(62vh, 560px);
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -1224,6 +1262,15 @@ const HeroTitle = styled.h1`
   text-shadow:
     0 14px 34px rgba(3, 14, 32, 0.48),
     0 2px 10px rgba(3, 14, 32, 0.34);
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    font-size: clamp(2.7rem, 4.8vw, 4.7rem);
+    line-height: 1.02;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    font-size: clamp(2.3rem, 4.2vw, 4rem);
+  }
 `;
 
 const HeroBody = styled.p`
@@ -1233,6 +1280,18 @@ const HeroBody = styled.p`
   line-height: 1.72;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 6px 22px rgba(3, 14, 32, 0.34);
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    max-width: 760px;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    max-width: 700px;
+    font-size: 0.94rem;
+    line-height: 1.52;
+  }
 `;
 
 const HeroSearch = styled.div`
@@ -1255,6 +1314,20 @@ const HeroSearch = styled.div`
     padding: 0 18px;
     gap: 16px;
   }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    width: min(900px, calc(100vw - 240px));
+    min-height: 60px;
+    gap: 16px;
+    padding: 0 22px 0 24px;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    width: min(820px, calc(100vw - 260px));
+    min-height: 56px;
+    gap: 14px;
+    padding: 0 18px 0 20px;
+  }
 `;
 
 const HeroSearchText = styled.span`
@@ -1268,39 +1341,107 @@ const HeroSearchText = styled.span`
     font-size: 0.92rem;
     line-height: 1.5;
   }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    font-size: clamp(0.88rem, 1.15vw, 1rem);
+    line-height: 1.35;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const HeroSearchIcon = styled.div`
-  width: 48px;
-  height: 48px;
-  border: 2px solid rgba(255, 255, 255, 0.96);
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 50%;
   position: relative;
   flex: 0 0 auto;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 18px rgba(3, 14, 32, 0.16);
 
   &::after {
     content: '';
     position: absolute;
-    width: 18px;
-    height: 3px;
+    width: 15px;
+    height: 2.5px;
     background: rgba(255, 255, 255, 0.96);
     border-radius: 999px;
-    right: -8px;
-    bottom: 5px;
+    right: 8px;
+    bottom: 10px;
     transform: rotate(45deg);
     transform-origin: center;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 12px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.96);
+    border-radius: 50%;
   }
 
   @media (max-width: 768px) {
     width: 40px;
     height: 40px;
-    border-width: 2px;
+    border-width: 1px;
 
     &::after {
+      width: 12px;
+      height: 2px;
+      right: 6px;
+      bottom: 8px;
+    }
+
+    &::before {
+      left: 10px;
+      top: 9px;
       width: 14px;
-      height: 3px;
-      right: -7px;
-      bottom: 3px;
+      height: 14px;
+      border-width: 2px;
+    }
+  }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    width: 42px;
+    height: 42px;
+
+    &::after {
+      width: 12px;
+      right: 7px;
+      bottom: 8px;
+    }
+
+    &::before {
+      left: 11px;
+      top: 10px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    width: 38px;
+    height: 38px;
+
+    &::after {
+      width: 11px;
+      right: 6px;
+      bottom: 7px;
+    }
+
+    &::before {
+      left: 9px;
+      top: 8px;
+      width: 13px;
+      height: 13px;
     }
   }
 `;
@@ -1325,6 +1466,14 @@ const ScrollHint = styled.div`
     position: absolute;
     transform: rotate(45deg);
     top: -14px;
+  }
+
+  @media (max-height: 920px) and (min-width: 769px) {
+    margin-top: -54px;
+  }
+
+  @media (max-height: 820px) and (min-width: 769px) {
+    display: none;
   }
 `;
 
