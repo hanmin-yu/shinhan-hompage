@@ -1275,22 +1275,22 @@ const HeroTitle = styled.h1`
 
 const HeroBody = styled.p`
   margin: 0;
-  max-width: 820px;
-  font-size: 1.08rem;
-  line-height: 1.72;
+  max-width: 760px;
+  font-size: 1rem;
+  line-height: 1.62;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 6px 22px rgba(3, 14, 32, 0.34);
 
   @media (max-height: 920px) and (min-width: 769px) {
-    max-width: 760px;
-    font-size: 1rem;
-    line-height: 1.6;
+    max-width: 680px;
+    font-size: 0.94rem;
+    line-height: 1.5;
   }
 
   @media (max-height: 820px) and (min-width: 769px) {
-    max-width: 700px;
-    font-size: 0.94rem;
-    line-height: 1.52;
+    max-width: 620px;
+    font-size: 0.88rem;
+    line-height: 1.42;
   }
 `;
 
@@ -1450,26 +1450,29 @@ const ScrollHint = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px;
+  min-height: 42px;
   color: rgba(255, 255, 255, 0.9);
   letter-spacing: 0.04em;
   position: relative;
-  margin-top: -76px;
+  margin-top: -26px;
   z-index: 3;
+  font-size: 0.92rem;
 
   &::before {
     content: '';
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-right: 2px solid rgba(255, 255, 255, 0.92);
     border-bottom: 2px solid rgba(255, 255, 255, 0.92);
     position: absolute;
     transform: rotate(45deg);
-    top: -14px;
+    top: -10px;
   }
 
   @media (max-height: 920px) and (min-width: 769px) {
-    margin-top: -54px;
+    margin-top: -10px;
+    min-height: 32px;
+    font-size: 0.84rem;
   }
 
   @media (max-height: 820px) and (min-width: 769px) {
