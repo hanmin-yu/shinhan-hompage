@@ -1276,7 +1276,7 @@ const HeroTitle = styled.h1`
 const HeroBody = styled.p`
   margin: 0;
   max-width: 760px;
-  font-size: 1rem;
+  font-size: 0.94rem;
   line-height: 1.62;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 6px 22px rgba(3, 14, 32, 0.34);
