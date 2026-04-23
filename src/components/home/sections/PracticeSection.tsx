@@ -23,89 +23,104 @@ const practiceCards = [
   {
     id: 'practice-import-export',
     title: '수출입통관',
-    body: '수입·수출 신고, 세번 검토, 보완 대응까지 통관 전체 프로세스를 실무 기준으로 설계합니다.',
+    body: 'PI·CI 기반 SOP 최적화와 iOOM 실시간 관리로 신고 정확도와 리드타임을 함께 개선합니다.',
   },
   {
     id: 'practice-quarantine',
     title: '검역/요건',
-    body: '품목별 검역과 수입요건을 사전에 점검해 통관 지연과 규제 리스크를 줄입니다.',
+    body: '품목별 검역·인증·수입요건을 사전 점검해 통관 지연과 보완 요청 리스크를 줄입니다.',
   },
   {
     id: 'practice-fta',
-    title: 'FTA / AEO 컨설팅',
-    body: '원산지 판정, 사후검증, AEO 심사 대응까지 운영 가능한 체계로 연결합니다.',
+    title: '원산지/FTA',
+    body: '특혜(FTA)와 비특혜(일반 원산지) 관리 체계를 구분 설계해 관세 절감과 규정 준수를 동시에 지원합니다.',
+  },
+  {
+    id: 'practice-aeo',
+    title: 'AEO · ACVA',
+    body: 'AEO 신규/갱신/사후관리와 ACVA 사전심사 대응으로 기업의 예측 가능성과 경영 안정성을 높입니다.',
   },
   {
     id: 'practice-investigation',
-    title: '관세조사 · 외환검사',
-    body: '기업심사와 조사 대응 과정에서 필요한 자료 구조화와 쟁점 대응 전략을 지원합니다.',
+    title: '관세조사 · 범칙조사',
+    body: '정기·비정기 조사부터 통고처분·검찰 단계까지 조사 대응 및 리스크 통제를 통합 지원합니다.',
   },
   {
-    id: 'practice-refund',
-    title: '환급 · 조세불복',
-    body: '환급 가능 항목 검토부터 신청·사후관리, 불복 절차 대응까지 한 흐름으로 지원합니다.',
+    id: 'practice-vietnam',
+    title: '베트남 · 특화서비스',
+    body: '하노이 법인 네트워크 기반 통관·수책·FTA 자문과 물류·FDA 이슈까지 확장형 서비스를 제공합니다.',
+  },
+];
+
+const practiceIaGroups = [
+  {
+    title: '핵심 통관',
+    items: ['수출입통관', '검역', '요건'],
   },
   {
-    id: 'practice-logistics',
+    title: '컨설팅',
+    items: ['FTA', 'AEO', '관세조사', '외환검사/조사', 'ACVA', '범칙조사', '조세불복', '환급', '기타 관세무역컨설팅'],
+  },
+  {
     title: '특화 서비스',
-    body: '물류, 베트남 법인, 미국 FDA 자문까지 산업별 해외 실무 과제를 함께 지원합니다.',
+    items: ['IT', '물류', '베트남', '미국 FDA'],
   },
 ];
 
 const Section = styled.section`
-  padding: 82px 0;
-  background: #ffffff;
+  padding: 96px 0;
+  background: #f7f9fc;
+  border-top: 1px solid rgba(17, 67, 143, 0.08);
 `;
 
 const Inner = styled(S.Container)`
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 38px;
 `;
 
 const Head = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) auto;
+  align-items: end;
   gap: 24px;
 
-  @media (max-width: 900px) {
-    flex-direction: column;
-    align-items: flex-start;
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 `;
 
 const Label = styled.span`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: #2f568f;
-  font-size: 0.8rem;
+  gap: 9px;
+  color: #2a568f;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 
   &::before {
     content: '';
-    width: 26px;
+    width: 28px;
     height: 1px;
-    background: rgba(36, 90, 171, 0.42);
+    background: rgba(29, 87, 170, 0.42);
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #153f7f;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.12;
+  color: #122f57;
+  font-size: clamp(2.04rem, 3.8vw, 3rem);
+  line-height: 1.14;
   letter-spacing: -0.03em;
 `;
 
 const Description = styled.p`
   margin: 0;
-  max-width: 540px;
-  color: #4b6182;
-  font-size: 0.98rem;
+  color: #4a6080;
+  font-size: 0.96rem;
   line-height: 1.72;
 `;
 
@@ -115,18 +130,19 @@ const HeadLink = styled.a`
   justify-content: center;
   min-height: 44px;
   padding: 0 18px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(21, 77, 159, 0.2);
   color: #1b4f98;
-  background: #f8fbff;
+  background: #ffffff;
   font-size: 0.9rem;
   font-weight: 700;
+  white-space: nowrap;
 `;
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 
   @media (max-width: 980px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -141,32 +157,82 @@ const Card = styled.article`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid rgba(20, 73, 152, 0.12);
+  min-height: 222px;
+  padding: 24px 22px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 73, 152, 0.14);
   background: #ffffff;
-  box-shadow: 0 14px 28px rgba(20, 67, 144, 0.08);
+  box-shadow: 0 8px 20px rgba(15, 48, 102, 0.07);
 `;
 
 const CardTitle = styled.h3`
   margin: 0;
   color: #163e78;
-  font-size: 1.24rem;
+  font-size: 1.18rem;
   letter-spacing: -0.02em;
 `;
 
 const CardBody = styled.p`
   margin: 0;
-  color: #52698b;
-  font-size: 0.94rem;
+  color: #4f6688;
+  font-size: 0.92rem;
   line-height: 1.65;
 `;
 
 const CardLink = styled.a`
   margin-top: auto;
+  width: fit-content;
   color: #1c57a8;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
+`;
+
+const IaMap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const IaGroup = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 73, 152, 0.12);
+  background: #f8fbff;
+`;
+
+const IaGroupTitle = styled.strong`
+  color: #1d487f;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const IaChipRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const IaChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 73, 152, 0.18);
+  color: #33557f;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 `;
 
 export function PracticeSection() {
@@ -181,13 +247,13 @@ export function PracticeSection() {
           <Head>
             <div>
               <Label>Practice Areas</Label>
-              <Title>핵심 업무분야 요약</Title>
+              <Title>핵심 업무분야</Title>
             </div>
             <Description>
-              메인 페이지에서는 핵심 서비스만 간결하게 안내하고, 세부 자문 범위는 업무분야 상세 페이지에서 확인할 수
-              있도록 구성했습니다.
+              메인에서는 핵심 업무를 요약해 보여주고, 상세 대응 범위와 절차는 업무분야 페이지에서 확인할 수 있도록
+              구성했습니다.
             </Description>
-            <HeadLink href="#contact">업무 상담 요청</HeadLink>
+            <HeadLink href="/services">전체 업무분야 보기</HeadLink>
           </Head>
 
           <Grid>
@@ -195,10 +261,23 @@ export function PracticeSection() {
               <Card key={item.id} id={item.id}>
                 <CardTitle>{item.title}</CardTitle>
                 <CardBody>{item.body}</CardBody>
-                <CardLink href="#contact">자세히 보기</CardLink>
+                <CardLink href="/services">자세히 보기</CardLink>
               </Card>
             ))}
           </Grid>
+
+          <IaMap>
+            {practiceIaGroups.map((group) => (
+              <IaGroup key={group.title}>
+                <IaGroupTitle>{group.title}</IaGroupTitle>
+                <IaChipRow>
+                  {group.items.map((item) => (
+                    <IaChip key={item}>{item}</IaChip>
+                  ))}
+                </IaChipRow>
+              </IaGroup>
+            ))}
+          </IaMap>
         </Inner>
       </Section>
     </>

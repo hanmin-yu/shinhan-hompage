@@ -11,7 +11,7 @@ function renderMobileSubmenu(items: NavItem[], onClose: () => void, depth = 0) {
   return items.map((item) => {
     if (!item.children?.length) {
       return (
-        <S.MobileMenuSubLink key={item.id} href={item.href} onClick={onClose} data-depth={depth}>
+        <S.MobileMenuSubLink key={item.id} href={item.href ?? '/'} onClick={onClose} data-depth={depth}>
           {item.label}
         </S.MobileMenuSubLink>
       );
@@ -38,7 +38,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         {headerNavigation.map((item) => (
           <S.MobileMenuSection key={item.id}>
-            <S.MobileMenuMainLink href={item.href} onClick={onClose}>
+            <S.MobileMenuMainLink href={item.href ?? '/'} onClick={onClose}>
               {item.label}
             </S.MobileMenuMainLink>
             {item.children ? renderMobileSubmenu(item.children, onClose) : null}
@@ -47,7 +47,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         <S.MobileMenuQuickRow>
           {mobileQuickLinks.map((item) => (
-            <S.MobileMenuQuickLink key={item.id} href={item.href} onClick={onClose}>
+            <S.MobileMenuQuickLink key={item.id} href={item.href ?? '/'} onClick={onClose}>
               {item.label}
             </S.MobileMenuQuickLink>
           ))}

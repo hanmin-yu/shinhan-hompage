@@ -3,7 +3,8 @@ export type FontMode = 'nanum' | 'notosans';
 export type LinkItem = {
   id: string;
   label: string;
-  href: string;
+  href?: string;
+  to?: string;
 };
 
 export type NavItem = LinkItem & {
@@ -72,4 +73,3 @@ export type NewsItem = {
   title: string;
   body: string;
 };
-

@@ -4,10 +4,9 @@ import { issueReports, newsItems } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 82px 0;
-  background: #f7faff;
+  padding: 96px 0;
+  background: #ffffff;
   border-top: 1px solid rgba(21, 77, 159, 0.08);
-  border-bottom: 1px solid rgba(21, 77, 159, 0.08);
 `;
 
 const Inner = styled(S.Container)`
@@ -17,45 +16,53 @@ const Inner = styled(S.Container)`
 `;
 
 const Head = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+  align-items: end;
   gap: 24px;
 
   @media (max-width: 900px) {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
   }
 `;
 
 const Label = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   color: #2c528e;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: rgba(36, 90, 171, 0.42);
+  }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #153f7f;
-  font-size: clamp(2rem, 4vw, 2.9rem);
-  line-height: 1.12;
+  color: #122f57;
+  font-size: clamp(2rem, 3.7vw, 2.9rem);
+  line-height: 1.14;
   letter-spacing: -0.03em;
 `;
 
 const Description = styled.p`
   margin: 0;
-  max-width: 520px;
   color: #4d6384;
-  font-size: 0.96rem;
-  line-height: 1.68;
+  font-size: 0.95rem;
+  line-height: 1.72;
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+  gap: 14px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -64,13 +71,13 @@ const Grid = styled.div`
 
 const Featured = styled.article`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 320px;
-  border-radius: 14px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+  min-height: 334px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 76, 158, 0.14);
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 16px 32px rgba(16, 53, 114, 0.08);
+  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
@@ -86,7 +93,7 @@ const FeaturedBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 24px;
+  padding: 24px 22px;
 `;
 
 const Meta = styled.div`
@@ -94,7 +101,7 @@ const Meta = styled.div`
   align-items: center;
   gap: 8px;
   color: #5c7397;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
 `;
 
@@ -108,64 +115,69 @@ const Dot = styled.span`
 const FeaturedTitle = styled.h3`
   margin: 0;
   color: #163e77;
-  font-size: 1.38rem;
-  line-height: 1.35;
+  font-size: 1.3rem;
+  line-height: 1.42;
   letter-spacing: -0.02em;
 `;
 
 const FeaturedText = styled.p`
   margin: 0;
   color: #4d6384;
-  font-size: 0.94rem;
-  line-height: 1.62;
+  font-size: 0.92rem;
+  line-height: 1.64;
 `;
 
 const FeaturedLink = styled.a`
   margin-top: auto;
+  width: fit-content;
   color: #1c57a8;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
 `;
 
 const SideList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 `;
 
 const SideCard = styled.article`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(20, 76, 158, 0.1);
-  background: #ffffff;
+  min-height: 104px;
+  padding: 18px 18px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 76, 158, 0.12);
+  background: #f8fbff;
 `;
 
 const SideCategory = styled.span`
   color: #2e5ea4;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 800;
+  letter-spacing: 0.08em;
 `;
 
 const SideTitle = styled.h4`
   margin: 0;
   color: #1d3f74;
-  font-size: 1.02rem;
-  line-height: 1.45;
+  font-size: 1rem;
+  line-height: 1.5;
 `;
 
 const SideText = styled.p`
   margin: 0;
   color: #5b7294;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.56;
 `;
 
 const MoreLink = styled.a`
+  margin-top: auto;
+  width: fit-content;
   color: #1c57a8;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 700;
 `;
 
@@ -187,8 +199,8 @@ export function IssueReportSection() {
               <Title>대표 이슈 리포트 / 소식</Title>
             </div>
             <Description>
-              메인에서는 최신 이슈의 핵심만 빠르게 확인하고, 상세 자료는 소식/자료 메뉴에서 확인할 수 있도록
-              구성했습니다.
+              주요 이슈를 편집형으로 요약해 빠르게 파악할 수 있도록 구성했습니다. 상세 자료와 아카이브는 소식/자료
+              페이지에서 확인할 수 있습니다.
             </Description>
           </Head>
 
@@ -203,7 +215,7 @@ export function IssueReportSection() {
                 </Meta>
                 <FeaturedTitle>{featured.title}</FeaturedTitle>
                 <FeaturedText>{featured.body}</FeaturedText>
-                <FeaturedLink href="#news">리포트 자세히 보기</FeaturedLink>
+                <FeaturedLink href="/news/issue-report">리포트 자세히 보기</FeaturedLink>
               </FeaturedBody>
             </Featured>
 
@@ -213,7 +225,7 @@ export function IssueReportSection() {
                   <SideCategory>{'source' in item ? '이슈 리포트' : item.category}</SideCategory>
                   <SideTitle>{item.title}</SideTitle>
                   <SideText>{item.body}</SideText>
-                  <MoreLink href="#news">읽어보기</MoreLink>
+                  <MoreLink href="/news">읽어보기</MoreLink>
                 </SideCard>
               ))}
             </SideList>

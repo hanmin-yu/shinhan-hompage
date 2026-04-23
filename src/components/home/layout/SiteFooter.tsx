@@ -20,7 +20,7 @@ export function SiteFooter() {
 
         <S.FooterPolicyRow>
           {footerLinks.map((item) => (
-            <S.FooterPolicyLink key={item.id} href={item.href}>
+            <S.FooterPolicyLink key={item.id} href={item.href ?? '/'}>
               {item.label}
             </S.FooterPolicyLink>
           ))}
@@ -43,4 +43,3 @@ export function SiteFooter() {
     </S.Footer>
   );
 }
-

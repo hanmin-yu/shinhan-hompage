@@ -4,8 +4,9 @@ import { members } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 82px 0;
-  background: #ffffff;
+  padding: 96px 0;
+  background: #f5f8fc;
+  border-top: 1px solid rgba(20, 76, 158, 0.08);
 `;
 
 const Inner = styled(S.Container)`
@@ -27,18 +28,28 @@ const Head = styled.div`
 `;
 
 const Label = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   color: #2d5592;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: rgba(29, 87, 170, 0.42);
+  }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #153f7f;
-  font-size: clamp(2rem, 4vw, 2.9rem);
-  line-height: 1.12;
+  color: #122f57;
+  font-size: clamp(2rem, 3.5vw, 2.85rem);
+  line-height: 1.14;
   letter-spacing: -0.03em;
 `;
 
@@ -48,10 +59,10 @@ const Link = styled.a`
   justify-content: center;
   min-height: 44px;
   padding: 0 18px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(21, 77, 159, 0.2);
   color: #1b4f98;
-  background: #f8fbff;
+  background: #ffffff;
   font-size: 0.9rem;
   font-weight: 700;
 `;
@@ -59,7 +70,7 @@ const Link = styled.a`
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -71,10 +82,10 @@ const Card = styled.article`
   flex-direction: column;
   gap: 14px;
   padding: 22px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid rgba(20, 76, 158, 0.12);
   background: #ffffff;
-  box-shadow: 0 14px 28px rgba(16, 53, 114, 0.08);
+  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
 `;
 
 const Profile = styled.div`
@@ -91,7 +102,7 @@ const Avatar = styled.div<{ image?: string; accent: string }>`
   background:
     ${({ image, accent }) => (image ? `url(${image}) center / cover no-repeat` : accent)},
     ${({ accent }) => accent};
-  box-shadow: 0 10px 20px rgba(17, 46, 95, 0.16);
+  box-shadow: 0 8px 16px rgba(17, 46, 95, 0.16);
   color: #ffffff;
   display: inline-flex;
   align-items: center;
@@ -134,9 +145,9 @@ export function MembersSection() {
         <Head>
           <div>
             <Label>Members</Label>
-            <Title>대표 구성원 미리보기</Title>
+            <Title>대표 구성원</Title>
           </div>
-          <Link href="#members">구성원 더보기</Link>
+          <Link href="/members/experts">분야별 전문가 더보기</Link>
         </Head>
 
         <Grid>

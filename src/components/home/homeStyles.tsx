@@ -64,7 +64,7 @@ export const GlobalStyle = ({ fontMode }: { fontMode: FontMode }) => (
 
 export const Page = styled.div`
   min-height: 100vh;
-  background: linear-gradient(180deg, #f4f7fc 0%, #f8fbff 24%, #ffffff 100%);
+  background: linear-gradient(180deg, #f2f5fa 0%, #f6f8fc 18%, #fbfcfe 36%, #ffffff 64%);
   color: #111111;
 `;
 
@@ -156,10 +156,10 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 25;
-  background: rgba(243, 248, 255, 0.96);
+  background: rgba(244, 248, 254, 0.96);
   border-bottom: 1px solid rgba(20, 75, 157, 0.12);
-  box-shadow: 0 8px 18px rgba(16, 48, 104, 0.07);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 14px rgba(16, 48, 104, 0.05);
+  backdrop-filter: blur(6px);
 
   @media (max-width: 768px) {
     top: 0;
@@ -169,20 +169,20 @@ export const Header = styled.header`
 `;
 
 export const HeaderInner = styled(Container)`
-  width: min(1680px, calc(100% - 56px));
+  width: min(1860px, calc(100% - 56px));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
-  min-height: 88px;
+  gap: 20px;
+  min-height: 78px;
 
   @media (max-width: 1200px) {
     width: min(100%, calc(100% - 28px));
-    gap: 14px;
+    gap: 12px;
   }
 
   @media (max-width: 1024px) {
-    min-height: 76px;
+    min-height: 72px;
   }
 `;
 
@@ -204,11 +204,12 @@ export const MenuArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 0 1 auto;
-  min-height: 88px;
+  flex: 1 1 auto;
+  min-height: 78px;
   min-width: 0;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1240px) {
     display: none;
   }
 `;
@@ -216,15 +217,20 @@ export const MenuArea = styled.div`
 export const Brand = styled.a`
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex: 0 0 auto;
+  gap: 10px;
+  flex: 0 0 228px;
+  min-width: 0;
+
+  @media (max-width: 980px) {
+    flex: 0 0 auto;
+  }
 `;
 
 export const BrandMark = styled.div`
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   border: 1px solid rgba(17, 78, 168, 0.18);
-  border-radius: 12px;
+  border-radius: 10px;
   background: linear-gradient(180deg, #1661c6, #0f4ca5);
   display: flex;
   align-items: center;
@@ -254,29 +260,30 @@ export const BrandLogo = styled.svg`
 `;
 
 export const BrandText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  @media (max-width: 1100px) {
-    gap: 2px;
-  }
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
 `;
 
 export const BrandTitle = styled.strong`
-  font-size: 1.85rem;
+  font-size: 2rem;
   line-height: 1;
   letter-spacing: 0.04em;
   color: #103c83;
+  white-space: nowrap;
 
-  @media (max-width: 1100px) {
-    font-size: 1.6rem;
+  @media (max-width: 1440px) {
+    font-size: 1.82rem;
+  }
+
+  @media (max-width: 1280px) {
+    font-size: 1.7rem;
   }
 `;
 
 export const BrandSub = styled.span`
   color: #4e617e;
-  font-size: 1rem;
+  font-size: 0.96rem;
 
   @media (max-width: 1100px) {
     font-size: 0.92rem;
@@ -287,18 +294,13 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-  font-size: 1rem;
+  gap: 2px;
+  font-size: 0.96rem;
   color: #153c7b;
   white-space: nowrap;
 
-  @media (max-width: 1200px) {
-    gap: 6px;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: 980px) {
-    gap: 4px;
+  @media (max-width: 1680px) {
+    font-size: 0.93rem;
   }
 `;
 
@@ -307,7 +309,7 @@ export const NavItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 88px;
+  min-height: 78px;
 
   &:hover .nav-dropdown {
     opacity: 1;
@@ -316,8 +318,8 @@ export const NavItem = styled.div`
     pointer-events: auto;
   }
 
-  @media (max-width: 1024px) {
-    min-height: 76px;
+  @media (max-width: 1240px) {
+    min-height: 72px;
   }
 `;
 
@@ -326,27 +328,27 @@ export const NavLink = styled.a<{ hasChildren?: boolean }>`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 88px;
-  padding: 0 12px;
+  min-height: 78px;
+  padding: 0 9px;
   position: relative;
   color: #153c7b;
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: -0.015em;
   white-space: nowrap;
   word-break: keep-all;
   transition: color 0.18s ease;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1680px) {
     gap: 6px;
-    padding: 0 9px;
-    font-size: 0.93rem;
+    padding: 0 8px;
+    font-size: 0.88rem;
   }
 
-  @media (max-width: 1024px) {
-    min-height: 76px;
+  @media (max-width: 1380px) {
+    min-height: 72px;
     padding: 0 6px;
-    font-size: 0.9rem;
+    font-size: 0.84rem;
   }
 
   &::before {
@@ -401,12 +403,11 @@ export const NavDropdown = styled.div`
   max-width: 420px;
   transform: translateX(-50%) translateY(8px);
   padding: 12px 0 10px;
-  border-radius: 0 0 10px 10px;
-  background: rgba(247, 251, 255, 0.98);
+  border-radius: 0 0 8px 8px;
+  background: #f8fbff;
   border: 1px solid rgba(20, 75, 157, 0.16);
   border-top: 0;
-  box-shadow: 0 14px 28px rgba(16, 32, 68, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 24px rgba(16, 32, 68, 0.1);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -426,7 +427,7 @@ export const NavDropdownList = styled.div`
 export const NavDropdownLink = styled.a`
   display: flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 38px;
   padding: 0 22px;
   color: #4f6688;
   font-size: 0.92rem;
@@ -473,7 +474,7 @@ export const NavDropdownGroupList = styled.div`
 `;
 
 export const NavDropdownSubLink = styled(NavDropdownLink)`
-  min-height: 34px;
+  min-height: 32px;
   padding-left: 28px;
   font-size: 0.9rem;
   color: #637593;
@@ -482,10 +483,10 @@ export const NavDropdownSubLink = styled(NavDropdownLink)`
 export const HeaderTools = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   flex: 0 0 auto;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1240px) {
     gap: 10px;
   }
 `;
@@ -493,9 +494,12 @@ export const HeaderTools = styled.div`
 export const HeaderUtilityLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 2px;
+  margin-left: 4px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(58, 82, 118, 0.2);
 
-  @media (max-width: 1560px) {
+  @media (max-width: 1700px) {
     display: none;
   }
 `;
@@ -504,10 +508,10 @@ export const HeaderUtilityLink = styled.a`
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
-  padding: 0 10px;
+  min-height: 28px;
+  padding: 0 8px;
   color: #3f5577;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -534,11 +538,11 @@ export const HeaderIconButton = styled.button<{ kind: 'pin' | 'menu' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border: 1px solid rgba(22, 72, 147, 0.18);
-  border-radius: 6px;
-  background: #f7fbff;
+  border-radius: 7px;
+  background: #f8fbff;
   color: #284f8f;
   cursor: pointer;
   position: relative;
@@ -591,7 +595,7 @@ export const FontModeToggle = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 38px;
   padding: 0 14px;
   border-radius: 7px;
   border: 1px solid rgba(17, 78, 168, 0.16);
@@ -610,7 +614,7 @@ export const FontModeToggle = styled.button`
     border-color: rgba(17, 78, 168, 0.3);
   }
 
-  @media (max-width: 1460px) {
+  @media (max-width: 1800px) {
     display: none;
   }
 `;
@@ -619,28 +623,22 @@ export const ContactButton = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
+  min-height: 44px;
   padding: 0 18px;
   border: 1px solid rgba(17, 78, 168, 0.16);
   border-radius: 8px;
   color: #ffffff;
   background: #1f5cb8;
   box-shadow: 0 10px 20px rgba(16, 84, 177, 0.16);
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 600;
   letter-spacing: -0.03em;
 
-  @media (max-width: 1520px) {
-    min-height: 42px;
-    padding: 0 14px;
-    font-size: 0.86rem;
-  }
-
-  @media (max-width: 1360px) {
+  @media (max-width: 1420px) {
     display: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1240px) {
     min-height: 38px;
     padding: 0 14px;
     font-size: 0.88rem;
@@ -651,7 +649,7 @@ export const ContactButton = styled.a`
 export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1240px) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2661,8 +2659,8 @@ export const OfficesMapHint = styled.p`
 export const Footer = styled.footer`
   position: relative;
   background:
-    radial-gradient(circle at top right, rgba(58, 89, 138, 0.18), transparent 18%),
-    linear-gradient(180deg, #22252b, #1c1e23);
+    radial-gradient(circle at top right, rgba(74, 128, 204, 0.18), transparent 22%),
+    linear-gradient(180deg, #10315f, #0c274a);
   color: rgba(255, 255, 255, 0.82);
   overflow: hidden;
 

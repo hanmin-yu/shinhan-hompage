@@ -18,17 +18,16 @@ const semiconductorHeroAsset = new URL(
 export const brandMarkPath = '/brand-mark.png';
 
 export const utilityLinks: LinkItem[] = [
-  { id: 'contact-us', label: 'Contact Us', href: '#contact' },
-  { id: 'recruit', label: '채용', href: '#top' },
-  { id: 'kor', label: 'KOR', href: '#top' },
-  { id: 'directions', label: '찾아오시는 길', href: '#offices' },
+  { id: 'recruit', label: '채용', href: '/recruit' },
+  { id: 'kor', label: 'KOR', href: '/' },
+  { id: 'directions', label: '찾아오시는 길', href: '/about/location' },
 ];
 
 export const footerLinks: LinkItem[] = [
-  { id: 'terms', label: '서비스 이용약관', href: '#top' },
-  { id: 'privacy', label: '개인정보처리방침', href: '#top' },
-  { id: 'disclaimer', label: '면책공고', href: '#top' },
-  { id: 'email-protection', label: '이메일무단수집거부', href: '#top' },
+  { id: 'terms', label: '서비스 이용약관', href: '/contact' },
+  { id: 'privacy', label: '개인정보처리방침', href: '/contact' },
+  { id: 'disclaimer', label: '면책공고', href: '/contact' },
+  { id: 'email-protection', label: '이메일무단수집거부', href: '/contact' },
 ];
 
 export const siteContact = {
@@ -150,9 +149,11 @@ export const officeBranches: OfficeBranch[] = [
     label: '인천경기지사',
     shortLabel: '경기',
     region: '인천항 · 수도권',
-    summary: '인천항과 수도권 제조·유통 기업을 대상으로 수출입통관, 관세환급, 요건 대응을 함께 지원하는 권역 거점입니다.',
-    address: '인천항 및 수도권 화주사 대응 거점 운영',
+    summary:
+      '인천항과 수도권 제조·유통 기업을 대상으로 수출입통관, 관세환급, 요건 대응을 함께 지원하는 권역 거점입니다.',
+    address: '인천광역시 연수구 인천타워대로 301, A동 906호',
     tel: '032-772-1181',
+    fax: '032-773-1181',
     accent: '#3c6ca8',
     x: 27,
     y: 31,
@@ -209,8 +210,9 @@ export const officeBranches: OfficeBranch[] = [
     label: '신한인비스타',
     shortLabel: '인비스타',
     region: '김포공항 물류권역',
-    summary: '국제물류, 창고 운영, 3PL, 내륙운송까지 통관 이후의 물류 실행력을 연결하는 실무형 물류 법인입니다.',
-    address: '서울시 강서구 하늘길 210, 김포공항 화물청사 3·6게이트 8-4',
+    summary:
+      '국제물류, 창고 운영, 3PL, 내륙운송까지 통관 이후의 물류 실행력을 연결하는 실무형 물류 법인입니다.',
+    address: '서울시 강서구 하늘길 210 김포국제공항 화물청사 8-4 3,6게이트',
     tel: '02-2663-1181',
     fax: '02-2665-9114',
     accent: '#2f689b',
@@ -254,7 +256,7 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   {
     id: 'practice-import-export',
     title: '수출입통관',
-    body: '수입신고와 수출신고, 세번 검토, 요건 확인, 보완 대응까지 통관 전 과정을 안정적으로 설계합니다.',
+    body: 'PI·CI 기반 SOP 최적화와 iOOM 시스템으로 신고부터 사후관리까지 통관 전 과정을 정밀하게 운영합니다.',
   },
   {
     id: 'practice-refund',
@@ -268,18 +270,18 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   },
   {
     id: 'practice-fta',
-    title: 'FTA',
-    body: '원산지 판정, 원산지 확인서, 사후검증 대응까지 FTA 운영 체계를 지원합니다.',
+    title: '원산지/FTA',
+    body: '특혜 원산지(FTA)와 일반 원산지(비특혜)를 구분 관리해 관세 절감과 규정 준수 안정성을 함께 확보합니다.',
   },
   {
     id: 'practice-aeo',
     title: 'AEO',
-    body: 'AEO 준비자료, 내부통제, 심사 대응 항목을 단계별로 정리합니다.',
+    body: '신규 공인·갱신·사후관리·등급조정까지 AEO 운영 전 주기를 실무형으로 지원합니다.',
   },
   {
     id: 'practice-investigation',
-    title: '관세조사',
-    body: '기업심사, 세관조사, 사후검증 대응 과정에서 필요한 자료 정리와 쟁점 대응을 체계적으로 지원합니다.',
+    title: '관세조사/범칙조사',
+    body: '정기·비정기 조사 대응과 범칙 리스크 관리까지 조사 단계별 쟁점 정리와 대응 전략을 제공합니다.',
   },
   {
     id: 'practice-it',
@@ -294,7 +296,7 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   {
     id: 'practice-vietnam',
     title: '베트남',
-    body: '베트남 수출입통관, 현지 규정 변화, 거래 구조 검토 등 해외 현지 실무에 맞춘 자문을 제공합니다.',
+    body: '하노이 현지 법인 기반으로 통관, 수책관리, FTA, 심사 대응, 상시자문을 통합 지원합니다.',
   },
   {
     id: 'practice-fda',
@@ -345,23 +347,23 @@ export const issueReports: IssueReport[] = [
 export const itServices: ItService[] = [
   {
     category: 'IT',
-    title: '통관 관리 시스템 대시보드',
-    body: '수입신고, 수출신고, 반출기간, 보완 요청, 관세환급 진행상태를 한 화면에서 추적하고 담당자별 처리 현황을 정리하는 내부 운영형 시스템을 상정한 소개입니다.',
+    title: '통관·신고 시스템 개발 및 운영',
+    body: '수출입 신고 자동화, 신고필증 데이터 처리, 관세청 연계 인터페이스까지 관세 실무 중심으로 직접 구축·운영합니다.',
   },
   {
     category: 'IT',
-    title: '활용프로그램과 고객 포털 연동',
-    body: '반복되는 문의를 줄이기 위해 의뢰 현황, 제출 서류, 세번 검토 상태, FTA 증빙 요청을 고객이 직접 확인할 수 있는 포털 경험까지 포함합니다.',
+    title: 'iOOM / iOOM Q 기반 업무 자동화',
+    body: '외부 고객용 iOOM, 내부 업무 효율화용 iOOM Q를 통해 반복 업무를 줄이고 처리 정확도와 속도를 높입니다.',
   },
   {
     category: 'IT',
-    title: 'AEO · FTA · FDA 규제 대응 워크플로우',
-    body: 'AEO 준비자료, FTA 원산지 검토, 미국 FDA 관련 체크포인트를 체크리스트와 일정 흐름으로 묶어 컨설팅과 운영을 동시에 지원하는 구조를 제안합니다.',
+    title: 'KORD FTA / KORD LIQ 솔루션',
+    body: '베트남 원산지관리(KORD FTA), 면세재고·수책관리(KORD LIQ)로 현지 통관과 FTA 운영을 데이터 기반으로 지원합니다.',
   },
   {
     category: 'IT',
-    title: 'Process Innovation 기반 보고 체계',
-    body: 'Process Innovation 팀이나 Go To Market 성격의 조직이 활용할 수 있도록 리포트 자동화, 업무 히스토리, 이슈 브리핑 배포 기능까지 포함한 운영 디자인으로 확장할 수 있습니다.',
+    title: '맞춤형 연동·데이터 분석·인프라 관리',
+    body: '고객사 시스템 연동, 데이터 수집·분석, 네트워크/보안 인프라 관리까지 통합해 실무 운영 안정성을 강화합니다.',
   },
 ];
 

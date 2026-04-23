@@ -10,14 +10,14 @@ export function NewsSection() {
   return (
     <S.LandingSection id="news">
       <S.LandingSectionInner data-reveal>
-        <SectionHeader label="NEWS & RESOURCES" title="소식 / 자료" linkLabel="소식 더보기" href="#news" />
+        <SectionHeader label="NEWS & RESOURCES" title="소식 / 자료" linkLabel="소식 더보기" href="/news" />
 
         <S.NewsletterGrid>
           <S.NewsletterCard>
             <S.CaseCategory style={{ color: '#04325a' }}>{featuredItem.category}</S.CaseCategory>
             <S.CardHeadline>{featuredItem.title}</S.CardHeadline>
             <S.CardText>{featuredItem.body}</S.CardText>
-            <S.LandingLink href="#news">자료 보기</S.LandingLink>
+            <S.LandingLink href="/news">자료 보기</S.LandingLink>
           </S.NewsletterCard>
           <S.NewsletterList>
             {secondaryItems.map((item) => (
@@ -33,4 +33,3 @@ export function NewsSection() {
     </S.LandingSection>
   );
 }
-

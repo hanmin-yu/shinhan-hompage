@@ -12,7 +12,7 @@ export function UtilityBar() {
         <S.UtilityInner>
           <S.UtilityLinks>
             {utilityLinks.map((link) => (
-              <S.UtilityLink key={link.id} href={link.href}>
+              <S.UtilityLink key={link.id} href={link.href ?? '/'}>
                 {link.label}
               </S.UtilityLink>
             ))}
@@ -22,4 +22,3 @@ export function UtilityBar() {
     </S.UtilityBar>
   );
 }
-

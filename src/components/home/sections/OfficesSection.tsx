@@ -7,15 +7,15 @@ import { officeBranches, siteContact } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 88px 0 96px;
-  background: #ffffff;
+  padding: 92px 0 96px;
+  background: #f7f9fc;
   border-top: 1px solid rgba(21, 77, 159, 0.08);
 `;
 
 const Inner = styled(S.Container)`
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 32px;
 `;
 
 const Head = styled.div`
@@ -32,17 +32,17 @@ const Head = styled.div`
 
 const Label = styled.span`
   color: #2e5692;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #153f7f;
-  font-size: clamp(2rem, 4vw, 2.9rem);
-  line-height: 1.12;
+  color: #122f57;
+  font-size: clamp(2rem, 3.8vw, 2.9rem);
+  line-height: 1.14;
   letter-spacing: -0.03em;
 `;
 
@@ -50,7 +50,7 @@ const Description = styled.p`
   margin: 0;
   max-width: 580px;
   color: #4d6384;
-  font-size: 0.96rem;
+  font-size: 0.95rem;
   line-height: 1.7;
 `;
 
@@ -63,7 +63,7 @@ const OfficeTabs = styled.div`
 const OfficeTab = styled.button<{ $active: boolean }>`
   min-height: 40px;
   padding: 0 14px;
-  border-radius: 6px;
+  border-radius: 7px;
   border: 1px solid ${({ $active }) => ($active ? 'rgba(19, 74, 154, 0.42)' : 'rgba(20, 76, 158, 0.16)')};
   background: ${({ $active }) => ($active ? '#ebf2ff' : '#ffffff')};
   color: ${({ $active }) => ($active ? '#194c92' : '#5e738f')};
@@ -87,10 +87,10 @@ const InfoCard = styled.article`
   flex-direction: column;
   gap: 18px;
   padding: 24px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid rgba(19, 74, 154, 0.16);
-  background: #f9fbff;
-  box-shadow: 0 14px 28px rgba(16, 53, 114, 0.08);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
 `;
 
 const Badge = styled.span`
@@ -167,7 +167,7 @@ const ContactItem = styled.a`
   gap: 8px;
   min-height: 118px;
   padding: 18px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(20, 76, 158, 0.14);
   background: #f8fbff;
 `;
@@ -216,8 +216,8 @@ export function OfficesSection() {
               <Title>사무소 / 문의</Title>
             </div>
             <Description>
-              전국 지사와 해외 법인 정보를 한 화면에서 확인하고, 문의 채널로 바로 연결할 수 있도록 정보 위계를
-              정리했습니다.
+              국내 지사와 해외 법인 정보를 한 화면에서 확인하고, 선택 지사 기준 상세 정보와 문의 채널을 바로 연결할 수
+              있도록 구성했습니다.
             </Description>
           </Head>
 
@@ -380,15 +380,15 @@ export function OfficesSection() {
           <ContactBlock>
             <ContactItem href={phoneHref}>
               <ContactLabel>전화 문의</ContactLabel>
-              <ContactText>대표번호로 연결 후 담당자와 바로 상담하실 수 있습니다.</ContactText>
+              <ContactText>대표번호로 연결 후 담당자와 실무 상담을 바로 진행하실 수 있습니다.</ContactText>
               <ContactAction>{siteContact.phone}</ContactAction>
             </ContactItem>
             <ContactItem href={mailHref}>
               <ContactLabel>온라인 문의</ContactLabel>
-              <ContactText>문의 내용을 남겨주시면 확인 후 빠르게 연락드립니다.</ContactText>
+              <ContactText>문의 내용을 남겨주시면 담당 부서 확인 후 신속히 회신드립니다.</ContactText>
               <ContactAction>{siteContact.email}</ContactAction>
             </ContactItem>
-            <ContactItem href="#offices">
+            <ContactItem href="/offices">
               <ContactLabel>오시는 길</ContactLabel>
               <ContactText>서울본사 및 국내/해외 지사 위치 정보를 확인하실 수 있습니다.</ContactText>
               <ContactAction>{siteContact.address}</ContactAction>
