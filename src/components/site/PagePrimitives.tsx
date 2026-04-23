@@ -13,11 +13,11 @@ export const PageContainer = styled.div`
 export const PageSection = styled.section<{ tone?: 'base' | 'soft' | 'blue' }>`
   padding: clamp(66px, 8vw, 96px) 0;
   background: ${({ tone }) => {
-    if (tone === 'soft') return '#f6f9fd';
-    if (tone === 'blue') return '#f2f6fc';
+    if (tone === 'soft') return '#f5f8fc';
+    if (tone === 'blue') return '#f4f8fd';
     return '#ffffff';
   }};
-  border-top: 1px solid rgba(17, 72, 149, 0.07);
+  border-top: 1px solid rgba(17, 72, 149, 0.08);
 `;
 
 export const HeroSection = styled(PageSection)`
@@ -90,7 +90,7 @@ export const PrimaryButton = styled(Link)`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(19, 84, 180, 0.28);
   background: #1c5cb8;
   color: #ffffff;
@@ -104,7 +104,7 @@ export const SecondaryButton = styled(Link)`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(19, 84, 180, 0.2);
   background: #ffffff;
   color: #1c4f98;
@@ -131,7 +131,7 @@ export const HeadLink = styled(Link)`
   justify-content: center;
   min-height: 42px;
   padding: 0 16px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(20, 78, 161, 0.2);
   color: #1d4f98;
   background: #f8fbff;
@@ -158,10 +158,10 @@ export const Card = styled.article`
   flex-direction: column;
   gap: 12px;
   padding: 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(19, 75, 154, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 75, 154, 0.13);
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.06);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.055);
 `;
 
 export const CardTitle = styled.h3`
@@ -206,7 +206,7 @@ export const SplitGrid = styled(PageContainer)`
 
 export const Panel = styled.div`
   padding: 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(19, 75, 154, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 75, 154, 0.13);
   background: #ffffff;
 `;

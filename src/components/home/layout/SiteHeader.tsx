@@ -79,7 +79,6 @@ export function SiteHeader({ fontMode, onToggleFontMode, onOpenMobileMenu }: Sit
               {fontMode === 'nanum' ? '본고딕 보기' : '나눔스퀘어 보기'}
             </S.FontModeToggle>
             <S.ContactButton href="/contact">Contact Us</S.ContactButton>
-            <S.MobileIconButton type="button" kind="search" aria-label="검색" />
             <S.MobileIconButton type="button" kind="menu" aria-label="메뉴" onClick={onOpenMobileMenu} />
           </S.HeaderTools>
         </S.HeaderRight>

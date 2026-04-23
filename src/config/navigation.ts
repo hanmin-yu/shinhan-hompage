@@ -94,14 +94,15 @@ export const headerNavigation: NavItem[] = [
     ],
   },
   {
-    id: 'etc',
-    label: '기타',
+    id: 'offices',
+    label: '사무소',
     href: '/offices',
-    children: [
-      { id: 'offices-all', label: '사무소 전체보기', href: '/offices' },
-      { id: 'recruit', label: '채용', href: '/recruit' },
-      { id: 'contact-us', label: 'Contact US', href: '/contact' },
-    ],
+    children: [{ id: 'offices-all', label: '사무소 전체보기', href: '/offices' }],
+  },
+  {
+    id: 'recruit',
+    label: '채용',
+    href: '/recruit',
   },
 ];
 
@@ -109,6 +110,7 @@ export const mobileQuickLinks: LinkItem[] = [
   { id: 'consult', label: '상담접수', href: '/contact' },
   { id: 'report', label: '이슈 리포트', href: '/news/issue-report' },
   { id: 'members', label: '구성원', href: '/members/experts' },
+  { id: 'recruit', label: '채용', href: '/recruit' },
   { id: 'it', label: 'IT', href: '/it' },
   { id: 'directions', label: '오시는 길', href: '/about/location' },
 ];

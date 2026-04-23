@@ -7,8 +7,8 @@ import { officeBranches, siteContact } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 92px 0 96px;
-  background: #f7f9fc;
+  padding: 88px 0 92px;
+  background: #f8fafd;
   border-top: 1px solid rgba(21, 77, 159, 0.08);
 `;
 
@@ -87,10 +87,10 @@ const InfoCard = styled.article`
   flex-direction: column;
   gap: 18px;
   padding: 24px;
-  border-radius: 10px;
-  border: 1px solid rgba(19, 74, 154, 0.16);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 74, 154, 0.14);
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
 `;
 
 const Badge = styled.span`
@@ -130,9 +130,9 @@ const FactGrid = styled.div`
 
 const Fact = styled.div`
   padding: 14px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(20, 76, 158, 0.12);
-  background: #ffffff;
+  background: #f8fbff;
 `;
 
 const FactLabel = styled.strong`
@@ -167,9 +167,9 @@ const ContactItem = styled.a`
   gap: 8px;
   min-height: 118px;
   padding: 18px;
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(20, 76, 158, 0.14);
-  background: #f8fbff;
+  background: #f7fafd;
 `;
 
 const ContactLabel = styled.strong`

@@ -18,7 +18,6 @@ const semiconductorHeroAsset = new URL(
 export const brandMarkPath = '/brand-mark.png';
 
 export const utilityLinks: LinkItem[] = [
-  { id: 'recruit', label: '채용', href: '/recruit' },
   { id: 'kor', label: 'KOR', href: '/' },
   { id: 'directions', label: '찾아오시는 길', href: '/about/location' },
 ];

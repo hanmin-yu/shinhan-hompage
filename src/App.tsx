@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { MobileMenu } from './components/home/layout/MobileMenu';
 import { SiteFooter } from './components/home/layout/SiteFooter';
@@ -47,68 +47,76 @@ const serviceRoutes = [
 ];
 
 function App() {
-  const [fontMode, setFontMode] = useState<FontMode>('nanum');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useRevealOnScroll();
-
   return (
     <>
-      <S.GlobalStyle fontMode={fontMode} />
       <BrowserRouter>
-        <S.Page>
-          <SiteHeader
-            fontMode={fontMode}
-            onToggleFontMode={() => setFontMode((prev) => (prev === 'nanum' ? 'notosans' : 'nanum'))}
-            onOpenMobileMenu={() => setMobileMenuOpen(true)}
-          />
-          <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
-
-          <S.Main id="top">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/about/history" element={<HistoryPage />} />
-              <Route path="/about/message" element={<MessagePage />} />
-              <Route path="/about/location" element={<LocationPage />} />
-
-              <Route path="/members" element={<MembersPage />} />
-              <Route path="/members/org" element={<OrgPage />} />
-              <Route path="/members/experts" element={<ExpertsPage />} />
-
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/services/consulting" element={<ConsultingPage />} />
-              {serviceRoutes.map((path) => (
-                <Route key={path} path={path} element={<ServiceDetailPage path={path} />} />
-              ))}
-
-              <Route path="/it" element={<ItPage />} />
-
-              <Route path="/news" element={<NewsPage />} />
-              <Route path="/news/issue-report" element={<IssueReportPage />} />
-              <Route path="/news/newsletter" element={<NewsletterPage />} />
-              <Route path="/news/seminar" element={<SeminarPage />} />
-              <Route path="/news/blog" element={<BlogPage />} />
-
-              <Route path="/offices" element={<OfficesPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/recruit" element={<RecruitPage />} />
-
-              <Route path="/about/*" element={<Navigate to="/about" replace />} />
-              <Route path="/members/*" element={<Navigate to="/members" replace />} />
-              <Route path="/services/*" element={<Navigate to="/services" replace />} />
-              <Route path="/news/*" element={<Navigate to="/news" replace />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </S.Main>
-
-          <SiteFooter />
-        </S.Page>
+        <AppShell />
       </BrowserRouter>
     </>
   );
 }
 
-export default App;
+function AppShell() {
+  const [fontMode, setFontMode] = useState<FontMode>('nanum');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
+  useRevealOnScroll(location.pathname);
+
+  return (
+    <>
+      <S.GlobalStyle fontMode={fontMode} />
+      <S.Page>
+        <SiteHeader
+          fontMode={fontMode}
+          onToggleFontMode={() => setFontMode((prev) => (prev === 'nanum' ? 'notosans' : 'nanum'))}
+          onOpenMobileMenu={() => setMobileMenuOpen(true)}
+        />
+        <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+
+        <S.Main id="top">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/about/history" element={<HistoryPage />} />
+            <Route path="/about/message" element={<MessagePage />} />
+            <Route path="/about/location" element={<LocationPage />} />
+
+            <Route path="/members" element={<MembersPage />} />
+            <Route path="/members/org" element={<OrgPage />} />
+            <Route path="/members/experts" element={<ExpertsPage />} />
+
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/consulting" element={<ConsultingPage />} />
+            {serviceRoutes.map((path) => (
+              <Route key={path} path={path} element={<ServiceDetailPage path={path} />} />
+            ))}
+
+            <Route path="/it" element={<ItPage />} />
+
+            <Route path="/news" element={<NewsPage />} />
+            <Route path="/news/issue-report" element={<IssueReportPage />} />
+            <Route path="/news/newsletter" element={<NewsletterPage />} />
+            <Route path="/news/seminar" element={<SeminarPage />} />
+            <Route path="/news/blog" element={<BlogPage />} />
+
+            <Route path="/offices" element={<OfficesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/recruit" element={<RecruitPage />} />
+
+            <Route path="/about/*" element={<Navigate to="/about" replace />} />
+            <Route path="/members/*" element={<Navigate to="/members" replace />} />
+            <Route path="/services/*" element={<Navigate to="/services" replace />} />
+            <Route path="/news/*" element={<Navigate to="/news" replace />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </S.Main>
+
+        <SiteFooter />
+      </S.Page>
+    </>
+  );
+}
+
+export default App;

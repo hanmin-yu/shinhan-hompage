@@ -4,8 +4,8 @@ import { itServices } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 92px 0;
-  background: #f3f7fc;
+  padding: 88px 0;
+  background: #f5f8fc;
   border-top: 1px solid rgba(21, 77, 159, 0.08);
 `;
 
@@ -75,10 +75,10 @@ const Featured = styled.article`
   gap: 14px;
   min-height: 260px;
   padding: 24px 22px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(24, 79, 160, 0.18);
-  background: linear-gradient(160deg, #114998 0%, #0f407f 100%);
-  box-shadow: 0 10px 22px rgba(14, 50, 108, 0.14);
+  background: linear-gradient(160deg, #123f82 0%, #153f79 100%);
+  box-shadow: 0 10px 20px rgba(14, 50, 108, 0.12);
 `;
 
 const FeaturedMeta = styled.span`
@@ -125,8 +125,8 @@ const Item = styled.article`
   gap: 8px;
   min-height: 106px;
   padding: 18px;
-  border-radius: 10px;
-  border: 1px solid rgba(19, 76, 158, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 76, 158, 0.13);
   background: #ffffff;
 `;
 

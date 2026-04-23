@@ -4,7 +4,7 @@ import { issueReports, newsItems } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 96px 0;
+  padding: 88px 0;
   background: #ffffff;
   border-top: 1px solid rgba(21, 77, 159, 0.08);
 `;
@@ -73,11 +73,11 @@ const Featured = styled.article`
   display: grid;
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
   min-height: 334px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(20, 76, 158, 0.14);
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
@@ -147,9 +147,9 @@ const SideCard = styled.article`
   gap: 10px;
   min-height: 104px;
   padding: 18px 18px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
-  background: #f8fbff;
+  border-radius: 8px;
+  border: 1px solid rgba(20, 76, 158, 0.13);
+  background: #f7fafd;
 `;
 
 const SideCategory = styled.span`

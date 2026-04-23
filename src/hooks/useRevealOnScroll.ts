@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-export function useRevealOnScroll() {
+export function useRevealOnScroll(routeKey?: string) {
   useEffect(() => {
-    const revealTargets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    if (!revealTargets.length) return;
+    const observed = new WeakSet<HTMLElement>();
+    let rafId: number | null = null;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -13,15 +13,42 @@ export function useRevealOnScroll() {
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.16, rootMargin: '0px 0px -10% 0px' },
     );
 
-    revealTargets.forEach((node, index) => {
-      node.style.transitionDelay = `${Math.min(index % 6, 4) * 60}ms`;
-      observer.observe(node);
+    const observeRevealTargets = () => {
+      const revealTargets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+
+      revealTargets.forEach((node, index) => {
+        if (observed.has(node) || node.classList.contains('is-visible')) return;
+        node.style.transitionDelay = `${Math.min(index % 6, 4) * 60}ms`;
+        observed.add(node);
+        observer.observe(node);
+      });
+    };
+
+    observeRevealTargets();
+
+    const mutationObserver = new MutationObserver(() => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+
+      rafId = window.requestAnimationFrame(() => {
+        observeRevealTargets();
+        rafId = null;
+      });
     });
 
-    return () => observer.disconnect();
-  }, []);
-}
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
 
+    return () => {
+      mutationObserver.disconnect();
+      observer.disconnect();
+
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [routeKey]);
+}

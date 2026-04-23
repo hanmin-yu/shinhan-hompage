@@ -68,8 +68,8 @@ const practiceIaGroups = [
 ];
 
 const Section = styled.section`
-  padding: 96px 0;
-  background: #f7f9fc;
+  padding: 88px 0;
+  background: #f8fafd;
   border-top: 1px solid rgba(17, 67, 143, 0.08);
 `;
 
@@ -159,10 +159,10 @@ const Card = styled.article`
   gap: 14px;
   min-height: 222px;
   padding: 24px 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 73, 152, 0.14);
+  border-radius: 8px;
+  border: 1px solid rgba(20, 73, 152, 0.15);
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(15, 48, 102, 0.07);
+  box-shadow: 0 8px 18px rgba(15, 48, 102, 0.06);
 `;
 
 const CardTitle = styled.h3`
@@ -202,9 +202,9 @@ const IaGroup = styled.article`
   flex-direction: column;
   gap: 12px;
   padding: 18px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 73, 152, 0.12);
-  background: #f8fbff;
+  border-radius: 8px;
+  border: 1px solid rgba(20, 73, 152, 0.13);
+  background: #f6f9fd;
 `;
 
 const IaGroupTitle = styled.strong`

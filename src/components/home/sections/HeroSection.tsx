@@ -8,11 +8,8 @@ const HeroShell = styled.section`
   position: relative;
   min-height: calc(100vh - 88px);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 76% 18%, rgba(47, 112, 201, 0.18), transparent 32%),
-    radial-gradient(circle at 10% 84%, rgba(29, 89, 176, 0.12), transparent 28%),
-    linear-gradient(180deg, #eef2f8 0%, #f3f6fb 44%, #f7f9fc 100%);
-  border-bottom: 1px solid rgba(19, 67, 142, 0.1);
+  background: linear-gradient(180deg, #edf2f9 0%, #f3f7fc 56%, #f7fafd 100%);
+  border-bottom: 1px solid rgba(19, 67, 142, 0.08);
 
   @media (max-width: 1024px) {
     min-height: calc(100vh - 76px);
@@ -206,7 +203,7 @@ const HeroCircleFrame = styled.div`
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 18px 36px rgba(17, 45, 91, 0.16);
+  box-shadow: 0 14px 30px rgba(17, 45, 91, 0.13);
   border: 1px solid rgba(255, 255, 255, 0.8);
   background: #dce4f2;
 

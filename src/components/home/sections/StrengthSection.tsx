@@ -18,8 +18,8 @@ const strengths = [
 ];
 
 const Section = styled.section`
-  padding: 92px 0;
-  background: #f2f6fb;
+  padding: 88px 0;
+  background: #f5f8fc;
   border-top: 1px solid rgba(19, 73, 152, 0.09);
 `;
 
@@ -67,10 +67,10 @@ const Grid = styled.div`
 
 const Card = styled.article`
   padding: 24px 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(20, 76, 158, 0.13);
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.06);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.055);
 `;
 
 const CardTitle = styled.h3`

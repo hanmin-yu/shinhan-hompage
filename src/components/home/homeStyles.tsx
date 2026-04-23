@@ -64,7 +64,7 @@ export const GlobalStyle = ({ fontMode }: { fontMode: FontMode }) => (
 
 export const Page = styled.div`
   min-height: 100vh;
-  background: linear-gradient(180deg, #f2f5fa 0%, #f6f8fc 18%, #fbfcfe 36%, #ffffff 64%);
+  background: #f6f9fd;
   color: #111111;
 `;
 
@@ -156,9 +156,9 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 25;
-  background: rgba(244, 248, 254, 0.96);
-  border-bottom: 1px solid rgba(20, 75, 157, 0.12);
-  box-shadow: 0 6px 14px rgba(16, 48, 104, 0.05);
+  background: rgba(243, 247, 253, 0.97);
+  border-bottom: 1px solid rgba(20, 75, 157, 0.1);
+  box-shadow: 0 4px 10px rgba(16, 48, 104, 0.045);
   backdrop-filter: blur(6px);
 
   @media (max-width: 768px) {
@@ -169,12 +169,12 @@ export const Header = styled.header`
 `;
 
 export const HeaderInner = styled(Container)`
-  width: min(1860px, calc(100% - 56px));
+  width: min(1720px, calc(100% - 52px));
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 78px;
+  min-height: 76px;
 
   @media (max-width: 1200px) {
     width: min(100%, calc(100% - 28px));
@@ -182,7 +182,7 @@ export const HeaderInner = styled(Container)`
   }
 
   @media (max-width: 1024px) {
-    min-height: 72px;
+    min-height: 70px;
   }
 `;
 
@@ -190,7 +190,7 @@ export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
   min-width: 0;
 
@@ -205,11 +205,11 @@ export const MenuArea = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex: 1 1 auto;
-  min-height: 78px;
+  min-height: 76px;
   min-width: 0;
   overflow: hidden;
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 `;
@@ -218,7 +218,7 @@ export const Brand = styled.a`
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 0 0 228px;
+  flex: 0 0 212px;
   min-width: 0;
 
   @media (max-width: 980px) {
@@ -266,18 +266,18 @@ export const BrandText = styled.div`
 `;
 
 export const BrandTitle = styled.strong`
-  font-size: 2rem;
+  font-size: 1.9rem;
   line-height: 1;
   letter-spacing: 0.04em;
   color: #103c83;
   white-space: nowrap;
 
   @media (max-width: 1440px) {
-    font-size: 1.82rem;
+    font-size: 1.72rem;
   }
 
   @media (max-width: 1280px) {
-    font-size: 1.7rem;
+    font-size: 1.62rem;
   }
 `;
 
@@ -294,8 +294,8 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
-  font-size: 0.96rem;
+  gap: 0;
+  font-size: 0.92rem;
   color: #153c7b;
   white-space: nowrap;
 
@@ -309,7 +309,7 @@ export const NavItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 78px;
+  min-height: 76px;
 
   &:hover .nav-dropdown {
     opacity: 1;
@@ -318,7 +318,7 @@ export const NavItem = styled.div`
     pointer-events: auto;
   }
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1320px) {
     min-height: 72px;
   }
 `;
@@ -328,11 +328,11 @@ export const NavLink = styled.a<{ hasChildren?: boolean }>`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 78px;
-  padding: 0 9px;
+  min-height: 76px;
+  padding: 0 8px;
   position: relative;
   color: #153c7b;
-  font-size: 0.92rem;
+  font-size: 0.89rem;
   font-weight: 700;
   letter-spacing: -0.015em;
   white-space: nowrap;
@@ -342,13 +342,13 @@ export const NavLink = styled.a<{ hasChildren?: boolean }>`
   @media (max-width: 1680px) {
     gap: 6px;
     padding: 0 8px;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
   }
 
   @media (max-width: 1380px) {
     min-height: 72px;
-    padding: 0 6px;
-    font-size: 0.84rem;
+    padding: 0 5px;
+    font-size: 0.8rem;
   }
 
   &::before {
@@ -401,13 +401,12 @@ export const NavDropdown = styled.div`
   width: max-content;
   min-width: 210px;
   max-width: 420px;
-  transform: translateX(-50%) translateY(8px);
-  padding: 12px 0 10px;
-  border-radius: 0 0 8px 8px;
-  background: #f8fbff;
-  border: 1px solid rgba(20, 75, 157, 0.16);
-  border-top: 0;
-  box-shadow: 0 12px 24px rgba(16, 32, 68, 0.1);
+  transform: translateX(-50%) translateY(6px);
+  padding: 10px 0;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 75, 157, 0.14);
+  box-shadow: 0 14px 26px rgba(16, 40, 86, 0.09);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -421,16 +420,16 @@ export const NavDropdown = styled.div`
 export const NavDropdownList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 `;
 
 export const NavDropdownLink = styled.a`
   display: flex;
   align-items: center;
-  min-height: 38px;
+  min-height: 36px;
   padding: 0 22px;
-  color: #4f6688;
-  font-size: 0.92rem;
+  color: #456083;
+  font-size: 0.88rem;
   font-weight: 600;
   line-height: 1.5;
   white-space: normal;
@@ -440,7 +439,7 @@ export const NavDropdownLink = styled.a`
 
   &:hover {
     color: #1e5db5;
-    background: rgba(209, 225, 246, 0.34);
+    background: rgba(17, 78, 168, 0.06);
   }
 `;
 
@@ -483,10 +482,10 @@ export const NavDropdownSubLink = styled(NavDropdownLink)`
 export const HeaderTools = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex: 0 0 auto;
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1320px) {
     gap: 10px;
   }
 `;
@@ -499,7 +498,7 @@ export const HeaderUtilityLinks = styled.div`
   padding-left: 8px;
   border-left: 1px solid rgba(58, 82, 118, 0.2);
 
-  @media (max-width: 1700px) {
+  @media (max-width: 1600px) {
     display: none;
   }
 `;
@@ -614,7 +613,7 @@ export const FontModeToggle = styled.button`
     border-color: rgba(17, 78, 168, 0.3);
   }
 
-  @media (max-width: 1800px) {
+  @media (max-width: 1760px) {
     display: none;
   }
 `;
@@ -634,11 +633,11 @@ export const ContactButton = styled.a`
   font-weight: 600;
   letter-spacing: -0.03em;
 
-  @media (max-width: 1420px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 
-  @media (max-width: 1240px) {
+  @media (max-width: 768px) {
     min-height: 38px;
     padding: 0 14px;
     font-size: 0.88rem;
@@ -649,7 +648,7 @@ export const ContactButton = styled.a`
 export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
   display: none;
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1320px) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2434,13 +2433,10 @@ export const OfficesMapCard = styled.aside`
   position: relative;
   overflow: hidden;
   padding: 26px;
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(243, 247, 252, 0.94)),
-    rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(19, 63, 139, 0.1);
-  box-shadow: 0 20px 44px rgba(19, 63, 139, 0.08);
-  backdrop-filter: blur(16px);
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(19, 63, 139, 0.14);
+  box-shadow: 0 8px 18px rgba(19, 63, 139, 0.06);
 `;
 
 export const OfficesMapHeader = styled.div`
@@ -2464,9 +2460,9 @@ export const OfficesMapBody = styled.p`
 export const OfficesMiniMap = styled.div`
   position: relative;
   min-height: 420px;
-  border-radius: 24px;
+  border-radius: 8px;
   background: linear-gradient(180deg, #f7fbff, #eef4fb);
-  border: 1px solid rgba(19, 63, 139, 0.08);
+  border: 1px solid rgba(19, 63, 139, 0.12);
   overflow: hidden;
 `;
 
@@ -2493,13 +2489,10 @@ export const OfficesMiniMapVietnamZone = styled.div`
   width: 21%;
   height: 36%;
   padding: 12px 12px 12px;
-  border-radius: 26px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 248, 253, 0.9)),
-    rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(20, 60, 121, 0.08);
-  box-shadow: 0 18px 34px rgba(29, 63, 114, 0.08);
-  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff, #f3f8fd);
+  border: 1px solid rgba(20, 60, 121, 0.12);
+  box-shadow: 0 8px 18px rgba(29, 63, 114, 0.07);
 
   &::before {
     content: '';
@@ -2658,21 +2651,9 @@ export const OfficesMapHint = styled.p`
 
 export const Footer = styled.footer`
   position: relative;
-  background:
-    radial-gradient(circle at top right, rgba(74, 128, 204, 0.18), transparent 22%),
-    linear-gradient(180deg, #10315f, #0c274a);
+  background: linear-gradient(180deg, #102f5d, #0d274b);
   color: rgba(255, 255, 255, 0.82);
   overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 24%, transparent 76%, rgba(255, 255, 255, 0.02)),
-      linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.02));
-    pointer-events: none;
-  }
 `;
 
 export const FooterInner = styled(Container)`
@@ -2708,7 +2689,7 @@ export const FooterBrandText = styled.div`
 `;
 
 export const FooterBrandTitle = styled.strong`
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 1;
   letter-spacing: 0.04em;
   color: #ffffff;
@@ -2716,7 +2697,7 @@ export const FooterBrandTitle = styled.strong`
 
 export const FooterBrandSub = styled.span`
   color: rgba(255, 255, 255, 0.66);
-  font-size: 1rem;
+  font-size: 0.9rem;
 `;
 
 export const FooterPolicyRow = styled.div`
@@ -2729,7 +2710,7 @@ export const FooterPolicyRow = styled.div`
 
 export const FooterPolicyLink = styled.a`
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.98rem;
+  font-size: 0.9rem;
   font-weight: 700;
 `;
 
@@ -2742,7 +2723,7 @@ export const FooterInfo = styled.div`
 export const FooterLine = styled.p`
   margin: 0;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
+  font-size: 0.92rem;
   line-height: 1.8;
 `;
 
@@ -2754,6 +2735,6 @@ export const FooterLabel = styled.strong`
 export const FooterCopyright = styled.p`
   margin: 8px 0 0;
   color: rgba(255, 255, 255, 0.44);
-  font-size: 0.98rem;
+  font-size: 0.86rem;
   letter-spacing: 0.02em;
 `;

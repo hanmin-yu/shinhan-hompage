@@ -4,8 +4,8 @@ import { members } from '../../../data/home';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
-  padding: 96px 0;
-  background: #f5f8fc;
+  padding: 88px 0;
+  background: #f8fafd;
   border-top: 1px solid rgba(20, 76, 158, 0.08);
 `;
 
@@ -82,10 +82,10 @@ const Card = styled.article`
   flex-direction: column;
   gap: 14px;
   padding: 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
+  border-radius: 8px;
+  border: 1px solid rgba(20, 76, 158, 0.13);
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 53, 114, 0.07);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
 `;
 
 const Profile = styled.div`
