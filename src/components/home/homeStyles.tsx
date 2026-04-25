@@ -204,7 +204,7 @@ export const MenuArea = styled.div`
   flex: 1 1 auto;
   min-height: 74px;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
 
   @media (max-width: 1320px) {
     display: none;
@@ -214,9 +214,13 @@ export const MenuArea = styled.div`
 export const Brand = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex: 0 0 232px;
+  gap: 12px;
+  flex: 0 0 420px;
   min-width: 0;
+
+  @media (max-width: 1180px) {
+    flex: 0 0 320px;
+  }
 
   @media (max-width: 980px) {
     flex: 0 0 auto;
@@ -257,33 +261,75 @@ export const BrandLogo = styled.svg`
 `;
 
 export const BrandText = styled.div`
-  display: inline-flex;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   min-width: 0;
 `;
 
-export const BrandTitle = styled.strong`
-  font-size: 1.9rem;
-  line-height: 1;
-  letter-spacing: 0.04em;
-  color: #103c83;
+export const BrandTop = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+`;
+
+export const BrandTopLine = styled.span`
+  width: 74px;
+  height: 1px;
+  background: rgba(30, 91, 178, 0.34);
+
+  @media (max-width: 980px) {
+    display: none;
+  }
+`;
+
+export const BrandEstablished = styled.span`
+  color: #5b7ea9;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 
+  @media (max-width: 980px) {
+    display: none;
+  }
+`;
+
+export const BrandTitle = styled.strong`
+  font-size: 3rem;
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  color: #103c83;
+  white-space: nowrap;
+  font-family: 'Times New Roman', Georgia, serif;
+  text-transform: uppercase;
+
   @media (max-width: 1440px) {
-    font-size: 1.72rem;
+    font-size: 2.45rem;
   }
 
   @media (max-width: 1280px) {
-    font-size: 1.62rem;
+    font-size: 2rem;
+  }
+
+  @media (max-width: 980px) {
+    font-size: 1.8rem;
   }
 `;
 
 export const BrandSub = styled.span`
-  color: #4e617e;
-  font-size: 0.96rem;
+  color: #5a6f8f;
+  font-size: 0.95rem;
+  font-family: 'Times New Roman', Georgia, serif;
+  white-space: nowrap;
 
   @media (max-width: 1100px) {
     font-size: 0.92rem;
+  }
+
+  @media (max-width: 980px) {
+    display: none;
   }
 `;
 
@@ -411,7 +457,7 @@ export const NavDropdown = styled.div`
     opacity 0.2s ease,
     transform 0.2s ease,
     visibility 0.2s ease;
-  z-index: 5;
+  z-index: 28;
 `;
 
 export const NavDropdownList = styled.div`
@@ -527,6 +573,34 @@ export const HeaderUtilityLink = styled(Link)`
     height: 12px;
     transform: translateY(-50%);
     background: rgba(58, 82, 118, 0.26);
+  }
+`;
+
+export const HeaderUtilityIconLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: #3f5577;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+
+  &:hover {
+    color: #1d56a8;
+    transform: translateY(-1px);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 `;
 

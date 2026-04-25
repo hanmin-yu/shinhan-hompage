@@ -47,7 +47,12 @@ export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
             <BrandMarkGraphic alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
           </S.BrandMark>
           <S.BrandText>
+            <S.BrandTop>
+              <S.BrandTopLine />
+              <S.BrandEstablished>Established 1965</S.BrandEstablished>
+            </S.BrandTop>
             <S.BrandTitle>SHINHAN</S.BrandTitle>
+            <S.BrandSub>SHINHAN Customs Service Inc.</S.BrandSub>
           </S.BrandText>
         </S.Brand>
 
@@ -71,10 +76,16 @@ export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
 
           <S.HeaderTools>
             <S.HeaderUtilityLinks>
+              <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
                 {language === 'ko' ? 'KOR' : 'ENG'}
               </S.HeaderUtilityButton>
-              <S.HeaderUtilityLink to="/about/location">{t('찾아오시는 길', 'Directions')}</S.HeaderUtilityLink>
+              <S.HeaderUtilityIconLink to="/about/location" aria-label={t('찾아오시는 길', 'Directions')}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 21c-2.5-3.2-6.5-7-6.5-11.2A6.5 6.5 0 0 1 12 3.3a6.5 6.5 0 0 1 6.5 6.5C18.5 14 14.5 17.8 12 21Z" />
+                  <circle cx="12" cy="9.8" r="2.4" />
+                </svg>
+              </S.HeaderUtilityIconLink>
             </S.HeaderUtilityLinks>
             <S.ContactButton to="/contact">Contact Us</S.ContactButton>
             <S.MobileIconButton type="button" kind="menu" aria-label={t('메뉴', 'Menu')} onClick={onOpenMobileMenu} />

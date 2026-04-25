@@ -3,67 +3,98 @@ import styled from '@emotion/styled';
 import * as P from '../../components/site/PagePrimitives';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
-import { getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
+import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
 
 const SectionInner = styled(P.PageContainer)`
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 24px;
 `;
 
 const InfoPanel = styled(P.Panel)`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-`;
-
-const NaverMapPanel = styled(P.Panel)`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const NaverMapPreview = styled.div`
-  width: 100%;
-  min-height: 440px;
-  border: 1px solid rgba(19, 75, 154, 0.14);
+  gap: 14px;
+  padding: 24px;
   border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(20, 76, 158, 0.08), rgba(20, 76, 158, 0.02)),
-    url('/subpages/about-history.jpg') center / cover no-repeat;
-
-  @media (max-width: 768px) {
-    min-height: 360px;
-  }
+  border: 1px solid rgba(19, 75, 154, 0.16);
+  background: #ffffff;
 `;
 
-const MapLinkRow = styled.div`
+const InfoList = styled.ul`
+  margin: 0;
+  padding-left: 18px;
+  color: #3f5f88;
+  font-size: 1rem;
+  line-height: 1.7;
+`;
+
+const ActionRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 6px;
+  gap: 10px;
 `;
 
 const MapLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 38px;
-  padding: 0 14px;
+  min-height: 40px;
+  padding: 0 15px;
   border-radius: 6px;
   border: 1px solid rgba(20, 75, 157, 0.2);
   background: #ffffff;
   color: #1d4f97;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   font-weight: 700;
 `;
 
 const NaverPrimary = styled(MapLink)`
-  min-height: 44px;
-  padding: 0 16px;
   background: linear-gradient(180deg, #1f65c3, #184f9f);
   border-color: rgba(15, 63, 132, 0.32);
   color: #ffffff;
+`;
+
+const MapPanel = styled(P.Panel)`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(19, 75, 154, 0.16);
+  background: #ffffff;
+`;
+
+const MapFrame = styled.div`
+  width: 100%;
+  min-height: 620px;
+  border-radius: 8px;
+  border: 1px solid rgba(19, 75, 154, 0.14);
+  overflow: hidden;
+  background: #edf4ff;
+
+  iframe {
+    width: 100%;
+    height: 620px;
+    border: 0;
+    display: block;
+  }
+
+  @media (max-width: 1024px) {
+    min-height: 520px;
+
+    iframe {
+      height: 520px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    min-height: 400px;
+
+    iframe {
+      height: 400px;
+    }
+  }
 `;
 
 export function LocationPage() {
@@ -72,8 +103,10 @@ export function LocationPage() {
   const officeAddress = hqOffice?.address ?? siteContact.address;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
-  const naverMapUrl = getNaverMapUrl(officeAddress, hqOffice?.label ?? '신한관세법인 서울본사');
-  const googleMapUrl = getGoogleMapUrl(officeAddress, hqOffice?.label ?? '신한관세법인 서울본사');
+  const officeName = hqOffice?.label ?? '신한관세법인 서울본사';
+  const naverMapUrl = getNaverMapUrl(officeAddress, officeName);
+  const googleMapUrl = getGoogleMapUrl(officeAddress, officeName);
+  const googleMapEmbedUrl = getGoogleMapEmbedUrl(officeAddress, officeName);
 
   return (
     <P.PageSection>
@@ -81,62 +114,62 @@ export function LocationPage() {
         <P.SectionHead>
           <div>
             <P.Kicker>HQ Location</P.Kicker>
-            <P.SectionTitle>{t('서울본사 오시는 길', 'Seoul HQ Directions')}</P.SectionTitle>
+            <P.SectionTitle>{t('오시는 길', 'Directions')}</P.SectionTitle>
           </div>
         </P.SectionHead>
         <P.Lead>
           {t(
-            '오시는 길은 서울본사 기준으로 안내합니다. 방문 전 담당자와 일정 확인 후 내방해 주세요.',
-            'Directions are centered on the Seoul headquarters. Please confirm your schedule with the responsible team before visiting.',
+            '서울본사 기준 위치 정보를 먼저 확인한 뒤, 아래 지도에서 경로를 바로 확인하실 수 있습니다.',
+            'Check Seoul HQ location details first, then review route guidance on the map below.',
           )}
         </P.Lead>
 
-        <P.SplitGrid>
-          <InfoPanel>
-            <P.Kicker>Office Information</P.Kicker>
-            <P.SectionTitle>{t('서울본사', 'Seoul HQ')}</P.SectionTitle>
-            <P.BulletList>
-              <li>
-                {t('주소', 'Address')}: {officeAddress}
-              </li>
-              <li>
-                {t('대표번호', 'Phone')}: {officePhone}
-              </li>
-              <li>
-                {t('팩스번호', 'Fax')}: {officeFax}
-              </li>
-              <li>
-                {t('이메일', 'Email')}: {siteContact.email}
-              </li>
-            </P.BulletList>
+        <InfoPanel>
+          <P.Kicker>Office Information</P.Kicker>
+          <P.SectionTitle>{t('서울본사', 'Seoul HQ')}</P.SectionTitle>
+          <InfoList>
+            <li>
+              {t('주소', 'Address')}: {officeAddress}
+            </li>
+            <li>
+              {t('대표번호', 'Phone')}: {officePhone}
+            </li>
+            <li>
+              {t('팩스번호', 'Fax')}: {officeFax}
+            </li>
+            <li>
+              {t('이메일', 'Email')}: {siteContact.email}
+            </li>
+          </InfoList>
 
-            <MapLinkRow>
-              <MapLink href={naverMapUrl} target="_blank" rel="noreferrer">
-                {t('네이버 지도 열기', 'Open Naver Map')}
-              </MapLink>
-              <MapLink href={googleMapUrl} target="_blank" rel="noreferrer">
-                {t('Google 지도 열기', 'Open Google Maps')}
-              </MapLink>
-            </MapLinkRow>
-          </InfoPanel>
+          <ActionRow>
+            <NaverPrimary href={naverMapUrl} target="_blank" rel="noreferrer">
+              {t('네이버 지도 열기', 'Open Naver Map')}
+            </NaverPrimary>
+            <MapLink href={googleMapUrl} target="_blank" rel="noreferrer">
+              {t('Google 지도 열기', 'Open Google Maps')}
+            </MapLink>
+          </ActionRow>
+        </InfoPanel>
 
-          <NaverMapPanel>
-            <P.Kicker>Naver Map</P.Kicker>
-            <P.SectionTitle>{t('네이버 지도 안내', 'Naver Map Directions')}</P.SectionTitle>
-            <P.CardText style={{ marginBottom: 10 }}>
-              {t(
-                '본사 위치 확인과 길찾기는 네이버 지도를 기준으로 제공합니다.',
-                'Office location and navigation guidance are provided primarily through Naver Map.',
-              )}
-            </P.CardText>
-            <NaverMapPreview aria-hidden="true" />
-            <MapLinkRow>
-              <NaverPrimary href={naverMapUrl} target="_blank" rel="noreferrer">
-                {t('네이버 지도에서 본사 위치 확인', 'Open Seoul HQ in Naver Map')}
-              </NaverPrimary>
-            </MapLinkRow>
-          </NaverMapPanel>
-        </P.SplitGrid>
+        <MapPanel>
+          <P.Kicker>Map</P.Kicker>
+          <P.SectionTitle>{t('본사 지도 안내', 'HQ Map')}</P.SectionTitle>
+          <P.CardText>
+            {t(
+              '아래 지도에서 본사 위치를 크게 확인할 수 있습니다. 네이버 지도는 상단 버튼으로 바로 이동할 수 있습니다.',
+              'You can view the HQ location on the large map below. Use the upper button for direct Naver Map access.',
+            )}
+          </P.CardText>
+          <MapFrame>
+            <iframe
+              src={googleMapEmbedUrl}
+              title={t('서울본사 지도', 'Seoul HQ Map')}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </MapFrame>
+        </MapPanel>
       </SectionInner>
     </P.PageSection>
   );

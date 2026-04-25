@@ -79,17 +79,6 @@ export const headerNavigation: NavItem[] = [
       { id: 'news-blog', label: '블로그', to: '/news/blog' },
     ],
   },
-  {
-    id: 'offices',
-    label: '사무소',
-    to: '/offices',
-    children: [{ id: 'offices-all', label: '사무소 전체보기', to: '/offices' }],
-  },
-  {
-    id: 'recruit',
-    label: '채용',
-    to: '/recruit',
-  },
 ];
 
 export const mobileQuickLinks: LinkItem[] = [
