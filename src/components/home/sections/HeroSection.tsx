@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { heroSlides } from '../../../data/home';
 import { useRotatingIndex } from '../../../hooks/useRotatingIndex';
@@ -126,7 +127,7 @@ const HeroActions = styled.div`
   margin-top: 2px;
 `;
 
-const HeroPrimaryAction = styled.a`
+const HeroPrimaryAction = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -148,7 +149,7 @@ const HeroPrimaryAction = styled.a`
   }
 `;
 
-const HeroSecondaryAction = styled.a`
+const HeroSecondaryAction = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -273,8 +274,8 @@ export function HeroSection() {
               기업의 실무 과제를 통합 지원합니다.
             </HeroDescription>
             <HeroActions>
-              <HeroPrimaryAction href="/contact">상담 문의하기</HeroPrimaryAction>
-              <HeroSecondaryAction href="/services">업무분야 보기</HeroSecondaryAction>
+              <HeroPrimaryAction to="/contact">상담 문의하기</HeroPrimaryAction>
+              <HeroSecondaryAction to="/services">업무분야 보기</HeroSecondaryAction>
             </HeroActions>
           </HeroCopy>
 

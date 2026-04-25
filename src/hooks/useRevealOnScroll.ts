@@ -4,11 +4,14 @@ export function useRevealOnScroll(routeKey?: string) {
   useEffect(() => {
     const observed = new WeakSet<HTMLElement>();
     let rafId: number | null = null;
+    let timeoutId1: number | null = null;
+    let timeoutId2: number | null = null;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+          const hasPassedViewportTop = entry.boundingClientRect.top < 0;
+          if (!entry.isIntersecting && !hasPassedViewportTop) return;
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         });
@@ -27,9 +30,7 @@ export function useRevealOnScroll(routeKey?: string) {
       });
     };
 
-    observeRevealTargets();
-
-    const mutationObserver = new MutationObserver(() => {
+    const queueObserve = () => {
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
@@ -38,16 +39,34 @@ export function useRevealOnScroll(routeKey?: string) {
         observeRevealTargets();
         rafId = null;
       });
-    });
+    };
+
+    observeRevealTargets();
+    timeoutId1 = window.setTimeout(observeRevealTargets, 120);
+    timeoutId2 = window.setTimeout(observeRevealTargets, 360);
+    window.addEventListener('scroll', queueObserve, { passive: true });
+    window.addEventListener('resize', queueObserve);
+
+    const mutationObserver = new MutationObserver(queueObserve);
 
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       mutationObserver.disconnect();
       observer.disconnect();
+      window.removeEventListener('scroll', queueObserve);
+      window.removeEventListener('resize', queueObserve);
 
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
+      }
+
+      if (timeoutId1 !== null) {
+        window.clearTimeout(timeoutId1);
+      }
+
+      if (timeoutId2 !== null) {
+        window.clearTimeout(timeoutId2);
       }
     };
   }, [routeKey]);

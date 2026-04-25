@@ -1,4 +1,3 @@
-import { ContactCtaSection } from '../components/site/ContactCtaSection';
 import { HeroSection } from '../components/home/sections/HeroSection';
 import { IssueReportSection } from '../components/home/sections/IssueReportSection';
 import { ItSection } from '../components/home/sections/ItSection';
@@ -17,7 +16,6 @@ export function HomePage() {
       <MembersSection />
       <ItSection />
       <OfficesSection />
-      <ContactCtaSection />
     </>
   );
 }

@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 
 import { members } from '../../../data/home';
+import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
   padding: 88px 0;
-  background: #f8fafd;
-  border-top: 1px solid rgba(20, 76, 158, 0.08);
+  background: linear-gradient(180deg, #edf5ff 0%, #f4f9ff 100%);
+  border-top: 1px solid rgba(20, 76, 158, 0.11);
 `;
 
 const Inner = styled(S.Container)`
@@ -18,8 +19,8 @@ const Inner = styled(S.Container)`
 const Head = styled.div`
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 18px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -31,7 +32,7 @@ const Label = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: #2d5592;
+  color: #22549a;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -41,30 +42,16 @@ const Label = styled.span`
     content: '';
     width: 28px;
     height: 1px;
-    background: rgba(29, 87, 170, 0.42);
+    background: rgba(29, 87, 170, 0.54);
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #122f57;
+  color: #103a72;
   font-size: clamp(2rem, 3.5vw, 2.85rem);
   line-height: 1.14;
   letter-spacing: -0.03em;
-`;
-
-const Link = styled.a`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 7px;
-  border: 1px solid rgba(21, 77, 159, 0.2);
-  color: #1b4f98;
-  background: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 700;
 `;
 
 const Grid = styled.div`
@@ -82,10 +69,32 @@ const Card = styled.article`
   flex-direction: column;
   gap: 14px;
   padding: 22px;
-  border-radius: 8px;
-  border: 1px solid rgba(20, 76, 158, 0.13);
+  border-radius: 6px;
+  border: 1px solid rgba(20, 76, 158, 0.18);
   background: #ffffff;
-  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
+  box-shadow: 0 10px 22px rgba(16, 53, 114, 0.08);
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 0;
+    width: 38px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2a6bc6, #7aa5dd);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(20, 76, 158, 0.28);
+    box-shadow: 0 14px 26px rgba(16, 53, 114, 0.11);
+  }
 `;
 
 const Profile = styled.div`
@@ -111,33 +120,34 @@ const Avatar = styled.div<{ image?: string; accent: string }>`
 `;
 
 const Name = styled.strong`
-  color: #163e78;
+  color: #11407b;
   font-size: 1.05rem;
 `;
 
 const TitleText = styled.p`
   margin: 0;
-  color: #5a7194;
+  color: #4a6a92;
   font-size: 0.88rem;
   line-height: 1.5;
 `;
 
 const Desc = styled.p`
   margin: 0;
-  color: #4f6688;
+  color: #40638d;
   font-size: 0.92rem;
   line-height: 1.6;
 `;
 
 const Contact = styled.p`
   margin: 0;
-  color: #2e548f;
+  color: #1f56a3;
   font-size: 0.86rem;
   font-weight: 700;
 `;
 
 export function MembersSection() {
-  const previewMembers = members.slice(0, 3);
+  const { t, tx } = useI18n();
+  const previewMembers = members;
 
   return (
     <Section id="members">
@@ -145,9 +155,8 @@ export function MembersSection() {
         <Head>
           <div>
             <Label>Members</Label>
-            <Title>대표 구성원</Title>
+            <Title>{t('대표 구성원', 'Key Professionals')}</Title>
           </div>
-          <Link href="/members/experts">분야별 전문가 더보기</Link>
         </Head>
 
         <Grid>
@@ -158,12 +167,13 @@ export function MembersSection() {
                   {member.image ? '' : member.name.slice(0, 1)}
                 </Avatar>
                 <div>
-                  <Name>{member.name}</Name>
-                  <TitleText>{member.title}</TitleText>
+                  <Name>{tx(member.name)}</Name>
+                  <TitleText>{tx(member.title)}</TitleText>
+                  <TitleText>{tx(member.department)}</TitleText>
                 </div>
               </Profile>
-              <Desc>{member.practice}</Desc>
-              <Contact>T. {member.phone}</Contact>
+              <Desc>{tx(member.practice)}</Desc>
+              <Contact>{t('T.', 'Tel.')} {member.phone}</Contact>
             </Card>
           ))}
         </Grid>

@@ -1,8 +1,8 @@
 import { Global, css } from '@emotion/react';
 import styled from '@emotion/styled';
-import type { FontMode } from '../../types/site';
+import { Link } from 'react-router-dom';
 
-export const GlobalStyle = ({ fontMode }: { fontMode: FontMode }) => (
+export const GlobalStyle = () => (
   <Global
     styles={css`
       @import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css');
@@ -32,9 +32,7 @@ export const GlobalStyle = ({ fontMode }: { fontMode: FontMode }) => (
         min-height: 100vh;
         background-color: #ffffff;
         overflow-x: hidden;
-        font-family: ${fontMode === 'nanum'
-          ? '"NanumSquare", "Noto Sans KR", sans-serif'
-          : '"Noto Sans KR", "Apple SD Gothic Neo", sans-serif'};
+        font-family: "NanumSquare", "Noto Sans KR", sans-serif;
       }
 
       a {
@@ -156,10 +154,9 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 25;
-  background: rgba(243, 247, 253, 0.97);
+  background: rgba(241, 246, 253, 0.98);
   border-bottom: 1px solid rgba(20, 75, 157, 0.1);
-  box-shadow: 0 4px 10px rgba(16, 48, 104, 0.045);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(16, 48, 104, 0.04);
 
   @media (max-width: 768px) {
     top: 0;
@@ -174,7 +171,7 @@ export const HeaderInner = styled(Container)`
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 76px;
+  min-height: 74px;
 
   @media (max-width: 1200px) {
     width: min(100%, calc(100% - 28px));
@@ -205,7 +202,7 @@ export const MenuArea = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex: 1 1 auto;
-  min-height: 76px;
+  min-height: 74px;
   min-width: 0;
   overflow: hidden;
 
@@ -214,11 +211,11 @@ export const MenuArea = styled.div`
   }
 `;
 
-export const Brand = styled.a`
+export const Brand = styled(Link)`
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 0 0 212px;
+  flex: 0 0 232px;
   min-width: 0;
 
   @media (max-width: 980px) {
@@ -309,7 +306,7 @@ export const NavItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 76px;
+  min-height: 74px;
 
   &:hover .nav-dropdown {
     opacity: 1;
@@ -323,13 +320,13 @@ export const NavItem = styled.div`
   }
 `;
 
-export const NavLink = styled.a<{ hasChildren?: boolean }>`
+export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 76px;
-  padding: 0 8px;
+  min-height: 74px;
+  padding: 0 10px;
   position: relative;
   color: #153c7b;
   font-size: 0.89rem;
@@ -423,7 +420,7 @@ export const NavDropdownList = styled.div`
   gap: 2px;
 `;
 
-export const NavDropdownLink = styled.a`
+export const NavDropdownLink = styled(Link)`
   display: flex;
   align-items: center;
   min-height: 36px;
@@ -498,12 +495,12 @@ export const HeaderUtilityLinks = styled.div`
   padding-left: 8px;
   border-left: 1px solid rgba(58, 82, 118, 0.2);
 
-  @media (max-width: 1600px) {
+  @media (max-width: 1460px) {
     display: none;
   }
 `;
 
-export const HeaderUtilityLink = styled.a`
+export const HeaderUtilityLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -522,6 +519,39 @@ export const HeaderUtilityLink = styled.a`
   }
 
   &:not(:last-of-type)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 1px;
+    height: 12px;
+    transform: translateY(-50%);
+    background: rgba(58, 82, 118, 0.26);
+  }
+`;
+
+export const HeaderUtilityButton = styled.button`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: #335684;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  word-break: keep-all;
+  cursor: pointer;
+  transition: color 0.18s ease;
+
+  &:hover {
+    color: #1b5bb2;
+  }
+
+  &::after {
     content: '';
     position: absolute;
     right: 0;
@@ -618,16 +648,16 @@ export const FontModeToggle = styled.button`
   }
 `;
 
-export const ContactButton = styled.a`
+export const ContactButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 18px;
+  min-height: 42px;
+  padding: 0 20px;
   border: 1px solid rgba(17, 78, 168, 0.16);
   border-radius: 8px;
   color: #ffffff;
-  background: #1f5cb8;
+  background: linear-gradient(135deg, #2162c2, #1a56ac);
   box-shadow: 0 10px 20px rgba(16, 84, 177, 0.16);
   font-size: 0.94rem;
   font-weight: 600;
@@ -792,7 +822,7 @@ export const MobileMenuSection = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 `;
 
-export const MobileMenuMainLink = styled.a`
+export const MobileMenuMainLink = styled(Link)`
   display: flex;
   align-items: center;
   min-height: 40px;
@@ -800,7 +830,7 @@ export const MobileMenuMainLink = styled.a`
   font-weight: 800;
 `;
 
-export const MobileMenuSubLink = styled.a`
+export const MobileMenuSubLink = styled(Link)`
   display: flex;
   align-items: center;
   min-height: 34px;
@@ -834,7 +864,22 @@ export const MobileMenuQuickRow = styled.div`
   gap: 10px;
 `;
 
-export const MobileMenuQuickLink = styled.a`
+export const MobileMenuQuickButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+`;
+
+export const MobileMenuQuickLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;

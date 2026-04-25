@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 
-import { issueReports, newsItems } from '../../../data/home';
+import { issueReports, newsletterItems, shinhanNewsItems } from '../../../data/home';
+import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
   padding: 88px 0;
-  background: #ffffff;
-  border-top: 1px solid rgba(21, 77, 159, 0.08);
+  background: linear-gradient(180deg, #eff6ff 0%, #f5f9ff 100%);
+  border-top: 1px solid rgba(21, 77, 159, 0.11);
 `;
 
 const Inner = styled(S.Container)`
@@ -17,20 +18,16 @@ const Inner = styled(S.Container)`
 
 const Head = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: end;
-  gap: 24px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
+  gap: 16px;
 `;
 
 const Label = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: #2c528e;
+  color: #23549a;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -40,23 +37,16 @@ const Label = styled.span`
     content: '';
     width: 28px;
     height: 1px;
-    background: rgba(36, 90, 171, 0.42);
+    background: rgba(36, 90, 171, 0.54);
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #122f57;
+  color: #0f3b73;
   font-size: clamp(2rem, 3.7vw, 2.9rem);
   line-height: 1.14;
   letter-spacing: -0.03em;
-`;
-
-const Description = styled.p`
-  margin: 0;
-  color: #4d6384;
-  font-size: 0.95rem;
-  line-height: 1.72;
 `;
 
 const Grid = styled.div`
@@ -73,11 +63,11 @@ const Featured = styled.article`
   display: grid;
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
   min-height: 334px;
-  border-radius: 8px;
-  border: 1px solid rgba(20, 76, 158, 0.14);
+  border-radius: 6px;
+  border: 1px solid rgba(20, 76, 158, 0.2);
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
+  box-shadow: 0 12px 24px rgba(16, 53, 114, 0.1);
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
@@ -94,13 +84,14 @@ const FeaturedBody = styled.div`
   flex-direction: column;
   gap: 14px;
   padding: 24px 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
 `;
 
 const Meta = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #5c7397;
+  color: #4e6c96;
   font-size: 0.8rem;
   font-weight: 700;
 `;
@@ -114,7 +105,7 @@ const Dot = styled.span`
 
 const FeaturedTitle = styled.h3`
   margin: 0;
-  color: #163e77;
+  color: #11407a;
   font-size: 1.3rem;
   line-height: 1.42;
   letter-spacing: -0.02em;
@@ -122,7 +113,7 @@ const FeaturedTitle = styled.h3`
 
 const FeaturedText = styled.p`
   margin: 0;
-  color: #4d6384;
+  color: #3f628b;
   font-size: 0.92rem;
   line-height: 1.64;
 `;
@@ -130,7 +121,7 @@ const FeaturedText = styled.p`
 const FeaturedLink = styled.a`
   margin-top: auto;
   width: fit-content;
-  color: #1c57a8;
+  color: #1b5ab0;
   font-size: 0.88rem;
   font-weight: 700;
 `;
@@ -147,13 +138,23 @@ const SideCard = styled.article`
   gap: 10px;
   min-height: 104px;
   padding: 18px 18px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(20, 76, 158, 0.13);
-  background: #f7fafd;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 76, 158, 0.18);
+  background: linear-gradient(180deg, #f8fbff 0%, #eff6ff 100%);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(20, 76, 158, 0.3);
+    box-shadow: 0 12px 20px rgba(16, 53, 114, 0.1);
+  }
 `;
 
 const SideCategory = styled.span`
-  color: #2e5ea4;
+  color: #1f5eb2;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -161,29 +162,30 @@ const SideCategory = styled.span`
 
 const SideTitle = styled.h4`
   margin: 0;
-  color: #1d3f74;
+  color: #14417e;
   font-size: 1rem;
   line-height: 1.5;
 `;
 
 const SideText = styled.p`
   margin: 0;
-  color: #5b7294;
+  color: #46658e;
   font-size: 0.88rem;
   line-height: 1.56;
 `;
 
-const MoreLink = styled.a`
+const SideMeta = styled.span`
   margin-top: auto;
-  width: fit-content;
-  color: #1c57a8;
-  font-size: 0.84rem;
+  color: #4a6992;
+  font-size: 0.82rem;
   font-weight: 700;
 `;
 
 export function IssueReportSection() {
+  const { t, tx } = useI18n();
   const featured = issueReports[0];
-  const sideItems = [issueReports[1], ...newsItems].filter(Boolean).slice(0, 3);
+  const featuredShinhanNews = shinhanNewsItems[0];
+  const featuredNewsletter = newsletterItems[0];
 
   if (!featured) return null;
 
@@ -196,38 +198,45 @@ export function IssueReportSection() {
           <Head>
             <div>
               <Label>Insights</Label>
-              <Title>대표 이슈 리포트 / 소식</Title>
+              <Title>{t('대표 이슈 리포트 / 소식', 'Featured Report / News')}</Title>
             </div>
-            <Description>
-              주요 이슈를 편집형으로 요약해 빠르게 파악할 수 있도록 구성했습니다. 상세 자료와 아카이브는 소식/자료
-              페이지에서 확인할 수 있습니다.
-            </Description>
           </Head>
 
           <Grid>
             <Featured>
-              <FeaturedImage image={featured.image} />
+              <FeaturedImage image={featured.image ?? '/hero/busan-port.jpg'} />
               <FeaturedBody>
                 <Meta>
-                  <span>{featured.source}</span>
+                  <span>{tx(featured.source)}</span>
                   <Dot />
-                  <span>{featured.date}</span>
+                  <span>{featured.publishedAt}</span>
                 </Meta>
-                <FeaturedTitle>{featured.title}</FeaturedTitle>
-                <FeaturedText>{featured.body}</FeaturedText>
-                <FeaturedLink href="/news/issue-report">리포트 자세히 보기</FeaturedLink>
+                <FeaturedTitle>{tx(featured.title)}</FeaturedTitle>
+                <FeaturedText>{tx(featured.summary)}</FeaturedText>
+                <FeaturedLink href={featured.url} target="_blank" rel="noreferrer">
+                  {t('원문 보기', 'View Source')}
+                </FeaturedLink>
               </FeaturedBody>
             </Featured>
 
             <SideList>
-              {sideItems.map((item) => (
-                <SideCard key={item.title}>
-                  <SideCategory>{'source' in item ? '이슈 리포트' : item.category}</SideCategory>
-                  <SideTitle>{item.title}</SideTitle>
-                  <SideText>{item.body}</SideText>
-                  <MoreLink href="/news">읽어보기</MoreLink>
+              {featuredShinhanNews ? (
+                <SideCard key={featuredShinhanNews.id}>
+                  <SideCategory>{t('신한 NEWS', 'Shinhan NEWS')}</SideCategory>
+                  <SideTitle>{tx(featuredShinhanNews.title)}</SideTitle>
+                  <SideText>{tx(featuredShinhanNews.summary)}</SideText>
+                  <SideMeta>{featuredShinhanNews.publishedAt}</SideMeta>
                 </SideCard>
-              ))}
+              ) : null}
+
+              {featuredNewsletter ? (
+                <SideCard key={featuredNewsletter.id}>
+                  <SideCategory>{t('소식지', 'Newsletter')}</SideCategory>
+                  <SideTitle>{tx(featuredNewsletter.title)}</SideTitle>
+                  <SideText>{tx(featuredNewsletter.summary)}</SideText>
+                  <SideMeta>{featuredNewsletter.publishedAt}</SideMeta>
+                </SideCard>
+              ) : null}
             </SideList>
           </Grid>
         </Inner>

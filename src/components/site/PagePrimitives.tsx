@@ -13,17 +13,17 @@ export const PageContainer = styled.div`
 export const PageSection = styled.section<{ tone?: 'base' | 'soft' | 'blue' }>`
   padding: clamp(66px, 8vw, 96px) 0;
   background: ${({ tone }) => {
-    if (tone === 'soft') return '#f5f8fc';
-    if (tone === 'blue') return '#f4f8fd';
-    return '#ffffff';
+    if (tone === 'soft') return '#f2f7ff';
+    if (tone === 'blue') return '#e8f2ff';
+    return '#f5f9ff';
   }};
-  border-top: 1px solid rgba(17, 72, 149, 0.08);
+  border-top: 1px solid rgba(17, 72, 149, 0.1);
 `;
 
 export const HeroSection = styled(PageSection)`
   padding-top: clamp(72px, 9vw, 112px);
   border-top: 0;
-  background: linear-gradient(180deg, #eef3f9 0%, #f5f8fc 56%, #ffffff 100%);
+  background: linear-gradient(180deg, #eaf2ff 0%, #f2f7ff 56%, #f8fbff 100%);
 `;
 
 export const HeroGrid = styled(PageContainer)`
@@ -46,7 +46,7 @@ export const HeroVisual = styled.div`
 `;
 
 export const Kicker = styled.span`
-  color: #2d5fa6;
+  color: #1f5cb2;
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -63,7 +63,7 @@ export const Title = styled.h1`
 
 export const SectionTitle = styled.h2`
   margin: 10px 0 0;
-  color: #163f7f;
+  color: #123a75;
   font-size: clamp(1.76rem, 3.2vw, 2.65rem);
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -71,7 +71,7 @@ export const SectionTitle = styled.h2`
 
 export const Lead = styled.p`
   margin: 16px 0 0;
-  color: #4e6385;
+  color: #445f86;
   font-size: 1rem;
   line-height: 1.7;
   max-width: 720px;
@@ -90,9 +90,9 @@ export const PrimaryButton = styled(Link)`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 7px;
-  border: 1px solid rgba(19, 84, 180, 0.28);
-  background: #1c5cb8;
+  border-radius: 6px;
+  border: 1px solid rgba(19, 84, 180, 0.34);
+  background: linear-gradient(180deg, #2567c2, #174d9a);
   color: #ffffff;
   font-size: 0.92rem;
   font-weight: 700;
@@ -104,10 +104,10 @@ export const SecondaryButton = styled(Link)`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 7px;
-  border: 1px solid rgba(19, 84, 180, 0.2);
-  background: #ffffff;
-  color: #1c4f98;
+  border-radius: 6px;
+  border: 1px solid rgba(19, 84, 180, 0.24);
+  background: #f6faff;
+  color: #1a4f9a;
   font-size: 0.92rem;
   font-weight: 700;
 `;
@@ -131,10 +131,10 @@ export const HeadLink = styled(Link)`
   justify-content: center;
   min-height: 42px;
   padding: 0 16px;
-  border-radius: 7px;
-  border: 1px solid rgba(20, 78, 161, 0.2);
-  color: #1d4f98;
-  background: #f8fbff;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 78, 161, 0.26);
+  color: #1b4d96;
+  background: #eff6ff;
   font-size: 0.9rem;
   font-weight: 700;
 `;
@@ -158,22 +158,22 @@ export const Card = styled.article`
   flex-direction: column;
   gap: 12px;
   padding: 22px;
-  border-radius: 8px;
-  border: 1px solid rgba(19, 75, 154, 0.13);
+  border-radius: 6px;
+  border: 1px solid rgba(19, 75, 154, 0.18);
   background: #ffffff;
-  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.055);
+  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
 `;
 
 export const CardTitle = styled.h3`
   margin: 0;
-  color: #163f7d;
+  color: #123d79;
   font-size: 1.14rem;
   letter-spacing: -0.02em;
 `;
 
 export const CardText = styled.p`
   margin: 0;
-  color: #536b8d;
+  color: #486485;
   font-size: 0.93rem;
   line-height: 1.64;
 `;
@@ -181,7 +181,7 @@ export const CardText = styled.p`
 export const CardLink = styled(Link)`
   margin-top: auto;
   width: fit-content;
-  color: #1b56a8;
+  color: #1a59b0;
   font-size: 0.9rem;
   font-weight: 700;
 `;
@@ -206,7 +206,7 @@ export const SplitGrid = styled(PageContainer)`
 
 export const Panel = styled.div`
   padding: 22px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid rgba(19, 75, 154, 0.13);
   background: #ffffff;
 `;

@@ -1,4 +1,5 @@
 import { siteContact } from '../../data/home';
+import { useI18n } from '../../i18n/useI18n';
 import * as P from './PagePrimitives';
 
 type ContactCtaSectionProps = {
@@ -8,21 +9,32 @@ type ContactCtaSectionProps = {
 
 export function ContactCtaSection({
   title = '문의가 필요한 이슈가 있으신가요?',
-  body = '전화 상담, 분야별 전문가 연결, 온라인 문의 중 편한 방식으로 바로 연결해드립니다.',
+  body = '전화 또는 온라인 문의로 필요한 상담 채널을 안내해드립니다.',
 }: ContactCtaSectionProps) {
+  const { t } = useI18n();
+
   return (
     <P.PageSection tone="blue">
       <P.PageContainer data-reveal>
         <P.Kicker>Contact</P.Kicker>
-        <P.SectionTitle>{title}</P.SectionTitle>
-        <P.Lead>{body}</P.Lead>
+        <P.SectionTitle>
+          {title === '문의가 필요한 이슈가 있으신가요?'
+            ? t('문의가 필요한 이슈가 있으신가요?', 'Need support on a customs issue?')
+            : title}
+        </P.SectionTitle>
+        <P.Lead>
+          {body === '전화 또는 온라인 문의로 필요한 상담 채널을 안내해드립니다.'
+            ? t(
+                '전화 또는 온라인 문의로 필요한 상담 채널을 안내해드립니다.',
+                'We guide you to the right consultation channel by phone or online.',
+              )
+            : body}
+        </P.Lead>
         <P.HeroActions>
-          <P.PrimaryButton to="/contact">Contact Us</P.PrimaryButton>
-          <P.SecondaryButton to="/members/experts">분야별 전문가 보기</P.SecondaryButton>
-          <P.SecondaryButton to="/offices">사무소 보기</P.SecondaryButton>
+          <P.PrimaryButton to="/contact">{t('문의하기', 'Contact Us')}</P.PrimaryButton>
         </P.HeroActions>
         <P.Lead>
-          T. {siteContact.phone} · E. {siteContact.email}
+          {t('대표번호', 'Phone')} {siteContact.phone} · {t('이메일', 'Email')} {siteContact.email}
         </P.Lead>
       </P.PageContainer>
     </P.PageSection>

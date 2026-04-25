@@ -4,27 +4,27 @@ import type {
   ItService,
   LinkItem,
   Member,
-  NewsItem,
+  NewsletterItem,
   OfficeBranch,
   PracticeAreaDetail,
+  ShinhanNewsItem,
 } from '../types/site';
+import {
+  flashItems as legacyFlashItems,
+  newsletterItems as legacyNewsletterItems,
+  seminarItems as legacySeminarItems,
+} from './pageContent';
 
-const apparelHeroAsset = new URL('../assets/4a68c8298f3c035fa15ba27546d15473.jpg', import.meta.url).href;
-const semiconductorHeroAsset = new URL(
-  '../assets/robotic-arm-placing-chip-circuit-board.jpg',
-  import.meta.url,
-).href;
-
-export const brandMarkPath = '/brand-mark.png';
+export const brandMarkPath = '/brand-mark.svg';
 
 export const utilityLinks: LinkItem[] = [
   { id: 'kor', label: 'KOR', href: '/' },
-  { id: 'directions', label: '찾아오시는 길', href: '/about/location' },
 ];
 
 export const footerLinks: LinkItem[] = [
   { id: 'terms', label: '서비스 이용약관', href: '/contact' },
   { id: 'privacy', label: '개인정보처리방침', href: '/contact' },
+  { id: 'recruit', label: '채용', href: '/recruit' },
   { id: 'disclaimer', label: '면책공고', href: '/contact' },
   { id: 'email-protection', label: '이메일무단수집거부', href: '/contact' },
 ];
@@ -39,33 +39,88 @@ export const siteContact = {
 export const heroSlides: HeroSlide[] = [
   {
     label: '반도체',
-    image: semiconductorHeroAsset,
-    objectPosition: 'center 52%',
-    mobileObjectPosition: '56% center',
+    labelEn: 'Semiconductor',
+    eyebrow: 'Advanced Manufacturing',
+    eyebrowEn: 'Advanced Manufacturing',
+    headline: '정밀한 통관 운영으로\n반도체 공급망을 지킵니다',
+    headlineEn: 'Protecting semiconductor supply chains\nthrough precise customs operations',
+    summary: '수입·수출 신고부터 사후 검증까지 생산 일정에 맞춰 실무를 관리합니다.',
+    summaryEn: 'We manage import-export declarations and post-verification in line with production schedules.',
+    image: '/hero/semiconductor.jpg',
+    secondaryImage: '/subpages/service-main-consulting.jpg',
+    objectPosition: 'center 50%',
+    secondaryObjectPosition: 'center 52%',
+    mobileObjectPosition: '58% center',
+    mobileSecondaryObjectPosition: '62% center',
+    theme: 'deep-blue',
   },
   {
-    label: '자동차 부품',
-    image: '/hero/auto-parts.jpg',
+    label: '항공물류',
+    labelEn: 'Air Cargo',
+    eyebrow: 'Air Cargo Operations',
+    eyebrowEn: 'Air Cargo Operations',
+    headline: '항공 물류권역의 긴급 통관을\n신속하게 연결합니다',
+    headlineEn: 'Rapidly connecting urgent customs\noperations for air cargo zones',
+    summary: '공항 기반 통관과 물류 연계를 한 흐름으로 운영해 납기 리스크를 줄입니다.',
+    summaryEn: 'Airport customs and logistics are managed as one flow to reduce lead-time risk.',
+    image: '/hero/incheon-airport.jpg',
+    secondaryImage: '/subpages/service-logistics.jpg',
     objectPosition: 'center 46%',
-    mobileObjectPosition: '62% center',
+    secondaryObjectPosition: 'center 38%',
+    mobileObjectPosition: '66% center',
+    mobileSecondaryObjectPosition: '60% center',
+    theme: 'deep-blue',
   },
   {
-    label: '의류',
-    image: apparelHeroAsset,
-    objectPosition: 'center 48%',
-    mobileObjectPosition: '54% center',
+    label: '항만',
+    labelEn: 'Port Logistics',
+    eyebrow: 'Port Logistics',
+    eyebrowEn: 'Port Logistics',
+    headline: '항만 통관부터 보세·운송 연계까지\n현장 기준으로 대응합니다',
+    headlineEn: 'From port clearance to bonded\ntransport support, aligned to field operations',
+    summary: '부산항 중심의 해상 물류 흐름에 맞춰 신고·검사·사후 대응을 지원합니다.',
+    summaryEn: 'We support declarations, inspections, and follow-up actions for maritime logistics at Busan Port.',
+    image: '/hero/busan-port.jpg',
+    secondaryImage: '/subpages/service-main-logistics.jpg',
+    objectPosition: 'center 42%',
+    secondaryObjectPosition: 'center 56%',
+    mobileObjectPosition: '64% center',
+    mobileSecondaryObjectPosition: '56% center',
+    theme: 'light-blue',
   },
   {
     label: '제약',
+    labelEn: 'Pharma',
+    eyebrow: 'Healthcare Compliance',
+    eyebrowEn: 'Healthcare Compliance',
+    headline: '규정 대응이 까다로운 의약 품목도\n체계적으로 관리합니다',
+    headlineEn: 'Systematic customs control for\nhigh-compliance pharmaceutical goods',
+    summary: '요건 검토, 인허가 확인, 통관 단계 점검을 일관된 프로세스로 운영합니다.',
+    summaryEn: 'Requirements review, permit checks, and clearance checkpoints are handled in one consistent process.',
     image: '/hero/pharma.jpg',
+    secondaryImage: '/subpages/service-main-import.jpg',
     objectPosition: 'center 42%',
-    mobileObjectPosition: '58% center',
+    secondaryObjectPosition: 'center 48%',
+    mobileObjectPosition: '66% center',
+    mobileSecondaryObjectPosition: '58% center',
+    theme: 'light-blue',
   },
   {
-    label: '부산항',
-    image: '/hero/busan-port.jpg',
+    label: '자동차 부품',
+    labelEn: 'Auto Parts',
+    eyebrow: 'Automotive Components',
+    eyebrowEn: 'Automotive Components',
+    headline: '자동차 부품 통관 업무를\n안정적으로 운영합니다',
+    headlineEn: 'Reliable customs operations for\nautomotive parts',
+    summary: '반복 거래 품목의 신고 품질을 높이고 공급 일정에 맞춘 대응 체계를 제공합니다.',
+    summaryEn: 'We improve declaration quality for recurring parts and align operations with supply schedules.',
+    image: '/hero/auto-parts.jpg',
+    secondaryImage: '/hero/apparel.jpg',
     objectPosition: 'center 44%',
-    mobileObjectPosition: '58% center',
+    secondaryObjectPosition: 'center 52%',
+    mobileObjectPosition: '62% center',
+    mobileSecondaryObjectPosition: '56% center',
+    theme: 'deep-blue',
   },
 ];
 
@@ -209,8 +264,7 @@ export const officeBranches: OfficeBranch[] = [
     label: '신한인비스타',
     shortLabel: '인비스타',
     region: '김포공항 물류권역',
-    summary:
-      '국제물류, 창고 운영, 3PL, 내륙운송까지 통관 이후의 물류 실행력을 연결하는 실무형 물류 법인입니다.',
+    summary: '국제물류, 창고 운영, 3PL, 내륙운송을 담당하며 통관 이후 물류 업무를 연계합니다.',
     address: '서울시 강서구 하늘길 210 김포국제공항 화물청사 8-4 3,6게이트',
     tel: '02-2663-1181',
     fax: '02-2665-9114',
@@ -275,7 +329,7 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   {
     id: 'practice-aeo',
     title: 'AEO',
-    body: '신규 공인·갱신·사후관리·등급조정까지 AEO 운영 전 주기를 실무형으로 지원합니다.',
+    body: '신규 공인, 갱신, 사후관리, 등급조정까지 AEO 운영 단계별 업무를 지원합니다.',
   },
   {
     id: 'practice-investigation',
@@ -295,7 +349,7 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   {
     id: 'practice-vietnam',
     title: '베트남',
-    body: '하노이 현지 법인 기반으로 통관, 수책관리, FTA, 심사 대응, 상시자문을 통합 지원합니다.',
+    body: '하노이 법인 중심으로 통관, 수책관리, FTA, 심사 대응, 상시 자문을 제공합니다.',
   },
   {
     id: 'practice-fda',
@@ -306,40 +360,44 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
 
 export const issueReports: IssueReport[] = [
   {
-    source: '신한관세법인 매거진',
-    date: '2026.02.04',
-    title: '2026년, 신기술과 빠른 투자의 시대에 관세도 함께 검토하자',
-    body: 'AI, 자동화, 첨단 장비 투자처럼 기술 의사결정이 빨라질수록 HS 분류, 감면 요건, 수입 신고 구조를 함께 검토해야 비용과 일정 리스크를 줄일 수 있다는 흐름을 보여주는 게시물입니다.',
+    id: 'issue-kcs-001',
+    source: '한국관세사회',
+    publishedAt: '2026.04.18',
+    title: 'FTA 사후검증 대응 시 필수 점검 항목',
+    summary: '원산지 소명자료, 거래 흐름, 협정별 요건 검토 항목을 중심으로 사후검증 대응 포인트를 정리한 외부 기관형 이슈입니다.',
+    url: 'https://www.koreacustoms.or.kr',
     image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC1.webp',
-    related: ['출처: 신한관세법인 매거진', '키워드: 신기술 투자 · 관세 검토'],
-    tags: ['관세검토', '신기술', '투자'],
+    tags: ['FTA', '사후검증', '원산지'],
   },
   {
-    source: '신한관세법인 매거진',
-    date: '2026.02.04',
-    title: '반도체 조립용 기계의 HS CODE 분류 사례',
-    body: '반도체 장비처럼 사양과 용도에 따라 세번 판단이 갈리는 품목은 초기 분류가 전체 세율, 통관 일정, 사후 리스크에 직접 연결되기 때문에 실무형 검토 체계를 강조하는 사례입니다.',
+    id: 'issue-kcs-002',
+    source: '관세청',
+    publishedAt: '2026.04.11',
+    title: '수입신고 단계 품목분류 사전 점검 강화 동향',
+    summary: '세번 분류 정확도와 사후 추징 리스크 간 연계를 중심으로, 신고 전 검토체계 필요성을 보여주는 관세청 공지 기반 이슈입니다.',
+    url: 'https://www.customs.go.kr',
     image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC2.webp',
-    related: ['출처: 논리로 푸는 HS 사례', '키워드: 반도체 · HS CODE'],
-    tags: ['HS CODE', '반도체', '품목분류'],
+    tags: ['품목분류', '수입신고', '사전심사'],
   },
   {
-    source: '신한관세법인 매거진',
-    date: '2026.02.04',
-    title: '베트남 수출입통관절차 시행규칙 개정안 공표',
-    body: '베트남 현지 통관 규정 변화는 신고 준비 서류, 심사 흐름, 현지 파트너 대응 방식까지 바꾸기 때문에 해외 현지 관세 컨설팅 역량을 함께 보여주기 좋은 주제입니다.',
+    id: 'issue-kita-003',
+    source: '한국무역협회',
+    publishedAt: '2026.04.05',
+    title: '주요 수출국 통관 규정 변경 브리핑',
+    summary: '국가별 통관·인증 조건 변화를 비교해 기업이 사전에 준비해야 할 실무 체크포인트를 제시하는 무역협회 자료 기반 이슈입니다.',
+    url: 'https://www.kita.net',
     image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC1.webp',
-    related: ['출처: Global Customs Insight', '키워드: 베트남 · 해외통관'],
-    tags: ['베트남', '해외통관', '규정개정'],
+    tags: ['수출규정', '통관', '무역실무'],
   },
   {
-    source: '신한관세법인 매거진',
-    date: '2026.02.04',
-    title: '수입화물 반출기간 관련 실무',
-    body: '반출기간 관리와 보관 리스크는 현장 운영과 물류비에 바로 영향을 주기 때문에, 알림과 일정 관리가 가능한 통관 관리 시스템의 필요성을 설명하기에 적합한 실무형 이슈입니다.',
+    id: 'issue-kotra-004',
+    source: 'KOTRA',
+    publishedAt: '2026.03.28',
+    title: '베트남 수입규제·통관 실무 업데이트',
+    summary: '현지 세관 운영 변화와 기업 대응 사례를 바탕으로 베트남 법인 운영 시 필요한 선제 대응 전략을 제시하는 코트라 자료형 이슈입니다.',
+    url: 'https://www.kotra.or.kr',
     image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC2.webp',
-    related: ['출처: FTA 및 수출입 실무 안내', '키워드: 반출기간 · 물류관리'],
-    tags: ['반출기간', '물류', '수입실무'],
+    tags: ['베트남', '통관규정', '해외법인'],
   },
 ];
 
@@ -366,20 +424,34 @@ export const itServices: ItService[] = [
   },
 ];
 
-export const newsItems: NewsItem[] = [
-  {
-    category: '소식지',
-    title: '원산지 검증 대응 레터',
-    body: '실무 담당자가 준비해야 할 증빙 자료와 자주 반복되는 오류 포인트를 담았습니다.',
-  },
-  {
-    category: '블로그',
-    title: '관세 실무 인사이트 아카이브',
-    body: '현장에서 자주 마주치는 통관, 품목분류, 원산지 검토 이슈를 이해하기 쉽게 정리한 콘텐츠를 모았습니다.',
-  },
-  {
-    category: '세미나',
-    title: '인증·검역 이슈 리포트',
-    body: '식품, 소비재, 의료기기 수입 단계에서 반복되는 규제 이슈를 보기 쉽게 정리했습니다.',
-  },
+export const shinhanNewsItems: ShinhanNewsItem[] = [
+  ...legacyFlashItems.map((item, index) => ({
+    id: `shinhan-news-flash-${index + 1}`,
+    category: 'flash' as const,
+    categoryLabel: 'FLASH',
+    title: item.title,
+    summary: item.body,
+    publishedAt: ['2026.04.16', '2026.04.04', '2026.03.22'][index] ?? '2026.03.01',
+    href: '/news/shinhan-news',
+  })),
+  ...legacySeminarItems.map((item, index) => ({
+    id: `shinhan-news-seminar-${index + 1}`,
+    category: 'seminar' as const,
+    categoryLabel: '세미나',
+    title: item.title,
+    summary: item.body,
+    publishedAt: ['2026.05.08', '2026.03.21', '2026.02.14'][index] ?? '2026.02.01',
+    href: '/news/shinhan-news',
+  })),
 ];
+
+export const newsletterItems: NewsletterItem[] = legacyNewsletterItems.map((item, index) => ({
+  id: `newsletter-${index + 1}`,
+  issue: item.date,
+  title: item.title,
+  summary: item.body,
+  publishedAt: item.date,
+  href: item.downloadHref ?? '/news/newsletter',
+  language: item.language,
+  downloadHref: item.downloadHref,
+}));

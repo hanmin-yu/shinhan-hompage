@@ -1,21 +1,20 @@
-import { headerNavigation } from '../../../config/navigation';
-import { utilityLinks } from '../../../data/home';
+import { getHeaderNavigation } from '../../../config/navigation';
 import type { NavItem } from '../../../types/site';
-import type { FontMode } from '../../../types/site';
+import { useI18n } from '../../../i18n/useI18n';
 import { BrandMarkGraphic } from '../BrandMarkGraphic';
 import * as S from '../homeStyles';
 
 type SiteHeaderProps = {
-  fontMode: FontMode;
-  onToggleFontMode: () => void;
   onOpenMobileMenu: () => void;
 };
 
 function renderDropdownItems(items: NavItem[]) {
   return items.map((child) => {
+    const childTo = child.to ?? child.href ?? '/';
+
     if (!child.children?.length) {
       return (
-        <S.NavDropdownLink key={child.id} href={child.href ?? '/'}>
+        <S.NavDropdownLink key={child.id} to={childTo}>
           {child.label}
         </S.NavDropdownLink>
       );
@@ -26,7 +25,7 @@ function renderDropdownItems(items: NavItem[]) {
         <S.NavDropdownGroupTitle>{child.label}</S.NavDropdownGroupTitle>
         <S.NavDropdownGroupList>
           {child.children.map((grandChild) => (
-            <S.NavDropdownSubLink key={grandChild.id} href={grandChild.href ?? '/'}>
+            <S.NavDropdownSubLink key={grandChild.id} to={grandChild.to ?? grandChild.href ?? '/'}>
               {grandChild.label}
             </S.NavDropdownSubLink>
           ))}
@@ -36,13 +35,16 @@ function renderDropdownItems(items: NavItem[]) {
   });
 }
 
-export function SiteHeader({ fontMode, onToggleFontMode, onOpenMobileMenu }: SiteHeaderProps) {
+export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
+  const { language, setLanguage, t } = useI18n();
+  const headerNavigation = getHeaderNavigation(language);
+
   return (
     <S.Header>
       <S.HeaderInner>
-        <S.Brand href="/">
+        <S.Brand to="/">
           <S.BrandMark aria-hidden="true">
-            <BrandMarkGraphic alt="신한관세법인 로고" />
+            <BrandMarkGraphic alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
           </S.BrandMark>
           <S.BrandText>
             <S.BrandTitle>SHINHAN</S.BrandTitle>
@@ -54,7 +56,7 @@ export function SiteHeader({ fontMode, onToggleFontMode, onOpenMobileMenu }: Sit
             <S.Nav>
               {headerNavigation.map((item) => (
                 <S.NavItem key={item.id}>
-                  <S.NavLink href={item.href ?? '/'} hasChildren={Boolean(item.children?.length)}>
+                  <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={Boolean(item.children?.length)}>
                     {item.label}
                   </S.NavLink>
                   {item.children ? (
@@ -69,17 +71,13 @@ export function SiteHeader({ fontMode, onToggleFontMode, onOpenMobileMenu }: Sit
 
           <S.HeaderTools>
             <S.HeaderUtilityLinks>
-              {utilityLinks.map((item) => (
-                <S.HeaderUtilityLink key={item.id} href={item.href ?? '/'}>
-                  {item.label}
-                </S.HeaderUtilityLink>
-              ))}
+              <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
+                {language === 'ko' ? 'KOR' : 'ENG'}
+              </S.HeaderUtilityButton>
+              <S.HeaderUtilityLink to="/about/location">{t('찾아오시는 길', 'Directions')}</S.HeaderUtilityLink>
             </S.HeaderUtilityLinks>
-            <S.FontModeToggle type="button" onClick={onToggleFontMode}>
-              {fontMode === 'nanum' ? '본고딕 보기' : '나눔스퀘어 보기'}
-            </S.FontModeToggle>
-            <S.ContactButton href="/contact">Contact Us</S.ContactButton>
-            <S.MobileIconButton type="button" kind="menu" aria-label="메뉴" onClick={onOpenMobileMenu} />
+            <S.ContactButton to="/contact">Contact Us</S.ContactButton>
+            <S.MobileIconButton type="button" kind="menu" aria-label={t('메뉴', 'Menu')} onClick={onOpenMobileMenu} />
           </S.HeaderTools>
         </S.HeaderRight>
       </S.HeaderInner>

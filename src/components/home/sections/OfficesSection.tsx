@@ -4,12 +4,14 @@ import styled from '@emotion/styled';
 import koreaMapAsset from '../../../assets/map-korea.svg';
 import vietnamMapAsset from '../../../assets/map-vietnam.svg';
 import { officeBranches, siteContact } from '../../../data/home';
+import { useI18n } from '../../../i18n/useI18n';
+import { getGoogleMapUrl, getNaverMapUrl } from '../../../utils/mapLinks';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
   padding: 88px 0 92px;
-  background: #f8fafd;
-  border-top: 1px solid rgba(21, 77, 159, 0.08);
+  background: linear-gradient(180deg, #edf4ff 0%, #f3f8ff 100%);
+  border-top: 1px solid rgba(21, 77, 159, 0.12);
 `;
 
 const Inner = styled(S.Container)`
@@ -20,38 +22,25 @@ const Inner = styled(S.Container)`
 
 const Head = styled.div`
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 24px;
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
-
-const Label = styled.span`
-  color: #2e5692;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #122f57;
+  color: #103b72;
   font-size: clamp(2rem, 3.8vw, 2.9rem);
   line-height: 1.14;
   letter-spacing: -0.03em;
 `;
 
-const Description = styled.p`
-  margin: 0;
-  max-width: 580px;
-  color: #4d6384;
-  font-size: 0.95rem;
-  line-height: 1.7;
+const Label = styled.span`
+  color: #21559d;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 `;
 
 const OfficeTabs = styled.div`
@@ -63,10 +52,10 @@ const OfficeTabs = styled.div`
 const OfficeTab = styled.button<{ $active: boolean }>`
   min-height: 40px;
   padding: 0 14px;
-  border-radius: 7px;
-  border: 1px solid ${({ $active }) => ($active ? 'rgba(19, 74, 154, 0.42)' : 'rgba(20, 76, 158, 0.16)')};
-  background: ${({ $active }) => ($active ? '#ebf2ff' : '#ffffff')};
-  color: ${({ $active }) => ($active ? '#194c92' : '#5e738f')};
+  border-radius: 6px;
+  border: 1px solid ${({ $active }) => ($active ? 'rgba(19, 74, 154, 0.5)' : 'rgba(20, 76, 158, 0.2)')};
+  background: ${({ $active }) => ($active ? '#dfeeff' : '#f8fbff')};
+  color: ${({ $active }) => ($active ? '#154b94' : '#47698f')};
   font-size: 0.9rem;
   font-weight: ${({ $active }) => ($active ? 700 : 600)};
   cursor: pointer;
@@ -87,10 +76,22 @@ const InfoCard = styled.article`
   flex-direction: column;
   gap: 18px;
   padding: 24px;
-  border-radius: 8px;
-  border: 1px solid rgba(19, 74, 154, 0.14);
+  border-radius: 6px;
+  border: 1px solid rgba(19, 74, 154, 0.19);
   background: #ffffff;
-  box-shadow: 0 8px 18px rgba(16, 53, 114, 0.06);
+  box-shadow: 0 12px 24px rgba(16, 53, 114, 0.1);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    width: 56px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2a6bc6, #7ba7de);
+  }
 `;
 
 const Badge = styled.span`
@@ -100,8 +101,8 @@ const Badge = styled.span`
   min-height: 28px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(22, 79, 159, 0.12);
-  color: #1e4f92;
+  background: rgba(22, 79, 159, 0.16);
+  color: #1a5197;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -110,14 +111,14 @@ const Badge = styled.span`
 
 const OfficeName = styled.h3`
   margin: 0;
-  color: #173d74;
+  color: #11407a;
   font-size: 1.46rem;
   letter-spacing: -0.02em;
 `;
 
 const OfficeSummary = styled.p`
   margin: 0;
-  color: #4f6789;
+  color: #43658e;
   font-size: 0.94rem;
   line-height: 1.66;
 `;
@@ -130,14 +131,14 @@ const FactGrid = styled.div`
 
 const Fact = styled.div`
   padding: 14px;
-  border-radius: 7px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
-  background: #f8fbff;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 76, 158, 0.16);
+  background: #f1f7ff;
 `;
 
 const FactLabel = styled.strong`
   display: block;
-  color: #245493;
+  color: #1e559f;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -146,9 +147,29 @@ const FactLabel = styled.strong`
 
 const FactValue = styled.p`
   margin: 6px 0 0;
-  color: #4f6789;
+  color: #45678e;
   font-size: 0.9rem;
   line-height: 1.56;
+`;
+
+const MapLinkRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const MapLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 75, 157, 0.26);
+  background: #eef6ff;
+  color: #19519c;
+  font-size: 0.84rem;
+  font-weight: 700;
 `;
 
 const ContactBlock = styled.div`
@@ -167,39 +188,42 @@ const ContactItem = styled.a`
   gap: 8px;
   min-height: 118px;
   padding: 18px;
-  border-radius: 7px;
-  border: 1px solid rgba(20, 76, 158, 0.14);
-  background: #f7fafd;
+  border-radius: 6px;
+  border: 1px solid rgba(20, 76, 158, 0.18);
+  background: #f0f7ff;
 `;
 
 const ContactLabel = styled.strong`
-  color: #1e4f92;
+  color: #15509d;
   font-size: 1.02rem;
   letter-spacing: -0.01em;
 `;
 
-const ContactText = styled.p`
-  margin: 0;
-  color: #5a7091;
-  font-size: 0.9rem;
-  line-height: 1.56;
-`;
-
 const ContactAction = styled.span`
   margin-top: auto;
-  color: #1c57a8;
+  color: #1a59ae;
   font-size: 0.88rem;
   font-weight: 700;
 `;
 
 export function OfficesSection() {
+  const { t, tx } = useI18n();
   const [selectedOfficeId, setSelectedOfficeId] = useState(officeBranches[0]?.id ?? '');
   const selectedOffice = officeBranches.find((office) => office.id === selectedOfficeId) ?? officeBranches[0];
   const domesticOffices = officeBranches.filter((office) => office.id !== 'vietnam');
   const vietnamOffice = officeBranches.find((office) => office.id === 'vietnam');
+  const selectedDomesticOffice = domesticOffices.find((office) => office.id === selectedOffice.id);
 
   const phoneHref = useMemo(() => `tel:${siteContact.phone.replace(/-/g, '')}`, []);
   const mailHref = useMemo(() => `mailto:${siteContact.email}`, []);
+  const googleMapUrl = useMemo(
+    () => getGoogleMapUrl(selectedOffice?.address ?? siteContact.address, selectedOffice?.label),
+    [selectedOffice],
+  );
+  const naverMapUrl = useMemo(
+    () => getNaverMapUrl(selectedOffice?.address ?? siteContact.address, selectedOffice?.label),
+    [selectedOffice],
+  );
 
   if (!selectedOffice) return null;
 
@@ -213,12 +237,8 @@ export function OfficesSection() {
           <Head>
             <div>
               <Label>Offices & Contact</Label>
-              <Title>사무소 / 문의</Title>
+              <Title>{t('사무소 / 문의', 'Offices / Contact')}</Title>
             </div>
-            <Description>
-              국내 지사와 해외 법인 정보를 한 화면에서 확인하고, 선택 지사 기준 상세 정보와 문의 채널을 바로 연결할 수
-              있도록 구성했습니다.
-            </Description>
           </Head>
 
           <OfficeTabs>
@@ -229,16 +249,16 @@ export function OfficesSection() {
                 $active={office.id === selectedOffice.id}
                 onClick={() => setSelectedOfficeId(office.id)}
               >
-                {office.label}
+                {tx(office.label)}
               </OfficeTab>
             ))}
           </OfficeTabs>
 
           <Grid>
             <InfoCard>
-              <Badge>{selectedOffice.region}</Badge>
-              <OfficeName>{selectedOffice.label}</OfficeName>
-              <OfficeSummary>{selectedOffice.summary}</OfficeSummary>
+              <Badge>{tx(selectedOffice.region)}</Badge>
+              <OfficeName>{tx(selectedOffice.label)}</OfficeName>
+              <OfficeSummary>{tx(selectedOffice.summary)}</OfficeSummary>
 
               <FactGrid>
                 <Fact>
@@ -251,34 +271,43 @@ export function OfficesSection() {
                   {selectedOffice.fax ? <FactValue>FAX. {selectedOffice.fax}</FactValue> : null}
                 </Fact>
               </FactGrid>
+
+              <MapLinkRow>
+                <MapLink href={googleMapUrl} target="_blank" rel="noreferrer">
+                  {t('Google 지도', 'Google Maps')}
+                </MapLink>
+                <MapLink href={naverMapUrl} target="_blank" rel="noreferrer">
+                  {t('네이버 지도', 'Naver Map')}
+                </MapLink>
+              </MapLinkRow>
             </InfoCard>
 
             <S.OfficesMapCard>
               <S.OfficesMapHeader>
-                <S.OfficesMapTitle>지사 미니맵</S.OfficesMapTitle>
+                <S.OfficesMapTitle>{t('지사 미니맵', 'Office Mini Map')}</S.OfficesMapTitle>
                 <S.OfficesMapBody>
-                  국내 지사와 베트남 법인을 한눈에 확인하고, 마커를 눌러 상세 정보를 볼 수 있습니다.
+                  {t(
+                    '국내 지사와 베트남 법인을 한눈에 확인하고, 마커를 눌러 상세 정보를 볼 수 있습니다.',
+                    'Check domestic branches and the Vietnam office at a glance, and click markers to view details.',
+                  )}
                 </S.OfficesMapBody>
               </S.OfficesMapHeader>
 
               <S.OfficesMiniMap>
                 <S.OfficesMiniMapKoreaZone>
-                  <S.OfficesMiniMapKoreaImage src={koreaMapAsset} alt="대한민국 지사 지도" />
+                  <S.OfficesMiniMapKoreaImage src={koreaMapAsset} alt={t('대한민국 지사 지도', 'Korea branch map')} />
                   <S.OfficesMapLines viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    {domesticOffices.map((office) => (
+                    {selectedDomesticOffice ? (
                       <line
-                        key={office.id}
-                        x1={office.x}
-                        y1={office.y}
-                        x2={office.labelX}
-                        y2={office.labelY}
-                        stroke={
-                          selectedOffice.id === office.id ? 'rgba(54, 92, 146, 0.36)' : 'rgba(54, 92, 146, 0.18)'
-                        }
-                        strokeWidth={selectedOffice.id === office.id ? 0.8 : 0.48}
+                        x1={selectedDomesticOffice.x}
+                        y1={selectedDomesticOffice.y}
+                        x2={selectedDomesticOffice.labelX}
+                        y2={selectedDomesticOffice.labelY}
+                        stroke="rgba(54, 92, 146, 0.36)"
+                        strokeWidth={0.85}
                         strokeLinecap="round"
                       />
-                    ))}
+                    ) : null}
                   </S.OfficesMapLines>
 
                   {domesticOffices.map((office) => (
@@ -290,7 +319,7 @@ export function OfficesSection() {
                       x={office.x}
                       y={office.y}
                       onClick={() => setSelectedOfficeId(office.id)}
-                      aria-label={`${office.label} 보기`}
+                      aria-label={`${tx(office.label)} ${t('보기', 'view')}`}
                     >
                       <S.OfficesMapAnchorDot active={selectedOffice.id === office.id} accent={office.accent} />
                     </S.OfficesMapAnchor>
@@ -307,35 +336,35 @@ export function OfficesSection() {
                         active={true}
                         accent={office.accent}
                         onClick={() => setSelectedOfficeId(office.id)}
-                        aria-label={`${office.label} 보기`}
+                        aria-label={`${tx(office.label)} ${t('보기', 'view')}`}
                       >
                         <S.OfficesMapLabelDot active={true} accent={office.accent} />
-                        {office.shortLabel}
+                        {tx(office.shortLabel)}
                       </S.OfficesMapLabel>
                     ))}
                 </S.OfficesMiniMapKoreaZone>
 
                 {vietnamOffice ? (
                   <S.OfficesMiniMapVietnamZone>
-                    <S.OfficesMiniMapInsetLabel>베트남 법인</S.OfficesMiniMapInsetLabel>
-                    <S.OfficesMiniMapVietnamImage src={vietnamMapAsset} alt="베트남 법인 지도" />
+                    <S.OfficesMiniMapInsetLabel>{t('베트남 법인', 'Vietnam Office')}</S.OfficesMiniMapInsetLabel>
+                    <S.OfficesMiniMapVietnamImage src={vietnamMapAsset} alt={t('베트남 법인 지도', 'Vietnam office map')} />
                     <S.OfficesMiniMapInsetMeta>
                       <S.OfficesMiniMapInsetTitle>Vietnam Office</S.OfficesMiniMapInsetTitle>
                       <S.OfficesMiniMapInsetCity>Hanoi</S.OfficesMiniMapInsetCity>
                     </S.OfficesMiniMapInsetMeta>
 
                     <S.OfficesMapLines viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                      <line
-                        x1={vietnamOffice.x}
-                        y1={vietnamOffice.y}
-                        x2={vietnamOffice.labelX}
-                        y2={vietnamOffice.labelY}
-                        stroke={
-                          selectedOffice.id === vietnamOffice.id ? 'rgba(54, 92, 146, 0.34)' : 'rgba(54, 92, 146, 0.18)'
-                        }
-                        strokeWidth={selectedOffice.id === vietnamOffice.id ? 0.95 : 0.58}
-                        strokeLinecap="round"
-                      />
+                      {selectedOffice.id === vietnamOffice.id ? (
+                        <line
+                          x1={vietnamOffice.x}
+                          y1={vietnamOffice.y}
+                          x2={vietnamOffice.labelX}
+                          y2={vietnamOffice.labelY}
+                          stroke="rgba(54, 92, 146, 0.34)"
+                          strokeWidth={0.95}
+                          strokeLinecap="round"
+                        />
+                      ) : null}
                     </S.OfficesMapLines>
 
                     <S.OfficesMapAnchor
@@ -345,7 +374,7 @@ export function OfficesSection() {
                       x={vietnamOffice.x}
                       y={vietnamOffice.y}
                       onClick={() => setSelectedOfficeId(vietnamOffice.id)}
-                      aria-label={`${vietnamOffice.label} 보기`}
+                      aria-label={`${tx(vietnamOffice.label)} ${t('보기', 'view')}`}
                     >
                       <S.OfficesMapAnchorDot
                         active={selectedOffice.id === vietnamOffice.id}
@@ -361,10 +390,10 @@ export function OfficesSection() {
                         active={true}
                         accent={vietnamOffice.accent}
                         onClick={() => setSelectedOfficeId(vietnamOffice.id)}
-                        aria-label={`${vietnamOffice.label} 보기`}
+                        aria-label={`${tx(vietnamOffice.label)} ${t('보기', 'view')}`}
                       >
                         <S.OfficesMapLabelDot active={true} accent={vietnamOffice.accent} />
-                        {vietnamOffice.shortLabel}
+                        {tx(vietnamOffice.shortLabel)}
                       </S.OfficesMapInsetLabelButton>
                     ) : null}
                   </S.OfficesMiniMapVietnamZone>
@@ -372,26 +401,24 @@ export function OfficesSection() {
               </S.OfficesMiniMap>
 
               <S.OfficesMapHint>
-                선택 지사: <strong>{selectedOffice.label}</strong> · {selectedOffice.region}
+                {t('선택 지사', 'Selected Office')}: <strong>{tx(selectedOffice.label)}</strong> ·{' '}
+                {tx(selectedOffice.region)}
               </S.OfficesMapHint>
             </S.OfficesMapCard>
           </Grid>
 
           <ContactBlock>
             <ContactItem href={phoneHref}>
-              <ContactLabel>전화 문의</ContactLabel>
-              <ContactText>대표번호로 연결 후 담당자와 실무 상담을 바로 진행하실 수 있습니다.</ContactText>
+              <ContactLabel>{t('전화 문의', 'Phone')}</ContactLabel>
               <ContactAction>{siteContact.phone}</ContactAction>
             </ContactItem>
             <ContactItem href={mailHref}>
-              <ContactLabel>온라인 문의</ContactLabel>
-              <ContactText>문의 내용을 남겨주시면 담당 부서 확인 후 신속히 회신드립니다.</ContactText>
+              <ContactLabel>{t('온라인 문의', 'Online Inquiry')}</ContactLabel>
               <ContactAction>{siteContact.email}</ContactAction>
             </ContactItem>
-            <ContactItem href="/offices">
-              <ContactLabel>오시는 길</ContactLabel>
-              <ContactText>서울본사 및 국내/해외 지사 위치 정보를 확인하실 수 있습니다.</ContactText>
-              <ContactAction>{siteContact.address}</ContactAction>
+            <ContactItem href={naverMapUrl} target="_blank" rel="noreferrer">
+              <ContactLabel>{t('오시는 길', 'Directions')}</ContactLabel>
+              <ContactAction>{selectedOffice.address}</ContactAction>
             </ContactItem>
           </ContactBlock>
         </Inner>

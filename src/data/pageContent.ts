@@ -14,6 +14,9 @@ export type ServiceDetailContent = {
   path: string;
   title: string;
   summary: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  sectionImage?: string;
   overview: string;
   scope: string[];
   checkpoints: string[];
@@ -23,16 +26,16 @@ export type ServiceDetailContent = {
 
 export const aboutStrengths: PointItem[] = [
   {
-    title: '실무형 대응',
-    body: '법령 해석을 넘어 신고·보완·사후관리까지 이어지는 실행형 자문으로 업무 공백을 줄입니다.',
+    title: '운영 대응력',
+    body: '법령 검토부터 신고·보완·사후관리까지 실제 업무 흐름에 맞춰 대응합니다.',
   },
   {
     title: '전국 지사 네트워크',
-    body: '서울본사와 인천·부산·청주·구미 등 주요 거점을 연결해 현장 이슈에 빠르게 대응합니다.',
+    body: '서울본사와 인천·부산·청주·구미 거점을 연결해 지역별 이슈를 처리합니다.',
   },
   {
     title: '해외 법인 연계',
-    body: '하노이 법인과 KORD Partners 협업으로 국내 통관 전략과 해외 규정 대응을 동시에 설계합니다.',
+    body: '하노이 법인과 KORD Partners 협업으로 국내 통관과 해외 규정 대응을 함께 운영합니다.',
   },
 ];
 
@@ -68,7 +71,7 @@ export const organizationUnits: PointItem[] = [
 export const serviceHubCards: LinkCard[] = [
   {
     title: '수출입통관',
-    body: 'PI·CI 체계와 iOOM 시스템을 기반으로 신고부터 사후 대응까지 통관 전 과정을 안정적으로 운영합니다.',
+    body: 'PI·CI 체계와 iOOM으로 신고부터 사후관리까지 통관 전 과정을 관리합니다.',
     href: '/services/import-export',
   },
   {
@@ -78,12 +81,12 @@ export const serviceHubCards: LinkCard[] = [
   },
   {
     title: '컨설팅',
-    body: '원산지/FTA, AEO, 조사 대응, ACVA, 조세불복, 환급을 포괄하는 기업 맞춤형 자문 체계를 제공합니다.',
+    body: '원산지/FTA, AEO, 조사 대응, ACVA, 조세불복, 환급 항목을 기업 상황에 맞춰 제공합니다.',
     href: '/services/consulting',
   },
   {
     title: '기타 서비스',
-    body: '물류, 베트남 법인, 미국 FDA까지 통관 이후·해외 운영 단계의 확장 이슈를 연결 지원합니다.',
+    body: '물류, 베트남 법인, 미국 FDA 등 통관 이후 단계에서 필요한 지원 항목을 제공합니다.',
     href: '/services/logistics',
   },
 ];
@@ -105,16 +108,68 @@ export const consultingHubCards: LinkCard[] = [
 ];
 
 export const newsHubCards: LinkCard[] = [
-  { title: '이슈리포트', body: '관세·통상 이슈를 핵심 쟁점 중심으로 정리한 리포트', href: '/news/issue-report' },
+  { title: '이슈 리포트', body: '외부기관 이슈를 기반으로 관세·통상 핵심 쟁점을 정리한 리포트', href: '/news/issue-report' },
+  { title: '신한 NEWS', body: 'FLASH와 세미나를 통합한 내부 활동·인사이트 아카이브', href: '/news/shinhan-news' },
   { title: '소식지', body: '월별 주요 정책 변화와 실무 체크포인트 요약', href: '/news/newsletter' },
-  { title: '세미나', body: '예정 세미나와 지난 세미나 아카이브', href: '/news/seminar' },
-  { title: '블로그', body: '현장 실무 중심의 사례형 인사이트', href: '/news/blog' },
 ];
 
 export const newsletterItems = [
-  { title: '2026년 4월호 소식지', body: '사전심사 제도와 조사 대응 체크포인트', date: '2026.04' },
-  { title: '2026년 3월호 소식지', body: '수출입통관 SOP 운영과 보완 대응 사례', date: '2026.03' },
-  { title: '2026년 2월호 소식지', body: '원산지 검증 및 AEO 사후관리 실무 브리핑', date: '2026.02' },
+  {
+    title: '2026년 4월호 소식지 (국문)',
+    body: '사전심사 제도와 조사 대응 체크포인트',
+    date: '2026.04',
+    language: '국문',
+    downloadHref: '/newsletters/newsletter-2026-04-ko.zip',
+  },
+  {
+    title: '2026년 4월호 소식지 (영문)',
+    body: 'April issue (English) - customs risk and pre-ruling highlights',
+    date: '2026.04',
+    language: '영문',
+    downloadHref: '/newsletters/newsletter-2026-04-en.zip',
+  },
+  {
+    title: '2026년 3월호 소식지 (국문)',
+    body: '수출입통관 SOP 운영과 보완 대응 사례',
+    date: '2026.03',
+    language: '국문',
+    downloadHref: '/newsletters/newsletter-2026-03-ko.zip',
+  },
+  {
+    title: '2026년 3월호 소식지 (영문)',
+    body: 'March issue (English) - operational SOP and compliance updates',
+    date: '2026.03',
+    language: '영문',
+    downloadHref: '/newsletters/newsletter-2026-03-en.zip',
+  },
+  {
+    title: '2026년 2월호 소식지 (국문)',
+    body: '원산지 검증 및 AEO 사후관리 실무 브리핑',
+    date: '2026.02',
+    language: '국문',
+    downloadHref: '/newsletters/newsletter-2026-02-ko.zip',
+  },
+  {
+    title: '2026년 2월호 소식지 (영문)',
+    body: 'February issue (English) - origin verification and AEO follow-up',
+    date: '2026.02',
+    language: '영문',
+    downloadHref: '/newsletters/newsletter-2026-02-en.zip',
+  },
+  {
+    title: '2025년 12월~2026년 1월 통합 소식지 (국문)',
+    body: '연말/연초 주요 정책 및 실무 이슈 통합본',
+    date: '2025.12~2026.01',
+    language: '국문',
+    downloadHref: '/newsletters/newsletter-2025-12-2026-01-ko.zip',
+  },
+  {
+    title: '2025년 12월~2026년 1월 통합 소식지 (영문)',
+    body: 'Year-end combined issue (English) - key policy and practice updates',
+    date: '2025.12~2026.01',
+    language: '영문',
+    downloadHref: '/newsletters/newsletter-2025-12-2026-01-en.zip',
+  },
 ];
 
 export const seminarItems = [
@@ -123,7 +178,7 @@ export const seminarItems = [
   { title: '관세조사·범칙조사 대응 브리핑', body: '지난 세미나 · 부산지사', status: '완료' },
 ];
 
-export const blogItems = [
+export const flashItems = [
   { title: 'PI·CI 기반 통관 프로세스 고도화 포인트', body: '신고 정확도와 리드타임을 함께 개선하는 운영 방법' },
   { title: 'ACVA로 과세가격 리스크를 줄이는 방법', body: '사전심사 제도 활용 시 기업이 얻는 실질적 효과' },
   { title: '베트남 통관/수책 관리 실무 체크리스트', body: '현지 규정 변화에 대비한 운영 포인트 정리' },
@@ -137,7 +192,7 @@ export const recruitSteps: PointItem[] = [
 
 const sharedResources = [
   { label: '대표 이슈리포트', href: '/news/issue-report' },
-  { label: '분야별 전문가', href: '/members/experts' },
+  { label: '관련 전문가', href: '/members/experts' },
 ];
 
 export const serviceDetailPages: ServiceDetailContent[] = [
@@ -145,7 +200,10 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     id: 'import-export',
     path: '/services/import-export',
     title: '수출입통관',
-    summary: 'PI·CI 운영 체계와 iOOM 기반 데이터 관리로 통관 정확도와 속도를 동시에 확보합니다.',
+    summary: 'PI·CI 운영 체계와 iOOM 데이터 관리로 통관 정확도와 속도를 관리합니다.',
+    heroImage: '/subpages/service-main-import.jpg',
+    heroImageAlt: '수출입통관 서비스',
+    sectionImage: '/subpages/service-import-export.jpg',
     overview:
       '수입·수출 신고, HS Code 검토, 요건 확인, 세관 심사 대응, 사후관리까지 통관 전 과정을 체계적으로 설계합니다. PI(Process Innovation)팀과 CI(Customs Innovation)팀 협업으로 고객사 SOP를 최적화합니다.',
     scope: [
@@ -168,8 +226,10 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/quarantine-requirements',
     title: '검역/요건',
     summary: '검역·요건을 사전 정리해 통관 지연과 보완 리스크를 최소화합니다.',
+    heroImage: '/subpages/service-main-import.jpg',
+    heroImageAlt: '검역 및 요건 서비스',
     overview:
-      '품목별 검역, 인증, 허가 요건을 거래 단계에서 미리 점검해 통관 단계의 불확실성을 줄입니다. 실무형 체크리스트로 서류 누락과 반복 보완을 예방합니다.',
+      '품목별 검역, 인증, 허가 요건을 거래 단계에서 점검해 통관 단계의 불확실성을 줄입니다. 체크리스트 기준으로 서류 누락과 반복 보완을 예방합니다.',
     scope: [
       '검역/인증 대상 품목 사전 판별',
       '수입요건·인허가 기준 검토',
@@ -185,6 +245,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/fta',
     title: '원산지/FTA',
     summary: '특혜(FTA)와 비특혜(일반 원산지)를 구분 운영해 관세 절감과 규정 준수를 함께 달성합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '원산지 FTA 컨설팅',
     overview:
       '협정별 원산지결정기준 분석, 원산지 판정 및 증빙 체계화, 사후검증 대응까지 전 주기를 지원합니다. 원산지 시스템/DB 구축을 통해 지속 가능한 관리 체계를 정착시킵니다.',
     scope: [
@@ -201,7 +263,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     id: 'aeo',
     path: '/services/consulting/aeo',
     title: 'AEO 컨설팅',
-    summary: '신규 공인부터 갱신·사후관리·등급조정까지 AEO 운영 전 과정을 실효성 있게 지원합니다.',
+    summary: '신규 공인부터 갱신·사후관리·등급조정까지 AEO 운영 전 과정을 지원합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: 'AEO 컨설팅',
     overview:
       '제도 도입 초기부터 축적된 실무 경험을 기반으로 기업 맞춤형 AEO 프로세스를 설계합니다. 인증 획득에 그치지 않고 조직 내 AEO 역량이 내재화되도록 실행 중심으로 지원합니다.',
     scope: [
@@ -219,6 +283,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/customs-audit',
     title: '관세조사',
     summary: '정기·비정기·간이 관세조사 전 단계에서 자료 체계화와 쟁점 대응을 지원합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '관세조사 대응',
     overview:
       '관세조사는 통관 후 기업 단위 적정성을 검증하는 핵심 절차입니다. 사전 리스크 진단과 입체적 대응 전략으로 조사 불확실성을 낮추고 경영 안정성을 확보합니다.',
     scope: ['조사 유형별 대응 전략 수립', '핵심 자료 구조화 및 제출 대응', '조사 쟁점 협의 및 사후 개선 지원'],
@@ -231,6 +297,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/foreign-exchange',
     title: '외환검사/조사',
     summary: '외환 규정과 거래 구조를 함께 점검해 검사 대응 리스크를 줄입니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '외환검사 조사 대응',
     overview:
       '대금결제 구조, 계약 조건, 증빙 체계를 통합 점검해 외환검사·조사에 대비합니다. 관세 이슈와 연결되는 외환 리스크를 함께 관리해 대응 효율을 높입니다.',
     scope: ['외환 거래 구조 진단', '규정 준수 점검', '검사/조사 대응 자료 정리', '재발 방지 체계 설계'],
@@ -243,6 +311,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/acva',
     title: 'ACVA',
     summary: '특수관계자 과세가격 사전심사로 조사 리스크를 완화하고 경영 예측 가능성을 높입니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: 'ACVA 컨설팅',
     overview:
       'ACVA는 특수관계자 거래의 과세가격 결정방법을 과세당국과 사전에 합의하는 제도입니다. 조사 유예, 가산세 면제, 자료 제출 부담 완화 등 실질적 이점으로 경영 안정성을 지원합니다.',
     scope: [
@@ -260,6 +330,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/penalty-investigation',
     title: '범칙조사',
     summary: '세관 조사부터 통고처분·검찰 단계까지 형사 리스크를 통합 관리합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '범칙조사 대응',
     overview:
       '범칙조사는 관세법·대외무역법·외국환거래법 위반 혐의에 대한 절차입니다. 법무법인 협업 체계로 임의·강제 조사 대응, 통고처분, 송치 이후 단계까지 전략적으로 지원합니다.',
     scope: [
@@ -277,6 +349,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/tax-appeal',
     title: '조세불복',
     summary: '과세전적부·이의·심사·심판·소송까지 단계별 불복 절차를 체계적으로 지원합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '조세불복 자문',
     overview:
       '세관 처분으로 침해된 권익을 회복하기 위해 사실관계와 법리를 정교하게 정리합니다. 과세관청의 심사 논리를 반영한 전략 설계로 권리구제 가능성을 높입니다.',
     scope: ['쟁점 분석 및 법리 구성', '불복서류 작성 대리', '심판·소송 단계 연계 자문'],
@@ -289,6 +363,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/refund',
     title: '환급',
     summary: '환급 가능 항목 발굴부터 신청·사후관리까지 실무 흐름에 맞춰 지원합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '관세 환급 서비스',
     overview:
       '원가·거래 구조와 신고 데이터를 기반으로 환급 가능성을 진단하고, 신청 근거 자료를 정비해 환급 실현률을 높입니다.',
     scope: ['환급 대상 식별', '근거자료 정리', '환급 신청 진행', '사후관리 및 이슈 대응'],
@@ -301,6 +377,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/consulting/trade-consulting',
     title: '기타 관세무역컨설팅',
     summary: '사전심사 제도를 활용한 사전 리스크 관리 중심의 맞춤형 컨설팅을 제공합니다.',
+    heroImage: '/subpages/service-main-consulting.jpg',
+    heroImageAlt: '관세무역 컨설팅',
     overview:
       '품목분류·과세가격·원산지 사전심사를 포함한 사전 확정형 컨설팅으로 불확실성을 줄이고 의사결정 속도를 높입니다.',
     scope: ['품목분류 사전심사', '과세가격 사전심사', '원산지 사전심사', '거래 구조 맞춤형 운영 자문'],
@@ -313,6 +391,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/logistics',
     title: '물류',
     summary: '통관 이후 물류 운영까지 연결해 공급망 전반의 리스크를 관리합니다.',
+    heroImage: '/subpages/service-main-logistics.jpg',
+    heroImageAlt: '물류 서비스',
+    sectionImage: '/subpages/service-logistics.jpg',
     overview:
       '반출기간, 보세창고, 운송 연계 등 통관 후 물류 이슈를 현장 기준으로 점검해 지연과 추가비용 발생 가능성을 최소화합니다.',
     scope: ['반출기간·보관 리스크 관리', '운송/통관 연계 프로세스 점검', '물류 파트너 협업 체계 지원'],
@@ -325,8 +406,11 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/vietnam',
     title: '베트남 법인',
     summary: '하노이 현지 법인과 한국 본사의 협업으로 베트남 통관·수책·FTA 리스크를 선제 대응합니다.',
+    heroImage: '/subpages/service-main-vietnam.jpg',
+    heroImageAlt: '베트남 현지 관세 컨설팅',
+    sectionImage: '/subpages/service-vietnam.jpg',
     overview:
-      '신한 베트남 관세법인(SCV)은 현지 세관 인가 기반으로 수출입통관, 수책(LIQ) 관리, FTA 원산지 운영, 관세심사 대응, 상시자문을 통합 제공하며 국내 의사결정과 현지 실행을 연결합니다.',
+      '신한 베트남 관세법인(SCV)은 현지 세관 인가 기반으로 수출입통관, 수책(LIQ) 관리, FTA 원산지 운영, 관세심사 대응, 상시 자문을 제공하며 국내 의사결정과 현지 실행을 연결합니다.',
     scope: [
       '수책(LIQ) 관리 및 보고 체계 구축',
       'KORD FTA 기반 원산지 운영·검증 대응',
@@ -342,6 +426,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     path: '/services/us-fda',
     title: '미국 FDA',
     summary: '미국 수출 시 필요한 FDA 준비 항목을 통관 실무와 연결해 지원합니다.',
+    heroImage: '/hero/pharma.jpg',
+    heroImageAlt: '미국 FDA 대응 서비스',
     overview:
       '품목별 FDA 체크포인트, 제출자료, 통관 연계 절차를 사전에 정리해 미국 수출 단계의 불확실성을 줄이고 대응 속도를 높입니다.',
     scope: ['FDA 요건/대상 판별', '서류 준비 및 점검', '통관·물류 연계 대응', '사후 이슈 대응 자문'],

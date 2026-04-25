@@ -1,4 +1,4 @@
-export type FontMode = 'nanum' | 'notosans';
+export type SiteLanguage = 'ko' | 'en';
 
 export type LinkItem = {
   id: string;
@@ -25,9 +25,20 @@ export type Member = {
 
 export type HeroSlide = {
   label: string;
+  labelEn?: string;
+  eyebrow: string;
+  eyebrowEn?: string;
+  headline: string;
+  headlineEn?: string;
+  summary: string;
+  summaryEn?: string;
   image: string;
+  secondaryImage?: string;
   objectPosition?: string;
+  secondaryObjectPosition?: string;
   mobileObjectPosition?: string;
+  mobileSecondaryObjectPosition?: string;
+  theme: 'deep-blue' | 'light-blue';
 };
 
 export type OfficeBranch = {
@@ -53,13 +64,14 @@ export type PracticeAreaDetail = {
 };
 
 export type IssueReport = {
+  id: string;
   source: string;
-  date: string;
+  publishedAt: string;
   title: string;
-  body: string;
-  image: string;
-  related: string[];
-  tags: string[];
+  summary: string;
+  url: string;
+  image?: string;
+  tags?: string[];
 };
 
 export type ItService = {
@@ -68,8 +80,23 @@ export type ItService = {
   body: string;
 };
 
-export type NewsItem = {
-  category: string;
+export type ShinhanNewsItem = {
+  id: string;
+  category: 'flash' | 'seminar';
+  categoryLabel: string;
   title: string;
-  body: string;
+  summary: string;
+  publishedAt: string;
+  href: string;
+};
+
+export type NewsletterItem = {
+  id: string;
+  issue: string;
+  title: string;
+  summary: string;
+  publishedAt: string;
+  href: string;
+  language?: string;
+  downloadHref?: string;
 };
