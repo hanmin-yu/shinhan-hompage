@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link, useLocation } from 'react-router-dom';
 
+import { palette } from '../home/homeStyles';
 import { useI18n } from '../../i18n/useI18n';
 
 export type LandingSubnavItem = {
@@ -18,26 +19,27 @@ type LandingSubnavProps = {
   summary?: string;
   summaryEn?: string;
   items: LandingSubnavItem[];
+  compactBottom?: boolean;
 };
 
-const Wrap = styled.section`
+const Wrap = styled.section<{ $compactBottom?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 26px;
-  margin-bottom: 42px;
-  border-bottom: 1px solid rgba(16, 58, 126, 0.12);
+  padding-bottom: ${({ $compactBottom }) => ($compactBottom ? '14px' : '26px')};
+  margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '18px' : '42px')};
+  border-bottom: 1px solid ${palette.lineSoft};
 
   @media (max-width: 980px) {
     gap: 18px;
-    padding-bottom: 22px;
-    margin-bottom: 34px;
+    padding-bottom: ${({ $compactBottom }) => ($compactBottom ? '12px' : '22px')};
+    margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '16px' : '34px')};
   }
 
   @media (max-width: 640px) {
     gap: 14px;
-    padding-bottom: 18px;
-    margin-bottom: 26px;
+    padding-bottom: ${({ $compactBottom }) => ($compactBottom ? '10px' : '18px')};
+    margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '14px' : '26px')};
   }
 `;
 
@@ -51,7 +53,7 @@ const Eyebrow = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #1d5cb2;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -61,21 +63,22 @@ const Eyebrow = styled.span`
     content: '';
     width: 30px;
     height: 1px;
-    background: rgba(28, 92, 179, 0.42);
+    background: linear-gradient(90deg, rgba(33, 101, 193, 0.56), rgba(23, 159, 150, 0.34));
   }
 `;
 
 const IntroTitle = styled.h1`
   margin: 0;
-  color: #13263f;
+  color: ${palette.textStrong};
   font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+  font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.04em;
 `;
 
 const IntroSummary = styled.p`
   margin: 0;
-  color: #526a8c;
+  color: ${palette.textBody};
   font-size: 0.95rem;
   line-height: 1.72;
   max-width: 760px;
@@ -90,7 +93,7 @@ const Tabs = styled.nav`
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: thin;
-  scrollbar-color: rgba(26, 86, 170, 0.36) transparent;
+  scrollbar-color: rgba(26, 86, 170, 0.44) transparent;
 
   @media (max-width: 980px) {
     gap: 8px;
@@ -109,9 +112,9 @@ const TabLink = styled(Link)`
   min-height: 38px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(21, 78, 161, 0.16);
-  background: rgba(246, 250, 255, 0.88);
-  color: #577090;
+  border: 1px solid ${palette.line};
+  background: ${palette.chipBackground};
+  color: ${palette.textMuted};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
   font-size: 0.9rem;
   font-weight: 800;
@@ -125,19 +128,19 @@ const TabLink = styled(Link)`
     box-shadow 0.18s ease;
 
   &[data-active='true'] {
-    color: #123c79;
-    background: #ffffff;
-    border-color: rgba(19, 75, 154, 0.3);
-    box-shadow: 0 10px 20px rgba(16, 52, 113, 0.08);
+    color: #ffffff;
+    background: ${palette.chipBackgroundActive};
+    border-color: rgba(214, 154, 54, 0.24);
+    box-shadow: 0 12px 24px rgba(16, 52, 113, 0.14);
   }
 
   &:hover {
-    color: #184b92;
-    border-color: rgba(19, 75, 154, 0.28);
+    color: ${palette.blueDeep};
+    border-color: ${palette.lineStrong};
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(24, 86, 178, 0.4);
+    outline: 2px solid rgba(24, 86, 178, 0.46);
     outline-offset: 2px;
     border-radius: 999px;
   }
@@ -154,7 +157,16 @@ const TabLink = styled(Link)`
   }
 `;
 
-export function LandingSubnav({ kicker, kickerEn, title, titleEn, summary, summaryEn, items }: LandingSubnavProps) {
+export function LandingSubnav({
+  kicker,
+  kickerEn,
+  title,
+  titleEn,
+  summary,
+  summaryEn,
+  items,
+  compactBottom = false,
+}: LandingSubnavProps) {
   const { t } = useI18n();
   const { pathname } = useLocation();
 
@@ -166,7 +178,7 @@ export function LandingSubnav({ kicker, kickerEn, title, titleEn, summary, summa
   };
 
   return (
-    <Wrap data-reveal>
+    <Wrap data-reveal $compactBottom={compactBottom}>
       <Intro>
         {kicker ? <Eyebrow>{t(kicker, kickerEn ?? kicker)}</Eyebrow> : null}
         <IntroTitle>{t(title, titleEn)}</IntroTitle>

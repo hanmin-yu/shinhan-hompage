@@ -101,6 +101,7 @@ export function LocationPage() {
   const { t } = useI18n();
   const hqOffice = officeBranches.find((office) => office.id === 'seoul') ?? officeBranches[0];
   const officeAddress = hqOffice?.address ?? siteContact.address;
+  const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
   const mapSearchQuery = '신한관세법인';
@@ -129,7 +130,7 @@ export function LocationPage() {
           <P.SectionTitle>{t('서울본사', 'Seoul HQ')}</P.SectionTitle>
           <InfoList>
             <li>
-              {t('주소', 'Address')}: {officeAddress}
+              {t('주소', 'Address')}: {t(officeAddress, officeAddressEn)}
             </li>
             <li>
               {t('대표번호', 'Phone')}: {officePhone}

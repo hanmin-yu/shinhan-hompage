@@ -2,6 +2,37 @@ import { Global, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
+export const palette = {
+  pageBackground:
+    'radial-gradient(circle at top left, rgba(89, 150, 230, 0.18), transparent 28%), radial-gradient(circle at 88% 16%, rgba(37, 170, 166, 0.12), transparent 22%), linear-gradient(180deg, #edf4ff 0%, #f4f8ff 44%, #f8fbff 100%)',
+  utilityBackground:
+    'linear-gradient(90deg, rgba(11, 43, 89, 0.98) 0%, rgba(18, 76, 146, 0.97) 52%, rgba(24, 116, 164, 0.94) 100%)',
+  headerBackground:
+    'linear-gradient(180deg, rgba(251, 253, 255, 0.98) 0%, rgba(241, 248, 255, 0.97) 100%)',
+  panelBackground:
+    'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 250, 255, 0.96) 100%)',
+  panelBackgroundStrong:
+    'linear-gradient(160deg, rgba(255, 255, 255, 0.99) 0%, rgba(239, 247, 255, 0.95) 62%, rgba(231, 246, 245, 0.9) 100%)',
+  chipBackground: 'rgba(247, 251, 255, 0.92)',
+  chipBackgroundActive: 'linear-gradient(135deg, #2667c2 0%, #174d9a 100%)',
+  line: 'rgba(28, 90, 170, 0.16)',
+  lineStrong: 'rgba(26, 88, 168, 0.3)',
+  lineSoft: 'rgba(53, 116, 194, 0.12)',
+  shadow: 'rgba(10, 45, 99, 0.12)',
+  shadowStrong: 'rgba(11, 42, 92, 0.18)',
+  textStrong: '#102744',
+  textPrimary: '#153a72',
+  textBody: '#496687',
+  textMuted: '#6681a3',
+  blue: '#2165c1',
+  blueDeep: '#0f3f85',
+  blueInk: '#0b2b59',
+  teal: '#179f96',
+  tealSoft: 'rgba(23, 159, 150, 0.14)',
+  gold: '#d69a36',
+  goldSoft: 'rgba(214, 154, 54, 0.16)',
+} as const;
+
 export const GlobalStyle = () => (
   <Global
     styles={css`
@@ -10,8 +41,8 @@ export const GlobalStyle = () => (
 
       :root {
         color-scheme: light;
-        background-color: #ffffff;
-        color: #111111;
+        background: ${palette.pageBackground};
+        color: ${palette.textStrong};
         font-synthesis: none;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
@@ -30,9 +61,10 @@ export const GlobalStyle = () => (
         margin: 0;
         min-width: 320px;
         min-height: 100vh;
-        background-color: #ffffff;
+        background: ${palette.pageBackground};
         overflow-x: hidden;
         font-family: "NanumSquare", "Noto Sans KR", sans-serif;
+        color: ${palette.textStrong};
       }
 
       a {
@@ -62,8 +94,8 @@ export const GlobalStyle = () => (
 
 export const Page = styled.div`
   min-height: 100vh;
-  background: #f6f9fd;
-  color: #111111;
+  background: ${palette.pageBackground};
+  color: ${palette.textStrong};
 `;
 
 export const Container = styled.div`
@@ -79,8 +111,10 @@ export const UtilityBar = styled.div`
   position: sticky;
   top: 0;
   z-index: 26;
-  background: #143f83;
-  border-bottom: 1px solid rgba(223, 234, 250, 0.28);
+  background:
+    radial-gradient(circle at 86% 50%, rgba(214, 154, 54, 0.22), transparent 24%),
+    ${palette.utilityBackground};
+  border-bottom: 1px solid rgba(235, 244, 255, 0.24);
 
   @media (max-width: 768px) {
     display: none;
@@ -154,14 +188,15 @@ export const Header = styled.header`
   position: sticky;
   top: 0;
   z-index: 25;
-  background: rgba(241, 246, 253, 0.98);
-  border-bottom: 1px solid rgba(20, 75, 157, 0.1);
-  box-shadow: 0 2px 8px rgba(16, 48, 104, 0.04);
+  background: ${palette.headerBackground};
+  border-bottom: 1px solid ${palette.lineSoft};
+  box-shadow: 0 12px 30px rgba(16, 48, 104, 0.06);
+  backdrop-filter: blur(18px);
 
   @media (max-width: 768px) {
     top: 0;
-    background: rgba(243, 248, 255, 0.98);
-    border-bottom: 1px solid rgba(20, 75, 157, 0.12);
+    background: ${palette.headerBackground};
+    border-bottom: 1px solid ${palette.line};
   }
 `;
 
@@ -176,6 +211,10 @@ export const HeaderInner = styled(Container)`
   @media (max-width: 1200px) {
     width: min(100%, calc(100% - 22px));
     gap: 12px;
+  }
+
+  @media (max-width: 1320px) {
+    min-height: 76px;
   }
 
   @media (max-width: 1024px) {
@@ -206,7 +245,7 @@ export const MenuArea = styled.div`
   min-width: 0;
   overflow: visible;
 
-  @media (max-width: 1420px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 `;
@@ -217,6 +256,11 @@ export const Brand = styled(Link)`
   gap: 12px;
   flex: 0 0 420px;
   min-width: 0;
+
+  @media (max-width: 1320px) {
+    flex: 0 1 360px;
+    gap: 10px;
+  }
 
   @media (max-width: 1180px) {
     flex: 0 0 320px;
@@ -230,19 +274,23 @@ export const Brand = styled(Link)`
 export const BrandMark = styled.div`
   width: 52px;
   height: 52px;
-  border: 1px solid rgba(17, 78, 168, 0.18);
+  border: 1px solid rgba(28, 92, 179, 0.24);
   border-radius: 10px;
-  background: linear-gradient(180deg, #1661c6, #0f4ca5);
+  background:
+    radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
+    linear-gradient(155deg, #2f7dd9 0%, #1a5ab2 56%, #123f85 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 10px 20px rgba(17, 78, 168, 0.18);
+  box-shadow: 0 14px 26px rgba(17, 78, 168, 0.2);
   overflow: hidden;
 
   @media (max-width: 768px) {
-    border-color: rgba(17, 78, 168, 0.18);
-    background: linear-gradient(180deg, #1661c6, #0f4ca5);
+    border-color: rgba(28, 92, 179, 0.24);
+    background:
+      radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
+      linear-gradient(155deg, #2f7dd9 0%, #1a5ab2 56%, #123f85 100%);
     color: #ffffff;
   }
 `;
@@ -265,6 +313,10 @@ export const BrandText = styled.div`
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+
+  @media (max-width: 520px) {
+    gap: 0;
+  }
 `;
 
 export const BrandTop = styled.span`
@@ -277,7 +329,7 @@ export const BrandTop = styled.span`
 export const BrandTopLine = styled.span`
   width: 74px;
   height: 1px;
-  background: rgba(30, 91, 178, 0.34);
+  background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(23, 159, 150, 0.3));
 
   @media (max-width: 980px) {
     display: none;
@@ -285,7 +337,7 @@ export const BrandTopLine = styled.span`
 `;
 
 export const BrandEstablished = styled.span`
-  color: #5b7ea9;
+  color: ${palette.textMuted};
   font-size: 0.84rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -298,9 +350,10 @@ export const BrandEstablished = styled.span`
 
 export const BrandTitle = styled.strong`
   font-size: 3rem;
+  font-weight: 800;
   line-height: 0.9;
   letter-spacing: 0.03em;
-  color: #103c83;
+  color: ${palette.blueDeep};
   white-space: nowrap;
   font-family: 'Times New Roman', Georgia, serif;
   text-transform: uppercase;
@@ -316,10 +369,14 @@ export const BrandTitle = styled.strong`
   @media (max-width: 980px) {
     font-size: 1.8rem;
   }
+
+  @media (max-width: 520px) {
+    font-size: 1.52rem;
+  }
 `;
 
 export const BrandSub = styled.span`
-  color: #5a6f8f;
+  color: ${palette.textMuted};
   font-size: 0.95rem;
   font-family: 'Times New Roman', Georgia, serif;
   white-space: nowrap;
@@ -339,7 +396,7 @@ export const Nav = styled.nav`
   justify-content: flex-end;
   gap: 0;
   font-size: 1.08rem;
-  color: #123f85;
+  color: ${palette.textPrimary};
   white-space: nowrap;
 
   @media (max-width: 1680px) {
@@ -358,7 +415,7 @@ export const NavItem = styled.div`
   justify-content: center;
   min-height: 82px;
 
-  @media (max-width: 1420px) {
+  @media (max-width: 1320px) {
     min-height: 78px;
   }
 `;
@@ -371,7 +428,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   min-height: 80px;
   padding: 0 12px;
   position: relative;
-  color: #123f85;
+  color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
   font-size: 1.2rem;
   font-weight: 900;
@@ -405,7 +462,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
     bottom: 19px;
     height: 4px;
     border-radius: 999px;
-    background: #1454ac;
+    background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
     transform: scaleX(0.35);
     transform-origin: center;
     opacity: 0;
@@ -431,7 +488,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
       : ''}
 
   &:hover {
-    color: #16519f;
+    color: ${palette.blueDeep};
   }
 
   &:hover::before {
@@ -440,7 +497,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   }
 
   &[data-active='true'] {
-    color: #0f315f;
+    color: ${palette.blueInk};
   }
 
   &[data-active='true']::before {
@@ -459,9 +516,9 @@ export const NavDropdown = styled.div`
   transform: translateX(-50%) translateY(6px);
   padding: 10px 0;
   border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid rgba(20, 75, 157, 0.14);
-  box-shadow: 0 14px 26px rgba(16, 40, 86, 0.09);
+  background: ${palette.panelBackgroundStrong};
+  border: 1px solid ${palette.line};
+  box-shadow: 0 18px 32px rgba(16, 40, 86, 0.12);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -483,7 +540,7 @@ export const NavDropdownLink = styled(Link)`
   align-items: center;
   min-height: 36px;
   padding: 0 22px;
-  color: #456083;
+  color: ${palette.textBody};
   font-size: 0.88rem;
   font-weight: 600;
   line-height: 1.5;
@@ -493,8 +550,8 @@ export const NavDropdownLink = styled(Link)`
     background-color 0.2s ease;
 
   &:hover {
-    color: #1e5db5;
-    background: rgba(17, 78, 168, 0.06);
+    color: ${palette.blue};
+    background: rgba(33, 101, 193, 0.08);
   }
 `;
 
@@ -514,7 +571,7 @@ export const NavDropdownGroup = styled.div`
 export const NavDropdownGroupTitle = styled.span`
   display: block;
   padding: 0 22px;
-  color: #1c4d93;
+  color: ${palette.blueDeep};
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -531,7 +588,7 @@ export const NavDropdownSubLink = styled(NavDropdownLink)`
   min-height: 32px;
   padding-left: 28px;
   font-size: 0.9rem;
-  color: #637593;
+  color: ${palette.textMuted};
 `;
 
 export const HeaderTools = styled.div`
@@ -543,6 +600,10 @@ export const HeaderTools = styled.div`
   @media (max-width: 1320px) {
     gap: 10px;
   }
+
+  @media (max-width: 560px) {
+    gap: 8px;
+  }
 `;
 
 export const HeaderUtilityLinks = styled.div`
@@ -551,9 +612,9 @@ export const HeaderUtilityLinks = styled.div`
   gap: 2px;
   margin-left: 4px;
   padding-left: 8px;
-  border-left: 1px solid rgba(58, 82, 118, 0.2);
+  border-left: 1px solid rgba(70, 102, 144, 0.22);
 
-  @media (max-width: 1460px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 `;
@@ -564,7 +625,7 @@ export const HeaderUtilityLink = styled(Link)`
   align-items: center;
   min-height: 28px;
   padding: 0 8px;
-  color: #3f5577;
+  color: ${palette.textBody};
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -573,7 +634,7 @@ export const HeaderUtilityLink = styled(Link)`
   transition: color 0.18s ease;
 
   &:hover {
-    color: #1d56a8;
+    color: ${palette.blue};
   }
 
   &:not(:last-of-type)::after {
@@ -584,7 +645,7 @@ export const HeaderUtilityLink = styled(Link)`
     width: 1px;
     height: 12px;
     transform: translateY(-50%);
-    background: rgba(58, 82, 118, 0.26);
+    background: rgba(70, 102, 144, 0.26);
   }
 `;
 
@@ -594,13 +655,13 @@ export const HeaderUtilityIconLink = styled(Link)`
   justify-content: center;
   width: 30px;
   height: 30px;
-  color: #3f5577;
+  color: ${palette.textBody};
   transition:
     color 0.18s ease,
     transform 0.18s ease;
 
   &:hover {
-    color: #1d56a8;
+    color: ${palette.blue};
     transform: translateY(-1px);
   }
 
@@ -624,7 +685,7 @@ export const HeaderUtilityButton = styled.button`
   padding: 0 10px;
   border: 0;
   background: transparent;
-  color: #335684;
+  color: ${palette.textBody};
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -634,7 +695,7 @@ export const HeaderUtilityButton = styled.button`
   transition: color 0.18s ease;
 
   &:hover {
-    color: #1b5bb2;
+    color: ${palette.blue};
   }
 
   &::after {
@@ -645,7 +706,7 @@ export const HeaderUtilityButton = styled.button`
     width: 1px;
     height: 12px;
     transform: translateY(-50%);
-    background: rgba(58, 82, 118, 0.26);
+    background: rgba(70, 102, 144, 0.26);
   }
 `;
 
@@ -655,10 +716,10 @@ export const HeaderIconButton = styled.button<{ kind: 'pin' | 'menu' }>`
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(22, 72, 147, 0.18);
+  border: 1px solid ${palette.line};
   border-radius: 7px;
-  background: #f8fbff;
-  color: #284f8f;
+  background: ${palette.panelBackground};
+  color: ${palette.textPrimary};
   cursor: pointer;
   position: relative;
   flex: 0 0 auto;
@@ -713,9 +774,9 @@ export const FontModeToggle = styled.button`
   min-height: 38px;
   padding: 0 14px;
   border-radius: 7px;
-  border: 1px solid rgba(17, 78, 168, 0.16);
-  color: #1b3f77;
-  background: #f8fbff;
+  border: 1px solid ${palette.line};
+  color: ${palette.textPrimary};
+  background: ${palette.panelBackground};
   font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
@@ -725,8 +786,8 @@ export const FontModeToggle = styled.button`
     border-color 0.2s ease;
 
   &:hover {
-    background: rgba(17, 78, 168, 0.08);
-    border-color: rgba(17, 78, 168, 0.3);
+    background: rgba(33, 101, 193, 0.08);
+    border-color: ${palette.lineStrong};
   }
 
   @media (max-width: 1760px) {
@@ -740,24 +801,41 @@ export const ContactButton = styled(Link)`
   justify-content: center;
   min-height: 42px;
   padding: 0 20px;
-  border: 1px solid rgba(17, 78, 168, 0.16);
+  border: 1px solid rgba(214, 154, 54, 0.22);
   border-radius: 8px;
   color: #ffffff;
-  background: linear-gradient(135deg, #2162c2, #1a56ac);
-  box-shadow: 0 10px 20px rgba(16, 84, 177, 0.16);
+  background:
+    linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
+    linear-gradient(135deg, #2a72d2 0%, #1a56ac 56%, #123f85 100%);
+  box-shadow: 0 14px 26px rgba(16, 84, 177, 0.2);
   font-size: 0.94rem;
   font-weight: 600;
   letter-spacing: -0.03em;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 30px rgba(16, 84, 177, 0.24);
+    filter: saturate(1.04);
+  }
+
+  @media (max-width: 1180px) {
+    display: none;
+  }
 
   @media (max-width: 1320px) {
-    display: none;
+    min-height: 40px;
+    padding: 0 16px;
+    font-size: 0.9rem;
   }
 
   @media (max-width: 768px) {
     min-height: 38px;
     padding: 0 14px;
     font-size: 0.88rem;
-    display: inline-flex;
   }
 `;
 
@@ -770,11 +848,11 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
     justify-content: center;
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(23, 59, 132, 0.12);
+    border: 1px solid ${palette.line};
     border-radius: 50%;
-    background: #ffffff;
+    background: ${palette.panelBackground};
     position: relative;
-    color: #173b84;
+    color: ${palette.textPrimary};
     cursor: pointer;
     flex: 0 0 auto;
 
@@ -820,11 +898,11 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
 export const MobileMenuOverlay = styled.div<{ open: boolean }>`
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1320px) {
     display: block;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.52);
+    background: rgba(8, 18, 36, 0.56);
     opacity: ${({ open }) => (open ? 1 : 0)};
     visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
     pointer-events: ${({ open }) => (open ? 'auto' : 'none')};
@@ -838,22 +916,31 @@ export const MobileMenuOverlay = styled.div<{ open: boolean }>`
 export const MobileMenuPanel = styled.aside<{ open: boolean }>`
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1320px) {
     display: flex;
     position: fixed;
     top: 0;
     right: 0;
-    width: min(88vw, 360px);
+    width: min(420px, 42vw);
     height: 100vh;
-    padding: 28px 22px 32px;
+    padding: 30px 24px 34px;
     flex-direction: column;
     gap: 22px;
-    background: rgba(39, 43, 48, 0.96);
+    background:
+      radial-gradient(circle at top right, rgba(214, 154, 54, 0.16), transparent 22%),
+      radial-gradient(circle at 18% 16%, rgba(38, 124, 226, 0.18), transparent 22%),
+      linear-gradient(180deg, rgba(10, 27, 55, 0.98) 0%, rgba(11, 36, 72, 0.98) 100%);
     color: #ffffff;
     transform: translateX(${({ open }) => (open ? '0' : '100%')});
     transition: transform 0.24s ease;
     z-index: 41;
     overflow-y: auto;
+    box-shadow: -18px 0 42px rgba(4, 14, 29, 0.34);
+  }
+
+  @media (max-width: 768px) {
+    width: min(88vw, 360px);
+    padding: 28px 22px 32px;
   }
 `;
 
@@ -866,15 +953,17 @@ export const MobileMenuTop = styled.div`
 
 export const MobileMenuTitle = styled.strong`
   font-size: 1.2rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
+  color: #ffffff;
 `;
 
 export const MobileMenuClose = styled.button`
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
   color: #ffffff;
   position: relative;
   cursor: pointer;
@@ -905,7 +994,7 @@ export const MobileMenuSection = styled.div`
   flex-direction: column;
   gap: 10px;
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 `;
 
 export const MobileMenuMainLink = styled(Link)`
@@ -914,13 +1003,14 @@ export const MobileMenuMainLink = styled(Link)`
   min-height: 40px;
   font-size: 1.1rem;
   font-weight: 800;
+  color: rgba(255, 255, 255, 0.96);
 `;
 
 export const MobileMenuSubLink = styled(Link)`
   display: flex;
   align-items: center;
   min-height: 34px;
-  color: rgba(255, 255, 255, 0.74);
+  color: rgba(227, 236, 250, 0.82);
   font-size: 0.96rem;
 
   &[data-depth='1'] {
@@ -937,16 +1027,16 @@ export const MobileMenuGroup = styled.div`
 `;
 
 export const MobileMenuGroupTitle = styled.span`
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(214, 230, 255, 0.62);
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding-left: 2px;
 `;
 
-export const MobileMenuQuickRow = styled.div`
+export const MobileMenuQuickRow = styled.div<{ $columns?: 1 | 2 }>`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(${({ $columns = 2 }) => $columns}, minmax(0, 1fr));
   gap: 10px;
 `;
 
@@ -957,11 +1047,16 @@ export const MobileMenuQuickButton = styled.button`
   min-height: 44px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06)),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   color: #ffffff;
   font-size: 0.92rem;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  word-break: keep-all;
   cursor: pointer;
 `;
 
@@ -972,10 +1067,16 @@ export const MobileMenuQuickLink = styled(Link)`
   min-height: 44px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06)),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.94);
   font-size: 0.92rem;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  word-break: keep-all;
 `;
 
 export const Main = styled.main`
@@ -1263,6 +1364,7 @@ export const HeroTitle = styled.h1`
   margin: 0;
   font-family: "Times New Roman", Georgia, serif;
   font-size: clamp(2.9rem, 5.2vw, 5.2rem);
+  font-weight: 800;
   line-height: 1.02;
   letter-spacing: -0.03em;
   color: #ffffff;
@@ -1666,6 +1768,7 @@ export const PracticeShowcaseMetaLabel = styled.span`
 export const PracticeShowcaseTitle = styled.h2`
   margin: 0;
   font-size: clamp(2.3rem, 5vw, 3.8rem);
+  font-weight: 800;
   color: #143c79;
 `;
 
@@ -1750,6 +1853,7 @@ export const PracticeDetailTitle = styled.strong`
   display: block;
   margin-bottom: 12px;
   font-size: 1.18rem;
+  font-weight: 700;
   line-height: 1.2;
   color: #143c79;
 `;
@@ -1933,6 +2037,7 @@ export const LandingLabel = styled.span`
 export const LandingTitle = styled.h2`
   margin: 0;
   font-size: clamp(2.4rem, 5vw, 3.75rem);
+  font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.04em;
   color: #111111;
@@ -2016,6 +2121,7 @@ export const IssueMetaDivider = styled.span`
 export const IssueHeadline = styled.h3`
   margin: 0;
   font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 700;
   line-height: 1.38;
   letter-spacing: -0.04em;
   color: #1b1b1b;
@@ -2292,6 +2398,7 @@ export const CaseCategory = styled.span`
 export const CardHeadline = styled.h3`
   margin: 0;
   font-size: 1.34rem;
+  font-weight: 700;
   line-height: 1.55;
   letter-spacing: -0.03em;
   color: #111111;
@@ -2397,6 +2504,7 @@ export const NewsletterList = styled.div`
 
 export const MemberName = styled.strong`
   font-size: 1.2rem;
+  font-weight: 700;
 `;
 
 export const OfficesSectionLayout = styled.div`
@@ -2508,6 +2616,7 @@ export const OfficesBadge = styled.span`
 export const OfficesFeatureTitle = styled.h3`
   margin: 0;
   font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.04em;
 `;
@@ -2563,43 +2672,48 @@ export const OfficesFactValue = styled.strong`
 export const OfficesMapCard = styled.aside`
   position: relative;
   overflow: hidden;
-  padding: 26px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid rgba(19, 63, 139, 0.14);
-  box-shadow: 0 8px 18px rgba(19, 63, 139, 0.06);
+  padding: 28px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(23, 159, 150, 0.08), transparent 22%),
+    ${palette.panelBackgroundStrong};
+  border: 1px solid ${palette.line};
+  box-shadow: 0 18px 40px rgba(16, 53, 114, 0.1);
 `;
 
 export const OfficesMapHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 `;
 
 export const OfficesMapTitle = styled.strong`
-  font-size: 1.24rem;
-  color: #163d77;
+  font-size: 1.36rem;
+  font-weight: 700;
+  color: ${palette.textPrimary};
 `;
 
 export const OfficesMapBody = styled.p`
   margin: 0;
-  color: #60708a;
+  color: ${palette.textBody};
   line-height: 1.65;
 `;
 
 export const OfficesMiniMap = styled.div`
   position: relative;
-  min-height: 420px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #f7fbff, #eef4fb);
-  border: 1px solid rgba(19, 63, 139, 0.12);
+  min-height: 470px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(33, 101, 193, 0.08), transparent 18%),
+    linear-gradient(180deg, #fbfdff, #f3f8fc);
+  border: 1px solid ${palette.lineSoft};
   overflow: hidden;
 `;
 
 export const OfficesMiniMapKoreaZone = styled.div`
   position: absolute;
-  inset: 5% 20% 6% 6%;
+  inset: 6% 24% 8% 6%;
 `;
 
 export const OfficesMiniMapKoreaImage = styled.img`
@@ -2609,29 +2723,34 @@ export const OfficesMiniMapKoreaImage = styled.img`
   height: 100%;
   object-fit: contain;
   object-position: center;
-  opacity: 0.58;
-  filter: saturate(0.48) brightness(1.02) contrast(0.92);
+  opacity: 0.42;
+  filter: saturate(0.12) brightness(1.03) contrast(0.98);
 `;
 
 export const OfficesMiniMapVietnamZone = styled.div`
   position: absolute;
-  right: 5%;
-  bottom: 6%;
-  width: 21%;
-  height: 36%;
-  padding: 12px 12px 12px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff, #f3f8fd);
-  border: 1px solid rgba(20, 60, 121, 0.12);
-  box-shadow: 0 8px 18px rgba(29, 63, 114, 0.07);
+  right: 6%;
+  bottom: 7%;
+  width: 14%;
+  height: 24%;
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff, #f3f8fc);
+  border: 1px solid ${palette.lineSoft};
+  box-shadow: 0 10px 20px rgba(29, 63, 114, 0.08);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &[data-active='true'] {
+    border-color: rgba(23, 159, 150, 0.24);
+    box-shadow: 0 14px 24px rgba(23, 77, 152, 0.12);
+    transform: translateY(-1px);
+  }
 
   &::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 68px;
-    background: linear-gradient(180deg, rgba(33, 72, 128, 0.08), rgba(33, 72, 128, 0));
-    pointer-events: none;
+    display: none;
   }
 `;
 
@@ -2642,27 +2761,27 @@ export const OfficesMiniMapInsetLabel = styled.span`
   display: inline-flex;
   align-items: center;
   min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #214880;
-  font-size: 0.86rem;
-  font-weight: 800;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.84);
+  color: ${palette.textBody};
+  font-size: 0.74rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
   z-index: 2;
 `;
 
 export const OfficesMiniMapVietnamImage = styled.img`
   position: absolute;
-  inset: 16% 16% 22%;
+  inset: 28% 22% 30%;
   width: auto;
   height: auto;
   max-width: calc(100% - 32%);
-  max-height: calc(100% - 38%);
+  max-height: calc(100% - 42%);
   object-fit: contain;
   object-position: center;
-  opacity: 0.72;
-  filter: saturate(0.56) brightness(1.02) contrast(0.94);
+  opacity: 0.44;
+  filter: saturate(0.26) brightness(1.02) contrast(0.96);
 `;
 
 export const OfficesMapLines = styled.svg`
@@ -2680,8 +2799,8 @@ export const OfficesMapAnchor = styled.button<{ x: number; y: number; active: bo
   top: ${({ y }) => `${y}%`};
   transform: translate(-50%, -50%);
   z-index: 2;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -2691,13 +2810,14 @@ export const OfficesMapAnchor = styled.button<{ x: number; y: number; active: bo
 
 export const OfficesMapAnchorDot = styled.span<{ active: boolean; accent: string }>`
   display: block;
-  width: 100%;
-  height: 100%;
+  width: ${({ active }) => (active ? '100%' : '78%')};
+  height: ${({ active }) => (active ? '100%' : '78%')};
+  margin: auto;
   border-radius: 50%;
-  background: ${({ active, accent }) => (active ? accent : '#2e6dcc')};
+  background: ${({ active, accent }) => (active ? accent : '#b3c3db')};
   box-shadow:
-    0 0 0 6px rgba(255, 255, 255, 0.82),
-    0 10px 18px rgba(20, 60, 121, 0.14);
+    0 0 0 ${({ active }) => (active ? '5px' : '4px')} rgba(255, 255, 255, 0.94),
+    0 8px 14px rgba(20, 60, 121, 0.1);
 `;
 
 export const OfficesMapLabel = styled.button<{ x: number; y: number; active: boolean; accent: string }>`
@@ -2709,80 +2829,95 @@ export const OfficesMapLabel = styled.button<{ x: number; y: number; active: boo
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 38px;
-  padding: 0 14px;
+  gap: 0;
+  min-height: auto;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
-  background: ${({ active, accent }) =>
-    active ? `linear-gradient(180deg, ${accent}, #3f74b7)` : 'rgba(255, 255, 255, 0.88)'};
-  color: ${({ active }) => (active ? '#ffffff' : '#36557e')};
-  font-size: 0.88rem;
-  font-weight: 800;
-  box-shadow: ${({ active }) =>
-    active ? '0 12px 24px rgba(41, 86, 145, 0.18)' : '0 8px 16px rgba(19, 63, 139, 0.06)'};
+  border-radius: 0;
+  background: transparent;
+  color: ${({ active }) => (active ? palette.blueInk : palette.textMuted)};
+  font-size: 0.92rem;
+  font-weight: ${({ active }) => (active ? 800 : 700)};
+  box-shadow: none;
   white-space: nowrap;
   cursor: pointer;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.95);
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
     color 0.2s ease;
 
   &:hover {
     transform: translate(-50%, calc(-50% - 1px));
+    color: ${palette.blueInk};
   }
 `;
 
 export const OfficesMapLabelDot = styled.span<{ active: boolean; accent: string }>`
-  width: 8px;
-  height: 8px;
+  display: none;
+  width: 0;
+  height: 0;
   border-radius: 50%;
-  background: ${({ active, accent }) => (active ? 'rgba(255, 255, 255, 0.94)' : accent)};
+  background: ${({ active, accent }) => (active ? accent : '#afc1da')};
   flex: 0 0 auto;
 `;
 
 export const OfficesMapInsetLabelButton = styled(OfficesMapLabel)`
-  min-height: 34px;
-  padding: 0 12px;
-  font-size: 0.82rem;
-  box-shadow: 0 10px 18px rgba(19, 63, 139, 0.1);
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 0.76rem;
+  box-shadow: none;
 `;
 
 export const OfficesMiniMapInsetMeta = styled.div`
   position: absolute;
-  left: 16px;
-  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   z-index: 2;
 `;
 
 export const OfficesMiniMapInsetTitle = styled.span`
-  color: #6c7c95;
-  font-size: 0.76rem;
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  color: #536a83;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
+`;
+
+export const OfficesMiniMapInsetDivider = styled.span`
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 42px;
+  height: 1px;
+  background: rgba(32, 72, 131, 0.08);
 `;
 
 export const OfficesMiniMapInsetCity = styled.span`
-  color: #123b75;
-  font-size: 1.08rem;
-  font-weight: 800;
+  color: #19487f;
+  font-size: 0.75rem;
+  font-weight: 700;
 `;
 
 export const OfficesMapHint = styled.p`
-  margin: 16px 0 0;
-  color: #6c7c95;
-  font-size: 0.92rem;
+  margin: 18px 0 0;
+  color: ${palette.textMuted};
+  font-size: 0.88rem;
   line-height: 1.6;
 `;
 
 export const Footer = styled.footer`
   position: relative;
-  background: linear-gradient(180deg, #102f5d, #0d274b);
+  background:
+    radial-gradient(circle at top right, rgba(214, 154, 54, 0.16), transparent 22%),
+    radial-gradient(circle at 12% 18%, rgba(30, 126, 195, 0.18), transparent 24%),
+    linear-gradient(180deg, #0b264d 0%, #0d2e5f 52%, #10243f 100%);
   color: rgba(255, 255, 255, 0.82);
   overflow: hidden;
 `;
@@ -2798,12 +2933,11 @@ export const FooterInner = styled(Container)`
 
 export const FooterTop = styled.div`
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
   gap: 24px;
 
   @media (max-width: 900px) {
-    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
@@ -2811,6 +2945,25 @@ export const FooterBrandWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
+`;
+
+export const FooterTopAside = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-left: clamp(10px, 1.4vw, 20px);
+
+  @media (max-width: 900px) {
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 68px;
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 `;
 
 export const FooterBrandText = styled.div`
@@ -2821,28 +2974,78 @@ export const FooterBrandText = styled.div`
 
 export const FooterBrandTitle = styled.strong`
   font-size: 1.7rem;
+  font-weight: 800;
   line-height: 1;
   letter-spacing: 0.04em;
   color: #ffffff;
 `;
 
 export const FooterBrandSub = styled.span`
-  color: rgba(255, 255, 255, 0.66);
+  color: rgba(232, 240, 255, 0.72);
   font-size: 0.9rem;
 `;
 
 export const FooterPolicyRow = styled.div`
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 16px 28px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
-export const FooterPolicyLink = styled.a`
+export const FooterPolicyLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
   font-weight: 700;
+  line-height: 1;
+  min-height: 28px;
+  white-space: nowrap;
+`;
+
+export const FooterSocialLabel = styled.span`
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+export const FooterSocialRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+`;
+
+export const FooterSocialLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
+  color: #ffffff;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(180deg, rgba(214, 154, 54, 0.22), rgba(255, 255, 255, 0.1));
+    border-color: rgba(255, 255, 255, 0.26);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
 `;
 
 export const FooterInfo = styled.div`
@@ -2853,7 +3056,7 @@ export const FooterInfo = styled.div`
 
 export const FooterLine = styled.p`
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(230, 239, 255, 0.74);
   font-size: 0.92rem;
   line-height: 1.8;
 `;
@@ -2865,7 +3068,7 @@ export const FooterLabel = styled.strong`
 
 export const FooterCopyright = styled.p`
   margin: 8px 0 0;
-  color: rgba(255, 255, 255, 0.44);
+  color: rgba(222, 233, 251, 0.48);
   font-size: 0.86rem;
   letter-spacing: 0.02em;
 `;

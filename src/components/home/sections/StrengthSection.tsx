@@ -68,6 +68,7 @@ const Title = styled.h2`
   margin: 10px 0 0;
   color: #103a72;
   font-size: clamp(1.98rem, 3.5vw, 2.85rem);
+  font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
 `;
@@ -137,6 +138,7 @@ const CardTitle = styled.h3<{ light?: boolean }>`
   margin: 0;
   color: ${({ light }) => (light ? '#f5f9ff' : '#11407c')};
   font-size: 1.16rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 

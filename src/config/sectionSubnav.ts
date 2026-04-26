@@ -1,3 +1,5 @@
+import { serviceLandingGroups } from '../data/pageContent';
+
 export type SectionSubnavItem = {
   label: string;
   labelEn: string;
@@ -14,6 +16,9 @@ export type SectionSubnavConfig = {
   summaryEn?: string;
   items: SectionSubnavItem[];
 };
+
+const getServicePrimaryHref = (groupId: (typeof serviceLandingGroups)[number]['id']) =>
+  serviceLandingGroups.find((group) => group.id === groupId)?.primaryHref ?? '/services/import-export';
 
 export const sectionSubnav = {
   about: {
@@ -53,25 +58,25 @@ export const sectionSubnav = {
       {
         label: '수출입통관 및 환급',
         labelEn: 'Clearance & Refund',
-        to: '/services/import-export',
+        to: getServicePrimaryHref('clearance-refund'),
         matchPrefixes: ['/services/import-export', '/services/consulting/refund'],
       },
       {
         label: '검역·요건',
         labelEn: 'Quarantine / Requirements',
-        to: '/services/quarantine-requirements',
-        matchPrefixes: ['/services/quarantine-requirements'],
+        to: getServicePrimaryHref('quarantine-requirements'),
+        matchPrefixes: ['/services/quarantine', '/services/requirements'],
       },
       {
         label: '컨설팅',
         labelEn: 'Consulting',
-        to: '/services/consulting',
+        to: getServicePrimaryHref('consulting'),
         matchPrefixes: ['/services/consulting/'],
       },
       {
         label: '기타',
         labelEn: 'Specialized',
-        to: '/services/logistics',
+        to: getServicePrimaryHref('specialized'),
         matchPrefixes: ['/services/logistics', '/services/vietnam', '/services/us-fda'],
       },
     ],
@@ -90,10 +95,9 @@ export const sectionSubnav = {
     kickerEn: 'News & Resources',
     title: '소식/자료',
     titleEn: 'News & Resources',
-    summary: '이슈리포트, 소식지, 세미나, 블로그를 하나의 아카이브 흐름으로 정리했습니다.',
-    summaryEn: 'Issue reports, newsletters, seminars, and blog content are organized as one editorial archive.',
+    summary: '이슈리포트와 주요 소식 리스트를 기관·채널별로 확인할 수 있습니다.',
+    summaryEn: 'Browse issue reports and key news lists by institution and channel.',
     items: [
-      { label: '소식/자료', labelEn: 'Overview', to: '/news' },
       { label: '이슈리포트', labelEn: 'Issue Reports', to: '/news/issue-report' },
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news' },
       {
@@ -102,8 +106,6 @@ export const sectionSubnav = {
         to: '/news/newsletter',
         matchPrefixes: ['/news/newsletter/'],
       },
-      { label: '세미나', labelEn: 'Seminar', to: '/news/seminar' },
-      { label: '블로그', labelEn: 'Blog', to: '/news/blog' },
     ],
   },
 } satisfies Record<'about' | 'members' | 'services' | 'it' | 'news', SectionSubnavConfig>;

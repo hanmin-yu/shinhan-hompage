@@ -6,8 +6,11 @@ import * as S from '../homeStyles';
 
 const Section = styled.section`
   padding: 88px 0;
-  background: linear-gradient(180deg, #e9f2ff 0%, #f1f7ff 100%);
-  border-top: 1px solid rgba(21, 77, 159, 0.12);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(33, 101, 193, 0.16), transparent 22%),
+    radial-gradient(circle at 88% 24%, rgba(23, 159, 150, 0.12), transparent 18%),
+    linear-gradient(180deg, #e8f3ff 0%, #f2f8ff 100%);
+  border-top: 1px solid ${S.palette.lineSoft};
 `;
 
 const Inner = styled(S.Container)`
@@ -27,7 +30,7 @@ const Label = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: #21559e;
+  color: ${S.palette.blue};
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -37,14 +40,15 @@ const Label = styled.span`
     content: '';
     width: 28px;
     height: 1px;
-    background: rgba(47, 87, 146, 0.56);
+    background: linear-gradient(90deg, rgba(33, 101, 193, 0.56), rgba(23, 159, 150, 0.34));
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #103b73;
+  color: ${S.palette.textPrimary};
   font-size: clamp(2rem, 3.6vw, 2.85rem);
+  font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
 `;
@@ -66,13 +70,15 @@ const Featured = styled.article`
   min-height: 260px;
   padding: 24px 22px;
   border-radius: 6px;
-  border: 1px solid rgba(24, 79, 160, 0.26);
-  background: linear-gradient(160deg, #0f3d7b 0%, #18539f 56%, #1f63bb 100%);
-  box-shadow: 0 14px 26px rgba(14, 50, 108, 0.15);
+  border: 1px solid rgba(214, 154, 54, 0.22);
+  background:
+    radial-gradient(circle at top right, rgba(214, 154, 54, 0.2), transparent 24%),
+    linear-gradient(160deg, #0f3d7b 0%, #18539f 56%, #1f63bb 82%, #179f96 100%);
+  box-shadow: 0 18px 30px rgba(14, 50, 108, 0.18);
 `;
 
 const FeaturedMeta = styled.span`
-  color: rgba(207, 225, 250, 0.92);
+  color: rgba(223, 236, 255, 0.94);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -83,13 +89,14 @@ const FeaturedTitle = styled.h3`
   margin: 0;
   color: #ffffff;
   font-size: 1.44rem;
+  font-weight: 700;
   line-height: 1.34;
   letter-spacing: -0.02em;
 `;
 
 const FeaturedBody = styled.p`
   margin: 0;
-  color: rgba(224, 236, 255, 0.9);
+  color: rgba(231, 240, 255, 0.92);
   font-size: 0.92rem;
   line-height: 1.66;
 `;
@@ -97,7 +104,7 @@ const FeaturedBody = styled.p`
 const FeaturedHint = styled.span`
   margin-top: auto;
   width: fit-content;
-  color: rgba(236, 244, 255, 0.9);
+  color: rgba(244, 248, 255, 0.94);
   font-size: 0.84rem;
   font-weight: 700;
 `;
@@ -115,8 +122,8 @@ const Item = styled.article`
   min-height: 106px;
   padding: 18px;
   border-radius: 6px;
-  border: 1px solid rgba(19, 76, 158, 0.18);
-  background: #f8fbff;
+  border: 1px solid ${S.palette.line};
+  background: linear-gradient(180deg, #f8fbff 0%, #eff8ff 72%, rgba(235, 247, 245, 0.86) 100%);
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -124,13 +131,13 @@ const Item = styled.article`
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(19, 76, 158, 0.28);
-    box-shadow: 0 12px 20px rgba(16, 53, 114, 0.1);
+    border-color: rgba(23, 159, 150, 0.28);
+    box-shadow: 0 14px 22px rgba(16, 53, 114, 0.12);
   }
 `;
 
 const ItemCategory = styled.span`
-  color: #1f5cb1;
+  color: ${S.palette.blue};
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -139,20 +146,21 @@ const ItemCategory = styled.span`
 
 const ItemTitle = styled.h4`
   margin: 0;
-  color: #11407e;
+  color: ${S.palette.textPrimary};
   font-size: 1.01rem;
+  font-weight: 700;
   line-height: 1.42;
 `;
 
 const ItemBody = styled.p`
   margin: 0;
-  color: #44658e;
+  color: ${S.palette.textBody};
   font-size: 0.88rem;
   line-height: 1.58;
 `;
 
 export function ItSection() {
-  const { t, tx } = useI18n();
+  const { t } = useI18n();
   const [featuredService, ...secondaryServices] = itServices;
 
   if (!featuredService) return null;
@@ -169,18 +177,18 @@ export function ItSection() {
 
         <Grid>
           <Featured>
-            <FeaturedMeta>{tx(featuredService.category)}</FeaturedMeta>
-            <FeaturedTitle>{tx(featuredService.title)}</FeaturedTitle>
-            <FeaturedBody>{tx(featuredService.body)}</FeaturedBody>
+            <FeaturedMeta>{t(featuredService.category, featuredService.categoryEn)}</FeaturedMeta>
+            <FeaturedTitle>{t(featuredService.title, featuredService.titleEn)}</FeaturedTitle>
+            <FeaturedBody>{t(featuredService.body, featuredService.bodyEn)}</FeaturedBody>
             <FeaturedHint>{t('주요 기능 보기', 'View key capabilities')}</FeaturedHint>
           </Featured>
 
           <List>
             {secondaryServices.slice(0, 3).map((item) => (
               <Item key={item.title}>
-                <ItemCategory>{tx(item.category)}</ItemCategory>
-                <ItemTitle>{tx(item.title)}</ItemTitle>
-                <ItemBody>{tx(item.body)}</ItemBody>
+                <ItemCategory>{t(item.category, item.categoryEn)}</ItemCategory>
+                <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                <ItemBody>{t(item.body, item.bodyEn)}</ItemBody>
               </Item>
             ))}
           </List>

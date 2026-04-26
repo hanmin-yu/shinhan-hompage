@@ -50,6 +50,7 @@ const Title = styled.h2`
   margin: 10px 0 0;
   color: #103a72;
   font-size: clamp(2rem, 3.5vw, 2.85rem);
+  font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
 `;
@@ -122,6 +123,7 @@ const Avatar = styled.div<{ image?: string; accent: string }>`
 const Name = styled.strong`
   color: #11407b;
   font-size: 1.05rem;
+  font-weight: 700;
 `;
 
 const TitleText = styled.p`

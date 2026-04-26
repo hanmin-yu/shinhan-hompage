@@ -131,34 +131,34 @@ const messageNetworkCards = [
   {
     metricKo: '7개',
     metricEn: '7',
-    titleKo: '전국 7개 도시 지사 운영',
+    titleKo: '전국 7개 도시 지사',
     titleEn: 'Seven Domestic City Branches',
-    bodyKo: '주요 입항지를 포함한 전국 거점에서 지역별 통관 이슈를 빠르게 대응합니다.',
-    bodyEn: 'We respond quickly to regional customs issues through domestic hubs including major port-of-entry locations.',
+    bodyKo: '주요 입항지를 비롯한 전국 7개 도시의 지사를 통해 고객에게 필요한 서비스를 제공합니다.',
+    bodyEn: 'We provide the services clients need through branches across seven domestic cities, including major port-of-entry locations.',
   },
   {
     metricKo: '3PL',
     metricEn: '3PL',
-    titleKo: '3PL 물류 운영',
-    titleEn: '3PL Logistics Operation',
-    bodyKo: '보세창고와 연계한 3PL 운영을 통해 통관 이후 보관·운송 단계까지 연결합니다.',
-    bodyEn: 'Through bonded warehouse-linked 3PL operations, we connect post-clearance storage and transportation.',
+    titleKo: '보세창고 기반 3PL 물류회사',
+    titleEn: 'Bonded-Warehouse 3PL Operation',
+    bodyKo: '보세창고를 운영하는 3PL 물류회사를 통해 통관 이후의 보관과 운송까지 이어갑니다.',
+    bodyEn: 'Through a 3PL logistics company operating bonded warehouses, we extend support into post-clearance storage and transportation.',
   },
   {
     metricKo: '2개 거점',
     metricEn: '2 Hubs',
-    titleKo: '해외 법인 네트워크',
-    titleEn: 'Overseas Entity Network',
-    bodyKo: '미국 Los Angeles와 베트남 Hanoi 법인을 통해 현지 통관·물류·규정 이슈를 함께 대응합니다.',
-    bodyEn: 'We jointly address local customs, logistics, and regulatory issues through entities in Los Angeles and Hanoi.',
+    titleKo: 'Los Angeles · Hanoi 관세물류법인',
+    titleEn: 'Los Angeles · Hanoi Customs Entities',
+    bodyKo: '미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인을 통해 현지 실무를 함께 지원합니다.',
+    bodyEn: 'We support local operations through customs and logistics entities in Los Angeles and Hanoi.',
   },
   {
     metricKo: '100+',
     metricEn: '100+',
-    titleKo: '100여 명 전문 인력',
-    titleEn: '100+ Professionals',
-    bodyKo: '통관·심사·행정쟁송·AEO·FTA·환급·요건 컨설팅까지 고객에게 필요한 서비스를 제공합니다.',
-    bodyEn: 'We provide services clients need across clearance, audits, administrative disputes, AEO, FTA, refunds, and requirements consulting.',
+    titleKo: '100여 명의 직원',
+    titleEn: '100+ Team Members',
+    bodyKo: '국내외 조직 전반에서 100여 명의 직원이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
+    bodyEn: 'Across the domestic and overseas organization, more than 100 team members provide every service our clients need.',
   },
 ];
 
@@ -185,21 +185,27 @@ export function MessagePage() {
             <P.SectionTitle>{t('인사말', 'Message')}</P.SectionTitle>
             <P.Lead>
               {t(
-                '1965년 3월 22일 서울통관사 창립 이후, 신한관세법인은 대한민국 무역의 성장과 함께 현장 중심의 관세 서비스를 확대해 왔습니다.',
-                'Since the founding of Seoul Customs Service on March 22, 1965, Shinhan has expanded practical customs services alongside Korea’s trade growth.',
+                '1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.',
+                'On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, was founded with three employees.',
               )}
             </P.Lead>
             <P.Lead>
               {t(
-                '현재는 전국 7개 도시 지사, 보세창고를 운영하는 3PL 물류회사, 미국 Los Angeles 및 베트남 Hanoi 법인을 포함한 네트워크로 고객의 실무를 지원하고 있습니다.',
-                'Today, we support client operations through a network covering seven domestic cities, a 3PL bonded warehouse operation, and entities in Los Angeles and Hanoi.',
+                '창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다.',
+                'Since then, Shinhan Customs Service has steadily grown alongside the development of Korea’s economy and trade.',
+              )}
+            </P.Lead>
+            <P.Lead>
+              {t(
+                '현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여 명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
+                'Today, through branches in seven domestic cities including major ports of entry, a 3PL logistics company operating bonded warehouses, and customs and logistics entities in Los Angeles and Hanoi, more than 100 employees provide every service our clients need.',
               )}
             </P.Lead>
             <MessageMetaRow>
-              <MessageMetaChip>{t('1965년 창립', 'Founded in 1965')}</MessageMetaChip>
-              <MessageMetaChip>{t('전국 7개 도시 지사', '7 Domestic Branches')}</MessageMetaChip>
+              <MessageMetaChip>{t('3명의 직원으로 창립', 'Founded with 3 Employees')}</MessageMetaChip>
+              <MessageMetaChip>{t('전국 7개 도시', '7 Domestic Cities')}</MessageMetaChip>
               <MessageMetaChip>{t('Los Angeles · Hanoi', 'Los Angeles · Hanoi')}</MessageMetaChip>
-              <MessageMetaChip>{t('100여 명 전문 인력', '100+ Professionals')}</MessageMetaChip>
+              <MessageMetaChip>{t('100여 명 직원', '100+ Team Members')}</MessageMetaChip>
             </MessageMetaRow>
             <P.SectionDivider />
             <GoalBadge>{t('100년의 Goal', '100-Year Goal')}</GoalBadge>
@@ -208,8 +214,8 @@ export function MessagePage() {
           <MessageVisual aria-hidden="true">
             <QuoteBox>
               {t(
-                '고객의 성공과 발전이 우리의 성공입니다. 진실하고 품격 있는 최고의 서비스로 100년의 Goal을 향해 나아가겠습니다.',
-                'Client success is our success. We will continue toward our 100-year goal with truthful and high-quality service.',
+                '고객의 성공과 발전이 우리의 성공임을 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 노력하겠습니다.',
+                'Keeping in our hearts that our clients’ success and growth are our own, we will strive to deliver truthful, high-quality service.',
               )}
             </QuoteBox>
           </MessageVisual>
@@ -245,8 +251,15 @@ export function MessagePage() {
               <GoalBadge>{t('100년의 Goal', '100-Year Goal')}</GoalBadge>
               <MessageBody>
                 {t(
-                  '1965년 창립 이래 신속하고 정확한 수출입통관서비스 제공을 기본으로, 기업심사자문·행정쟁송대리·AEO·FTA·환급·요건 컨설팅·3PL 물류까지 서비스 범위를 지속적으로 확장해 왔습니다.',
-                  'Since 1965, we have continuously expanded from precise import/export clearance to advisory services including audits, administrative disputes, AEO, FTA, refunds, requirements consulting, and 3PL logistics.',
+                  '1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.',
+                  'Since our founding in 1965, we have done our utmost every day and every year to provide fast and accurate import and export clearance services.',
+                )}
+              </MessageBody>
+              <P.SectionDivider />
+              <MessageBody>
+                {t(
+                  '또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · 3PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 Goal을 향해서 계속 나아가겠습니다.',
+                  'To contribute to client growth, we have also expanded into services such as corporate audit advisory, representation in administrative disputes, AEO, FTA, refunds, requirements consulting, and 3PL logistics. Shinhan Customs Service will keep moving toward its 100-year goal without stopping these forward-looking efforts.',
                 )}
               </MessageBody>
             </P.QuotePanel>
@@ -254,8 +267,14 @@ export function MessagePage() {
               <MessageStack>
                 <MessageBody>
                   {t(
-                    '함께해 주신 고객과 협력사에 깊이 감사드리며, 고객의 발전과 성공이 곧 우리의 성공이라는 원칙 아래 진실하고 품격 있는 서비스를 이어가겠습니다.',
-                    'We deeply thank our clients and partners, and will continue to provide truthful and high-quality services under the principle that client growth and success are our own.',
+                    '함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다.',
+                    'We extend our sincere thanks to all clients and partners who have stood with us and supported us.',
+                  )}
+                </MessageBody>
+                <MessageBody>
+                  {t(
+                    '고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.',
+                    'Every member of our company keeps in mind that our clients’ success and growth are our own, and we will continue striving today and tomorrow to provide truthful and distinguished service of the highest quality.',
                   )}
                 </MessageBody>
                 <P.SectionDivider />

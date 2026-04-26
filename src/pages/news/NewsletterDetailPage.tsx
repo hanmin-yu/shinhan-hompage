@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
@@ -15,28 +15,25 @@ type NewsletterManifest = {
   images: string[];
 };
 
-const MetaRow = styled.div`
+const ContentBlock = styled.div`
+  margin-top: 12px;
+`;
+
+const ViewerWrap = styled.div`
+  padding: clamp(16px, 2.4vw, 24px);
+  border-radius: 18px;
+  border: 1px solid rgba(20, 75, 157, 0.18);
+  background: linear-gradient(180deg, #f9fbff, #eef4fb);
+  box-shadow: 0 24px 44px rgba(13, 44, 92, 0.08);
+`;
+
+const ViewerHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  color: #5d7496;
-  font-size: 0.86rem;
-  font-weight: 700;
-`;
-
-const LangBadge = styled.span`
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  padding: 0 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 75, 157, 0.2);
-  background: #f6faff;
-  color: #1e4f93;
-  font-size: 0.74rem;
-  font-weight: 700;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
 `;
 
 const ActionRow = styled.div`
@@ -44,21 +41,6 @@ const ActionRow = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin-top: 18px;
-`;
-
-const BackLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 0 15px;
-  border-radius: 6px;
-  border: 1px solid rgba(20, 75, 157, 0.2);
-  background: #ffffff;
-  color: #1b4f95;
-  font-size: 0.88rem;
-  font-weight: 700;
 `;
 
 const DownloadLink = styled.a`
@@ -75,57 +57,113 @@ const DownloadLink = styled.a`
   font-weight: 700;
 `;
 
-const ViewerWrap = styled.div`
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(20, 75, 157, 0.18);
-  background: #fbfdff;
-`;
-
-const ViewerTitle = styled.h3`
-  margin: 0 0 12px;
-  color: #173f77;
-  font-size: 1.02rem;
-  line-height: 1.4;
-`;
-
-const PdfFrame = styled.iframe`
-  width: 100%;
-  height: min(72vh, 900px);
-  border: 1px solid rgba(20, 75, 157, 0.16);
-  border-radius: 8px;
-  background: #ffffff;
-`;
-
-const ImageList = styled.div`
+const ViewerControls = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
 `;
 
-const ImagePage = styled.img`
-  width: 100%;
+const NavButton = styled.button<{ $primary?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid ${({ $primary }) => ($primary ? 'rgba(19, 81, 174, 0.3)' : 'rgba(19, 75, 154, 0.18)')};
+  background: ${({ $primary }) => ($primary ? 'linear-gradient(180deg, #2567c2, #174d9a)' : '#ffffff')};
+  color: ${({ $primary }) => ($primary ? '#ffffff' : '#1b4f95')};
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+`;
+
+const PageCounter = styled.div`
+  min-width: 96px;
+  color: #173f77;
+  font-size: 0.93rem;
+  font-weight: 800;
+  text-align: center;
+`;
+
+const ViewerStage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 68vh;
+  padding: clamp(12px, 2vw, 20px);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top, rgba(54, 110, 191, 0.12), transparent 32%),
+    linear-gradient(180deg, #dfe9f7, #edf3fb 22%, #dde8f7 100%);
+  border: 1px solid rgba(20, 75, 157, 0.14);
+
+  @media (max-width: 820px) {
+    min-height: 50vh;
+  }
+`;
+
+const PageImage = styled.img`
+  width: min(100%, 980px);
   height: auto;
-  border-radius: 6px;
-  border: 1px solid rgba(20, 75, 157, 0.12);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 26px 50px rgba(14, 36, 77, 0.16);
+`;
+
+const ThumbnailRail = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(88px, 108px);
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 16px;
+  padding-bottom: 4px;
+`;
+
+const ThumbnailButton = styled.button<{ $active: boolean }>`
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid ${({ $active }) => ($active ? 'rgba(20, 75, 157, 0.36)' : 'rgba(20, 75, 157, 0.12)')};
+  background: ${({ $active }) => ($active ? 'rgba(234, 242, 255, 0.9)' : 'rgba(255, 255, 255, 0.82)')};
+  cursor: pointer;
+`;
+
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
   background: #ffffff;
 `;
 
+const ThumbnailLabel = styled.span`
+  color: #325682;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+`;
+
 export function NewsletterDetailPage() {
-  const { t, tx } = useI18n();
+  const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
   const { newsletterId } = useParams<{ newsletterId: string }>();
 
-  const activeItem = useMemo(
-    () => newsletterItems.find((item) => item.id === newsletterId) ?? null,
-    [newsletterId],
-  );
-
+  const item = useMemo(() => newsletterItems.find((entry) => entry.id === newsletterId) ?? null, [newsletterId]);
   const [manifest, setManifest] = useState<NewsletterManifest | null>(null);
   const [loadingPreview, setLoadingPreview] = useState(false);
+  const [activePageIndex, setActivePageIndex] = useState(0);
 
-  const activeSlug = getNewsletterAssetSlug(activeItem?.downloadHref);
+  const activeSlug = getNewsletterAssetSlug(item?.downloadHref);
 
   useEffect(() => {
     let ignore = false;
@@ -155,9 +193,38 @@ export function NewsletterDetailPage() {
     };
   }, [activeSlug]);
 
-  const pdfUrl = manifest?.pdf && activeSlug ? `/newsletters/render/${activeSlug}/${manifest.pdf}` : null;
   const imageUrls =
     manifest?.images && activeSlug ? manifest.images.map((name) => `/newsletters/render/${activeSlug}/${name}`) : [];
+  const currentImageUrl = imageUrls[activePageIndex] ?? null;
+
+  useEffect(() => {
+    setActivePageIndex(0);
+  }, [activeSlug, imageUrls.length]);
+
+  useEffect(() => {
+    if (!imageUrls.length) return;
+
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        setActivePageIndex((current) => Math.min(current + 1, imageUrls.length - 1));
+      }
+
+      if (event.key === 'ArrowLeft') {
+        setActivePageIndex((current) => Math.max(current - 1, 0));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
+  }, [imageUrls.length]);
+
+  const movePage = (direction: -1 | 1) => {
+    setActivePageIndex((current) => Math.min(Math.max(current + direction, 0), imageUrls.length - 1));
+  };
+
+  if (!item) {
+    return <Navigate to="/news/newsletter" replace />;
+  }
 
   return (
     <>
@@ -172,63 +239,70 @@ export function NewsletterDetailPage() {
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
           />
-        </P.PageContainer>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Newsletter</P.Kicker>
-            <P.Title>{t('소식지 보기', 'Newsletter Detail')}</P.Title>
-            {activeItem ? (
-              <>
-                <P.Lead>{tx(activeItem.title)}</P.Lead>
-                <MetaRow>
-                  <span>{activeItem.publishedAt}</span>
-                  {activeItem.language ? <LangBadge>{tx(activeItem.language)}</LangBadge> : null}
-                </MetaRow>
-                <P.CardText style={{ marginTop: 8 }}>{tx(activeItem.summary)}</P.CardText>
+          <ContentBlock data-reveal>
+            <ViewerWrap>
+              <ViewerHeader>
                 <ActionRow>
-                  <BackLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</BackLink>
-                  {activeItem.downloadHref ? (
-                    <DownloadLink href={activeItem.downloadHref} target="_blank" rel="noreferrer">
+                  <P.CardLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</P.CardLink>
+                  {item.downloadHref ? (
+                    <DownloadLink href={item.downloadHref} target="_blank" rel="noreferrer">
                       {t('원본 다운로드', 'Download Original')}
                     </DownloadLink>
                   ) : null}
                 </ActionRow>
-              </>
-            ) : (
-              <P.CardText style={{ marginTop: 4 }}>
-                {t(
-                  '요청하신 소식지 경로가 올바르지 않거나 삭제되었습니다. 목록 페이지에서 다시 선택해주세요.',
-                  'The requested newsletter path is invalid or no longer available. Please choose it again from the list.',
-                )}
-              </P.CardText>
-            )}
-          </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/about-coms1.jpg" minHeight={320} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
+                {imageUrls.length ? (
+                  <ViewerControls>
+                    <NavButton type="button" onClick={() => movePage(-1)} disabled={activePageIndex === 0}>
+                      {t('이전 페이지', 'Previous')}
+                    </NavButton>
+                    <PageCounter>
+                      {t(`${activePageIndex + 1} / ${imageUrls.length} 페이지`, `Page ${activePageIndex + 1} / ${imageUrls.length}`)}
+                    </PageCounter>
+                    <NavButton
+                      type="button"
+                      $primary
+                      onClick={() => movePage(1)}
+                      disabled={activePageIndex === imageUrls.length - 1}
+                    >
+                      {t('다음 페이지', 'Next')}
+                    </NavButton>
+                  </ViewerControls>
+                ) : null}
+              </ViewerHeader>
 
-      <P.PageSection tone="soft">
-        <P.PageContainer data-reveal>
-          {activeItem ? (
-            <ViewerWrap>
-              <ViewerTitle>{t('소식지 원문', 'Newsletter Content')}</ViewerTitle>
+              {loadingPreview ? <P.CardText>{t('소식지를 불러오는 중입니다...', 'Loading newsletter...')}</P.CardText> : null}
 
-              {loadingPreview ? (
-                <P.CardText>{t('소식지를 불러오는 중입니다...', 'Loading newsletter...')}</P.CardText>
+              {!loadingPreview && currentImageUrl ? (
+                <>
+                  <ViewerStage>
+                    <PageImage
+                      src={currentImageUrl}
+                      alt={`${t(item.title, item.titleEn)} ${t(`${activePageIndex + 1}페이지`, `page ${activePageIndex + 1}`)}`}
+                    />
+                  </ViewerStage>
+
+                  <ThumbnailRail aria-label={t('소식지 페이지 목록', 'Newsletter page list')}>
+                    {imageUrls.map((src, index) => (
+                      <ThumbnailButton
+                        key={src}
+                        type="button"
+                        $active={index === activePageIndex}
+                        onClick={() => setActivePageIndex(index)}
+                      >
+                        <ThumbnailImage
+                          src={src}
+                          alt={`${t(item.title, item.titleEn)} ${t(`${index + 1}페이지 미리보기`, `page ${index + 1} preview`)}`}
+                          loading="lazy"
+                        />
+                        <ThumbnailLabel>{t(`${index + 1}페이지`, `Page ${index + 1}`)}</ThumbnailLabel>
+                      </ThumbnailButton>
+                    ))}
+                  </ThumbnailRail>
+                </>
               ) : null}
 
-              {!loadingPreview && pdfUrl ? <PdfFrame src={pdfUrl} title={`${tx(activeItem.title)} PDF`} /> : null}
-
-              {!loadingPreview && !pdfUrl && imageUrls.length ? (
-                <ImageList>
-                  {imageUrls.map((src, idx) => (
-                    <ImagePage key={src} src={src} alt={`${tx(activeItem.title)} ${idx + 1}`} loading="lazy" />
-                  ))}
-                </ImageList>
-              ) : null}
-
-              {!loadingPreview && !pdfUrl && !imageUrls.length ? (
+              {!loadingPreview && !imageUrls.length ? (
                 <P.CardText>
                   {t(
                     '웹 미리보기 파일이 아직 준비되지 않았습니다. 원본 다운로드 버튼으로 확인해주세요.',
@@ -237,20 +311,9 @@ export function NewsletterDetailPage() {
                 </P.CardText>
               ) : null}
             </ViewerWrap>
-          ) : (
-            <P.Card>
-              <P.CardTitle>{t('소식지를 찾을 수 없습니다.', 'Newsletter not found')}</P.CardTitle>
-              <P.CardText>
-                {t(
-                  '요청하신 소식지 경로가 올바르지 않거나 삭제되었습니다. 목록 페이지에서 다시 선택해주세요.',
-                  'The requested newsletter path is invalid or no longer available. Please choose it again from the list.',
-                )}
-              </P.CardText>
-              <P.CardLink to="/news/newsletter">{t('소식지 목록으로 이동', 'Go to Newsletter List')}</P.CardLink>
-            </P.Card>
-          )}
+          </ContentBlock>
         </P.PageContainer>
-      </P.PageSection>
+      </P.HeroSection>
     </>
   );
 }

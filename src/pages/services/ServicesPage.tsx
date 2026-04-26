@@ -58,6 +58,7 @@ const ServiceMapTitle = styled.h3`
   margin: 0;
   color: #123d78;
   font-size: 1.08rem;
+  font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.02em;
 `;
@@ -133,6 +134,7 @@ const GroupTitle = styled.h3`
   margin: 0;
   color: #143d78;
   font-size: clamp(1.44rem, 2.6vw, 1.86rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 

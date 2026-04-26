@@ -6,11 +6,15 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
+const IntroVisual = styled(P.IntroVisualPanel)`
+  box-shadow: 0 24px 46px rgba(16, 45, 92, 0.1);
+`;
+
 const IdentityPoints = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 8px;
 `;
 
 const IdentityPoint = styled.span`
@@ -19,15 +23,16 @@ const IdentityPoint = styled.span`
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid rgba(20, 76, 158, 0.2);
-  background: #f8fbff;
+  border: 1px solid rgba(20, 76, 158, 0.16);
+  background: #f6faff;
   color: #1f4f93;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 `;
 
 const AllInOneSection = styled(P.PageSection)`
+  padding: clamp(58px, 6vw, 78px) 0;
   background: linear-gradient(180deg, #0f3d7d 0%, #184f9c 100%);
   border-top: 1px solid rgba(17, 58, 122, 0.5);
 `;
@@ -43,20 +48,37 @@ const AllInOneTitle = styled.h2`
   margin: 0;
   color: #f2f7ff;
   font-size: clamp(2rem, 3.4vw, 3rem);
+  font-weight: 800;
   letter-spacing: 0.01em;
 `;
 
 const AllInOneBody = styled.p`
-  margin: 0;
+  max-width: 760px;
+  margin: 0 auto;
   color: rgba(223, 235, 255, 0.95);
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.72;
+  text-wrap: balance;
+`;
+
+const ServiceSection = styled(P.PageSection)`
+  padding-top: clamp(56px, 6vw, 72px);
+  border-top: 0;
+`;
+
+const ServiceIntro = styled.p`
+  margin: 14px 0 0;
+  max-width: 720px;
+  color: #4a6788;
+  font-size: 0.95rem;
+  line-height: 1.74;
 `;
 
 const ServiceColumns = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+  margin-top: 24px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -65,6 +87,7 @@ const ServiceColumns = styled.div`
 
 const ServiceCard = styled(P.Card)`
   gap: 14px;
+  padding: 24px;
 `;
 
 const ServiceCardHead = styled.div`
@@ -105,6 +128,8 @@ const ServiceDescription = styled.p`
 `;
 
 const ServiceList = styled.ul`
+  display: grid;
+  gap: 6px;
   margin: 0;
   padding-left: 18px;
   color: #445f86;
@@ -135,7 +160,7 @@ const StripCard = styled.article<{ src: string; $span: number; $height?: number 
   border-radius: 16px;
   border: 1px solid rgba(20, 76, 158, 0.16);
   background:
-    linear-gradient(180deg, rgba(9, 29, 59, 0.04) 0%, rgba(9, 29, 59, 0.58) 100%),
+    linear-gradient(180deg, rgba(9, 29, 59, 0.06) 0%, rgba(9, 29, 59, 0.6) 100%),
     ${({ src }) => `url(${src}) center / cover no-repeat`};
   box-shadow: 0 18px 36px rgba(15, 49, 106, 0.08);
   overflow: hidden;
@@ -172,6 +197,7 @@ const StripTitle = styled.h3`
   margin: 0;
   color: #ffffff;
   font-size: 1.16rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 
@@ -194,6 +220,7 @@ const VisionLead = styled.p`
   color: #4e6888;
   font-size: 0.98rem;
   line-height: 1.72;
+  text-align: center;
 `;
 
 const VisionDiagram = styled.div`
@@ -393,41 +420,41 @@ const visionValueRightOrder = ['INTEGRITY', 'TEAMWORK'] as const;
 
 const consultingItemsKo = [
   '관세심사(법인/기획/종합심사) 컨설팅',
-  '해외 법률자문(중국, 미국, 통상이슈)',
+  '해외 법률자문(중국,미국,통상이슈)',
   '이전가격(ACVA) 컨설팅',
   '관세 환급 컨설팅',
   '관세 불복 자문',
-  'FTA, AEO 컨설팅',
+  'FTA,AEO 컨설팅',
   '무역 컨설팅',
   '베트남 재고관리, FTA 업무 컨설팅',
 ];
 
 const consultingItemsEn = [
   'Customs audit consulting (corporate/planned/comprehensive)',
-  'Overseas legal advisory (China, U.S., trade issues)',
+  'Overseas legal advisory (China,U.S.,trade issues)',
   'Transfer pricing (ACVA) consulting',
   'Customs refund consulting',
   'Customs appeal advisory',
-  'FTA and AEO consulting',
+  'FTA,AEO consulting',
   'Trade consulting',
   'Vietnam inventory and FTA consulting',
 ];
 
 const clearanceItemsKo = [
   '통관 관련 분석 자료 제공',
-  '월간 리포트 및 KPI 리포트 제공',
-  '개정법령 등 무역 관련 소식지 제공',
+  '(Monthly Report, KPI Report)',
+  '개정법령 등 무역관련 소식지 제공',
   '자체 사후심사 시스템 제공',
   '서류 보관 업무 대행',
   '환율 정보 제공 서비스',
-  'OJT 지원 및 교육',
+  'OJT지원,교육',
   '요건 확인 업무 컨설팅',
 ];
 
 const clearanceItemsEn = [
   'Customs analytics materials',
-  'Monthly and KPI reporting',
-  'Trade newsletters with regulatory updates',
+  '(Monthly Report, KPI Report)',
+  'Trade newsletters with revised regulations',
   'Internal post-audit system support',
   'Document archive outsourcing',
   'Exchange rate information service',
@@ -445,7 +472,7 @@ const logisticsItemsKo = [
 
 const logisticsItemsEn = [
   'Bonded and general cargo storage',
-  'Domestic bonded transport (Air/Ocean)',
+  'Domestic bonded transport (Air / Ocean)',
   'Domestic inland transportation after clearance',
   'Third Party Logistics',
   'Logistics consulting',
@@ -461,35 +488,35 @@ const aboutGalleryItems = [
   {
     labelKo: 'Partnership',
     labelEn: 'Partnership',
-    titleKo: '신뢰 기반 협업',
-    titleEn: 'Trust-Based Collaboration',
-    bodyKo: '고객과의 장기적인 협업 관계를 바탕으로 자문과 실행을 함께 설계합니다.',
-    bodyEn: 'We design advisory and execution together through long-term client partnerships.',
+    titleKo: '오랜 신뢰의 축적',
+    titleEn: 'Built on Long-Term Trust',
+    bodyKo: '고객사와 함께해 온 시간 속에서 신뢰와 KNOW-HOW를 쌓아왔습니다.',
+    bodyEn: 'We have built trust and know-how through long-term partnership with clients.',
     src: '/subpages/about-coms1.jpg',
     span: 4,
-    height: 250,
+    height: 248,
   },
   {
-    labelKo: 'Network',
-    labelEn: 'Network',
-    titleKo: '도심 네트워크 허브',
-    titleEn: 'Urban Network Hub',
-    bodyKo: '국내외 네트워크와 현장 대응 체계를 하나의 서비스 흐름으로 연결합니다.',
-    bodyEn: 'We connect domestic and overseas networks into one service flow.',
+    labelKo: 'Service',
+    labelEn: 'Service',
+    titleKo: '통관·컨설팅·물류의 연결',
+    titleEn: 'Connected Total Service',
+    bodyKo: '통관, 물류, 컨설팅까지 이어지는 Total Service 체계를 제공합니다.',
+    bodyEn: 'We provide a connected total service system spanning clearance, logistics, and consulting.',
     src: '/subpages/about-coms2.jpg',
     span: 4,
-    height: 278,
+    height: 272,
   },
   {
-    labelKo: 'Execution',
-    labelEn: 'Execution',
-    titleKo: '보세·물류 실행력',
-    titleEn: 'Bonded & Logistics Execution',
-    bodyKo: '보세창고와 물류 운영까지 이어지는 후속 실행력을 통해 서비스 범위를 확장합니다.',
-    bodyEn: 'We extend service scope with follow-through execution across bonded warehousing and logistics.',
+    labelKo: 'Innovation',
+    labelEn: 'Innovation',
+    titleKo: '전통과 혁신의 융합',
+    titleEn: 'Tradition Meets Innovation',
+    bodyKo: '지속적인 IT 투자와 개발로 급변하는 무역환경에 앞서 대응합니다.',
+    bodyEn: 'With continuous IT investment and development, we stay ahead of fast-changing trade environments.',
     src: '/subpages/about-coms3.jpg',
     span: 4,
-    height: 250,
+    height: 248,
   },
 ];
 
@@ -513,9 +540,8 @@ export function AboutPage() {
             kickerEn={aboutSubnav.kickerEn}
             title={aboutSubnav.title}
             titleEn={aboutSubnav.titleEn}
-            summary={aboutSubnav.summary}
-            summaryEn={aboutSubnav.summaryEn}
             items={aboutSubnav.items}
+            compactBottom
           />
         </P.PageContainer>
 
@@ -525,52 +551,31 @@ export function AboutPage() {
             <P.Title>{t('신뢰할 수 있는 동반자', 'A Trusted Partner')}</P.Title>
             <P.Lead>
               {t(
-                '신한관세법인은 1965년 창립 이래 수출입 무역 기업과 함께 성장해 온 관세·무역 전문 파트너입니다.',
-                'Since 1965, Shinhan Customs Service has grown with import-export companies as a customs and trade partner.',
+                '신한관세법인은 1965년 창립 이래로 수출입 무역 업체의 든든한 동반자로서 고객사와 함께 해왔습니다.',
+                'Since its founding in 1965, Shinhan Customs Service has stood with clients as a trusted partner to import and export businesses.',
               )}
             </P.Lead>
             <P.Lead>
               {t(
-                '오랜 신뢰와 KNOW-HOW를 바탕으로 통관·컨설팅·물류를 아우르는 Total Service를 제공합니다.',
-                'Built on long-standing trust and know-how, we provide total services spanning clearance, consulting, and logistics.',
+                '오랜 기간 동안 쌓아온 신뢰와 KNOW-HOW를 바탕으로 신한의 관세전문가들이 깊이 있는 관세 서비스를 여러분께 제공하고 있습니다.',
+                'Built on trust and KNOW-HOW accumulated over many years, Shinhan’s customs professionals provide clients with deep and reliable customs services.',
+              )}
+            </P.Lead>
+            <P.Lead>
+              {t(
+                '정기적인 고객사 교육을 통하여 신한관세법인만의 관세 및 무역에 관한 KNOW-HOW를 고객사와 공유하고자 노력하고 있습니다. 급변하는 세계의 무역환경에서 앞서 나갈 수 있도록 IT분야의 지속적인 투자 및 개발을 하여, 전통과 혁신이 융합된 최선의 서비스를 제공합니다.',
+                'Through regular client education, we share Shinhan Customs Service’s customs and trade KNOW-HOW with our clients. We continue investing in and developing IT capabilities so clients can stay ahead in a rapidly changing global trade environment, delivering the best service through a combination of tradition and innovation.',
               )}
             </P.Lead>
             <IdentityPoints>
               <IdentityPoint>{t('1965년 창립', 'Founded in 1965')}</IdentityPoint>
-              <IdentityPoint>{t('전통과 혁신', 'Tradition & Innovation')}</IdentityPoint>
-              <IdentityPoint>{t('ALL-IN-ONE SERVICE', 'ALL-IN-ONE SERVICE')}</IdentityPoint>
-              <IdentityPoint>{t('관세·무역 Total Service', 'Customs & Trade Total Service')}</IdentityPoint>
+              <IdentityPoint>{t('신뢰와 KNOW-HOW', 'Trust and KNOW-HOW')}</IdentityPoint>
+              <IdentityPoint>{t('전통과 혁신의 융합', 'Tradition and Innovation')}</IdentityPoint>
             </IdentityPoints>
           </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/about-mt14.jpg" minHeight={390} aria-hidden="true" />
+          <IntroVisual image="/subpages/about-mt14.jpg" minHeight={390} aria-hidden="true" />
         </P.IntroBlock>
       </P.HeroSection>
-
-      <P.PageSection tone="soft">
-        <P.PageContainer data-reveal>
-          <P.SectionHead>
-            <div>
-              <P.Kicker>Identity</P.Kicker>
-              <P.SectionTitle>{t('전통과 혁신의 결합', 'Tradition Meets Innovation')}</P.SectionTitle>
-            </div>
-          </P.SectionHead>
-          <P.StatementBlock>
-            <P.Lead style={{ marginTop: 0 }}>
-              {t(
-                '정기적인 고객사 교육을 통해 관세·무역 KNOW-HOW를 공유하고, 급변하는 무역환경에 대응할 수 있도록 IT 분야의 지속적인 투자와 개발을 이어가고 있습니다.',
-                'Through regular client education, we share customs and trade know-how and continue investing in IT development to respond to rapidly changing trade conditions.',
-              )}
-            </P.Lead>
-            <P.SectionDivider />
-            <P.Lead style={{ marginTop: 0 }}>
-              {t(
-                '전통과 혁신을 결합한 운영 체계로 고객 업무에 바로 적용 가능한 서비스를 제공합니다.',
-                'By combining tradition and innovation, we deliver services that can be applied directly to client operations.',
-              )}
-            </P.Lead>
-          </P.StatementBlock>
-        </P.PageContainer>
-      </P.PageSection>
 
       <AllInOneSection>
         <AllInOneInner data-reveal>
@@ -578,17 +583,23 @@ export function AboutPage() {
           <AllInOneTitle>ALL-IN-ONE SERVICE</AllInOneTitle>
           <AllInOneBody>
             {t(
-              '통관, 환급, FTA, AEO, 심사, 물류, 행정쟁송 등 관세 및 무역에 관한 업무를 하나의 체계로 제공합니다.',
-              'We provide customs and trade services in one system, including clearance, refunds, FTA, AEO, audits, logistics, and administrative disputes.',
+              '통관, 환급, FTA, AEO, 심사, 물류, 행정쟁송과 관세 및 무역에 관한 ALL-IN ONE SERVICE를 제공합니다.',
+              'We provide ALL-IN ONE SERVICE across customs clearance, refunds, FTA, AEO, audits, logistics, administrative disputes, and customs and trade operations.',
             )}
           </AllInOneBody>
         </AllInOneInner>
       </AllInOneSection>
 
-      <P.PageSection>
+      <ServiceSection>
         <P.PageContainer data-reveal>
           <P.Kicker>Service Areas</P.Kicker>
           <P.SectionTitle>{t('서비스 3축', 'Three Service Pillars')}</P.SectionTitle>
+          <ServiceIntro>
+            {t(
+              '원본 회사소개 페이지의 서비스 구성을 기준으로, 컨설팅서비스·통관서비스·물류서비스를 한 화면에서 바로 확인할 수 있도록 정리했습니다.',
+              'Based on the original company introduction page, the three service groups of consulting, clearance, and logistics are organized so they can be reviewed at a glance.',
+            )}
+          </ServiceIntro>
           <ServiceColumns>
             <ServiceCard>
               <ServiceCardHead>
@@ -598,8 +609,8 @@ export function AboutPage() {
               <P.CardTitle>{t('컨설팅서비스', 'Consulting Service')}</P.CardTitle>
               <ServiceDescription>
                 {t(
-                  '심사·불복·원산지·AEO·무역 이슈를 기업 상황에 맞게 설계하는 자문 체계입니다.',
-                  'An advisory system built around audits, appeals, origin, AEO, and trade issues aligned with each client context.',
+                  '관세심사, 해외 법률자문, AEO, FTA, 환급, 무역 이슈까지 폭넓은 자문 항목을 제공합니다.',
+                  'We provide a broad advisory range covering customs audits, overseas legal support, AEO, FTA, refunds, and trade issues.',
                 )}
               </ServiceDescription>
               <ServiceList>
@@ -616,8 +627,8 @@ export function AboutPage() {
               <P.CardTitle>{t('통관서비스', 'Clearance Service')}</P.CardTitle>
               <ServiceDescription>
                 {t(
-                  '운영 리포트, 사후심사 시스템, 교육 지원을 포함해 통관 운영의 정확도와 속도를 함께 관리합니다.',
-                  'We manage the accuracy and speed of customs operations through reporting, post-audit systems, and training support.',
+                  '분석 자료, 리포트, 사후심사 시스템, 교육과 요건 확인 컨설팅까지 통관 운영 전반을 지원합니다.',
+                  'We support the full clearance operation through analytics, reporting, post-audit systems, education, and requirement verification consulting.',
                 )}
               </ServiceDescription>
               <ServiceList>
@@ -634,8 +645,8 @@ export function AboutPage() {
               <P.CardTitle>{t('물류서비스', 'Logistics Service')}</P.CardTitle>
               <ServiceDescription>
                 {t(
-                  '보세창고와 국내외 운송, 3PL 운영을 연결해 통관 이후 단계까지 실무를 이어갑니다.',
-                  'We connect bonded warehousing, transportation, and 3PL operations to support post-clearance execution.',
+                  '보세 화물 보관부터 국내 보세운송과 내륙 운송, 3PL과 물류 컨설팅까지 실무 실행을 이어갑니다.',
+                  'We extend execution from bonded storage to domestic bonded transport, inland delivery, 3PL, and logistics consulting.',
                 )}
               </ServiceDescription>
               <ServiceList>
@@ -646,7 +657,7 @@ export function AboutPage() {
             </ServiceCard>
           </ServiceColumns>
         </P.PageContainer>
-      </P.PageSection>
+      </ServiceSection>
 
       <P.PageSection tone="soft">
         <P.PageContainer data-reveal>
@@ -671,8 +682,8 @@ export function AboutPage() {
           <VisionPanel as={P.QuotePanel}>
             <VisionLead>
               {t(
-                '고객의 지속적인 성공을 중심에 두고, 신한의 4대 가치가 하나의 경영이념으로 연결되는 구조를 정리했습니다.',
-                'Centered on clients’ sustained success, Shinhan’s four core values are organized into one management philosophy.',
+                '고객의 성공을 위한 차이를 만들어내겠다는 신한의 방향을 4대 가치와 하나의 경영이념으로 연결해 보여줍니다.',
+                'Shinhan’s promise to make the difference for clients’ success is expressed through four core values connected to one management philosophy.',
               )}
             </VisionLead>
             <VisionDiagram>

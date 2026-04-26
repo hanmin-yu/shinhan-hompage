@@ -1,136 +1,281 @@
 import styled from '@emotion/styled';
+import { useEffect, useMemo, useState } from 'react';
 
+import { NewsListPagination } from '../../components/site/NewsListPagination';
+import { NewsListTable, type NewsListTableRow } from '../../components/site/NewsListTable';
+import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { issueReports } from '../../data/home';
+import { useIssueReports } from '../../hooks/useIssueReports';
 import { useI18n } from '../../i18n/useI18n';
 
-const ReportList = styled.div`
-  margin-top: 20px;
-  border-top: 1px solid rgba(22, 74, 149, 0.24);
+const PAGE_SIZE = 20;
+
+const FlushPageSection = styled(P.CompactPageSection)`
+  padding-top: 0;
 `;
 
-const ReportItem = styled.article`
-  display: grid;
-  grid-template-columns: 150px 170px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(20, 74, 149, 0.12);
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 130px minmax(0, 1fr) auto;
-    gap: 12px;
-  }
-
-  @media (max-width: 780px) {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-`;
-
-const Meta = styled.span`
-  color: #5f7999;
-  font-size: 0.84rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-`;
-
-const Source = styled.span`
-  color: #1b4f95;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
-const Content = styled.div`
-  display: grid;
-  gap: 4px;
-`;
-
-const Title = styled.h3`
-  margin: 0;
-  color: #153c6e;
-  font-size: 1.03rem;
-  line-height: 1.45;
-`;
-
-const Summary = styled.p`
-  margin: 0;
-  color: #4d6889;
-  font-size: 0.9rem;
+const StatusNote = styled.p<{ $tone?: 'default' | 'success' | 'error' }>`
+  margin: 0 0 14px;
+  color: ${({ $tone = 'default' }) =>
+    $tone === 'success' ? '#245d3c' : $tone === 'error' ? '#8a3d3d' : '#5c7898'};
+  font-size: 0.88rem;
   line-height: 1.6;
 `;
 
-const ActionLink = styled.a`
+const MetaActionRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 0 14px;
+
+  @media (max-width: 720px) {
+    justify-content: flex-start;
+  }
+`;
+
+const MetaText = styled.p`
+  margin: 0;
+  color: #5c7898;
+  font-size: 0.88rem;
+  line-height: 1.6;
+`;
+
+const RefreshButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(20, 75, 157, 0.2);
-  color: #1b56a8;
-  font-size: 0.84rem;
-  font-weight: 700;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 74, 151, 0.16);
+  background: rgba(255, 255, 255, 0.96);
+  color: #1c57a7;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(24, 74, 149, 0.12);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    opacity 0.18s ease,
+    color 0.18s ease,
+    background-color 0.18s ease;
+
+  &:hover:enabled {
+    transform: translateY(-1px);
+    color: #123f80;
+    background: #ffffff;
+    box-shadow: 0 12px 22px rgba(24, 74, 149, 0.18);
+  }
+
+  &:disabled {
+    opacity: 0.58;
+    cursor: default;
+    box-shadow: none;
+  }
 `;
 
+function normalizeSearch(value: string) {
+  return value.toLowerCase().replace(/\s+/g, '');
+}
+
 export function IssueReportPage() {
-  const { t, tx } = useI18n();
+  const { language, t } = useI18n();
   const newsSubnav = sectionSubnav.news;
+  const { reports, loading, failedSources, refreshing, refreshStatus, refreshedAt, refreshReports } = useIssueReports();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSource, setSelectedSource] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const sourceOptions = useMemo(() => {
+    const options = Array.from(new Map(reports.map((item) => [item.source, item.sourceEn])).entries());
+
+    return [
+      { value: 'all', label: t('전체', 'All') },
+      ...options.map(([source, sourceEn]) => ({
+        value: source,
+        label: t(source, sourceEn),
+      })),
+    ];
+  }, [reports, t]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedSource]);
+
+  const filteredReports = useMemo(() => {
+    const normalizedQuery = normalizeSearch(searchQuery);
+
+    return reports.filter((item) => {
+      if (selectedSource !== 'all' && item.source !== selectedSource) {
+        return false;
+      }
+
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      const target = normalizeSearch(
+        [language === 'en' ? item.titleEn : item.title, language === 'en' ? item.sourceEn : item.source, item.publishedAt].join(' '),
+      );
+      return target.includes(normalizedQuery);
+    });
+  }, [language, reports, searchQuery, selectedSource]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredReports.length / PAGE_SIZE));
+  const activePage = Math.min(currentPage, totalPages);
+  const pagedReports = useMemo(
+    () => filteredReports.slice((activePage - 1) * PAGE_SIZE, activePage * PAGE_SIZE),
+    [activePage, filteredReports],
+  );
+
+  const rows: NewsListTableRow[] = pagedReports.map((item) => {
+    const isExternal = item.url.startsWith('http');
+
+    return {
+      id: item.id,
+      publishedAt: item.publishedAt,
+      sourceLabel: t(item.source, item.sourceEn),
+      title: t(item.title, item.titleEn),
+      href: item.status === 'placeholder' ? undefined : item.url,
+      external: item.status === 'placeholder' ? false : isExternal,
+      disabled: item.status === 'placeholder',
+      actions: [
+        {
+          label: item.status === 'placeholder' ? t('준비중', 'Pending') : t('열기', 'Open'),
+          href: item.status === 'placeholder' ? undefined : item.url,
+          external: item.status === 'placeholder' ? false : isExternal,
+          disabled: item.status === 'placeholder',
+        },
+      ],
+    };
+  });
+
+  const failedSourcesLabel = failedSources
+    .map((source) => {
+      const report = reports.find((item) => item.source === source);
+      return language === 'en' ? report?.sourceEn ?? source : source;
+    })
+    .join(', ');
+  const refreshedAtLabel = refreshedAt
+    ? new Date(refreshedAt).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null;
+  const metaStatusLabel = refreshedAtLabel
+    ? t(`마지막 수집 시각: ${refreshedAtLabel}`, `Last updated: ${refreshedAtLabel}`)
+    : t('최근 수집 기록이 없습니다.', 'No recent refresh has been recorded.');
+  const emptyMessage = loading
+    ? undefined
+    : filteredReports.length === 0 && reports.length > 0
+      ? t('검색 조건에 맞는 이슈리포트가 없습니다.', 'No issue reports match the current filters.')
+      : t('표시할 이슈리포트가 없습니다.', 'No issue reports are available right now.');
 
   return (
     <>
-      <P.HeroSection>
+      <P.CompactHeroSection>
         <P.PageContainer>
-        <LandingSubnav
-          kicker={newsSubnav.kicker}
-          kickerEn={newsSubnav.kickerEn}
-          title={newsSubnav.title}
-          titleEn={newsSubnav.titleEn}
-          summary={newsSubnav.summary}
-          summaryEn={newsSubnav.summaryEn}
-          items={newsSubnav.items}
-        />
-
+          <LandingSubnav
+            kicker={newsSubnav.kicker}
+            kickerEn={newsSubnav.kickerEn}
+            title={newsSubnav.title}
+            titleEn={newsSubnav.titleEn}
+            summary={newsSubnav.summary}
+            summaryEn={newsSubnav.summaryEn}
+            items={newsSubnav.items}
+            compactBottom
+          />
         </P.PageContainer>
+      </P.CompactHeroSection>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Issue Reports</P.Kicker>
-            <P.Title>{t('이슈리포트', 'Issue Reports')}</P.Title>
-            <P.Lead>
-              {t(
-                '한국관세사회, 관세청, 한국무역협회, KOTRA 등 기관 자료를 기준으로 관세·통상 이슈를 정리합니다.',
-                'We organize customs and trade issues based on publications from KCSA, Korea Customs Service, KITA, and KOTRA.',
-              )}
-            </P.Lead>
-          </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/about-coms3.jpg" minHeight={320} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
-
-      <P.PageSection tone="soft">
+      <FlushPageSection tone="soft">
         <P.PageContainer data-reveal>
-          <ReportList>
-            {issueReports.map((item) => (
-              <ReportItem key={item.id}>
-                <Meta>{item.publishedAt}</Meta>
-                <Source>{tx(item.source)}</Source>
-                <Content>
-                  <Title>{tx(item.title)}</Title>
-                  <Summary>{tx(item.summary)}</Summary>
-                </Content>
-                <ActionLink href={item.url} target="_blank" rel="noreferrer">
-                  {t('원문 보기', 'Source')}
-                </ActionLink>
-              </ReportItem>
-            ))}
-          </ReportList>
+          {loading ? <StatusNote>{t('기관 목록을 불러오는 중입니다.', 'Loading source feeds.')}</StatusNote> : null}
+          {refreshing ? (
+            <StatusNote>{t('새로 수집 중입니다. 현재 목록은 유지됩니다.', 'Refreshing feeds while keeping the current list visible.')}</StatusNote>
+          ) : null}
+          {!refreshing && refreshStatus === 'success' && refreshedAtLabel ? (
+            <StatusNote $tone="success">
+              {t(
+                `최신 목록으로 갱신했습니다. 마지막 수집 시각: ${refreshedAtLabel}`,
+                `Feeds refreshed successfully. Last updated: ${refreshedAtLabel}`,
+              )}
+            </StatusNote>
+          ) : null}
+          {!refreshing && refreshStatus === 'error' ? (
+            <StatusNote $tone="error">
+              {t(
+                '새로 수집하지 못해 이전 목록을 유지하고 있습니다.',
+                'Refresh failed, so the previous list is still being shown.',
+              )}
+            </StatusNote>
+          ) : null}
+          {!loading && failedSources.length > 0 && reports.length > 0 ? (
+            <StatusNote>
+              {t(
+                `${failedSourcesLabel} 수집에 실패해, 불러온 출처만 표시하고 있습니다.`,
+                `Some sources failed to load (${failedSourcesLabel}), so only available feeds are being shown.`,
+              )}
+            </StatusNote>
+          ) : null}
+          {!loading && failedSources.length > 0 && reports.length === 0 ? (
+            <StatusNote>
+              {t(
+                `${failedSourcesLabel} 수집에 실패했습니다. 현재 표시할 이슈리포트가 없습니다.`,
+                `Failed to load ${failedSourcesLabel}. There are no issue reports to display right now.`,
+              )}
+            </StatusNote>
+          ) : null}
+          <NewsListToolbar
+            searchLabel={t('검색', 'Search')}
+            searchValue={searchQuery}
+            searchPlaceholder={t('제목, 출처, 날짜로 검색', 'Search by title, source, or date')}
+            onSearchChange={setSearchQuery}
+            chipLabel={t('출처 필터', 'Source Filter')}
+            chipOptions={sourceOptions}
+            selectedChip={selectedSource}
+            onChipChange={setSelectedSource}
+            resultLabel={t(`총 ${filteredReports.length}건`, `${filteredReports.length} results`)}
+          />
+          <NewsListTable
+            rows={rows}
+            dateLabel={t('일자', 'Date')}
+            sourceLabel={t('출처', 'Source')}
+            titleLabel={t('제목', 'Title')}
+            actionLabel={t('바로가기', 'Open')}
+            emptyMessage={emptyMessage}
+          />
+          <MetaActionRow>
+            <MetaText>{metaStatusLabel}</MetaText>
+            <RefreshButton
+              type="button"
+              onClick={() => {
+                void refreshReports();
+              }}
+              disabled={refreshing}
+              aria-label={refreshing ? t('새로 수집 중', 'Refreshing') : t('새로고침', 'Refresh')}
+              title={refreshing ? t('새로 수집 중', 'Refreshing') : t('새로고침', 'Refresh')}
+            >
+              {refreshing ? '↻' : '🔄'}
+            </RefreshButton>
+          </MetaActionRow>
+          <NewsListPagination
+            currentPage={activePage}
+            totalPages={totalPages}
+            previousLabel={t('이전', 'Prev')}
+            nextLabel={t('다음', 'Next')}
+            onPageChange={setCurrentPage}
+          />
         </P.PageContainer>
-      </P.PageSection>
+      </FlushPageSection>
     </>
   );
 }

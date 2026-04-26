@@ -60,6 +60,7 @@ const TimelineItem = styled.article`
 const Year = styled.strong`
   color: #1a4f96;
   font-size: 1.03rem;
+  font-weight: 700;
   letter-spacing: 0.01em;
   position: relative;
   z-index: 1;
@@ -131,6 +132,7 @@ const EraTitle = styled.h3`
   margin: 0;
   color: #13417f;
   font-size: clamp(1.14rem, 2.2vw, 1.38rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 

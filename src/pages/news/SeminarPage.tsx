@@ -49,6 +49,7 @@ const SeminarTitle = styled.h3`
   margin: 0;
   color: #143c6f;
   font-size: 1rem;
+  font-weight: 700;
   line-height: 1.45;
 `;
 

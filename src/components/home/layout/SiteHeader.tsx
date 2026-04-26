@@ -6,10 +6,11 @@ import { BrandMarkGraphic } from '../BrandMarkGraphic';
 import * as S from '../homeStyles';
 
 type SiteHeaderProps = {
+  mobileMenuOpen: boolean;
   onOpenMobileMenu: () => void;
 };
 
-export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
+export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps) {
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
@@ -63,7 +64,15 @@ export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
               </S.HeaderUtilityIconLink>
             </S.HeaderUtilityLinks>
             <S.ContactButton to="/contact">Contact Us</S.ContactButton>
-            <S.MobileIconButton type="button" kind="menu" aria-label={t('메뉴', 'Menu')} onClick={onOpenMobileMenu} />
+            <S.MobileIconButton
+              type="button"
+              kind="menu"
+              aria-label={t('메뉴', 'Menu')}
+              aria-haspopup="dialog"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="site-mobile-menu"
+              onClick={onOpenMobileMenu}
+            />
           </S.HeaderTools>
         </S.HeaderRight>
       </S.HeaderInner>

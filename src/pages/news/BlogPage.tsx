@@ -60,6 +60,7 @@ const ArchiveTitle = styled.h3`
   margin: 0;
   color: #143d70;
   font-size: 1.02rem;
+  font-weight: 700;
   line-height: 1.45;
 `;
 

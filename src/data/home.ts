@@ -7,13 +7,11 @@ import type {
   NewsletterItem,
   OfficeBranch,
   PracticeAreaDetail,
+  SiteContact,
   ShinhanNewsItem,
 } from '../types/site';
-import {
-  flashItems as legacyFlashItems,
-  newsletterItems as legacyNewsletterItems,
-  seminarItems as legacySeminarItems,
-} from './pageContent';
+import { newsletterItems as legacyNewsletterItems } from './pageContent';
+import { shinhanNewsArchive } from './shinhanNewsArchive';
 
 export const brandMarkPath = '/brand-mark.svg';
 
@@ -22,17 +20,30 @@ export const utilityLinks: LinkItem[] = [
 ];
 
 export const footerLinks: LinkItem[] = [
-  { id: 'terms', label: '서비스 이용약관', href: '/contact' },
-  { id: 'privacy', label: '개인정보처리방침', href: '/contact' },
-  { id: 'recruit', label: '채용', href: '/recruit' },
-  { id: 'disclaimer', label: '면책공고', href: '/contact' },
-  { id: 'email-protection', label: '이메일무단수집거부', href: '/contact' },
+  { id: 'terms', label: '서비스 이용약관', to: '/legal/terms' },
+  { id: 'privacy', label: '개인정보처리방침', to: '/legal/privacy' },
+  { id: 'recruit-disclaimer', label: '채용면책공고', to: '/legal/recruit-disclaimer' },
+  { id: 'email-protection', label: '이메일무단수집거부', to: '/legal/no-email-collection' },
 ];
 
-export const siteContact = {
+export const footerSocialLinks: LinkItem[] = [
+  {
+    id: 'youtube',
+    label: '유튜브',
+    href: 'https://www.youtube.com/@%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8',
+  },
+  {
+    id: 'blog',
+    label: '블로그',
+    href: 'https://blog.naver.com/shinhan22',
+  },
+];
+
+export const siteContact: SiteContact = {
   phone: '02-3448-1181',
   email: 'shinhan@shcs.kr',
   address: '서울시 강남구 논현로 704',
+  addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
   businessNumber: '211-86-05953',
 };
 
@@ -46,12 +57,12 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'Protecting semiconductor supply chains\nthrough precise customs operations',
     summary: '수입·수출 신고부터 사후 검증까지 생산 일정에 맞춰 실무를 관리합니다.',
     summaryEn: 'We manage import-export declarations and post-verification in line with production schedules.',
-    image: '/hero/semiconductor.jpg',
-    secondaryImage: '/subpages/service-main-consulting.jpg',
-    objectPosition: 'center 50%',
-    secondaryObjectPosition: 'center 52%',
-    mobileObjectPosition: '58% center',
-    mobileSecondaryObjectPosition: '62% center',
+    image: '/hero/practice-import-port.jpg',
+    secondaryImage: '/hero/practice-fta-containers.jpg',
+    objectPosition: '50% 52%',
+    secondaryObjectPosition: '50% 52%',
+    mobileObjectPosition: '54% center',
+    mobileSecondaryObjectPosition: '54% center',
     theme: 'deep-blue',
   },
   {
@@ -63,12 +74,12 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'Rapidly connecting urgent customs\noperations for air cargo zones',
     summary: '공항 기반 통관과 물류 연계를 한 흐름으로 운영해 납기 리스크를 줄입니다.',
     summaryEn: 'Airport customs and logistics are managed as one flow to reduce lead-time risk.',
-    image: '/hero/incheon-airport.jpg',
-    secondaryImage: '/subpages/service-logistics.jpg',
-    objectPosition: 'center 46%',
-    secondaryObjectPosition: 'center 38%',
-    mobileObjectPosition: '66% center',
-    mobileSecondaryObjectPosition: '60% center',
+    image: '/hero/practice-fta-containers.jpg',
+    secondaryImage: '/hero/practice-import-port.jpg',
+    objectPosition: '50% 50%',
+    secondaryObjectPosition: '50% 52%',
+    mobileObjectPosition: '50% center',
+    mobileSecondaryObjectPosition: '54% center',
     theme: 'deep-blue',
   },
   {
@@ -80,12 +91,12 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'From port clearance to bonded\ntransport support, aligned to field operations',
     summary: '부산항 중심의 해상 물류 흐름에 맞춰 신고·검사·사후 대응을 지원합니다.',
     summaryEn: 'We support declarations, inspections, and follow-up actions for maritime logistics at Busan Port.',
-    image: '/hero/busan-port.jpg',
-    secondaryImage: '/subpages/service-main-logistics.jpg',
-    objectPosition: 'center 42%',
-    secondaryObjectPosition: 'center 56%',
-    mobileObjectPosition: '64% center',
-    mobileSecondaryObjectPosition: '56% center',
+    image: '/hero/practice-aeo-warehouse.jpg',
+    secondaryImage: '/hero/practice-fta-containers.jpg',
+    objectPosition: '50% 54%',
+    secondaryObjectPosition: '50% 50%',
+    mobileObjectPosition: '50% center',
+    mobileSecondaryObjectPosition: '50% center',
     theme: 'light-blue',
   },
   {
@@ -97,12 +108,12 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'Systematic customs control for\nhigh-compliance pharmaceutical goods',
     summary: '요건 검토, 인허가 확인, 통관 단계 점검을 일관된 프로세스로 운영합니다.',
     summaryEn: 'Requirements review, permit checks, and clearance checkpoints are handled in one consistent process.',
-    image: '/hero/pharma.jpg',
-    secondaryImage: '/subpages/service-main-import.jpg',
-    objectPosition: 'center 42%',
-    secondaryObjectPosition: 'center 48%',
-    mobileObjectPosition: '66% center',
-    mobileSecondaryObjectPosition: '58% center',
+    image: '/hero/practice-investigation-robot.jpg',
+    secondaryImage: '/hero/practice-fta-containers.jpg',
+    objectPosition: '50% 48%',
+    secondaryObjectPosition: '50% 50%',
+    mobileObjectPosition: '52% center',
+    mobileSecondaryObjectPosition: '50% center',
     theme: 'light-blue',
   },
   {
@@ -114,12 +125,12 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'Reliable customs operations for\nautomotive parts',
     summary: '반복 거래 품목의 신고 품질을 높이고 공급 일정에 맞춘 대응 체계를 제공합니다.',
     summaryEn: 'We improve declaration quality for recurring parts and align operations with supply schedules.',
-    image: '/hero/auto-parts.jpg',
-    secondaryImage: '/hero/apparel.jpg',
-    objectPosition: 'center 44%',
-    secondaryObjectPosition: 'center 52%',
-    mobileObjectPosition: '62% center',
-    mobileSecondaryObjectPosition: '56% center',
+    image: '/hero/practice-forex-monitors.jpg',
+    secondaryImage: '/hero/practice-investigation-robot.jpg',
+    objectPosition: '58% 46%',
+    secondaryObjectPosition: '50% 48%',
+    mobileObjectPosition: '60% center',
+    mobileSecondaryObjectPosition: '52% center',
     theme: 'deep-blue',
   },
 ];
@@ -171,10 +182,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'seoul',
     label: '서울본사',
+    labelEn: 'Seoul HQ',
     shortLabel: '본사',
+    shortLabelEn: 'HQ',
     region: '서울 강남',
+    regionEn: 'Gangnam, Seoul',
     summary: '컨설팅본부와 통관본부를 중심으로 전국 화주사 대응, 기업심사, 조사 대응, FTA 및 통관 자문을 총괄하는 메인 허브입니다.',
+    summaryEn:
+      'Our main hub integrates the consulting and clearance divisions to lead nationwide client support across corporate audits, investigations, FTA, and customs advisory.',
     address: '서울시 강남구 논현로 704',
+    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '02-542-1181',
     fax: '02-540-2323',
     accent: '#1c4f96',
@@ -186,10 +203,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'airport',
     label: '인천공항지사',
+    labelEn: 'Incheon Airport Branch',
     shortLabel: '공항',
+    shortLabelEn: 'Airport',
     region: '인천공항 물류권역',
+    regionEn: 'Incheon Airport Logistics Zone',
     summary: '항공 화물 중심의 수출입통관, 긴급 통관, 공항 물류 연계 대응에 강점을 가진 현장 밀착형 지사입니다.',
+    summaryEn:
+      'A field-focused branch specializing in air cargo import/export clearance, urgent declarations, and airport logistics coordination.',
     address: '인천광역시 중구 공항동로 295번길 77-11, 217호',
+    addressEn: 'Suite 217, 77-11 Gonghangdong-ro 295beon-gil, Jung-gu, Incheon, Korea',
     tel: '032-744-9961~2',
     fax: '032-744-9960',
     accent: '#2f78bf',
@@ -201,11 +224,17 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'incheon',
     label: '인천경기지사',
+    labelEn: 'Incheon-Gyeonggi Branch',
     shortLabel: '경기',
+    shortLabelEn: 'Gyeonggi',
     region: '인천항 · 수도권',
+    regionEn: 'Incheon Port / Metro Area',
     summary:
       '인천항과 수도권 제조·유통 기업을 대상으로 수출입통관, 관세환급, 요건 대응을 함께 지원하는 권역 거점입니다.',
+    summaryEn:
+      'A regional hub supporting import/export clearance, duty refunds, and compliance matters for manufacturers and distributors around Incheon Port and the Seoul metro area.',
     address: '인천광역시 연수구 인천타워대로 301, A동 906호',
+    addressEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
     tel: '032-772-1181',
     fax: '032-773-1181',
     accent: '#3c6ca8',
@@ -217,10 +246,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'busan',
     label: '부산지사',
+    labelEn: 'Busan Branch',
     shortLabel: '부산',
+    shortLabelEn: 'Busan',
     region: '부산항',
+    regionEn: 'Busan Port',
     summary: '해상 수출입통관과 항만 물류 흐름에 강점을 가진 남부권 핵심 지사로, 부산항 기반 고객 대응을 빠르게 수행합니다.',
+    summaryEn:
+      'A key southern branch with strengths in ocean import/export clearance and port logistics, delivering rapid Busan Port-based client support.',
     address: '부산광역시 중구 충장대로 9번길 11 미광빌딩 501호',
+    addressEn: 'Suite 501, Migwang Building, 11 Chungjang-daero 9beon-gil, Jung-gu, Busan, Korea',
     tel: '051-463-1181',
     fax: '051-465-1181',
     accent: '#0f5a8f',
@@ -232,10 +267,17 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'cheongju',
     label: '청주지사',
+    labelEn: 'Cheongju Branch',
     shortLabel: '청주',
+    shortLabelEn: 'Cheongju',
     region: '충북 내륙권',
+    regionEn: 'Chungbuk Inland Region',
     summary: '청주·충북 지역 제조기업의 통관, 검역/요건, 환급 업무를 밀착 지원하는 중부권 실무 거점입니다.',
+    summaryEn:
+      'A central operations base closely supporting clearance, quarantine/requirements, and refunds for manufacturers in Cheongju and Chungbuk.',
     address: '충청북도 청주시 흥덕구 직지대로 530, 1동 청주테크노 S타워 2층 216호, 221호',
+    addressEn:
+      'Suite 216 / 221, 2F, Building 1, Cheongju Techno S Tower, 530 Jikji-daero, Heungdeok-gu, Cheongju-si, Chungcheongbuk-do, Korea',
     tel: '043-273-3160~1',
     fax: '043-273-3162',
     accent: '#5a7fb2',
@@ -247,10 +289,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'gumi',
     label: '구미지사',
+    labelEn: 'Gumi Branch',
     shortLabel: '구미',
+    shortLabelEn: 'Gumi',
     region: '경북 산업벨트',
+    regionEn: 'Gyeongbuk Industrial Belt',
     summary: '전자·부품 제조업체가 밀집한 경북권 고객사를 대상으로 수출입통관과 기업 맞춤형 현장 대응을 지원합니다.',
+    summaryEn:
+      'Supports electronics and component manufacturers across the Gyeongbuk region with import/export clearance and tailored on-site response.',
     address: '경상북도 구미시 1공단로 182 금오빌딩 504호',
+    addressEn: 'Suite 504, Geumoh Building, 182 1gongdan-ro, Gumi-si, Gyeongsangbuk-do, Korea',
     tel: '054-464-1133',
     fax: '054-464-1131',
     accent: '#4a73a2',
@@ -262,10 +310,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'invista',
     label: '신한인비스타',
+    labelEn: 'Shinhan Invista',
     shortLabel: '인비스타',
+    shortLabelEn: 'Invista',
     region: '김포공항 물류권역',
+    regionEn: 'Gimpo Airport Logistics Zone',
     summary: '국제물류, 창고 운영, 3PL, 내륙운송을 담당하며 통관 이후 물류 업무를 연계합니다.',
+    summaryEn:
+      'Connects post-clearance logistics execution across global forwarding, warehousing, 3PL, and inland transportation.',
     address: '서울시 강서구 하늘길 210 김포국제공항 화물청사 8-4 3,6게이트',
+    addressEn: 'Gates 3 and 6, Cargo Terminal 8-4, 210 Haneul-gil, Gangseo-gu, Seoul, Korea',
     tel: '02-2663-1181',
     fax: '02-2665-9114',
     accent: '#2f689b',
@@ -277,10 +331,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'vietnam',
     label: '신한 베트남 관세법인',
+    labelEn: 'Shinhan Customs Vietnam',
     shortLabel: '베트남',
+    shortLabelEn: 'Vietnam',
     region: '하노이',
+    regionEn: 'Hanoi',
     summary: '베트남 현지 통관 규정 대응, 해외 법인 운영 지원, 수출입 구조 검토까지 연결하는 해외 현지 법인입니다.',
+    summaryEn:
+      'An overseas entity supporting Vietnam customs compliance, local operations, and import/export structure reviews.',
     address: '5F, Star Tower, Duong Dinh Nghe street, Cau Giay New Urban Area, Yen Hoa Ward, Cau Giay District, Hanoi city, Vietnam',
+    addressEn: '5F, Star Tower, Duong Dinh Nghe St., Yen Hoa Ward, Cau Giay District, Hanoi, Vietnam',
     tel: '+84-(0)24-7300-8630',
     accent: '#2f84ae',
     x: 54,
@@ -291,10 +351,16 @@ export const officeBranches: OfficeBranch[] = [
   {
     id: 'kord',
     label: 'KORD Partners',
+    labelEn: 'KORD Partners',
     shortLabel: 'KORD',
+    shortLabelEn: 'KORD',
     region: '서울 강남',
+    regionEn: 'Gangnam, Seoul',
     summary: '관세·통관 프로젝트와 연계되는 전문 파트너 조직으로, 협업형 자문과 운영 지원 기능을 담당합니다.',
+    summaryEn:
+      'A specialized partner organization supporting customs projects through collaborative advisory and operational support.',
     address: '서울시 강남구 논현로 704',
+    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '070-4343-7791',
     fax: '02-3448-1184',
     accent: '#365c92',
@@ -362,41 +428,57 @@ export const issueReports: IssueReport[] = [
   {
     id: 'issue-kcs-001',
     source: '한국관세사회',
+    sourceEn: 'Korea Customs Brokers Association',
     publishedAt: '2026.04.18',
     title: 'FTA 사후검증 대응 시 필수 점검 항목',
+    titleEn: 'Essential Checkpoints for Responding to FTA Post-Verification',
     summary: '원산지 소명자료, 거래 흐름, 협정별 요건 검토 항목을 중심으로 사후검증 대응 포인트를 정리한 외부 기관형 이슈입니다.',
+    summaryEn:
+      'An external-source issue brief outlining FTA post-verification response points around origin documentation, transaction flow, and agreement-specific requirements.',
     url: 'https://www.koreacustoms.or.kr',
-    image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC1.webp',
+    image: '/hero/practice-fta-containers.jpg',
     tags: ['FTA', '사후검증', '원산지'],
   },
   {
     id: 'issue-kcs-002',
     source: '관세청',
+    sourceEn: 'Korea Customs Service',
     publishedAt: '2026.04.11',
     title: '수입신고 단계 품목분류 사전 점검 강화 동향',
+    titleEn: 'Stronger Pre-Checks on Tariff Classification at the Import Declaration Stage',
     summary: '세번 분류 정확도와 사후 추징 리스크 간 연계를 중심으로, 신고 전 검토체계 필요성을 보여주는 관세청 공지 기반 이슈입니다.',
+    summaryEn:
+      'A Korea Customs Service-based issue highlighting why pre-declaration review systems matter, focusing on classification accuracy and post-assessment risk.',
     url: 'https://www.customs.go.kr',
-    image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC2.webp',
+    image: '/hero/practice-import-port.jpg',
     tags: ['품목분류', '수입신고', '사전심사'],
   },
   {
     id: 'issue-kita-003',
     source: '한국무역협회',
+    sourceEn: 'Korea International Trade Association',
     publishedAt: '2026.04.05',
     title: '주요 수출국 통관 규정 변경 브리핑',
+    titleEn: 'Briefing on Customs Rule Changes in Major Export Markets',
     summary: '국가별 통관·인증 조건 변화를 비교해 기업이 사전에 준비해야 할 실무 체크포인트를 제시하는 무역협회 자료 기반 이슈입니다.',
+    summaryEn:
+      'A KITA-based issue comparing customs and certification changes by country and presenting practical checkpoints companies should prepare in advance.',
     url: 'https://www.kita.net',
-    image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC1.webp',
+    image: '/hero/practice-fta-containers.jpg',
     tags: ['수출규정', '통관', '무역실무'],
   },
   {
     id: 'issue-kotra-004',
     source: 'KOTRA',
+    sourceEn: 'KOTRA',
     publishedAt: '2026.03.28',
     title: '베트남 수입규제·통관 실무 업데이트',
+    titleEn: 'Vietnam Import Regulation and Customs Practice Update',
     summary: '현지 세관 운영 변화와 기업 대응 사례를 바탕으로 베트남 법인 운영 시 필요한 선제 대응 전략을 제시하는 코트라 자료형 이슈입니다.',
+    summaryEn:
+      'A KOTRA-style issue presenting proactive response strategies for Vietnam operations based on local customs changes and corporate case examples.',
     url: 'https://www.kotra.or.kr',
-    image: 'https://d1tgonli21s4df.cloudfront.net/main_new/insight_PC2.webp',
+    image: '/hero/practice-forex-monitors.jpg',
     tags: ['베트남', '통관규정', '해외법인'],
   },
 ];
@@ -404,54 +486,92 @@ export const issueReports: IssueReport[] = [
 export const itServices: ItService[] = [
   {
     category: 'IT',
+    categoryEn: 'IT',
     title: '통관·신고 시스템 개발 및 운영',
+    titleEn: 'Customs Declaration System Development and Operations',
     body: '수출입 신고 자동화, 신고필증 데이터 처리, 관세청 연계 인터페이스까지 관세 실무 중심으로 직접 구축·운영합니다.',
+    bodyEn:
+      'We build and operate customs-focused systems covering declaration automation, customs certificate data processing, and Korea Customs Service integration interfaces.',
   },
   {
     category: 'IT',
+    categoryEn: 'IT',
     title: 'iOOM / iOOM Q 기반 업무 자동화',
+    titleEn: 'Workflow Automation Powered by iOOM / iOOM Q',
     body: '외부 고객용 iOOM, 내부 업무 효율화용 iOOM Q를 통해 반복 업무를 줄이고 처리 정확도와 속도를 높입니다.',
+    bodyEn:
+      'Using iOOM for external clients and iOOM Q for internal efficiency, we reduce repetitive work while improving speed and processing accuracy.',
   },
   {
     category: 'IT',
+    categoryEn: 'IT',
     title: 'KORD FTA / KORD LIQ 솔루션',
+    titleEn: 'KORD FTA / KORD LIQ Solutions',
     body: '베트남 원산지관리(KORD FTA), 면세재고·수책관리(KORD LIQ)로 현지 통관과 FTA 운영을 데이터 기반으로 지원합니다.',
+    bodyEn:
+      'We support Vietnam customs and FTA operations with data-driven origin management (KORD FTA) and bonded inventory / liquidation control (KORD LIQ).',
   },
   {
     category: 'IT',
+    categoryEn: 'IT',
     title: '맞춤형 연동·데이터 분석·인프라 관리',
+    titleEn: 'Custom Integration, Data Analytics, and Infrastructure Management',
     body: '고객사 시스템 연동, 데이터 수집·분석, 네트워크/보안 인프라 관리까지 통합해 실무 운영 안정성을 강화합니다.',
+    bodyEn:
+      'We strengthen operational stability by integrating client system connectivity, data collection and analysis, plus network and security infrastructure management.',
   },
 ];
 
-export const shinhanNewsItems: ShinhanNewsItem[] = [
-  ...legacyFlashItems.map((item, index) => ({
-    id: `shinhan-news-flash-${index + 1}`,
-    category: 'flash' as const,
-    categoryLabel: 'FLASH',
-    title: item.title,
-    summary: item.body,
-    publishedAt: ['2026.04.16', '2026.04.04', '2026.03.22'][index] ?? '2026.03.01',
-    href: '/news/shinhan-news',
-  })),
-  ...legacySeminarItems.map((item, index) => ({
-    id: `shinhan-news-seminar-${index + 1}`,
-    category: 'seminar' as const,
-    categoryLabel: '세미나',
-    title: item.title,
-    summary: item.body,
-    publishedAt: ['2026.05.08', '2026.03.21', '2026.02.14'][index] ?? '2026.02.01',
-    href: '/news/shinhan-news',
-  })),
-];
+export const shinhanNewsItems: ShinhanNewsItem[] = shinhanNewsArchive;
+
+function getNewsletterTitleEn(title: string) {
+  switch (title) {
+    case '2026년 4월호 소식지 (국문)':
+      return 'April 2026 Newsletter (Korean)';
+    case '2026년 4월호 소식지 (영문)':
+      return 'April 2026 Newsletter (English)';
+    case '2026년 3월호 소식지 (국문)':
+      return 'March 2026 Newsletter (Korean)';
+    case '2026년 3월호 소식지 (영문)':
+      return 'March 2026 Newsletter (English)';
+    case '2026년 2월호 소식지 (국문)':
+      return 'February 2026 Newsletter (Korean)';
+    case '2026년 2월호 소식지 (영문)':
+      return 'February 2026 Newsletter (English)';
+    case '2025년 12월~2026년 1월 통합 소식지 (국문)':
+      return 'December 2025 to January 2026 Combined Newsletter (Korean)';
+    case '2025년 12월~2026년 1월 통합 소식지 (영문)':
+      return 'December 2025 to January 2026 Combined Newsletter (English)';
+    default:
+      return title;
+  }
+}
+
+function getNewsletterSummaryEn(summary: string) {
+  switch (summary) {
+    case '사전심사 제도와 조사 대응 체크포인트':
+      return 'Advance ruling procedures and investigation response checkpoints';
+    case '수출입통관 SOP 운영과 보완 대응 사례':
+      return 'Import/export clearance SOP operations and corrective-response cases';
+    case '원산지 검증 및 AEO 사후관리 실무 브리핑':
+      return 'Practical briefing on origin verification and AEO follow-up management';
+    case '연말/연초 주요 정책 및 실무 이슈 통합본':
+      return 'Combined issue covering key year-end and new-year policy and practice topics';
+    default:
+      return summary;
+  }
+}
 
 export const newsletterItems: NewsletterItem[] = legacyNewsletterItems.map((item, index) => ({
   id: `newsletter-${index + 1}`,
   issue: item.date,
   title: item.title,
+  titleEn: getNewsletterTitleEn(item.title),
   summary: item.body,
+  summaryEn: getNewsletterSummaryEn(item.body),
   publishedAt: item.date,
   href: item.downloadHref ?? '/news/newsletter',
   language: item.language,
+  languageEn: item.language === '영문' ? 'English' : 'Korean',
   downloadHref: item.downloadHref,
 }));

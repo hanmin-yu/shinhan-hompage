@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { issueReports, newsletterItems, shinhanNewsItems } from '../../data/home';
-import { seminarItems } from '../../data/pageContent';
+import { newsletterItems, shinhanNewsItems } from '../../data/home';
+import { useIssueReports } from '../../hooks/useIssueReports';
 import { useI18n } from '../../i18n/useI18n';
 
 const IntroList = styled.ul`
@@ -58,6 +58,7 @@ const ItemTitle = styled.h3`
   margin: 0;
   color: #143964;
   font-size: 1.02rem;
+  font-weight: 700;
   line-height: 1.45;
   letter-spacing: -0.01em;
 `;
@@ -76,11 +77,11 @@ const ItemLink = styled(P.CardLink)`
 export function NewsPage() {
   const { t, tx } = useI18n();
   const newsSubnav = sectionSubnav.news;
+  const { reports } = useIssueReports();
 
-  const issuePreview = issueReports.slice(0, 3);
+  const issuePreview = reports.filter((item) => item.status !== 'placeholder').slice(0, 3);
   const shinhanNewsPreview = shinhanNewsItems.slice(0, 3);
   const newsletterPreview = newsletterItems.slice(0, 3);
-  const seminarPreview = seminarItems.slice(0, 3);
 
   return (
     <>
@@ -103,8 +104,8 @@ export function NewsPage() {
             <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
             <P.Lead>
               {t(
-                '이슈리포트, 신한 NEWS, 소식지, 세미나와 블로그를 한 화면에서 확인할 수 있도록 편집형 아카이브로 구성했습니다.',
-                'Issue reports, Shinhan NEWS, newsletters, seminars, and blog archives are organized in one editorial view.',
+                '이슈리포트, 신한 NEWS, 소식지를 한 화면에서 확인할 수 있도록 편집형 아카이브로 구성했습니다.',
+                'Issue reports, Shinhan NEWS, and newsletters are organized in one editorial view.',
               )}
             </P.Lead>
             <IntroList>
@@ -167,31 +168,6 @@ export function NewsPage() {
                   <ItemLink to="/news/newsletter">{t('목록 보기', 'View')}</ItemLink>
                 </EditorialItem>
               ))}
-            </EditorialList>
-          </EditorialSection>
-
-          <EditorialSection>
-            <P.Kicker>Seminar & Blog</P.Kicker>
-            <P.SectionTitle>{t('세미나 · 블로그', 'Seminar · Blog')}</P.SectionTitle>
-            <EditorialList>
-              {seminarPreview.map((item) => (
-                <EditorialItem key={item.title}>
-                  <ItemDate>{tx(item.status)}</ItemDate>
-                  <ItemMeta>
-                    <ItemTitle>{tx(item.title)}</ItemTitle>
-                    <ItemSummary>{tx(item.body)}</ItemSummary>
-                  </ItemMeta>
-                  <ItemLink to="/news/seminar">{t('목록 보기', 'View')}</ItemLink>
-                </EditorialItem>
-              ))}
-              <EditorialItem>
-                <ItemDate>{t('BLOG', 'BLOG')}</ItemDate>
-                <ItemMeta>
-                  <ItemTitle>{t('지식 아카이브', 'Knowledge Archive')}</ItemTitle>
-                  <ItemSummary>{t('업무 인사이트 중심 콘텐츠를 카테고리별로 확인할 수 있습니다.', 'Browse knowledge content by category.')}</ItemSummary>
-                </ItemMeta>
-                <ItemLink to="/news/blog">{t('목록 보기', 'View')}</ItemLink>
-              </EditorialItem>
             </EditorialList>
           </EditorialSection>
         </P.PageContainer>
