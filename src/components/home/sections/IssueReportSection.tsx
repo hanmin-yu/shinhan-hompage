@@ -198,7 +198,7 @@ export function IssueReportSection() {
           <Head>
             <div>
               <Label>Insights</Label>
-              <Title>{t('대표 이슈 리포트 / 소식', 'Featured Report / News')}</Title>
+              <Title>{t('이슈 리포트', 'Issue Report')}</Title>
             </div>
           </Head>
 

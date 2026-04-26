@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { newsletterItems } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 import { getNewsletterAssetSlug } from '../../utils/newsletter';
@@ -112,6 +114,7 @@ const ImagePage = styled.img`
 
 export function NewsletterDetailPage() {
   const { t, tx } = useI18n();
+  const newsSubnav = sectionSubnav.news;
   const { newsletterId } = useParams<{ newsletterId: string }>();
 
   const activeItem = useMemo(
@@ -158,58 +161,84 @@ export function NewsletterDetailPage() {
 
   return (
     <>
-      <P.PageSection>
+      <P.HeroSection>
+        <P.PageContainer>
+          <LandingSubnav
+            kicker={newsSubnav.kicker}
+            kickerEn={newsSubnav.kickerEn}
+            title={newsSubnav.title}
+            titleEn={newsSubnav.titleEn}
+            summary={newsSubnav.summary}
+            summaryEn={newsSubnav.summaryEn}
+            items={newsSubnav.items}
+          />
+        </P.PageContainer>
+
+        <P.IntroBlock data-reveal>
+          <P.IntroPanel>
+            <P.Kicker>Newsletter</P.Kicker>
+            <P.Title>{t('소식지 보기', 'Newsletter Detail')}</P.Title>
+            {activeItem ? (
+              <>
+                <P.Lead>{tx(activeItem.title)}</P.Lead>
+                <MetaRow>
+                  <span>{activeItem.publishedAt}</span>
+                  {activeItem.language ? <LangBadge>{tx(activeItem.language)}</LangBadge> : null}
+                </MetaRow>
+                <P.CardText style={{ marginTop: 8 }}>{tx(activeItem.summary)}</P.CardText>
+                <ActionRow>
+                  <BackLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</BackLink>
+                  {activeItem.downloadHref ? (
+                    <DownloadLink href={activeItem.downloadHref} target="_blank" rel="noreferrer">
+                      {t('원본 다운로드', 'Download Original')}
+                    </DownloadLink>
+                  ) : null}
+                </ActionRow>
+              </>
+            ) : (
+              <P.CardText style={{ marginTop: 4 }}>
+                {t(
+                  '요청하신 소식지 경로가 올바르지 않거나 삭제되었습니다. 목록 페이지에서 다시 선택해주세요.',
+                  'The requested newsletter path is invalid or no longer available. Please choose it again from the list.',
+                )}
+              </P.CardText>
+            )}
+          </P.IntroPanel>
+          <P.IntroVisualPanel image="/subpages/about-coms1.jpg" minHeight={320} aria-hidden="true" />
+        </P.IntroBlock>
+      </P.HeroSection>
+
+      <P.PageSection tone="soft">
         <P.PageContainer data-reveal>
-          <P.Kicker>Newsletter</P.Kicker>
-          <P.SectionTitle>{t('소식지 보기', 'Newsletter Detail')}</P.SectionTitle>
-
           {activeItem ? (
-            <>
-              <P.Lead>{tx(activeItem.title)}</P.Lead>
-              <MetaRow>
-                <span>{activeItem.publishedAt}</span>
-                {activeItem.language ? <LangBadge>{tx(activeItem.language)}</LangBadge> : null}
-              </MetaRow>
-              <P.CardText style={{ marginTop: 8 }}>{tx(activeItem.summary)}</P.CardText>
+            <ViewerWrap>
+              <ViewerTitle>{t('소식지 원문', 'Newsletter Content')}</ViewerTitle>
 
-              <ActionRow>
-                <BackLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</BackLink>
-                {activeItem.downloadHref ? (
-                  <DownloadLink href={activeItem.downloadHref} target="_blank" rel="noreferrer">
-                    {t('원본 다운로드', 'Download Original')}
-                  </DownloadLink>
-                ) : null}
-              </ActionRow>
+              {loadingPreview ? (
+                <P.CardText>{t('소식지를 불러오는 중입니다...', 'Loading newsletter...')}</P.CardText>
+              ) : null}
 
-              <ViewerWrap>
-                <ViewerTitle>{t('소식지 원문', 'Newsletter Content')}</ViewerTitle>
+              {!loadingPreview && pdfUrl ? <PdfFrame src={pdfUrl} title={`${tx(activeItem.title)} PDF`} /> : null}
 
-                {loadingPreview ? (
-                  <P.CardText>{t('소식지를 불러오는 중입니다...', 'Loading newsletter...')}</P.CardText>
-                ) : null}
+              {!loadingPreview && !pdfUrl && imageUrls.length ? (
+                <ImageList>
+                  {imageUrls.map((src, idx) => (
+                    <ImagePage key={src} src={src} alt={`${tx(activeItem.title)} ${idx + 1}`} loading="lazy" />
+                  ))}
+                </ImageList>
+              ) : null}
 
-                {!loadingPreview && pdfUrl ? <PdfFrame src={pdfUrl} title={`${tx(activeItem.title)} PDF`} /> : null}
-
-                {!loadingPreview && !pdfUrl && imageUrls.length ? (
-                  <ImageList>
-                    {imageUrls.map((src, idx) => (
-                      <ImagePage key={src} src={src} alt={`${tx(activeItem.title)} ${idx + 1}`} loading="lazy" />
-                    ))}
-                  </ImageList>
-                ) : null}
-
-                {!loadingPreview && !pdfUrl && !imageUrls.length ? (
-                  <P.CardText>
-                    {t(
-                      '웹 미리보기 파일이 아직 준비되지 않았습니다. 원본 다운로드 버튼으로 확인해주세요.',
-                      'Web preview files are not available yet. Please use the original download button.',
-                    )}
-                  </P.CardText>
-                ) : null}
-              </ViewerWrap>
-            </>
+              {!loadingPreview && !pdfUrl && !imageUrls.length ? (
+                <P.CardText>
+                  {t(
+                    '웹 미리보기 파일이 아직 준비되지 않았습니다. 원본 다운로드 버튼으로 확인해주세요.',
+                    'Web preview files are not available yet. Please use the original download button.',
+                  )}
+                </P.CardText>
+              ) : null}
+            </ViewerWrap>
           ) : (
-            <P.Card style={{ marginTop: 20 }}>
+            <P.Card>
               <P.CardTitle>{t('소식지를 찾을 수 없습니다.', 'Newsletter not found')}</P.CardTitle>
               <P.CardText>
                 {t(

@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { members } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -13,6 +15,7 @@ function detectCategory(practice: string) {
 
 export function ExpertsPage() {
   const { t, tx } = useI18n();
+  const membersSubnav = sectionSubnav.members;
   const categories = useMemo(
     () => ['전체', ...Array.from(new Set(members.map((member) => detectCategory(member.practice))))],
     [],
@@ -24,8 +27,18 @@ export function ExpertsPage() {
   );
 
   return (
-    <P.PageSection>
+    <P.HeroSection>
       <P.PageContainer data-reveal>
+        <LandingSubnav
+          kicker={membersSubnav.kicker}
+          kickerEn={membersSubnav.kickerEn}
+          title={membersSubnav.title}
+          titleEn={membersSubnav.titleEn}
+          summary={membersSubnav.summary}
+          summaryEn={membersSubnav.summaryEn}
+          items={membersSubnav.items}
+        />
+
         <P.SectionHead>
           <div>
             <P.Kicker>Experts</P.Kicker>
@@ -72,6 +85,6 @@ export function ExpertsPage() {
           ))}
         </P.Grid>
       </P.PageContainer>
-    </P.PageSection>
+    </P.HeroSection>
   );
 }

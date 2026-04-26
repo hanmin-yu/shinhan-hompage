@@ -1,14 +1,29 @@
 import { ItSection } from '../../components/home/sections/ItSection';
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { useI18n } from '../../i18n/useI18n';
 
 export function ItPage() {
   const { t } = useI18n();
+  const itSubnav = sectionSubnav.it;
 
   return (
     <>
       <P.HeroSection>
-        <P.PageContainer data-reveal>
+        <P.PageContainer>
+          <LandingSubnav
+            kicker={itSubnav.kicker}
+            kickerEn={itSubnav.kickerEn}
+            title={itSubnav.title}
+            titleEn={itSubnav.titleEn}
+            summary={itSubnav.summary}
+            summaryEn={itSubnav.summaryEn}
+            items={itSubnav.items}
+          />
+        </P.PageContainer>
+
+        <P.PageContainer data-reveal style={{ marginTop: 22 }}>
           <P.Kicker>IT Service</P.Kicker>
           <P.Title>{t('통관 실무와 연결되는 IT 서비스', 'IT Services Integrated with Customs Operations')}</P.Title>
           <P.Lead>

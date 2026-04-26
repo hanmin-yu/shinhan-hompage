@@ -1,33 +1,11 @@
 import { getHeaderNavigation, getMobileQuickLinks } from '../../../config/navigation';
 import { useI18n } from '../../../i18n/useI18n';
-import type { NavItem } from '../../../types/site';
 import * as S from '../homeStyles';
 
 type MobileMenuProps = {
   open: boolean;
   onClose: () => void;
 };
-
-function renderMobileSubmenu(items: NavItem[], onClose: () => void, depth = 0) {
-  return items.map((item) => {
-    const itemTo = item.to ?? item.href ?? '/';
-
-    if (!item.children?.length) {
-      return (
-        <S.MobileMenuSubLink key={item.id} to={itemTo} onClick={onClose} data-depth={depth}>
-          {item.label}
-        </S.MobileMenuSubLink>
-      );
-    }
-
-    return (
-      <S.MobileMenuGroup key={item.id}>
-        <S.MobileMenuGroupTitle>{item.label}</S.MobileMenuGroupTitle>
-        {renderMobileSubmenu(item.children, onClose, depth + 1)}
-      </S.MobileMenuGroup>
-    );
-  });
-}
 
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
   const { language, setLanguage, t } = useI18n();
@@ -54,7 +32,6 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             <S.MobileMenuMainLink to={item.to ?? item.href ?? '/'} onClick={onClose}>
               {item.label}
             </S.MobileMenuMainLink>
-            {item.children ? renderMobileSubmenu(item.children, onClose) : null}
           </S.MobileMenuSection>
         ))}
 

@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { consultingHubCards } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -20,11 +22,22 @@ const IntroVisual = styled.div`
 
 export function ConsultingPage() {
   const { t, tx } = useI18n();
+  const servicesSubnav = sectionSubnav.services;
 
   return (
     <>
-      <P.PageSection tone="soft">
+      <P.HeroSection>
         <P.PageContainer data-reveal>
+          <LandingSubnav
+            kicker={servicesSubnav.kicker}
+            kickerEn={servicesSubnav.kickerEn}
+            title={servicesSubnav.title}
+            titleEn={servicesSubnav.titleEn}
+            summary={servicesSubnav.summary}
+            summaryEn={servicesSubnav.summaryEn}
+            items={servicesSubnav.items}
+          />
+
           <P.SectionHead>
             <div>
               <P.Kicker>Consulting Hub</P.Kicker>
@@ -52,7 +65,7 @@ export function ConsultingPage() {
             ))}
           </P.Grid>
         </P.PageContainer>
-      </P.PageSection>
+      </P.HeroSection>
     </>
   );
 }

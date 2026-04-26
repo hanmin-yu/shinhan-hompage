@@ -25,53 +25,56 @@ const practiceCards = [
   {
     id: 'practice-import-export',
     title: '수출입통관',
-    body: 'PI·CI 기반 통관 SOP를 운영하고 iOOM으로 신고 진행과 이슈를 관리합니다.',
+    body: '60년 이상의 축적된 통관 경험과 전문 인력을 기반으로 신속하고 정확한 수출입 통관 서비스를 제공합니다.',
     href: '/services/import-export',
+    titleEn: 'Import & Export Clearance',
+    bodyEn:
+      'Based on over 60 years of accumulated clearance experience and specialized professionals, we provide fast and accurate import/export clearance services.',
   },
   {
     id: 'practice-quarantine',
-    title: '검역/요건',
-    body: '검역, 인증, 수입요건을 사전에 점검해 통관 단계의 지연 가능성을 낮춥니다.',
+    title: '검역.요건',
+    body: '검역/요건 전담인력 운영을 통해 HSK별로 세분화된 검토를 수행하여 법적 안정성을 보장합니다.',
     href: '/services/quarantine-requirements',
+    titleEn: 'Quarantine & Requirements',
+    bodyEn:
+      'With dedicated quarantine/requirements specialists, we conduct detailed HS code-based reviews to ensure legal stability.',
   },
   {
     id: 'practice-fta',
-    title: '원산지/FTA',
-    body: 'FTA 원산지와 일반 원산지 업무를 구분해 운영하고 사후검증 대응 기준을 정리합니다.',
+    title: 'FTA',
+    body: 'FTA 전담팀 운영을 통해 적법한 FTA 적용 및 사후검증 대응을 지원하여 기업의 FTA 활용을 극대화합니다.',
     href: '/services/consulting/fta',
+    titleEn: 'FTA',
+    bodyEn:
+      'Through our dedicated FTA team, we support compliant FTA application and post-verification response to maximize corporate FTA utilization.',
   },
   {
     id: 'practice-aeo',
-    title: 'AEO · ACVA',
-    body: 'AEO 공인·갱신·사후관리와 ACVA 사전심사 업무를 한 구조에서 확인할 수 있습니다.',
-    href: '/services/consulting',
+    title: 'AEO',
+    body: '풍부한 부문별 AEO공인 및 사후관리 경험을 바탕으로 신속한 공인 획득과 체계적인 사후관리 서비스를 제공합니다.',
+    href: '/services/consulting/aeo',
+    titleEn: 'AEO',
+    bodyEn:
+      'Based on extensive experience in AEO certification by sector and follow-up management, we provide rapid certification and structured post-management services.',
   },
   {
     id: 'practice-investigation',
-    title: '관세조사 · 범칙조사',
-    body: '관세조사와 범칙조사에서 필요한 단계별 대응 항목을 정리해 제공합니다.',
-    href: '/services/consulting',
+    title: '관세조사',
+    body: '사전 리스크 진단부터 세관 대응까지 관세조사 전 과정을 지원하여 기업의 리스크를 최소화합니다.',
+    href: '/services/consulting/customs-audit',
+    titleEn: 'Customs Audit',
+    bodyEn:
+      'From pre-risk diagnosis to customs authority response, we support the full customs audit lifecycle to minimize corporate risk.',
   },
   {
-    id: 'practice-vietnam',
-    title: '베트남 · 특화서비스',
-    body: '베트남·물류·미국 FDA 관련 지원 항목을 제공합니다.',
-    href: '/services',
-  },
-];
-
-const practiceIaGroups = [
-  {
-    title: '핵심 통관',
-    items: ['수출입통관', '검역', '요건'],
-  },
-  {
-    title: '컨설팅',
-    items: ['FTA', 'AEO', '관세조사', '외환검사/조사', 'ACVA', '범칙조사', '조세불복', '환급', '기타 관세무역컨설팅'],
-  },
-  {
-    title: '특화 서비스',
-    items: ['IT', '물류', '베트남', '미국 FDA'],
+    id: 'practice-foreign-exchange',
+    title: '외환검사.조사',
+    body: '외환거래 전반에 대한 사전 진단과 법령 검토를 통해 리스크를 예방하고 신고 및 사후 대응을 지원합니다.',
+    href: '/services/consulting/foreign-exchange',
+    titleEn: 'Foreign Exchange Inspection & Investigation',
+    bodyEn:
+      'We provide pre-diagnosis and legal review across foreign exchange transactions to prevent risk and support reporting and post-response.',
   },
 ];
 
@@ -205,54 +208,6 @@ const CardHint = styled.p`
   }
 `;
 
-const IaMap = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const IaGroup = styled.article`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 18px;
-  border-radius: 6px;
-  border: 1px solid rgba(20, 73, 152, 0.16);
-  background: #eef5ff;
-`;
-
-const IaGroupTitle = styled.strong`
-  color: #174888;
-  font-size: 0.88rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
-const IaChipRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const IaChip = styled.span`
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 73, 152, 0.24);
-  color: #2b568b;
-  background: #f8fbff;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-`;
-
 export function PracticeSection() {
   const { t, tx } = useI18n();
 
@@ -274,25 +229,12 @@ export function PracticeSection() {
           <Grid>
             {practiceCards.map((item) => (
               <Card key={item.id} id={item.id} to={item.href}>
-                <CardTitle>{tx(item.title)}</CardTitle>
-                <CardBody>{tx(item.body)}</CardBody>
+                <CardTitle>{t(item.title, item.titleEn ?? tx(item.title))}</CardTitle>
+                <CardBody>{t(item.body, item.bodyEn ?? tx(item.body))}</CardBody>
                 <CardHint>{t('자세히 보기', 'Learn more')}</CardHint>
               </Card>
             ))}
           </Grid>
-
-          <IaMap>
-            {practiceIaGroups.map((group) => (
-              <IaGroup key={group.title}>
-                <IaGroupTitle>{tx(group.title)}</IaGroupTitle>
-                <IaChipRow>
-                  {group.items.map((item) => (
-                    <IaChip key={item}>{tx(item)}</IaChip>
-                  ))}
-                </IaChipRow>
-              </IaGroup>
-            ))}
-          </IaMap>
         </Inner>
       </Section>
     </>

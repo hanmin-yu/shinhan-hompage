@@ -1,5 +1,6 @@
+import { useLocation } from 'react-router-dom';
+
 import { getHeaderNavigation } from '../../../config/navigation';
-import type { NavItem } from '../../../types/site';
 import { useI18n } from '../../../i18n/useI18n';
 import { BrandMarkGraphic } from '../BrandMarkGraphic';
 import * as S from '../homeStyles';
@@ -8,36 +9,15 @@ type SiteHeaderProps = {
   onOpenMobileMenu: () => void;
 };
 
-function renderDropdownItems(items: NavItem[]) {
-  return items.map((child) => {
-    const childTo = child.to ?? child.href ?? '/';
-
-    if (!child.children?.length) {
-      return (
-        <S.NavDropdownLink key={child.id} to={childTo}>
-          {child.label}
-        </S.NavDropdownLink>
-      );
-    }
-
-    return (
-      <S.NavDropdownGroup key={child.id}>
-        <S.NavDropdownGroupTitle>{child.label}</S.NavDropdownGroupTitle>
-        <S.NavDropdownGroupList>
-          {child.children.map((grandChild) => (
-            <S.NavDropdownSubLink key={grandChild.id} to={grandChild.to ?? grandChild.href ?? '/'}>
-              {grandChild.label}
-            </S.NavDropdownSubLink>
-          ))}
-        </S.NavDropdownGroupList>
-      </S.NavDropdownGroup>
-    );
-  });
-}
-
 export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
   const { language, setLanguage, t } = useI18n();
+  const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
+
+  const isActive = (path?: string) => {
+    if (!path) return false;
+    return pathname === path;
+  };
 
   return (
     <S.Header>
@@ -61,14 +41,9 @@ export function SiteHeader({ onOpenMobileMenu }: SiteHeaderProps) {
             <S.Nav>
               {headerNavigation.map((item) => (
                 <S.NavItem key={item.id}>
-                  <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={Boolean(item.children?.length)}>
+                  <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={false} data-active={isActive(item.to ?? item.href)}>
                     {item.label}
                   </S.NavLink>
-                  {item.children ? (
-                    <S.NavDropdown className="nav-dropdown">
-                      <S.NavDropdownList>{renderDropdownItems(item.children)}</S.NavDropdownList>
-                    </S.NavDropdown>
-                  ) : null}
                 </S.NavItem>
               ))}
             </S.Nav>

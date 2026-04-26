@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 import { heroSlides } from '../../../data/home';
 import { useRotatingIndex } from '../../../hooks/useRotatingIndex';
@@ -120,57 +119,6 @@ const HeroDescription = styled.p`
   max-width: 620px;
 `;
 
-const HeroActions = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 2px;
-`;
-
-const HeroPrimaryAction = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: 7px;
-  background: #1f5cb8;
-  border: 1px solid rgba(31, 92, 184, 0.48);
-  color: #ffffff;
-  font-size: 0.94rem;
-  font-weight: 700;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-
-  &:hover {
-    background: #184f9f;
-    transform: translateY(-1px);
-  }
-`;
-
-const HeroSecondaryAction = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: 7px;
-  border: 1px solid rgba(32, 84, 160, 0.22);
-  background: rgba(255, 255, 255, 0.76);
-  color: #1f4f95;
-  font-size: 0.94rem;
-  font-weight: 700;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-
-  &:hover {
-    background: #ffffff;
-    transform: translateY(-1px);
-  }
-`;
-
 const HeroVisual = styled.div`
   position: relative;
   height: min(76vh, 760px);
@@ -273,10 +221,6 @@ export function HeroSection() {
               신한관세법인은 열정, 정직, 혁신, 팀워크의 가치 위에서 수출입통관·검역/요건·컨설팅·물류 연계까지
               기업의 실무 과제를 통합 지원합니다.
             </HeroDescription>
-            <HeroActions>
-              <HeroPrimaryAction to="/contact">상담 문의하기</HeroPrimaryAction>
-              <HeroSecondaryAction to="/services">업무분야 보기</HeroSecondaryAction>
-            </HeroActions>
           </HeroCopy>
 
           <HeroVisual aria-hidden="true">

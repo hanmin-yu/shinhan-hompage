@@ -9,9 +9,32 @@ export type LinkCard = {
   href: string;
 };
 
+export type ServiceLandingGroupItem = {
+  label: string;
+  labelEn: string;
+  href: string;
+  parentTitle?: string;
+  parentTitleEn?: string;
+};
+
+export type ServiceLandingGroup = {
+  id: 'clearance-refund' | 'quarantine-requirements' | 'consulting' | 'specialized';
+  heading: string;
+  headingEn: string;
+  title: string;
+  titleEn: string;
+  description: string;
+  descriptionEn: string;
+  image: string;
+  items: ServiceLandingGroupItem[];
+};
+
 export type ServiceDetailContent = {
   id: string;
   path: string;
+  groupKey: ServiceLandingGroup['id'];
+  groupTitle: string;
+  groupTitleEn: string;
   title: string;
   summary: string;
   heroImage?: string;
@@ -40,18 +63,62 @@ export const aboutStrengths: PointItem[] = [
 ];
 
 export const aboutTimeline = [
-  { year: '1965', event: '서울통관사 창립' },
-  { year: '1993', event: '신한관세법인 법인 등록' },
-  { year: '2004', event: '인천공항지사 설립' },
-  { year: '2006', event: '부산지사 설립 및 컨설팅본부 운영 확대' },
-  { year: '2007', event: '신한인비스타 · 인천경기지사 · 청주지사 설립' },
-  { year: '2008', event: 'FTA Business Model 경진대회 최우수상 수상' },
-  { year: '2010', event: '관세법인 최초 AEO 인증 획득' },
-  { year: '2013', event: '신한관세법인 AEO 공인인증 AA 인증' },
-  { year: '2015', event: '구미지사 설립 및 신한관세법인 창립 50주년' },
-  { year: '2016', event: 'KORD Partners Inc. 설립(미국 LA 통관/FDA 컨설팅)' },
-  { year: '2019', event: '신한 베트남 관세법인(SCV) 설립' },
-  { year: '2025', event: '신한관세법인 창립 60주년' },
+  { period: '2011-current', year: '2025', event: '03월 신한관세법인 창립 60주년' },
+  { period: '2011-current', year: '2023', event: '01월 신한관세법인 AEO 공인인증 AA 인증' },
+  { period: '2011-current', year: '2021', event: '08월 관세청 적극행정 및 규제혁신 대국민 공모전 입상' },
+  { period: '2011-current', year: '2021', event: '03월 2018~2021년 수출바우처 컨설팅 수행기관 선정' },
+  { period: '2011-current', year: '2019', event: '03월 신한 베트남 관세법인(SCV) 설립(현지 컨설팅·통관업무)' },
+  { period: '2011-current', year: '2019', event: '01월 관세청 YES FTA 전문교육기관 선정' },
+  { period: '2011-current', year: '2018', event: '09월 관세청 블록체인 기반 수출통관 물류서비스 시범사업 업무협약 체결' },
+  { period: '2011-current', year: '2018', event: '05월 K-V FTA 활용역량강화 경제협력사업 베트남 현지 포럼 개최' },
+  { period: '2011-current', year: '2018', event: '01월 관세청 YES FTA 전문교육기관 선정' },
+  { period: '2011-current', year: '2017', event: '04월 포스트차이나 베트남 진출 기업 대상 관세통관제도 설명회 개최' },
+  { period: '2011-current', year: '2017', event: '03월 대전충남지사 설립' },
+  { period: '2011-current', year: '2017', event: '01월 K-V FTA 활용 역량강화사업 연구' },
+  { period: '2011-current', year: '2017', event: '01월 관세청 YES FTA 전문교육기관 선정' },
+  { period: '2011-current', year: '2016', event: '09월 한국관세사회 공로패' },
+  { period: '2011-current', year: '2016', event: '01월 KORD Partners Inc. 설립(미국 LA 통관/FDA 요건 컨설팅)' },
+  { period: '2011-current', year: '2016', event: '01월 중소기업진흥공단 관세법인 활용 FTA 교육' },
+  { period: '2011-current', year: '2015', event: '03월 신한관세법인 창립 50주년' },
+  { period: '2011-current', year: '2015', event: '01월 KOTRA 한중 FTA 이해·활용전략 포럼 감사패 수상' },
+  { period: '2011-current', year: '2015', event: '01월 포워딩 G사 고객사 우수협력상 표창' },
+  { period: '2011-current', year: '2015', event: '01월 글로벌 I사 고객사 우수협력상 표창' },
+  { period: '2011-current', year: '2014', event: '05월 구미지사 설립' },
+  { period: '2011-current', year: '2014', event: '04월 미국 법률·회계 JC&COMPANY MOU 체결' },
+  { period: '2011-current', year: '2014', event: '03월 무역협회 OK FTA 컨설팅 수행' },
+  { period: '2011-current', year: '2014', event: '01월 FTA 중소기업지원 우수사례 최우수상 수상' },
+  { period: '2011-current', year: '2013', event: '05월 중소기업진흥공단 관세법인 활용 FTA 교육' },
+  { period: '2011-current', year: '2013', event: '03월 인도 PMP LOGISTICS MOU 체결' },
+  { period: '2011-current', year: '2013', event: '01월 신한관세법인 AEO 공인인증 AA 인증' },
+  { period: '2011-current', year: '2012', event: '08월 AEO 우수사례 경진대회 본상 수상' },
+  { period: '2011-current', year: '2012', event: '03월 무역협회 OK FTA 컨설팅 수행' },
+  { period: '2011-current', year: '2011', event: '11월 글로벌 I사 고객사 우수협력사 감사패 수상' },
+  { period: '2011-current', year: '2011', event: '01월 ECCK Official Customs Advisor' },
+  { period: '2011-current', year: '2011', event: '01월 중소기업진흥공단 FTA 컨설팅 기관' },
+  { period: '2001-2010', year: '2010', event: '01월 포워딩 B사 고객사 우수협력사 감사패 수상' },
+  { period: '2001-2010', year: '2010', event: '01월 관세법인 최초 AEO 인증 획득' },
+  { period: '2001-2010', year: '2010', event: '01월 신한인비스타 보세창고 설립' },
+  { period: '2001-2010', year: '2008', event: '08월 FTA BUSINESS MODEL 경진대회 최우수상' },
+  { period: '2001-2010', year: '2007', event: '08월 청주지사 설립' },
+  { period: '2001-2010', year: '2007', event: '02월 인천경기지사 설립' },
+  { period: '2001-2010', year: '2007', event: '01월 신한인비스타 설립' },
+  { period: '2001-2010', year: '2006', event: '02월 글로벌 I사 고객사 우수협력사 감사패 수상' },
+  { period: '2001-2010', year: '2006', event: '01월 부산지사 설립' },
+  { period: '2001-2010', year: '2006', event: '01월 컨설팅본부 설립' },
+  { period: '2001-2010', year: '2004', event: '01월 인천공항지사 설립' },
+  { period: '1965-2000', year: '1993', event: '03월 신한관세법인 법인 등록' },
+  { period: '1965-2000', year: '1982', event: '01월 장흥진 회장 한국관세사회 부회장 역임' },
+  { period: '1965-2000', year: '1977', event: '05월 장흥진 회장 사단법인 한국관세협회 상임이사 역임' },
+  { period: '1965-2000', year: '1977', event: '01월 장흥진 회장 한국관세사회 서울지부 초대 지부장 역임' },
+  { period: '1965-2000', year: '1965', event: '03월 서울통관사 창립' },
+];
+
+export const historyMilestones = [
+  { year: '1965', ko: '서울통관사 창립', en: 'Founded as Seoul Customs Service' },
+  { year: '1993', ko: '신한관세법인 법인 등록', en: 'Registered as Shinhan Customs Service Inc.' },
+  { year: '2015', ko: '신한관세법인 창립 50주년', en: '50th Anniversary of Shinhan Customs Service' },
+  { year: '2019', ko: '신한 베트남 관세법인(SCV) 설립', en: 'Established Shinhan Customs Vietnam (SCV)' },
+  { year: '2025', ko: '신한관세법인 창립 60주년', en: '60th Anniversary of Shinhan Customs Service' },
 ];
 
 export const managementValues: PointItem[] = [
@@ -104,6 +171,126 @@ export const consultingHubCards: LinkCard[] = [
     title: '기타 관세무역컨설팅',
     body: '품목분류/과세가격/원산지 사전심사 등 사전 리스크 관리',
     href: '/services/consulting/trade-consulting',
+  },
+];
+
+export const serviceLandingGroups: ServiceLandingGroup[] = [
+  {
+    id: 'clearance-refund',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '수출입통관 및 환급',
+    titleEn: 'Import/Export Clearance & Refund',
+    description: '신고부터 환급까지 통관 운영 전 과정을 연결해 실무 효율과 정확도를 함께 관리합니다.',
+    descriptionEn: 'From declarations to refunds, we connect the full clearance workflow for operational accuracy.',
+    image: '/subpages/service-main-import.jpg',
+    items: [
+      {
+        label: '수출입통관',
+        labelEn: 'Import/Export Clearance',
+        href: '/services/import-export',
+        parentTitle: '수출입통관 및 환급',
+        parentTitleEn: 'Import/Export Clearance & Refund',
+      },
+      {
+        label: '환급',
+        labelEn: 'Refund',
+        href: '/services/consulting/refund',
+        parentTitle: '수출입통관 및 환급',
+        parentTitleEn: 'Import/Export Clearance & Refund',
+      },
+    ],
+  },
+  {
+    id: 'quarantine-requirements',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '검역/요건',
+    titleEn: 'Quarantine / Requirements',
+    description: '검역과 수입요건을 HSK별로 사전 검토해 통관 지연 리스크를 줄입니다.',
+    descriptionEn: 'We review quarantine and import requirements in advance by HSK to reduce delay risks.',
+    image: '/subpages/service-import-export.jpg',
+    items: [
+      {
+        label: '검역',
+        labelEn: 'Quarantine',
+        href: '/services/quarantine-requirements',
+        parentTitle: '검역/요건',
+        parentTitleEn: 'Quarantine / Requirements',
+      },
+      {
+        label: '요건',
+        labelEn: 'Requirements',
+        href: '/services/quarantine-requirements',
+        parentTitle: '검역/요건',
+        parentTitleEn: 'Quarantine / Requirements',
+      },
+    ],
+  },
+  {
+    id: 'consulting',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '컨설팅',
+    titleEn: 'Consulting',
+    description: '조사 대응, 원산지/FTA, AEO, ACVA, 조세불복까지 기업 리스크 관리를 지원합니다.',
+    descriptionEn: 'We support enterprise risk management across audits, FTA, AEO, ACVA, and tax appeals.',
+    image: '/subpages/service-main-consulting.jpg',
+    items: [
+      { label: 'FTA', labelEn: 'FTA', href: '/services/consulting/fta', parentTitle: '컨설팅', parentTitleEn: 'Consulting' },
+      { label: 'AEO', labelEn: 'AEO', href: '/services/consulting/aeo', parentTitle: '컨설팅', parentTitleEn: 'Consulting' },
+      {
+        label: '관세조사',
+        labelEn: 'Customs Audit',
+        href: '/services/consulting/customs-audit',
+        parentTitle: '컨설팅',
+        parentTitleEn: 'Consulting',
+      },
+      {
+        label: '외환검사/조사',
+        labelEn: 'Foreign Exchange',
+        href: '/services/consulting/foreign-exchange',
+        parentTitle: '컨설팅',
+        parentTitleEn: 'Consulting',
+      },
+      { label: 'ACVA', labelEn: 'ACVA', href: '/services/consulting/acva', parentTitle: '컨설팅', parentTitleEn: 'Consulting' },
+      {
+        label: '범칙조사',
+        labelEn: 'Penalty Investigation',
+        href: '/services/consulting/penalty-investigation',
+        parentTitle: '컨설팅',
+        parentTitleEn: 'Consulting',
+      },
+      {
+        label: '조세불복',
+        labelEn: 'Tax Appeal',
+        href: '/services/consulting/tax-appeal',
+        parentTitle: '컨설팅',
+        parentTitleEn: 'Consulting',
+      },
+      {
+        label: '관세무역컨설팅',
+        labelEn: 'Trade Consulting',
+        href: '/services/consulting/trade-consulting',
+        parentTitle: '컨설팅',
+        parentTitleEn: 'Consulting',
+      },
+    ],
+  },
+  {
+    id: 'specialized',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '기타',
+    titleEn: 'Specialized',
+    description: '물류, 베트남 법인, 미국 FDA 대응 등 통관 이후 확장 업무를 지원합니다.',
+    descriptionEn: 'We cover extended operations including logistics, Vietnam entity support, and U.S. FDA response.',
+    image: '/subpages/service-main-vietnam.jpg',
+    items: [
+      { label: '물류', labelEn: 'Logistics', href: '/services/logistics', parentTitle: '기타', parentTitleEn: 'Specialized' },
+      { label: '베트남', labelEn: 'Vietnam', href: '/services/vietnam', parentTitle: '기타', parentTitleEn: 'Specialized' },
+      { label: '미국 FDA', labelEn: 'US FDA', href: '/services/us-fda', parentTitle: '기타', parentTitleEn: 'Specialized' },
+    ],
   },
 ];
 
@@ -199,6 +386,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'import-export',
     path: '/services/import-export',
+    groupKey: 'clearance-refund',
+    groupTitle: '수출입통관 및 환급',
+    groupTitleEn: 'Import/Export Clearance & Refund',
     title: '수출입통관',
     summary: 'PI·CI 운영 체계와 iOOM 데이터 관리로 통관 정확도와 속도를 관리합니다.',
     heroImage: '/subpages/service-main-import.jpg',
@@ -224,6 +414,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'quarantine-requirements',
     path: '/services/quarantine-requirements',
+    groupKey: 'quarantine-requirements',
+    groupTitle: '검역/요건',
+    groupTitleEn: 'Quarantine / Requirements',
     title: '검역/요건',
     summary: '검역·요건을 사전 정리해 통관 지연과 보완 리스크를 최소화합니다.',
     heroImage: '/subpages/service-main-import.jpg',
@@ -243,6 +436,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'fta',
     path: '/services/consulting/fta',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '원산지/FTA',
     summary: '특혜(FTA)와 비특혜(일반 원산지)를 구분 운영해 관세 절감과 규정 준수를 함께 달성합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -262,6 +458,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'aeo',
     path: '/services/consulting/aeo',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: 'AEO 컨설팅',
     summary: '신규 공인부터 갱신·사후관리·등급조정까지 AEO 운영 전 과정을 지원합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -281,6 +480,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'customs-audit',
     path: '/services/consulting/customs-audit',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '관세조사',
     summary: '정기·비정기·간이 관세조사 전 단계에서 자료 체계화와 쟁점 대응을 지원합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -295,6 +497,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'foreign-exchange',
     path: '/services/consulting/foreign-exchange',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '외환검사/조사',
     summary: '외환 규정과 거래 구조를 함께 점검해 검사 대응 리스크를 줄입니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -309,6 +514,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'acva',
     path: '/services/consulting/acva',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: 'ACVA',
     summary: '특수관계자 과세가격 사전심사로 조사 리스크를 완화하고 경영 예측 가능성을 높입니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -328,6 +536,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'penalty-investigation',
     path: '/services/consulting/penalty-investigation',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '범칙조사',
     summary: '세관 조사부터 통고처분·검찰 단계까지 형사 리스크를 통합 관리합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -347,6 +558,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'tax-appeal',
     path: '/services/consulting/tax-appeal',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '조세불복',
     summary: '과세전적부·이의·심사·심판·소송까지 단계별 불복 절차를 체계적으로 지원합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -361,6 +575,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'refund',
     path: '/services/consulting/refund',
+    groupKey: 'clearance-refund',
+    groupTitle: '수출입통관 및 환급',
+    groupTitleEn: 'Import/Export Clearance & Refund',
     title: '환급',
     summary: '환급 가능 항목 발굴부터 신청·사후관리까지 실무 흐름에 맞춰 지원합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -375,6 +592,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'trade-consulting',
     path: '/services/consulting/trade-consulting',
+    groupKey: 'consulting',
+    groupTitle: '컨설팅',
+    groupTitleEn: 'Consulting',
     title: '기타 관세무역컨설팅',
     summary: '사전심사 제도를 활용한 사전 리스크 관리 중심의 맞춤형 컨설팅을 제공합니다.',
     heroImage: '/subpages/service-main-consulting.jpg',
@@ -389,6 +609,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'logistics',
     path: '/services/logistics',
+    groupKey: 'specialized',
+    groupTitle: '기타',
+    groupTitleEn: 'Specialized',
     title: '물류',
     summary: '통관 이후 물류 운영까지 연결해 공급망 전반의 리스크를 관리합니다.',
     heroImage: '/subpages/service-main-logistics.jpg',
@@ -404,6 +627,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'vietnam',
     path: '/services/vietnam',
+    groupKey: 'specialized',
+    groupTitle: '기타',
+    groupTitleEn: 'Specialized',
     title: '베트남 법인',
     summary: '하노이 현지 법인과 한국 본사의 협업으로 베트남 통관·수책·FTA 리스크를 선제 대응합니다.',
     heroImage: '/subpages/service-main-vietnam.jpg',
@@ -424,6 +650,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'us-fda',
     path: '/services/us-fda',
+    groupKey: 'specialized',
+    groupTitle: '기타',
+    groupTitleEn: 'Specialized',
     title: '미국 FDA',
     summary: '미국 수출 시 필요한 FDA 준비 항목을 통관 실무와 연결해 지원합니다.',
     heroImage: '/hero/pharma.jpg',

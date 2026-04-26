@@ -1,14 +1,27 @@
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { members } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
 export function MembersPage() {
   const { t, tx } = useI18n();
+  const membersSubnav = sectionSubnav.members;
   const preview = members.slice(0, 3);
 
   return (
-    <P.PageSection>
+    <P.HeroSection>
       <P.PageContainer data-reveal>
+        <LandingSubnav
+          kicker={membersSubnav.kicker}
+          kickerEn={membersSubnav.kickerEn}
+          title={membersSubnav.title}
+          titleEn={membersSubnav.titleEn}
+          summary={membersSubnav.summary}
+          summaryEn={membersSubnav.summaryEn}
+          items={membersSubnav.items}
+        />
+
         <P.SectionHead>
           <div>
             <P.Kicker>Members</P.Kicker>
@@ -31,6 +44,6 @@ export function MembersPage() {
           ))}
         </P.Grid>
       </P.PageContainer>
-    </P.PageSection>
+    </P.HeroSection>
   );
 }

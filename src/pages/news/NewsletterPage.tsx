@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
 
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { newsletterItems } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -65,6 +67,7 @@ const CardActions = styled.div`
 
 export function NewsletterPage() {
   const { language, setLanguage, t, tx } = useI18n();
+  const newsSubnav = sectionSubnav.news;
   const languageMode = language === 'en' ? 'en' : 'ko';
 
   const filteredItems = useMemo(
@@ -81,23 +84,44 @@ export function NewsletterPage() {
 
   return (
     <>
-      <P.PageSection>
+      <P.HeroSection>
+        <P.PageContainer>
+          <LandingSubnav
+            kicker={newsSubnav.kicker}
+            kickerEn={newsSubnav.kickerEn}
+            title={newsSubnav.title}
+            titleEn={newsSubnav.titleEn}
+            summary={newsSubnav.summary}
+            summaryEn={newsSubnav.summaryEn}
+            items={newsSubnav.items}
+          />
+
+        </P.PageContainer>
+
+        <P.IntroBlock data-reveal>
+          <P.IntroPanel>
+            <P.Kicker>Newsletter</P.Kicker>
+            <P.Title>{t('소식지', 'Newsletter')}</P.Title>
+            <P.Lead>
+              {languageMode === 'en'
+                ? 'You can review and download original English newsletters by month.'
+                : '국문 소식지 원본을 월별로 확인하고 다운로드할 수 있습니다.'}
+            </P.Lead>
+            <ModeRow>
+              <ModeButton type="button" $active={languageMode === 'ko'} onClick={() => handleModeChange('ko')}>
+                {t('국문 모드', 'Korean Mode')}
+              </ModeButton>
+              <ModeButton type="button" $active={languageMode === 'en'} onClick={() => handleModeChange('en')}>
+                {t('영문 모드', 'English Mode')}
+              </ModeButton>
+            </ModeRow>
+          </P.IntroPanel>
+          <P.IntroVisualPanel image="/subpages/about-coms1.jpg" minHeight={320} aria-hidden="true" />
+        </P.IntroBlock>
+      </P.HeroSection>
+
+      <P.PageSection tone="soft">
         <P.PageContainer data-reveal>
-          <P.Kicker>Newsletter</P.Kicker>
-          <P.SectionTitle>{t('소식지', 'Newsletter')}</P.SectionTitle>
-          <P.Lead>
-            {languageMode === 'en'
-              ? 'You can review and download original English newsletters by month.'
-              : '국문 소식지 원본을 월별로 확인하고 다운로드할 수 있습니다.'}
-          </P.Lead>
-          <ModeRow>
-            <ModeButton type="button" $active={languageMode === 'ko'} onClick={() => handleModeChange('ko')}>
-              {t('국문 모드', 'Korean Mode')}
-            </ModeButton>
-            <ModeButton type="button" $active={languageMode === 'en'} onClick={() => handleModeChange('en')}>
-              {t('영문 모드', 'English Mode')}
-            </ModeButton>
-          </ModeRow>
           <P.Grid columns={2}>
             {filteredItems.length ? (
               filteredItems.map((item) => (

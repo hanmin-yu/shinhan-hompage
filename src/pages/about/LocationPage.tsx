@@ -103,13 +103,13 @@ export function LocationPage() {
   const officeAddress = hqOffice?.address ?? siteContact.address;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
-  const officeName = hqOffice?.label ?? '신한관세법인 서울본사';
-  const naverMapUrl = getNaverMapUrl(officeAddress, officeName);
-  const googleMapUrl = getGoogleMapUrl(officeAddress, officeName);
-  const googleMapEmbedUrl = getGoogleMapEmbedUrl(officeAddress, officeName);
+  const mapSearchQuery = '신한관세법인';
+  const naverMapUrl = getNaverMapUrl(mapSearchQuery);
+  const googleMapUrl = getGoogleMapUrl(mapSearchQuery);
+  const googleMapEmbedUrl = getGoogleMapEmbedUrl(mapSearchQuery);
 
   return (
-    <P.PageSection>
+    <P.HeroSection>
       <SectionInner data-reveal>
         <P.SectionHead>
           <div>
@@ -171,6 +171,6 @@ export function LocationPage() {
           </MapFrame>
         </MapPanel>
       </SectionInner>
-    </P.PageSection>
+    </P.HeroSection>
   );
 }
