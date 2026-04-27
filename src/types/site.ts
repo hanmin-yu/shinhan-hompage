@@ -125,7 +125,12 @@ export type ShinhanNewsItem = {
   title: string;
   summary: string;
   publishedAt: string;
-  href: string;
+};
+
+export type ShinhanNewsDetail = {
+  author?: string;
+  legacyUrl?: string;
+  bodyHtml?: string;
 };
 
 export type NewsletterItem = {

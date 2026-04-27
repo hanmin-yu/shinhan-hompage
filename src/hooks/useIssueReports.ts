@@ -9,7 +9,7 @@ type IssueReportResponse = {
   refreshedAt?: string;
 };
 
-const LIVE_ISSUE_REPORT_SOURCES = ['한국관세사회', '한국무역협회', 'KOTRA'] as const;
+const LIVE_ISSUE_REPORT_SOURCES = ['한국관세사회', '한국무역협회'] as const;
 
 export function useIssueReports() {
   const [reports, setReports] = useState<IssueReport[]>([]);

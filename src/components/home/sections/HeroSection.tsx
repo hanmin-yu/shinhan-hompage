@@ -155,11 +155,11 @@ const HeroDescription = styled.p`
 const HeroVisual = styled.div`
   position: relative;
   height: min(76vh, 760px);
-  min-height: 430px;
+  min-height: 460px;
 
   @media (max-width: 1120px) {
     height: min(50vw, 500px);
-    min-height: 330px;
+    min-height: 360px;
   }
 
   @media (max-width: 920px) {
@@ -180,7 +180,7 @@ const HeroRing = styled.div`
   pointer-events: none;
 
   &[data-ring='large'] {
-    width: clamp(490px, 52vw, 760px);
+    width: min(clamp(490px, 52vw, 760px), 78vh);
     aspect-ratio: 1 / 1;
     right: 24%;
     top: 1%;
@@ -216,8 +216,8 @@ const HeroCircleFrame = styled.div`
   position: absolute;
   right: 0;
   bottom: 3%;
-  width: clamp(390px, 48vw, 680px);
-  aspect-ratio: 1 / 1;
+  width: min(clamp(390px, 48vw, 680px), 68vh);
+  height: min(clamp(390px, 48vw, 680px), 68vh);
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 18px 34px rgba(17, 45, 91, 0.16);
@@ -226,17 +226,20 @@ const HeroCircleFrame = styled.div`
 
   @media (max-width: 1120px) {
     width: min(420px, 42vw);
+    height: min(420px, 42vw);
     right: 0;
     bottom: 5%;
   }
 
   @media (max-width: 920px) {
     width: min(300px, 34vw);
+    height: min(300px, 34vw);
     bottom: 8%;
   }
 
   @media (max-width: 768px) {
     width: clamp(260px, 60vw, 440px);
+    height: clamp(260px, 60vw, 440px);
     right: 50%;
     bottom: 3%;
     transform: translateX(50%);
@@ -260,7 +263,7 @@ const HeroSlideImage = styled.img<{ $active: boolean; $position?: string; $mobil
 
 const HeroScroll = styled.span`
   position: absolute;
-  right: 30px;
+  right: clamp(-20px, -1vw, -8px);
   bottom: 34px;
   color: ${S.palette.blueInk};
   font-size: 0.8rem;

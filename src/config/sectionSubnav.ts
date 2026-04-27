@@ -42,8 +42,8 @@ export const sectionSubnav = {
     summary: '조직 구조와 분야별 전문가를 통해 신한의 실무 대응 체계를 확인할 수 있습니다.',
     summaryEn: 'Review Shinhan’s execution system through its organization and field-specific experts.',
     items: [
-      { label: '구성원', labelEn: 'Overview', to: '/members' },
       { label: '조직도', labelEn: 'Organization', to: '/members/org' },
+      { label: '임원진', labelEn: 'Executives', to: '/members/executives' },
       { label: '분야별 전문가', labelEn: 'Experts', to: '/members/experts' },
     ],
   },

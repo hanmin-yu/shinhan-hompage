@@ -10,6 +10,7 @@ import type {
   SiteContact,
   ShinhanNewsItem,
 } from '../types/site';
+import { issueReportsSnapshot } from './issueReportsSnapshot';
 import { newsletterItems as legacyNewsletterItems } from './pageContent';
 import { shinhanNewsArchive } from './shinhanNewsArchive';
 
@@ -424,64 +425,17 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
   },
 ];
 
-export const issueReports: IssueReport[] = [
-  {
-    id: 'issue-kcs-001',
-    source: '한국관세사회',
-    sourceEn: 'Korea Customs Brokers Association',
-    publishedAt: '2026.04.18',
-    title: 'FTA 사후검증 대응 시 필수 점검 항목',
-    titleEn: 'Essential Checkpoints for Responding to FTA Post-Verification',
-    summary: '원산지 소명자료, 거래 흐름, 협정별 요건 검토 항목을 중심으로 사후검증 대응 포인트를 정리한 외부 기관형 이슈입니다.',
-    summaryEn:
-      'An external-source issue brief outlining FTA post-verification response points around origin documentation, transaction flow, and agreement-specific requirements.',
-    url: 'https://www.koreacustoms.or.kr',
-    image: '/hero/practice-fta-containers.jpg',
-    tags: ['FTA', '사후검증', '원산지'],
-  },
-  {
-    id: 'issue-kcs-002',
-    source: '관세청',
-    sourceEn: 'Korea Customs Service',
-    publishedAt: '2026.04.11',
-    title: '수입신고 단계 품목분류 사전 점검 강화 동향',
-    titleEn: 'Stronger Pre-Checks on Tariff Classification at the Import Declaration Stage',
-    summary: '세번 분류 정확도와 사후 추징 리스크 간 연계를 중심으로, 신고 전 검토체계 필요성을 보여주는 관세청 공지 기반 이슈입니다.',
-    summaryEn:
-      'A Korea Customs Service-based issue highlighting why pre-declaration review systems matter, focusing on classification accuracy and post-assessment risk.',
-    url: 'https://www.customs.go.kr',
-    image: '/hero/practice-import-port.jpg',
-    tags: ['품목분류', '수입신고', '사전심사'],
-  },
-  {
-    id: 'issue-kita-003',
-    source: '한국무역협회',
-    sourceEn: 'Korea International Trade Association',
-    publishedAt: '2026.04.05',
-    title: '주요 수출국 통관 규정 변경 브리핑',
-    titleEn: 'Briefing on Customs Rule Changes in Major Export Markets',
-    summary: '국가별 통관·인증 조건 변화를 비교해 기업이 사전에 준비해야 할 실무 체크포인트를 제시하는 무역협회 자료 기반 이슈입니다.',
-    summaryEn:
-      'A KITA-based issue comparing customs and certification changes by country and presenting practical checkpoints companies should prepare in advance.',
-    url: 'https://www.kita.net',
-    image: '/hero/practice-fta-containers.jpg',
-    tags: ['수출규정', '통관', '무역실무'],
-  },
-  {
-    id: 'issue-kotra-004',
-    source: 'KOTRA',
-    sourceEn: 'KOTRA',
-    publishedAt: '2026.03.28',
-    title: '베트남 수입규제·통관 실무 업데이트',
-    titleEn: 'Vietnam Import Regulation and Customs Practice Update',
-    summary: '현지 세관 운영 변화와 기업 대응 사례를 바탕으로 베트남 법인 운영 시 필요한 선제 대응 전략을 제시하는 코트라 자료형 이슈입니다.',
-    summaryEn:
-      'A KOTRA-style issue presenting proactive response strategies for Vietnam operations based on local customs changes and corporate case examples.',
-    url: 'https://www.kotra.or.kr',
-    image: '/hero/practice-forex-monitors.jpg',
-    tags: ['베트남', '통관규정', '해외법인'],
-  },
+const issueReportImages = [
+  '/hero/practice-fta-containers.jpg',
+  '/hero/practice-import-port.jpg',
+  '/hero/practice-aeo-warehouse.jpg',
+  '/hero/practice-forex-monitors.jpg',
 ];
+
+export const issueReports: IssueReport[] = issueReportsSnapshot.slice(0, 4).map((item, index) => ({
+  ...item,
+  image: issueReportImages[index % issueReportImages.length],
+}));
 
 export const itServices: ItService[] = [
   {

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { palette } from '../home/homeStyles';
+import { palette, wordSafeWrap } from '../home/homeStyles';
 
 export const PageContainer = styled.div`
   width: min(1320px, calc(100% - 28px));
@@ -113,6 +113,7 @@ export const Title = styled.h1`
   font-weight: 800;
   line-height: 1.03;
   letter-spacing: -0.05em;
+  ${wordSafeWrap};
 `;
 
 export const SectionTitle = styled.h2`
@@ -122,6 +123,7 @@ export const SectionTitle = styled.h2`
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.04em;
+  ${wordSafeWrap};
 `;
 
 export const Lead = styled.p`
@@ -130,6 +132,7 @@ export const Lead = styled.p`
   font-size: 1.02rem;
   line-height: 1.78;
   max-width: 720px;
+  ${wordSafeWrap};
 `;
 
 export const HeroActions = styled.div`
@@ -228,6 +231,7 @@ export const CardTitle = styled.h3`
   font-size: 1.14rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  ${wordSafeWrap};
 `;
 
 export const CardText = styled.p`
@@ -235,6 +239,7 @@ export const CardText = styled.p`
   color: ${palette.textBody};
   font-size: 0.93rem;
   line-height: 1.64;
+  ${wordSafeWrap};
 `;
 
 export const CardLink = styled(Link)`
@@ -251,6 +256,7 @@ export const BulletList = styled.ul`
   color: ${palette.textBody};
   font-size: 0.94rem;
   line-height: 1.68;
+  ${wordSafeWrap};
 `;
 
 export const SplitGrid = styled(PageContainer)`

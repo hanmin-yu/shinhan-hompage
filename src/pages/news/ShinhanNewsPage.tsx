@@ -74,20 +74,17 @@ export function ShinhanNewsPage() {
         publishedAt: item.publishedAt,
         sourceLabel: tx(item.categoryLabel),
         title: tx(item.title),
-        href: item.href,
-        external: true,
+        to: `/news/shinhan-news/${item.id}`,
         actions: [
           {
-            label: t('원문 보기', 'View Source'),
-            href: item.href,
-            external: true,
+            label: t('상세 보기', 'View Detail'),
+            to: `/news/shinhan-news/${item.id}`,
           },
         ],
       })),
     [pagedItems, t, tx],
   );
 
-  const filtersChanged = searchQuery !== '' || selectedCategory !== 'all';
   const emptyMessage = t('검색 조건에 맞는 소식이 없습니다.', 'No news items match the current filters.');
 
   return (
@@ -119,13 +116,6 @@ export function ShinhanNewsPage() {
             selectedChip={selectedCategory}
             onChipChange={(value) => setSelectedCategory(value as typeof selectedCategory)}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
-            resetLabel={t('초기화', 'Reset')}
-            onReset={() => {
-              setSearchQuery('');
-              setSelectedCategory('all');
-              setCurrentPage(1);
-            }}
-            resetDisabled={!filtersChanged}
           />
           <NewsListTable
             rows={rows}

@@ -583,7 +583,8 @@ const DivisionLabel = styled.div`
   letter-spacing: -0.04em;
   text-align: center;
   word-break: keep-all;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  line-break: auto;
 `;
 
 const LeafStack = styled.div`
@@ -610,7 +611,8 @@ const LeafNode = styled.div`
   letter-spacing: -0.03em;
   text-align: center;
   word-break: keep-all;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  line-break: auto;
   box-shadow:
     inset 0 0 0 1px rgba(65, 134, 148, 0.05),
     0 6px 14px rgba(105, 156, 162, 0.07);

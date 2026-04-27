@@ -33,6 +33,17 @@ export const palette = {
   goldSoft: 'rgba(214, 154, 54, 0.16)',
 } as const;
 
+export const wordSafeWrap = css`
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-break: auto;
+`;
+
+export const longTokenWrap = css`
+  word-break: normal;
+  overflow-wrap: anywhere;
+`;
+
 export const GlobalStyle = () => (
   <Global
     styles={css`
@@ -65,6 +76,22 @@ export const GlobalStyle = () => (
         overflow-x: hidden;
         font-family: "NanumSquare", "Noto Sans KR", sans-serif;
         color: ${palette.textStrong};
+        ${wordSafeWrap};
+      }
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      li,
+      dt,
+      dd,
+      blockquote,
+      figcaption {
+        ${wordSafeWrap};
       }
 
       a {
@@ -251,23 +278,34 @@ export const MenuArea = styled.div`
 `;
 
 export const Brand = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  flex: 0 0 420px;
+  flex: 0 0 auto;
+  width: fit-content;
   min-width: 0;
+`;
+
+export const HeaderBrandImage = styled.img`
+  display: block;
+  width: auto;
+  max-width: 430px;
+  height: auto;
+  max-height: 66px;
+  object-fit: contain;
 
   @media (max-width: 1320px) {
-    flex: 0 1 360px;
-    gap: 10px;
-  }
-
-  @media (max-width: 1180px) {
-    flex: 0 0 320px;
+    max-width: 360px;
+    max-height: 58px;
   }
 
   @media (max-width: 980px) {
-    flex: 0 0 auto;
+    max-width: 280px;
+    max-height: 48px;
+  }
+
+  @media (max-width: 520px) {
+    max-width: 220px;
+    max-height: 40px;
   }
 `;
 
@@ -2402,6 +2440,7 @@ export const CardHeadline = styled.h3`
   line-height: 1.55;
   letter-spacing: -0.03em;
   color: #111111;
+  ${wordSafeWrap};
 `;
 
 export const DarkCardHeadline = styled(CardHeadline)`
@@ -2413,6 +2452,7 @@ export const CardText = styled.p`
   margin: 0;
   color: #797979;
   line-height: 1.78;
+  ${wordSafeWrap};
 `;
 
 export const DarkCardText = styled(CardText)`
@@ -2425,7 +2465,7 @@ export const MemberContact = styled.p`
   color: #536070;
   font-size: 0.98rem;
   line-height: 1.65;
-  word-break: break-word;
+  ${longTokenWrap};
 `;
 
 export const MemberSectionList = styled.div`
@@ -2460,6 +2500,7 @@ export const MemberSectionBody = styled.p`
   margin: 0;
   color: #556273;
   line-height: 1.65;
+  ${wordSafeWrap};
 `;
 
 export const NewsletterGrid = styled.div`
@@ -2619,6 +2660,7 @@ export const OfficesFeatureTitle = styled.h3`
   font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.04em;
+  ${wordSafeWrap};
 `;
 
 export const OfficesFeatureBody = styled.p`
@@ -2627,6 +2669,7 @@ export const OfficesFeatureBody = styled.p`
   color: rgba(255, 255, 255, 0.88);
   font-size: 1.08rem;
   line-height: 1.72;
+  ${wordSafeWrap};
 `;
 
 export const OfficesFactsGrid = styled.div`
@@ -2666,7 +2709,7 @@ export const OfficesFactValue = styled.strong`
   font-size: 1.08rem;
   line-height: 1.6;
   color: #ffffff;
-  word-break: break-word;
+  ${longTokenWrap};
 `;
 
 export const OfficesMapCard = styled.aside`
@@ -2692,12 +2735,14 @@ export const OfficesMapTitle = styled.strong`
   font-size: 1.36rem;
   font-weight: 700;
   color: ${palette.textPrimary};
+  ${wordSafeWrap};
 `;
 
 export const OfficesMapBody = styled.p`
   margin: 0;
   color: ${palette.textBody};
   line-height: 1.65;
+  ${wordSafeWrap};
 `;
 
 export const OfficesMiniMap = styled.div`
@@ -3024,27 +3069,23 @@ export const FooterSocialLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
-  color: #ffffff;
   transition:
     transform 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
+    opacity 0.2s ease;
 
   &:hover {
     transform: translateY(-1px);
-    background: linear-gradient(180deg, rgba(214, 154, 54, 0.22), rgba(255, 255, 255, 0.1));
-    border-color: rgba(255, 255, 255, 0.26);
+    opacity: 0.92;
   }
+`;
 
-  svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
+export const FooterSocialImage = styled.img`
+  display: block;
+  height: 32px;
+  width: auto;
+
+  @media (max-width: 768px) {
+    height: 28px;
   }
 `;
 

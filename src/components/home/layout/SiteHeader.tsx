@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 
 import { getHeaderNavigation } from '../../../config/navigation';
 import { useI18n } from '../../../i18n/useI18n';
-import { BrandMarkGraphic } from '../BrandMarkGraphic';
 import * as S from '../homeStyles';
 
 type SiteHeaderProps = {
@@ -24,17 +23,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
     <S.Header>
       <S.HeaderInner>
         <S.Brand to="/">
-          <S.BrandMark aria-hidden="true">
-            <BrandMarkGraphic alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
-          </S.BrandMark>
-          <S.BrandText>
-            <S.BrandTop>
-              <S.BrandTopLine />
-              <S.BrandEstablished>Established 1965</S.BrandEstablished>
-            </S.BrandTop>
-            <S.BrandTitle>SHINHAN</S.BrandTitle>
-            <S.BrandSub>SHINHAN Customs Service Inc.</S.BrandSub>
-          </S.BrandText>
+          <S.HeaderBrandImage src="/brand-header-logo.jpeg" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
         </S.Brand>
 
         <S.HeaderRight>

@@ -197,17 +197,10 @@ export function IssueReportSection() {
   const { t } = useI18n();
   const { reports } = useIssueReports();
 
-  const liveReportsBySource = new Map<string, (typeof reports)[number]>();
-
-  reports.forEach((report) => {
-    if (report.status === 'placeholder') return;
-    if (liveReportsBySource.has(report.source)) return;
-    liveReportsBySource.set(report.source, report);
-  });
-
-  const sourceReports = issueReports.map((fallback) => liveReportsBySource.get(fallback.source) ?? fallback);
-  const featured = sourceReports[0];
-  const sideReports = sourceReports.slice(1, 4);
+  const latestReports = reports.filter((report) => report.status !== 'placeholder');
+  const visibleReports = (latestReports.length > 0 ? latestReports : issueReports).slice(0, 4);
+  const featured = visibleReports[0];
+  const sideReports = visibleReports.slice(1, 4);
 
   if (!featured) return null;
 

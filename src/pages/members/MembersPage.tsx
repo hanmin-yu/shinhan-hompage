@@ -24,14 +24,14 @@ export function MembersPage() {
 
         <P.SectionHead>
           <div>
-            <P.Kicker>Members</P.Kicker>
-            <P.SectionTitle>{t('구성원', 'Members')}</P.SectionTitle>
+            <P.Kicker>Executives</P.Kicker>
+            <P.SectionTitle>{t('임원진', 'Executives')}</P.SectionTitle>
           </div>
         </P.SectionHead>
         <P.Lead>
           {t(
-            '조직도와 분야별 전문가 페이지를 통해 담당 영역별로 빠르게 확인하실 수 있습니다.',
-            'You can quickly find the right contacts through the organization and expert pages.',
+            '신한의 주요 임원진과 핵심 역할을 한눈에 확인할 수 있습니다.',
+            'You can quickly review Shinhan’s key executives and their primary roles.',
           )}
         </P.Lead>
         <P.Grid columns={3}>
