@@ -10,6 +10,36 @@ type IssueReportResponse = {
 };
 
 const LIVE_ISSUE_REPORT_SOURCES = ['한국관세사회', '한국무역협회'] as const;
+type IssueReportDataMode = 'api' | 'static-json';
+
+function isVercelPreviewHost(hostname: string) {
+  return hostname === 'shinhan-homepage.vercel.app' || hostname.endsWith('.vercel.app');
+}
+
+function resolveIssueReportDataMode(): IssueReportDataMode {
+  const configuredMode = import.meta.env.VITE_ISSUE_REPORT_MODE;
+
+  if (configuredMode === 'static-json' || configuredMode === 'api') {
+    return configuredMode;
+  }
+
+  if (typeof window !== 'undefined' && isVercelPreviewHost(window.location.hostname)) {
+    return 'static-json';
+  }
+
+  return 'api';
+}
+
+function resolveIssueReportUrl(refresh: boolean) {
+  const mode = resolveIssueReportDataMode();
+
+  if (mode === 'static-json') {
+    const cacheBust = refresh ? `?ts=${Date.now()}` : '';
+    return `/issue-reports.json${cacheBust}`;
+  }
+
+  return refresh ? '/api/issue-reports?refresh=1' : '/api/issue-reports';
+}
 
 export function useIssueReports() {
   const [reports, setReports] = useState<IssueReport[]>([]);
@@ -32,7 +62,7 @@ export function useIssueReports() {
 
     async function loadReports() {
       try {
-        const response = await fetch('/api/issue-reports', {
+        const response = await fetch(resolveIssueReportUrl(false), {
           signal: controller.signal,
         });
 
@@ -73,7 +103,7 @@ export function useIssueReports() {
     setRefreshStatus('idle');
 
     try {
-      const response = await fetch('/api/issue-reports?refresh=1', {
+      const response = await fetch(resolveIssueReportUrl(true), {
         cache: 'no-store',
       });
 
