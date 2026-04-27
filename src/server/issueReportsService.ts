@@ -360,8 +360,16 @@ async function buildIssueReports(): Promise<IssueReportApiResponse> {
     failedSources.push(source);
   });
 
+  const normalizedReports = dedupeReports(reports).sort(
+    (left, right) => reportDateValue(right.publishedAt) - reportDateValue(left.publishedAt),
+  );
+
+  if (normalizedReports.length === 0) {
+    throw new Error('Failed to collect any issue reports');
+  }
+
   return {
-    reports: dedupeReports(reports).sort((left, right) => reportDateValue(right.publishedAt) - reportDateValue(left.publishedAt)),
+    reports: normalizedReports,
     failedSources,
     succeededSources,
     refreshedAt: new Date().toISOString(),
