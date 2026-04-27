@@ -315,8 +315,8 @@ export const officeBranches: OfficeBranch[] = [
     summary: '항공 화물 중심의 수출입통관, 긴급 통관, 공항 물류 연계 대응에 강점을 가진 현장 밀착형 지사입니다.',
     summaryEn:
       'A field-focused branch specializing in air cargo import/export clearance, urgent declarations, and airport logistics coordination.',
-    address: '인천광역시 중구 공항동로 295번길 77-11, 217호',
-    addressEn: 'Suite 217, 77-11 Gonghangdong-ro 295beon-gil, Jung-gu, Incheon, Korea',
+    address: '인천광역시 중구 햇내로27번길 14, 304호',
+    addressEn: 'Suite 304, 14 Haennae-ro 27beon-gil, Jung-gu, Incheon, Korea',
     tel: '032-744-9961~2',
     fax: '032-744-9960',
     accent: '#2f78bf',
