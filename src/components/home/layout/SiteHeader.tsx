@@ -1,3 +1,4 @@
+import { useEffect, useState, type MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { getHeaderNavigation } from '../../../config/navigation';
@@ -14,15 +15,45 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
   const overHero = pathname === '/';
+  const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
 
   const isActive = (path?: string) => {
     if (!path) return false;
     return pathname === path;
   };
 
+  const closeMegaMenu = () => {
+    setMegaMenuSuppressed(true);
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const handlePrimaryNavClick = (event: MouseEvent<HTMLAnchorElement>, hasChildren: boolean) => {
+    if (hasChildren) {
+      event.preventDefault();
+      return;
+    }
+
+    closeMegaMenu();
+  };
+
+  useEffect(() => {
+    if (!megaMenuSuppressed) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setMegaMenuSuppressed(false);
+    }, 260);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [megaMenuSuppressed, pathname]);
+
   return (
     <S.Header $overHero={overHero}>
-      <S.HeaderInner>
+      <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/">
           <S.HeaderBrandImage
             src="/brand-header-logo-transparent.png"
@@ -34,7 +65,12 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
           <S.Nav>
             {headerNavigation.map((item) => (
               <S.NavItem key={item.id}>
-                <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={Boolean(item.children?.length)} data-active={isActive(item.to ?? item.href)}>
+                <S.NavLink
+                  to={item.to ?? item.href ?? '/'}
+                  hasChildren={Boolean(item.children?.length)}
+                  data-active={isActive(item.to ?? item.href)}
+                  onClick={(event) => handlePrimaryNavClick(event, Boolean(item.children?.length))}
+                >
                   {item.label}
                 </S.NavLink>
                 {item.children && item.children.length > 0 ? (
@@ -47,11 +83,11 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
                       <S.MegaMenuLinks>
                         {item.children.map((child) =>
                           child.href ? (
-                            <S.MegaMenuAnchor key={child.id} href={child.href} target="_blank" rel="noreferrer" data-mega-link>
+                            <S.MegaMenuAnchor key={child.id} href={child.href} target="_blank" rel="noreferrer" data-mega-link onClick={closeMegaMenu}>
                               {child.label}
                             </S.MegaMenuAnchor>
                           ) : (
-                            <S.MegaMenuLink key={child.id} to={child.to ?? '/'} data-mega-link>
+                            <S.MegaMenuLink key={child.id} to={child.to ?? '/'} data-mega-link onClick={closeMegaMenu}>
                               {child.label}
                             </S.MegaMenuLink>
                           ),

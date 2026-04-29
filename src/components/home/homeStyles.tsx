@@ -854,6 +854,20 @@ export const MegaMenu = styled.div`
   box-shadow: 0 20px 42px rgba(3, 15, 34, 0.1);
   backdrop-filter: blur(16px);
 
+  [data-mega-suppressed='true'] & {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-18px) scaleY(0.98) !important;
+  }
+
+  [data-mega-suppressed='true'] & [data-mega-title],
+  [data-mega-suppressed='true'] & [data-mega-link] {
+    opacity: 0 !important;
+    transform: translate3d(0, 22px, 0) rotateX(8deg) !important;
+    transition-delay: 0s !important;
+  }
+
   &::before,
   &::after {
     content: '';

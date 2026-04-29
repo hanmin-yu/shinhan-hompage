@@ -19,8 +19,8 @@ export const headerNavigation: NavItem[] = [
     to: '/members',
     children: [
       { id: 'members-org', label: '조직도', to: '/members/org' },
-      { id: 'members-executives', label: '대표 구성원', to: '/members/executives' },
-      { id: 'members-experts', label: '전문가', to: '/members/experts' },
+      { id: 'members-executives', label: '임원진', to: '/members/executives' },
+      { id: 'members-experts', label: '분야별 전문가', to: '/members/experts' },
     ],
   },
   {
@@ -29,15 +29,17 @@ export const headerNavigation: NavItem[] = [
     to: '/services',
     children: [
       { id: 'service-import', label: '수출입통관', to: '/services/import-export' },
+      { id: 'service-refund', label: '환급', to: '/services/consulting/refund' },
       { id: 'service-quarantine', label: '검역·요건', to: '/services/quarantine' },
       { id: 'service-fta', label: 'FTA', to: '/services/consulting/fta' },
       { id: 'service-aeo', label: 'AEO', to: '/services/consulting/aeo' },
       { id: 'service-audit', label: '관세조사', to: '/services/consulting/customs-audit' },
       { id: 'service-forex', label: '외환검사·조사', to: '/services/consulting/foreign-exchange' },
       { id: 'service-acva', label: 'ACVA', to: '/services/consulting/acva' },
+      { id: 'service-penalty', label: '범칙조사', to: '/services/consulting/penalty-investigation' },
       { id: 'service-tax', label: '조세불복', to: '/services/consulting/tax-appeal' },
-      { id: 'service-refund', label: '관세환급', to: '/services/consulting/refund' },
-      { id: 'service-logistics', label: '물류서비스', to: '/services/logistics' },
+      { id: 'service-trade', label: '관세무역컨설팅', to: '/services/consulting/trade-consulting' },
+      { id: 'service-logistics', label: '물류', to: '/services/logistics' },
       { id: 'service-vietnam', label: '베트남', to: '/services/vietnam' },
       { id: 'service-fda', label: '미국 FDA', to: '/services/us-fda' },
     ],
@@ -47,8 +49,7 @@ export const headerNavigation: NavItem[] = [
     label: 'IT',
     to: '/it',
     children: [
-      { id: 'it-main', label: '관세·IT 융합 서비스', to: '/it' },
-      { id: 'it-customs-view', label: 'Customs View', href: 'https://www.customsview.com' },
+      { id: 'it-main', label: 'IT 서비스 소개', to: '/it' },
     ],
   },
   {
@@ -56,11 +57,10 @@ export const headerNavigation: NavItem[] = [
     label: '소식/자료',
     to: '/news',
     children: [
-      { id: 'news-report', label: '이슈 리포트', to: '/news/issue-report' },
-      { id: 'news-shinhan', label: '신한 뉴스', to: '/news/shinhan-news' },
-      { id: 'news-newsletter', label: '뉴스레터', to: '/news/newsletter' },
+      { id: 'news-report', label: '이슈리포트', to: '/news/issue-report' },
+      { id: 'news-shinhan', label: '신한 NEWS', to: '/news/shinhan-news' },
       { id: 'news-seminar', label: '세미나', to: '/news/seminar' },
-      { id: 'news-blog', label: '블로그', to: '/news/blog' },
+      { id: 'news-newsletter', label: '소식지', to: '/news/newsletter' },
     ],
   },
 ];

@@ -6,37 +6,60 @@ import {
   getShinhanNewsRecord as getStaticShinhanNewsRecord,
   getShinhanNewsRecords as getStaticShinhanNewsRecords,
 } from './newsRepository';
+import { sortShinhanNewsRecords } from '../utils/shinhanNews';
 
 type NewsListResponse<T> = {
   items: T[];
 };
 
+const API_TIMEOUT_MS = 3500;
+
 function isEnabledMode() {
   return resolveNewsAdminMode() === 'enabled';
 }
 
-async function fetchJson<T>(url: string) {
-  const response = await fetch(url, {
-    credentials: 'same-origin',
+function mergeRecordsById<T extends { id: string }>(baseItems: T[], overrideItems: T[]) {
+  const records = new Map(baseItems.map((item) => [item.id, item]));
+
+  overrideItems.forEach((item) => {
+    records.set(item.id, item);
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
-  }
+  return [...records.values()];
+}
 
-  return (await response.json()) as T;
+async function fetchJson<T>(url: string) {
+  const controller = new AbortController();
+  const timeoutId = globalThis.setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      credentials: 'same-origin',
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${url}: ${response.status}`);
+    }
+
+    return (await response.json()) as T;
+  } finally {
+    globalThis.clearTimeout(timeoutId);
+  }
 }
 
 export async function loadShinhanNewsRecords() {
+  const staticItems = getStaticShinhanNewsRecords();
+
   if (!isEnabledMode()) {
-    return getStaticShinhanNewsRecords();
+    return staticItems;
   }
 
   try {
     const payload = await fetchJson<NewsListResponse<ShinhanNewsRecord>>('/api/news/shinhan-news');
-    return payload.items;
+    return sortShinhanNewsRecords(mergeRecordsById(staticItems, payload.items ?? []));
   } catch {
-    return getStaticShinhanNewsRecords();
+    return staticItems;
   }
 }
 
@@ -53,15 +76,19 @@ export async function loadShinhanNewsRecord(newsId: string) {
 }
 
 export async function loadNewsletterRecords() {
+  const staticItems = getStaticNewsletterRecords();
+
   if (!isEnabledMode()) {
-    return getStaticNewsletterRecords();
+    return staticItems;
   }
 
   try {
     const payload = await fetchJson<NewsListResponse<NewsletterRecord>>('/api/news/newsletters');
-    return payload.items;
+    return mergeRecordsById(staticItems, payload.items ?? []).sort((left, right) =>
+      right.publishedAt.localeCompare(left.publishedAt),
+    );
   } catch {
-    return getStaticNewsletterRecords();
+    return staticItems;
   }
 }
 
