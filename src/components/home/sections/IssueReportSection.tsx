@@ -6,15 +6,19 @@ import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
+  position: relative;
   padding: 88px 0;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 84% 18%, rgba(214, 154, 54, 0.1), transparent 18%),
-    radial-gradient(circle at 14% 18%, rgba(33, 101, 193, 0.12), transparent 22%),
-    linear-gradient(180deg, #eef6ff 0%, #f5fbff 100%);
-  border-top: 1px solid ${S.palette.lineSoft};
+    radial-gradient(circle at 84% 12%, rgba(23, 159, 150, 0.18), transparent 20%),
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.12), transparent 22%),
+    linear-gradient(180deg, #0b2b59 0%, #174d9a 28%, #dcecff 74%, #f5fbff 100%);
+  border-top: 0;
 `;
 
 const Inner = styled(S.Container)`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -31,7 +35,7 @@ const Label = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: ${S.palette.blue};
+  color: rgba(235, 246, 255, 0.94);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -41,17 +45,18 @@ const Label = styled.span`
     content: '';
     width: 28px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.56), rgba(214, 154, 54, 0.3));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(23, 159, 150, 0.58));
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: ${S.palette.textPrimary};
+  color: #ffffff;
   font-size: clamp(2rem, 3.7vw, 2.9rem);
   font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
+  text-shadow: 0 16px 38px rgba(3, 15, 34, 0.34);
 `;
 
 const Grid = styled.div`
@@ -69,10 +74,10 @@ const Featured = styled.a`
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
   min-height: 334px;
   border-radius: 6px;
-  border: 1px solid ${S.palette.line};
+  border: 1px solid rgba(225, 238, 255, 0.34);
   overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 16px 30px rgba(16, 53, 114, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.18);
   text-decoration: none;
 
   @media (max-width: 760px) {
@@ -92,7 +97,7 @@ const FeaturedBody = styled.div`
   padding: 24px 22px;
   background:
     radial-gradient(circle at top right, rgba(23, 159, 150, 0.08), transparent 22%),
-    linear-gradient(180deg, #ffffff 0%, #f3f8ff 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(231, 243, 255, 0.9) 100%);
 `;
 
 const Meta = styled.div`
@@ -148,9 +153,10 @@ const SideCard = styled.a`
   min-height: 104px;
   padding: 18px 18px 16px;
   border-radius: 6px;
-  border: 1px solid ${S.palette.line};
+  border: 1px solid rgba(225, 238, 255, 0.3);
   background:
-    linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(239, 246, 255, 0.98) 72%, rgba(235, 247, 245, 0.92) 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(231, 243, 255, 0.88) 72%, rgba(211, 235, 248, 0.82) 100%);
+  box-shadow: 0 12px 26px rgba(3, 15, 34, 0.12);
   text-decoration: none;
   transition:
     transform 0.2s ease,

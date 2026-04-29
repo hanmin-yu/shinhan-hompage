@@ -7,47 +7,119 @@ import * as S from '../homeStyles';
 
 const HeroShell = styled.section`
   position: relative;
-  min-height: calc(100vh - 88px);
+  min-height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 12% 18%, rgba(58, 124, 214, 0.18), transparent 24%),
-    radial-gradient(circle at 82% 24%, rgba(23, 159, 150, 0.12), transparent 18%),
-    radial-gradient(circle at 76% 82%, rgba(214, 154, 54, 0.1), transparent 18%),
-    linear-gradient(180deg, #eaf3ff 0%, #f2f7ff 56%, #f8fbff 100%);
-  border-bottom: 1px solid ${S.palette.lineSoft};
+  background: #102744;
+  border-bottom: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &::before {
+    inset: -24% -16%;
+    background:
+      linear-gradient(105deg, transparent 16%, rgba(255, 255, 255, 0.2) 31%, transparent 46%),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 0,
+        rgba(255, 255, 255, 0.06) 1px,
+        transparent 1px,
+        transparent 118px
+      );
+    opacity: 0.62;
+    transform: translate3d(calc(var(--viewport-progress) * 92px), calc(var(--viewport-progress) * -34px), 0)
+      rotate(-4deg);
+    animation: kineticSweep 7.5s ease-in-out infinite alternate;
+  }
+
+  &::after {
+    right: -8vw;
+    bottom: -10vw;
+    width: min(62vw, 820px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(23, 159, 150, 0.28), rgba(33, 101, 193, 0.16) 42%, transparent 68%);
+    transform: translate3d(0, calc(var(--viewport-progress) * -120px), 0);
+    animation: glowPulse 8s ease-in-out infinite;
+  }
 
   @media (max-width: 1024px) {
-    min-height: calc(100vh - 76px);
+    min-height: 100vh;
   }
 
   @media (max-width: 768px) {
-    min-height: min(760px, calc(100vh - 76px));
+    min-height: min(780px, 100vh);
   }
+`;
+
+const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mobilePosition?: string }>`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: ${({ $position }) => $position ?? 'center'};
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transform: ${({ $active }) => ($active ? 'scale(1.04)' : 'scale(1.11)')};
+  filter: saturate(1.06) contrast(1.08) brightness(0.96);
+  transition:
+    opacity 1s ease,
+    transform 5.6s ease;
+
+  @media (max-width: 768px) {
+    object-position: ${({ $mobilePosition, $position }) => $mobilePosition ?? $position ?? 'center'};
+  }
+`;
+
+const HeroBackdropOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(238, 246, 255, 0.28) 18%, rgba(14, 38, 78, 0.14) 46%, rgba(8, 28, 64, 0.84) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(22, 91, 176, 0.16) 38%, rgba(8, 24, 54, 0.08) 70%, rgba(8, 24, 54, 0.28) 100%);
+
+  @media (max-width: 768px) {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 246, 255, 0.28) 22%, rgba(14, 38, 78, 0.18) 58%, rgba(8, 28, 64, 0.84) 100%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(8, 24, 54, 0.18));
+  }
+`;
+
+const HeroBottomBlend = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 1;
+  height: min(28vh, 260px);
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 28, 64, 0) 0%, rgba(10, 43, 89, 0.62) 46%, rgba(11, 43, 89, 1) 100%),
+    radial-gradient(circle at 80% 100%, rgba(23, 159, 150, 0.18), transparent 42%);
 `;
 
 const HeroInner = styled(S.Container)`
   position: relative;
+  z-index: 1;
   min-height: inherit;
-  display: grid;
-  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  display: flex;
   align-items: center;
-  gap: clamp(28px, 5vw, 84px);
-  padding: clamp(40px, 8vh, 78px) 0;
+  justify-content: center;
+  padding: clamp(116px, 15vh, 150px) 0 clamp(40px, 8vh, 78px);
 
   @media (max-width: 1120px) {
-    grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
-    gap: clamp(18px, 3vw, 30px);
   }
 
   @media (max-width: 920px) {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.82fr);
-    gap: 18px;
-    padding: clamp(32px, 6vh, 56px) 0;
+    padding: clamp(104px, 13vh, 132px) 0 clamp(32px, 6vh, 56px);
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 24px;
   }
 `;
 
@@ -56,7 +128,12 @@ const HeroCopy = styled.div`
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  align-items: center;
+  gap: 24px;
+  width: min(1120px, 100%);
+  text-align: center;
+  transform: translate3d(0, calc(var(--viewport-progress) * -34px), 0);
+  transition: transform 0.16s linear;
 
   @media (max-width: 920px) {
     gap: 14px;
@@ -65,14 +142,15 @@ const HeroCopy = styled.div`
 
 const HeroGuideLine = styled.span`
   position: absolute;
-  left: -40px;
-  top: 33%;
-  width: 1px;
-  height: 182px;
-  background: linear-gradient(180deg, rgba(33, 101, 193, 0.32), rgba(23, 159, 150, 0.18));
+  left: 50%;
+  top: -54px;
+  width: min(460px, 54vw);
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.82), transparent);
 
   @media (max-width: 1120px) {
-    display: none;
+    top: -38px;
   }
 `;
 
@@ -80,8 +158,8 @@ const HeroKicker = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: ${S.palette.blue};
-  font-size: 0.86rem;
+  color: rgba(232, 242, 255, 0.96);
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -90,34 +168,58 @@ const HeroKicker = styled.span`
     content: '';
     width: 30px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.52), rgba(23, 159, 150, 0.34));
+    background: linear-gradient(90deg, rgba(225, 238, 255, 0.72), rgba(23, 159, 150, 0.62));
   }
 `;
 
 const HeroTitle = styled.h1`
   margin: 0;
-  color: ${S.palette.textStrong};
+  color: #ffffff;
   font-family: 'Times New Roman', Georgia, serif;
-  font-size: clamp(2.52rem, 4.2vw, 4.96rem);
+  font-size: clamp(5.2rem, 13vw, 13.8rem);
   font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  max-width: 640px;
+  line-height: 0.82;
+  letter-spacing: 0.01em;
+  max-width: none;
+  text-shadow:
+    0 18px 46px rgba(3, 15, 34, 0.56),
+    0 2px 8px rgba(3, 15, 34, 0.34);
+  text-transform: uppercase;
 
   @media (max-width: 920px) {
-    max-width: 14ch;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-size: clamp(4rem, 17vw, 8rem);
+  }
+`;
+
+const HeroStatement = styled.p`
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2rem, 4.2vw, 4.4rem);
+  font-weight: 300;
+  line-height: 1.22;
+  letter-spacing: -0.04em;
+  text-shadow:
+    0 16px 42px rgba(3, 15, 34, 0.62),
+    0 2px 8px rgba(3, 15, 34, 0.38);
+
+  b {
+    font-weight: 800;
+  }
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.5rem, 7vw, 2.8rem);
   }
 `;
 
 const HeroValues = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  width: min(520px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  width: min(720px, 100%);
 
   @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+    gap: 8px;
   }
 `;
 
@@ -126,24 +228,25 @@ const HeroValueChip = styled.span`
   align-items: center;
   justify-content: center;
   min-height: 42px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(23, 159, 150, 0.18);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(239, 248, 255, 0.82));
-  color: ${S.palette.blueDeep};
-  box-shadow: 0 10px 20px rgba(16, 53, 114, 0.08);
+  padding: 0 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(225, 238, 255, 0.34);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(22, 91, 176, 0.12));
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 20px rgba(3, 15, 34, 0.16);
+  backdrop-filter: blur(10px);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
 `;
 
 const HeroDescription = styled.p`
   margin: 4px 0 0;
-  color: ${S.palette.textBody};
-  font-size: 1.02rem;
+  color: rgba(248, 251, 255, 0.94);
+  text-shadow: 0 8px 24px rgba(3, 15, 34, 0.44);
+  font-size: 1.08rem;
   line-height: 1.68;
-  max-width: 620px;
+  max-width: 760px;
 
   @media (max-width: 920px) {
     font-size: 0.94rem;
@@ -152,124 +255,16 @@ const HeroDescription = styled.p`
   }
 `;
 
-const HeroVisual = styled.div`
-  position: relative;
-  height: min(76vh, 760px);
-  min-height: 460px;
-
-  @media (max-width: 1120px) {
-    height: min(50vw, 500px);
-    min-height: 360px;
-  }
-
-  @media (max-width: 920px) {
-    height: min(44vw, 380px);
-    min-height: 260px;
-  }
-
-  @media (max-width: 768px) {
-    height: min(60vh, 560px);
-    min-height: 330px;
-  }
-`;
-
-const HeroRing = styled.div`
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(33, 101, 193, 0.24);
-  pointer-events: none;
-
-  &[data-ring='large'] {
-    width: min(clamp(490px, 52vw, 760px), 78vh);
-    aspect-ratio: 1 / 1;
-    right: 24%;
-    top: 1%;
-  }
-
-  @media (max-width: 1120px) {
-    &[data-ring='large'] {
-      width: min(420px, 42vw);
-      right: 14%;
-      top: 5%;
-    }
-  }
-
-  @media (max-width: 920px) {
-    &[data-ring='large'] {
-      width: min(300px, 36vw);
-      right: 8%;
-      top: 10%;
-    }
-  }
-
-  @media (max-width: 768px) {
-    &[data-ring='large'] {
-      width: min(440px, 76vw);
-      right: 50%;
-      top: 2%;
-      transform: translateX(50%);
-    }
-  }
-`;
-
-const HeroCircleFrame = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 3%;
-  width: min(clamp(390px, 48vw, 680px), 68vh);
-  height: min(clamp(390px, 48vw, 680px), 68vh);
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 18px 34px rgba(17, 45, 91, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.84);
-  background: linear-gradient(180deg, #dce8fa 0%, #edf5ff 100%);
-
-  @media (max-width: 1120px) {
-    width: min(420px, 42vw);
-    height: min(420px, 42vw);
-    right: 0;
-    bottom: 5%;
-  }
-
-  @media (max-width: 920px) {
-    width: min(300px, 34vw);
-    height: min(300px, 34vw);
-    bottom: 8%;
-  }
-
-  @media (max-width: 768px) {
-    width: clamp(260px, 60vw, 440px);
-    height: clamp(260px, 60vw, 440px);
-    right: 50%;
-    bottom: 3%;
-    transform: translateX(50%);
-  }
-`;
-
-const HeroSlideImage = styled.img<{ $active: boolean; $position?: string; $mobilePosition?: string }>`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: ${({ $position }) => $position ?? 'center'};
-  opacity: ${({ $active }) => ($active ? 1 : 0)};
-  transition: opacity 0.7s ease;
-
-  @media (max-width: 768px) {
-    object-position: ${({ $mobilePosition, $position }) => $mobilePosition ?? $position ?? 'center'};
-  }
-`;
-
 const HeroScroll = styled.span`
   position: absolute;
   right: clamp(-20px, -1vw, -8px);
   bottom: 34px;
-  color: ${S.palette.blueInk};
+  color: rgba(255, 255, 255, 0.84);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
   text-orientation: mixed;
+  animation: scrollPulse 1.55s ease-in-out infinite;
 
   &::before {
     content: '';
@@ -278,12 +273,25 @@ const HeroScroll = styled.span`
     bottom: -48px;
     width: 1px;
     height: 38px;
-    background: rgba(33, 66, 111, 0.5);
+    background: rgba(255, 255, 255, 0.58);
     transform: translateX(-50%);
   }
 
   @media (max-width: 920px) {
     display: none;
+  }
+
+  @keyframes scrollPulse {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.72;
+    }
+
+    50% {
+      transform: translateY(10px);
+      opacity: 1;
+    }
   }
 `;
 
@@ -295,16 +303,34 @@ export function HeroSection() {
     <>
       <S.SectionAnchor id="about" />
       <HeroShell>
-        <HeroInner data-reveal>
-          <HeroCopy>
+        {heroSlides.map((slide, index) => (
+          <HeroBackdropImage
+            key={`${slide.label}-backdrop`}
+            src={slide.image}
+            srcSet={slide.mobileImage ? `${slide.mobileImage} 768w, ${slide.image} 1600w` : undefined}
+            sizes="100vw"
+            alt=""
+            aria-hidden="true"
+            $active={activeSlide === index}
+            $position={slide.objectPosition}
+            $mobilePosition={slide.mobileObjectPosition}
+          />
+        ))}
+        <HeroBackdropOverlay />
+        <HeroBottomBlend />
+        <HeroInner data-reveal="zoom">
+          <HeroCopy data-reveal="slide-left">
             <HeroGuideLine />
-            <HeroKicker>Shinhan</HeroKicker>
-            <HeroTitle>Vision-Driven Customs Excellence</HeroTitle>
+            <HeroKicker>Shinhan Customs Service</HeroKicker>
+            <HeroTitle>ShinHan</HeroTitle>
+            <HeroStatement>
+              관세 업무의 <b>새로운 기준</b>을 열다.
+            </HeroStatement>
             <HeroValues>
-              <HeroValueChip>PASSION</HeroValueChip>
-              <HeroValueChip>INTEGRITY</HeroValueChip>
-              <HeroValueChip>INNOVATION</HeroValueChip>
-              <HeroValueChip>TEAMWORK</HeroValueChip>
+              <HeroValueChip>수출입통관</HeroValueChip>
+              <HeroValueChip>관세·무역 컨설팅</HeroValueChip>
+              <HeroValueChip>물류서비스</HeroValueChip>
+              <HeroValueChip>해외 관세 자문</HeroValueChip>
             </HeroValues>
             <HeroDescription>
               {t(
@@ -313,22 +339,6 @@ export function HeroSection() {
               )}
             </HeroDescription>
           </HeroCopy>
-
-          <HeroVisual aria-hidden="true">
-            <HeroRing data-ring="large" />
-            <HeroCircleFrame>
-              {heroSlides.map((slide, index) => (
-                <HeroSlideImage
-                  key={slide.label}
-                  src={slide.image}
-                  alt={t(slide.label, slide.labelEn ?? slide.label)}
-                  $active={activeSlide === index}
-                  $position={slide.objectPosition}
-                  $mobilePosition={slide.mobileObjectPosition}
-                />
-              ))}
-            </HeroCircleFrame>
-          </HeroVisual>
 
           <HeroScroll>scroll</HeroScroll>
         </HeroInner>

@@ -39,7 +39,11 @@ export function MembersPage() {
         <P.Grid columns={3}>
           {executives.map((member) => (
             <ExecutiveCard key={member.name} tabIndex={0}>
-              {member.image ? <Portrait src={member.image} alt={tx(member.name)} /> : null}
+              {member.image ? (
+                <PortraitFrame>
+                  <Portrait src={member.image} alt={tx(member.name)} $position={member.imagePosition} />
+                </PortraitFrame>
+              ) : null}
               <Content>
                 <Name>{tx(member.name)}</Name>
                 <Title>{tx(member.title)}</Title>
@@ -111,11 +115,18 @@ const ExecutiveCard = styled.article`
   }
 `;
 
-const Portrait = styled.img`
+const PortraitFrame = styled.div`
   width: 100%;
   aspect-ratio: 4 / 5;
-  object-fit: cover;
   background: linear-gradient(180deg, #f2f5f9, #e8edf4);
+  overflow: hidden;
+`;
+
+const Portrait = styled.img<{ $position?: string }>`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: ${({ $position }) => $position ?? '50% 18%'};
   transition:
     box-shadow 220ms ease,
     filter 220ms ease,
@@ -124,11 +135,11 @@ const Portrait = styled.img`
   ${ExecutiveCard}:hover &,
   ${ExecutiveCard}:focus-visible & {
     box-shadow:
-      inset 0 0 0 3px rgba(38, 109, 214, 0.85),
+      inset 0 0 0 3px rgba(38, 109, 214, 0.5),
       inset 0 -22px 38px rgba(43, 102, 190, 0.12),
       0 16px 32px rgba(22, 81, 170, 0.14);
-    filter: saturate(1.06) contrast(1.02);
-    transform: scale(1.035);
+    filter: saturate(1.04) contrast(1.01);
+    transform: scale(1.01);
   }
 `;
 

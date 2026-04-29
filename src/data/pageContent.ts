@@ -477,6 +477,7 @@ export const recruitBenefitGroups: RecruitBenefitGroup[] = [
       { label: '자격증취득지원', labelEn: 'Certification support', detail: '직무 관련 자격 취득을 지원합니다.', detailEn: 'Support is available for job-related certifications.' },
       { label: '교육비 지원', labelEn: 'Tuition and course fee support', detail: '교육 과정과 수강 비용을 지원합니다.', detailEn: 'Course and tuition costs are supported.' },
       { label: '자기계발비 지원', labelEn: 'Self-development allowance', detail: '자기계발을 위한 비용을 지원합니다.', detailEn: 'Allowance is provided for self-development.' },
+      { label: '명절선물', labelEn: 'Holiday gifts', detail: '명절 시즌 선물을 제공합니다.', detailEn: 'Holiday gifts are provided during seasonal holidays.' },
       { label: '사내 동호회 운영', labelEn: 'In-house clubs', detail: '사내 동호회 활동을 운영합니다.', detailEn: 'Employees can join in-house clubs.' },
       { label: '사우회(경조사회)', labelEn: 'Employee mutual aid for life events', detail: '경조사를 함께 챙기는 사우회를 운영합니다.', detailEn: 'A mutual aid group supports major life events.' },
       { label: '간식 제공', labelEn: 'Snacks provided', detail: '업무 중 즐길 수 있는 간식을 제공합니다.', detailEn: 'Snacks are available during the workday.' },
@@ -527,18 +528,7 @@ export const recruitBenefitGroups: RecruitBenefitGroup[] = [
     categoryEn: 'Culture',
     items: [
       { label: '회식강요 안함', labelEn: 'No pressure to attend company dinners', detail: '회식 참석을 강요하지 않는 문화를 지향합니다.', detailEn: 'The culture avoids pressure around company dinners.' },
-      { label: '야근강요 안함', labelEn: 'No pressure for overtime', detail: '불필요한 야근을 지양합니다.', detailEn: 'The culture avoids unnecessary overtime pressure.' },
       { label: '자유로운 연차사용', labelEn: 'Flexible use of annual leave', detail: '연차를 비교적 자유롭게 사용할 수 있습니다.', detailEn: 'Annual leave can be used with flexibility.' },
-    ],
-  },
-  {
-    category: '선물 / 명절선물',
-    categoryEn: 'Gifts & Holiday Gifts',
-    items: [
-      { label: '창립일선물지급', labelEn: 'Anniversary gifts', detail: '창립일에 맞춘 선물을 제공합니다.', detailEn: 'Gifts are provided for the company anniversary.' },
-      { label: '명절선물', labelEn: 'Holiday gifts', detail: '명절 시즌 선물을 제공합니다.', detailEn: 'Holiday gifts are provided during seasonal holidays.' },
-      { label: '생일선물/파티', labelEn: 'Birthday gifts and parties', detail: '생일을 함께 기념하는 선물과 이벤트입니다.', detailEn: 'Birthday gifts and celebrations mark personal milestones.' },
-      { label: '도서 무제한 제공', labelEn: 'Unlimited access to books', detail: '도서를 자유롭게 이용할 수 있습니다.', detailEn: 'Books are available for broad employee use.' },
     ],
   },
   {
@@ -582,7 +572,6 @@ export const recruitBenefitDisplayGroups: RecruitBenefitGroup[] = [
   '지원금/보험',
   '조직 문화',
   '근무 환경',
-  '선물 / 명절선물',
 ].map(getRecruitBenefitGroup);
 
 export const recruitBenefitTotalCount = recruitBenefitGroups.reduce((count, group) => count + group.items.length, 0);
@@ -952,6 +941,37 @@ const taxAppealImages: ServiceDocumentImage[] = [
     src: '/services/docs/acva-tax-appeal/image1.png',
     alt: '조세불복 관세행정 권리구제제도 도식',
     caption: '과세전적부심사, 이의신청, 심사청구, 심판청구, 행정소송 등 관세행정 권리구제 절차를 정리한 자료입니다.',
+  },
+];
+
+const refundSections: ServiceDetailSection[] = [
+  {
+    heading: '개요',
+    headingEn: 'Overview',
+    body: [
+      '"관세환급"이란 일반적으로 『수출용 원재료에 대한 관세 등 환급에 관한 특례법』 상의 환급을 지칭하며, 수입 원재료를 수출 또는 외화획득용 원재료로 사용한 경우에 수입 때 납부한 관세를 수출자 또는 생산자에게 되돌려 주는 것을 말합니다.',
+    ],
+  },
+  {
+    heading: '관세환급',
+    headingEn: 'Types of Refund',
+    list: [
+      '개별 환급: 수출물품 생산에 소요된 각각의 원재료별 소요량을 산출하고 각 원재료를 수입하는 때에 납부하였거나 납부할 관세 등의 세액을 확인·계산하여 환급금을 산출하는 제도',
+      '간이 환급: 중소기업의 환급절차를 간소화하기 위하여 중소기업이 생산하여 수출한 물품에 대하여 관세납부증명서와 소요량계산서 제출을 생략하고 수출신고필증만 확인하여 간소하게 환급하는 제도',
+    ],
+  },
+  {
+    heading: '주요 서비스',
+    headingEn: 'Key Services',
+    list: [
+      '사전 검토 및 환급 전략 수립: 소요량 사전심사 신청 및 소요량 산정 적정성 검토를 통해 환급 신청 전 오류를 점검하고 과다환급에 따른 추징 리스크를 예방합니다.',
+      '환급 요건 충족 여부 점검 및 자문: 수출물품 및 원재료의 환급 대상 해당 여부, 수출 이행기간 충족 여부 등 관련 요건을 종합적으로 검토합니다.',
+      '환급 계좌 개설 지원: 환급금 수령을 위한 환급 전용계좌 개설, 통보서 작성, 인감증명서 등 관련 서류 구비와 신청 절차를 지원합니다.',
+      '기초원재료 납세증명서 및 분할증명서 발급 신청: 제조·가공 여부와 양도 형태에 따른 발급 요건을 검토하고, 수입신고 내역과 국내거래인정서류 등 관련 자료를 구비해 증명서 발급 신청을 수행합니다.',
+      '개별 환급 및 간이 정액 환급 신청: 기업 규모와 간이정액환급률표 적용 대상 여부를 검토하여 적정 환급 방식을 선정하고, 환급 신청서 작성 및 세관 신고 절차를 수행합니다.',
+      '관세 환급심사 대응: 환급 심사 시 세관 측의 이슈사항에 적극 대응하여 추징 리스크를 최소화합니다.',
+      '제도 개선 건의 및 애로사항 대응: 환급 제도 운영상 미비점과 기업 애로사항을 검토하여 관세청 건의 및 제도 개선 대응을 지원합니다.',
+    ],
   },
 ];
 
@@ -1361,13 +1381,27 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '수출입통관 및 환급',
     groupTitleEn: 'Import/Export Clearance & Refund',
     title: '환급',
-    summary: '환급 가능 항목 발굴부터 신청·사후관리까지 실무 흐름에 맞춰 지원합니다.',
+    summary: '환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출하고 과다·과소환급 리스크를 줄입니다.',
+    subtitle:
+      '환급 진단 컨설팅부터 신청, 심사 대응, 제도 개선 건의까지 실무 흐름 전반을 지원합니다.',
     heroImage: '/services/heroes/refund.jpg',
     heroImageAlt: '관세 환급 서비스',
     overview:
-      '원가·거래 구조와 신고 데이터를 기반으로 환급 가능성을 진단하고, 신청 근거 자료를 정비해 환급 실현률을 높입니다.',
-    scope: ['환급 대상 식별', '근거자료 정리', '환급 신청 진행', '사후관리 및 이슈 대응'],
-    checkpoints: ['대상 진단', '증빙 준비', '신청 및 보완', '사후 점검'],
+      '원가·거래 구조와 신고 데이터를 기반으로 환급 가능성을 진단하고, 환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출합니다. 사전 검토, 증빙 정비, 환급 신청, 심사 대응, 제도 개선 대응까지 연결해 과다·과소환급 리스크를 최소화합니다.',
+    scope: [
+      '환급대상 원재료와 환급 대상 해당 여부 검토',
+      '소요량 산정 적정성 검토 및 환급 전략 수립',
+      '개별 환급·간이 정액 환급 신청 수행',
+      '환급 심사 대응 및 제도 개선 지원',
+    ],
+    checkpoints: [
+      '소요량·잔량 계산과 사전 진단',
+      '환급 요건 충족 여부 및 증빙 검토',
+      '환급 계좌·납세증명서·분할증명서 준비',
+      '개별 환급 또는 간이 정액 환급 신청',
+      '환급 심사 및 추징 리스크 대응',
+    ],
+    contentSections: refundSections,
     relatedExpertNames: ['최대규', '전무열'],
     relatedResources: sharedResources,
   },
@@ -1400,13 +1434,77 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '기타',
     groupTitleEn: 'Specialized',
     title: '물류',
-    summary: '통관 이후 물류 운영까지 연결해 공급망 전반의 리스크를 관리합니다.',
+    summary: '국제 포워딩, 창고 보관, 국내 운송까지 연결하는 One Stop Logistics Service를 제공합니다.',
+    subtitle:
+      '신한인비스타는 2007년 설립 이래 국내 수출입 기업과 다국적 기업, 외국계 기업의 국제 포워딩 업무 및 입항 이후의 창고 보관, 국내 운송 서비스를 제공하는 One Stop Logistics Service Provider입니다.',
     heroImage: '/services/heroes/logistics.jpg',
     heroImageAlt: '물류 서비스',
     overview:
-      '반출기간, 보세창고, 운송 연계 등 통관 후 물류 이슈를 현장 기준으로 점검해 지연과 추가비용 발생 가능성을 최소화합니다.',
-    scope: ['반출기간·보관 리스크 관리', '운송/통관 연계 프로세스 점검', '물류 파트너 협업 체계 지원'],
-    checkpoints: ['물류 흐름 진단', '병목 구간 도출', '개선 시나리오 실행', '성과 모니터링'],
+      '신한인비스타는 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리, 3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다. 수출입 기업, 다국적 기업, 외국계 기업의 운영 특성에 맞춰 항공·해상·복합운송과 창고, 트럭킹 서비스를 통합 지원합니다.',
+    scope: ['Warehouse Task', 'Forwarding', 'Trucking'],
+    checkpoints: ['입항 이후 보관·반출 계획 수립', '국제 운송 및 내륙운송 연계', '보세·일반 화물 운영 관리', '현장 이슈 대응'],
+    contentSections: [
+      {
+        heading: '물류 소개',
+        body: [
+          '신한인비스타는 2007년 설립 이래 국내 수출입 기업과 다국적 기업, 외국계 기업의 국제 포워딩 업무 및 입항 이후의 창고 보관, 국내 운송 서비스를 제공하는 One Stop Logistics Service Provider입니다.',
+        ],
+      },
+      {
+        heading: 'Warehouse Task',
+        list: [
+          '보세화물 입출고 관리',
+          '일반화물 입출고 관리',
+          '3PL 관리업무',
+          '화물 장-단기 보관',
+          'AEO 절차관리',
+        ],
+      },
+      {
+        heading: 'Forwarding',
+        list: [
+          '항공 해상 수출입 CARGO HANDLING',
+          'LCL 화물정기 CONSOLILDATION',
+          'SEA & AIR 복합운송',
+          'DOOR TO DOOR',
+          '벌크, 특수화물, 위험물 운송',
+          '창고보관 및 내륙운송',
+        ],
+      },
+      {
+        heading: 'Trucking',
+        list: [
+          '수출입 연계 수배송 서비스',
+          '보세운송 서비스',
+          '일반 수배송',
+          '반품회수',
+          'PACKING, SHORING',
+        ],
+      },
+      {
+        heading: '대표사례',
+        list: [
+          '[물류 서비스] 글로벌 전자기기 업체 In / Out Operation',
+          '[물류 서비스] 글로벌 전자기기 업체 입고 및 제품검수',
+          '[물류 서비스] 유통기업 내륙운송 진행',
+          '[물류 서비스] 스피커 제조업체 홍콩 항공 해상 수출입',
+        ],
+      },
+    ],
+    contactPoints: [
+      {
+        name: '권민성',
+        phone: '070-4343-7745',
+        email: 'kms@shcs.kr',
+        role: '국제물류, 창고, 3PL, 내륙운송',
+      },
+      {
+        name: '이미경',
+        phone: '070-4343-7742',
+        email: 'sjcho@shcs.kr',
+        role: '국제물류, 창고, 3PL, 내륙운송',
+      },
+    ],
     relatedExpertNames: ['전무열', '서영진'],
     relatedResources: sharedResources,
   },

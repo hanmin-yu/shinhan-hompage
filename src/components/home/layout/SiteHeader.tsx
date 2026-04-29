@@ -13,6 +13,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
+  const overHero = pathname === '/';
 
   const isActive = (path?: string) => {
     if (!path) return false;
@@ -20,7 +21,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   };
 
   return (
-    <S.Header>
+    <S.Header $overHero={overHero}>
       <S.HeaderInner>
         <S.Brand to="/">
           <S.HeaderBrandImage
@@ -29,20 +30,21 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
           />
         </S.Brand>
 
-        <S.HeaderRight>
-          <S.MenuArea>
-            <S.Nav>
-              {headerNavigation.map((item) => (
-                <S.NavItem key={item.id}>
-                  <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={false} data-active={isActive(item.to ?? item.href)}>
-                    {item.label}
-                  </S.NavLink>
-                </S.NavItem>
-              ))}
-            </S.Nav>
-          </S.MenuArea>
+        <S.MenuArea>
+          <S.Nav>
+            {headerNavigation.map((item) => (
+              <S.NavItem key={item.id}>
+                <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={false} data-active={isActive(item.to ?? item.href)}>
+                  {item.label}
+                </S.NavLink>
+              </S.NavItem>
+            ))}
+          </S.Nav>
+        </S.MenuArea>
 
+        <S.HeaderRight>
           <S.HeaderTools>
+            <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton>
             <S.HeaderUtilityLinks>
               <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>

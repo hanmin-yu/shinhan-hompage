@@ -4,16 +4,19 @@ import { Link } from 'react-router-dom';
 import { palette, wordSafeWrap } from '../home/homeStyles';
 
 export const PageContainer = styled.div`
-  width: min(1320px, calc(100% - 28px));
+  width: calc(100% - 48px);
+  max-width: none;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    width: min(100%, calc(100% - 18px));
+    width: calc(100% - 28px);
   }
 `;
 
 export const PageSection = styled.section<{ tone?: 'base' | 'soft' | 'blue' }>`
+  position: relative;
   padding: clamp(74px, 8vw, 108px) 0;
+  overflow: hidden;
   background: ${({ tone }) => {
     if (tone === 'soft') {
       return 'radial-gradient(circle at 86% 14%, rgba(23, 159, 150, 0.08), transparent 18%), linear-gradient(180deg, #f3f8ff 0%, #f7fbff 100%)';
@@ -24,6 +27,28 @@ export const PageSection = styled.section<{ tone?: 'base' | 'soft' | 'blue' }>`
     return 'radial-gradient(circle at top right, rgba(214, 154, 54, 0.08), transparent 18%), linear-gradient(180deg, #f8fbff 0%, #fbfdff 100%)';
   }};
   border-top: 1px solid ${palette.lineSoft};
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        110deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.58) calc(22% + (var(--scroll-progress) * 18%)),
+        transparent calc(36% + (var(--scroll-progress) * 18%))
+      );
+    mix-blend-mode: screen;
+    opacity: 0.42;
+    transform: translate3d(calc((var(--viewport-progress) - 0.5) * 52px), 0, 0);
+  }
 `;
 
 export const HeroSection = styled(PageSection)`
@@ -109,7 +134,7 @@ export const Kicker = styled.span`
 export const Title = styled.h1`
   margin: 12px 0 0;
   color: ${palette.textStrong};
-  font-size: clamp(2.2rem, 4.4vw, 4.1rem);
+  font-size: clamp(2.58rem, 5.1vw, 4.82rem);
   font-weight: 800;
   line-height: 1.03;
   letter-spacing: -0.05em;
@@ -119,7 +144,7 @@ export const Title = styled.h1`
 export const SectionTitle = styled.h2`
   margin: 10px 0 0;
   color: ${palette.textPrimary};
-  font-size: clamp(1.86rem, 3.3vw, 2.8rem);
+  font-size: clamp(2.18rem, 3.9vw, 3.34rem);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.04em;

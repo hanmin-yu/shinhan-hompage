@@ -5,15 +5,19 @@ import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
+  position: relative;
   padding: 88px 0;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 18% 16%, rgba(33, 101, 193, 0.16), transparent 22%),
-    radial-gradient(circle at 88% 24%, rgba(23, 159, 150, 0.12), transparent 18%),
-    linear-gradient(180deg, #e8f3ff 0%, #f2f8ff 100%);
-  border-top: 1px solid ${S.palette.lineSoft};
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.14), transparent 22%),
+    radial-gradient(circle at 88% 18%, rgba(23, 159, 150, 0.18), transparent 20%),
+    linear-gradient(180deg, #102744 0%, #18539f 30%, #dcecff 76%, #f2f8ff 100%);
+  border-top: 0;
 `;
 
 const Inner = styled(S.Container)`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -30,7 +34,7 @@ const Label = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: ${S.palette.blue};
+  color: rgba(235, 246, 255, 0.94);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -40,17 +44,18 @@ const Label = styled.span`
     content: '';
     width: 28px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.56), rgba(23, 159, 150, 0.34));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(23, 159, 150, 0.58));
   }
 `;
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: ${S.palette.textPrimary};
+  color: #ffffff;
   font-size: clamp(2rem, 3.6vw, 2.85rem);
   font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
+  text-shadow: 0 16px 38px rgba(3, 15, 34, 0.34);
 `;
 
 const Grid = styled.div`
@@ -122,8 +127,9 @@ const Item = styled.article`
   min-height: 106px;
   padding: 18px;
   border-radius: 6px;
-  border: 1px solid ${S.palette.line};
-  background: linear-gradient(180deg, #f8fbff 0%, #eff8ff 72%, rgba(235, 247, 245, 0.86) 100%);
+  border: 1px solid rgba(225, 238, 255, 0.3);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(231, 243, 255, 0.88) 72%, rgba(211, 235, 248, 0.82) 100%);
+  box-shadow: 0 12px 26px rgba(3, 15, 34, 0.12);
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,

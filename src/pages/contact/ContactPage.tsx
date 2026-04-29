@@ -19,93 +19,111 @@ export function ContactPage() {
 
   return (
     <P.HeroSection>
-      <SectionInner data-reveal>
-        <HeroGrid>
-          <HeroCopy>
+      <SectionInner>
+        <InquiryGrid>
+          <InfoPanel>
             <P.Kicker>Contact Us</P.Kicker>
             <P.SectionTitle>{t('문의', 'Contact')}</P.SectionTitle>
             <P.Lead>
               {t(
-                '대표 연락처와 본사 위치를 한 화면에서 확인하고, 바로 연결할 수 있도록 구성했습니다.',
-                'This page brings together our primary contact channels and HQ location so you can connect right away.',
+                '기본 연락처와 본사 위치를 확인하고, 필요한 상담 내용을 온라인으로 남길 수 있습니다.',
+                'Check our primary contact details and leave your inquiry online.',
               )}
             </P.Lead>
 
-            <HeroActions>
+            <InfoActions>
               <P.PrimaryButton to="/about/location">{t('오시는 길 보기', 'View Directions')}</P.PrimaryButton>
-              <ActionAnchor href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
+              <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
                 {t('대표번호 연결', 'Call Main Line')}
-              </ActionAnchor>
-              <ActionAnchor href={`mailto:${siteContact.email}`}>{t('이메일 보내기', 'Send Email')}</ActionAnchor>
-            </HeroActions>
+              </InfoActionLink>
+              <InfoActionLink href={`mailto:${siteContact.email}`}>{t('이메일 보내기', 'Send Email')}</InfoActionLink>
+            </InfoActions>
 
-            <QuickFacts>
-              <QuickFact>
-                <QuickLabel>{t('대표번호', 'Phone')}</QuickLabel>
-                <QuickValue href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>{siteContact.phone}</QuickValue>
-              </QuickFact>
-              <QuickFact>
-                <QuickLabel>{t('이메일', 'Email')}</QuickLabel>
-                <QuickValue href={`mailto:${siteContact.email}`}>{siteContact.email}</QuickValue>
-              </QuickFact>
-            </QuickFacts>
-          </HeroCopy>
+            <InfoList>
+              <InfoItem>
+                <InfoLabel>{t('대표번호', 'Phone')}</InfoLabel>
+                <InfoValueLink href={`tel:${officePhone.replace(/[^+\d]/g, '')}`}>{officePhone}</InfoValueLink>
+              </InfoItem>
+              <InfoItem>
+                <InfoLabel>{t('팩스번호', 'Fax')}</InfoLabel>
+                <InfoValue>{officeFax}</InfoValue>
+              </InfoItem>
+              <InfoItem>
+                <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
+                <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
+              </InfoItem>
+              <InfoItem>
+                <InfoLabel>{t('본사 주소', 'HQ Address')}</InfoLabel>
+                <InfoValue>{t(officeAddress, officeAddressEn)}</InfoValue>
+              </InfoItem>
+              <InfoItem>
+                <InfoLabel>{t('사업자등록번호', 'Business Registration No.')}</InfoLabel>
+                <InfoValue>{siteContact.businessNumber}</InfoValue>
+              </InfoItem>
+            </InfoList>
+          </InfoPanel>
 
-          <HeroPanel>
-            <HeroPanelKicker>{t('Head Office', 'Head Office')}</HeroPanelKicker>
-            <HeroPanelTitle>{t('서울본사 안내', 'Seoul HQ Information')}</HeroPanelTitle>
-            <HeroPanelText>{t(officeAddress, officeAddressEn)}</HeroPanelText>
-            <HeroMetaList>
-              <HeroMetaItem>
-                <MetaLabel>{t('대표번호', 'Phone')}</MetaLabel>
-                <MetaValue href={`tel:${officePhone.replace(/[^+\d]/g, '')}`}>{officePhone}</MetaValue>
-              </HeroMetaItem>
-              <HeroMetaItem>
-                <MetaLabel>{t('팩스번호', 'Fax')}</MetaLabel>
-                <MetaStatic>{officeFax}</MetaStatic>
-              </HeroMetaItem>
-              <HeroMetaItem>
-                <MetaLabel>{t('사업자등록번호', 'Business Registration No.')}</MetaLabel>
-                <MetaStatic>{siteContact.businessNumber}</MetaStatic>
-              </HeroMetaItem>
-            </HeroMetaList>
-          </HeroPanel>
-        </HeroGrid>
+          <InquiryPanel>
+            <InquiryHeader>
+              <InquiryIcon aria-hidden="true">?</InquiryIcon>
+              <div>
+                <InquiryTitle>{t('온라인 문의하기', 'Online Inquiry')}</InquiryTitle>
+                <InquiryText>
+                  {t(
+                    '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
+                    'Leave your inquiry and our team will review it.',
+                  )}
+                </InquiryText>
+              </div>
+            </InquiryHeader>
 
-        <ContactGrid>
-          <ContactCard>
-            <CardKicker>{t('Call', 'Call')}</CardKicker>
-            <P.CardTitle>{t('대표번호', 'Phone')}</P.CardTitle>
-            <P.CardText>
+            <PrivacyNotice>
               {t(
-                '전화 상담이 필요한 경우 대표번호로 바로 연결할 수 있습니다.',
-                'For direct consultation, connect immediately through our main phone line.',
+                '안심하세요. 문의 내용은 상담 안내 목적으로만 확인합니다.',
+                'Your inquiry is reviewed only for consultation guidance.',
               )}
-            </P.CardText>
-            <ContactLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>{siteContact.phone}</ContactLink>
-          </ContactCard>
+            </PrivacyNotice>
 
-          <ContactCard>
-            <CardKicker>{t('Email', 'Email')}</CardKicker>
-            <P.CardTitle>{t('이메일', 'Email')}</P.CardTitle>
-            <P.CardText>
-              {t(
-                '문의 사항을 메일로 보내주시면 확인 후 빠르게 안내드립니다.',
-                'Send your inquiry by email and our team will respond as promptly as possible.',
-              )}
-            </P.CardText>
-            <ContactLink href={`mailto:${siteContact.email}`}>{siteContact.email}</ContactLink>
-          </ContactCard>
-
-          <ContactCard>
-            <CardKicker>{t('Location', 'Location')}</CardKicker>
-            <P.CardTitle>{t('본사 위치', 'HQ Location')}</P.CardTitle>
-            <P.CardText>{t(officeAddress, officeAddressEn)}</P.CardText>
-            <ContactLink href={naverMapUrl} target="_blank" rel="noreferrer">
-              {t('네이버 지도 열기', 'Open Naver Map')}
-            </ContactLink>
-          </ContactCard>
-        </ContactGrid>
+            <InquiryForm onSubmit={(event) => event.preventDefault()}>
+              <FieldGroup>
+                <FieldLabel htmlFor="contact-name">{t('이름', 'Name')}</FieldLabel>
+                <TextInput id="contact-name" name="name" placeholder={t('입력해주세요', 'Enter your name')} />
+              </FieldGroup>
+              <FieldGroup>
+                <FieldLabel htmlFor="contact-phone">{t('연락처', 'Contact')}</FieldLabel>
+                <TextInput id="contact-phone" name="phone" placeholder={t('- 없이 입력해주세요', 'Enter without hyphens')} />
+              </FieldGroup>
+              <FieldGroup>
+                <FieldLabel htmlFor="contact-office">{t('사무소', 'Office')}</FieldLabel>
+                <SelectInput id="contact-office" name="office" defaultValue="">
+                  <option value="" disabled>
+                    {t('사무소를 선택해주세요', 'Select an office')}
+                  </option>
+                  {officeBranches.map((office) => (
+                    <option key={office.id} value={office.id}>
+                      {t(office.label, office.labelEn)}
+                    </option>
+                  ))}
+                </SelectInput>
+              </FieldGroup>
+              <FieldGroup $wide>
+                <FieldLabel htmlFor="contact-message">{t('문의내용', 'Inquiry')}</FieldLabel>
+                <TextArea id="contact-message" name="message" placeholder={t('내용을 입력해주세요.', 'Enter your inquiry.')} />
+              </FieldGroup>
+              <ConsentArea>
+                <ConsentLabel>
+                  <input type="checkbox" name="privacy" />
+                  <span>{t('개인정보수집에 동의합니다.', 'I agree to the collection of personal information.')}</span>
+                </ConsentLabel>
+                <ConsentLabel>
+                  <input type="checkbox" name="age" />
+                  <span>{t('만 14세 이상입니다.', 'I am 14 years of age or older.')}</span>
+                </ConsentLabel>
+              </ConsentArea>
+              <SubmitButton type="submit">{t('상담신청서 제출', 'Submit Inquiry')}</SubmitButton>
+            </InquiryForm>
+          </InquiryPanel>
+        </InquiryGrid>
 
         <LocationGrid>
           <MapPanel>
@@ -178,29 +196,29 @@ const SectionInner = styled(P.PageContainer)`
   gap: 28px;
 `;
 
-const HeroGrid = styled.div`
+const InquiryGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
   gap: 22px;
-  align-items: stretch;
+  align-items: start;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const HeroCopy = styled(P.Panel)`
+const InfoPanel = styled(P.Panel)`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   padding: clamp(28px, 3vw, 40px);
 `;
 
-const HeroActions = styled(P.HeroActions)`
+const InfoActions = styled(P.HeroActions)`
   margin-top: 14px;
 `;
 
-const ActionAnchor = styled.a`
+const InfoActionLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -214,86 +232,21 @@ const ActionAnchor = styled.a`
   font-weight: 700;
 `;
 
-const QuickFacts = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 6px;
-
-  @media (max-width: 700px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const QuickFact = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 18px 18px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(18, 72, 143, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 249, 255, 0.94));
-`;
-
-const QuickLabel = styled.span`
-  color: #5f7594;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-`;
-
-const QuickValue = styled.a`
-  color: #143d79;
-  font-size: 1.14rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  word-break: break-word;
-`;
-
-const HeroPanel = styled(P.Panel)`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: clamp(26px, 2.8vw, 34px);
-  background:
-    radial-gradient(circle at top right, rgba(31, 93, 184, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 248, 255, 0.96));
-`;
-
-const HeroPanelKicker = styled.span`
-  color: #1e5bb4;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-`;
-
-const HeroPanelTitle = styled.h3`
-  margin: 0;
-  color: #123a75;
-  font-size: clamp(1.32rem, 2vw, 1.76rem);
-  letter-spacing: -0.03em;
-`;
-
-const HeroPanelText = styled.p`
-  margin: 0;
-  color: #4c6788;
-  font-size: 0.96rem;
-  line-height: 1.68;
-`;
-
-const HeroMetaList = styled.div`
+const InfoList = styled.div`
   display: grid;
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 10px;
 `;
 
-const HeroMetaItem = styled.div`
+const InfoItem = styled.div`
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
+  grid-template-columns: 118px minmax(0, 1fr);
   gap: 12px;
   align-items: start;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(18, 72, 143, 0.09);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 255, 0.96));
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -301,54 +254,216 @@ const HeroMetaItem = styled.div`
   }
 `;
 
-const MetaLabel = styled.span`
+const InfoLabel = styled.span`
   color: #1f5cb2;
   font-size: 0.84rem;
   font-weight: 800;
 `;
 
-const MetaValue = styled.a`
-  color: #163a70;
-  font-size: 0.95rem;
-  font-weight: 700;
-  word-break: break-word;
-`;
-
-const MetaStatic = styled.span`
+const InfoValue = styled.span`
   color: #496582;
   font-size: 0.95rem;
   font-weight: 600;
+  line-height: 1.56;
   word-break: break-word;
 `;
 
-const ContactGrid = styled(P.Grid)`
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+const InfoValueLink = styled.a`
+  color: #163a70;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.56;
+  word-break: break-word;
+`;
 
-  @media (max-width: 1024px) {
+const InquiryPanel = styled(P.Panel)`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 34px);
+  background:
+    radial-gradient(circle at top right, rgba(31, 93, 184, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(244, 249, 255, 0.98));
+`;
+
+const InquiryHeader = styled.div`
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+
+  @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const ContactCard = styled(P.Card)`
-  padding: 24px;
-  gap: 12px;
+const InquiryIcon = styled.div`
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #edf5ff, #dceaf8);
+  color: #1a6da7;
+  font-size: 2rem;
+  font-weight: 900;
 `;
 
-const CardKicker = styled.span`
-  color: #5f7594;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+const InquiryTitle = styled.h3`
+  margin: 0;
+  color: #087fa6;
+  font-size: clamp(1.52rem, 2.6vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
 `;
 
-const ContactLink = styled.a`
-  margin-top: auto;
-  color: #1b56ad;
-  font-size: 1rem;
+const InquiryText = styled.p`
+  margin: 8px 0 0;
+  color: #263f58;
+  font-size: 0.98rem;
+  line-height: 1.62;
+`;
+
+const PrivacyNotice = styled.p`
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #eef7fb;
+  color: #3d5a70;
+  font-size: 0.92rem;
+  line-height: 1.55;
+`;
+
+const InquiryForm = styled.form`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 18px;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FieldGroup = styled.div<{ $wide?: boolean }>`
+  display: grid;
+  gap: 8px;
+  grid-column: ${({ $wide }) => ($wide ? '1 / -1' : 'auto')};
+`;
+
+const FieldLabel = styled.label`
+  color: #112f56;
+  font-size: 0.9rem;
   font-weight: 800;
+`;
+
+const InputBase = styled.input`
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(22, 77, 148, 0.18);
+  border-radius: 0;
+  background: #ffffff;
+  color: #243f5f;
+  font-size: 0.94rem;
+  outline: none;
+
+  &::placeholder {
+    color: #8996a7;
+  }
+
+  &:focus {
+    border-color: rgba(26, 94, 181, 0.52);
+    box-shadow: 0 0 0 3px rgba(38, 113, 214, 0.1);
+  }
+`;
+
+const TextInput = styled(InputBase)``;
+
+const SelectInput = styled.select`
+  width: 100%;
+  min-height: 50px;
+  padding: 0 42px 0 16px;
+  border: 1px solid rgba(22, 77, 148, 0.18);
+  border-radius: 0;
+  background: #ffffff;
+  color: #55677b;
+  font-size: 0.94rem;
+  outline: none;
+
+  &:focus {
+    border-color: rgba(26, 94, 181, 0.52);
+    box-shadow: 0 0 0 3px rgba(38, 113, 214, 0.1);
+  }
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  min-height: 168px;
+  padding: 16px;
+  border: 1px solid rgba(22, 77, 148, 0.18);
+  border-radius: 0;
+  background: #ffffff;
+  color: #243f5f;
+  font-size: 0.94rem;
   line-height: 1.5;
-  word-break: break-word;
+  resize: vertical;
+  outline: none;
+
+  &::placeholder {
+    color: #8996a7;
+  }
+
+  &:focus {
+    border-color: rgba(26, 94, 181, 0.52);
+    box-shadow: 0 0 0 3px rgba(38, 113, 214, 0.1);
+  }
+`;
+
+const ConsentArea = styled.div`
+  display: grid;
+  grid-column: 1 / -1;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 4px;
+`;
+
+const ConsentLabel = styled.label`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #4d6076;
+  font-size: 0.9rem;
+
+  input {
+    width: 15px;
+    height: 15px;
+    accent-color: #2467c3;
+  }
+`;
+
+const SubmitButton = styled.button`
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 476px);
+  min-height: 58px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 0;
+  background: #2e65ae;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: #1e559d;
+    transform: translateY(-1px);
+    outline: none;
+  }
 `;
 
 const LocationGrid = styled.div`

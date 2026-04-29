@@ -9,6 +9,15 @@ import {
 } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
+const RecruitHeroSection = styled(P.CompactHeroSection)`
+  padding-top: clamp(14px, 2vw, 24px);
+  padding-bottom: clamp(28px, 4vw, 42px);
+`;
+
+const RecruitBenefitsSection = styled(P.CompactPageSection)`
+  padding-top: clamp(18px, 3vw, 28px);
+`;
+
 const IntroLayout = styled(P.SplitGrid)`
   align-items: stretch;
 `;
@@ -362,7 +371,7 @@ export function RecruitPage() {
 
   return (
     <>
-      <P.PageSection>
+      <RecruitHeroSection>
         <IntroLayout data-reveal>
           <IntroPanel>
             <P.Kicker>Recruit</P.Kicker>
@@ -390,10 +399,10 @@ export function RecruitPage() {
             </RoleCloud>
           </RolePanel>
         </IntroLayout>
-      </P.PageSection>
+      </RecruitHeroSection>
 
-      <P.PageSection>
-        <P.PageContainer data-reveal>
+      <RecruitBenefitsSection>
+        <P.PageContainer>
           <P.SectionHead>
             <div>
               <P.Kicker>{t('복리후생', 'Benefits')}</P.Kicker>
@@ -470,9 +479,9 @@ export function RecruitPage() {
                 {t(recruitPostingLinks[1].label, recruitPostingLinks[1].labelEn)}
               </CtaSecondaryAction>
             </BottomActionRow>
-          </BottomCta>
-        </P.PageContainer>
-      </P.PageSection>
+            </BottomCta>
+          </P.PageContainer>
+      </RecruitBenefitsSection>
     </>
   );
 }

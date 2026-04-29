@@ -48,6 +48,7 @@ export type Member = {
   practice: string;
   accent: string;
   image?: string;
+  imagePosition?: string;
 };
 
 export type HeroSlide = {
@@ -60,6 +61,7 @@ export type HeroSlide = {
   summary: string;
   summaryEn?: string;
   image: string;
+  mobileImage?: string;
   secondaryImage?: string;
   objectPosition?: string;
   secondaryObjectPosition?: string;

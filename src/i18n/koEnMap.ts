@@ -271,6 +271,42 @@ export const koToEnTextMap: Record<string, string> = {
     'Integrated support from the Hanoi office across customs clearance, LIQ ledger control, FTA, audit response, and ongoing advisory.',
   '미국 수출 시 필요한 FDA 관련 체크포인트와 준비 서류 흐름을 정리합니다.':
     'Organizes FDA checkpoints and required document workflows for U.S. exports.',
+  '환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출하고 과다·과소환급 리스크를 줄입니다.':
+    'We calculate the exact required and remaining quantities of refund-eligible raw materials to maximize refunds while reducing over- and under-refund risk.',
+  '환급 진단 컨설팅부터 신청, 심사 대응, 제도 개선 건의까지 실무 흐름 전반을 지원합니다.':
+    'We support the full refund workflow, from refund diagnostics and filing to audit response and policy improvement support.',
+  '원가·거래 구조와 신고 데이터를 기반으로 환급 가능성을 진단하고, 환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출합니다. 사전 검토, 증빙 정비, 환급 신청, 심사 대응, 제도 개선 대응까지 연결해 과다·과소환급 리스크를 최소화합니다.':
+    'Based on cost structures, transaction flows, and declaration data, we diagnose refund potential and calculate the exact required and remaining quantities of eligible raw materials to maximize refund amounts. We connect pre-review, evidence preparation, filing, audit response, and policy issue support to minimize over- and under-refund risk.',
+  '환급대상 원재료와 환급 대상 해당 여부 검토': 'Review of eligible raw materials and refund qualification',
+  '소요량 산정 적정성 검토 및 환급 전략 수립': 'Review of usage calculation accuracy and refund strategy planning',
+  '개별 환급·간이 정액 환급 신청 수행': 'Execution of individual and simplified fixed-rate refund filings',
+  '환급 심사 대응 및 제도 개선 지원': 'Refund audit response and policy improvement support',
+  '소요량·잔량 계산과 사전 진단': 'Required quantity and remaining stock calculation with pre-diagnostics',
+  '환급 요건 충족 여부 및 증빙 검토': 'Review of refund eligibility and supporting evidence',
+  '환급 계좌·납세증명서·분할증명서 준비': 'Preparation of refund accounts, tax payment certificates, and split certificates',
+  '개별 환급 또는 간이 정액 환급 신청': 'Individual or simplified fixed-rate refund filing',
+  '환급 심사 및 추징 리스크 대응': 'Refund audit and reassessment risk response',
+  '관세환급': 'Customs Refund',
+  '"관세환급"이란 일반적으로 『수출용 원재료에 대한 관세 등 환급에 관한 특례법』 상의 환급을 지칭하며, 수입 원재료를 수출 또는 외화획득용 원재료로 사용한 경우에 수입 때 납부한 관세를 수출자 또는 생산자에게 되돌려 주는 것을 말합니다.':
+    '"Customs refund" generally refers to refunds under the Act on Special Cases Concerning the Refund of Duties, etc. on Raw Materials for Export, meaning the return of duties paid at import when imported raw materials are used for exports or other foreign-currency-earning production.',
+  '개별 환급: 수출물품 생산에 소요된 각각의 원재료별 소요량을 산출하고 각 원재료를 수입하는 때에 납부하였거나 납부할 관세 등의 세액을 확인·계산하여 환급금을 산출하는 제도':
+    'Individual refund: a system that calculates the usage quantity of each raw material used to produce exported goods and determines the refund amount by verifying and calculating the duties paid or payable on each imported raw material.',
+  '간이 환급: 중소기업의 환급절차를 간소화하기 위하여 중소기업이 생산하여 수출한 물품에 대하여 관세납부증명서와 소요량계산서 제출을 생략하고 수출신고필증만 확인하여 간소하게 환급하는 제도':
+    'Simplified refund: a system designed to simplify refund procedures for SMEs by allowing refunds for exported goods produced by SMEs based on export declaration documents without separately submitting duty payment certificates and usage calculation statements.',
+  '사전 검토 및 환급 전략 수립: 소요량 사전심사 신청 및 소요량 산정 적정성 검토를 통해 환급 신청 전 오류를 점검하고 과다환급에 따른 추징 리스크를 예방합니다.':
+    'Pre-review and refund strategy planning: we check errors before filing and prevent reassessment risk from over-refunds through pre-audit requests and review of usage calculation accuracy.',
+  '환급 요건 충족 여부 점검 및 자문: 수출물품 및 원재료의 환급 대상 해당 여부, 수출 이행기간 충족 여부 등 관련 요건을 종합적으로 검토합니다.':
+    'Refund eligibility review and advisory: we comprehensively review whether exported goods and raw materials qualify and whether export performance deadlines and related conditions are met.',
+  '환급 계좌 개설 지원: 환급금 수령을 위한 환급 전용계좌 개설, 통보서 작성, 인감증명서 등 관련 서류 구비와 신청 절차를 지원합니다.':
+    'Refund account setup support: we support dedicated refund account opening, notice preparation, required seals/certificates, and related filing procedures.',
+  '기초원재료 납세증명서 및 분할증명서 발급 신청: 제조·가공 여부와 양도 형태에 따른 발급 요건을 검토하고, 수입신고 내역과 국내거래인정서류 등 관련 자료를 구비해 증명서 발급 신청을 수행합니다.':
+    'Application for tax payment certificates and split certificates for basic raw materials: we review issuance requirements based on manufacturing/processing status and transfer method, then prepare import declarations and domestic transaction documents to file for certificate issuance.',
+  '개별 환급 및 간이 정액 환급 신청: 기업 규모와 간이정액환급률표 적용 대상 여부를 검토하여 적정 환급 방식을 선정하고, 환급 신청서 작성 및 세관 신고 절차를 수행합니다.':
+    'Individual and simplified fixed-rate refund filing: we review company size and eligibility for the simplified fixed-rate refund table, choose the proper refund method, and complete filing and customs reporting.',
+  '관세 환급심사 대응: 환급 심사 시 세관 측의 이슈사항에 적극 대응하여 추징 리스크를 최소화합니다.':
+    'Refund audit response: we respond proactively to customs issues during refund audits to minimize reassessment risk.',
+  '제도 개선 건의 및 애로사항 대응: 환급 제도 운영상 미비점과 기업 애로사항을 검토하여 관세청 건의 및 제도 개선 대응을 지원합니다.':
+    'Policy improvement and issue support: we review operational gaps in the refund system and client difficulties to support proposals to the customs authority and policy improvement efforts.',
   '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다.':
     'We support product-certification work for U.S. exports, from product suitability checks and FDA registration to labeling and import alert response.',
   '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.':

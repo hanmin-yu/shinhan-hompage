@@ -12,15 +12,19 @@ const PRIMARY_OFFICE_IDS = ['seoul', 'airport', 'incheon', 'busan', 'cheongju', 
 const NETWORK_OFFICE_IDS = ['invista', 'vietnam', 'kord'] as const;
 
 const Section = styled.section`
+  position: relative;
   padding: 88px 0 92px;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 12% 18%, rgba(33, 101, 193, 0.1), transparent 20%),
-    radial-gradient(circle at 86% 14%, rgba(214, 154, 54, 0.08), transparent 18%),
-    linear-gradient(180deg, #f1f6fc 0%, #f7fbff 58%, #fbfdff 100%);
-  border-top: 1px solid ${S.palette.lineSoft};
+    radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.13), transparent 22%),
+    radial-gradient(circle at 86% 18%, rgba(23, 159, 150, 0.14), transparent 18%),
+    linear-gradient(180deg, #0b2b59 0%, #174d9a 28%, #e5f1ff 76%, #fbfdff 100%);
+  border-top: 0;
 `;
 
 const Inner = styled(S.Container)`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -35,15 +39,16 @@ const Head = styled.div`
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: ${S.palette.textPrimary};
+  color: #ffffff;
   font-size: clamp(2rem, 3.8vw, 2.9rem);
   font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.03em;
+  text-shadow: 0 16px 38px rgba(3, 15, 34, 0.34);
 `;
 
 const Label = styled.span`
-  color: ${S.palette.blueDeep};
+  color: rgba(235, 246, 255, 0.94);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -53,7 +58,7 @@ const Label = styled.span`
 const Intro = styled.p`
   max-width: 720px;
   margin: 14px 0 0;
-  color: ${S.palette.textBody};
+  color: rgba(235, 246, 255, 0.86);
   font-size: 0.95rem;
   line-height: 1.76;
 `;
@@ -79,7 +84,7 @@ const TabGroupLabel = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: ${S.palette.textPrimary};
+  color: rgba(235, 246, 255, 0.94);
   font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: -0.01em;
@@ -89,7 +94,7 @@ const TabGroupLabel = styled.span`
     width: 22px;
     height: 1px;
     border-radius: 999px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(214, 154, 54, 0.28));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(23, 159, 150, 0.58));
   }
 `;
 
@@ -103,16 +108,17 @@ const OfficeTab = styled.button<{ $active: boolean }>`
   min-height: 40px;
   padding: 0 16px;
   border-radius: 7px;
-  border: 1px solid ${({ $active }) => ($active ? 'rgba(214, 154, 54, 0.22)' : S.palette.line)};
+  border: 1px solid ${({ $active }) => ($active ? 'rgba(225, 238, 255, 0.46)' : 'rgba(225, 238, 255, 0.24)')};
   background: ${({ $active }) =>
     $active
-      ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 249, 255, 0.96))'
-      : 'rgba(255, 255, 255, 0.72)'};
-  color: ${({ $active }) => ($active ? S.palette.blueInk : S.palette.textMuted)};
+      ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 243, 255, 0.9))'
+      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(220, 237, 255, 0.32))'};
+  color: ${({ $active }) => ($active ? S.palette.blueInk : 'rgba(255, 255, 255, 0.9)')};
   font-size: 0.92rem;
   font-weight: ${({ $active }) => ($active ? 800 : 700)};
   box-shadow: ${({ $active }) =>
-    $active ? 'inset 3px 0 0 #1d5aa9, 0 10px 18px rgba(16, 53, 114, 0.08)' : 'none'};
+    $active ? '0 10px 18px rgba(16, 53, 114, 0.12)' : '0 8px 18px rgba(3, 15, 34, 0.12)'};
+  text-shadow: ${({ $active }) => ($active ? 'none' : '0 1px 8px rgba(3, 15, 34, 0.28)')};
   cursor: pointer;
   transition:
     transform 0.2s ease,
@@ -123,6 +129,12 @@ const OfficeTab = styled.button<{ $active: boolean }>`
 
   &:hover {
     transform: translateY(-1px);
+    color: ${({ $active }) => ($active ? S.palette.blueInk : '#ffffff')};
+    border-color: rgba(255, 255, 255, 0.52);
+    background: ${({ $active }) =>
+      $active
+        ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 243, 255, 0.9))'
+        : 'linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(220, 237, 255, 0.42))'};
   }
 `;
 
@@ -142,9 +154,9 @@ const InfoCard = styled.article`
   gap: 22px;
   padding: 28px;
   border-radius: 12px;
-  border: 1px solid ${S.palette.line};
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(244, 250, 255, 0.97), rgba(239, 248, 247, 0.88));
-  box-shadow: 0 18px 32px rgba(16, 53, 114, 0.08);
+  border: 1px solid rgba(225, 238, 255, 0.34);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(231, 243, 255, 0.9), rgba(211, 235, 248, 0.82));
+  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.16);
   position: relative;
   overflow: hidden;
 
@@ -409,8 +421,8 @@ export function OfficesSection() {
         <Inner data-reveal>
           <Head>
             <div>
-              <Label>Offices & Contact</Label>
-              <Title>{t('사무소 / 문의', 'Offices / Contact')}</Title>
+              <Label>Offices</Label>
+              <Title>{t('사무소', 'Offices')}</Title>
               <Intro>
                 {t(
                   '국내 주요 지사와 해외 네트워크를 통해 고객 실무에 가까운 관세 지원 체계를 운영합니다.',

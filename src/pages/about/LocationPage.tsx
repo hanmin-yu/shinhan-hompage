@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
+import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { sectionSubnav } from '../../config/sectionSubnav';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
@@ -99,6 +101,7 @@ const MapFrame = styled.div`
 
 export function LocationPage() {
   const { t } = useI18n();
+  const aboutSubnav = sectionSubnav.about;
   const hqOffice = officeBranches.find((office) => office.id === 'seoul') ?? officeBranches[0];
   const officeAddress = hqOffice?.address ?? siteContact.address;
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
@@ -111,7 +114,17 @@ export function LocationPage() {
 
   return (
     <P.HeroSection>
-      <SectionInner data-reveal>
+      <SectionInner>
+        <LandingSubnav
+          kicker={aboutSubnav.kicker}
+          kickerEn={aboutSubnav.kickerEn}
+          title={aboutSubnav.title}
+          titleEn={aboutSubnav.titleEn}
+          summary={aboutSubnav.summary}
+          summaryEn={aboutSubnav.summaryEn}
+          items={aboutSubnav.items}
+        />
+
         <P.SectionHead>
           <div>
             <P.Kicker>HQ Location</P.Kicker>

@@ -54,6 +54,9 @@ export const GlobalStyle = () => (
         color-scheme: light;
         background: ${palette.pageBackground};
         color: ${palette.textStrong};
+        --scroll-y: 0px;
+        --scroll-progress: 0;
+        --viewport-progress: 0;
         font-synthesis: none;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
@@ -72,11 +75,15 @@ export const GlobalStyle = () => (
         margin: 0;
         min-width: 320px;
         min-height: 100vh;
-        background: ${palette.pageBackground};
+        background:
+          radial-gradient(circle at calc(12% + (var(--scroll-progress) * 22%)) 10%, rgba(33, 101, 193, 0.2), transparent 24%),
+          radial-gradient(circle at calc(92% - (var(--scroll-progress) * 28%)) 28%, rgba(23, 159, 150, 0.14), transparent 20%),
+          ${palette.pageBackground};
         overflow-x: hidden;
         font-family: "NanumSquare", "Noto Sans KR", sans-serif;
         color: ${palette.textStrong};
         ${wordSafeWrap};
+        animation: bodyRender 0.9s cubic-bezier(0.18, 0.9, 0.28, 1) both;
       }
 
       p,
@@ -105,15 +112,93 @@ export const GlobalStyle = () => (
 
       [data-reveal] {
         opacity: 0;
-        transform: translateY(34px) scale(0.985);
+        filter: blur(18px) saturate(0.9);
+        transform: translate3d(0, 72px, 0) scale(0.94) rotateX(7deg);
+        transform-origin: center top;
         transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
+          opacity 0.92s cubic-bezier(0.18, 0.9, 0.28, 1),
+          filter 0.92s cubic-bezier(0.18, 0.9, 0.28, 1),
+          transform 0.92s cubic-bezier(0.18, 0.9, 0.28, 1);
+        will-change: opacity, filter, transform;
       }
 
       [data-reveal].is-visible {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        filter: blur(0) saturate(1);
+        transform: translate3d(0, 0, 0) scale(1) rotateX(0);
+      }
+
+      [data-reveal='slide-left'] {
+        transform: translate3d(-96px, 46px, 0) scale(0.95) rotateY(-8deg);
+      }
+
+      [data-reveal='slide-right'] {
+        transform: translate3d(96px, 46px, 0) scale(0.95) rotateY(8deg);
+      }
+
+      [data-reveal='zoom'] {
+        transform: translate3d(0, 42px, 0) scale(0.88);
+      }
+
+      @keyframes bodyRender {
+        from {
+          opacity: 0;
+          filter: blur(12px);
+        }
+
+        to {
+          opacity: 1;
+          filter: blur(0);
+        }
+      }
+
+      @keyframes kineticSweep {
+        0% {
+          background-position: -18vw 0, 0 0;
+        }
+
+        100% {
+          background-position: 18vw 0, 118px 0;
+        }
+      }
+
+      @keyframes glowPulse {
+        0%,
+        100% {
+          opacity: 0.48;
+          filter: saturate(0.96);
+        }
+
+        50% {
+          opacity: 0.82;
+          filter: saturate(1.12);
+        }
+      }
+
+      @keyframes breatheScale {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+
+        50% {
+          transform: scale(1.045) rotate(1.5deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        body,
+        [data-reveal],
+        [data-reveal].is-visible {
+          animation: none;
+          transition: none;
+          transform: none;
+          filter: none;
+        }
       }
     `}
   />
@@ -121,16 +206,19 @@ export const GlobalStyle = () => (
 
 export const Page = styled.div`
   min-height: 100vh;
-  background: ${palette.pageBackground};
+  background:
+    linear-gradient(90deg, rgba(33, 101, 193, 0.08), transparent 18%, transparent 82%, rgba(23, 159, 150, 0.08)),
+    ${palette.pageBackground};
   color: ${palette.textStrong};
 `;
 
 export const Container = styled.div`
-  width: min(1320px, calc(100% - 28px));
+  width: calc(100% - 48px);
+  max-width: none;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    width: min(100%, calc(100% - 18px));
+    width: calc(100% - 28px);
   }
 `;
 
@@ -211,33 +299,92 @@ export const UtilityLink = styled.a`
   }
 `;
 
-export const Header = styled.header`
-  position: sticky;
+export const Header = styled.header<{ $overHero?: boolean }>`
+  position: ${({ $overHero }) => ($overHero ? 'fixed' : 'sticky')};
   top: 0;
+  left: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
+  right: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
   z-index: 25;
-  background: ${palette.headerBackground};
-  border-bottom: 1px solid ${palette.lineSoft};
-  box-shadow: 0 12px 30px rgba(16, 48, 104, 0.06);
+  background: ${({ $overHero }) =>
+    $overHero
+      ? `linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(239, 247, 255, 0.72) 58%, rgba(239, 247, 255, 0) 100%)`
+      : `
+    radial-gradient(circle at 12% 18%, rgba(33, 101, 193, 0.14), transparent 24%),
+    radial-gradient(circle at 88% 16%, rgba(23, 159, 150, 0.1), transparent 22%),
+    linear-gradient(180deg, rgba(237, 244, 255, 0.96) 0%, rgba(244, 248, 255, 0.94) 100%)`};
+  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : palette.lineSoft)};
+  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : '0 12px 30px rgba(16, 48, 104, 0.08)')};
   backdrop-filter: blur(18px);
+
+  ${({ $overHero }) =>
+    $overHero
+      ? `
+    img {
+      filter: drop-shadow(0 8px 18px rgba(255, 255, 255, 0.28));
+    }
+
+    nav a {
+      color: ${palette.blueInk};
+      text-shadow: 0 10px 26px rgba(255, 255, 255, 0.48);
+    }
+
+    nav a:hover,
+    nav a[data-active='true'] {
+      color: ${palette.blueDeep};
+    }
+
+    nav a::before {
+      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+    }
+
+    a[href='/contact'] {
+      border-color: rgba(18, 63, 133, 0.34);
+      background: linear-gradient(180deg, rgba(23, 77, 156, 0.9), rgba(11, 43, 89, 0.86));
+      color: #ffffff;
+      box-shadow: 0 14px 28px rgba(3, 15, 34, 0.16);
+      backdrop-filter: blur(12px);
+    }
+
+    a[href='/recruit'],
+    button,
+    a[aria-label] {
+      color: ${palette.textPrimary};
+      text-shadow: 0 8px 18px rgba(255, 255, 255, 0.44);
+    }
+
+    div {
+      border-left-color: rgba(33, 101, 193, 0.18);
+    }
+  `
+      : ''}
 
   @media (max-width: 768px) {
     top: 0;
-    background: ${palette.headerBackground};
-    border-bottom: 1px solid ${palette.line};
+    background: ${({ $overHero }) =>
+      $overHero
+        ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(239, 247, 255, 0.66) 100%)'
+        : `
+      radial-gradient(circle at 12% 18%, rgba(33, 101, 193, 0.14), transparent 24%),
+      linear-gradient(180deg, rgba(237, 244, 255, 0.97) 0%, rgba(244, 248, 255, 0.96) 100%)`};
+    border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : palette.line)};
   }
 `;
 
 export const HeaderInner = styled(Container)`
-  width: min(1720px, calc(100% - 28px));
-  display: flex;
+  position: relative;
+  width: calc(100% - 48px);
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   min-height: 82px;
 
   @media (max-width: 1200px) {
-    width: min(100%, calc(100% - 22px));
     gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    width: calc(100% - 28px);
   }
 
   @media (max-width: 1320px) {
@@ -254,9 +401,8 @@ export const HeaderRight = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 28px;
-  flex: 1;
+  justify-self: end;
   min-width: 0;
-  margin-left: auto;
 
   @media (max-width: 768px) {
     gap: 10px;
@@ -265,15 +411,17 @@ export const HeaderRight = styled.div`
 
 export const MenuArea = styled.div`
   position: relative;
+  justify-self: center;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1 1 auto;
+  justify-content: center;
+  width: max-content;
+  flex: 0 0 auto;
   min-height: 82px;
   min-width: 0;
   overflow: visible;
 
-  @media (max-width: 1320px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `;
@@ -281,6 +429,7 @@ export const MenuArea = styled.div`
 export const Brand = styled(Link)`
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   flex: 0 0 auto;
   width: fit-content;
   min-width: 0;
@@ -289,19 +438,19 @@ export const Brand = styled(Link)`
 export const HeaderBrandImage = styled.img`
   display: block;
   width: auto;
-  max-width: 430px;
+  max-width: 460px;
   height: auto;
-  max-height: 66px;
+  max-height: 72px;
   object-fit: contain;
 
   @media (max-width: 1320px) {
-    max-width: 360px;
+    max-width: 340px;
     max-height: 58px;
   }
 
   @media (max-width: 980px) {
-    max-width: 280px;
-    max-height: 48px;
+    max-width: 300px;
+    max-height: 52px;
   }
 
   @media (max-width: 520px) {
@@ -432,21 +581,22 @@ export const BrandSub = styled.span`
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: 100%;
-  gap: 6px;
-  font-size: 1.16rem;
+  gap: 12px;
+  font-size: 1.26rem;
   color: ${palette.textPrimary};
+  text-align: center;
   white-space: nowrap;
 
   @media (max-width: 1680px) {
-    gap: 4px;
-    font-size: 1.08rem;
+    gap: 8px;
+    font-size: 1.18rem;
   }
 
   @media (max-width: 1480px) {
-    gap: 2px;
-    font-size: 0.95rem;
+    gap: 4px;
+    font-size: 1.05rem;
   }
 `;
 
@@ -455,6 +605,7 @@ export const NavItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   min-height: 82px;
 
   @media (max-width: 1320px) {
@@ -468,11 +619,12 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   justify-content: center;
   gap: 10px;
   min-height: 80px;
-  padding: 0 20px;
+  padding: 0 18px;
   position: relative;
+  text-align: center;
   color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.32rem;
+  font-size: 1.58rem;
   font-weight: 900;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -481,13 +633,13 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
 
   @media (max-width: 1680px) {
     gap: 8px;
-    padding: 0 16px;
-    font-size: 1.18rem;
+    padding: 0 14px;
+    font-size: 1.42rem;
   }
 
   @media (max-width: 1480px) {
-    padding: 0 10px;
-    font-size: 1.04rem;
+    padding: 0 9px;
+    font-size: 1.22rem;
   }
 
   @media (max-width: 1380px) {
@@ -1126,6 +1278,7 @@ export const MobileMenuQuickLink = styled(Link)`
 export const Main = styled.main`
   display: flex;
   flex-direction: column;
+  overflow: clip;
 `;
 
 export const HeroSection = styled.section`
@@ -2753,7 +2906,7 @@ export const OfficesMapBody = styled.p`
 
 export const OfficesMiniMap = styled.div`
   position: relative;
-  min-height: 470px;
+  min-height: 620px;
   border-radius: 18px;
   background:
     radial-gradient(circle at 18% 16%, rgba(33, 101, 193, 0.08), transparent 18%),
@@ -2764,7 +2917,17 @@ export const OfficesMiniMap = styled.div`
 
 export const OfficesMiniMapKoreaZone = styled.div`
   position: absolute;
-  inset: 6% 24% 8% 6%;
+  top: 5%;
+  left: 48%;
+  height: 88%;
+  aspect-ratio: 2 / 3;
+  transform: translateX(-50%);
+
+  @media (max-width: 860px) {
+    top: 8%;
+    left: 50%;
+    height: 76%;
+  }
 `;
 
 export const OfficesMiniMapKoreaImage = styled.img`
@@ -2772,9 +2935,9 @@ export const OfficesMiniMapKoreaImage = styled.img`
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
   object-position: center;
-  opacity: 0.42;
+  opacity: 0.48;
   filter: saturate(0.12) brightness(1.03) contrast(0.98);
 `;
 

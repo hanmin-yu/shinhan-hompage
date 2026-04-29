@@ -32,6 +32,7 @@ export const sectionSubnav = {
       { label: '회사소개', labelEn: 'Overview', to: '/about' },
       { label: '인사말', labelEn: 'Message', to: '/about/message' },
       { label: '연혁', labelEn: 'History', to: '/about/history' },
+      { label: '오시는 길', labelEn: 'Directions', to: '/about/location' },
     ],
   },
   members: {
