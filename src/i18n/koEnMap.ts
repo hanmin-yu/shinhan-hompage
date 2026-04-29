@@ -185,6 +185,7 @@ export const koToEnTextMap: Record<string, string> = {
   최병찬: 'Byungchan Choi',
   김희정: 'Heejeong Kim',
   차미정: 'Mijeong Cha',
+  김다혜: 'Dahye Kim',
   '대표이사 / 관세사': 'CEO / Licensed Customs Broker',
   '부대표 / 관세사': 'Vice President / Licensed Customs Broker',
   '상무 / 관세사 자격 / 미국공인회계사': 'Executive Director / Customs Specialist / US CPA',
@@ -195,6 +196,7 @@ export const koToEnTextMap: Record<string, string> = {
   '지사장 / 관세사': 'Branch Director / Licensed Customs Broker',
   '팀장 / 이사 / 관세사': 'Team Leader / Director / Licensed Customs Broker',
   '팀장 / 관세사': 'Team Leader / Licensed Customs Broker',
+  '과장 / KORD Partners US': 'Manager / KORD Partners US',
   '기업심사, 조사 대응, 수출입 통관 총괄': 'Corporate audit response and overall import/export clearance management',
   '기업심사 및 조사, 외환, FTA 자문': 'Corporate audits, foreign exchange compliance, and FTA advisory',
   'FTA 컨설팅, 베트남 관세 및 재고관리': 'FTA consulting, Vietnam customs, and inventory control',
@@ -269,6 +271,46 @@ export const koToEnTextMap: Record<string, string> = {
     'Integrated support from the Hanoi office across customs clearance, LIQ ledger control, FTA, audit response, and ongoing advisory.',
   '미국 수출 시 필요한 FDA 관련 체크포인트와 준비 서류 흐름을 정리합니다.':
     'Organizes FDA checkpoints and required document workflows for U.S. exports.',
+  '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다.':
+    'We support product-certification work for U.S. exports, from product suitability checks and FDA registration to labeling and import alert response.',
+  '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.':
+    'We reduce U.S. export risk by reviewing product-specific requirements in advance across food, health supplements, cosmetics, pet food, and OTC drugs.',
+  '코드 파트너스 US와 연계해 제품 통관 사전검토부터 원료 검토, 미국 규제 준수, 라벨링·영양성분표, FDA 공장 등록, FCE/SID, FSVP, NDI, HACCP 및 각종 Permit 검토까지 미국 상품인증 실무를 종합 지원합니다.':
+    'In coordination with KORD Partners US, we provide end-to-end support for U.S. product certification, from pre-clearance review and ingredient checks to regulatory compliance, labeling, nutrition panels, FDA facility registration, FCE/SID, FSVP, NDI, HACCP, and permit review.',
+  '제품 통관사전검토 및 원료 검토': 'Pre-clearance review and ingredient checks',
+  '미국 규제 준수 검토 및 대행': 'U.S. regulatory compliance review and execution support',
+  'FDA 등록·FCE/SID·FSVP·NDI·HACCP 검토': 'FDA registration, FCE/SID, FSVP, NDI, and HACCP review',
+  '수입경보 해제 및 제조공장 인허가 검토': 'Import alert resolution and manufacturing facility permit review',
+  '수출 적합성 및 미국 수입 적합성 검토': 'Export suitability and U.S. import eligibility review',
+  '라벨링·문안·영양성분표 시안 점검': 'Labeling, copy, and nutrition panel review',
+  'FDA 공장 등록과 관련 Filing 준비': 'FDA facility registration and filing preparation',
+  'Permit 및 채널별 규정 준수 검토': 'Permit and channel-specific compliance review',
+  '수입경보·인허가 이슈 대응': 'Import alert and licensing issue response',
+  '핵심 서비스 소개': 'Core Services',
+  '제품 통관사전검토: 해당 제품의 수출 적합성 검토 서비스 제공':
+    'Pre-clearance product review: suitability checks for export readiness',
+  '원료 검토를 통한 수출 적합성 검토': 'Export suitability review through ingredient assessment',
+  '제품 미국 규제 준수 컨설팅: 해당 제품의 미국 규제 준수 검토 및 대행 서비스 제공':
+    'U.S. regulatory compliance consulting: review and execution support for product-specific compliance requirements',
+  '미국 수입 적합성 검토(원료 검토) 및 라벨링·문안 검토, 영양성분표 시안 제작':
+    'U.S. import eligibility review including ingredient assessment, labeling and copy review, and nutrition panel drafting',
+  'FDA 공장 등록(FFR/DUNS), FCE/SID Filing, FSVP':
+    'FDA facility registration (FFR/DUNS), FCE/SID filing, and FSVP support',
+  'NDI(New Dietary Ingredient), Food Safety Plan / HACCP 검토, 각종 Permit 검토 및 대행':
+    'NDI (New Dietary Ingredient), Food Safety Plan / HACCP review, plus permit review and execution support',
+  '지원 카테고리': 'Supported Categories',
+  화장품: 'Cosmetics',
+  '식품/건강기능식품': 'Food / Health Supplements',
+  '반려동물 식품': 'Pet Food',
+  '세부 검토 및 리스크 제어': 'Risk Control and Review',
+  '제품 리스크 제어 및 경쟁력 제고': 'Product risk control and competitiveness enhancement',
+  '세부 검토를 통한 리스크 제어 서비스 제공': 'Risk-control support through detailed review',
+  '제품 상세페이지 검수': 'Product detail page review',
+  'FDA 수입경보 해제': 'FDA import alert resolution',
+  'FDA / USDA 제조공장 인허가 검토 서비스': 'FDA / USDA manufacturing facility permit review',
+  '미국 유통채널 별 규정 준수': 'U.S. Channel Compliance',
+  '미국 수출에 필요한 통관 전 검토사항과 미국 수출 관련 규제 준수 항목을 연결해 검역·통관 및 관련 컨설팅을 진행합니다.':
+    'We connect pre-clearance review points with U.S. export compliance requirements to support inspection, customs clearance, and related consulting.',
   '통관·신고 시스템 개발 및 운영': 'Customs Declaration System Development & Operations',
   '수출입 신고 자동화, 신고필증 데이터 처리, 관세청 연계 인터페이스까지 관세 실무 중심으로 직접 구축·운영합니다.':
     'Builds and operates customs-focused systems from declaration automation and certificate processing to customs agency integration.',

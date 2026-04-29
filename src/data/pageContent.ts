@@ -836,6 +836,53 @@ const vietnamContacts: ServiceContactPoint[] = [
   { name: '김선웅', role: '관세사' },
 ];
 
+const usFdaSections: ServiceDetailSection[] = [
+  {
+    heading: '핵심 서비스 소개',
+    headingEn: 'Core Services',
+    list: [
+      '제품 통관사전검토: 해당 제품의 수출 적합성 검토 서비스 제공',
+      '원료 검토를 통한 수출 적합성 검토',
+      '제품 미국 규제 준수 컨설팅: 해당 제품의 미국 규제 준수 검토 및 대행 서비스 제공',
+      '미국 수입 적합성 검토(원료 검토) 및 라벨링·문안 검토, 영양성분표 시안 제작',
+      'FDA 공장 등록(FFR/DUNS), FCE/SID Filing, FSVP',
+      'NDI(New Dietary Ingredient), Food Safety Plan / HACCP 검토, 각종 Permit 검토 및 대행',
+    ],
+  },
+  {
+    heading: '지원 카테고리',
+    headingEn: 'Supported Categories',
+    list: ['화장품', '식품/건강기능식품', '반려동물 식품', 'OTC Drug'],
+  },
+  {
+    heading: '세부 검토 및 리스크 제어',
+    headingEn: 'Risk Control and Review',
+    list: [
+      '제품 리스크 제어 및 경쟁력 제고',
+      '세부 검토를 통한 리스크 제어 서비스 제공',
+      '제품 상세페이지 검수',
+      'FDA 수입경보 해제',
+      'FDA / USDA 제조공장 인허가 검토 서비스',
+    ],
+  },
+  {
+    heading: '미국 유통채널 별 규정 준수',
+    headingEn: 'U.S. Channel Compliance',
+    body: [
+      '미국 수출에 필요한 통관 전 검토사항과 미국 수출 관련 규제 준수 항목을 연결해 검역·통관 및 관련 컨설팅을 진행합니다.',
+    ],
+  },
+];
+
+const usFdaContacts: ServiceContactPoint[] = [
+  {
+    name: '김다혜',
+    role: '과장 / KORD Partners US',
+    phone: '010-2128-7393',
+    email: 'dana@kordpartners.com',
+  },
+];
+
 const acvaSections: ServiceDetailSection[] = [
   {
     heading: '개요',
@@ -1398,14 +1445,29 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '기타',
     groupTitleEn: 'Specialized',
     title: '미국 FDA',
-    summary: '미국 수출 시 필요한 FDA 준비 항목을 통관 실무와 연결해 지원합니다.',
+    summary: '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다.',
+    subtitle:
+      '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
     heroImage: '/services/heroes/us-fda.jpg',
     heroImageAlt: '미국 FDA 대응 서비스',
     overview:
-      '품목별 FDA 체크포인트, 제출자료, 통관 연계 절차를 사전에 정리해 미국 수출 단계의 불확실성을 줄이고 대응 속도를 높입니다.',
-    scope: ['FDA 요건/대상 판별', '서류 준비 및 점검', '통관·물류 연계 대응', '사후 이슈 대응 자문'],
-    checkpoints: ['품목 분류 확인', '요건 체크리스트 점검', '제출자료 정비', '출고 전 최종 검토'],
-    relatedExpertNames: ['서영진', '전무열'],
+      '코드 파트너스 US와 연계해 제품 통관 사전검토부터 원료 검토, 미국 규제 준수, 라벨링·영양성분표, FDA 공장 등록, FCE/SID, FSVP, NDI, HACCP 및 각종 Permit 검토까지 미국 상품인증 실무를 종합 지원합니다.',
+    scope: [
+      '제품 통관사전검토 및 원료 검토',
+      '미국 규제 준수 검토 및 대행',
+      'FDA 등록·FCE/SID·FSVP·NDI·HACCP 검토',
+      '수입경보 해제 및 제조공장 인허가 검토',
+    ],
+    checkpoints: [
+      '수출 적합성 및 미국 수입 적합성 검토',
+      '라벨링·문안·영양성분표 시안 점검',
+      'FDA 공장 등록과 관련 Filing 준비',
+      'Permit 및 채널별 규정 준수 검토',
+      '수입경보·인허가 이슈 대응',
+    ],
+    contentSections: usFdaSections,
+    contactPoints: usFdaContacts,
+    relatedExpertNames: ['서영진', '전무열', '김희정'],
     relatedResources: sharedResources,
   },
 ];
