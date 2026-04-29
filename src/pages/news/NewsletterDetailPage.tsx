@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { newsletterItems } from '../../data/home';
+import { useNewsletterRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
-import { getNewsletterAssetSlug } from '../../utils/newsletter';
 
 type NewsletterManifest = {
   slug: string;
@@ -158,24 +157,25 @@ export function NewsletterDetailPage() {
   const newsSubnav = sectionSubnav.news;
   const { newsletterId } = useParams<{ newsletterId: string }>();
 
-  const item = useMemo(() => newsletterItems.find((entry) => entry.id === newsletterId) ?? null, [newsletterId]);
+  const { item, loading: loadingItem } = useNewsletterRecord(newsletterId);
   const [manifest, setManifest] = useState<NewsletterManifest | null>(null);
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [activePageIndex, setActivePageIndex] = useState(0);
 
-  const activeSlug = getNewsletterAssetSlug(item?.downloadHref);
+  const previewManifestUrl = item?.previewManifestUrl ?? null;
+  const previewBasePath = previewManifestUrl?.replace(/\/manifest\.json$/i, '') ?? null;
 
   useEffect(() => {
     let ignore = false;
 
-    if (!activeSlug) {
+    if (!previewManifestUrl) {
       setManifest(null);
       return;
     }
 
     setLoadingPreview(true);
 
-    fetch(`/newsletters/render/${activeSlug}/manifest.json`)
+    fetch(previewManifestUrl)
       .then(async (res) => {
         if (!res.ok) throw new Error('manifest not found');
         const data = (await res.json()) as NewsletterManifest;
@@ -191,15 +191,14 @@ export function NewsletterDetailPage() {
     return () => {
       ignore = true;
     };
-  }, [activeSlug]);
+  }, [previewManifestUrl]);
 
-  const imageUrls =
-    manifest?.images && activeSlug ? manifest.images.map((name) => `/newsletters/render/${activeSlug}/${name}`) : [];
+  const imageUrls = manifest?.images && previewBasePath ? manifest.images.map((name) => `${previewBasePath}/${name}`) : [];
   const currentImageUrl = imageUrls[activePageIndex] ?? null;
 
   useEffect(() => {
     setActivePageIndex(0);
-  }, [activeSlug, imageUrls.length]);
+  }, [previewManifestUrl, imageUrls.length]);
 
   useEffect(() => {
     if (!imageUrls.length) return;
@@ -222,7 +221,7 @@ export function NewsletterDetailPage() {
     setActivePageIndex((current) => Math.min(Math.max(current + direction, 0), imageUrls.length - 1));
   };
 
-  if (!item) {
+  if (!loadingItem && !item) {
     return <Navigate to="/news/newsletter" replace />;
   }
 
@@ -245,8 +244,8 @@ export function NewsletterDetailPage() {
               <ViewerHeader>
                 <ActionRow>
                   <P.CardLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</P.CardLink>
-                  {item.downloadHref ? (
-                    <DownloadLink href={item.downloadHref} target="_blank" rel="noreferrer">
+                  {item?.downloadUrl ? (
+                    <DownloadLink href={item.downloadUrl} target="_blank" rel="noreferrer">
                       {t('원본 다운로드', 'Download Original')}
                     </DownloadLink>
                   ) : null}
@@ -278,7 +277,7 @@ export function NewsletterDetailPage() {
                   <ViewerStage>
                     <PageImage
                       src={currentImageUrl}
-                      alt={`${t(item.title, item.titleEn)} ${t(`${activePageIndex + 1}페이지`, `page ${activePageIndex + 1}`)}`}
+                      alt={`${t(item?.title ?? '', item?.titleEn ?? '')} ${t(`${activePageIndex + 1}페이지`, `page ${activePageIndex + 1}`)}`}
                     />
                   </ViewerStage>
 
@@ -292,7 +291,7 @@ export function NewsletterDetailPage() {
                       >
                         <ThumbnailImage
                           src={src}
-                          alt={`${t(item.title, item.titleEn)} ${t(`${index + 1}페이지 미리보기`, `page ${index + 1} preview`)}`}
+                          alt={`${t(item?.title ?? '', item?.titleEn ?? '')} ${t(`${index + 1}페이지 미리보기`, `page ${index + 1} preview`)}`}
                           loading="lazy"
                         />
                         <ThumbnailLabel>{t(`${index + 1}페이지`, `Page ${index + 1}`)}</ThumbnailLabel>

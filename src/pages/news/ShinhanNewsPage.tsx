@@ -7,8 +7,9 @@ import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { shinhanNewsItems } from '../../data/home';
+import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
+import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../utils/shinhanNews';
 
 const PAGE_SIZE = 20;
 
@@ -21,8 +22,9 @@ function normalizeSearch(value: string) {
 }
 
 export function ShinhanNewsPage() {
-  const { t, tx } = useI18n();
+  const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
+  const { items, loading } = useShinhanNewsRecords();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'flash' | 'seminar'>('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,8 +45,7 @@ export function ShinhanNewsPage() {
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
 
-    return [...shinhanNewsItems]
-      .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
+    return sortShinhanNewsRecords(items)
       .filter((item) => {
         if (selectedCategory !== 'all' && item.category !== selectedCategory) {
           return false;
@@ -57,7 +58,7 @@ export function ShinhanNewsPage() {
         const target = normalizeSearch([item.title, item.summary, item.categoryLabel, item.publishedAt].join(' '));
         return target.includes(normalizedQuery);
       });
-  }, [searchQuery, selectedCategory]);
+  }, [items, searchQuery, selectedCategory]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -72,8 +73,8 @@ export function ShinhanNewsPage() {
         id: item.id,
         anchorId: item.id,
         publishedAt: item.publishedAt,
-        sourceLabel: tx(item.categoryLabel),
-        title: tx(item.title),
+        sourceLabel: getShinhanNewsSourceLabel(item, t('세미나', 'Seminar')),
+        title: t(item.title, item.titleEn),
         to: `/news/shinhan-news/${item.id}`,
         actions: [
           {
@@ -82,7 +83,7 @@ export function ShinhanNewsPage() {
           },
         ],
       })),
-    [pagedItems, t, tx],
+    [pagedItems, t],
   );
 
   const emptyMessage = t('검색 조건에 맞는 소식이 없습니다.', 'No news items match the current filters.');
@@ -117,6 +118,7 @@ export function ShinhanNewsPage() {
             onChipChange={(value) => setSelectedCategory(value as typeof selectedCategory)}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
           />
+          {loading ? <P.CardText>{t('소식을 불러오는 중입니다.', 'Loading news items.')}</P.CardText> : null}
           <NewsListTable
             rows={rows}
             dateLabel={t('일자', 'Date')}

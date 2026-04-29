@@ -277,21 +277,14 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     title: '검역/요건',
     titleEn: 'Quarantine / Requirements',
     primaryHref: '/services/quarantine',
-    description: '검역과 수입요건을 HSK별로 사전 검토해 통관 지연 리스크를 줄입니다.',
-    descriptionEn: 'We review quarantine and import requirements in advance by HSK to reduce delay risks.',
+    description: '검역, 신고, 인증, 허가, 표시기준까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
+    descriptionEn: 'We review quarantine, declarations, certifications, permits, and labeling standards together to reduce import-stage delays.',
     image: '/subpages/service-import-export.jpg',
     items: [
       {
-        label: '검역',
-        labelEn: 'Quarantine',
+        label: '검역·요건',
+        labelEn: 'Quarantine / Requirements',
         href: '/services/quarantine',
-        parentTitle: '검역/요건',
-        parentTitleEn: 'Quarantine / Requirements',
-      },
-      {
-        label: '요건',
-        labelEn: 'Requirements',
-        href: '/services/requirements',
         parentTitle: '검역/요건',
         parentTitleEn: 'Quarantine / Requirements',
       },
@@ -539,11 +532,11 @@ export const recruitBenefitGroups: RecruitBenefitGroup[] = [
     ],
   },
   {
-    category: '선물 / 명절선물·귀향비',
-    categoryEn: 'Gifts & Holiday Support',
+    category: '선물 / 명절선물',
+    categoryEn: 'Gifts & Holiday Gifts',
     items: [
       { label: '창립일선물지급', labelEn: 'Anniversary gifts', detail: '창립일에 맞춘 선물을 제공합니다.', detailEn: 'Gifts are provided for the company anniversary.' },
-      { label: '명절선물/파티', labelEn: 'Holiday gifts and parties', detail: '명절 시즌 선물과 이벤트를 운영합니다.', detailEn: 'Holiday gifts and seasonal events are provided.' },
+      { label: '명절선물', labelEn: 'Holiday gifts', detail: '명절 시즌 선물을 제공합니다.', detailEn: 'Holiday gifts are provided during seasonal holidays.' },
       { label: '생일선물/파티', labelEn: 'Birthday gifts and parties', detail: '생일을 함께 기념하는 선물과 이벤트입니다.', detailEn: 'Birthday gifts and celebrations mark personal milestones.' },
       { label: '도서 무제한 제공', labelEn: 'Unlimited access to books', detail: '도서를 자유롭게 이용할 수 있습니다.', detailEn: 'Books are available for broad employee use.' },
     ],
@@ -589,7 +582,7 @@ export const recruitBenefitDisplayGroups: RecruitBenefitGroup[] = [
   '지원금/보험',
   '조직 문화',
   '근무 환경',
-  '선물 / 명절선물·귀향비',
+  '선물 / 명절선물',
 ].map(getRecruitBenefitGroup);
 
 export const recruitBenefitTotalCount = recruitBenefitGroups.reduce((count, group) => count + group.items.length, 0);
@@ -1091,42 +1084,66 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupKey: 'quarantine-requirements',
     groupTitle: '검역/요건',
     groupTitleEn: 'Quarantine / Requirements',
-    title: '검역',
-    summary: '검역 대상 여부와 제출 절차를 선제 점검해 통관 지연과 보완 리스크를 줄입니다.',
+    title: '검역·요건',
+    summary: '검역, 인허가, 신고, 표시사항까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
     heroImage: '/services/heroes/quarantine.jpg',
-    heroImageAlt: '검역 서비스',
+    heroImageAlt: '검역 및 요건 서비스',
+    subtitle:
+      '정확한 법령 검토와 실무 중심의 대응으로, 수입 단계별 검역·인허가·표시사항 리스크를 사전에 점검하고 안정적인 통관을 지원합니다.',
     overview:
-      '품목별 검역 대상 여부와 기관별 제출 절차를 거래 단계에서 먼저 확인해 통관 단계의 불확실성을 줄입니다. 검역 일정과 필요 서류를 체크리스트로 관리해 반복 보완을 예방합니다.',
+      '수입물품이 국내 반입 및 유통에 앞서 관계 법령상 검역, 신고, 인증, 허가, 표시기준 적합 여부를 검토하고 품목별 특성에 맞는 행정절차를 지원합니다. 식품, 식물, 축산물, 공산품 등은 적용 법령과 요구자료가 서로 달라 사전 검토를 통해 통관 지연, 보완, 반송, 폐기 리스크를 최소화하는 것이 핵심입니다.',
     scope: [
-      '검역 대상 품목 사전 판별',
-      '기관별 제출 절차 및 일정 점검',
-      '필수 검역 서류 사전 준비',
-      '보완 요청 대응 및 커뮤니케이션 지원',
+      '식품·식물·축산물·공산품별 검역 및 요건 검토',
+      '수입 가능 여부와 법령상 제한사항 사전 확인',
+      '표시사항, 성분, 규격, 제조공정 검토',
+      '신고, 승인, 인증, 확인 등 관계기관 절차 지원',
     ],
-    checkpoints: ['품목 분류 확인', '검역 대상 항목 매핑', '사전서류 준비', '신고 후 보완 대응'],
-    relatedExpertNames: ['서영진', '전무열'],
-    relatedResources: sharedResources,
-  },
-  {
-    id: 'requirements',
-    path: '/services/requirements',
-    groupKey: 'quarantine-requirements',
-    groupTitle: '검역/요건',
-    groupTitleEn: 'Quarantine / Requirements',
-    title: '요건',
-    summary: '수입요건과 인허가 기준을 사전에 정리해 신고 보완과 반출 지연 가능성을 낮춥니다.',
-    heroImage: '/services/heroes/requirements.jpg',
-    heroImageAlt: '요건 서비스',
-    overview:
-      '수입요건, 인증, 허가 기준을 품목별로 점검해 신고 전 단계에서 필요한 자료를 정비합니다. 거래 구조와 제출 서류를 함께 검토해 반복 보완 없이 통관 흐름이 이어지도록 지원합니다.',
-    scope: [
-      '수입요건·인허가 기준 검토',
-      '인증 및 제출서류 체크리스트 설계',
-      '신고 전 정합성 사전 점검',
-      '보완 요청 대응 및 후속 관리',
+    checkpoints: ['사전 검토', '수입 가능성 확인', '구비서류 점검', '이슈 대응'],
+    contentSections: [
+      {
+        heading: '개요',
+        body: [
+          '“검역 및 요건업무”란 수입물품이 국내 반입 및 유통에 앞서 관계 법령에서 정한 검역, 신고, 인증, 허가 및 표시기준 적합 여부를 검토하고, 품목별 특성에 따라 필요한 행정절차를 이행하도록 지원하는 업무입니다.',
+          '품목에 따라 식품, 식물, 축산물, 공산품 등 적용 법령과 요구자료가 상이하므로, 사전 검토를 통해 통관 지연과 보완, 반송, 폐기 등의 리스크를 최소화하는 것이 핵심입니다.',
+        ],
+      },
+      {
+        heading: '요건의 종류',
+        list: [
+          '식품검역: 가공식품, 식품첨가물, 건강기능식품, 기구·용기·포장 등 식품 관련 물품에 대하여 수입신고, 한글표시사항, 원재료 및 배합비, 제조공정, 성분규격, 검사대상 여부 등을 검토하고 관련 절차를 수행합니다.',
+          '식물검역: 곡류, 과실류, 채소류, 종자류, 목재류 및 기타 식물성 물품에 대하여 병해충 유입 방지를 위한 검역요건을 확인하고, 수입금지·제한 여부, 검역증명서 필요 여부, 소독·검사 대상 여부 등을 검토합니다.',
+          '축산물검역: 육류, 유가공품, 알가공품 등 축산물 및 축산물 원료가 포함된 물품에 대하여 검역조건, 수출국 및 제조시설 적합 여부, 위생증명서 구비 여부, 수입허용 조건 등을 검토하고 관련 신고 및 검역 절차를 지원합니다.',
+          '기타(KC, 화장품): 전기용품, 생활용품, 어린이제품 등에 대한 KC 인증·확인 대상 여부와 화장품 수입 시 요구되는 표시기준, 책임판매업 관련 사항, 기능성 여부 등 개별 법령에 따른 요건을 검토하여 통관 전 필요한 조치를 지원합니다.',
+        ],
+      },
+      {
+        heading: '주요 수행 분야',
+        list: [
+          '사전 검토: 품목별 검역 및 요건 해당 여부를 사전에 검토',
+          '수입 가능성 확인: 수입 가능 여부 및 법령상 제한사항을 확인',
+          '표시사항 검토: 한글표시사항 및 제품 라벨 적정성을 검토',
+          '성분·규격 검토: 원재료, 배합비율, 제조공정, 성분규격을 검토',
+          '구비서류 확인: 검역증명서, 위생증명서, 성분서 등 구비서류를 확인',
+          '행정절차 지원: 관계기관 신고, 승인, 인증 및 확인 절차를 지원',
+          '이슈 대응: 통관 보완, 반려, 검사 지연 등 발생 이슈에 대응',
+        ],
+      },
     ],
-    checkpoints: ['품목별 요건 확인', '인허가 기준 매핑', '제출자료 정비', '신고 후 이슈 대응'],
-    relatedExpertNames: ['서영진', '전무열'],
+    contactPoints: [
+      {
+        name: '서정용',
+        role: '팀장',
+        phone: '070-4343-7787',
+        email: 'shfood@shcs.kr',
+      },
+      {
+        name: '이경심',
+        role: '책임',
+        phone: '070-4343-7789',
+        email: 'shfood@shcs.kr',
+      },
+    ],
+    relatedExpertNames: ['서영진', '전무열', '김희정'],
     relatedResources: sharedResources,
   },
   {

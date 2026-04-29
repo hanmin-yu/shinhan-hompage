@@ -23,7 +23,10 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
     <S.Header>
       <S.HeaderInner>
         <S.Brand to="/">
-          <S.HeaderBrandImage src="/brand-header-logo.jpeg" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
+          <S.HeaderBrandImage
+            src="/brand-header-logo-transparent.png"
+            alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')}
+          />
         </S.Brand>
 
         <S.HeaderRight>
@@ -52,7 +55,6 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
                 </svg>
               </S.HeaderUtilityIconLink>
             </S.HeaderUtilityLinks>
-            <S.ContactButton to="/contact">Contact Us</S.ContactButton>
             <S.MobileIconButton
               type="button"
               kind="menu"

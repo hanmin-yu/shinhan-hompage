@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { newsletterItems, shinhanNewsItems } from '../../data/home';
 import { useIssueReports } from '../../hooks/useIssueReports';
+import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const IntroList = styled.ul`
@@ -78,10 +78,12 @@ export function NewsPage() {
   const { t, tx } = useI18n();
   const newsSubnav = sectionSubnav.news;
   const { reports } = useIssueReports();
+  const { items: shinhanNewsItems } = useShinhanNewsRecords();
+  const { items: newsletters } = useNewsletterRecords();
 
   const issuePreview = reports.filter((item) => item.status !== 'placeholder').slice(0, 3);
   const shinhanNewsPreview = shinhanNewsItems.slice(0, 3);
-  const newsletterPreview = newsletterItems.slice(0, 3);
+  const newsletterPreview = newsletters.slice(0, 3);
 
   return (
     <>
@@ -145,8 +147,8 @@ export function NewsPage() {
                 <EditorialItem key={item.id}>
                   <ItemDate>{item.publishedAt}</ItemDate>
                   <ItemMeta>
-                    <ItemTitle>{tx(item.title)}</ItemTitle>
-                    <ItemSummary>{tx(item.summary)}</ItemSummary>
+                    <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                    <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
                   </ItemMeta>
                   <ItemLink to="/news/shinhan-news">{t('목록 보기', 'View')}</ItemLink>
                 </EditorialItem>
@@ -162,8 +164,8 @@ export function NewsPage() {
                 <EditorialItem key={item.id}>
                   <ItemDate>{item.publishedAt}</ItemDate>
                   <ItemMeta>
-                    <ItemTitle>{tx(item.title)}</ItemTitle>
-                    <ItemSummary>{tx(item.summary)}</ItemSummary>
+                    <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                    <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
                   </ItemMeta>
                   <ItemLink to="/news/newsletter">{t('목록 보기', 'View')}</ItemLink>
                 </EditorialItem>

@@ -7,6 +7,10 @@ import { SiteHeader } from './components/home/layout/SiteHeader';
 import * as S from './components/home/homeStyles';
 import { useRevealOnScroll } from './hooks/useRevealOnScroll';
 import { SiteLanguageProvider } from './i18n/useI18n';
+import { AdminLoginPage } from './pages/admin/AdminLoginPage';
+import { AdminNewsPage } from './pages/admin/AdminNewsPage';
+import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
+import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
 import { AboutPage } from './pages/about/AboutPage';
 import { HistoryPage } from './pages/about/HistoryPage';
 import { LocationPage } from './pages/about/LocationPage';
@@ -33,7 +37,6 @@ import { ServiceDetailPage } from './pages/services/ServiceDetailPage';
 const serviceRoutes = [
   '/services/import-export',
   '/services/quarantine',
-  '/services/requirements',
   '/services/consulting/fta',
   '/services/consulting/aeo',
   '/services/consulting/customs-audit',
@@ -129,6 +132,7 @@ function AppShell() {
               <Route path="/services" element={<Navigate to="/services/import-export" replace />} />
               <Route path="/services/consulting" element={<Navigate to="/services/consulting/fta" replace />} />
               <Route path="/services/quarantine-requirements" element={<Navigate to="/services/quarantine" replace />} />
+              <Route path="/services/requirements" element={<Navigate to="/services/quarantine" replace />} />
               {serviceRoutes.map((path) => (
                 <Route key={path} path={path} element={<ServiceDetailPage path={path} />} />
               ))}
@@ -143,6 +147,12 @@ function AppShell() {
               <Route path="/news/newsletter/:newsletterId" element={<NewsletterDetailPage />} />
               <Route path="/news/seminar" element={<SeminarPage />} />
               <Route path="/news/blog" element={<BlogPage />} />
+
+              <Route path="/admin" element={<Navigate to="/admin/news" replace />} />
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin/news" element={<AdminNewsPage />} />
+              <Route path="/admin/news/shinhan-news" element={<AdminShinhanNewsPage />} />
+              <Route path="/admin/news/newsletter" element={<AdminNewsletterPage />} />
 
               <Route path="/offices" element={<OfficesPage />} />
               <Route path="/contact" element={<ContactPage />} />

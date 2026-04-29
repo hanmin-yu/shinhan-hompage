@@ -89,22 +89,6 @@ const RoleHint = styled.p`
   line-height: 1.7;
 `;
 
-const GuidePanel = styled(P.Panel)`
-  display: grid;
-  gap: 16px;
-  padding: 24px;
-  border-radius: 20px;
-`;
-
-const RoleCardGrid = styled(P.Grid)`
-  gap: 14px;
-`;
-
-const RoleCard = styled(P.Card)`
-  padding: 20px;
-  border-radius: 18px;
-`;
-
 const BenefitSummaryGrid = styled(P.Grid)`
   gap: 26px 18px;
   margin-top: 44px;
@@ -406,31 +390,6 @@ export function RecruitPage() {
             </RoleCloud>
           </RolePanel>
         </IntroLayout>
-      </P.PageSection>
-
-      <P.PageSection tone="soft">
-        <P.PageContainer data-reveal>
-          <P.SectionHead>
-            <div>
-              <P.Kicker>{t('채용 안내', 'Recruitment Guide')}</P.Kicker>
-              <P.SectionTitle>{t('모집 직무 안내', 'Role Track Guide')}</P.SectionTitle>
-            </div>
-          </P.SectionHead>
-          <GuidePanel>
-            <div>
-              <P.Kicker>{t('모집 직무', 'Open Roles')}</P.Kicker>
-              <P.SectionTitle style={{ fontSize: '1.5rem', marginTop: 8 }}>{t('채용 직무군', 'Role Tracks')}</P.SectionTitle>
-            </div>
-            <P.CardText>{t('현재 모집 중인 직무군입니다.', 'Current role tracks.')}</P.CardText>
-            <RoleCardGrid columns={3}>
-              {recruitRoles.map((role) => (
-                <RoleCard key={role.title}>
-                  <P.CardTitle>{t(role.title, role.titleEn)}</P.CardTitle>
-                </RoleCard>
-              ))}
-            </RoleCardGrid>
-          </GuidePanel>
-        </P.PageContainer>
       </P.PageSection>
 
       <P.PageSection>

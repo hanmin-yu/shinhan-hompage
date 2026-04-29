@@ -1,4 +1,5 @@
 export type SiteLanguage = 'ko' | 'en';
+export type NewsAdminMode = 'readonly' | 'enabled';
 
 export type LinkItem = {
   id: string;
@@ -71,6 +72,8 @@ export type OfficeBranch = {
   id: string;
   label: string;
   labelEn: string;
+  mapQuery?: string;
+  mapQueryEn?: string;
   shortLabel: string;
   shortLabelEn: string;
   region: string;
@@ -133,6 +136,16 @@ export type ShinhanNewsDetail = {
   bodyHtml?: string;
 };
 
+export type ShinhanNewsRecord = ShinhanNewsItem & {
+  titleEn: string;
+  summaryEn: string;
+  author?: string;
+  bodyHtml?: string;
+  status: 'published';
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type NewsletterItem = {
   id: string;
   issue: string;
@@ -145,4 +158,21 @@ export type NewsletterItem = {
   language?: string;
   languageEn?: string;
   downloadHref?: string;
+  downloadUrl?: string;
+};
+
+export type NewsletterRecord = NewsletterItem & {
+  status: 'published';
+  previewManifestUrl?: string | null;
+  previewImages?: string[];
+  downloadFileName?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type AdminSession = {
+  mode: NewsAdminMode;
+  isAuthenticated: boolean;
+  isReadOnly: boolean;
+  username?: string;
 };

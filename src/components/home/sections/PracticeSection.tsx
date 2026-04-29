@@ -35,9 +35,9 @@ const practiceCards = [
   },
   {
     id: 'practice-quarantine',
-    title: '검역.요건',
+    title: '검역·요건',
     meta: 'REQUIREMENTS',
-    body: '검역/요건 전담인력 운영을 통해 HSK별로 세분화된 검토를 수행하여 법적 안정성을 보장합니다.',
+    body: '검역, 인증, 인허가, 표시사항까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
     href: '/services/quarantine',
     titleEn: 'Quarantine & Requirements',
     metaEn: 'REQUIREMENTS',

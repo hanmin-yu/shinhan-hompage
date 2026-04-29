@@ -7,7 +7,7 @@ import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { newsletterItems } from '../../data/home';
+import { useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const PAGE_SIZE = 20;
@@ -23,6 +23,7 @@ function normalizeSearch(value: string) {
 export function NewsletterPage() {
   const { language, t } = useI18n();
   const newsSubnav = sectionSubnav.news;
+  const { items, loading } = useNewsletterRecords();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +44,7 @@ export function NewsletterPage() {
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
 
-    const searched = newsletterItems.filter((item) => {
+    const searched = items.filter((item) => {
       if (selectedLanguage !== 'all' && (item.language ?? '') !== selectedLanguage) {
         return false;
       }
@@ -63,7 +64,7 @@ export function NewsletterPage() {
       return target.includes(normalizedQuery);
     });
     return searched;
-  }, [language, searchQuery, selectedLanguage]);
+  }, [items, language, searchQuery, selectedLanguage]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -82,8 +83,8 @@ export function NewsletterPage() {
         to: `/news/newsletter/${item.id}`,
         actions: [
           { label: t('보기', 'Read'), to: `/news/newsletter/${item.id}` },
-          ...(item.downloadHref
-            ? [{ label: t('다운로드', 'Download'), href: item.downloadHref, external: true }]
+          ...(item.downloadUrl
+            ? [{ label: t('다운로드', 'Download'), href: item.downloadUrl, external: true }]
             : []),
         ],
       })),
@@ -133,6 +134,7 @@ export function NewsletterPage() {
             }}
             resetDisabled={!filtersChanged}
           />
+          {loading ? <P.CardText>{t('소식지를 불러오는 중입니다.', 'Loading newsletters.')}</P.CardText> : null}
           <NewsListTable
             rows={rows}
             dateLabel={t('발행월', 'Issue')}

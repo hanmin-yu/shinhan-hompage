@@ -104,7 +104,7 @@ export function LocationPage() {
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
-  const mapSearchQuery = '신한관세법인';
+  const mapSearchQuery = t(hqOffice?.mapQuery ?? '신한관세법인', hqOffice?.mapQueryEn ?? 'Shinhan Customs Service');
   const naverMapUrl = getNaverMapUrl(mapSearchQuery);
   const googleMapUrl = getGoogleMapUrl(mapSearchQuery);
   const googleMapEmbedUrl = getGoogleMapEmbedUrl(mapSearchQuery);

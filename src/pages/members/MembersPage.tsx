@@ -38,7 +38,7 @@ export function MembersPage() {
 
         <P.Grid columns={3}>
           {executives.map((member) => (
-            <ExecutiveCard key={member.name}>
+            <ExecutiveCard key={member.name} tabIndex={0}>
               {member.image ? <Portrait src={member.image} alt={tx(member.name)} /> : null}
               <Content>
                 <Name>{tx(member.name)}</Name>
@@ -70,6 +70,7 @@ export function MembersPage() {
 }
 
 const ExecutiveCard = styled.article`
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -77,6 +78,37 @@ const ExecutiveCard = styled.article`
   border: 1px solid rgba(18, 72, 143, 0.12);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.98));
   box-shadow: 0 24px 42px rgba(16, 53, 114, 0.08);
+  cursor: default;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    box-shadow 240ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(43, 118, 222, 0.18), rgba(43, 118, 222, 0) 42%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-8px);
+    border-color: rgba(28, 92, 186, 0.42);
+    box-shadow:
+      0 34px 54px rgba(16, 63, 136, 0.2),
+      0 8px 24px rgba(42, 114, 210, 0.16);
+    outline: none;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+  }
 `;
 
 const Portrait = styled.img`
@@ -84,6 +116,20 @@ const Portrait = styled.img`
   aspect-ratio: 4 / 5;
   object-fit: cover;
   background: linear-gradient(180deg, #f2f5f9, #e8edf4);
+  transition:
+    box-shadow 220ms ease,
+    filter 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  ${ExecutiveCard}:hover &,
+  ${ExecutiveCard}:focus-visible & {
+    box-shadow:
+      inset 0 0 0 3px rgba(38, 109, 214, 0.85),
+      inset 0 -22px 38px rgba(43, 102, 190, 0.12),
+      0 16px 32px rgba(22, 81, 170, 0.14);
+    filter: saturate(1.06) contrast(1.02);
+    transform: scale(1.035);
+  }
 `;
 
 const Content = styled.div`
@@ -91,6 +137,12 @@ const Content = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 22px 22px 24px;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  ${ExecutiveCard}:hover &,
+  ${ExecutiveCard}:focus-visible & {
+    transform: translateY(-2px);
+  }
 `;
 
 const Name = styled.h3`

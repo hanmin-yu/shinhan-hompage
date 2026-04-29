@@ -4,16 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "npm run dev:full",
+    "dev:web": "vite --host --port 4173",
+    "dev:api": "tsx watch server/news-admin-api.ts",
+    "dev:full": "concurrently -k -n web,api \"npm run dev:web\" \"npm run dev:api\"",
     "build": "tsc && vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host --port 4173"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
+    "concurrently": "^9.2.1",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.3"
+    "react-router-dom": "^6.30.3",
+    "tsx": "^4.21.0",
+    "unzipper": "^0.12.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

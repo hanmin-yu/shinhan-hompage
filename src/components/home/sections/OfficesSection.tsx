@@ -380,6 +380,7 @@ export function OfficesSection() {
   const { t } = useI18n();
   const [selectedOfficeId, setSelectedOfficeId] = useState('incheon');
   const selectedOffice = officeBranches.find((office) => office.id === selectedOfficeId) ?? officeBranches[0];
+  const mapQuery = t(selectedOffice.mapQuery ?? selectedOffice.label, selectedOffice.mapQueryEn ?? selectedOffice.labelEn);
 
   const primaryOffices = officeBranches.filter((office) => getOfficeGroup(office.id) === 'primary');
   const networkOffices = officeBranches.filter((office) => getOfficeGroup(office.id) === 'network');
@@ -388,12 +389,12 @@ export function OfficesSection() {
 
   const phoneHref = useMemo(() => `tel:${getDialNumber(selectedOffice.tel)}`, [selectedOffice.tel]);
   const googleMapUrl = useMemo(
-    () => getGoogleMapUrl(selectedOffice.address, selectedOffice.label),
-    [selectedOffice.address, selectedOffice.label],
+    () => getGoogleMapUrl(selectedOffice.address, mapQuery),
+    [mapQuery, selectedOffice.address],
   );
   const naverMapUrl = useMemo(
-    () => getNaverMapUrl(selectedOffice.address, selectedOffice.label),
-    [selectedOffice.address, selectedOffice.label],
+    () => getNaverMapUrl(selectedOffice.address, mapQuery),
+    [mapQuery, selectedOffice.address],
   );
   const directionsUrl = selectedOffice.id === 'vietnam' ? googleMapUrl : naverMapUrl;
 

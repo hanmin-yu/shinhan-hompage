@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
-import { useEffect, useMemo, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { shinhanNewsItems } from '../../data/home';
-import type { ShinhanNewsDetail } from '../../types/site';
+import { useShinhanNewsRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
+import { getShinhanNewsSourceLabel } from '../../utils/shinhanNews';
 
 const DetailSection = styled(P.CompactPageSection)`
   padding-top: 0;
@@ -113,45 +112,13 @@ const StatusText = styled.p`
 `;
 
 export function ShinhanNewsDetailPage() {
-  const { t, tx } = useI18n();
+  const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
   const { newsId } = useParams<{ newsId: string }>();
 
-  const item = useMemo(() => shinhanNewsItems.find((entry) => entry.id === newsId) ?? null, [newsId]);
-  const [detail, setDetail] = useState<ShinhanNewsDetail | null>(null);
-  const [loadingDetail, setLoadingDetail] = useState(true);
+  const { item, loading } = useShinhanNewsRecord(newsId);
 
-  useEffect(() => {
-    let ignore = false;
-
-    if (!newsId) {
-      setDetail(null);
-      setLoadingDetail(false);
-      return;
-    }
-
-    setLoadingDetail(true);
-
-    import('../../data/shinhanNewsDetails')
-      .then((module) => {
-        if (ignore) return;
-        setDetail(module.shinhanNewsDetails[newsId] ?? null);
-      })
-      .catch(() => {
-        if (ignore) return;
-        setDetail(null);
-      })
-      .finally(() => {
-        if (ignore) return;
-        setLoadingDetail(false);
-      });
-
-    return () => {
-      ignore = true;
-    };
-  }, [newsId]);
-
-  if (!item) {
+  if (!loading && !item) {
     return <Navigate to="/news/shinhan-news" replace />;
   }
 
@@ -176,17 +143,17 @@ export function ShinhanNewsDetailPage() {
         <P.PageContainer data-reveal>
           <DetailCard>
             <MetaRow>
-              <CategoryBadge>{tx(item.categoryLabel)}</CategoryBadge>
-              <span>{item.publishedAt}</span>
-              {detail?.author ? <span>{detail.author}</span> : null}
+              <CategoryBadge>{item ? getShinhanNewsSourceLabel(item, t('세미나', 'Seminar')) : 'FLASH'}</CategoryBadge>
+              <span>{item?.publishedAt}</span>
+              {item?.author ? <span>{item.author}</span> : null}
             </MetaRow>
-            <DetailTitle>{tx(item.title)}</DetailTitle>
+            <DetailTitle>{item ? t(item.title, item.titleEn) : ''}</DetailTitle>
             <ActionRow>
               <P.CardLink to="/news/shinhan-news">{t('목록으로', 'Back to List')}</P.CardLink>
             </ActionRow>
-            {loadingDetail ? <StatusText>{t('상세 내용을 불러오는 중입니다.', 'Loading article details.')}</StatusText> : null}
-            {!loadingDetail && detail?.bodyHtml ? <ContentWrap dangerouslySetInnerHTML={{ __html: detail.bodyHtml }} /> : null}
-            {!loadingDetail && !detail?.bodyHtml ? (
+            {loading ? <StatusText>{t('상세 내용을 불러오는 중입니다.', 'Loading article details.')}</StatusText> : null}
+            {!loading && item?.bodyHtml ? <ContentWrap dangerouslySetInnerHTML={{ __html: item.bodyHtml }} /> : null}
+            {!loading && !item?.bodyHtml ? (
               <StatusText>{t('상세 내용을 찾을 수 없습니다.', 'The article content could not be found.')}</StatusText>
             ) : null}
           </DetailCard>

@@ -253,9 +253,10 @@ export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 28px;
   flex: 1;
   min-width: 0;
+  margin-left: auto;
 
   @media (max-width: 768px) {
     gap: 10px;
@@ -432,16 +433,19 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0;
-  font-size: 1.08rem;
+  width: 100%;
+  gap: 6px;
+  font-size: 1.16rem;
   color: ${palette.textPrimary};
   white-space: nowrap;
 
   @media (max-width: 1680px) {
-    font-size: 1.02rem;
+    gap: 4px;
+    font-size: 1.08rem;
   }
 
   @media (max-width: 1480px) {
+    gap: 2px;
     font-size: 0.95rem;
   }
 `;
@@ -462,13 +466,13 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   min-height: 80px;
-  padding: 0 12px;
+  padding: 0 20px;
   position: relative;
   color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.32rem;
   font-weight: 900;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -476,19 +480,19 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   transition: color 0.18s ease;
 
   @media (max-width: 1680px) {
-    gap: 6px;
-    padding: 0 10px;
-    font-size: 1.1rem;
+    gap: 8px;
+    padding: 0 16px;
+    font-size: 1.18rem;
   }
 
   @media (max-width: 1480px) {
-    padding: 0 8px;
-    font-size: 1rem;
+    padding: 0 10px;
+    font-size: 1.04rem;
   }
 
   @media (max-width: 1380px) {
     min-height: 78px;
-    padding: 0 5px;
+    padding: 0 7px;
     font-size: 0.92rem;
   }
 
@@ -634,9 +638,11 @@ export const HeaderTools = styled.div`
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
+  margin-right: 22px;
 
   @media (max-width: 1320px) {
     gap: 10px;
+    margin-right: 0;
   }
 
   @media (max-width: 560px) {
@@ -647,9 +653,9 @@ export const HeaderTools = styled.div`
 export const HeaderUtilityLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
-  margin-left: 4px;
-  padding-left: 8px;
+  gap: 4px;
+  margin-left: 14px;
+  padding-left: 18px;
   border-left: 1px solid rgba(70, 102, 144, 0.22);
 
   @media (max-width: 1320px) {
@@ -661,11 +667,11 @@ export const HeaderUtilityLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 0 8px;
+  min-height: 32px;
+  padding: 0 10px;
   color: ${palette.textBody};
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
   white-space: nowrap;
   word-break: keep-all;
@@ -691,8 +697,8 @@ export const HeaderUtilityIconLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   color: ${palette.textBody};
   transition:
     color 0.18s ease,
@@ -704,8 +710,8 @@ export const HeaderUtilityIconLink = styled(Link)`
   }
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: block;
     fill: none;
     stroke: currentColor;
