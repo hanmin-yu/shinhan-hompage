@@ -309,12 +309,12 @@ export const Header = styled.header<{ $overHero?: boolean }>`
     $overHero
       ? `linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(239, 247, 255, 0.72) 58%, rgba(239, 247, 255, 0) 100%)`
       : `
-    radial-gradient(circle at 12% 18%, rgba(33, 101, 193, 0.14), transparent 24%),
-    radial-gradient(circle at 88% 16%, rgba(23, 159, 150, 0.1), transparent 22%),
-    linear-gradient(180deg, rgba(237, 244, 255, 0.96) 0%, rgba(244, 248, 255, 0.94) 100%)`};
-  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : palette.lineSoft)};
-  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : '0 12px 30px rgba(16, 48, 104, 0.08)')};
-  backdrop-filter: blur(18px);
+    radial-gradient(circle at 14% 0%, rgba(33, 101, 193, 0.1), transparent 34%),
+    radial-gradient(circle at 88% 0%, rgba(23, 159, 150, 0.07), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 249, 255, 0.62) 54%, rgba(239, 247, 255, 0) 100%)`};
+  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : 'rgba(33, 101, 193, 0)')};
+  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : 'none')};
+  backdrop-filter: blur(10px);
 
   ${({ $overHero }) =>
     $overHero

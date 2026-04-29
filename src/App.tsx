@@ -13,7 +13,7 @@ import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
 import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
 import { AboutPage } from './pages/about/AboutPage';
 import { HistoryPage } from './pages/about/HistoryPage';
-import { LocationPage } from './pages/about/LocationPage';
+import { DirectionsPage, LocationPage } from './pages/about/LocationPage';
 import { MessagePage } from './pages/about/MessagePage';
 import { ContactPage } from './pages/contact/ContactPage';
 import { HomePage } from './pages/HomePage';
@@ -123,6 +123,7 @@ function AppShell() {
               <Route path="/about/history" element={<HistoryPage />} />
               <Route path="/about/message" element={<MessagePage />} />
               <Route path="/about/location" element={<LocationPage />} />
+              <Route path="/location" element={<DirectionsPage />} />
 
               <Route path="/members" element={<Navigate to="/members/org" replace />} />
               <Route path="/members/org" element={<OrgPage />} />

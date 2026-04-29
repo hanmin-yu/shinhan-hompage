@@ -69,7 +69,7 @@ export const mobileQuickLinks: LinkItem[] = [
   { id: 'consult', label: 'Contact US', to: '/contact' },
   { id: 'recruit', label: '채용', to: '/recruit' },
   { id: 'offices', label: '사무소', to: '/offices' },
-  { id: 'directions', label: '오시는 길', to: '/about/location' },
+  { id: 'directions', label: '오시는 길', to: '/location' },
 ];
 
 function localizeLabel(label: string, language: SiteLanguage) {

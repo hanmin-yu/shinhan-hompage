@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import * as P from '../../components/site/PagePrimitives';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
-import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
 
 export function ContactPage() {
   const { t } = useI18n();
@@ -12,27 +11,22 @@ export function ContactPage() {
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
-  const mapSearchQuery = '신한관세법인';
-  const naverMapUrl = getNaverMapUrl(mapSearchQuery);
-  const googleMapUrl = getGoogleMapUrl(mapSearchQuery);
-  const googleMapEmbedUrl = getGoogleMapEmbedUrl(mapSearchQuery);
 
   return (
     <P.HeroSection>
       <SectionInner>
-        <InquiryGrid>
+        <ContactGrid>
           <InfoPanel>
             <P.Kicker>Contact Us</P.Kicker>
             <P.SectionTitle>{t('문의', 'Contact')}</P.SectionTitle>
             <P.Lead>
               {t(
-                '기본 연락처와 본사 위치를 확인하고, 필요한 상담 내용을 온라인으로 남길 수 있습니다.',
-                'Check our primary contact details and leave your inquiry online.',
+                '신한관세법인의 대표 연락 정보입니다. 문의가 필요하신 경우 아래 연락처로 편하게 연락해주세요.',
+                'Primary contact details for Shinhan Customs Service.',
               )}
             </P.Lead>
 
             <InfoActions>
-              <P.PrimaryButton to="/about/location">{t('오시는 길 보기', 'View Directions')}</P.PrimaryButton>
               <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
                 {t('대표번호 연결', 'Call Main Line')}
               </InfoActionLink>
@@ -65,24 +59,15 @@ export function ContactPage() {
 
           <InquiryPanel>
             <InquiryHeader>
-              <InquiryIcon aria-hidden="true">?</InquiryIcon>
-              <div>
-                <InquiryTitle>{t('온라인 문의하기', 'Online Inquiry')}</InquiryTitle>
-                <InquiryText>
-                  {t(
-                    '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
-                    'Leave your inquiry and our team will review it.',
-                  )}
-                </InquiryText>
-              </div>
+              <P.Kicker>Online Inquiry</P.Kicker>
+              <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
+              <InquiryText>
+                {t(
+                  '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
+                  'Leave your inquiry and our team will review it.',
+                )}
+              </InquiryText>
             </InquiryHeader>
-
-            <PrivacyNotice>
-              {t(
-                '안심하세요. 문의 내용은 상담 안내 목적으로만 확인합니다.',
-                'Your inquiry is reviewed only for consultation guidance.',
-              )}
-            </PrivacyNotice>
 
             <InquiryForm onSubmit={(event) => event.preventDefault()}>
               <FieldGroup>
@@ -106,85 +91,22 @@ export function ContactPage() {
                   ))}
                 </SelectInput>
               </FieldGroup>
+              <FieldGroup>
+                <FieldLabel htmlFor="contact-email">{t('이메일', 'Email')}</FieldLabel>
+                <TextInput id="contact-email" name="email" placeholder={t('이메일 주소', 'Email address')} />
+              </FieldGroup>
               <FieldGroup $wide>
                 <FieldLabel htmlFor="contact-message">{t('문의내용', 'Inquiry')}</FieldLabel>
                 <TextArea id="contact-message" name="message" placeholder={t('내용을 입력해주세요.', 'Enter your inquiry.')} />
               </FieldGroup>
-              <ConsentArea>
-                <ConsentLabel>
-                  <input type="checkbox" name="privacy" />
-                  <span>{t('개인정보수집에 동의합니다.', 'I agree to the collection of personal information.')}</span>
-                </ConsentLabel>
-                <ConsentLabel>
-                  <input type="checkbox" name="age" />
-                  <span>{t('만 14세 이상입니다.', 'I am 14 years of age or older.')}</span>
-                </ConsentLabel>
-              </ConsentArea>
-              <SubmitButton type="submit">{t('상담신청서 제출', 'Submit Inquiry')}</SubmitButton>
+              <ConsentLabel>
+                <input type="checkbox" name="privacy" />
+                <span>{t('개인정보 수집 및 이용에 동의합니다.', 'I agree to the collection and use of personal information.')}</span>
+              </ConsentLabel>
+              <SubmitButton type="submit">{t('문의 보내기', 'Send Inquiry')}</SubmitButton>
             </InquiryForm>
           </InquiryPanel>
-        </InquiryGrid>
-
-        <LocationGrid>
-          <MapPanel>
-            <P.Kicker>Map</P.Kicker>
-            <P.SectionTitle>{t('본사 지도 안내', 'HQ Map')}</P.SectionTitle>
-            <P.CardText>
-              {t(
-                '서울 본사 위치를 크게 확인하고, 네이버 지도와 Google 지도로 바로 이동할 수 있습니다.',
-                'Review the Seoul HQ location in detail and jump directly to Naver Map or Google Maps.',
-              )}
-            </P.CardText>
-            <MapActions>
-              <MapPrimaryLink href={naverMapUrl} target="_blank" rel="noreferrer">
-                {t('네이버 지도 열기', 'Open Naver Map')}
-              </MapPrimaryLink>
-              <MapSecondaryLink href={googleMapUrl} target="_blank" rel="noreferrer">
-                {t('Google 지도 열기', 'Open Google Maps')}
-              </MapSecondaryLink>
-            </MapActions>
-            <MapFrame>
-              <iframe
-                src={googleMapEmbedUrl}
-                title={t('서울본사 지도', 'Seoul HQ Map')}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </MapFrame>
-          </MapPanel>
-
-          <GuidePanel>
-            <P.Kicker>Visit Guide</P.Kicker>
-            <P.SectionTitle>{t('방문 전 확인사항', 'Before Your Visit')}</P.SectionTitle>
-            <GuideList>
-              <GuideItem>
-                <GuideLabel>{t('주소', 'Address')}</GuideLabel>
-                <GuideText>{t(officeAddress, officeAddressEn)}</GuideText>
-              </GuideItem>
-              <GuideItem>
-                <GuideLabel>{t('대표번호', 'Phone')}</GuideLabel>
-                <GuideText>{officePhone}</GuideText>
-              </GuideItem>
-              <GuideItem>
-                <GuideLabel>{t('팩스번호', 'Fax')}</GuideLabel>
-                <GuideText>{officeFax}</GuideText>
-              </GuideItem>
-              <GuideItem>
-                <GuideLabel>{t('이메일', 'Email')}</GuideLabel>
-                <GuideText>{siteContact.email}</GuideText>
-              </GuideItem>
-            </GuideList>
-            <GuideCallout>
-              {t(
-                '방문 전 담당자와 일정을 조율하시면 보다 정확한 안내를 받으실 수 있습니다.',
-                'Coordinating your visit with the responsible team in advance helps us guide you more accurately.',
-              )}
-            </GuideCallout>
-            <P.HeroActions>
-              <P.PrimaryButton to="/about/location">{t('오시는 길 보기', 'View Directions')}</P.PrimaryButton>
-            </P.HeroActions>
-          </GuidePanel>
-        </LocationGrid>
+        </ContactGrid>
       </SectionInner>
     </P.HeroSection>
   );
@@ -196,11 +118,11 @@ const SectionInner = styled(P.PageContainer)`
   gap: 28px;
 `;
 
-const InquiryGrid = styled.div`
+const ContactGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
-  align-items: start;
+  align-items: stretch;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -211,6 +133,7 @@ const InfoPanel = styled(P.Panel)`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  height: 100%;
   padding: clamp(28px, 3vw, 40px);
 `;
 
@@ -280,6 +203,7 @@ const InquiryPanel = styled(P.Panel)`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
   padding: clamp(24px, 3vw, 34px);
   background:
     radial-gradient(circle at top right, rgba(31, 93, 184, 0.12), transparent 28%),
@@ -288,50 +212,22 @@ const InquiryPanel = styled(P.Panel)`
 
 const InquiryHeader = styled.div`
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const InquiryIcon = styled.div`
-  display: grid;
-  width: 70px;
-  height: 70px;
-  place-items: center;
-  border-radius: 24px;
-  background: linear-gradient(180deg, #edf5ff, #dceaf8);
-  color: #1a6da7;
-  font-size: 2rem;
-  font-weight: 900;
+  gap: 8px;
 `;
 
 const InquiryTitle = styled.h3`
   margin: 0;
-  color: #087fa6;
-  font-size: clamp(1.52rem, 2.6vw, 2.2rem);
+  color: #123b70;
+  font-size: clamp(1.56rem, 2.6vw, 2.16rem);
   font-weight: 900;
   letter-spacing: -0.05em;
 `;
 
 const InquiryText = styled.p`
-  margin: 8px 0 0;
-  color: #263f58;
-  font-size: 0.98rem;
-  line-height: 1.62;
-`;
-
-const PrivacyNotice = styled.p`
   margin: 0;
-  padding: 12px 16px;
-  border-radius: 14px;
-  background: #eef7fb;
-  color: #3d5a70;
-  font-size: 0.92rem;
-  line-height: 1.55;
+  color: #496582;
+  font-size: 0.96rem;
+  line-height: 1.62;
 `;
 
 const InquiryForm = styled.form`
@@ -398,7 +294,7 @@ const SelectInput = styled.select`
 
 const TextArea = styled.textarea`
   width: 100%;
-  min-height: 168px;
+  min-height: 152px;
   padding: 16px;
   border: 1px solid rgba(22, 77, 148, 0.18);
   border-radius: 0;
@@ -419,16 +315,9 @@ const TextArea = styled.textarea`
   }
 `;
 
-const ConsentArea = styled.div`
-  display: grid;
-  grid-column: 1 / -1;
-  justify-content: center;
-  gap: 8px;
-  padding-top: 4px;
-`;
-
 const ConsentLabel = styled.label`
   display: inline-flex;
+  grid-column: 1 / -1;
   align-items: center;
   gap: 8px;
   color: #4d6076;
@@ -443,10 +332,8 @@ const ConsentLabel = styled.label`
 
 const SubmitButton = styled.button`
   grid-column: 1 / -1;
-  justify-self: center;
-  width: min(100%, 476px);
-  min-height: 58px;
-  margin-top: 8px;
+  justify-self: stretch;
+  min-height: 56px;
   border: 0;
   border-radius: 0;
   background: #2e65ae;
@@ -464,131 +351,4 @@ const SubmitButton = styled.button`
     transform: translateY(-1px);
     outline: none;
   }
-`;
-
-const LocationGrid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
-  gap: 22px;
-
-  @media (max-width: 1120px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const MapPanel = styled(P.Panel)`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px;
-`;
-
-const MapActions = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`;
-
-const MapBaseLink = styled.a`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
-`;
-
-const MapPrimaryLink = styled(MapBaseLink)`
-  background: linear-gradient(180deg, #2567c2, #174d9a);
-  border: 1px solid rgba(19, 84, 180, 0.34);
-  color: #ffffff;
-  box-shadow: 0 14px 24px rgba(24, 74, 149, 0.16);
-`;
-
-const MapSecondaryLink = styled(MapBaseLink)`
-  border: 1px solid rgba(18, 78, 160, 0.16);
-  background: rgba(255, 255, 255, 0.96);
-  color: #1a4f9a;
-`;
-
-const MapFrame = styled.div`
-  width: 100%;
-  min-height: 520px;
-  margin-top: 2px;
-  border-radius: 16px;
-  border: 1px solid rgba(18, 72, 143, 0.12);
-  overflow: hidden;
-  background: #edf4ff;
-
-  iframe {
-    width: 100%;
-    height: 520px;
-    border: 0;
-    display: block;
-  }
-
-  @media (max-width: 960px) {
-    min-height: 420px;
-
-    iframe {
-      height: 420px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    min-height: 340px;
-
-    iframe {
-      height: 340px;
-    }
-  }
-`;
-
-const GuidePanel = styled(P.Panel)`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px;
-`;
-
-const GuideList = styled.div`
-  display: grid;
-  gap: 12px;
-`;
-
-const GuideItem = styled.div`
-  display: grid;
-  gap: 4px;
-  padding: 16px 16px 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(18, 72, 143, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 249, 255, 0.95));
-`;
-
-const GuideLabel = styled.span`
-  color: #1f5cb2;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
-const GuideText = styled.p`
-  margin: 0;
-  color: #496582;
-  font-size: 0.94rem;
-  line-height: 1.66;
-  word-break: break-word;
-`;
-
-const GuideCallout = styled.p`
-  margin: 2px 0 0;
-  padding: 16px 18px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(232, 242, 255, 0.96), rgba(244, 249, 255, 0.96));
-  color: #3f5f88;
-  font-size: 0.94rem;
-  line-height: 1.66;
 `;

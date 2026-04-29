@@ -10,19 +10,32 @@ type ServiceDetailPageProps = {
   path: string;
 };
 
-const HeroVisual = styled.div<{ image: string }>`
-  min-height: 360px;
-  border-radius: 22px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
+const ServiceHeroSection = styled(P.HeroSection)<{ image: string }>`
+  min-height: clamp(700px, 92vh, 1040px);
+  padding-bottom: clamp(78px, 10vw, 140px);
   background:
-    linear-gradient(180deg, rgba(8, 37, 81, 0.16), rgba(8, 37, 81, 0.04)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(241, 247, 255, 0.7) 10%, rgba(71, 116, 176, 0.28) 26%, rgba(8, 28, 64, 0.26) 42%, rgba(8, 28, 64, 0.72) 100%),
+    linear-gradient(90deg, rgba(8, 28, 64, 0.84) 0%, rgba(8, 28, 64, 0.54) 42%, rgba(8, 28, 64, 0.12) 100%),
+    radial-gradient(circle at 78% 36%, rgba(23, 159, 150, 0.12), transparent 34%),
     ${({ image }) => `url(${image}) center / cover no-repeat`};
-  overflow: hidden;
-  box-shadow: 0 26px 52px rgba(16, 45, 92, 0.1);
+
+  &::before {
+    opacity: 0.32;
+    mix-blend-mode: soft-light;
+  }
+
+  &::after {
+    opacity: 0.42;
+  }
 
   @media (max-width: 980px) {
-    min-height: 280px;
+    min-height: auto;
   }
+`;
+
+const ServiceIntroBlock = styled(P.IntroBlock)`
+  grid-template-columns: minmax(0, 1fr);
+  align-items: end;
 `;
 
 const HeadlinePanel = styled(P.StatementBlock)`
@@ -30,6 +43,23 @@ const HeadlinePanel = styled(P.StatementBlock)`
   flex-direction: column;
   justify-content: center;
   gap: 14px;
+  min-height: 360px;
+  width: 100%;
+  border-color: rgba(225, 238, 255, 0.28);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(23, 159, 150, 0.16), transparent 28%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 255, 0.86)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(239, 247, 255, 0.88));
+  box-shadow: 0 30px 58px rgba(3, 15, 34, 0.24);
+
+  ${P.SectionTitle} {
+    max-width: 820px;
+  }
+
+  ${P.Lead},
+  ${P.CardText} {
+    max-width: 960px;
+  }
 `;
 
 const SubtitleText = styled.p`
@@ -171,7 +201,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
   return (
     <>
-      <P.HeroSection>
+      <ServiceHeroSection image={heroImage}>
         <P.PageContainer>
           <ServiceDetailSubnav
             kicker={servicesSubnav.kicker}
@@ -186,7 +216,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           />
         </P.PageContainer>
 
-        <P.IntroBlock data-reveal>
+        <ServiceIntroBlock data-reveal>
           <HeadlinePanel>
             <P.Kicker>Service Detail</P.Kicker>
             <P.SectionTitle>{tx(content.title)}</P.SectionTitle>
@@ -194,9 +224,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
             <P.Lead style={{ marginTop: 0 }}>{tx(content.summary)}</P.Lead>
             <P.CardText>{tx(content.overview)}</P.CardText>
           </HeadlinePanel>
-          <HeroVisual image={heroImage} role="img" aria-label={content.heroImageAlt ?? content.title} />
-        </P.IntroBlock>
-      </P.HeroSection>
+        </ServiceIntroBlock>
+      </ServiceHeroSection>
 
       {useDocumentLayout ? (
         <>

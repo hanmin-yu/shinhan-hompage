@@ -109,7 +109,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
                 {language === 'ko' ? 'KOR' : 'ENG'}
               </S.HeaderUtilityButton>
-              <S.HeaderUtilityIconLink to="/about/location" aria-label={t('찾아오시는 길', 'Directions')}>
+              <S.HeaderUtilityIconLink to="/location" aria-label={t('찾아오시는 길', 'Directions')}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 21c-2.5-3.2-6.5-7-6.5-11.2A6.5 6.5 0 0 1 12 3.3a6.5 6.5 0 0 1 6.5 6.5C18.5 14 14.5 17.8 12 21Z" />
                   <circle cx="12" cy="9.8" r="2.4" />
