@@ -143,6 +143,7 @@ function AppShell() {
               <Route path="/news/issue-report" element={<IssueReportPage />} />
               <Route path="/news/shinhan-news" element={<ShinhanNewsPage />} />
               <Route path="/news/shinhan-news/:newsId" element={<ShinhanNewsDetailPage />} />
+              <Route path="/news/seminar/:newsId" element={<ShinhanNewsDetailPage />} />
               <Route path="/news/newsletter" element={<NewsletterPage />} />
               <Route path="/news/newsletter/:newsletterId" element={<NewsletterDetailPage />} />
               <Route path="/news/seminar" element={<SeminarPage />} />

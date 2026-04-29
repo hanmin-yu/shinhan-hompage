@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 
 import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
@@ -114,12 +114,15 @@ const StatusText = styled.p`
 export function ShinhanNewsDetailPage() {
   const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
+  const location = useLocation();
   const { newsId } = useParams<{ newsId: string }>();
 
   const { item, loading } = useShinhanNewsRecord(newsId);
+  const shouldReturnToSeminar = location.pathname.startsWith('/news/seminar') || item?.category === 'seminar';
+  const listPath = shouldReturnToSeminar ? '/news/seminar' : '/news/shinhan-news';
 
   if (!loading && !item) {
-    return <Navigate to="/news/shinhan-news" replace />;
+    return <Navigate to={listPath} replace />;
   }
 
   return (
@@ -149,7 +152,7 @@ export function ShinhanNewsDetailPage() {
             </MetaRow>
             <DetailTitle>{item ? t(item.title, item.titleEn) : ''}</DetailTitle>
             <ActionRow>
-              <P.CardLink to="/news/shinhan-news">{t('목록으로', 'Back to List')}</P.CardLink>
+              <P.CardLink to={listPath}>{t('목록으로', 'Back to List')}</P.CardLink>
             </ActionRow>
             {loading ? <StatusText>{t('상세 내용을 불러오는 중입니다.', 'Loading article details.')}</StatusText> : null}
             {!loading && item?.bodyHtml ? <ContentWrap dangerouslySetInnerHTML={{ __html: item.bodyHtml }} /> : null}

@@ -65,6 +65,7 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
   object-position: ${({ $position }) => $position ?? 'center'};
   opacity: ${({ $active }) => ($active ? 1 : 0)};
   transform: ${({ $active }) => ($active ? 'scale(1.04)' : 'scale(1.11)')};
+  animation: ${({ $active }) => ($active ? 'heroImageDrift 18s ease-in-out infinite alternate' : 'none')};
   filter: saturate(1.06) contrast(1.08) brightness(0.96);
   transition:
     opacity 1s ease,
@@ -72,6 +73,23 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
 
   @media (max-width: 768px) {
     object-position: ${({ $mobilePosition, $position }) => $mobilePosition ?? $position ?? 'center'};
+  }
+
+  @keyframes heroImageDrift {
+    0% {
+      transform: scale(1.035) translate3d(-0.8%, -0.4%, 0);
+      filter: saturate(1.04) contrast(1.06) brightness(0.96);
+    }
+
+    50% {
+      transform: scale(1.07) translate3d(0.7%, -1.1%, 0);
+      filter: saturate(1.1) contrast(1.09) brightness(0.98);
+    }
+
+    100% {
+      transform: scale(1.095) translate3d(1.1%, 0.4%, 0);
+      filter: saturate(1.07) contrast(1.08) brightness(0.97);
+    }
   }
 `;
 

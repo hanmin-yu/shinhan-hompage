@@ -3,6 +3,7 @@ import { IssueReportSection } from '../components/home/sections/IssueReportSecti
 import { ItSection } from '../components/home/sections/ItSection';
 import { OfficesSection } from '../components/home/sections/OfficesSection';
 import { PracticeSection } from '../components/home/sections/PracticeSection';
+import { NewsSection } from '../components/home/sections/NewsSection';
 
 export function HomePage() {
   return (
@@ -11,6 +12,7 @@ export function HomePage() {
       <PracticeSection />
       <IssueReportSection />
       <ItSection />
+      <NewsSection />
       <OfficesSection />
     </>
   );

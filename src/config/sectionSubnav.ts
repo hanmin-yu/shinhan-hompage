@@ -102,6 +102,12 @@ export const sectionSubnav = {
       { label: '이슈리포트', labelEn: 'Issue Reports', to: '/news/issue-report' },
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news' },
       {
+        label: '세미나',
+        labelEn: 'Seminar',
+        to: '/news/seminar',
+        matchPrefixes: ['/news/seminar/'],
+      },
+      {
         label: '소식지',
         labelEn: 'Newsletter',
         to: '/news/newsletter',

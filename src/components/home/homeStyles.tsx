@@ -608,6 +608,49 @@ export const NavItem = styled.div`
   text-align: center;
   min-height: 82px;
 
+  &:hover > div,
+  &:focus-within > div {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+
+    &::before {
+      transform: translateX(0);
+    }
+
+    &::after {
+      opacity: 0.7;
+      transform: translate3d(0, 0, 0);
+    }
+
+    [data-mega-title],
+    [data-mega-link] {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotateX(0);
+    }
+
+    [data-mega-link]:nth-of-type(1) {
+      transition-delay: 0.08s;
+    }
+
+    [data-mega-link]:nth-of-type(2) {
+      transition-delay: 0.12s;
+    }
+
+    [data-mega-link]:nth-of-type(3) {
+      transition-delay: 0.16s;
+    }
+
+    [data-mega-link]:nth-of-type(4) {
+      transition-delay: 0.2s;
+    }
+
+    [data-mega-link]:nth-of-type(n + 5) {
+      transition-delay: 0.24s;
+    }
+  }
+
   @media (max-width: 1320px) {
     min-height: 78px;
   }
@@ -783,6 +826,218 @@ export const NavDropdownSubLink = styled(NavDropdownLink)`
   padding-left: 28px;
   font-size: 0.9rem;
   color: ${palette.textMuted};
+`;
+
+export const MegaMenu = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 82px;
+  z-index: 24;
+  min-height: 300px;
+  padding: 34px 0 38px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-18px) scaleY(0.98);
+  transform-origin: top center;
+  transition:
+    opacity 0.34s cubic-bezier(0.18, 0.9, 0.28, 1),
+    visibility 0.34s ease,
+    transform 0.34s cubic-bezier(0.18, 0.9, 0.28, 1);
+  background:
+    radial-gradient(circle at 16% 36%, rgba(33, 101, 193, 0.1), transparent 24%),
+    radial-gradient(circle at 78% 80%, rgba(23, 159, 150, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.98));
+  border-top: 1px solid rgba(33, 101, 193, 0.08);
+  border-bottom: 1px solid rgba(33, 101, 193, 0.1);
+  box-shadow: 0 20px 42px rgba(3, 15, 34, 0.1);
+  backdrop-filter: blur(16px);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: min(36vw, 520px);
+    background:
+      linear-gradient(135deg, rgba(16, 66, 139, 0.98), rgba(11, 43, 89, 0.96)),
+      radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.2), transparent 26%);
+    clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
+    opacity: 0.96;
+    transform: translateX(-18px);
+    transition: transform 0.42s cubic-bezier(0.18, 0.9, 0.28, 1);
+  }
+
+  &::after {
+    left: 40px;
+    bottom: 28px;
+    width: 210px;
+    height: 82px;
+    border-left: 1px solid rgba(255, 255, 255, 0.34);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    opacity: 0;
+    transform: translate3d(-10px, 14px, 0);
+    transition:
+      opacity 0.42s ease,
+      transform 0.42s cubic-bezier(0.18, 0.9, 0.28, 1);
+  }
+
+  a {
+    color: rgba(42, 50, 64, 0.82);
+    text-shadow: none;
+  }
+
+  a::before {
+    display: none;
+  }
+
+  a:hover,
+  a:focus-visible {
+    color: ${palette.blueDeep};
+  }
+
+  @media (max-width: 1320px) {
+    top: 76px;
+  }
+`;
+
+export const MegaMenuInner = styled.div`
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 96px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.32fr) minmax(0, 1fr);
+  gap: clamp(52px, 6vw, 96px);
+  align-items: start;
+`;
+
+export const MegaMenuTitleBlock = styled.div`
+  min-height: 152px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+  text-align: left;
+  padding: 18px 28px 20px;
+  color: #ffffff;
+  opacity: 0;
+  transform: translate3d(-24px, 16px, 0);
+  transition:
+    opacity 0.42s ease,
+    transform 0.42s cubic-bezier(0.18, 0.9, 0.28, 1);
+
+`;
+
+export const MegaMenuKicker = styled.span`
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+`;
+
+export const MegaMenuTitle = styled.strong`
+  color: #ffffff;
+  font-size: clamp(2.42rem, 3.8vw, 3.45rem);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  text-shadow: 0 18px 34px rgba(3, 15, 34, 0.24);
+`;
+
+export const MegaMenuLinks = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 8px 0 0;
+  position: relative;
+  perspective: 1000px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -18px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(33, 101, 193, 0.22), rgba(23, 159, 150, 0.14), transparent);
+  }
+
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(4, minmax(128px, 1fr));
+  }
+`;
+
+const megaMenuLinkStyles = `
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(33, 101, 193, 0.1);
+  background: rgba(255, 255, 255, 0.68);
+  color: ${palette.blueInk};
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-align: left;
+  white-space: normal;
+  word-break: keep-all;
+  transition:
+    opacity 0.36s ease,
+    color 0.18s ease,
+    transform 0.36s cubic-bezier(0.18, 0.9, 0.28, 1),
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) rotateX(8deg);
+  transform-origin: center top;
+
+  &::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.44;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: #ffffff;
+    background: linear-gradient(135deg, ${palette.blueDeep}, ${palette.blue});
+    border-color: transparent;
+    box-shadow: 0 14px 26px rgba(11, 43, 89, 0.16);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+    transform: translateX(3px) rotate(45deg);
+  }
+`;
+
+export const MegaMenuLink = styled(Link)`
+  ${megaMenuLinkStyles}
+`;
+
+export const MegaMenuAnchor = styled.a`
+  ${megaMenuLinkStyles}
 `;
 
 export const HeaderTools = styled.div`

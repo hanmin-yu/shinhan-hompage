@@ -26,14 +26,13 @@ export function ShinhanNewsPage() {
   const newsSubnav = sectionSubnav.news;
   const { items, loading } = useShinhanNewsRecords();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'flash' | 'seminar'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'flash'>('all');
   const [currentPage, setCurrentPage] = useState(1);
 
   const categoryOptions = useMemo(
     () => [
       { value: 'all', label: t('전체', 'All') },
       { value: 'flash', label: 'FLASH' },
-      { value: 'seminar', label: t('세미나', 'Seminar') },
     ],
     [t],
   );
@@ -47,6 +46,10 @@ export function ShinhanNewsPage() {
 
     return sortShinhanNewsRecords(items)
       .filter((item) => {
+        if (item.category === 'seminar') {
+          return false;
+        }
+
         if (selectedCategory !== 'all' && item.category !== selectedCategory) {
           return false;
         }

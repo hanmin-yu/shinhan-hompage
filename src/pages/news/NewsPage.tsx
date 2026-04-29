@@ -82,7 +82,8 @@ export function NewsPage() {
   const { items: newsletters } = useNewsletterRecords();
 
   const issuePreview = reports.filter((item) => item.status !== 'placeholder').slice(0, 3);
-  const shinhanNewsPreview = shinhanNewsItems.slice(0, 3);
+  const shinhanNewsPreview = shinhanNewsItems.filter((item) => item.category !== 'seminar').slice(0, 3);
+  const seminarPreview = shinhanNewsItems.filter((item) => item.category === 'seminar').slice(0, 3);
   const newsletterPreview = newsletters.slice(0, 3);
 
   return (
@@ -112,7 +113,8 @@ export function NewsPage() {
             </P.Lead>
             <IntroList>
               <li>{t('이슈리포트: 기관 출처 기반 핵심 이슈 정리', 'Issue Reports: Source-based issue briefs')}</li>
-              <li>{t('신한 NEWS: FLASH + 세미나 통합 아카이브', 'Shinhan NEWS: Integrated FLASH and seminar archive')}</li>
+              <li>{t('신한 NEWS: 공지와 FLASH 중심 아카이브', 'Shinhan NEWS: Notice and FLASH archive')}</li>
+              <li>{t('세미나: 교육·세미나 카드형 아카이브', 'Seminar: Training and seminar card archive')}</li>
               <li>{t('소식지: 월별 국문/영문 발행물 열람·다운로드', 'Newsletter: Monthly KR/EN publication archive')}</li>
             </IntroList>
           </P.IntroPanel>
@@ -151,6 +153,23 @@ export function NewsPage() {
                     <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
                   </ItemMeta>
                   <ItemLink to="/news/shinhan-news">{t('목록 보기', 'View')}</ItemLink>
+                </EditorialItem>
+              ))}
+            </EditorialList>
+          </EditorialSection>
+
+          <EditorialSection>
+            <P.Kicker>Seminar</P.Kicker>
+            <P.SectionTitle>{t('세미나', 'Seminar')}</P.SectionTitle>
+            <EditorialList>
+              {seminarPreview.map((item) => (
+                <EditorialItem key={item.id}>
+                  <ItemDate>{item.publishedAt}</ItemDate>
+                  <ItemMeta>
+                    <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                    <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
+                  </ItemMeta>
+                  <ItemLink to="/news/seminar">{t('목록 보기', 'View')}</ItemLink>
                 </EditorialItem>
               ))}
             </EditorialList>

@@ -34,9 +34,32 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
           <S.Nav>
             {headerNavigation.map((item) => (
               <S.NavItem key={item.id}>
-                <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={false} data-active={isActive(item.to ?? item.href)}>
+                <S.NavLink to={item.to ?? item.href ?? '/'} hasChildren={Boolean(item.children?.length)} data-active={isActive(item.to ?? item.href)}>
                   {item.label}
                 </S.NavLink>
+                {item.children && item.children.length > 0 ? (
+                  <S.MegaMenu>
+                    <S.MegaMenuInner>
+                      <S.MegaMenuTitleBlock data-mega-title>
+                        <S.MegaMenuKicker>SHINHAN</S.MegaMenuKicker>
+                        <S.MegaMenuTitle>{item.label}</S.MegaMenuTitle>
+                      </S.MegaMenuTitleBlock>
+                      <S.MegaMenuLinks>
+                        {item.children.map((child) =>
+                          child.href ? (
+                            <S.MegaMenuAnchor key={child.id} href={child.href} target="_blank" rel="noreferrer" data-mega-link>
+                              {child.label}
+                            </S.MegaMenuAnchor>
+                          ) : (
+                            <S.MegaMenuLink key={child.id} to={child.to ?? '/'} data-mega-link>
+                              {child.label}
+                            </S.MegaMenuLink>
+                          ),
+                        )}
+                      </S.MegaMenuLinks>
+                    </S.MegaMenuInner>
+                  </S.MegaMenu>
+                ) : null}
               </S.NavItem>
             ))}
           </S.Nav>
