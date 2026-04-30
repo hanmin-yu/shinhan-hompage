@@ -54,6 +54,12 @@ const Section = styled.section`
     }
   }
 
+  @keyframes officeDash {
+    to {
+      stroke-dashoffset: -22;
+    }
+  }
+
   @media (max-width: 860px) {
     min-height: auto;
     padding: 82px 0;
@@ -131,8 +137,20 @@ const MapStage = styled.div`
 
 const MapPanel = styled.div`
   position: relative;
-  width: min(118%, 680px);
+  width: min(124%, 740px);
   aspect-ratio: 0.86;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 92%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(70, 181, 209, 0.16);
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const KoreaMapImage = styled.img`
@@ -141,37 +159,65 @@ const KoreaMapImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0.42;
-  filter: grayscale(1) contrast(1.42);
+  opacity: 0.52;
+  filter: grayscale(1) contrast(1.52);
 `;
 
 const MapHalo = styled.span`
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 70%;
+  width: 86%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(70, 181, 209, 0.14), rgba(70, 181, 209, 0.035) 45%, transparent 70%);
+  background:
+    radial-gradient(circle, rgba(70, 181, 209, 0.16), rgba(70, 181, 209, 0.04) 42%, transparent 68%),
+    conic-gradient(from 16deg, rgba(70, 181, 209, 0.16), transparent 16%, rgba(70, 181, 209, 0.12), transparent 38%, rgba(70, 181, 209, 0.14), transparent 62%);
   transform: translate(-50%, -50%);
+  opacity: 0.72;
+`;
+
+const MapConnections = styled.svg`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`;
+
+const MapLine = styled.line`
+  stroke: rgba(44, 157, 198, 0.42);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+  stroke-dasharray: 5 8;
+  animation: officeDash 7s linear infinite;
 `;
 
 const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
   position: absolute;
   left: ${({ x }) => x}%;
   top: ${({ y }) => y}%;
-  width: 12px;
-  height: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.92);
   background: ${({ accent }) => accent};
-  box-shadow: 0 0 0 6px rgba(70, 181, 209, 0.16), 0 14px 28px rgba(15, 43, 89, 0.16);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 0 0 7px rgba(70, 181, 209, 0.15), 0 18px 30px rgba(15, 43, 89, 0.2);
   transform: translate(-50%, -50%);
 
   &::before,
   &::after {
     content: '';
     position: absolute;
-    inset: -16px;
+    inset: -22px;
     border-radius: 50%;
     border: 1px solid rgba(70, 181, 209, 0.36);
     animation: officePulse 2.8s ease-out infinite;
@@ -180,6 +226,28 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
   &::after {
     animation-delay: 1.4s;
   }
+`;
+
+const MapCaption = styled.div`
+  position: absolute;
+  left: 6%;
+  bottom: 7%;
+  display: grid;
+  gap: 5px;
+  color: #2d5f8b;
+`;
+
+const MapCaptionLabel = styled.span`
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+const MapCaptionText = styled.strong`
+  color: #173f69;
+  font-size: 1rem;
+  font-weight: 900;
 `;
 
 const Label = styled.span`
@@ -368,6 +436,8 @@ export function OfficesSection() {
   const { t } = useI18n();
   const visibleOffices = officeBranches.filter((office) => office.id !== 'kord').slice(0, 8);
   const domesticOffices = visibleOffices.filter((office) => office.id !== 'vietnam');
+  const hubOffice = domesticOffices.find((office) => office.id === 'seoul') ?? domesticOffices[0];
+  const connectedOffices = hubOffice ? domesticOffices.filter((office) => office.id !== hubOffice.id) : [];
 
   return (
     <>
@@ -396,15 +466,34 @@ export function OfficesSection() {
             <MapPanel>
               <MapHalo aria-hidden="true" />
               <KoreaMapImage src={koreaMapAsset} alt="" />
-              {domesticOffices.map((office) => (
+              {hubOffice ? (
+                <MapConnections viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  {connectedOffices.map((office) => (
+                    <MapLine
+                      key={`${office.id}-line`}
+                      x1={hubOffice.x}
+                      y1={hubOffice.y}
+                      x2={office.x}
+                      y2={office.y}
+                    />
+                  ))}
+                </MapConnections>
+              ) : null}
+              {domesticOffices.map((office, index) => (
                 <MapPoint
                   key={`${office.id}-point`}
                   x={office.x}
                   y={office.y}
                   accent={office.accent}
                   aria-label={t(office.label, office.labelEn)}
-                />
+                >
+                  {index + 1}
+                </MapPoint>
               ))}
+              <MapCaption>
+                <MapCaptionLabel>Domestic Network</MapCaptionLabel>
+                <MapCaptionText>{t('국내 거점 연결', 'Connected offices')}</MapCaptionText>
+              </MapCaption>
             </MapPanel>
           </MapStage>
 

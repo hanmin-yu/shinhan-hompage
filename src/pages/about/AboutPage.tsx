@@ -7,80 +7,104 @@ import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialHero = styled(P.HeroSection)`
-  min-height: auto;
-  padding-bottom: clamp(70px, 8vw, 118px);
+  min-height: clamp(420px, 54vw, 610px);
+  display: grid;
+  place-items: center;
+  padding-top: calc(82px + clamp(24px, 4vw, 54px));
+  padding-bottom: clamp(54px, 7vw, 90px);
   background:
-    linear-gradient(180deg, rgba(9, 17, 29, 0.24) 0%, rgba(9, 17, 29, 0.9) 74%, #0a1424 100%),
-    linear-gradient(120deg, rgba(8, 17, 31, 0.98), rgba(24, 38, 58, 0.9)),
-    url('/subpages/about-mt14.jpg') center / cover no-repeat;
+    linear-gradient(180deg, rgba(8, 17, 31, 0.1) 0%, rgba(8, 17, 31, 0.12) 48%, rgba(8, 17, 31, 0.28) 100%),
+    url('/hero/homepage/office-tower-clear-sky.jpg') center 42% / cover no-repeat;
 
   &::before,
   &::after {
-    opacity: 0.26;
+    opacity: 0.08;
+  }
+
+  @media (max-width: 768px) {
+    min-height: clamp(360px, 68vh, 560px);
+    padding-top: calc(70px + clamp(24px, 5vw, 40px));
   }
 `;
 
-const HeroStatement = styled(P.PageContainer)`
-  display: grid;
-  gap: clamp(34px, 5vw, 62px);
-  padding-top: clamp(42px, 5vw, 74px);
-`;
-
-const AboutTop = styled(P.PageContainer)`
-  display: grid;
-  gap: clamp(18px, 2.2vw, 28px);
-  padding-top: clamp(34px, 5vw, 68px);
-  padding-bottom: clamp(18px, 2.4vw, 30px);
-  border-bottom: 1px solid rgba(232, 237, 244, 0.24);
-`;
-
-const AboutTopTitleRow = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-
-  @media (max-width: 720px) {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-`;
-
-const AboutTopTitle = styled.h1`
+const HeroVisualTitle = styled.h1`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  font-size: clamp(2.6rem, 5vw, 4.9rem);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.06em;
-  text-shadow: 0 22px 48px rgba(0, 0, 0, 0.34);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-shadow:
+    0 18px 36px rgba(4, 12, 24, 0.36),
+    0 2px 10px rgba(4, 12, 24, 0.32);
+`;
+
+const SubnavBand = styled.section`
+  background: #ffffff;
+  border-bottom: 1px solid #e4e7ec;
+`;
+
+const SubnavInner = styled(P.PageContainer)`
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 66px;
+  border-left: 1px solid #e4e7ec;
+  border-right: 1px solid #e4e7ec;
+
+  @media (max-width: 760px) {
+    flex-direction: column;
+    min-height: 0;
+    border-left: 0;
+    border-right: 0;
+  }
 `;
 
 const AboutBreadcrumb = styled.div`
-  color: rgba(235, 239, 245, 0.68);
-  font-size: 0.86rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  min-width: 280px;
+  padding: 0 32px;
+  border-right: 1px solid #e4e7ec;
+  color: #5e6672;
+  font-size: 0.95rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
+
+  @media (max-width: 760px) {
+    min-height: 54px;
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid #e4e7ec;
+  }
 `;
 
 const AboutNav = styled.nav`
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(18px, 3vw, 38px);
-  padding-top: 4px;
+  align-items: stretch;
+  margin-left: auto;
+
+  @media (max-width: 760px) {
+    margin-left: 0;
+  }
 `;
 
 const AboutNavLink = styled(Link)`
   position: relative;
-  color: rgba(236, 239, 244, 0.72);
-  font-size: clamp(0.96rem, 1.2vw, 1.06rem);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 clamp(18px, 2.4vw, 34px);
+  border-left: 1px solid #e4e7ec;
+  color: #4f5661;
+  font-size: 0.98rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  padding-bottom: 12px;
 
   &[data-active='true'] {
-    color: #ffffff;
+    color: #121c2b;
   }
 
   &[data-active='true']::after {
@@ -90,16 +114,30 @@ const AboutNavLink = styled(Link)`
     right: 0;
     bottom: 0;
     height: 2px;
-    background: #ffffff;
+    background: #121c2b;
   }
 
   &:hover {
-    color: #ffffff;
+    color: #121c2b;
+  }
+
+  @media (max-width: 760px) {
+    min-height: 52px;
+    padding: 0 18px;
+
+    &:first-of-type {
+      border-left: 0;
+    }
   }
 `;
 
+const HeroStatement = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(30px, 4vw, 54px);
+`;
+
 const HeroEyebrow = styled.span`
-  color: rgba(226, 231, 238, 0.78);
+  color: #52647c;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -109,13 +147,13 @@ const HeroEyebrow = styled.span`
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #ffffff;
+  color: #172337;
   font-size: clamp(2.64rem, 6.4vw, 6.2rem);
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: -0.055em;
   text-wrap: balance;
-  text-shadow: 0 24px 52px rgba(0, 0, 0, 0.32);
+  text-shadow: none;
 
   @media (max-width: 640px) {
     letter-spacing: -0.035em;
@@ -136,7 +174,7 @@ const HeroLeadGrid = styled.div`
 const HeroLead = styled.p`
   max-width: 760px;
   margin: 0;
-  color: rgba(235, 239, 245, 0.86);
+  color: #4d5a6c;
   font-size: clamp(1.04rem, 1.6vw, 1.28rem);
   line-height: 1.82;
 `;
@@ -144,8 +182,8 @@ const HeroLead = styled.p`
 const HeroFacts = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid rgba(232, 237, 244, 0.28);
-  border-bottom: 1px solid rgba(232, 237, 244, 0.18);
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -156,7 +194,7 @@ const HeroFact = styled.div`
   display: grid;
   gap: 8px;
   padding: 18px 18px 18px 0;
-  border-right: 1px solid rgba(232, 237, 244, 0.16);
+  border-right: 1px solid #dbe0e8;
 
   &:last-of-type {
     border-right: 0;
@@ -165,7 +203,7 @@ const HeroFact = styled.div`
   @media (max-width: 640px) {
     padding-right: 0;
     border-right: 0;
-    border-bottom: 1px solid rgba(232, 237, 244, 0.14);
+    border-bottom: 1px solid #dbe0e8;
 
     &:last-of-type {
       border-bottom: 0;
@@ -174,14 +212,14 @@ const HeroFact = styled.div`
 `;
 
 const HeroFactValue = styled.strong`
-  color: #ffffff;
+  color: #172337;
   font-size: clamp(1.42rem, 2.3vw, 2.06rem);
   font-weight: 800;
   line-height: 1;
 `;
 
 const HeroFactLabel = styled.span`
-  color: rgba(226, 231, 238, 0.7);
+  color: #687385;
   font-size: 0.88rem;
   line-height: 1.5;
 `;
@@ -248,7 +286,7 @@ const Rule = styled.div<{ $light?: boolean }>`
   height: 1px;
   margin: 8px 0;
   background: ${({ $light }) =>
-    $light ? 'rgba(219, 235, 255, 0.2)' : 'linear-gradient(90deg, #0f3d7d, rgba(15, 61, 125, 0))'};
+    $light ? 'rgba(226, 231, 238, 0.18)' : 'linear-gradient(90deg, #4d5e74, rgba(77, 94, 116, 0))'};
 `;
 
 const ServiceGrid = styled.div`
@@ -586,11 +624,12 @@ export function AboutPage() {
   return (
     <>
       <EditorialHero>
-        <AboutTop data-reveal>
-          <AboutTopTitleRow>
-            <AboutTopTitle>{t('회사소개', 'Overview')}</AboutTopTitle>
-            <AboutBreadcrumb>{t('홈 / 신한 소개 / 회사소개', 'Home / About Shinhan / Overview')}</AboutBreadcrumb>
-          </AboutTopTitleRow>
+        <HeroVisualTitle data-reveal>{t('회사소개', 'Overview')}</HeroVisualTitle>
+      </EditorialHero>
+
+      <SubnavBand>
+        <SubnavInner>
+          <AboutBreadcrumb>{t('홈 / 신한 소개 / 회사소개', 'Home / About Shinhan / Overview')}</AboutBreadcrumb>
           <AboutNav aria-label={t('회사소개 하위 메뉴', 'Overview sub navigation')}>
             {aboutSubnav.items.map((item) => (
               <AboutNavLink
@@ -602,8 +641,10 @@ export function AboutPage() {
               </AboutNavLink>
             ))}
           </AboutNav>
-        </AboutTop>
+        </SubnavInner>
+      </SubnavBand>
 
+      <EditorialSection>
         <HeroStatement data-reveal>
           <div>
             <HeroEyebrow>Shinhan Customs Service</HeroEyebrow>
@@ -637,9 +678,9 @@ export function AboutPage() {
             </HeroFacts>
           </HeroLeadGrid>
         </HeroStatement>
-      </EditorialHero>
+      </EditorialSection>
 
-      <EditorialSection>
+      <EditorialSection $tone="soft">
         <IntroLayout data-reveal>
           <div>
             <SectionLabel>About Shinhan</SectionLabel>

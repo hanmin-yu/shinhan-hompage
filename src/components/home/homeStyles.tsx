@@ -837,7 +837,7 @@ export const MegaMenu = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  top: 82px;
+  top: 76px;
   z-index: 24;
   min-height: 300px;
   padding: 34px 0 38px;
@@ -851,13 +851,12 @@ export const MegaMenu = styled.div`
     visibility 0.34s ease,
     transform 0.34s cubic-bezier(0.18, 0.9, 0.28, 1);
   background:
-    radial-gradient(circle at 16% 36%, rgba(33, 101, 193, 0.1), transparent 24%),
-    radial-gradient(circle at 78% 80%, rgba(23, 159, 150, 0.08), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.98));
-  border-top: 1px solid rgba(33, 101, 193, 0.08);
-  border-bottom: 1px solid rgba(33, 101, 193, 0.1);
-  box-shadow: 0 20px 42px rgba(3, 15, 34, 0.1);
-  backdrop-filter: blur(16px);
+    linear-gradient(180deg, rgba(244, 250, 255, 0.86) 0%, rgba(226, 239, 252, 0.78) 58%, rgba(205, 225, 244, 0.68) 100%),
+    linear-gradient(90deg, rgba(15, 67, 139, 0.3) 0%, rgba(33, 101, 193, 0.12) 26%, rgba(237, 247, 255, 0.42) 52%, rgba(221, 238, 250, 0.36) 100%);
+  border-top: 0;
+  border-bottom: 1px solid rgba(15, 54, 112, 0.1);
+  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.04);
+  backdrop-filter: blur(24px) saturate(1.12);
 
   [data-mega-suppressed='true'] & {
     opacity: 0 !important;
@@ -886,10 +885,10 @@ export const MegaMenu = styled.div`
     bottom: 0;
     width: min(36vw, 520px);
     background:
-      linear-gradient(135deg, rgba(16, 66, 139, 0.98), rgba(11, 43, 89, 0.96)),
-      radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.2), transparent 26%);
+      linear-gradient(135deg, rgba(28, 86, 164, 0.76), rgba(11, 43, 89, 0.68)),
+      radial-gradient(circle at 20% 18%, rgba(225, 238, 255, 0.18), transparent 28%);
     clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
-    opacity: 0.96;
+    opacity: 0.86;
     transform: translateX(-18px);
     transition: transform 0.42s cubic-bezier(0.18, 0.9, 0.28, 1);
   }
@@ -899,8 +898,8 @@ export const MegaMenu = styled.div`
     bottom: 28px;
     width: 210px;
     height: 82px;
-    border-left: 1px solid rgba(255, 255, 255, 0.34);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    border-left: 1px solid rgba(225, 238, 255, 0.2);
+    border-bottom: 1px solid rgba(225, 238, 255, 0.16);
     opacity: 0;
     transform: translate3d(-10px, 14px, 0);
     transition:
@@ -909,7 +908,7 @@ export const MegaMenu = styled.div`
   }
 
   a {
-    color: rgba(42, 50, 64, 0.82);
+    color: ${palette.blueInk};
     text-shadow: none;
   }
 
@@ -923,7 +922,7 @@ export const MegaMenu = styled.div`
   }
 
   @media (max-width: 1320px) {
-    top: 76px;
+    top: 70px;
   }
 `;
 
@@ -946,7 +945,7 @@ export const MegaMenuTitleBlock = styled.div`
   gap: 14px;
   text-align: left;
   padding: 18px 28px 20px;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.94);
   opacity: 0;
   transform: translate3d(-24px, 16px, 0);
   transition:
@@ -956,14 +955,14 @@ export const MegaMenuTitleBlock = styled.div`
 `;
 
 export const MegaMenuKicker = styled.span`
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(232, 242, 255, 0.72);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.2em;
 `;
 
 export const MegaMenuTitle = styled.strong`
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.96);
   font-size: clamp(2.42rem, 3.8vw, 3.45rem);
   font-weight: 900;
   line-height: 0.96;
@@ -986,7 +985,7 @@ export const MegaMenuLinks = styled.div`
     right: 0;
     top: -18px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.22), rgba(23, 159, 150, 0.14), transparent);
+    background: linear-gradient(90deg, rgba(33, 101, 193, 0.26), rgba(23, 159, 150, 0.18), transparent);
   }
 
   @media (max-width: 1600px) {
@@ -1001,8 +1000,10 @@ const megaMenuLinkStyles = `
   min-height: 48px;
   padding: 0 16px;
   border-radius: 8px;
-  border: 1px solid rgba(33, 101, 193, 0.1);
-  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(33, 101, 193, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(231, 242, 255, 0.46)),
+    rgba(225, 239, 252, 0.54);
   color: ${palette.blueInk};
   font-size: 1rem;
   font-weight: 800;
@@ -1037,7 +1038,7 @@ const megaMenuLinkStyles = `
   &:hover,
   &:focus-visible {
     color: #ffffff;
-    background: linear-gradient(135deg, ${palette.blueDeep}, ${palette.blue});
+    background: linear-gradient(135deg, rgba(11, 43, 89, 0.94), rgba(24, 74, 149, 0.92) 58%, rgba(33, 101, 193, 0.9));
     border-color: transparent;
     box-shadow: 0 14px 26px rgba(11, 43, 89, 0.16);
     transform: translateY(-2px);
