@@ -1,9 +1,114 @@
+import styled from '@emotion/styled';
+
 import { ItSection } from '../../components/home/sections/ItSection';
-import { LandingSubnav } from '../../components/site/LandingSubnav';
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { itOverview } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
+
+const EditorialSection = styled.section<{ $tone?: 'soft' }>`
+  padding: clamp(78px, 9vw, 128px) 0;
+  border-top: 1px solid #d8dee8;
+  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)' : '#ffffff')};
+`;
+
+const HeroStatement = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(30px, 4vw, 54px);
+`;
+
+const HeroEyebrow = styled.span`
+  color: #52647c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const HeroTitle = styled.h1`
+  max-width: 1040px;
+  margin: 0;
+  color: #172337;
+  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
+  }
+`;
+
+const HeroLeadGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.42fr);
+  gap: clamp(28px, 5vw, 74px);
+  align-items: end;
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HeroLead = styled.p`
+  max-width: 760px;
+  margin: 0;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  line-height: 1.82;
+`;
+
+const LeadStack = styled.div`
+  display: grid;
+  gap: 18px;
+`;
+
+const HeroFacts = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HeroFact = styled.div`
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 18px 0;
+  border-right: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  @media (max-width: 640px) {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid #dbe0e8;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+`;
+
+const HeroFactValue = styled.strong`
+  color: #172337;
+  font-size: clamp(1.42rem, 2.3vw, 2.06rem);
+  font-weight: 800;
+  line-height: 1;
+`;
+
+const HeroFactLabel = styled.span`
+  color: #687385;
+  font-size: 0.88rem;
+  line-height: 1.5;
+`;
 
 export function ItPage() {
   const { t } = useI18n();
@@ -11,26 +116,37 @@ export function ItPage() {
 
   return (
     <>
-      <P.HeroSection>
-        <P.PageContainer>
-          <LandingSubnav
-            kicker={itSubnav.kicker}
-            kickerEn={itSubnav.kickerEn}
-            title={itSubnav.title}
-            titleEn={itSubnav.titleEn}
-            summary={itSubnav.summary}
-            summaryEn={itSubnav.summaryEn}
-            items={itSubnav.items}
-          />
-        </P.PageContainer>
+      <EditorialPageHeader config={itSubnav} heroImage="/hero/it-service.jpg" heroPosition="center 50%" />
 
-        <P.PageContainer data-reveal style={{ marginTop: 22 }}>
-          <P.Kicker>IT Service</P.Kicker>
-          <P.Title>{t(itOverview.title, itOverview.titleEn)}</P.Title>
-          <P.Lead>{t(itOverview.summary, itOverview.summaryEn)}</P.Lead>
-          <P.Lead>{t(itOverview.body, itOverview.bodyEn)}</P.Lead>
-        </P.PageContainer>
-      </P.HeroSection>
+      <EditorialSection>
+        <HeroStatement data-reveal>
+          <div>
+            <HeroEyebrow>IT Service</HeroEyebrow>
+            <HeroTitle>{t(itOverview.title, itOverview.titleEn)}</HeroTitle>
+          </div>
+          <HeroLeadGrid>
+            <LeadStack>
+              <HeroLead>{t(itOverview.summary, itOverview.summaryEn)}</HeroLead>
+              <HeroLead>{t(itOverview.body, itOverview.bodyEn)}</HeroLead>
+            </LeadStack>
+            <HeroFacts>
+              <HeroFact>
+                <HeroFactValue>AX</HeroFactValue>
+                <HeroFactLabel>{t('업무 자동화와 AI 전환', 'Automation and AI transformation')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>iOOM</HeroFactValue>
+                <HeroFactLabel>{t('고객 통관 모니터링 시스템', 'Client customs monitoring system')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>Data</HeroFactValue>
+                <HeroFactLabel>{t('데이터 중심 통관 운영', 'Data-driven customs operations')}</HeroFactLabel>
+              </HeroFact>
+            </HeroFacts>
+          </HeroLeadGrid>
+        </HeroStatement>
+      </EditorialSection>
+
       <ItSection />
     </>
   );

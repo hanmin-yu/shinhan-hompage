@@ -12,12 +12,9 @@ import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import type { ShinhanNewsRecord } from '../../types/site';
 import { sortShinhanNewsRecords } from '../../utils/shinhanNews';
+import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
 
 const PAGE_SIZE = 12;
-
-const FlushPageSection = styled(P.CompactPageSection)`
-  padding-top: 0;
-`;
 
 const CardGrid = styled.div`
   display: grid;
@@ -208,7 +205,7 @@ export function SeminarPage() {
 
   return (
     <>
-      <P.CompactHeroSection>
+      <NewsCompactHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -219,11 +216,12 @@ export function SeminarPage() {
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
             compactBottom
+            matchAboutHero
           />
         </P.PageContainer>
-      </P.CompactHeroSection>
+      </NewsCompactHeroSection>
 
-      <FlushPageSection tone="soft">
+      <NewsFlushPageSection>
         <P.PageContainer>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
@@ -275,7 +273,7 @@ export function SeminarPage() {
             onPageChange={setCurrentPage}
           />
         </P.PageContainer>
-      </FlushPageSection>
+      </NewsFlushPageSection>
     </>
   );
 }

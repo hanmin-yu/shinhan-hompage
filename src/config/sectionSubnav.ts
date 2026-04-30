@@ -32,7 +32,7 @@ export const sectionSubnav = {
       { label: '회사소개', labelEn: 'Overview', to: '/about' },
       { label: '인사말', labelEn: 'Message', to: '/about/message' },
       { label: '연혁', labelEn: 'History', to: '/about/history' },
-      { label: '오시는 길', labelEn: 'Directions', to: '/about/location' },
+      { label: '사무소', labelEn: 'Offices', to: '/offices' },
     ],
   },
   members: {
@@ -71,7 +71,16 @@ export const sectionSubnav = {
         label: '컨설팅',
         labelEn: 'Consulting',
         to: getServicePrimaryHref('consulting'),
-        matchPrefixes: ['/services/consulting/'],
+        matchPrefixes: [
+          '/services/consulting/fta',
+          '/services/consulting/aeo',
+          '/services/consulting/customs-audit',
+          '/services/consulting/foreign-exchange',
+          '/services/consulting/acva',
+          '/services/consulting/penalty-investigation',
+          '/services/consulting/tax-appeal',
+          '/services/consulting/trade-consulting',
+        ],
       },
       {
         label: '기타',

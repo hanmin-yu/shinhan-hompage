@@ -10,7 +10,7 @@ export const headerNavigation: NavItem[] = [
       { id: 'about-overview', label: '회사소개', to: '/about' },
       { id: 'about-message', label: '인사말', to: '/about/message' },
       { id: 'about-history', label: '연혁', to: '/about/history' },
-      { id: 'about-location', label: '오시는 길', to: '/about/location' },
+      { id: 'about-offices', label: '사무소', to: '/offices' },
     ],
   },
   {

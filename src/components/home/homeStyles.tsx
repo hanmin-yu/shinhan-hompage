@@ -300,60 +300,185 @@ export const UtilityLink = styled.a`
 `;
 
 export const Header = styled.header<{ $overHero?: boolean }>`
-  position: ${({ $overHero }) => ($overHero ? 'fixed' : 'sticky')};
+  position: ${({ $overHero }) => ($overHero ? 'absolute' : 'sticky')};
   top: 0;
   left: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
   right: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
   z-index: 25;
   background: ${({ $overHero }) =>
     $overHero
-      ? `linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(239, 247, 255, 0.72) 58%, rgba(239, 247, 255, 0) 100%)`
-      : `
-    radial-gradient(circle at 14% 0%, rgba(33, 101, 193, 0.1), transparent 34%),
-    radial-gradient(circle at 88% 0%, rgba(23, 159, 150, 0.07), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 249, 255, 0.62) 54%, rgba(239, 247, 255, 0) 100%)`};
-  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : 'rgba(33, 101, 193, 0)')};
-  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : 'none')};
-  backdrop-filter: blur(10px);
+      ? 'transparent'
+      : '#ffffff'};
+  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'transparent' : '#e5ebf3')};
+  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : '0 10px 28px rgba(18, 36, 60, 0.06)')};
+  backdrop-filter: none;
+  overflow: visible;
+  isolation: isolate;
+  transition:
+    background 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    backdrop-filter 0.24s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: ${({ $overHero }) => ($overHero ? '148px' : '0')};
+    pointer-events: none;
+    z-index: 0;
+    opacity: ${({ $overHero }) => ($overHero ? 1 : 0)};
+    background: linear-gradient(
+      180deg,
+      rgba(0, 51, 116, 0.86) 0%,
+      rgba(0, 87, 176, 0.56) 45%,
+      rgba(36, 140, 215, 0.2) 76%,
+      rgba(36, 140, 215, 0) 100%
+    );
+    transition:
+      opacity 0.24s ease,
+      height 0.24s ease;
+  }
 
   ${({ $overHero }) =>
     $overHero
       ? `
-    img {
-      filter: drop-shadow(0 8px 18px rgba(255, 255, 255, 0.28));
+    > div > a:first-of-type img {
+      filter: drop-shadow(0 10px 22px rgba(0, 24, 70, 0.46));
     }
 
-    nav a {
-      color: ${palette.blueInk};
-      text-shadow: 0 10px 26px rgba(255, 255, 255, 0.48);
+    > div > a:first-of-type strong {
+      color: rgba(255, 255, 255, 0.98);
+      text-shadow: 0 4px 14px rgba(0, 24, 70, 0.7);
     }
 
-    nav a:hover,
-    nav a[data-active='true'] {
-      color: ${palette.blueDeep};
+    > div > a:first-of-type span {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 3px 10px rgba(0, 24, 70, 0.62);
     }
 
-    nav a::before {
-      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+    > div > a:first-of-type span span:first-of-type {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.68), rgba(151, 213, 255, 0.34));
+    }
+
+    nav > div > a {
+      color: #ffffff;
+      text-shadow:
+        0 2px 6px rgba(0, 24, 70, 0.7),
+        0 10px 24px rgba(0, 24, 70, 0.34);
+    }
+
+    nav > div > a:hover,
+    nav > div > a[data-active='true'] {
+      color: #ffffff;
+    }
+
+    nav > div > a::before {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), ${palette.teal});
+      box-shadow: 0 6px 18px rgba(23, 159, 150, 0.22);
     }
 
     a[href='/contact'] {
-      border-color: rgba(18, 63, 133, 0.34);
-      background: linear-gradient(180deg, rgba(23, 77, 156, 0.9), rgba(11, 43, 89, 0.86));
+      border-color: rgba(255, 255, 255, 0.72);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        linear-gradient(135deg, rgba(24, 111, 221, 0.82), rgba(6, 57, 132, 0.84));
       color: #ffffff;
-      box-shadow: 0 14px 28px rgba(3, 15, 34, 0.16);
+      box-shadow: 0 16px 34px rgba(0, 24, 70, 0.34);
       backdrop-filter: blur(12px);
     }
 
     a[href='/recruit'],
     button,
     a[aria-label] {
-      color: ${palette.textPrimary};
-      text-shadow: 0 8px 18px rgba(255, 255, 255, 0.44);
+      color: #ffffff;
+      text-shadow: 0 3px 10px rgba(0, 24, 70, 0.62);
     }
 
     div {
-      border-left-color: rgba(33, 101, 193, 0.18);
+      border-left-color: rgba(255, 255, 255, 0.24);
+    }
+
+    &:has(nav > div:hover),
+    &:has(nav > div:focus-within) {
+      background: #ffffff;
+      border-bottom-color: rgba(33, 101, 193, 0.16);
+      box-shadow: 0 12px 28px rgba(3, 15, 34, 0.08);
+      backdrop-filter: none;
+    }
+
+    &:has(nav > div:hover)::before,
+    &:has(nav > div:focus-within)::before {
+      opacity: 0;
+      height: 76px;
+    }
+
+    &:has(nav > div:hover) > div > a:first-of-type img,
+    &:has(nav > div:focus-within) > div > a:first-of-type img {
+      filter: none;
+    }
+
+    &:has(nav > div:hover) > div > a:first-of-type strong,
+    &:has(nav > div:focus-within) > div > a:first-of-type strong {
+      color: ${palette.blueDeep};
+      text-shadow: none;
+    }
+
+    &:has(nav > div:hover) > div > a:first-of-type span,
+    &:has(nav > div:focus-within) > div > a:first-of-type span {
+      color: ${palette.textMuted};
+      text-shadow: none;
+    }
+
+    &:has(nav > div:hover) > div > a:first-of-type span span:first-of-type,
+    &:has(nav > div:focus-within) > div > a:first-of-type span span:first-of-type {
+      background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(23, 159, 150, 0.3));
+    }
+
+    &:has(nav > div:hover) nav > div > a,
+    &:has(nav > div:focus-within) nav > div > a {
+      color: ${palette.textPrimary};
+      text-shadow: none;
+    }
+
+    &:has(nav > div:hover) nav > div > a:hover,
+    &:has(nav > div:hover) nav > div > a[data-active='true'],
+    &:has(nav > div:focus-within) nav > div > a:hover,
+    &:has(nav > div:focus-within) nav > div > a[data-active='true'] {
+      color: ${palette.blueDeep};
+    }
+
+    &:has(nav > div:hover) nav > div > a::before,
+    &:has(nav > div:focus-within) nav > div > a::before {
+      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+      box-shadow: none;
+    }
+
+    &:has(nav > div:hover) a[href='/contact'],
+    &:has(nav > div:focus-within) a[href='/contact'] {
+      border-color: rgba(214, 154, 54, 0.22);
+      background:
+        linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
+        linear-gradient(135deg, #2a72d2 0%, #1a56ac 56%, #123f85 100%);
+      color: #ffffff;
+      box-shadow: 0 14px 26px rgba(16, 84, 177, 0.2);
+    }
+
+    &:has(nav > div:hover) a[href='/recruit'],
+    &:has(nav > div:hover) button,
+    &:has(nav > div:hover) a[aria-label],
+    &:has(nav > div:focus-within) a[href='/recruit'],
+    &:has(nav > div:focus-within) button,
+    &:has(nav > div:focus-within) a[aria-label] {
+      color: ${palette.textBody};
+      text-shadow: none;
+    }
+
+    &:has(nav > div:hover) div,
+    &:has(nav > div:focus-within) div {
+      border-left-color: rgba(70, 102, 144, 0.22);
     }
   `
       : ''}
@@ -361,23 +486,83 @@ export const Header = styled.header<{ $overHero?: boolean }>`
   @media (max-width: 768px) {
     top: 0;
     background: ${({ $overHero }) =>
-      $overHero
-        ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(239, 247, 255, 0.66) 100%)'
-        : `
-      radial-gradient(circle at 12% 18%, rgba(33, 101, 193, 0.14), transparent 24%),
-      linear-gradient(180deg, rgba(237, 244, 255, 0.97) 0%, rgba(244, 248, 255, 0.96) 100%)`};
-    border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(33, 101, 193, 0.12)' : palette.line)};
+      $overHero ? 'linear-gradient(180deg, rgba(3, 15, 34, 0.42), rgba(3, 15, 34, 0.12))' : '#ffffff'};
+    border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(255, 255, 255, 0.1)' : '#e5ebf3')};
   }
+`;
+
+export const HeaderSubnav = styled.nav`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  min-height: 38px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(5, 13, 25, 0.08);
+
+  @media (max-width: 1400px) {
+    display: none;
+  }
+`;
+
+export const HeaderSubnavInner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.6vw, 42px);
+  width: calc(100% - 48px);
+  min-height: 38px;
+`;
+
+const headerSubnavLinkStyles = `
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-shadow: 0 8px 18px rgba(5, 13, 25, 0.36);
+  white-space: nowrap;
+
+  &[data-active='true'] {
+    color: #ffffff;
+  }
+
+  &[data-active='true']::after,
+  &:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 2px;
+    background: #ffffff;
+  }
+
+  &:hover {
+    color: #ffffff;
+  }
+`;
+
+export const HeaderSubnavLink = styled(Link)`
+  ${headerSubnavLinkStyles}
+`;
+
+export const HeaderSubnavAnchor = styled.a`
+  ${headerSubnavLinkStyles}
 `;
 
 export const HeaderInner = styled(Container)`
   position: relative;
+  z-index: 1;
   width: calc(100% - 48px);
   display: grid;
   grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   align-items: center;
   gap: 24px;
-  min-height: 82px;
+  min-height: 74px;
 
   @media (max-width: 1200px) {
     gap: 12px;
@@ -388,11 +573,11 @@ export const HeaderInner = styled(Container)`
   }
 
   @media (max-width: 1320px) {
-    min-height: 76px;
+    min-height: 72px;
   }
 
   @media (max-width: 1024px) {
-    min-height: 70px;
+    min-height: 66px;
   }
 `;
 
@@ -429,7 +614,7 @@ export const MenuArea = styled.div`
 export const Brand = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 13px;
   justify-self: start;
   flex: 0 0 auto;
   width: fit-content;
@@ -465,25 +650,20 @@ export const HeaderBrandImage = styled.img`
 `;
 
 export const BrandMark = styled.div`
-  width: 52px;
-  height: 52px;
-  border: 1px solid rgba(28, 92, 179, 0.24);
-  border-radius: 10px;
-  background:
-    radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
-    linear-gradient(155deg, #2f7dd9 0%, #1a5ab2 56%, #123f85 100%);
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 14px 26px rgba(17, 78, 168, 0.2);
+  box-shadow: none;
   overflow: hidden;
 
   @media (max-width: 768px) {
-    border-color: rgba(28, 92, 179, 0.24);
-    background:
-      radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
-      linear-gradient(155deg, #2f7dd9 0%, #1a5ab2 56%, #123f85 100%);
+    background: transparent;
     color: #ffffff;
   }
 `;
@@ -504,7 +684,7 @@ export const BrandLogo = styled.svg`
 export const BrandText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
   min-width: 0;
 
   @media (max-width: 520px) {
@@ -520,7 +700,7 @@ export const BrandTop = styled.span`
 `;
 
 export const BrandTopLine = styled.span`
-  width: 74px;
+  width: 64px;
   height: 1px;
   background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(23, 159, 150, 0.3));
 
@@ -531,7 +711,7 @@ export const BrandTopLine = styled.span`
 
 export const BrandEstablished = styled.span`
   color: ${palette.textMuted};
-  font-size: 0.84rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -542,9 +722,9 @@ export const BrandEstablished = styled.span`
 `;
 
 export const BrandTitle = styled.strong`
-  font-size: 3rem;
+  font-size: 2.54rem;
   font-weight: 800;
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: 0.03em;
   color: ${palette.blueDeep};
   white-space: nowrap;
@@ -552,11 +732,11 @@ export const BrandTitle = styled.strong`
   text-transform: uppercase;
 
   @media (max-width: 1440px) {
-    font-size: 2.45rem;
+    font-size: 2.16rem;
   }
 
   @media (max-width: 1280px) {
-    font-size: 2rem;
+    font-size: 1.92rem;
   }
 
   @media (max-width: 980px) {
@@ -570,7 +750,7 @@ export const BrandTitle = styled.strong`
 
 export const BrandSub = styled.span`
   color: ${palette.textMuted};
-  font-size: 0.95rem;
+  font-size: 0.78rem;
   font-family: 'Times New Roman', Georgia, serif;
   white-space: nowrap;
 
@@ -698,6 +878,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
 
   &::before {
     content: '';
+    display: none;
     position: absolute;
     left: 8px;
     right: 8px;
@@ -733,7 +914,8 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
     color: ${palette.blueDeep};
   }
 
-  &:hover::before {
+  &:hover::before,
+  &:focus-visible::before {
     transform: scaleX(1);
     opacity: 1;
   }
@@ -743,8 +925,8 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   }
 
   &[data-active='true']::before {
-    transform: scaleX(1);
-    opacity: 1;
+    transform: scaleX(0.35);
+    opacity: 0;
   }
 `;
 
@@ -839,8 +1021,8 @@ export const MegaMenu = styled.div`
   right: 0;
   top: 76px;
   z-index: 24;
-  min-height: 300px;
-  padding: 34px 0 38px;
+  min-height: 392px;
+  padding: 42px 0 50px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -850,13 +1032,11 @@ export const MegaMenu = styled.div`
     opacity 0.34s cubic-bezier(0.18, 0.9, 0.28, 1),
     visibility 0.34s ease,
     transform 0.34s cubic-bezier(0.18, 0.9, 0.28, 1);
-  background:
-    linear-gradient(180deg, rgba(244, 250, 255, 0.86) 0%, rgba(226, 239, 252, 0.78) 58%, rgba(205, 225, 244, 0.68) 100%),
-    linear-gradient(90deg, rgba(15, 67, 139, 0.3) 0%, rgba(33, 101, 193, 0.12) 26%, rgba(237, 247, 255, 0.42) 52%, rgba(221, 238, 250, 0.36) 100%);
-  border-top: 0;
-  border-bottom: 1px solid rgba(15, 54, 112, 0.1);
-  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.04);
-  backdrop-filter: blur(24px) saturate(1.12);
+  background: #ffffff;
+  border-top: 1px solid rgba(33, 101, 193, 0.16);
+  border-bottom: 1px solid rgba(15, 54, 112, 0.12);
+  box-shadow: 0 24px 44px rgba(3, 15, 34, 0.1);
+  backdrop-filter: none;
 
   [data-mega-suppressed='true'] & {
     opacity: 0 !important;
@@ -883,23 +1063,21 @@ export const MegaMenu = styled.div`
     left: 0;
     top: 0;
     bottom: 0;
-    width: min(36vw, 520px);
-    background:
-      linear-gradient(135deg, rgba(28, 86, 164, 0.76), rgba(11, 43, 89, 0.68)),
-      radial-gradient(circle at 20% 18%, rgba(225, 238, 255, 0.18), transparent 28%);
-    clip-path: polygon(0 0, 82% 0, 100% 100%, 0 100%);
-    opacity: 0.86;
-    transform: translateX(-18px);
+    width: min(31vw, 420px);
+    background: linear-gradient(180deg, rgba(245, 248, 252, 0.98), rgba(255, 255, 255, 0.98));
+    border-right: 1px solid rgba(15, 54, 112, 0.07);
+    opacity: 1;
+    transform: translateX(0);
     transition: transform 0.42s cubic-bezier(0.18, 0.9, 0.28, 1);
   }
 
   &::after {
-    left: 40px;
-    bottom: 28px;
+    left: 44px;
+    bottom: 44px;
     width: 210px;
     height: 82px;
-    border-left: 1px solid rgba(225, 238, 255, 0.2);
-    border-bottom: 1px solid rgba(225, 238, 255, 0.16);
+    border-left: 1px solid rgba(15, 54, 112, 0.12);
+    border-bottom: 1px solid rgba(15, 54, 112, 0.1);
     opacity: 0;
     transform: translate3d(-10px, 14px, 0);
     transition:
@@ -932,8 +1110,8 @@ export const MegaMenuInner = styled.div`
   width: calc(100% - 96px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(300px, 0.32fr) minmax(0, 1fr);
-  gap: clamp(52px, 6vw, 96px);
+  grid-template-columns: minmax(260px, 0.27fr) minmax(0, 1fr);
+  gap: clamp(44px, 5vw, 84px);
   align-items: start;
 `;
 
@@ -944,8 +1122,8 @@ export const MegaMenuTitleBlock = styled.div`
   justify-content: flex-start;
   gap: 14px;
   text-align: left;
-  padding: 18px 28px 20px;
-  color: rgba(255, 255, 255, 0.94);
+  padding: 14px 26px 20px;
+  color: ${palette.blueInk};
   opacity: 0;
   transform: translate3d(-24px, 16px, 0);
   transition:
@@ -955,19 +1133,19 @@ export const MegaMenuTitleBlock = styled.div`
 `;
 
 export const MegaMenuKicker = styled.span`
-  color: rgba(232, 242, 255, 0.72);
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.2em;
 `;
 
 export const MegaMenuTitle = styled.strong`
-  color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(2.42rem, 3.8vw, 3.45rem);
+  color: ${palette.textPrimary};
+  font-size: clamp(2.22rem, 3.4vw, 3.2rem);
   font-weight: 900;
   line-height: 0.96;
   letter-spacing: -0.055em;
-  text-shadow: 0 18px 34px rgba(3, 15, 34, 0.24);
+  text-shadow: none;
 `;
 
 export const MegaMenuLinks = styled.div`
@@ -997,15 +1175,14 @@ const megaMenuLinkStyles = `
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 48px;
-  padding: 0 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(33, 101, 193, 0.14);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(231, 242, 255, 0.46)),
-    rgba(225, 239, 252, 0.54);
+  min-height: 54px;
+  padding: 0 18px;
+  border-radius: 0;
+  border: 1px solid transparent;
+  border-bottom-color: rgba(15, 54, 112, 0.08);
+  background: #ffffff;
   color: ${palette.blueInk};
-  font-size: 1rem;
+  font-size: 1.04rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   text-align: left;
@@ -1037,10 +1214,10 @@ const megaMenuLinkStyles = `
 
   &:hover,
   &:focus-visible {
-    color: #ffffff;
-    background: linear-gradient(135deg, rgba(11, 43, 89, 0.94), rgba(24, 74, 149, 0.92) 58%, rgba(33, 101, 193, 0.9));
-    border-color: transparent;
-    box-shadow: 0 14px 26px rgba(11, 43, 89, 0.16);
+    color: ${palette.blueDeep};
+    background: rgba(245, 248, 252, 0.98);
+    border-color: rgba(15, 54, 112, 0.08);
+    box-shadow: none;
     transform: translateY(-2px);
     outline: none;
   }

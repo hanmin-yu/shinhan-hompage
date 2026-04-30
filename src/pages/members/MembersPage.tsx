@@ -11,7 +11,7 @@ export function MembersPage() {
   const membersSubnav = sectionSubnav.members;
 
   return (
-    <P.HeroSection>
+    <ExecutivesHero>
       <P.PageContainer data-reveal>
         <LandingSubnav
           kicker={membersSubnav.kicker}
@@ -29,12 +29,6 @@ export function MembersPage() {
             <P.SectionTitle>{t('임원진', 'Executives')}</P.SectionTitle>
           </div>
         </P.SectionHead>
-        <P.Lead>
-          {t(
-            '참고 사이트의 구성원 정보를 기준으로 주요 임원진의 프로필을 정리했습니다.',
-            'Executive profiles are organized based on the reference site’s member information.',
-          )}
-        </P.Lead>
 
         <P.Grid columns={3}>
           {executives.map((member) => (
@@ -69,9 +63,36 @@ export function MembersPage() {
           ))}
         </P.Grid>
       </P.PageContainer>
-    </P.HeroSection>
+    </ExecutivesHero>
   );
 }
+
+const ExecutivesHero = styled(P.HeroSection)`
+  color: #102744;
+  --page-kicker-color: #1c5aa9;
+  --page-heading-color: #143c73;
+  --page-lead-color: #526b88;
+  --page-text-shadow: none;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(70, 181, 209, 0.16), transparent 24%),
+    radial-gradient(circle at 12% 72%, rgba(33, 101, 193, 0.12), transparent 26%),
+    linear-gradient(180deg, #f8fbff 0%, #eef6ff 42%, #f8fbff 100%);
+
+  &::before {
+    opacity: 0.12;
+    background: url('/brand-mark.svg') right 10% bottom 2% / min(42vw, 560px) auto no-repeat;
+    transform: none;
+    animation: none;
+  }
+
+  &::after {
+    right: -14vw;
+    bottom: -18vw;
+    width: min(56vw, 720px);
+    background: radial-gradient(circle, rgba(70, 181, 209, 0.2), rgba(33, 101, 193, 0.08) 46%, transparent 70%);
+    animation: none;
+  }
+`;
 
 const ExecutiveCard = styled.article`
   position: relative;
@@ -79,9 +100,11 @@ const ExecutiveCard = styled.article`
   flex-direction: column;
   overflow: hidden;
   border-radius: 22px;
-  border: 1px solid rgba(18, 72, 143, 0.12);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.98));
-  box-shadow: 0 24px 42px rgba(16, 53, 114, 0.08);
+  border: 1px solid rgba(18, 72, 143, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(249, 252, 255, 0.98)),
+    #ffffff;
+  box-shadow: 0 22px 38px rgba(28, 75, 138, 0.07);
   cursor: default;
   transition:
     transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -118,7 +141,7 @@ const ExecutiveCard = styled.article`
 const PortraitFrame = styled.div`
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: linear-gradient(180deg, #f2f5f9, #e8edf4);
+  background: linear-gradient(180deg, #f7fbff, #edf5fc);
   overflow: hidden;
 `;
 

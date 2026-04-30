@@ -5,6 +5,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
+import { NewsContentSection, NewsHeroSection } from './newsLayout';
 
 const IntroList = styled.ul`
   margin: 0;
@@ -85,7 +86,7 @@ export function NewsPage() {
 
   return (
     <>
-      <P.HeroSection>
+      <NewsHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -95,31 +96,27 @@ export function NewsPage() {
             summary={newsSubnav.summary}
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
+            matchAboutHero
           />
         </P.PageContainer>
+      </NewsHeroSection>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Insights & Archive</P.Kicker>
-            <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
-            <P.Lead>
-              {t(
-                '신한 NEWS, 세미나, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
-                'Shinhan NEWS, seminars, and newsletters are organized in one quick editorial view.',
-              )}
-            </P.Lead>
-            <IntroList>
-              <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
-              <li>{t('세미나: 최신 교육·세미나 3건', 'Seminar: 3 latest seminar updates')}</li>
-              <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
-            </IntroList>
-          </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/about-coms2.jpg" minHeight={340} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
-
-      <P.PageSection tone="soft">
+      <NewsContentSection>
         <P.PageContainer data-reveal>
+          <P.Kicker>Insights & Archive</P.Kicker>
+          <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
+          <P.Lead>
+            {t(
+              '신한 NEWS, 세미나, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
+              'Shinhan NEWS, seminars, and newsletters are organized in one quick editorial view.',
+            )}
+          </P.Lead>
+          <IntroList>
+            <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
+            <li>{t('세미나: 최신 교육·세미나 3건', 'Seminar: 3 latest seminar updates')}</li>
+            <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
+          </IntroList>
+          <P.SectionDivider />
           <EditorialSection>
             <P.Kicker>Shinhan NEWS</P.Kicker>
             <P.SectionTitle>{t('신한 NEWS', 'Shinhan NEWS')}</P.SectionTitle>
@@ -171,7 +168,7 @@ export function NewsPage() {
             </EditorialList>
           </EditorialSection>
         </P.PageContainer>
-      </P.PageSection>
+      </NewsContentSection>
     </>
   );
 }

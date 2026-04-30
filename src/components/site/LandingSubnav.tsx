@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Link, useLocation } from 'react-router-dom';
 
-import { palette } from '../home/homeStyles';
 import { useI18n } from '../../i18n/useI18n';
 
 export type LandingSubnavItem = {
@@ -20,115 +19,153 @@ type LandingSubnavProps = {
   summaryEn?: string;
   items: LandingSubnavItem[];
   compactBottom?: boolean;
+  matchAboutHero?: boolean;
 };
 
-const Wrap = styled.section<{ $compactBottom?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  padding: ${({ $compactBottom }) => ($compactBottom ? '22px 0 16px' : '34px 0 28px')};
-  margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '12px' : '36px')};
-  border-bottom: 1px solid rgba(225, 238, 255, 0.22);
-  color: #ffffff;
+const heroImagesByTitle: Record<string, { image: string; position: string }> = {
+  '신한 소개': { image: '/hero/homepage/office-tower-clear-sky.jpg', position: 'center 42%' },
+  'About Shinhan': { image: '/hero/homepage/office-tower-clear-sky.jpg', position: 'center 42%' },
+  구성원: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
+  Professionals: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
+  업무분야: { image: '/hero/busan-port.jpg', position: 'center 48%' },
+  Services: { image: '/hero/busan-port.jpg', position: 'center 48%' },
+  IT: { image: '/hero/semiconductor.jpg', position: 'center 46%' },
+  '소식/자료': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
+  'News & Resources': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
+};
+
+const Wrap = styled.section<{ $compactBottom?: boolean; $matchAboutHero?: boolean }>`
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: ${({ $compactBottom, $matchAboutHero }) => {
+    if ($matchAboutHero) {
+      return '0';
+    }
+    return $compactBottom ? 'calc(-1 * clamp(30px, 4vw, 52px))' : 'calc(-82px - clamp(34px, 5vw, 68px))';
+  }};
+  margin-bottom: 0;
+  color: #121c2b;
 
   @media (max-width: 980px) {
-    gap: 18px;
-    padding: ${({ $compactBottom }) => ($compactBottom ? '18px 0 14px' : '28px 0 22px')};
-    margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '16px' : '34px')};
+    margin-bottom: 0;
   }
 
   @media (max-width: 640px) {
-    gap: 14px;
-    padding: ${({ $compactBottom }) => ($compactBottom ? '16px 0 12px' : '22px 0 18px')};
-    margin-bottom: ${({ $compactBottom }) => ($compactBottom ? '14px' : '26px')};
+    margin-bottom: 0;
   }
 `;
 
-const Intro = styled.div`
+const VisualHero = styled.div<{ $image: string; $position: string }>`
+  min-height: clamp(260px, 31vw, 410px);
   display: grid;
-  gap: 14px;
-  max-width: 1080px;
-  width: fit-content;
-  padding: clamp(16px, 2.2vw, 24px);
-  border-radius: 24px;
-  border: 1px solid rgba(225, 238, 255, 0.16);
+  place-items: center;
+  padding: calc(82px + 38px + clamp(18px, 3vw, 34px)) 24px clamp(34px, 5vw, 56px);
   background:
-    radial-gradient(circle at 92% 0%, rgba(23, 159, 150, 0.12), transparent 28%),
-    linear-gradient(135deg, rgba(7, 22, 54, 0.54), rgba(10, 43, 89, 0.22));
-  box-shadow: 0 22px 48px rgba(3, 15, 34, 0.16);
-  backdrop-filter: blur(10px);
+    linear-gradient(180deg, rgba(8, 17, 31, 0.08) 0%, rgba(8, 17, 31, 0.13) 58%, rgba(8, 17, 31, 0.28) 100%),
+    ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+
+  &[data-title='구성원'],
+  &[data-title='Professionals'] {
+    background:
+      linear-gradient(90deg, rgba(5, 23, 48, 0.72) 0%, rgba(5, 23, 48, 0.38) 42%, rgba(5, 23, 48, 0.5) 100%),
+      linear-gradient(180deg, rgba(5, 15, 30, 0.08) 0%, rgba(5, 15, 30, 0.34) 100%),
+      ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+  }
+
+  @media (max-width: 768px) {
+    min-height: clamp(260px, 44vh, 380px);
+    padding-top: clamp(44px, 8vw, 70px);
+
+    &[data-title='구성원'],
+    &[data-title='Professionals'] {
+      background:
+        linear-gradient(180deg, rgba(5, 23, 48, 0.32) 0%, rgba(5, 23, 48, 0.58) 100%),
+        ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+    }
+  }
 `;
 
 const Eyebrow = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: rgba(232, 242, 255, 0.96);
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-shadow: 0 12px 28px rgba(3, 15, 34, 0.34);
-
-  &::before {
-    content: '';
-    width: 30px;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(225, 238, 255, 0.74), rgba(23, 159, 150, 0.62));
-  }
+  display: none;
 `;
 
 const IntroTitle = styled.h1`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.85rem, 8vw, 7.4rem);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.075em;
+  font-size: clamp(2.54rem, 5vw, 4.9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-align: center;
   text-shadow:
-    0 20px 48px rgba(3, 15, 34, 0.48),
-    0 2px 8px rgba(3, 15, 34, 0.28);
+    0 18px 36px rgba(4, 12, 24, 0.36),
+    0 2px 10px rgba(4, 12, 24, 0.32);
 
   @media (max-width: 640px) {
-    font-size: clamp(2.36rem, 13vw, 4.4rem);
-    line-height: 0.98;
+    font-size: clamp(2.2rem, 11vw, 3.8rem);
   }
 `;
 
 const IntroSummary = styled.p`
-  margin: 0;
-  color: rgba(232, 242, 255, 0.9);
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
-  line-height: 1.72;
-  max-width: 820px;
-  text-shadow: 0 14px 32px rgba(3, 15, 34, 0.34);
+  display: none;
+`;
+
+const SubnavBand = styled.div`
+  background: #ffffff;
+  border-bottom: 1px solid #e4e7ec;
+`;
+
+const SubnavInner = styled.div`
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: calc(100% - 48px);
+  max-width: none;
+  min-height: 66px;
+  margin: 0 auto;
+  border-left: 1px solid #e4e7ec;
+  border-right: 1px solid #e4e7ec;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 28px);
+    overflow-x: auto;
+  }
+`;
+
+const HomeCell = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  flex: 0 0 66px;
+  border-right: 1px solid #e4e7ec;
+  color: #303844;
+
+  &::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: currentColor;
+    clip-path: polygon(50% 8%, 92% 42%, 82% 42%, 82% 90%, 60% 90%, 60% 62%, 40% 62%, 40% 90%, 18% 90%, 18% 42%, 8% 42%);
+  }
+
+  @media (max-width: 860px) {
+    width: 56px;
+    flex-basis: 56px;
+  }
 `;
 
 const Tabs = styled.nav`
   display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  width: fit-content;
-  max-width: 100%;
-  padding: 8px;
-  border-radius: 16px;
-  border: 1px solid rgba(225, 238, 255, 0.24);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(22, 91, 176, 0.08));
-  box-shadow: 0 18px 38px rgba(3, 15, 34, 0.14);
-  backdrop-filter: blur(14px);
-  overflow-x: auto;
+  align-items: stretch;
+  flex: 1;
+  justify-content: flex-end;
   white-space: nowrap;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(26, 86, 170, 0.44) transparent;
+  overflow-x: auto;
+  scrollbar-width: none;
 
-  @media (max-width: 980px) {
-    gap: 8px;
-    flex-wrap: nowrap;
-  }
-
-  @media (max-width: 640px) {
-    gap: 7px;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -136,38 +173,38 @@ const TabLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(225, 238, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.86);
+  min-width: 132px;
+  padding: 0 clamp(18px, 2vw, 30px);
+  border-right: 1px solid #e4e7ec;
+  color: #4f5661;
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
   position: relative;
-  transition:
-    color 0.18s ease,
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
+  transition: color 0.18s ease;
+
+  &:first-of-type {
+    border-left: 1px solid #e4e7ec;
+  }
 
   &[data-active='true'] {
-    color: ${palette.blueInk};
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(225, 238, 255, 0.72);
-    box-shadow:
-      0 16px 30px rgba(3, 15, 34, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    color: #121c2b;
+  }
+
+  &[data-active='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: #121c2b;
   }
 
   &:hover {
-    color: #ffffff;
-    border-color: rgba(225, 238, 255, 0.5);
-    transform: translateY(-1px);
+    color: #121c2b;
   }
 
   &:focus-visible {
@@ -177,13 +214,13 @@ const TabLink = styled(Link)`
   }
 
   @media (max-width: 980px) {
-    min-height: 36px;
-    padding: 0 13px;
+    min-height: 58px;
   }
 
   @media (max-width: 640px) {
-    min-height: 34px;
-    padding: 0 11px;
+    min-height: 52px;
+    padding: 0 18px;
+    min-width: auto;
     font-size: 0.84rem;
   }
 `;
@@ -197,9 +234,11 @@ export function LandingSubnav({
   summaryEn,
   items,
   compactBottom = false,
+  matchAboutHero = false,
 }: LandingSubnavProps) {
   const { t } = useI18n();
   const { pathname } = useLocation();
+  const hero = heroImagesByTitle[title] ?? heroImagesByTitle[titleEn] ?? heroImagesByTitle['신한 소개'];
 
   const isActivePath = (item: LandingSubnavItem) => {
     if (pathname === item.to) {
@@ -207,21 +246,28 @@ export function LandingSubnav({
     }
     return (item.matchPrefixes ?? []).some((prefix) => pathname.startsWith(prefix));
   };
+  const activeItem = items.find(isActivePath);
+  const visualTitle = activeItem ? t(activeItem.label, activeItem.labelEn ?? activeItem.label) : t(title, titleEn);
 
   return (
-    <Wrap data-reveal $compactBottom={compactBottom}>
-      <Intro>
+    <Wrap data-reveal $compactBottom={compactBottom} $matchAboutHero={matchAboutHero}>
+      <VisualHero $image={hero.image} $position={hero.position} data-title={title}>
         {kicker ? <Eyebrow>{t(kicker, kickerEn ?? kicker)}</Eyebrow> : null}
-        <IntroTitle>{t(title, titleEn)}</IntroTitle>
+        <IntroTitle>{visualTitle}</IntroTitle>
         {summary ? <IntroSummary>{t(summary, summaryEn ?? summary)}</IntroSummary> : null}
-      </Intro>
-      <Tabs aria-label={t(`${title} 하위 메뉴`, `${titleEn} sub navigation`)}>
-        {items.map((item) => (
-          <TabLink key={item.to} to={item.to} data-active={isActivePath(item)}>
-            {t(item.label, item.labelEn ?? item.label)}
-          </TabLink>
-        ))}
-      </Tabs>
+      </VisualHero>
+      <SubnavBand>
+        <SubnavInner>
+          <HomeCell to="/" aria-label={t('홈', 'Home')} />
+          <Tabs aria-label={t(`${title} 하위 메뉴`, `${titleEn} sub navigation`)}>
+            {items.map((item) => (
+              <TabLink key={item.to} to={item.to} data-active={isActivePath(item)}>
+                {t(item.label, item.labelEn ?? item.label)}
+              </TabLink>
+            ))}
+          </Tabs>
+        </SubnavInner>
+      </SubnavBand>
     </Wrap>
   );
 }

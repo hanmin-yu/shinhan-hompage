@@ -7,34 +7,21 @@ import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const MessageHero = styled(P.HeroSection)`
+  margin-top: 0;
   min-height: auto;
-  padding-bottom: clamp(72px, 8vw, 116px);
-  background:
-    linear-gradient(180deg, rgba(3, 15, 34, 0.16) 0%, rgba(3, 15, 34, 0.86) 78%, #061833 100%),
-    linear-gradient(120deg, rgba(4, 22, 52, 0.98), rgba(13, 51, 102, 0.82)),
-    url('/subpages/message-ceo-quote.jpg') center / cover no-repeat;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
 
   &::before,
   &::after {
-    opacity: 0.22;
+    display: none;
   }
-`;
 
-const HeroInner = styled(P.PageContainer)`
-  display: grid;
-  grid-template-columns: minmax(0, 0.62fr) minmax(300px, 0.38fr);
-  gap: clamp(34px, 6vw, 86px);
-  align-items: end;
-  padding-top: clamp(48px, 7vw, 94px);
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 768px) {
+    min-height: auto;
+    padding-bottom: 0;
   }
-`;
-
-const HeroCopy = styled.div`
-  display: grid;
-  gap: 18px;
 `;
 
 const Kicker = styled.span<{ $light?: boolean }>`
@@ -43,42 +30,6 @@ const Kicker = styled.span<{ $light?: boolean }>`
   font-weight: 800;
   letter-spacing: 0.17em;
   text-transform: uppercase;
-`;
-
-const HeroTitle = styled.h1`
-  max-width: 960px;
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(2.62rem, 6vw, 5.8rem);
-  font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -0.052em;
-  text-wrap: balance;
-  text-shadow: 0 24px 52px rgba(0, 0, 0, 0.34);
-
-  @media (max-width: 640px) {
-    letter-spacing: -0.035em;
-  }
-`;
-
-const HeroLead = styled.p`
-  max-width: 740px;
-  margin: 0;
-  color: rgba(232, 242, 255, 0.9);
-  font-size: clamp(1.04rem, 1.5vw, 1.24rem);
-  line-height: 1.86;
-`;
-
-const HeroQuote = styled.blockquote`
-  margin: 0;
-  padding: clamp(22px, 3vw, 34px) 0 0;
-  border-top: 1px solid rgba(226, 238, 255, 0.32);
-  color: #ffffff;
-  font-size: clamp(1.18rem, 2.1vw, 1.72rem);
-  font-weight: 700;
-  line-height: 1.48;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'soft' | 'navy' }>`
@@ -361,32 +312,9 @@ export function MessagePage() {
             title={aboutSubnav.title}
             titleEn={aboutSubnav.titleEn}
             items={aboutSubnav.items}
+            matchAboutHero
           />
         </P.PageContainer>
-
-        <HeroInner data-reveal>
-          <HeroCopy>
-            <Kicker $light>Leadership Message</Kicker>
-            <HeroTitle>
-              {t(
-                '고객의 성공과 발전이 우리의 성공입니다.',
-                'Our clients’ success and growth are our success.',
-              )}
-            </HeroTitle>
-            <HeroLead>
-              {t(
-                '1965년 3월 22일 서울통관사로 시작한 신한관세법인은 대한민국 경제와 무역의 성장과 함께 꾸준히 발전해왔습니다.',
-                'Founded as Seoul Customs Service on March 22, 1965, Shinhan Customs Service has steadily developed alongside Korea’s economy and trade.',
-              )}
-            </HeroLead>
-          </HeroCopy>
-          <HeroQuote>
-            {t(
-              '진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력하겠습니다.',
-              'We will continue striving today and tomorrow to provide truthful, distinguished service of the highest quality.',
-            )}
-          </HeroQuote>
-        </HeroInner>
       </MessageHero>
 
       <EditorialSection>

@@ -12,6 +12,40 @@ const FeaturedMilestone = styled(P.QuotePanel)`
   margin-bottom: 20px;
 `;
 
+const HistoryHero = styled(P.HeroSection)`
+  margin-top: 0;
+  min-height: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    min-height: auto;
+    padding-bottom: 0;
+  }
+`;
+
+const HistoryContentSection = styled(P.PageSection)`
+  background: #ffffff;
+
+  &::after {
+    display: none;
+  }
+`;
+
+const HistoryLead = styled(P.Lead)`
+  margin-top: clamp(28px, 3.2vw, 44px);
+`;
+
+const HistoryDivider = styled(P.SectionDivider)`
+  margin-top: clamp(28px, 3vw, 40px);
+`;
+
 const FeaturedYear = styled.span`
   color: #1f5cb2;
   font-size: 0.82rem;
@@ -175,7 +209,7 @@ export function HistoryPage() {
 
   return (
     <>
-      <P.HeroSection>
+      <HistoryHero>
         <P.PageContainer>
           <LandingSubnav
             kicker={aboutSubnav.kicker}
@@ -185,32 +219,27 @@ export function HistoryPage() {
             summary={aboutSubnav.summary}
             summaryEn={aboutSubnav.summaryEn}
             items={aboutSubnav.items}
+            matchAboutHero
           />
         </P.PageContainer>
+      </HistoryHero>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>History</P.Kicker>
-            <P.Title>{t('연혁', 'History')}</P.Title>
-            <P.Lead>
-              {t(
-                '1965년 창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다.',
-                'This page presents Shinhan Customs Service milestones by period since our founding in 1965.',
-              )}
-            </P.Lead>
-            <P.Lead>
-              {t(
-                '창립 50주년(2015)에 이어 2025년 창립 60주년을 맞이했으며, 전국 지사 및 해외 법인과 함께 성장해 왔습니다.',
-                'Following our 50th anniversary in 2015, we reached our 60th anniversary in 2025 and have continued to grow with domestic branches and overseas entities.',
-              )}
-            </P.Lead>
-          </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/about-history.jpg" minHeight={360} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
-
-      <P.PageSection>
+      <HistoryContentSection>
         <P.PageContainer data-reveal>
+          <P.Kicker>History</P.Kicker>
+          <P.Title>
+            {t(
+              '1965년부터 이어온 신한의 성장 기록',
+              'A record of Shinhan’s growth since 1965.',
+            )}
+          </P.Title>
+          <HistoryLead>
+            {t(
+              '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
+              'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
+            )}
+          </HistoryLead>
+          <HistoryDivider />
           <P.Kicker>Milestone</P.Kicker>
           <P.SectionTitle>{t('주요 이정표', 'Key Milestones')}</P.SectionTitle>
           {featuredMilestone ? (
@@ -236,7 +265,7 @@ export function HistoryPage() {
             ))}
           </P.MilestoneBand>
         </P.PageContainer>
-      </P.PageSection>
+      </HistoryContentSection>
 
       <P.PageSection tone="soft">
         <P.PageContainer data-reveal>

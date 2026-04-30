@@ -36,19 +36,12 @@ type NewsListToolbarProps = {
 
 const ToolbarCard = styled.div`
   display: grid;
-  gap: 10px;
-  margin: 0 0 14px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  border: 1px solid ${palette.line};
-  background:
-    radial-gradient(circle at top right, rgba(54, 112, 192, 0.16), transparent 34%),
-    radial-gradient(circle at 14% 18%, rgba(214, 154, 54, 0.08), transparent 18%),
-    ${palette.panelBackgroundStrong};
-  box-shadow: 0 20px 40px rgba(16, 53, 114, 0.08);
+  gap: 16px;
+  margin: 0 0 22px;
+  padding: 0;
+  background: transparent;
 
   @media (max-width: 720px) {
-    padding: 14px;
     gap: 12px;
   }
 `;
@@ -98,11 +91,11 @@ const SelectField = styled(Field)`
 `;
 
 const SearchInput = styled.input`
-  min-height: 42px;
-  padding: 0 14px;
+  min-height: 52px;
+  padding: 0 18px;
   width: 100%;
-  border-radius: 12px;
-  border: 1px solid ${palette.line};
+  border-radius: 0;
+  border: 1px solid rgba(16, 39, 68, 0.22);
   background: rgba(255, 255, 255, 0.98);
   color: ${palette.blueInk};
   font-size: 0.91rem;
@@ -112,17 +105,17 @@ const SearchInput = styled.input`
     box-shadow 0.18s ease;
 
   &:focus {
-    border-color: ${palette.lineStrong};
-    box-shadow: 0 0 0 4px rgba(36, 101, 190, 0.12);
+    border-color: ${palette.blueInk};
+    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.1);
   }
 `;
 
 const SelectInput = styled.select`
-  min-height: 42px;
+  min-height: 52px;
   padding: 0 38px 0 12px;
   width: 100%;
-  border-radius: 12px;
-  border: 1px solid ${palette.line};
+  border-radius: 0;
+  border: 1px solid rgba(16, 39, 68, 0.22);
   background: rgba(255, 255, 255, 0.98);
   color: ${palette.blueInk};
   font-size: 0.91rem;
@@ -132,8 +125,8 @@ const SelectInput = styled.select`
     box-shadow 0.18s ease;
 
   &:focus {
-    border-color: ${palette.lineStrong};
-    box-shadow: 0 0 0 4px rgba(36, 101, 190, 0.12);
+    border-color: ${palette.blueInk};
+    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.1);
   }
 `;
 
@@ -233,34 +226,35 @@ const InlineChipField = styled.div`
 const ChipGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0;
   min-width: 0;
+  border: 1px solid rgba(16, 39, 68, 0.18);
+  background: rgba(255, 255, 255, 0.72);
 `;
 
 const ChipButton = styled.button<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid ${({ $active }) => ($active ? 'rgba(214, 154, 54, 0.24)' : palette.line)};
-  background: ${({ $active }) => ($active ? palette.chipBackgroundActive : 'rgba(255, 255, 255, 0.92)')};
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-right: 1px solid rgba(16, 39, 68, 0.12);
+  background: ${({ $active }) => ($active ? palette.blueInk : 'transparent')};
   color: ${({ $active }) => ($active ? '#ffffff' : palette.textBody)};
   font-size: 0.84rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   transition:
-    transform 0.18s ease,
     color 0.18s ease,
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    box-shadow 0.18s ease;
+    background-color 0.18s ease;
+
+  &:last-of-type {
+    border-right: 0;
+  }
 
   &:hover {
-    transform: translateY(-1px);
-    border-color: ${palette.lineStrong};
-    box-shadow: 0 10px 18px rgba(16, 53, 114, 0.1);
+    background: ${({ $active }) => ($active ? palette.blueInk : 'rgba(16, 39, 68, 0.06)')};
   }
 `;
 

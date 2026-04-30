@@ -9,12 +9,9 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useIssueReports } from '../../hooks/useIssueReports';
 import { useI18n } from '../../i18n/useI18n';
+import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
 
 const PAGE_SIZE = 20;
-
-const FlushPageSection = styled(P.CompactPageSection)`
-  padding-top: 0;
-`;
 
 const StatusNote = styled.p<{ $tone?: 'default' | 'success' | 'error' }>`
   margin: 0 0 14px;
@@ -181,7 +178,7 @@ export function IssueReportPage() {
 
   return (
     <>
-      <P.CompactHeroSection>
+      <NewsCompactHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -192,11 +189,12 @@ export function IssueReportPage() {
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
             compactBottom
+            matchAboutHero
           />
         </P.PageContainer>
-      </P.CompactHeroSection>
+      </NewsCompactHeroSection>
 
-      <FlushPageSection tone="soft">
+      <NewsFlushPageSection>
         <P.PageContainer data-reveal>
           {loading ? <StatusNote>{t('기관 목록을 불러오는 중입니다.', 'Loading source feeds.')}</StatusNote> : null}
           {refreshing ? (
@@ -275,7 +273,7 @@ export function IssueReportPage() {
             onPageChange={setCurrentPage}
           />
         </P.PageContainer>
-      </FlushPageSection>
+      </NewsFlushPageSection>
     </>
   );
 }

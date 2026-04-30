@@ -819,10 +819,7 @@ export const practiceAreaDetails: PracticeAreaDetail[] = [
 ];
 
 const issueReportImages = [
-  '/hero/practice-fta-containers.jpg',
-  '/hero/practice-import-port.jpg',
-  '/hero/practice-aeo-warehouse.jpg',
-  '/hero/practice-forex-monitors.jpg',
+  '/hero/issue-report-ai-insight.png',
 ];
 
 export const issueReports: IssueReport[] = issueReportsSnapshot.slice(0, 4).map((item, index) => ({

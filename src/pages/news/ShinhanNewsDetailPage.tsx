@@ -8,8 +8,9 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel } from '../../utils/shinhanNews';
+import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
 
-const DetailSection = styled(P.CompactPageSection)`
+const DetailSection = styled(NewsFlushPageSection)`
   padding-top: 0;
 `;
 
@@ -127,7 +128,7 @@ export function ShinhanNewsDetailPage() {
 
   return (
     <>
-      <P.CompactHeroSection>
+      <NewsCompactHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -138,11 +139,12 @@ export function ShinhanNewsDetailPage() {
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
             compactBottom
+            matchAboutHero
           />
         </P.PageContainer>
-      </P.CompactHeroSection>
+      </NewsCompactHeroSection>
 
-      <DetailSection tone="soft">
+      <DetailSection>
         <P.PageContainer data-reveal>
           <DetailCard>
             <MetaRow>

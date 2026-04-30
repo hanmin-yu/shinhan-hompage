@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
+import { utilitySubnav } from '../../config/utilitySubnav';
 import {
   recruitBenefitDisplayGroups,
   recruitBenefitSummaryCards,
@@ -9,9 +11,12 @@ import {
 } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const RecruitHeroSection = styled(P.CompactHeroSection)`
-  padding-top: clamp(14px, 2vw, 24px);
-  padding-bottom: clamp(28px, 4vw, 42px);
+const RecruitIntroSection = styled(P.PageSection)`
+  background: #ffffff;
+
+  &::after {
+    display: none;
+  }
 `;
 
 const RecruitBenefitsSection = styled(P.CompactPageSection)`
@@ -371,7 +376,15 @@ export function RecruitPage() {
 
   return (
     <>
-      <RecruitHeroSection>
+      <EditorialPageHeader
+        config={utilitySubnav}
+        title="채용"
+        titleEn="Recruit"
+        heroImage="/subpages/about-mt14.jpg"
+        heroPosition="center 48%"
+      />
+
+      <RecruitIntroSection>
         <IntroLayout data-reveal>
           <IntroPanel>
             <P.Kicker>Recruit</P.Kicker>
@@ -399,7 +412,7 @@ export function RecruitPage() {
             </RoleCloud>
           </RolePanel>
         </IntroLayout>
-      </RecruitHeroSection>
+      </RecruitIntroSection>
 
       <RecruitBenefitsSection>
         <P.PageContainer>

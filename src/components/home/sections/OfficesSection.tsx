@@ -137,7 +137,7 @@ const MapStage = styled.div`
 
 const MapPanel = styled.div`
   position: relative;
-  width: min(124%, 740px);
+  width: min(120%, 710px);
   aspect-ratio: 0.86;
 
   &::before {
@@ -148,7 +148,7 @@ const MapPanel = styled.div`
     width: 92%;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid rgba(70, 181, 209, 0.16);
+    border: 1px solid rgba(70, 181, 209, 0.2);
     transform: translate(-50%, -50%);
   }
 `;
@@ -159,8 +159,8 @@ const KoreaMapImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0.52;
-  filter: grayscale(1) contrast(1.52);
+  opacity: 0.42;
+  filter: grayscale(1) contrast(1.3) drop-shadow(0 18px 26px rgba(20, 62, 121, 0.12));
 `;
 
 const MapHalo = styled.span`
@@ -177,23 +177,6 @@ const MapHalo = styled.span`
   opacity: 0.72;
 `;
 
-const MapConnections = styled.svg`
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-`;
-
-const MapLine = styled.line`
-  stroke: rgba(44, 157, 198, 0.42);
-  stroke-width: 0.7;
-  stroke-linecap: round;
-  stroke-dasharray: 5 8;
-  animation: officeDash 7s linear infinite;
-`;
-
 const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
   position: absolute;
   left: ${({ x }) => x}%;
@@ -201,16 +184,15 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
   z-index: 2;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.92);
   background: ${({ accent }) => accent};
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 900;
-  line-height: 1;
-  box-shadow: 0 0 0 7px rgba(70, 181, 209, 0.15), 0 18px 30px rgba(15, 43, 89, 0.2);
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+  box-shadow: 0 0 0 7px rgba(70, 181, 209, 0.14), 0 18px 30px rgba(15, 43, 89, 0.18);
   transform: translate(-50%, -50%);
 
   &::before,
@@ -226,28 +208,6 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
   &::after {
     animation-delay: 1.4s;
   }
-`;
-
-const MapCaption = styled.div`
-  position: absolute;
-  left: 6%;
-  bottom: 7%;
-  display: grid;
-  gap: 5px;
-  color: #2d5f8b;
-`;
-
-const MapCaptionLabel = styled.span`
-  font-size: 0.68rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
-const MapCaptionText = styled.strong`
-  color: #173f69;
-  font-size: 1rem;
-  font-weight: 900;
 `;
 
 const Label = styled.span`
@@ -436,8 +396,6 @@ export function OfficesSection() {
   const { t } = useI18n();
   const visibleOffices = officeBranches.filter((office) => office.id !== 'kord').slice(0, 8);
   const domesticOffices = visibleOffices.filter((office) => office.id !== 'vietnam');
-  const hubOffice = domesticOffices.find((office) => office.id === 'seoul') ?? domesticOffices[0];
-  const connectedOffices = hubOffice ? domesticOffices.filter((office) => office.id !== hubOffice.id) : [];
 
   return (
     <>
@@ -466,34 +424,15 @@ export function OfficesSection() {
             <MapPanel>
               <MapHalo aria-hidden="true" />
               <KoreaMapImage src={koreaMapAsset} alt="" />
-              {hubOffice ? (
-                <MapConnections viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                  {connectedOffices.map((office) => (
-                    <MapLine
-                      key={`${office.id}-line`}
-                      x1={hubOffice.x}
-                      y1={hubOffice.y}
-                      x2={office.x}
-                      y2={office.y}
-                    />
-                  ))}
-                </MapConnections>
-              ) : null}
-              {domesticOffices.map((office, index) => (
+              {domesticOffices.map((office) => (
                 <MapPoint
                   key={`${office.id}-point`}
                   x={office.x}
                   y={office.y}
                   accent={office.accent}
                   aria-label={t(office.label, office.labelEn)}
-                >
-                  {index + 1}
-                </MapPoint>
+                />
               ))}
-              <MapCaption>
-                <MapCaptionLabel>Domestic Network</MapCaptionLabel>
-                <MapCaptionText>{t('국내 거점 연결', 'Connected offices')}</MapCaptionText>
-              </MapCaption>
             </MapPanel>
           </MapStage>
 

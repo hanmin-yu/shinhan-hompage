@@ -7,11 +7,12 @@ import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialHero = styled(P.HeroSection)`
-  min-height: clamp(420px, 54vw, 610px);
+  margin-top: 0;
+  min-height: clamp(260px, 31vw, 410px);
   display: grid;
   place-items: center;
-  padding-top: calc(82px + clamp(24px, 4vw, 54px));
-  padding-bottom: clamp(54px, 7vw, 90px);
+  padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
+  padding-bottom: clamp(34px, 5vw, 56px);
   background:
     linear-gradient(180deg, rgba(8, 17, 31, 0.1) 0%, rgba(8, 17, 31, 0.12) 48%, rgba(8, 17, 31, 0.28) 100%),
     url('/hero/homepage/office-tower-clear-sky.jpg') center 42% / cover no-repeat;
@@ -22,8 +23,9 @@ const EditorialHero = styled(P.HeroSection)`
   }
 
   @media (max-width: 768px) {
-    min-height: clamp(360px, 68vh, 560px);
-    padding-top: calc(70px + clamp(24px, 5vw, 40px));
+    margin-top: 0;
+    min-height: clamp(260px, 44vh, 380px);
+    padding-top: clamp(44px, 8vw, 70px);
   }
 `;
 
@@ -61,31 +63,40 @@ const SubnavInner = styled(P.PageContainer)`
   }
 `;
 
-const AboutBreadcrumb = styled.div`
+const HomeCell = styled(Link)`
   display: flex;
   align-items: center;
-  min-width: 280px;
-  padding: 0 32px;
+  justify-content: center;
+  width: 66px;
+  flex: 0 0 66px;
   border-right: 1px solid #e4e7ec;
-  color: #5e6672;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
+  color: #303844;
+
+  &::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: currentColor;
+    clip-path: polygon(50% 8%, 92% 42%, 82% 42%, 82% 90%, 60% 90%, 60% 62%, 40% 62%, 40% 90%, 18% 90%, 18% 42%, 8% 42%);
+  }
 
   @media (max-width: 760px) {
-    min-height: 54px;
-    padding: 0;
-    border-right: 0;
-    border-bottom: 1px solid #e4e7ec;
+    width: 56px;
+    flex-basis: 56px;
   }
 `;
 
 const AboutNav = styled.nav`
   display: flex;
-  flex-wrap: wrap;
   align-items: stretch;
-  margin-left: auto;
+  flex: 1;
+  justify-content: flex-end;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (max-width: 760px) {
     margin-left: 0;
@@ -96,12 +107,18 @@ const AboutNavLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 0 clamp(18px, 2.4vw, 34px);
-  border-left: 1px solid #e4e7ec;
+  justify-content: center;
+  min-width: 132px;
+  padding: 0 clamp(18px, 2vw, 30px);
+  border-right: 1px solid #e4e7ec;
   color: #4f5661;
   font-size: 0.98rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+
+  &:first-of-type {
+    border-left: 1px solid #e4e7ec;
+  }
 
   &[data-active='true'] {
     color: #121c2b;
@@ -113,7 +130,7 @@ const AboutNavLink = styled(Link)`
     left: 0;
     right: 0;
     bottom: 0;
-    height: 2px;
+    height: 3px;
     background: #121c2b;
   }
 
@@ -123,11 +140,8 @@ const AboutNavLink = styled(Link)`
 
   @media (max-width: 760px) {
     min-height: 52px;
+    min-width: auto;
     padding: 0 18px;
-
-    &:first-of-type {
-      border-left: 0;
-    }
   }
 `;
 
@@ -629,7 +643,7 @@ export function AboutPage() {
 
       <SubnavBand>
         <SubnavInner>
-          <AboutBreadcrumb>{t('홈 / 신한 소개 / 회사소개', 'Home / About Shinhan / Overview')}</AboutBreadcrumb>
+          <HomeCell to="/" aria-label={t('홈', 'Home')} />
           <AboutNav aria-label={t('회사소개 하위 메뉴', 'Overview sub navigation')}>
             {aboutSubnav.items.map((item) => (
               <AboutNavLink

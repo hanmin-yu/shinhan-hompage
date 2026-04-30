@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { ServiceDetailSubnav } from '../../components/site/ServiceDetailSubnav';
 import { sectionSubnav } from '../../config/sectionSubnav';
@@ -10,77 +11,249 @@ type ServiceDetailPageProps = {
   path: string;
 };
 
-const ServiceHeroSection = styled(P.HeroSection)<{ image: string }>`
-  min-height: clamp(700px, 92vh, 1040px);
-  padding-bottom: clamp(78px, 10vw, 140px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(241, 247, 255, 0.7) 10%, rgba(71, 116, 176, 0.28) 26%, rgba(8, 28, 64, 0.26) 42%, rgba(8, 28, 64, 0.72) 100%),
-    linear-gradient(90deg, rgba(8, 28, 64, 0.84) 0%, rgba(8, 28, 64, 0.54) 42%, rgba(8, 28, 64, 0.12) 100%),
-    radial-gradient(circle at 78% 36%, rgba(23, 159, 150, 0.12), transparent 34%),
-    ${({ image }) => `url(${image}) center / cover no-repeat`};
-
-  &::before {
-    opacity: 0.32;
-    mix-blend-mode: soft-light;
-  }
-
-  &::after {
-    opacity: 0.42;
-  }
-
-  @media (max-width: 980px) {
-    min-height: auto;
-  }
+const EditorialSection = styled.section<{ $tone?: 'soft' }>`
+  padding: clamp(78px, 9vw, 128px) 0;
+  border-top: 1px solid #d8dee8;
+  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)' : '#ffffff')};
 `;
 
-const ServiceIntroBlock = styled(P.IntroBlock)`
-  grid-template-columns: minmax(0, 1fr);
-  align-items: end;
+const ServiceNavSection = styled.section`
+  padding: clamp(18px, 2.6vw, 28px) 0;
+  border-top: 1px solid #e4e7ec;
+  border-bottom: 1px solid #e4e7ec;
+  background: #ffffff;
 `;
 
-const HeadlinePanel = styled(P.StatementBlock)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 14px;
-  min-height: 360px;
-  width: 100%;
-  border-color: rgba(225, 238, 255, 0.28);
-  background:
-    radial-gradient(circle at 92% 8%, rgba(23, 159, 150, 0.16), transparent 28%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 255, 0.86)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(239, 247, 255, 0.88));
-  box-shadow: 0 30px 58px rgba(3, 15, 34, 0.24);
-
-  ${P.SectionTitle} {
-    max-width: 820px;
-  }
-
-  ${P.Lead},
-  ${P.CardText} {
-    max-width: 960px;
-  }
+const HeroStatement = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(30px, 4vw, 54px);
 `;
 
-const SubtitleText = styled.p`
+const HeroEyebrow = styled.span`
+  color: #52647c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const HeroTitle = styled.h1`
+  max-width: 1040px;
   margin: 0;
-  color: #1d4f96;
-  font-size: 0.98rem;
-  font-weight: 700;
-  line-height: 1.7;
+  color: #172337;
+  font-size: clamp(2.44rem, 5.6vw, 5.4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
+  }
 `;
 
-const ChecklistGrid = styled(P.Grid)`
-  margin-top: 14px;
+const HeroLeadGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
+  gap: clamp(28px, 5vw, 74px);
+  align-items: start;
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const DocumentStack = styled.div`
+const BodyStack = styled.div`
   display: grid;
   gap: 18px;
 `;
 
-const DocumentSectionCard = styled(P.StatementBlock)`
-  gap: 14px;
+const HeroLead = styled.p`
+  max-width: 820px;
+  margin: 0;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.45vw, 1.22rem);
+  line-height: 1.82;
+`;
+
+const ServiceFacts = styled.div`
+  display: grid;
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+`;
+
+const ServiceFact = styled.div`
+  display: grid;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+`;
+
+const ServiceFactValue = styled.strong`
+  color: #172337;
+  font-size: clamp(1.24rem, 2vw, 1.72rem);
+  font-weight: 800;
+  line-height: 1.12;
+`;
+
+const ServiceFactLabel = styled.span`
+  color: #687385;
+  font-size: 0.88rem;
+  line-height: 1.5;
+`;
+
+const SubtitleText = styled.p`
+  margin: 0;
+  color: #52647c;
+  font-size: 0.98rem;
+  font-weight: 800;
+  line-height: 1.7;
+`;
+
+const SectionInner = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(34px, 5vw, 62px);
+`;
+
+const SectionHead = styled.div`
+  display: grid;
+  gap: 12px;
+`;
+
+const SectionLabel = styled.span`
+  display: block;
+  color: #52647c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+`;
+
+const EditorialTitle = styled.h2`
+  max-width: 860px;
+  margin: 0;
+  color: #172337;
+  font-size: clamp(2.14rem, 4.2vw, 4.22rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
+  }
+`;
+
+const ContentGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
+  gap: clamp(34px, 6vw, 86px);
+  align-items: start;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FeaturedPanel = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 38px);
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+`;
+
+const FeaturedMeta = styled.span`
+  color: rgba(45, 58, 76, 0.34);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+`;
+
+const FeaturedTitle = styled.h3`
+  margin: 0;
+  color: #18283e;
+  font-size: clamp(1.36rem, 2vw, 1.72rem);
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+`;
+
+const FeaturedBody = styled.p`
+  margin: 0;
+  color: #4e5d70;
+  font-size: 0.98rem;
+  line-height: 1.76;
+`;
+
+const ItemList = styled.div`
+  display: grid;
+  border-top: 1px solid #d5dbe4;
+`;
+
+const Item = styled.article`
+  display: grid;
+  grid-template-columns: minmax(112px, 0.22fr) minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid #dbe0e8;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+`;
+
+const ItemCategory = styled.span`
+  color: #52647c;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+const ItemBodyStack = styled.div`
+  display: grid;
+  gap: 10px;
+`;
+
+const ItemTitle = styled.h4`
+  margin: 0;
+  color: #18283e;
+  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+`;
+
+const ItemBody = styled.p`
+  margin: 0;
+  color: #4e5d70;
+  font-size: 0.94rem;
+  line-height: 1.72;
+`;
+
+const DocumentStack = styled.div`
+  display: grid;
+  border-top: 1px solid #d5dbe4;
+`;
+
+const DocumentSectionCard = styled.article`
+  display: grid;
+  grid-template-columns: minmax(140px, 0.24fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 48px);
+  padding: clamp(24px, 3vw, 34px) 0;
+  border-bottom: 1px solid #dbe0e8;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ParagraphStack = styled.div`
@@ -88,8 +261,11 @@ const ParagraphStack = styled.div`
   gap: 10px;
 `;
 
-const SectionParagraph = styled(P.CardText)`
+const SectionParagraph = styled.p`
   max-width: none;
+  margin: 0;
+  color: #4e5d70;
+  font-size: 0.96rem;
   line-height: 1.78;
 `;
 
@@ -110,7 +286,39 @@ const StepList = styled.ol`
 `;
 
 const ContactGrid = styled(P.Grid)`
-  margin-top: 8px;
+  margin-top: 0;
+`;
+
+const ContactPanel = styled.article`
+  display: grid;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 38px);
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+  background: rgba(255, 255, 255, 0.58);
+`;
+
+const ContactCard = styled.article`
+  display: grid;
+  gap: 12px;
+  padding: 20px 0;
+  border-top: 1px solid #dbe0e8;
+`;
+
+const ContactName = styled.h3`
+  margin: 0;
+  color: #18283e;
+  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+`;
+
+const ContactRole = styled.p`
+  margin: 0;
+  color: #4e5d70;
+  font-size: 0.94rem;
+  line-height: 1.72;
 `;
 
 const ContactMeta = styled.div`
@@ -147,7 +355,7 @@ const SummaryImage = styled.div<{ image: string }>`
 const FigureGrid = styled.div<{ columns: 1 | 2 }>`
   display: grid;
   grid-template-columns: repeat(${({ columns }) => columns}, minmax(0, 1fr));
-  gap: 18px;
+  gap: clamp(18px, 3vw, 30px);
 
   @media (max-width: 820px) {
     grid-template-columns: 1fr;
@@ -156,19 +364,14 @@ const FigureGrid = styled.div<{ columns: 1 | 2 }>`
 
 const FigureCard = styled.figure`
   margin: 0;
-  display: grid;
-  gap: 10px;
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(19, 75, 154, 0.12);
-  background: #ffffff;
-  box-shadow: 0 18px 38px rgba(16, 53, 114, 0.05);
+  padding-top: 18px;
+  border-top: 1px solid #d5dbe4;
 `;
 
 const FigureImage = styled.img`
   width: 100%;
   display: block;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(20, 76, 158, 0.1);
   object-fit: cover;
 `;
@@ -197,7 +400,15 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
   return (
     <>
-      <ServiceHeroSection image={heroImage}>
+      <EditorialPageHeader
+        config={servicesSubnav}
+        title={tx(content.title)}
+        titleEn={tx(content.title)}
+        heroImage={heroImage}
+        heroPosition="center 50%"
+      />
+
+      <ServiceNavSection>
         <P.PageContainer>
           <ServiceDetailSubnav
             kicker={servicesSubnav.kicker}
@@ -211,65 +422,97 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
             activePath={content.path}
           />
         </P.PageContainer>
+      </ServiceNavSection>
 
-        <ServiceIntroBlock data-reveal>
-          <HeadlinePanel>
-            <P.Kicker>Service Detail</P.Kicker>
-            <P.SectionTitle>{tx(content.title)}</P.SectionTitle>
-            {content.subtitle ? <SubtitleText>{tx(content.subtitle)}</SubtitleText> : null}
-            <P.Lead style={{ marginTop: 0 }}>{tx(content.summary)}</P.Lead>
-            <P.CardText>{tx(content.overview)}</P.CardText>
-          </HeadlinePanel>
-        </ServiceIntroBlock>
-      </ServiceHeroSection>
+      <EditorialSection>
+        <HeroStatement data-reveal>
+          <div>
+            <HeroEyebrow>Service Detail</HeroEyebrow>
+            <HeroTitle>{tx(content.title)}</HeroTitle>
+          </div>
+          <HeroLeadGrid>
+            <BodyStack>
+              {content.subtitle ? <SubtitleText>{tx(content.subtitle)}</SubtitleText> : null}
+              <HeroLead>{tx(content.summary)}</HeroLead>
+              <HeroLead>{tx(content.overview)}</HeroLead>
+            </BodyStack>
+            <ServiceFacts>
+              <ServiceFact>
+                <ServiceFactValue>{t('업무분야', 'Practice')}</ServiceFactValue>
+                <ServiceFactLabel>{t(servicesSubnav.title, servicesSubnav.titleEn)}</ServiceFactLabel>
+              </ServiceFact>
+              <ServiceFact>
+                <ServiceFactValue>
+                  {t(
+                    serviceLandingGroups.find((group) => group.id === content.groupKey)?.title ?? servicesSubnav.title,
+                    serviceLandingGroups.find((group) => group.id === content.groupKey)?.titleEn ?? servicesSubnav.titleEn,
+                  )}
+                </ServiceFactValue>
+                <ServiceFactLabel>{t('중분류 기준의 서비스 체계', 'Service category')}</ServiceFactLabel>
+              </ServiceFact>
+              <ServiceFact>
+                <ServiceFactValue>{t('Detail', 'Detail')}</ServiceFactValue>
+                <ServiceFactLabel>{t('세부 업무 범위와 체크포인트', 'Detailed scope and checkpoints')}</ServiceFactLabel>
+              </ServiceFact>
+            </ServiceFacts>
+          </HeroLeadGrid>
+        </HeroStatement>
+      </EditorialSection>
 
       {useDocumentLayout ? (
         <>
           {hasDocumentSections ? (
-            <P.PageSection tone="soft">
-              <P.PageContainer data-reveal>
-                <P.Kicker>{t('문서 구성', 'Document Flow')}</P.Kicker>
-                <P.SectionTitle>{t('상세 내용', 'Detailed Content')}</P.SectionTitle>
+            <EditorialSection $tone="soft">
+              <SectionInner data-reveal>
+                <SectionHead>
+                  <SectionLabel>{t('문서 구성', 'Document Flow')}</SectionLabel>
+                  <EditorialTitle>{t('상세 내용', 'Detailed Content')}</EditorialTitle>
+                </SectionHead>
                 <DocumentStack>
-                  {content.contentSections?.map((section) => (
+                  {content.contentSections?.map((section, index) => (
                     <DocumentSectionCard key={section.heading}>
-                      <P.CardTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</P.CardTitle>
-                      {section.body?.length ? (
-                        <ParagraphStack>
-                          {section.body.map((paragraph) => (
-                            <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
-                          ))}
-                        </ParagraphStack>
-                      ) : null}
-                      {section.list?.length ? (
-                        <SectionList>
-                          {section.list.map((item) => (
-                            <li key={item}>{tx(item)}</li>
-                          ))}
-                        </SectionList>
-                      ) : null}
-                      {section.steps?.length ? (
-                        <StepList>
-                          {section.steps.map((step) => (
-                            <li key={step}>{tx(step)}</li>
-                          ))}
-                        </StepList>
-                      ) : null}
+                      <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
+                      <ItemBodyStack>
+                        <ItemTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</ItemTitle>
+                        {section.body?.length ? (
+                          <ParagraphStack>
+                            {section.body.map((paragraph) => (
+                              <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
+                            ))}
+                          </ParagraphStack>
+                        ) : null}
+                        {section.list?.length ? (
+                          <SectionList>
+                            {section.list.map((item) => (
+                              <li key={item}>{tx(item)}</li>
+                            ))}
+                          </SectionList>
+                        ) : null}
+                        {section.steps?.length ? (
+                          <StepList>
+                            {section.steps.map((step) => (
+                              <li key={step}>{tx(step)}</li>
+                            ))}
+                          </StepList>
+                        ) : null}
+                      </ItemBodyStack>
                     </DocumentSectionCard>
                   ))}
                   {!hasDocumentImages && content.sectionImage ? (
                     <SummaryImage image={content.sectionImage} role="img" aria-hidden="true" />
                   ) : null}
                 </DocumentStack>
-              </P.PageContainer>
-            </P.PageSection>
+              </SectionInner>
+            </EditorialSection>
           ) : null}
 
           {hasDocumentImages ? (
-            <P.PageSection>
-              <P.PageContainer data-reveal>
-                <P.Kicker>{t('자료/도식', 'Figures & Diagrams')}</P.Kicker>
-                <P.SectionTitle>{t('참고 이미지', 'Reference Images')}</P.SectionTitle>
+            <EditorialSection>
+              <SectionInner data-reveal>
+                <SectionHead>
+                  <SectionLabel>{t('자료/도식', 'Figures & Diagrams')}</SectionLabel>
+                  <EditorialTitle>{t('참고 이미지', 'Reference Images')}</EditorialTitle>
+                </SectionHead>
                 <FigureGrid columns={(content.documentImages?.length ?? 0) > 1 ? 2 : 1}>
                   {content.documentImages?.map((image) => (
                     <FigureCard key={image.src}>
@@ -277,71 +520,90 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                     </FigureCard>
                   ))}
                 </FigureGrid>
-              </P.PageContainer>
-            </P.PageSection>
+              </SectionInner>
+            </EditorialSection>
           ) : null}
         </>
       ) : (
         <>
-          <P.PageSection tone="soft">
-            <P.PageContainer data-reveal>
-              <P.SectionHead>
-                <div>
-                  <P.Kicker>{t('주요 지원 범위', 'Scope')}</P.Kicker>
-                  <P.SectionTitle>{t('지원 범위', 'Support Scope')}</P.SectionTitle>
-                </div>
-              </P.SectionHead>
-              <P.Grid columns={2}>
-                {content.scope.map((item) => (
-                  <P.Card key={item}>
-                    <P.CardTitle>{tx(item)}</P.CardTitle>
-                    <P.CardText>
-                      {t(
-                        '현장 운영과 법령 적용을 함께 고려해 범위와 우선순위를 정리합니다.',
-                        'We define scope and priorities by aligning field operations with regulatory application.',
-                      )}
-                    </P.CardText>
-                  </P.Card>
-                ))}
-                {content.sectionImage ? <SummaryImage image={content.sectionImage} role="img" aria-hidden="true" /> : null}
-              </P.Grid>
-            </P.PageContainer>
-          </P.PageSection>
+          <EditorialSection $tone="soft">
+            <SectionInner data-reveal>
+              <SectionHead>
+                <SectionLabel>{t('주요 지원 범위', 'Scope')}</SectionLabel>
+                <EditorialTitle>{t('지원 범위', 'Support Scope')}</EditorialTitle>
+              </SectionHead>
+              <ContentGrid>
+                <FeaturedPanel>
+                  <FeaturedMeta>Service Scope</FeaturedMeta>
+                  <FeaturedTitle>{tx(content.title)}</FeaturedTitle>
+                  <FeaturedBody>
+                    {t(
+                      '현장 운영과 법령 적용을 함께 고려해 업무 범위와 우선순위를 정리합니다.',
+                      'We define scope and priorities by aligning field operations with regulatory application.',
+                    )}
+                  </FeaturedBody>
+                  {content.sectionImage ? <SummaryImage image={content.sectionImage} role="img" aria-hidden="true" /> : null}
+                </FeaturedPanel>
+                <ItemList>
+                  {content.scope.map((item, index) => (
+                    <Item key={item}>
+                      <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
+                      <ItemBodyStack>
+                        <ItemTitle>{tx(item)}</ItemTitle>
+                        <ItemBody>
+                          {t(
+                            '통관 실무와 사후 리스크를 함께 검토해 필요한 대응 범위를 구체화합니다.',
+                            'We define the practical response by reviewing customs operations and post-clearance risk together.',
+                          )}
+                        </ItemBody>
+                      </ItemBodyStack>
+                    </Item>
+                  ))}
+                </ItemList>
+              </ContentGrid>
+            </SectionInner>
+          </EditorialSection>
 
-          <P.PageSection>
-            <P.PageContainer data-reveal>
-              <P.Kicker>Checklist</P.Kicker>
-              <P.SectionTitle>{t('절차 / 체크포인트', 'Process / Checkpoints')}</P.SectionTitle>
-              <ChecklistGrid columns={2}>
-                {content.checkpoints.map((point) => (
-                  <P.Card key={point}>
-                    <P.CardTitle>{tx(point)}</P.CardTitle>
-                    <P.CardText>
-                      {t(
-                        '각 단계별로 필요한 자료와 확인 항목을 정리해 대응합니다.',
-                        'We organize required documents and checkpoints for each phase.',
-                      )}
-                    </P.CardText>
-                  </P.Card>
+          <EditorialSection>
+            <SectionInner data-reveal>
+              <SectionHead>
+                <SectionLabel>Checklist</SectionLabel>
+                <EditorialTitle>{t('절차 / 체크포인트', 'Process / Checkpoints')}</EditorialTitle>
+              </SectionHead>
+              <ItemList>
+                {content.checkpoints.map((point, index) => (
+                  <Item key={point}>
+                    <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
+                    <ItemBodyStack>
+                      <ItemTitle>{tx(point)}</ItemTitle>
+                      <ItemBody>
+                        {t(
+                          '각 단계별로 필요한 자료와 확인 항목을 정리해 대응합니다.',
+                          'We organize required documents and checkpoints for each phase.',
+                        )}
+                      </ItemBody>
+                    </ItemBodyStack>
+                  </Item>
                 ))}
-              </ChecklistGrid>
-            </P.PageContainer>
-          </P.PageSection>
+              </ItemList>
+            </SectionInner>
+          </EditorialSection>
         </>
       )}
 
-      <P.PageSection tone="soft">
-        <P.PageContainer data-reveal>
-          <P.QuotePanel>
-            <P.Kicker>{hasContactPoints ? t('연락처', 'Contact') : t('관련 전문가', 'Related Experts')}</P.Kicker>
-            <P.SectionTitle>{hasContactPoints ? t('Contact Point', 'Contact Point') : t('전문가 연계', 'Expert Connection')}</P.SectionTitle>
-            <P.SectionDivider />
+      <EditorialSection $tone="soft">
+        <SectionInner data-reveal>
+          <SectionHead>
+            <SectionLabel>{hasContactPoints ? t('연락처', 'Contact') : t('관련 전문가', 'Related Experts')}</SectionLabel>
+            <EditorialTitle>{hasContactPoints ? t('Contact Point', 'Contact Point') : t('전문가 연계', 'Expert Connection')}</EditorialTitle>
+          </SectionHead>
+          <ContactPanel>
             {hasContactPoints ? (
               <ContactGrid columns={2}>
                 {content.contactPoints?.map((contact) => (
-                  <P.Card key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
-                    <P.CardTitle>{tx(contact.name)}</P.CardTitle>
-                    {contact.role ? <P.CardText>{tx(contact.role)}</P.CardText> : null}
+                  <ContactCard key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
+                    <ContactName>{tx(contact.name)}</ContactName>
+                    {contact.role ? <ContactRole>{tx(contact.role)}</ContactRole> : null}
                     {contact.phone ? (
                       <ContactMeta>
                         <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
@@ -354,7 +616,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                         <ContactValue href={`mailto:${contact.email}`}>{contact.email}</ContactValue>
                       </ContactMeta>
                     ) : null}
-                  </P.Card>
+                  </ContactCard>
                 ))}
               </ContactGrid>
             ) : (
@@ -364,9 +626,9 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                 ))}
               </P.BulletList>
             )}
-          </P.QuotePanel>
-        </P.PageContainer>
-      </P.PageSection>
+          </ContactPanel>
+        </SectionInner>
+      </EditorialSection>
     </>
   );
 }

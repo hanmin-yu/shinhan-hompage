@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
+import { utilitySubnav } from '../../config/utilitySubnav';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -13,61 +15,70 @@ export function ContactPage() {
   const officeFax = hqOffice?.fax ?? '02-540-2323';
 
   return (
-    <P.HeroSection>
-      <SectionInner>
-        <ContactGrid>
-          <InfoPanel>
-            <P.Kicker>Contact Us</P.Kicker>
-            <P.SectionTitle>{t('문의', 'Contact')}</P.SectionTitle>
-            <P.Lead>
-              {t(
-                '신한관세법인의 대표 연락 정보입니다. 문의가 필요하신 경우 아래 연락처로 편하게 연락해주세요.',
-                'Primary contact details for Shinhan Customs Service.',
-              )}
-            </P.Lead>
+    <>
+      <EditorialPageHeader
+        config={utilitySubnav}
+        title="문의"
+        titleEn="Contact"
+        heroImage="/hero/homepage/office-blue-sky.jpg"
+        heroPosition="center 42%"
+      />
 
-            <InfoActions>
-              <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
-                {t('대표번호 연결', 'Call Main Line')}
-              </InfoActionLink>
-              <InfoActionLink href={`mailto:${siteContact.email}`}>{t('이메일 보내기', 'Send Email')}</InfoActionLink>
-            </InfoActions>
-
-            <InfoList>
-              <InfoItem>
-                <InfoLabel>{t('대표번호', 'Phone')}</InfoLabel>
-                <InfoValueLink href={`tel:${officePhone.replace(/[^+\d]/g, '')}`}>{officePhone}</InfoValueLink>
-              </InfoItem>
-              <InfoItem>
-                <InfoLabel>{t('팩스번호', 'Fax')}</InfoLabel>
-                <InfoValue>{officeFax}</InfoValue>
-              </InfoItem>
-              <InfoItem>
-                <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
-                <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
-              </InfoItem>
-              <InfoItem>
-                <InfoLabel>{t('본사 주소', 'HQ Address')}</InfoLabel>
-                <InfoValue>{t(officeAddress, officeAddressEn)}</InfoValue>
-              </InfoItem>
-              <InfoItem>
-                <InfoLabel>{t('사업자등록번호', 'Business Registration No.')}</InfoLabel>
-                <InfoValue>{siteContact.businessNumber}</InfoValue>
-              </InfoItem>
-            </InfoList>
-          </InfoPanel>
-
-          <InquiryPanel>
-            <InquiryHeader>
-              <P.Kicker>Online Inquiry</P.Kicker>
-              <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
-              <InquiryText>
+      <ContactSection>
+        <SectionInner>
+          <ContactGrid>
+            <InfoPanel>
+              <P.Kicker>Contact Us</P.Kicker>
+              <P.SectionTitle>{t('문의', 'Contact')}</P.SectionTitle>
+              <P.Lead>
                 {t(
-                  '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
-                  'Leave your inquiry and our team will review it.',
+                  '신한관세법인의 대표 연락 정보입니다. 문의가 필요하신 경우 아래 연락처로 편하게 연락해주세요.',
+                  'Primary contact details for Shinhan Customs Service.',
                 )}
-              </InquiryText>
-            </InquiryHeader>
+              </P.Lead>
+
+              <InfoActions>
+                <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
+                  {t('대표번호 연결', 'Call Main Line')}
+                </InfoActionLink>
+                <InfoActionLink href={`mailto:${siteContact.email}`}>{t('이메일 보내기', 'Send Email')}</InfoActionLink>
+              </InfoActions>
+
+              <InfoList>
+                <InfoItem>
+                  <InfoLabel>{t('대표번호', 'Phone')}</InfoLabel>
+                  <InfoValueLink href={`tel:${officePhone.replace(/[^+\d]/g, '')}`}>{officePhone}</InfoValueLink>
+                </InfoItem>
+                <InfoItem>
+                  <InfoLabel>{t('팩스번호', 'Fax')}</InfoLabel>
+                  <InfoValue>{officeFax}</InfoValue>
+                </InfoItem>
+                <InfoItem>
+                  <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
+                  <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
+                </InfoItem>
+                <InfoItem>
+                  <InfoLabel>{t('본사 주소', 'HQ Address')}</InfoLabel>
+                  <InfoValue>{t(officeAddress, officeAddressEn)}</InfoValue>
+                </InfoItem>
+                <InfoItem>
+                  <InfoLabel>{t('사업자등록번호', 'Business Registration No.')}</InfoLabel>
+                  <InfoValue>{siteContact.businessNumber}</InfoValue>
+                </InfoItem>
+              </InfoList>
+            </InfoPanel>
+
+            <InquiryPanel>
+              <InquiryHeader>
+                <P.Kicker>Online Inquiry</P.Kicker>
+                <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
+                <InquiryText>
+                  {t(
+                    '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
+                    'Leave your inquiry and our team will review it.',
+                  )}
+                </InquiryText>
+              </InquiryHeader>
 
             <InquiryForm onSubmit={(event) => event.preventDefault()}>
               <FieldGroup>
@@ -104,13 +115,22 @@ export function ContactPage() {
                 <span>{t('개인정보 수집 및 이용에 동의합니다.', 'I agree to the collection and use of personal information.')}</span>
               </ConsentLabel>
               <SubmitButton type="submit">{t('문의 보내기', 'Send Inquiry')}</SubmitButton>
-            </InquiryForm>
-          </InquiryPanel>
-        </ContactGrid>
-      </SectionInner>
-    </P.HeroSection>
+              </InquiryForm>
+            </InquiryPanel>
+          </ContactGrid>
+        </SectionInner>
+      </ContactSection>
+    </>
   );
 }
+
+const ContactSection = styled(P.PageSection)`
+  background: #ffffff;
+
+  &::after {
+    display: none;
+  }
+`;
 
 const SectionInner = styled(P.PageContainer)`
   display: flex;

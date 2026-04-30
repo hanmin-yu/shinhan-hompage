@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useEffect, useMemo, useState } from 'react';
 
 import { NewsListPagination } from '../../components/site/NewsListPagination';
@@ -10,12 +9,9 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../utils/shinhanNews';
+import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
 
 const PAGE_SIZE = 20;
-
-const FlushPageSection = styled(P.CompactPageSection)`
-  padding-top: 0;
-`;
 
 function normalizeSearch(value: string) {
   return value.toLowerCase().replace(/\s+/g, '');
@@ -93,7 +89,7 @@ export function ShinhanNewsPage() {
 
   return (
     <>
-      <P.CompactHeroSection>
+      <NewsCompactHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -104,11 +100,12 @@ export function ShinhanNewsPage() {
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
             compactBottom
+            matchAboutHero
           />
         </P.PageContainer>
-      </P.CompactHeroSection>
+      </NewsCompactHeroSection>
 
-      <FlushPageSection tone="soft">
+      <NewsFlushPageSection>
         <P.PageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
@@ -138,7 +135,7 @@ export function ShinhanNewsPage() {
             onPageChange={setCurrentPage}
           />
         </P.PageContainer>
-      </FlushPageSection>
+      </NewsFlushPageSection>
     </>
   );
 }

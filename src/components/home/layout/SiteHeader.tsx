@@ -14,7 +14,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
-  const overHero = pathname === '/';
+  const overHero = !pathname.startsWith('/admin');
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
 
   const isActive = (path?: string) => {

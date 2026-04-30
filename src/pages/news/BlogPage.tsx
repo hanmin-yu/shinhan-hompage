@@ -4,6 +4,7 @@ import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useI18n } from '../../i18n/useI18n';
+import { NewsContentSection, NewsHeroSection } from './newsLayout';
 
 const blogSeries = [
   {
@@ -77,37 +78,32 @@ export function BlogPage() {
 
   return (
     <>
-      <P.HeroSection>
+      <NewsHeroSection>
         <P.PageContainer>
-        <LandingSubnav
-          kicker={newsSubnav.kicker}
-          kickerEn={newsSubnav.kickerEn}
-          title={newsSubnav.title}
-          titleEn={newsSubnav.titleEn}
-          summary={newsSubnav.summary}
-          summaryEn={newsSubnav.summaryEn}
-          items={newsSubnav.items}
-        />
-
+          <LandingSubnav
+            kicker={newsSubnav.kicker}
+            kickerEn={newsSubnav.kickerEn}
+            title={newsSubnav.title}
+            titleEn={newsSubnav.titleEn}
+            summary={newsSubnav.summary}
+            summaryEn={newsSubnav.summaryEn}
+            items={newsSubnav.items}
+            matchAboutHero
+          />
         </P.PageContainer>
+      </NewsHeroSection>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Blog Archive</P.Kicker>
-            <P.Title>{t('블로그', 'Blog')}</P.Title>
-            <P.Lead>
-              {t(
-                '블로그는 업무 인사이트를 아카이브 형태로 정리해 분야별 참고 자료로 활용할 수 있도록 구성했습니다.',
-                'The blog is organized as a knowledge archive for practice-area references.',
-              )}
-            </P.Lead>
-          </P.IntroPanel>
-          <P.IntroVisualPanel image="/subpages/service-main-vietnam.jpg" minHeight={320} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
-
-      <P.PageSection tone="soft">
+      <NewsContentSection>
         <P.PageContainer data-reveal>
+          <P.Kicker>Blog Archive</P.Kicker>
+          <P.Title>{t('블로그', 'Blog')}</P.Title>
+          <P.Lead>
+            {t(
+              '블로그는 업무 인사이트를 아카이브 형태로 정리해 분야별 참고 자료로 활용할 수 있도록 구성했습니다.',
+              'The blog is organized as a knowledge archive for practice-area references.',
+            )}
+          </P.Lead>
+          <P.SectionDivider />
           <ArchiveList>
             {blogSeries.map((item) => (
               <ArchiveItem key={item.id}>
@@ -120,7 +116,7 @@ export function BlogPage() {
             ))}
           </ArchiveList>
         </P.PageContainer>
-      </P.PageSection>
+      </NewsContentSection>
     </>
   );
 }

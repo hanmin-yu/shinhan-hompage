@@ -104,12 +104,6 @@ export function ExpertsPage() {
             <P.SectionTitle>{t('분야별 전문가', 'Experts')}</P.SectionTitle>
           </div>
         </P.SectionHead>
-        <P.Lead>
-          {t(
-            '전문 분야별로 구성원을 탐색하고 관련 업무 정보를 확인할 수 있습니다.',
-            'Explore professionals by specialty and review related service information.',
-          )}
-        </P.Lead>
 
         <FilterBar aria-label={t('업무분야 필터', 'Practice filter')}>
           {expertCategories.map((category) => (

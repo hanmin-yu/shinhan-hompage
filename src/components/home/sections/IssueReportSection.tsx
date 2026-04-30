@@ -6,6 +6,8 @@ import { useIssueReports } from '../../../hooks/useIssueReports';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
+const issueReportVisual = '/hero/issue-report-ai-insight.png';
+
 const Section = styled.section`
   position: relative;
   padding: 108px 0 104px;
@@ -272,7 +274,7 @@ export function IssueReportSection() {
               href={featured.url}
               target="_blank"
               rel="noreferrer"
-              style={{ '--report-image': `url(${featured.image ?? '/hero/busan-port.jpg'})` } as CSSProperties & Record<'--report-image', string>}
+              style={{ '--report-image': `url(${featured.image ?? issueReportVisual})` } as CSSProperties & Record<'--report-image', string>}
             >
               <FeaturedBody>
                 <Meta>

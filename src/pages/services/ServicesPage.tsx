@@ -1,21 +1,132 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { LandingSubnav } from '../../components/site/LandingSubnav';
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { serviceLandingGroups } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const IntroVisual = styled(P.IntroVisualPanel)`
-  border-radius: 14px;
+const EditorialSection = styled.section<{ $tone?: 'soft' }>`
+  padding: clamp(78px, 9vw, 128px) 0;
+  border-top: 1px solid #d8dee8;
+  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)' : '#ffffff')};
+`;
+
+const HeroStatement = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(30px, 4vw, 54px);
+`;
+
+const HeroEyebrow = styled.span`
+  color: #52647c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const HeroTitle = styled.h1`
+  max-width: 1040px;
+  margin: 0;
+  color: #172337;
+  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+`;
+
+const HeroLeadGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.42fr);
+  gap: clamp(28px, 5vw, 74px);
+  align-items: end;
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HeroLead = styled.p`
+  max-width: 760px;
+  margin: 0;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  line-height: 1.82;
+`;
+
+const HeroFacts = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HeroFact = styled.div`
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 18px 0;
+  border-right: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  @media (max-width: 640px) {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid #dbe0e8;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+`;
+
+const HeroFactValue = styled.strong`
+  color: #172337;
+  font-size: clamp(1.34rem, 2.4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.08;
+`;
+
+const HeroFactLabel = styled.span`
+  color: #687385;
+  font-size: 0.88rem;
+  line-height: 1.5;
+`;
+
+const SectionLabel = styled.span`
+  display: inline-flex;
+  margin-bottom: 16px;
+  color: #52647c;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const EditorialTitle = styled.h2`
+  max-width: 940px;
+  margin: 0 0 clamp(28px, 4vw, 48px);
+  color: #172337;
+  font-size: clamp(2.2rem, 4.8vw, 4.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
 `;
 
 const ServiceMap = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 22px;
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
 
   @media (max-width: 1180px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -27,40 +138,53 @@ const ServiceMap = styled.div`
 `;
 
 const ServiceMapCard = styled.a`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 100%;
-  padding: 18px;
-  border-radius: 12px;
-  border: 1px solid rgba(20, 74, 152, 0.12);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(242, 247, 255, 0.94));
-  box-shadow: 0 12px 28px rgba(14, 47, 98, 0.05);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 210px;
+  padding: clamp(20px, 2.6vw, 34px);
+  border-right: 1px solid #dbe0e8;
+  color: #172337;
 
-  &:hover,
-  &:focus-visible {
-    transform: translateY(-2px);
-    border-color: rgba(20, 74, 152, 0.28);
-    box-shadow: 0 18px 36px rgba(14, 47, 98, 0.08);
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  @media (max-width: 1180px) {
+    &:nth-of-type(2n) {
+      border-right: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    border-right: 0;
+    border-bottom: 1px solid #dbe0e8;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
   }
 `;
 
 const ServiceMapMeta = styled.span`
-  color: #6482a7;
-  font-size: 0.72rem;
+  color: #52647c;
+  font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
 const ServiceMapTitle = styled.h3`
   margin: 0;
-  color: #123d78;
-  font-size: 1.08rem;
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  color: #172337;
+  font-size: clamp(1.3rem, 2.2vw, 1.82rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
 `;
 
 const ServiceMapItems = styled.div`
@@ -72,82 +196,72 @@ const ServiceMapItems = styled.div`
 const ServiceMapTag = styled.span`
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: rgba(28, 88, 168, 0.08);
-  color: #1a4f98;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #dbe0e8;
+  color: #4f5661;
   font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 800;
 `;
 
 const GroupStack = styled.div`
   display: grid;
-  gap: 18px;
+  gap: clamp(26px, 4vw, 42px);
 `;
 
 const GroupPanel = styled.article`
   display: grid;
   grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
-  border-radius: 12px;
-  border: 1px solid rgba(20, 74, 152, 0.16);
-  overflow: hidden;
+  border-top: 1px solid #d5dbe4;
   background: #ffffff;
-  box-shadow: 0 10px 26px rgba(14, 47, 98, 0.07);
 
-  @media (max-width: 1100px) {
+  @media (max-width: 980px) {
     grid-template-columns: 1fr;
   }
 `;
 
 const GroupVisual = styled.div<{ image: string }>`
-  min-height: 250px;
+  min-height: clamp(280px, 31vw, 420px);
   background:
-    linear-gradient(180deg, rgba(6, 30, 68, 0.28), rgba(6, 30, 68, 0.08)),
+    linear-gradient(180deg, rgba(8, 17, 31, 0.08), rgba(8, 17, 31, 0.28)),
     ${({ image }) => `url(${image}) center / cover no-repeat`};
 `;
 
 const GroupBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: clamp(18px, 2vw, 24px);
+  justify-content: center;
+  gap: 18px;
+  padding: clamp(28px, 4vw, 54px);
 `;
 
 const GroupMeta = styled.span`
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: #eef5ff;
-  color: #1c58a8;
+  color: #52647c;
   font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
 const GroupTitle = styled.h3`
   margin: 0;
-  color: #143d78;
-  font-size: clamp(1.44rem, 2.6vw, 1.86rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  color: #172337;
+  font-size: clamp(2rem, 3.6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
 `;
 
 const GroupText = styled.p`
   margin: 0;
-  color: #426181;
-  font-size: 0.97rem;
-  line-height: 1.7;
+  color: #52647c;
+  font-size: 1rem;
+  line-height: 1.76;
 `;
 
 const ItemList = styled.div`
   display: grid;
-  gap: 8px;
+  border-top: 1px solid #dbe0e8;
 `;
 
 const ItemLink = styled(Link)`
@@ -155,29 +269,21 @@ const ItemLink = styled(Link)`
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 14px;
-  min-height: 48px;
-  padding: 0 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(20, 74, 152, 0.12);
-  background: #f7faff;
-  color: #1a4f98;
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  transition: all 0.18s ease;
+  min-height: 56px;
+  border-bottom: 1px solid #dbe0e8;
+  color: #172337;
+  font-size: 0.98rem;
+  font-weight: 800;
 
-  &:hover,
-  &:focus-visible {
-    background: #eef5ff;
-    border-color: rgba(20, 74, 152, 0.3);
-    color: #123d78;
+  &:hover {
+    color: #1d4f96;
   }
 `;
 
 const ItemHint = styled.span`
-  color: #6e83a0;
+  color: #687385;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
 `;
 
 export function ServicesPage() {
@@ -186,40 +292,49 @@ export function ServicesPage() {
 
   return (
     <>
-      <P.HeroSection>
-        <P.PageContainer>
-          <LandingSubnav
-            kicker={servicesSubnav.kicker}
-            kickerEn={servicesSubnav.kickerEn}
-            title={servicesSubnav.title}
-            titleEn={servicesSubnav.titleEn}
-            items={servicesSubnav.items}
-          />
-        </P.PageContainer>
+      <EditorialPageHeader
+        config={servicesSubnav}
+        title={servicesSubnav.title}
+        titleEn={servicesSubnav.titleEn}
+        heroImage="/hero/busan-port.jpg"
+        heroPosition="center 48%"
+      />
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Practice Areas</P.Kicker>
-            <P.Title>{t('업무분야', 'Practice Areas')}</P.Title>
-            <P.Lead>
+      <EditorialSection>
+        <HeroStatement data-reveal>
+          <div>
+            <HeroEyebrow>Practice Areas</HeroEyebrow>
+            <HeroTitle>{t('무역 현장의 흐름을 하나의 서비스 체계로 연결합니다.', 'Connecting trade operations through one service system.')}</HeroTitle>
+          </div>
+          <HeroLeadGrid>
+            <HeroLead>
               {t(
-                '신한관세법인의 업무분야는 4개 중분류 체계로 구성되며, 각 중분류 안에서 세부 서비스를 바로 확인할 수 있습니다.',
-                'Our practice areas are organized into four mid-level categories, each showing detailed services at a glance.',
+                '신한관세법인은 수출입통관 및 환급, 검역/요건, 컨설팅, 물류와 해외 지원까지 기업의 무역 실무에 필요한 업무를 체계적으로 제공합니다.',
+                'Shinhan Customs Service provides a structured practice system covering clearance and refunds, quarantine and requirements, consulting, logistics, and overseas support.',
               )}
-            </P.Lead>
-            <P.Lead>
-              {t(
-                '수출입통관 및 환급, 검역/요건, 컨설팅, 기타 체계를 기준으로 필요한 업무영역으로 바로 이동할 수 있습니다.',
-                'You can move directly into the right practice area through clearance & refund, quarantine/requirements, consulting, and specialized services.',
-              )}
-            </P.Lead>
-          </P.IntroPanel>
-          <IntroVisual image="/subpages/service-main-import.jpg" minHeight={380} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
+            </HeroLead>
+            <HeroFacts>
+              <HeroFact>
+                <HeroFactValue>4</HeroFactValue>
+                <HeroFactLabel>{t('중분류 업무 체계', 'Main practice categories')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>14+</HeroFactValue>
+                <HeroFactLabel>{t('세부 서비스 페이지', 'Detailed service pages')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>All-in-One</HeroFactValue>
+                <HeroFactLabel>{t('통관·컨설팅·물류 연계', 'Clearance, consulting, and logistics')}</HeroFactLabel>
+              </HeroFact>
+            </HeroFacts>
+          </HeroLeadGrid>
+        </HeroStatement>
+      </EditorialSection>
 
-      <P.PageSection tone="soft">
+      <EditorialSection $tone="soft">
         <P.PageContainer data-reveal>
+          <SectionLabel>Service Map</SectionLabel>
+          <EditorialTitle>{t('필요한 업무영역으로 바로 이동하세요.', 'Move directly to the practice area you need.')}</EditorialTitle>
           <ServiceMap>
             {serviceLandingGroups.map((group) => (
               <ServiceMapCard key={`map-${group.id}`} href={`#${group.id}`}>
@@ -233,6 +348,13 @@ export function ServicesPage() {
               </ServiceMapCard>
             ))}
           </ServiceMap>
+        </P.PageContainer>
+      </EditorialSection>
+
+      <EditorialSection>
+        <P.PageContainer data-reveal>
+          <SectionLabel>Practice Detail</SectionLabel>
+          <EditorialTitle>{t('업무별 범위와 상세 서비스를 확인할 수 있습니다.', 'Review scope and detailed services by practice area.')}</EditorialTitle>
           <GroupStack>
             {serviceLandingGroups.map((group) => (
               <GroupPanel key={group.id} id={group.id}>
@@ -254,7 +376,7 @@ export function ServicesPage() {
             ))}
           </GroupStack>
         </P.PageContainer>
-      </P.PageSection>
+      </EditorialSection>
     </>
   );
 }

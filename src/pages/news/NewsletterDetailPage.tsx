@@ -7,6 +7,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
+import { NewsFlushPageSection, NewsHeroSection } from './newsLayout';
 
 type NewsletterManifest = {
   slug: string;
@@ -227,7 +228,7 @@ export function NewsletterDetailPage() {
 
   return (
     <>
-      <P.HeroSection>
+      <NewsHeroSection>
         <P.PageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
@@ -237,8 +238,13 @@ export function NewsletterDetailPage() {
             summary={newsSubnav.summary}
             summaryEn={newsSubnav.summaryEn}
             items={newsSubnav.items}
+            matchAboutHero
           />
+        </P.PageContainer>
+      </NewsHeroSection>
 
+      <NewsFlushPageSection>
+        <P.PageContainer>
           <ContentBlock data-reveal>
             <ViewerWrap>
               <ViewerHeader>
@@ -312,7 +318,7 @@ export function NewsletterDetailPage() {
             </ViewerWrap>
           </ContentBlock>
         </P.PageContainer>
-      </P.HeroSection>
+      </NewsFlushPageSection>
     </>
   );
 }
