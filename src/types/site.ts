@@ -86,6 +86,8 @@ export type OfficeBranch = {
   addressEn: string;
   tel: string;
   fax?: string;
+  image?: string;
+  imagePosition?: string;
   accent: string;
   x: number;
   y: number;
@@ -119,6 +121,8 @@ export type ItService = {
   categoryEn: string;
   title: string;
   titleEn: string;
+  summary?: string;
+  summaryEn?: string;
   body: string;
   bodyEn: string;
 };

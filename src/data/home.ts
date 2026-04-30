@@ -58,13 +58,73 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'A customs partner aligned\nwith global trade operations',
     summary: '신한관세법인은 수출입통관, 관세·무역 컨설팅, 물류서비스를 통합 지원합니다.',
     summaryEn: 'Shinhan Customs Service supports customs clearance, trade consulting, and logistics services.',
-    image: '/source-site/main-hero-desktop.jpg',
-    mobileImage: '/source-site/main-hero-mobile.jpg',
+    image: '/hero/homepage/office-blue-sky.jpg',
+    mobileImage: '/hero/homepage/office-blue-sky.jpg',
     secondaryImage: '/source-site/company-main.jpg',
-    objectPosition: '50% 50%',
+    objectPosition: '72% 50%',
     secondaryObjectPosition: '50% 50%',
-    mobileObjectPosition: '50% center',
+    mobileObjectPosition: '68% center',
     mobileSecondaryObjectPosition: '54% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '통관 운영',
+    labelEn: 'Customs Operations',
+    eyebrow: 'Import & Export Clearance',
+    eyebrowEn: 'Import & Export Clearance',
+    headline: '수출입 현장의 흐름을\n정확하게 연결합니다',
+    headlineEn: 'Connecting import and export\noperations with precision',
+    summary: '통관, 신고, 요건 확인, 사후관리까지 기업의 무역 실무가 멈추지 않도록 지원합니다.',
+    summaryEn: 'We support clearance, declarations, requirements, and follow-up operations so trade workflows keep moving.',
+    image: '/hero/homepage/port-cranes-blue-sky.jpg',
+    mobileImage: '/hero/homepage/port-cranes-blue-sky.jpg',
+    objectPosition: '78% 52%',
+    mobileObjectPosition: '70% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '글로벌 네트워크',
+    labelEn: 'Global Network',
+    eyebrow: 'Global Customs Advisory',
+    eyebrowEn: 'Global Customs Advisory',
+    headline: '국내외 네트워크로\n관세 리스크를 관리합니다',
+    headlineEn: 'Managing customs risk\nthrough a global network',
+    summary: '국내 주요 지사와 베트남 법인, KORD Partners를 연결해 현장 가까운 관세 지원 체계를 운영합니다.',
+    summaryEn: 'Our Korean branches, Vietnam entity, and KORD Partners provide customs support close to each operation.',
+    image: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    mobileImage: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    objectPosition: '74% 50%',
+    mobileObjectPosition: '66% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '항공 물류',
+    labelEn: 'Air Logistics',
+    eyebrow: 'Logistics & Requirements',
+    eyebrowEn: 'Logistics & Requirements',
+    headline: '검역·요건·물류까지\n한 번에 점검합니다',
+    headlineEn: 'Reviewing requirements\nand logistics together',
+    summary: '항공·해상 물류 흐름과 검역·요건 리스크를 함께 점검해 안정적인 반입과 반출을 지원합니다.',
+    summaryEn: 'We review logistics flows and requirement risks together to support stable imports and exports.',
+    image: '/hero/homepage/cargo-plane-sky.jpg',
+    mobileImage: '/hero/homepage/cargo-plane-sky.jpg',
+    objectPosition: '70% 50%',
+    mobileObjectPosition: '64% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '전문 컨설팅',
+    labelEn: 'Professional Consulting',
+    eyebrow: 'FTA · AEO · ACVA',
+    eyebrowEn: 'FTA · AEO · ACVA',
+    headline: '복잡한 관세 이슈를\n전문 컨설팅으로 풉니다',
+    headlineEn: 'Solving complex customs issues\nwith expert consulting',
+    summary: 'FTA, AEO, ACVA, 관세조사, 조세불복 등 기업 리스크를 사전에 진단하고 대응합니다.',
+    summaryEn: 'We diagnose and respond to enterprise risk across FTA, AEO, ACVA, customs audits, and tax appeals.',
+    image: '/hero/homepage/office-tower-clear-sky.jpg',
+    mobileImage: '/hero/homepage/office-tower-clear-sky.jpg',
+    objectPosition: '74% 50%',
+    mobileObjectPosition: '64% center',
     theme: 'deep-blue',
   },
 ];
@@ -72,7 +132,7 @@ export const heroSlides: HeroSlide[] = [
 export const members: Member[] = [
   {
     name: '장승희',
-    phone: '02-542-1181',
+    phone: '02-3448-1181',
     email: 'vision@shcs.kr',
     title: '대표이사 / 관세사',
     department: '신한관세법인',
@@ -264,6 +324,16 @@ export const expertMembers: Member[] = [
     image: '/members/experts/권민성_정면.jpg',
   },
   {
+    name: '이미경',
+    phone: '070-4397-2051',
+    email: 'mklee@customsservice.co.kr',
+    title: '차장',
+    department: '신한인비스타',
+    practice: '국제물류, 창고, 3PL, 내륙운송',
+    accent: '#58749a',
+    image: '/members/experts/이미경_정면.jpeg',
+  },
+  {
     name: '조나현',
     phone: '070-4343-7725',
     email: 'nhcho@shcs.kr',
@@ -325,7 +395,7 @@ export const expertMembers: Member[] = [
   },
   {
     name: '김다혜',
-    phone: '010-0000-0000',
+    phone: '010-3449-7731',
     email: 'dhkim@customsservice.co.kr',
     title: '',
     department: '',
@@ -335,7 +405,7 @@ export const expertMembers: Member[] = [
   },
   {
     name: '엄동규',
-    phone: '010-0000-0000',
+    phone: '010-5330-7393',
     email: 'dgeom@customsservice.co.kr',
     title: '',
     department: '',
@@ -378,7 +448,7 @@ export const expertMembers: Member[] = [
 export const executives: Member[] = [
   {
     name: '장승희',
-    phone: '02-542-1181',
+    phone: '02-3448-1181',
     email: 'vision@shcs.kr',
     title: '대표이사 / 관세사',
     department: '신한관세법인',
@@ -482,8 +552,10 @@ export const officeBranches: OfficeBranch[] = [
       'Our main hub integrates the consulting and clearance divisions to lead nationwide client support across corporate audits, investigations, FTA, and customs advisory.',
     address: '서울시 강남구 논현로 704',
     addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
-    tel: '02-542-1181',
+    tel: '02-3448-1181',
     fax: '02-540-2323',
+    image: '/offices/seoul.jpg',
+    imagePosition: '50% 50%',
     accent: '#1c4f96',
     x: 42,
     y: 32,
@@ -507,6 +579,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: 'Suite 304, 14 Haennae-ro 27beon-gil, Jung-gu, Incheon, Korea',
     tel: '032-744-9961~2',
     fax: '032-744-9960',
+    image: '/offices/airport.jpg',
+    imagePosition: '50% 50%',
     accent: '#2f78bf',
     x: 28,
     y: 28,
@@ -531,6 +605,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
     tel: '032-772-1181',
     fax: '032-773-1181',
+    image: '/offices/incheon.jpg',
+    imagePosition: '50% 50%',
     accent: '#3c6ca8',
     x: 32,
     y: 37,
@@ -554,6 +630,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: 'Suite 501, Migwang Building, 11 Chungjang-daero 9beon-gil, Jung-gu, Busan, Korea',
     tel: '051-463-1181',
     fax: '051-465-1181',
+    image: '/offices/busan.jpg',
+    imagePosition: '50% 50%',
     accent: '#0f5a8f',
     x: 72,
     y: 77,
@@ -578,6 +656,8 @@ export const officeBranches: OfficeBranch[] = [
       'Suite 216 / 221, 2F, Building 1, Cheongju Techno S Tower, 530 Jikji-daero, Heungdeok-gu, Cheongju-si, Chungcheongbuk-do, Korea',
     tel: '043-273-3160~1',
     fax: '043-273-3162',
+    image: '/offices/cheongju.jpg',
+    imagePosition: '50% 50%',
     accent: '#5a7fb2',
     x: 48,
     y: 49,
@@ -601,6 +681,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: 'Suite 504, Geumoh Building, 182 1gongdan-ro, Gumi-si, Gyeongsangbuk-do, Korea',
     tel: '054-464-1133',
     fax: '054-464-1131',
+    image: '/offices/gumi.jpg',
+    imagePosition: '50% 50%',
     accent: '#4a73a2',
     x: 63,
     y: 62,
@@ -624,6 +706,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: 'Gates 3 and 6, Cargo Terminal 8-4, 210 Haneul-gil, Gangseo-gu, Seoul, Korea',
     tel: '02-2663-1181',
     fax: '02-2665-9114',
+    image: '/offices/invista.jpg',
+    imagePosition: '50% 50%',
     accent: '#2f689b',
     x: 35,
     y: 30,
@@ -646,6 +730,8 @@ export const officeBranches: OfficeBranch[] = [
     address: '5F, Star Tower, Duong Dinh Nghe street, Cau Giay New Urban Area, Yen Hoa Ward, Cau Giay District, Hanoi city, Vietnam',
     addressEn: '5F, Star Tower, Duong Dinh Nghe St., Yen Hoa Ward, Cau Giay District, Hanoi, Vietnam',
     tel: '+84-(0)24-7300-8630',
+    image: '/offices/vietnam.jpg',
+    imagePosition: '50% 50%',
     accent: '#2f84ae',
     x: 54,
     y: 40,
@@ -669,6 +755,8 @@ export const officeBranches: OfficeBranch[] = [
     addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '070-4343-7791',
     fax: '02-3448-1184',
+    image: '/offices/kord.jpg',
+    imagePosition: '50% 50%',
     accent: '#365c92',
     x: 43,
     y: 34,
@@ -742,42 +830,131 @@ export const issueReports: IssueReport[] = issueReportsSnapshot.slice(0, 4).map(
   image: issueReportImages[index % issueReportImages.length],
 }));
 
+export const itOverview = {
+  title: '관세 실무와 기술을 연결하는 IT팀',
+  titleEn: '관세 실무와 기술을 연결하는 IT팀',
+  summary:
+    '신한관세법인 IT팀은 관세 실무 지식과 최첨단 기술을 결합하여 데이터 중심의 스마트 통관 환경을 구축하고, 현장의 요구를 정교한 솔루션으로 해결하며 무역 업무의 디지털 전환을 선도합니다.',
+  summaryEn:
+    '신한관세법인 IT팀은 관세 실무 지식과 최첨단 기술을 결합하여 데이터 중심의 스마트 통관 환경을 구축하고, 현장의 요구를 정교한 솔루션으로 해결하며 무역 업무의 디지털 전환을 선도합니다.',
+  body:
+    '신한관세법인 IT팀은 단순한 시스템 운영의 차원을 넘어, 관세 및 무역 실무에 대한 깊은 통찰력과 최첨단 기술력을 결합하여 업무 자동화와 AI 전환(AX)을 선도하고 있습니다. 관세 전문가와의 밀착 협업을 통해 현장의 복잡하고 까다로운 요구사항을 정교한 기술적 솔루션으로 해결하며, 데이터 중심의 스마트한 통관 시스템을 구축하여 미래 지향적인 관세 서비스를 실현합니다.',
+  bodyEn:
+    '신한관세법인 IT팀은 단순한 시스템 운영의 차원을 넘어, 관세 및 무역 실무에 대한 깊은 통찰력과 최첨단 기술력을 결합하여 업무 자동화와 AI 전환(AX)을 선도하고 있습니다. 관세 전문가와의 밀착 협업을 통해 현장의 복잡하고 까다로운 요구사항을 정교한 기술적 솔루션으로 해결하며, 데이터 중심의 스마트한 통관 시스템을 구축하여 미래 지향적인 관세 서비스를 실현합니다.',
+};
+
 export const itServices: ItService[] = [
   {
     category: 'IT',
     categoryEn: 'IT',
-    title: '통관·신고 시스템 개발 및 운영',
-    titleEn: 'Customs Declaration System Development and Operations',
-    body: '수출입 신고 자동화, 신고필증 데이터 처리, 관세청 연계 인터페이스까지 관세 실무 중심으로 직접 구축·운영합니다.',
+    title: '통관·신고 시스템 개발 및 유지보수',
+    titleEn: '통관·신고 시스템 개발 및 유지보수',
+    summary:
+      '수출입 신고부터 관세청 연계 인터페이스까지 전 과정을 아우르는 전용 시스템을 직접 운영하며, 정확하고 신속한 처리를 통해 고객사의 중단 없는 물류 흐름을 보장합니다.',
+    summaryEn:
+      '수출입 신고부터 관세청 연계 인터페이스까지 전 과정을 아우르는 전용 시스템을 직접 운영하며, 정확하고 신속한 처리를 통해 고객사의 중단 없는 물류 흐름을 보장합니다.',
+    body:
+      '수출입 신고 자동화부터 신고필증 데이터 처리, 관세청 연계 인터페이스 구축에 이르기까지 관세 실무의 전 과정을 아우르는 전용 시스템을 직접 개발하고 운영합니다. 이를 통해 수출입 신고의 정확성과 신속성을 극대화하며, 안정적인 환경을 보장하여 고객사의 물류 흐름이 중단 없이 이어질 수 있도록 최상의 기술 지원을 제공합니다.',
     bodyEn:
-      'We build and operate customs-focused systems covering declaration automation, customs certificate data processing, and Korea Customs Service integration interfaces.',
+      '수출입 신고 자동화부터 신고필증 데이터 처리, 관세청 연계 인터페이스 구축에 이르기까지 관세 실무의 전 과정을 아우르는 전용 시스템을 직접 개발하고 운영합니다. 이를 통해 수출입 신고의 정확성과 신속성을 극대화하며, 안정적인 환경을 보장하여 고객사의 물류 흐름이 중단 없이 이어질 수 있도록 최상의 기술 지원을 제공합니다.',
   },
   {
     category: 'IT',
     categoryEn: 'IT',
-    title: 'iOOM / iOOM Q 기반 업무 자동화',
-    titleEn: 'Workflow Automation Powered by iOOM / iOOM Q',
-    body: '외부 고객용 iOOM, 내부 업무 효율화용 iOOM Q를 통해 반복 업무를 줄이고 처리 정확도와 속도를 높입니다.',
+    title: '업무 자동화',
+    titleEn: '업무 자동화',
+    summary:
+      '반복적인 서류 작업을 디지털로 전환하여 인적 오류를 방지하고 처리 속도를 높였으며, 전문가가 고부가가치 검토 업무에 집중할 수 있는 효율적인 환경을 조성합니다.',
+    summaryEn:
+      '반복적인 서류 작업을 디지털로 전환하여 인적 오류를 방지하고 처리 속도를 높였으며, 전문가가 고부가가치 검토 업무에 집중할 수 있는 효율적인 환경을 조성합니다.',
+    body:
+      '반복적이고 소모적인 수출입 신고 및 데이터 처리 프로세스를 지능화된 시스템으로 자동화하여 업무 전반의 생산성을 획기적으로 향상시키고 있습니다. 단순 서류 작업의 디지털화를 통해 인적 오류를 원천적으로 방지하고 처리 속도를 높임으로써, 전문가들이 보다 고부가가치 서비스와 정밀한 검토에 집중할 수 있는 환경을 조성합니다.',
     bodyEn:
-      'Using iOOM for external clients and iOOM Q for internal efficiency, we reduce repetitive work while improving speed and processing accuracy.',
+      '반복적이고 소모적인 수출입 신고 및 데이터 처리 프로세스를 지능화된 시스템으로 자동화하여 업무 전반의 생산성을 획기적으로 향상시키고 있습니다. 단순 서류 작업의 디지털화를 통해 인적 오류를 원천적으로 방지하고 처리 속도를 높임으로써, 전문가들이 보다 고부가가치 서비스와 정밀한 검토에 집중할 수 있는 환경을 조성합니다.',
   },
   {
     category: 'IT',
     categoryEn: 'IT',
-    title: 'KORD FTA / KORD LIQ 솔루션',
-    titleEn: 'KORD FTA / KORD LIQ Solutions',
-    body: '베트남 원산지관리(KORD FTA), 면세재고·수책관리(KORD LIQ)로 현지 통관과 FTA 운영을 데이터 기반으로 지원합니다.',
+    title: 'iOOM',
+    titleEn: 'iOOM',
+    summary:
+      '실시간 통관 모니터링과 HS Code 관리, 분석 리포트 기능을 제공하여 고객사가 데이터를 기반으로 최적의 전략적 의사결정을 내릴 수 있도록 돕는 비즈니스 파트너입니다.',
+    summaryEn:
+      '실시간 통관 모니터링과 HS Code 관리, 분석 리포트 기능을 제공하여 고객사가 데이터를 기반으로 최적의 전략적 의사결정을 내릴 수 있도록 돕는 비즈니스 파트너입니다.',
+    body:
+      '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
     bodyEn:
-      'We support Vietnam customs and FTA operations with data-driven origin management (KORD FTA) and bonded inventory / liquidation control (KORD LIQ).',
+      '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
   },
   {
     category: 'IT',
     categoryEn: 'IT',
-    title: '맞춤형 연동·데이터 분석·인프라 관리',
-    titleEn: 'Custom Integration, Data Analytics, and Infrastructure Management',
-    body: '고객사 시스템 연동, 데이터 수집·분석, 네트워크/보안 인프라 관리까지 통합해 실무 운영 안정성을 강화합니다.',
+    title: 'iOOM Q',
+    titleEn: 'iOOM Q',
+    summary:
+      '수출입 의뢰부터 신고까지 전 과정을 통합 관리하며, 실시간 알림과 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 생산성을 극대화합니다.',
+    summaryEn:
+      '수출입 의뢰부터 신고까지 전 과정을 통합 관리하며, 실시간 알림과 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 생산성을 극대화합니다.',
+    body:
+      '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
     bodyEn:
-      'We strengthen operational stability by integrating client system connectivity, data collection and analysis, plus network and security infrastructure management.',
+      '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
+  },
+  {
+    category: 'IT',
+    categoryEn: 'IT',
+    title: 'KORD FTA',
+    titleEn: 'KORD FTA',
+    summary:
+      '베트남의 복잡한 15개 FTA 규정을 완벽히 반영하여 정밀한 원산지 판정 및 서류 보관을 지원하며, 글로벌 사후 검증 리스크에 선제적으로 대응합니다.',
+    summaryEn:
+      '베트남의 복잡한 15개 FTA 규정을 완벽히 반영하여 정밀한 원산지 판정 및 서류 보관을 지원하며, 글로벌 사후 검증 리스크에 선제적으로 대응합니다.',
+    body:
+      '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
+    bodyEn:
+      '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
+  },
+  {
+    category: 'IT',
+    categoryEn: 'IT',
+    title: 'KORD LIQ',
+    titleEn: 'KORD LIQ',
+    summary:
+      '통관 및 회계 재고의 격차를 정밀 분석하여 관세 리스크 금액을 산출하고, 세관 제출용 결산 서류를 자동 생성함으로써 기업의 과세 위험을 안전하게 방어합니다.',
+    summaryEn:
+      '통관 및 회계 재고의 격차를 정밀 분석하여 관세 리스크 금액을 산출하고, 세관 제출용 결산 서류를 자동 생성함으로써 기업의 과세 위험을 안전하게 방어합니다.',
+    body:
+      '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
+    bodyEn:
+      '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
+  },
+  {
+    category: 'IT',
+    categoryEn: 'IT',
+    title: '고객사 맞춤 솔루션 및 시스템 연동',
+    titleEn: '고객사 맞춤 솔루션 및 시스템 연동',
+    summary:
+      '고객사 ERP와의 유연한 인터페이스 연동 및 맞춤형 로직 개발을 통해 데이터의 단절 없는 흐름을 구현하고 각 기업에 최적화된 디지털 업무 환경을 제공합니다.',
+    summaryEn:
+      '고객사 ERP와의 유연한 인터페이스 연동 및 맞춤형 로직 개발을 통해 데이터의 단절 없는 흐름을 구현하고 각 기업에 최적화된 디지털 업무 환경을 제공합니다.',
+    body:
+      '고객사가 사용 중인 ERP 시스템과의 유연한 인터페이스 연동을 통해 데이터의 단절 없는 흐름을 보장하며, 각 기업의 특수한 비즈니스 로직에 최적화된 맞춤형 솔루션을 개발합니다. 현장의 요구를 즉각적으로 반영하는 기술 유연성을 바탕으로 고객사별 최적화된 디지털 업무 환경을 구축하는 데 앞장서고 있습니다.',
+    bodyEn:
+      '고객사가 사용 중인 ERP 시스템과의 유연한 인터페이스 연동을 통해 데이터의 단절 없는 흐름을 보장하며, 각 기업의 특수한 비즈니스 로직에 최적화된 맞춤형 솔루션을 개발합니다. 현장의 요구를 즉각적으로 반영하는 기술 유연성을 바탕으로 고객사별 최적화된 디지털 업무 환경을 구축하는 데 앞장서고 있습니다.',
+  },
+  {
+    category: 'IT',
+    categoryEn: 'IT',
+    title: 'IT 인프라 관리',
+    titleEn: 'IT 인프라 관리',
+    summary:
+      '방대한 무역 데이터 수집·분석으로 비즈니스 인사이트를 제공하며, 강력한 보안 프로토콜과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 인프라를 운영합니다.',
+    summaryEn:
+      '방대한 무역 데이터 수집·분석으로 비즈니스 인사이트를 제공하며, 강력한 보안 프로토콜과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 인프라를 운영합니다.',
+    body:
+      '통관 과정에서 발생하는 방대한 데이터를 체계적으로 수집하고 정교하게 분석하여 비즈니스 통찰력을 제공하는 것은 물론, 강력한 보안 프로토콜을 기반으로 소중한 정보를 안전하게 보호합니다. 외부 협력사 및 유관 기관과의 유기적인 시스템 연동과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 IT 인프라를 유지하고 있습니다.',
+    bodyEn:
+      '통관 과정에서 발생하는 방대한 데이터를 체계적으로 수집하고 정교하게 분석하여 비즈니스 통찰력을 제공하는 것은 물론, 강력한 보안 프로토콜을 기반으로 소중한 정보를 안전하게 보호합니다. 외부 협력사 및 유관 기관과의 유기적인 시스템 연동과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 IT 인프라를 유지하고 있습니다.',
   },
 ];
 

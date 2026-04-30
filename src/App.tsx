@@ -24,6 +24,7 @@ import { OrgPage } from './pages/members/OrgPage';
 import { LegalPage } from './pages/legal/LegalPage';
 import { IssueReportPage } from './pages/news/IssueReportPage';
 import { BlogPage } from './pages/news/BlogPage';
+import { NewsPage } from './pages/news/NewsPage';
 import { NewsletterDetailPage } from './pages/news/NewsletterDetailPage';
 import { NewsletterPage } from './pages/news/NewsletterPage';
 import { SeminarPage } from './pages/news/SeminarPage';
@@ -125,7 +126,7 @@ function AppShell() {
               <Route path="/about/location" element={<LocationPage />} />
               <Route path="/location" element={<DirectionsPage />} />
 
-              <Route path="/members" element={<Navigate to="/members/org" replace />} />
+              <Route path="/members" element={<Navigate to="/members/executives" replace />} />
               <Route path="/members/org" element={<OrgPage />} />
               <Route path="/members/executives" element={<MembersPage />} />
               <Route path="/members/experts" element={<ExpertsPage />} />
@@ -140,7 +141,7 @@ function AppShell() {
 
               <Route path="/it" element={<ItPage />} />
 
-              <Route path="/news" element={<Navigate to="/news/issue-report" replace />} />
+              <Route path="/news" element={<NewsPage />} />
               <Route path="/news/issue-report" element={<IssueReportPage />} />
               <Route path="/news/shinhan-news" element={<ShinhanNewsPage />} />
               <Route path="/news/shinhan-news/:newsId" element={<ShinhanNewsDetailPage />} />
@@ -167,7 +168,7 @@ function AppShell() {
 
               <Route path="/about/*" element={<Navigate to="/about" replace />} />
               <Route path="/legal/*" element={<Navigate to="/legal/terms" replace />} />
-              <Route path="/members/*" element={<Navigate to="/members/org" replace />} />
+              <Route path="/members/*" element={<Navigate to="/members/executives" replace />} />
               <Route path="/services/*" element={<Navigate to="/services/import-export" replace />} />
               <Route path="/news/*" element={<Navigate to="/news" replace />} />
               <Route path="*" element={<NotFoundPage />} />

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import type { CSSProperties } from 'react';
 
 import { issueReports } from '../../../data/home';
 import { useIssueReports } from '../../../hooks/useIssueReports';
@@ -7,62 +8,117 @@ import * as S from '../homeStyles';
 
 const Section = styled.section`
   position: relative;
-  padding: 88px 0;
+  padding: 108px 0 104px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 84% 12%, rgba(23, 159, 150, 0.18), transparent 20%),
-    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.12), transparent 22%),
-    linear-gradient(180deg, #0b2b59 0%, #174d9a 28%, #dcecff 74%, #f5fbff 100%);
-  border-top: 0;
+    linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border-top: 1px solid rgba(22, 54, 96, 0.08);
+
+  &::before {
+    content: 'I N S I G H T';
+    position: absolute;
+    left: 24px;
+    top: 26px;
+    color: rgba(15, 35, 62, 0.055);
+    font-size: clamp(3.6rem, 8vw, 8.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -120px;
+    top: 42px;
+    width: min(42vw, 560px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url('/brand-mark.svg') center / contain no-repeat;
+    opacity: 0.034;
+    transform: rotate(8deg);
+  }
+
+  @media (max-width: 860px) {
+    padding: 82px 0;
+
+    &::after {
+      width: 82vw;
+      right: -42vw;
+      top: 120px;
+    }
+  }
 `;
 
 const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 34px;
+  display: grid;
+  gap: 38px;
 `;
 
 const Head = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: 16px;
+  gap: 24px;
+
+  @media (max-width: 780px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Label = styled.span`
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  color: rgba(235, 246, 255, 0.94);
+  gap: 12px;
+  color: #1c5aa9;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 
   &::before {
     content: '';
-    width: 28px;
+    width: 36px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(23, 159, 150, 0.58));
+    background: rgba(33, 101, 193, 0.48);
   }
 `;
 
 const Title = styled.h2`
-  margin: 10px 0 0;
-  color: #ffffff;
-  font-size: clamp(2rem, 3.7vw, 2.9rem);
+  margin: 12px 0 0;
+  color: #222a34;
+  font-size: clamp(2.8rem, 7vw, 6.2rem);
   font-weight: 800;
-  line-height: 1.14;
-  letter-spacing: -0.03em;
-  text-shadow: 0 16px 38px rgba(3, 15, 34, 0.34);
+  line-height: 0.92;
+  letter-spacing: 0.04em;
 `;
 
-const Grid = styled.div`
+const ViewAll = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #164f99;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: currentColor;
+  }
+`;
+
+const Content = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
-  gap: 14px;
+  grid-template-columns: minmax(320px, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -71,132 +127,119 @@ const Grid = styled.div`
 
 const Featured = styled.a`
   display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
-  min-height: 334px;
-  border-radius: 6px;
-  border: 1px solid rgba(225, 238, 255, 0.34);
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.18);
+  min-height: 440px;
+  color: #ffffff;
   text-decoration: none;
+  background:
+    linear-gradient(180deg, rgba(3, 20, 42, 0.06), rgba(3, 20, 42, 0.72)),
+    var(--report-image);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(12, 46, 93, 0.12);
+  overflow: hidden;
 
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 700px) {
+    min-height: 360px;
   }
-`;
-
-const FeaturedImage = styled.div<{ image: string }>`
-  background: ${({ image }) => `url(${image}) center / cover no-repeat`};
-  min-height: 220px;
 `;
 
 const FeaturedBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 24px 22px;
-  background:
-    radial-gradient(circle at top right, rgba(23, 159, 150, 0.08), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(231, 243, 255, 0.9) 100%);
+  justify-content: flex-end;
+  gap: 15px;
+  padding: clamp(24px, 4vw, 38px);
 `;
 
 const Meta = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  color: ${S.palette.textMuted};
-  font-size: 0.8rem;
-  font-weight: 700;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.82rem;
+  font-weight: 800;
 `;
 
 const Dot = styled.span`
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(33, 101, 193, 0.36);
+  background: currentColor;
+  opacity: 0.58;
 `;
 
 const FeaturedTitle = styled.h3`
   margin: 0;
-  color: ${S.palette.textPrimary};
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1.42;
+  max-width: 16ch;
+  color: #ffffff;
+  font-size: clamp(1.7rem, 3vw, 2.65rem);
+  font-weight: 800;
+  line-height: 1.18;
   letter-spacing: -0.02em;
 `;
 
 const FeaturedText = styled.p`
+  max-width: 54ch;
   margin: 0;
-  color: ${S.palette.textBody};
-  font-size: 0.92rem;
-  line-height: 1.64;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.96rem;
+  line-height: 1.68;
 `;
 
-const FeaturedLink = styled.a`
-  margin-top: auto;
-  width: fit-content;
-  color: ${S.palette.blue};
-  font-size: 0.88rem;
-  font-weight: 700;
-`;
-
-const SideList = styled.div`
+const List = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  border-top: 1px solid rgba(15, 43, 89, 0.18);
 `;
 
-const SideCard = styled.a`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-height: 104px;
-  padding: 18px 18px 16px;
-  border-radius: 6px;
-  border: 1px solid rgba(225, 238, 255, 0.3);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(231, 243, 255, 0.88) 72%, rgba(211, 235, 248, 0.82) 100%);
-  box-shadow: 0 12px 26px rgba(3, 15, 34, 0.12);
+const ReportLink = styled.a`
+  display: grid;
+  grid-template-columns: minmax(92px, 0.18fr) minmax(0, 1fr);
+  gap: 22px;
+  padding: 23px 0 22px;
+  border-bottom: 1px solid rgba(15, 43, 89, 0.14);
   text-decoration: none;
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    padding-left 0.24s ease,
+    border-color 0.24s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    border-color: rgba(23, 159, 150, 0.26);
-    box-shadow: 0 14px 24px rgba(16, 53, 114, 0.12);
+    padding-left: 16px;
+    border-color: rgba(28, 90, 169, 0.42);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 `;
 
-const SideCategory = styled.span`
-  color: ${S.palette.blue};
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-`;
-
-const SideTitle = styled.h4`
-  margin: 0;
-  color: ${S.palette.textPrimary};
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5;
-`;
-
-const SideText = styled.p`
-  margin: 0;
-  color: ${S.palette.textBody};
+const ReportDate = styled.span`
+  color: #677684;
   font-size: 0.88rem;
-  line-height: 1.56;
+  font-weight: 800;
+  white-space: nowrap;
 `;
 
-const SideMeta = styled.span`
-  margin-top: auto;
-  color: ${S.palette.textMuted};
-  font-size: 0.82rem;
-  font-weight: 700;
+const ReportCopy = styled.span`
+  display: grid;
+  gap: 8px;
+`;
+
+const ReportSource = styled.span`
+  color: #1c5aa9;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+`;
+
+const ReportTitle = styled.strong`
+  color: #2d3339;
+  font-size: clamp(1.05rem, 1.5vw, 1.34rem);
+  font-weight: 800;
+  line-height: 1.38;
 `;
 
 export function IssueReportSection() {
@@ -204,9 +247,9 @@ export function IssueReportSection() {
   const { reports } = useIssueReports();
 
   const latestReports = reports.filter((report) => report.status !== 'placeholder');
-  const visibleReports = (latestReports.length > 0 ? latestReports : issueReports).slice(0, 4);
+  const visibleReports = (latestReports.length > 0 ? latestReports : issueReports).slice(0, 9);
   const featured = visibleReports[0];
-  const sideReports = visibleReports.slice(1, 4);
+  const sideReports = visibleReports.slice(1);
 
   if (!featured) return null;
 
@@ -218,14 +261,19 @@ export function IssueReportSection() {
         <Inner data-reveal>
           <Head>
             <div>
-              <Label>Insights</Label>
-              <Title>{t('이슈 리포트', 'Issue Report')}</Title>
+              <Label>Issue Report</Label>
+              <Title>INSIGHT</Title>
             </div>
+            <ViewAll href="/news/issue-report">{t('이슈 리포트 전체보기', 'View all issue reports')}</ViewAll>
           </Head>
 
-          <Grid>
-            <Featured href={featured.url} target="_blank" rel="noreferrer">
-              <FeaturedImage image={featured.image ?? '/hero/busan-port.jpg'} />
+          <Content>
+            <Featured
+              href={featured.url}
+              target="_blank"
+              rel="noreferrer"
+              style={{ '--report-image': `url(${featured.image ?? '/hero/busan-port.jpg'})` } as CSSProperties & Record<'--report-image', string>}
+            >
               <FeaturedBody>
                 <Meta>
                   <span>{t(featured.source, featured.sourceEn)}</span>
@@ -234,23 +282,21 @@ export function IssueReportSection() {
                 </Meta>
                 <FeaturedTitle>{t(featured.title, featured.titleEn)}</FeaturedTitle>
                 <FeaturedText>{t(featured.summary, featured.summaryEn)}</FeaturedText>
-                <FeaturedLink href={featured.url} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()}>
-                  {t('원문 보기', 'View Source')}
-                </FeaturedLink>
               </FeaturedBody>
             </Featured>
 
-            <SideList>
+            <List>
               {sideReports.map((item) => (
-                <SideCard key={item.id} href={item.url} target="_blank" rel="noreferrer">
-                  <SideCategory>{t(item.source, item.sourceEn)}</SideCategory>
-                  <SideTitle>{t(item.title, item.titleEn)}</SideTitle>
-                  <SideText>{t(item.summary, item.summaryEn)}</SideText>
-                  <SideMeta>{item.publishedAt}</SideMeta>
-                </SideCard>
+                <ReportLink key={item.id} href={item.url} target="_blank" rel="noreferrer">
+                  <ReportDate>{item.publishedAt}</ReportDate>
+                  <ReportCopy>
+                    <ReportSource>{t(item.source, item.sourceEn)}</ReportSource>
+                    <ReportTitle>{t(item.title, item.titleEn)}</ReportTitle>
+                  </ReportCopy>
+                </ReportLink>
               ))}
-            </SideList>
-          </Grid>
+            </List>
+          </Content>
         </Inner>
       </Section>
     </>

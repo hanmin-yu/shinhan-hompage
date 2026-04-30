@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import { heroSlides } from '../../../data/home';
 import { useI18n } from '../../../i18n/useI18n';
@@ -127,7 +128,7 @@ const HeroInner = styled(S.Container)`
   min-height: inherit;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: clamp(116px, 15vh, 150px) 0 clamp(40px, 8vh, 78px);
 
   @media (max-width: 1120px) {
@@ -146,25 +147,27 @@ const HeroCopy = styled.div`
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 24px;
-  width: min(1120px, 100%);
-  text-align: center;
+  width: min(980px, 58vw);
+  text-align: left;
   transform: translate3d(0, calc(var(--viewport-progress) * -34px), 0);
   transition: transform 0.16s linear;
 
   @media (max-width: 920px) {
+    width: min(100%, 680px);
+    text-align: center;
+    align-items: center;
     gap: 14px;
   }
 `;
 
 const HeroGuideLine = styled.span`
   position: absolute;
-  left: 50%;
+  left: 0;
   top: -54px;
   width: min(460px, 54vw);
   height: 2px;
-  transform: translateX(-50%);
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.82), transparent);
 
   @media (max-width: 1120px) {
@@ -194,7 +197,7 @@ const HeroTitle = styled.h1`
   margin: 0;
   color: #ffffff;
   font-family: 'Times New Roman', Georgia, serif;
-  font-size: clamp(5.2rem, 13vw, 13.8rem);
+  font-size: clamp(3.3rem, 8.4vw, 9rem);
   font-weight: 700;
   line-height: 0.82;
   letter-spacing: 0.01em;
@@ -212,10 +215,11 @@ const HeroTitle = styled.h1`
 const HeroStatement = styled.p`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2rem, 4.2vw, 4.4rem);
-  font-weight: 300;
-  line-height: 1.22;
+  font-size: clamp(2.2rem, 4.8vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.08;
   letter-spacing: -0.04em;
+  white-space: pre-line;
   text-shadow:
     0 16px 42px rgba(3, 15, 34, 0.62),
     0 2px 8px rgba(3, 15, 34, 0.38);
@@ -275,13 +279,14 @@ const HeroDescription = styled.p`
 
 const HeroScroll = styled.span`
   position: absolute;
-  right: clamp(-20px, -1vw, -8px);
-  bottom: 34px;
+  left: 50%;
+  bottom: 38px;
   color: rgba(255, 255, 255, 0.84);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
   text-orientation: mixed;
+  transform: translateX(-50%);
   animation: scrollPulse 1.55s ease-in-out infinite;
 
   &::before {
@@ -307,15 +312,147 @@ const HeroScroll = styled.span`
     }
 
     50% {
-      transform: translateY(10px);
+      transform: translate(-50%, 10px);
       opacity: 1;
     }
   }
 `;
 
+const HeroControls = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: clamp(86px, 11vh, 128px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(620px, 52vw);
+  transform: translateX(-50%);
+
+  @media (max-width: 920px) {
+    width: min(88vw, 520px);
+    bottom: 88px;
+  }
+`;
+
+const HeroProgress = styled.div`
+  position: relative;
+  flex: 1 1 auto;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.28);
+`;
+
+const HeroProgressBar = styled.span<{ $progress: number }>`
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: ${({ $progress }) => `${$progress}%`};
+  background: #ffffff;
+  transition: width 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+`;
+
+const HeroCounter = styled.span`
+  min-width: 74px;
+  color: #ffffff;
+  font-size: 1.22rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-shadow: 0 10px 28px rgba(3, 15, 34, 0.42);
+`;
+
+const HeroControlButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.84);
+  color: #174d9a;
+  font-size: 1.45rem;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    background: #ffffff;
+    outline: none;
+  }
+`;
+
+const SeminarQuickCard = styled(Link)`
+  position: absolute;
+  right: clamp(24px, 4vw, 76px);
+  bottom: clamp(54px, 8vh, 92px);
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 46px;
+  align-items: stretch;
+  width: min(320px, 22vw);
+  min-width: 240px;
+  min-height: 110px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(3, 15, 34, 0.86), rgba(8, 28, 64, 0.54)),
+    url('/source-site/news-newsletter.png') center / cover no-repeat;
+  color: #ffffff;
+  box-shadow: 0 22px 44px rgba(3, 15, 34, 0.28);
+
+  @media (max-width: 920px) {
+    display: none;
+  }
+`;
+
+const SeminarQuickCopy = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 20px;
+`;
+
+const SeminarQuickTitle = styled.strong`
+  font-size: 1.24rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+`;
+
+const SeminarQuickText = styled.span`
+  font-size: 0.9rem;
+  font-weight: 800;
+`;
+
+const SeminarQuickArrow = styled.span`
+  display: grid;
+  place-items: center;
+  background: #1fa6d8;
+  font-size: 1.8rem;
+  font-weight: 300;
+`;
+
 export function HeroSection() {
   const { t } = useI18n();
-  const [activeSlide] = useRotatingIndex(heroSlides.length, 6200);
+  const [activeSlide, setActiveSlide] = useRotatingIndex(heroSlides.length, 6200);
+  const slide = heroSlides[activeSlide] ?? heroSlides[0];
+  const progress = heroSlides.length > 0 ? ((activeSlide + 1) / heroSlides.length) * 100 : 0;
+
+  const moveSlide = (direction: 'prev' | 'next') => {
+    setActiveSlide((current) => {
+      if (direction === 'prev') {
+        return (current - 1 + heroSlides.length) % heroSlides.length;
+      }
+
+      return (current + 1) % heroSlides.length;
+    });
+  };
 
   return (
     <>
@@ -339,10 +476,10 @@ export function HeroSection() {
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
             <HeroGuideLine />
-            <HeroKicker>Shinhan Customs Service</HeroKicker>
+            <HeroKicker>{t(slide.eyebrow, slide.eyebrowEn ?? slide.eyebrow)}</HeroKicker>
             <HeroTitle>ShinHan</HeroTitle>
             <HeroStatement>
-              관세 업무의 <b>새로운 기준</b>을 열다.
+              {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>
             <HeroValues>
               <HeroValueChip>수출입통관</HeroValueChip>
@@ -351,12 +488,32 @@ export function HeroSection() {
               <HeroValueChip>해외 관세 자문</HeroValueChip>
             </HeroValues>
             <HeroDescription>
-              {t(
-                '신한관세법인은 열정, 정직, 혁신, 팀워크의 가치 위에서 수출입통관·검역/요건·컨설팅·물류 연계까지 기업의 실무 과제를 통합 지원합니다.',
-                'Shinhan Customs Service supports business operations end-to-end, from import/export clearance and quarantine requirements to consulting and logistics coordination, grounded in passion, integrity, innovation, and teamwork.',
-              )}
+              {t(slide.summary, slide.summaryEn ?? slide.summary)}
             </HeroDescription>
           </HeroCopy>
+
+          <HeroControls aria-label={t('대표 이미지 슬라이드', 'Hero image slider')}>
+            <HeroProgress aria-hidden="true">
+              <HeroProgressBar $progress={progress} />
+            </HeroProgress>
+            <HeroCounter>
+              {activeSlide + 1} / {heroSlides.length}
+            </HeroCounter>
+            <HeroControlButton type="button" aria-label={t('이전 이미지', 'Previous slide')} onClick={() => moveSlide('prev')}>
+              ‹
+            </HeroControlButton>
+            <HeroControlButton type="button" aria-label={t('다음 이미지', 'Next slide')} onClick={() => moveSlide('next')}>
+              ›
+            </HeroControlButton>
+          </HeroControls>
+
+          <SeminarQuickCard to="/news/seminar">
+            <SeminarQuickCopy>
+              <SeminarQuickTitle>Seminar</SeminarQuickTitle>
+              <SeminarQuickText>{t('세미나', 'Seminar')}</SeminarQuickText>
+            </SeminarQuickCopy>
+            <SeminarQuickArrow>›</SeminarQuickArrow>
+          </SeminarQuickCard>
 
           <HeroScroll>scroll</HeroScroll>
         </HeroInner>

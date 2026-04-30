@@ -2,6 +2,7 @@ import { ItSection } from '../../components/home/sections/ItSection';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
+import { itOverview } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
 export function ItPage() {
@@ -25,13 +26,9 @@ export function ItPage() {
 
         <P.PageContainer data-reveal style={{ marginTop: 22 }}>
           <P.Kicker>IT Service</P.Kicker>
-          <P.Title>{t('통관 실무와 연결되는 IT 서비스', 'IT Services Integrated with Customs Operations')}</P.Title>
-          <P.Lead>
-            {t(
-              '신고 진행, 보완 이력, 리포트 배포까지 관세 업무 흐름을 데이터 기반으로 연결해 운영 효율을 높입니다.',
-              'From declarations to corrections and reporting, we connect customs workflows through data to improve operational efficiency.',
-            )}
-          </P.Lead>
+          <P.Title>{t(itOverview.title, itOverview.titleEn)}</P.Title>
+          <P.Lead>{t(itOverview.summary, itOverview.summaryEn)}</P.Lead>
+          <P.Lead>{t(itOverview.body, itOverview.bodyEn)}</P.Lead>
         </P.PageContainer>
       </P.HeroSection>
       <ItSection />

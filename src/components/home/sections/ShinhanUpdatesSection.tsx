@@ -1,332 +1,245 @@
 import styled from '@emotion/styled';
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../../hooks/useNewsContent';
 import { getNewsletterRecords, getShinhanNewsRecords } from '../../../repositories/newsRepository';
 import { useI18n } from '../../../i18n/useI18n';
 import type { NewsletterRecord, ShinhanNewsRecord } from '../../../types/site';
-import { sortShinhanNewsRecords } from '../../../utils/shinhanNews';
+import { getShinhanNewsSourceLabel, isShinhanNewsNotice, sortShinhanNewsRecords } from '../../../utils/shinhanNews';
 import * as S from '../homeStyles';
 
 const Section = styled.section`
   position: relative;
-  padding: 92px 0;
+  padding: 102px 0 106px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 12% 16%, rgba(17, 93, 187, 0.16), transparent 20%),
-    radial-gradient(circle at 88% 12%, rgba(0, 184, 107, 0.14), transparent 18%),
-    linear-gradient(180deg, #eef5ff 0%, #f6f9ff 38%, #fbfdff 100%);
-  border-top: 1px solid rgba(21, 77, 159, 0.08);
+    linear-gradient(138deg, rgba(255, 255, 255, 0.92) 0%, rgba(239, 247, 253, 0.86) 48%, rgba(236, 248, 246, 0.72) 100%),
+    linear-gradient(180deg, #ffffff 0%, #f4f8fc 100%);
+  border-top: 1px solid rgba(22, 54, 96, 0.08);
+
+  &::before {
+    content: 'N E W S';
+    position: absolute;
+    left: 24px;
+    top: 28px;
+    color: rgba(15, 35, 62, 0.055);
+    font-size: clamp(3.8rem, 8vw, 8.9rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -130px;
+    bottom: -160px;
+    width: min(44vw, 600px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url('/brand-mark.svg') center / contain no-repeat;
+    opacity: 0.035;
+    transform: rotate(-14deg);
+  }
+
+  @media (max-width: 860px) {
+    padding: 82px 0;
+
+    &::after {
+      width: 86vw;
+      left: -48vw;
+      bottom: -90px;
+    }
+  }
 `;
 
 const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 34px;
+  display: grid;
+  gap: 40px;
 `;
 
 const Head = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: 20px;
+  gap: 24px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 780px) {
     grid-template-columns: 1fr;
-    align-items: start;
   }
-`;
-
-const HeadCopy = styled.div`
-  display: grid;
-  gap: 14px;
 `;
 
 const Label = styled.span`
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  color: #23549a;
+  gap: 12px;
+  color: #1c5aa9;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 
   &::before {
     content: '';
-    width: 28px;
+    width: 36px;
     height: 1px;
-    background: rgba(36, 90, 171, 0.54);
+    background: rgba(33, 101, 193, 0.48);
   }
 `;
 
 const Title = styled.h2`
-  margin: 0;
-  color: #103b73;
-  font-size: clamp(2rem, 3.7vw, 3rem);
+  margin: 12px 0 0;
+  color: #222a34;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
 `;
 
-const Summary = styled.p`
-  margin: 0;
-  max-width: 760px;
-  color: #4e6785;
-  font-size: 0.98rem;
-  line-height: 1.72;
-`;
-
-const HeadTools = styled.div`
-  display: flex;
+const ViewAll = styled(Link)`
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  justify-self: end;
+  color: #164f99;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: currentColor;
+  }
+`;
+
+const Columns = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(30px, 5vw, 74px);
+  align-items: stretch;
 
   @media (max-width: 900px) {
-    justify-self: start;
+    grid-template-columns: 1fr;
   }
 `;
 
-const ViewAllLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(24, 83, 165, 0.12);
-  background: rgba(255, 255, 255, 0.82);
-  color: #1c59ab;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-`;
-
-const CarouselButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(24, 83, 165, 0.12);
-  background: rgba(255, 255, 255, 0.82);
-  color: #184f98;
-  font-size: 1rem;
-  font-weight: 800;
-  box-shadow: 0 12px 22px rgba(16, 53, 114, 0.08);
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    border-color: rgba(24, 83, 165, 0.22);
-    box-shadow: 0 16px 28px rgba(16, 53, 114, 0.12);
-  }
-`;
-
-const RailWrap = styled.div`
-  position: relative;
-`;
-
-const Rail = styled.div`
+const Column = styled.section`
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(300px, 31%);
+  grid-template-rows: auto 1fr;
   gap: 18px;
-  overflow-x: auto;
-  padding: 4px 6px 10px;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 6px;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    height: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(32, 81, 151, 0.18);
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(227, 236, 250, 0.6);
-    border-radius: 999px;
-  }
-
-  @media (max-width: 1180px) {
-    grid-auto-columns: minmax(300px, 44%);
-  }
-
-  @media (max-width: 760px) {
-    grid-auto-columns: minmax(286px, 86%);
-  }
+  min-width: 0;
 `;
 
-const Card = styled(Link)<{ $theme: 'seminar' | 'flash' | 'newsletter' }>`
-  position: relative;
-  display: grid;
-  gap: 16px;
-  min-height: 330px;
-  padding: 24px 24px 22px;
-  border-radius: 28px;
-  border: 1px solid
-    ${({ $theme }) =>
-      $theme === 'seminar'
-        ? 'rgba(24, 93, 173, 0.16)'
-        : $theme === 'flash'
-          ? 'rgba(28, 135, 104, 0.18)'
-          : 'rgba(128, 85, 193, 0.16)'};
-  background:
-    ${({ $theme }) =>
-      $theme === 'seminar'
-        ? 'radial-gradient(circle at top right, rgba(69, 131, 214, 0.22), transparent 32%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 247, 255, 0.98) 56%, rgba(227, 241, 255, 0.96) 100%)'
-        : $theme === 'flash'
-          ? 'radial-gradient(circle at top right, rgba(32, 185, 124, 0.24), transparent 30%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 250, 245, 0.98) 56%, rgba(225, 247, 237, 0.96) 100%)'
-          : 'radial-gradient(circle at top right, rgba(146, 112, 221, 0.2), transparent 30%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 242, 255, 0.98) 56%, rgba(237, 232, 255, 0.96) 100%)'};
-  box-shadow: 0 18px 30px rgba(16, 53, 114, 0.08);
-  scroll-snap-align: start;
-  text-decoration: none;
-  overflow: hidden;
-  transition:
-    transform 0.24s ease,
-    box-shadow 0.24s ease,
-    border-color 0.24s ease;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 5px;
-    background:
-      ${({ $theme }) =>
-        $theme === 'seminar'
-          ? 'linear-gradient(90deg, #1c63bb, #4a96e5)'
-          : $theme === 'flash'
-            ? 'linear-gradient(90deg, #07b56a, #36d48e)'
-            : 'linear-gradient(90deg, #7b5ad8, #aa87ff)'};
-  }
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 24px 38px rgba(16, 53, 114, 0.12);
-  }
-`;
-
-const CardTop = styled.div`
+const ColumnHead = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid rgba(15, 43, 89, 0.22);
 `;
 
-const CardLabel = styled.span<{ $theme: 'seminar' | 'flash' | 'newsletter' }>`
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 30px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background:
-    ${({ $theme }) =>
-      $theme === 'seminar' ? 'rgba(33, 101, 193, 0.1)' : $theme === 'flash' ? 'rgba(5, 183, 105, 0.12)' : 'rgba(123, 90, 216, 0.12)'};
-  color: ${({ $theme }) => ($theme === 'seminar' ? '#1f5eb2' : $theme === 'flash' ? '#078d57' : '#714fd1')};
-  font-size: 0.76rem;
+const ColumnTitle = styled.h3`
+  margin: 0;
+  color: #2b3138;
+  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  line-height: 1.08;
 `;
 
-const CardDate = styled.span`
-  color: #5b7596;
-  font-size: 0.8rem;
-  font-weight: 700;
+const ColumnLink = styled(Link)`
+  color: #1c5aa9;
+  font-size: 0.84rem;
+  font-weight: 800;
   white-space: nowrap;
 `;
 
-const CardVisual = styled.div<{ $theme: 'seminar' | 'flash' | 'newsletter' }>`
+const List = styled.div`
   display: grid;
-  align-content: end;
-  min-height: 118px;
-  padding: 18px 18px 16px;
-  border-radius: 22px;
-  background:
-    ${({ $theme }) =>
-      $theme === 'seminar'
-        ? 'linear-gradient(135deg, #0d4f9e 0%, #2f78d3 100%)'
-        : $theme === 'flash'
-          ? 'linear-gradient(135deg, #078957 0%, #17c57b 100%)'
-          : 'linear-gradient(135deg, #6945d0 0%, #9b77ff 100%)'};
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  grid-template-rows: repeat(4, minmax(154px, 1fr));
+  height: 100%;
+
+  @media (max-width: 640px) {
+    grid-template-rows: none;
+  }
 `;
 
-const CardVisualMeta = styled.span`
-  color: rgba(232, 242, 255, 0.82);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+const ItemLink = styled(Link)`
+  display: grid;
+  grid-template-rows: auto minmax(0, auto) minmax(0, 1fr);
+  gap: 10px;
+  min-height: 154px;
+  padding: 22px 0 21px;
+  border-bottom: 1px solid rgba(15, 43, 89, 0.14);
+  text-decoration: none;
+  min-width: 0;
+  transition:
+    padding-left 0.24s ease,
+    border-color 0.24s ease;
+
+  &:hover {
+    padding-left: 16px;
+    border-color: rgba(28, 90, 169, 0.42);
+  }
 `;
 
-const CardVisualTitle = styled.strong`
-  margin-top: 10px;
-  color: #ffffff;
-  font-size: 1.28rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.14;
-  max-width: 10ch;
-`;
-
-const CardTitle = styled.h3`
-  margin: 0;
-  color: #143f79;
-  font-size: 1.08rem;
-  font-weight: 700;
-  line-height: 1.54;
-`;
-
-const CardText = styled.p`
-  margin: 0;
-  color: #4d6889;
-  font-size: 0.92rem;
-  line-height: 1.66;
-`;
-
-const CardFooter = styled.div`
-  margin-top: auto;
+const ItemTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
+  min-height: 22px;
 `;
 
-const CardHint = styled.span`
-  color: #1c59ab;
-  font-size: 0.88rem;
-  font-weight: 700;
+const ItemCategory = styled.span`
+  color: #1c5aa9;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
-const SwipeHint = styled.span`
-  color: #6580a3;
+const ItemDate = styled.span`
+  color: #677684;
   font-size: 0.84rem;
-  font-weight: 700;
+  font-weight: 800;
+  white-space: nowrap;
 `;
 
-type UpdateCard = {
+const ItemTitle = styled.strong`
+  color: #2d3339;
+  font-size: clamp(1.08rem, 1.5vw, 1.34rem);
+  font-weight: 800;
+  line-height: 1.42;
+  display: -webkit-box;
+  min-height: calc(1em * 1.42 * 2);
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+`;
+
+const ItemText = styled.p`
+  margin: 0;
+  color: #5c6d7c;
+  font-size: 0.92rem;
+  line-height: 1.64;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+`;
+
+type NewsListItem = {
   id: string;
-  kind: 'seminar' | 'flash' | 'newsletter';
-  labelKo: string;
-  labelEn: string;
-  eyebrow: string;
+  category: string;
   titleKo: string;
   titleEn: string;
   summaryKo: string;
@@ -335,145 +248,100 @@ type UpdateCard = {
   href: string;
 };
 
-function getSeminarRecord(items: ShinhanNewsRecord[]) {
-  return sortShinhanNewsRecords(items).find((item) => item.category === 'seminar') ?? null;
+function buildNewsItems(items: ShinhanNewsRecord[]): NewsListItem[] {
+  return sortShinhanNewsRecords(items)
+    .filter((item) => item.category !== 'seminar' || isShinhanNewsNotice(item))
+    .slice(0, 4)
+    .map((item) => ({
+      id: item.id,
+      category: getShinhanNewsSourceLabel(item, 'SEMINAR'),
+      titleKo: item.title,
+      titleEn: item.titleEn,
+      summaryKo: item.summary,
+      summaryEn: item.summaryEn,
+      publishedAt: item.publishedAt,
+      href: `/news/shinhan-news/${item.id}`,
+    }));
 }
 
-function getFlashRecord(items: ShinhanNewsRecord[]) {
-  return sortShinhanNewsRecords(items).find((item) => item.category === 'flash') ?? null;
-}
-
-function buildSeminarCard(item: ShinhanNewsRecord | null): UpdateCard | null {
-  if (!item) return null;
-  return {
-    id: item.id,
-    kind: 'seminar',
-    labelKo: '세미나',
-    labelEn: 'Seminar',
-    eyebrow: 'SEMINAR',
-    titleKo: item.title,
-    titleEn: item.titleEn,
-    summaryKo: item.summary,
-    summaryEn: item.summaryEn,
-    publishedAt: item.publishedAt,
-    href: `/news/shinhan-news/${item.id}`,
-  };
-}
-
-function buildFlashCard(item: ShinhanNewsRecord | null): UpdateCard | null {
-  if (!item) return null;
-  return {
-    id: item.id,
-    kind: 'flash',
-    labelKo: '플래시',
-    labelEn: 'FLASH',
-    eyebrow: 'FLASH',
-    titleKo: item.title,
-    titleEn: item.titleEn,
-    summaryKo: item.summary,
-    summaryEn: item.summaryEn,
-    publishedAt: item.publishedAt,
-    href: `/news/shinhan-news/${item.id}`,
-  };
-}
-
-function buildNewsletterCard(item: NewsletterRecord | null): UpdateCard | null {
-  if (!item) return null;
-  return {
-    id: item.id,
-    kind: 'newsletter',
-    labelKo: '소식지',
-    labelEn: 'Newsletter',
-    eyebrow: 'NEWSLETTER',
-    titleKo: item.title,
-    titleEn: item.titleEn,
-    summaryKo: item.summary,
-    summaryEn: item.summaryEn,
-    publishedAt: item.publishedAt,
-    href: `/news/newsletter/${item.id}`,
-  };
+function buildNewsletterItems(items: NewsletterRecord[]): NewsListItem[] {
+  return [...items]
+    .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
+    .slice(0, 4)
+    .map((item) => ({
+      id: item.id,
+      category: item.language ?? 'Newsletter',
+      titleKo: item.title,
+      titleEn: item.titleEn,
+      summaryKo: item.summary,
+      summaryEn: item.summaryEn,
+      publishedAt: item.publishedAt,
+      href: `/news/newsletter/${item.id}`,
+    }));
 }
 
 export function ShinhanUpdatesSection() {
   const { t } = useI18n();
-  const railRef = useRef<HTMLDivElement | null>(null);
   const { items: dynamicShinhanNewsItems } = useShinhanNewsRecords();
   const { items: dynamicNewsletterItems } = useNewsletterRecords();
 
   const shinhanNewsItems = dynamicShinhanNewsItems.length > 0 ? dynamicShinhanNewsItems : getShinhanNewsRecords();
   const newsletterItems = dynamicNewsletterItems.length > 0 ? dynamicNewsletterItems : getNewsletterRecords();
+  const newsList = buildNewsItems(shinhanNewsItems);
+  const newsletterList = buildNewsletterItems(newsletterItems);
 
-  const cards = [
-    buildSeminarCard(getSeminarRecord(shinhanNewsItems)),
-    buildFlashCard(getFlashRecord(shinhanNewsItems)),
-    buildNewsletterCard(newsletterItems[0] ?? null),
-  ].filter((item): item is UpdateCard => item !== null);
-
-  const scrollRail = (direction: 'prev' | 'next') => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const firstCard = rail.firstElementChild as HTMLElement | null;
-    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width + 18 : rail.clientWidth * 0.9;
-    rail.scrollBy({
-      left: direction === 'next' ? cardWidth : -cardWidth,
-      behavior: 'smooth',
-    });
-  };
-
-  if (cards.length === 0) return null;
+  if (newsList.length === 0 && newsletterList.length === 0) return null;
 
   return (
     <Section>
       <Inner data-reveal>
         <Head>
-          <HeadCopy>
-            <Label>Shinhan Updates</Label>
-            <Title>{t('신한 소식', 'Shinhan Updates')}</Title>
-            <Summary>
-              {t(
-                '세미나, FLASH, 소식지를 카드형으로 넘기며 최신 소식을 빠르게 확인해보세요.',
-                'Swipe through Seminar, FLASH, and Newsletter cards to check the latest updates at a glance.',
-              )}
-            </Summary>
-          </HeadCopy>
-
-          <HeadTools>
-            <CarouselButton type="button" aria-label={t('이전 소식 보기', 'View previous update')} onClick={() => scrollRail('prev')}>
-              ←
-            </CarouselButton>
-            <CarouselButton type="button" aria-label={t('다음 소식 보기', 'View next update')} onClick={() => scrollRail('next')}>
-              →
-            </CarouselButton>
-            <ViewAllLink to="/news/shinhan-news">{t('전체 보기', 'View all')}</ViewAllLink>
-          </HeadTools>
+          <div>
+            <Label>News & Newsletter</Label>
+            <Title>{t('신한 NEWS / 소식지', 'Shinhan NEWS / Newsletter')}</Title>
+          </div>
+          <ViewAll to="/news">{t('소식 전체보기', 'View all news')}</ViewAll>
         </Head>
 
-        <RailWrap>
-          <Rail ref={railRef}>
-            {cards.map((card) => (
-              <Card key={card.id} to={card.href} $theme={card.kind}>
-                <CardTop>
-                  <CardLabel $theme={card.kind}>{t(card.labelKo, card.labelEn)}</CardLabel>
-                  <CardDate>{card.publishedAt}</CardDate>
-                </CardTop>
+        <Columns>
+          <Column aria-labelledby="home-shinhan-news-title">
+            <ColumnHead>
+              <ColumnTitle id="home-shinhan-news-title">{t('신한 NEWS', 'Shinhan NEWS')}</ColumnTitle>
+              <ColumnLink to="/news/shinhan-news">{t('전체보기', 'View all')}</ColumnLink>
+            </ColumnHead>
+            <List>
+              {newsList.map((item) => (
+                <ItemLink key={item.id} to={item.href}>
+                  <ItemTop>
+                    <ItemCategory>{item.category}</ItemCategory>
+                    <ItemDate>{item.publishedAt}</ItemDate>
+                  </ItemTop>
+                  <ItemTitle>{t(item.titleKo, item.titleEn)}</ItemTitle>
+                  <ItemText>{t(item.summaryKo, item.summaryEn)}</ItemText>
+                </ItemLink>
+              ))}
+            </List>
+          </Column>
 
-                <CardVisual $theme={card.kind}>
-                  <CardVisualMeta>{card.eyebrow}</CardVisualMeta>
-                  <CardVisualTitle>{t(card.labelKo, card.labelEn)}</CardVisualTitle>
-                </CardVisual>
-
-                <CardTitle>{t(card.titleKo, card.titleEn)}</CardTitle>
-                <CardText>{t(card.summaryKo, card.summaryEn)}</CardText>
-
-                <CardFooter>
-                  <CardHint>{t('자세히 보기', 'Learn more')}</CardHint>
-                  <SwipeHint>{t('좌우로 넘기기', 'Swipe')}</SwipeHint>
-                </CardFooter>
-              </Card>
-            ))}
-          </Rail>
-        </RailWrap>
+          <Column aria-labelledby="home-newsletter-title">
+            <ColumnHead>
+              <ColumnTitle id="home-newsletter-title">{t('소식지', 'Newsletter')}</ColumnTitle>
+              <ColumnLink to="/news/newsletter">{t('전체보기', 'View all')}</ColumnLink>
+            </ColumnHead>
+            <List>
+              {newsletterList.map((item) => (
+                <ItemLink key={item.id} to={item.href}>
+                  <ItemTop>
+                    <ItemCategory>{item.category}</ItemCategory>
+                    <ItemDate>{item.publishedAt}</ItemDate>
+                  </ItemTop>
+                  <ItemTitle>{t(item.titleKo, item.titleEn)}</ItemTitle>
+                  <ItemText>{t(item.summaryKo, item.summaryEn)}</ItemText>
+                </ItemLink>
+              ))}
+            </List>
+          </Column>
+        </Columns>
       </Inner>
     </Section>
   );

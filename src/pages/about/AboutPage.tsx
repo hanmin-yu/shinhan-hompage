@@ -1,422 +1,452 @@
 import styled from '@emotion/styled';
+import { Link, useLocation } from 'react-router-dom';
 
-import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const IntroVisual = styled(P.IntroVisualPanel)`
-  box-shadow: 0 24px 46px rgba(16, 45, 92, 0.1);
-`;
-
-const IdentityPoints = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 8px;
-`;
-
-const IdentityPoint = styled.span`
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 76, 158, 0.16);
-  background: #f6faff;
-  color: #1f4f93;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-`;
-
-const AllInOneSection = styled(P.PageSection)`
-  padding: clamp(58px, 6vw, 78px) 0;
-  background: linear-gradient(180deg, #0f3d7d 0%, #184f9c 100%);
-  border-top: 1px solid rgba(17, 58, 122, 0.5);
-`;
-
-const AllInOneInner = styled(P.PageContainer)`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: center;
-`;
-
-const AllInOneTitle = styled.h2`
-  margin: 0;
-  color: #f2f7ff;
-  font-size: clamp(2rem, 3.4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: 0.01em;
-`;
-
-const AllInOneBody = styled.p`
-  max-width: 760px;
-  margin: 0 auto;
-  color: rgba(223, 235, 255, 0.95);
-  font-size: 1rem;
-  line-height: 1.72;
-  text-wrap: balance;
-`;
-
-const ServiceSection = styled(P.PageSection)`
-  padding-top: clamp(56px, 6vw, 72px);
-  border-top: 0;
-`;
-
-const ServiceIntro = styled.p`
-  margin: 14px 0 0;
-  max-width: 720px;
-  color: #4a6788;
-  font-size: 0.95rem;
-  line-height: 1.74;
-`;
-
-const ServiceColumns = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 24px;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ServiceCard = styled(P.Card)`
-  gap: 14px;
-  padding: 24px;
-`;
-
-const ServiceCardHead = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-`;
-
-const ServiceTag = styled.span`
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  width: fit-content;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: #eff5ff;
-  color: #1d4f97;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
-const ServiceIndex = styled.span`
-  color: rgba(28, 88, 168, 0.28);
-  font-size: 2rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.06em;
-`;
-
-const ServiceDescription = styled.p`
-  margin: 0;
-  color: #4a6788;
-  font-size: 0.94rem;
-  line-height: 1.68;
-`;
-
-const ServiceList = styled.ul`
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding-left: 18px;
-  color: #445f86;
-  font-size: 0.92rem;
-  line-height: 1.68;
-`;
-
-const ImageStrip = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 12px;
-
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (max-width: 700px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StripCard = styled.article<{ src: string; $span: number; $height?: number }>`
-  grid-column: span ${({ $span }) => $span};
-  min-height: ${({ $height = 240 }) => `${$height}px`};
-  display: flex;
-  align-items: flex-end;
-  padding: 18px;
-  border-radius: 16px;
-  border: 1px solid rgba(20, 76, 158, 0.16);
+const EditorialHero = styled(P.HeroSection)`
+  min-height: auto;
+  padding-bottom: clamp(70px, 8vw, 118px);
   background:
-    linear-gradient(180deg, rgba(9, 29, 59, 0.06) 0%, rgba(9, 29, 59, 0.6) 100%),
-    ${({ src }) => `url(${src}) center / cover no-repeat`};
-  box-shadow: 0 18px 36px rgba(15, 49, 106, 0.08);
-  overflow: hidden;
-
-  @media (max-width: 980px) {
-    grid-column: span 1;
-    min-height: 240px;
-  }
-`;
-
-const StripContent = styled.div`
-  display: grid;
-  gap: 6px;
-  width: min(100%, 260px);
-`;
-
-const StripLabel = styled.span`
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 24px;
-  padding: 0 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(222, 235, 255, 0.34);
-  background: rgba(10, 36, 74, 0.24);
-  color: #edf4ff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
-const StripTitle = styled.h3`
-  margin: 0;
-  color: #ffffff;
-  font-size: 1.16rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-`;
-
-const StripText = styled.p`
-  margin: 0;
-  color: rgba(234, 242, 255, 0.92);
-  font-size: 0.9rem;
-  line-height: 1.6;
-`;
-
-const VisionPanel = styled(P.Panel)`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: clamp(20px, 2.4vw, 28px);
-`;
-
-const VisionLead = styled.p`
-  margin: 0;
-  color: #4e6888;
-  font-size: 0.98rem;
-  line-height: 1.72;
-  text-align: center;
-`;
-
-const VisionDiagram = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(16px, 2vw, 26px);
-  padding: clamp(20px, 3vw, 34px);
-  border-radius: 18px;
-  border: 1px solid rgba(20, 76, 158, 0.14);
-  background:
-    radial-gradient(circle at top, rgba(39, 101, 191, 0.08), transparent 42%),
-    linear-gradient(180deg, rgba(247, 250, 255, 0.98), rgba(238, 245, 255, 0.9));
-  overflow: hidden;
+    linear-gradient(180deg, rgba(9, 17, 29, 0.24) 0%, rgba(9, 17, 29, 0.9) 74%, #0a1424 100%),
+    linear-gradient(120deg, rgba(8, 17, 31, 0.98), rgba(24, 38, 58, 0.9)),
+    url('/subpages/about-mt14.jpg') center / cover no-repeat;
 
   &::before,
   &::after {
+    opacity: 0.26;
+  }
+`;
+
+const HeroStatement = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(34px, 5vw, 62px);
+  padding-top: clamp(42px, 5vw, 74px);
+`;
+
+const AboutTop = styled(P.PageContainer)`
+  display: grid;
+  gap: clamp(18px, 2.2vw, 28px);
+  padding-top: clamp(34px, 5vw, 68px);
+  padding-bottom: clamp(18px, 2.4vw, 30px);
+  border-bottom: 1px solid rgba(232, 237, 244, 0.24);
+`;
+
+const AboutTopTitleRow = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+
+  @media (max-width: 720px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+`;
+
+const AboutTopTitle = styled.h1`
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  text-shadow: 0 22px 48px rgba(0, 0, 0, 0.34);
+`;
+
+const AboutBreadcrumb = styled.div`
+  color: rgba(235, 239, 245, 0.68);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+`;
+
+const AboutNav = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 38px);
+  padding-top: 4px;
+`;
+
+const AboutNavLink = styled(Link)`
+  position: relative;
+  color: rgba(236, 239, 244, 0.72);
+  font-size: clamp(0.96rem, 1.2vw, 1.06rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  padding-bottom: 12px;
+
+  &[data-active='true'] {
+    color: #ffffff;
+  }
+
+  &[data-active='true']::after {
     content: '';
     position: absolute;
-    background: rgba(20, 76, 158, 0.12);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #ffffff;
   }
 
-  &::before {
-    left: 50%;
-    top: 12%;
-    bottom: 12%;
-    width: 1px;
-    transform: translateX(-50%);
+  &:hover {
+    color: #ffffff;
   }
+`;
 
-  &::after {
-    left: 10%;
-    right: 10%;
-    top: 50%;
-    height: 1px;
-    transform: translateY(-50%);
+const HeroEyebrow = styled.span`
+  color: rgba(226, 231, 238, 0.78);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const HeroTitle = styled.h1`
+  max-width: 1040px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+  text-shadow: 0 24px 52px rgba(0, 0, 0, 0.32);
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
   }
+`;
 
-  @media (max-width: 980px) {
+const HeroLeadGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.42fr);
+  gap: clamp(28px, 5vw, 74px);
+  align-items: end;
+
+  @media (max-width: 920px) {
     grid-template-columns: 1fr;
-    gap: 16px;
+  }
+`;
 
-    &::before,
-    &::after {
-      display: none;
+const HeroLead = styled.p`
+  max-width: 760px;
+  margin: 0;
+  color: rgba(235, 239, 245, 0.86);
+  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  line-height: 1.82;
+`;
+
+const HeroFacts = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(232, 237, 244, 0.28);
+  border-bottom: 1px solid rgba(232, 237, 244, 0.18);
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const HeroFact = styled.div`
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 18px 0;
+  border-right: 1px solid rgba(232, 237, 244, 0.16);
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  @media (max-width: 640px) {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(232, 237, 244, 0.14);
+
+    &:last-of-type {
+      border-bottom: 0;
     }
   }
 `;
 
-const VisionSide = styled.div`
+const HeroFactValue = styled.strong`
+  color: #ffffff;
+  font-size: clamp(1.42rem, 2.3vw, 2.06rem);
+  font-weight: 800;
+  line-height: 1;
+`;
+
+const HeroFactLabel = styled.span`
+  color: rgba(226, 231, 238, 0.7);
+  font-size: 0.88rem;
+  line-height: 1.5;
+`;
+
+const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
+  padding: clamp(78px, 9vw, 128px) 0;
+  border-top: 1px solid ${({ $tone }) => ($tone === 'navy' ? 'rgba(226, 231, 238, 0.12)' : '#d8dee8')};
+  background: ${({ $tone }) => {
+    if ($tone === 'navy') {
+      return 'linear-gradient(180deg, #0a1424 0%, #121f33 100%)';
+    }
+    if ($tone === 'soft') {
+      return 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)';
+    }
+    return '#ffffff';
+  }};
+`;
+
+const IntroLayout = styled(P.PageContainer)`
   display: grid;
-  gap: 14px;
-`;
-
-const VisionCard = styled.article`
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-height: 170px;
-  padding: 22px;
-  border-radius: 18px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 18px 36px rgba(13, 45, 95, 0.06);
+  grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.44fr);
+  gap: clamp(36px, 6vw, 88px);
+  align-items: start;
 
   @media (max-width: 980px) {
-    min-height: 0;
+    grid-template-columns: 1fr;
   }
 `;
 
-const VisionValueTitle = styled.h3`
-  margin: 0;
-  color: #1c58a8;
-  font-size: 1.02rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
-const VisionValueKo = styled.span`
-  color: #183764;
-  font-size: 1.38rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-`;
-
-const VisionValueBody = styled.p`
-  margin: 0;
-  color: #516c8d;
-  font-size: 0.92rem;
-  line-height: 1.72;
-`;
-
-const VisionCore = styled.div`
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: clamp(240px, 25vw, 310px);
-  aspect-ratio: 1 / 1;
-  padding: 34px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #1f65c3 0%, #11498f 100%);
-  box-shadow:
-    0 24px 50px rgba(16, 58, 126, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  text-align: center;
-
-  @media (max-width: 980px) {
-    order: -1;
-    justify-self: center;
-    width: min(100%, 280px);
-    padding: 28px;
-  }
-`;
-
-const VisionCoreLabel = styled.span`
-  color: rgba(227, 238, 255, 0.82);
-  font-size: 0.75rem;
+const SectionLabel = styled.span<{ $light?: boolean }>`
+  display: block;
+  color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.7)' : '#52647c')};
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
-const VisionCoreTitle = styled.h3`
+const EditorialTitle = styled.h2<{ $light?: boolean }>`
+  max-width: 860px;
+  margin: 12px 0 0;
+  color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
+  font-size: clamp(2.14rem, 4.2vw, 4.22rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+`;
+
+const BodyStack = styled.div`
+  display: grid;
+  gap: 20px;
+`;
+
+const EditorialBody = styled.p<{ $light?: boolean }>`
   margin: 0;
-  color: #ffffff;
-  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.8)' : '#4d5a6c')};
+  font-size: clamp(1rem, 1.2vw, 1.08rem);
+  line-height: 1.88;
+`;
+
+const Rule = styled.div<{ $light?: boolean }>`
+  width: 100%;
+  height: 1px;
+  margin: 8px 0;
+  background: ${({ $light }) =>
+    $light ? 'rgba(219, 235, 255, 0.2)' : 'linear-gradient(90deg, #0f3d7d, rgba(15, 61, 125, 0))'};
+`;
+
+const ServiceGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(36px, 5vw, 62px);
+  border-top: 1px solid #d5dbe4;
+  border-bottom: 1px solid #d5dbe4;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ServiceColumn = styled.article`
+  display: grid;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 38px);
+  border-right: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  @media (max-width: 980px) {
+    border-right: 0;
+    border-bottom: 1px solid #dbe0e8;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+`;
+
+const ServiceIndex = styled.span`
+  color: rgba(45, 58, 76, 0.22);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+`;
+
+const ServiceTitle = styled.h3`
+  margin: 0;
+  color: #18283e;
+  font-size: clamp(1.36rem, 2vw, 1.72rem);
   font-weight: 800;
   letter-spacing: -0.03em;
 `;
 
-const VisionCoreRule = styled.span`
-  width: 34px;
-  height: 1px;
-  background: rgba(233, 241, 255, 0.58);
-`;
-
-const VisionCoreBody = styled.p`
+const ServiceDescription = styled.p`
   margin: 0;
-  color: rgba(239, 245, 255, 0.94);
-  font-size: 0.95rem;
-  line-height: 1.74;
-  text-wrap: balance;
+  color: #4e5d70;
+  font-size: 0.98rem;
+  line-height: 1.76;
 `;
 
-const SloganBand = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(18px, 2vw, 24px);
-  border-radius: 16px;
-  border: 1px solid rgba(20, 76, 158, 0.12);
-  background: linear-gradient(180deg, rgba(244, 248, 255, 0.96), rgba(236, 244, 255, 0.92));
-`;
-
-const Slogan = styled.p`
+const ServiceList = styled.ul`
+  display: grid;
+  gap: 8px;
   margin: 0;
-  color: #103b72;
-  font-size: clamp(1.18rem, 2.4vw, 1.58rem);
+  padding: 18px 0 0;
+  border-top: 1px solid #e2e6ec;
+  list-style: none;
+`;
+
+const ServiceItem = styled.li`
+  position: relative;
+  padding-left: 14px;
+  color: #4b596b;
+  font-size: 0.92rem;
+  line-height: 1.62;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 4px;
+    height: 4px;
+    background: #4c5d73;
+  }
+`;
+
+const NavyInner = styled(P.PageContainer)`
+  display: grid;
+  grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
+  gap: clamp(34px, 6vw, 86px);
+  align-items: start;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ValueList = styled.div`
+  display: grid;
+  border-top: 1px solid rgba(226, 231, 238, 0.16);
+`;
+
+const ValueRow = styled.article`
+  display: grid;
+  grid-template-columns: minmax(140px, 0.32fr) minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(226, 231, 238, 0.16);
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+`;
+
+const ValueTitle = styled.h3`
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.2rem, 1.8vw, 1.54rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  text-align: center;
-  text-wrap: balance;
 `;
 
-const VisionCopyGroup = styled.div`
-  display: grid;
-  gap: 12px;
-  max-width: 920px;
-  margin: 0 auto;
-`;
-
-const VisionCopy = styled.p`
+const ValueBody = styled.p`
   margin: 0;
-  color: #4a6587;
-  text-align: center;
-  font-size: 0.96rem;
+  color: rgba(226, 231, 238, 0.72);
+  font-size: 0.98rem;
   line-height: 1.78;
 `;
 
-const visionValueLabels: Record<string, { ko: string; en: string }> = {
-  PASSION: { ko: '열정', en: 'Passion' },
-  INTEGRITY: { ko: '정직', en: 'Integrity' },
-  INNOVATION: { ko: '혁신', en: 'Innovation' },
-  TEAMWORK: { ko: '팀워크', en: 'Teamwork' },
-};
+const GalleryGrid = styled(P.PageContainer)`
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
 
-const visionValueLeftOrder = ['PASSION', 'INNOVATION'] as const;
-const visionValueRightOrder = ['INTEGRITY', 'TEAMWORK'] as const;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const GalleryCard = styled.article<{ src: string; $span: number; $height?: number }>`
+  grid-column: span ${({ $span }) => $span};
+  min-height: ${({ $height = 300 }) => `${$height}px`};
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(20px, 3vw, 30px);
+  background:
+    linear-gradient(180deg, rgba(10, 18, 30, 0.04) 0%, rgba(10, 18, 30, 0.72) 100%),
+    ${({ src }) => `url(${src}) center / cover no-repeat`};
+
+  @media (max-width: 900px) {
+    grid-column: span 1;
+    min-height: 280px;
+  }
+`;
+
+const GalleryContent = styled.div`
+  max-width: 330px;
+`;
+
+const GalleryLabel = styled.span`
+  color: rgba(232, 235, 240, 0.76);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+`;
+
+const GalleryTitle = styled.h3`
+  margin: 10px 0 0;
+  color: #ffffff;
+  font-size: 1.34rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+`;
+
+const GalleryText = styled.p`
+  margin: 10px 0 0;
+  color: rgba(235, 238, 243, 0.84);
+  font-size: 0.94rem;
+  line-height: 1.68;
+`;
+
+const SloganBand = styled.div`
+  margin-top: clamp(34px, 5vw, 60px);
+  padding-top: clamp(22px, 3vw, 34px);
+  border-top: 1px solid #d5dbe4;
+`;
+
+const Slogan = styled.p`
+  max-width: 980px;
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.64rem, 3.3vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+`;
 
 const consultingItemsKo = [
   '관세심사(법인/기획/종합심사) 컨설팅',
@@ -478,10 +508,37 @@ const logisticsItemsEn = [
   'Logistics consulting',
 ];
 
-const servicePillarMeta = [
-  { index: '01', titleKo: 'Consulting Focus', titleEn: 'Consulting Focus' },
-  { index: '02', titleKo: 'Clearance Operations', titleEn: 'Clearance Operations' },
-  { index: '03', titleKo: 'Logistics Integration', titleEn: 'Logistics Integration' },
+const servicePillars = [
+  {
+    index: '01',
+    titleKo: '컨설팅서비스',
+    titleEn: 'Consulting Service',
+    bodyKo: '관세심사, 해외 법률자문, AEO, FTA, 환급, 무역 이슈까지 폭넓은 자문 항목을 제공합니다.',
+    bodyEn:
+      'We provide a broad advisory range covering customs audits, overseas legal support, AEO, FTA, refunds, and trade issues.',
+    itemsKo: consultingItemsKo,
+    itemsEn: consultingItemsEn,
+  },
+  {
+    index: '02',
+    titleKo: '통관서비스',
+    titleEn: 'Clearance Service',
+    bodyKo: '분석 자료, 리포트, 사후심사 시스템, 교육과 요건 확인 컨설팅까지 통관 운영 전반을 지원합니다.',
+    bodyEn:
+      'We support the full clearance operation through analytics, reporting, post-audit systems, education, and requirement verification consulting.',
+    itemsKo: clearanceItemsKo,
+    itemsEn: clearanceItemsEn,
+  },
+  {
+    index: '03',
+    titleKo: '물류서비스',
+    titleEn: 'Logistics Service',
+    bodyKo: '보세 화물 보관부터 국내 보세운송과 내륙 운송, 3PL과 물류 컨설팅까지 실무 실행을 이어갑니다.',
+    bodyEn:
+      'We extend execution from bonded storage to domestic bonded transport, inland delivery, 3PL, and logistics consulting.',
+    itemsKo: logisticsItemsKo,
+    itemsEn: logisticsItemsEn,
+  },
 ];
 
 const aboutGalleryItems = [
@@ -494,7 +551,7 @@ const aboutGalleryItems = [
     bodyEn: 'We have built trust and know-how through long-term partnership with clients.',
     src: '/subpages/about-coms1.jpg',
     span: 4,
-    height: 248,
+    height: 330,
   },
   {
     labelKo: 'Service',
@@ -505,7 +562,7 @@ const aboutGalleryItems = [
     bodyEn: 'We provide a connected total service system spanning clearance, logistics, and consulting.',
     src: '/subpages/about-coms2.jpg',
     span: 4,
-    height: 272,
+    height: 390,
   },
   {
     labelKo: 'Innovation',
@@ -516,228 +573,170 @@ const aboutGalleryItems = [
     bodyEn: 'With continuous IT investment and development, we stay ahead of fast-changing trade environments.',
     src: '/subpages/about-coms3.jpg',
     span: 4,
-    height: 248,
+    height: 330,
   },
 ];
 
 export function AboutPage() {
-  const { t } = useI18n();
+  const { t, tx } = useI18n();
   const aboutSubnav = sectionSubnav.about;
-  const findVisionValue = (title: string) => managementValues.find((item) => item.title === title);
-  const leftVisionValues = visionValueLeftOrder
-    .map((title) => findVisionValue(title))
-    .filter((item): item is NonNullable<(typeof managementValues)[number]> => Boolean(item));
-  const rightVisionValues = visionValueRightOrder
-    .map((title) => findVisionValue(title))
-    .filter((item): item is NonNullable<(typeof managementValues)[number]> => Boolean(item));
+  const { pathname } = useLocation();
+  const isActivePath = (to: string) => pathname === to;
 
   return (
     <>
-      <P.HeroSection>
-        <P.PageContainer>
-          <LandingSubnav
-            kicker={aboutSubnav.kicker}
-            kickerEn={aboutSubnav.kickerEn}
-            title={aboutSubnav.title}
-            titleEn={aboutSubnav.titleEn}
-            items={aboutSubnav.items}
-            compactBottom
-          />
-        </P.PageContainer>
+      <EditorialHero>
+        <AboutTop data-reveal>
+          <AboutTopTitleRow>
+            <AboutTopTitle>{t('회사소개', 'Overview')}</AboutTopTitle>
+            <AboutBreadcrumb>{t('홈 / 신한 소개 / 회사소개', 'Home / About Shinhan / Overview')}</AboutBreadcrumb>
+          </AboutTopTitleRow>
+          <AboutNav aria-label={t('회사소개 하위 메뉴', 'Overview sub navigation')}>
+            {aboutSubnav.items.map((item) => (
+              <AboutNavLink
+                key={item.to}
+                to={item.to}
+                data-active={isActivePath(item.to)}
+              >
+                {t(item.label, item.labelEn)}
+              </AboutNavLink>
+            ))}
+          </AboutNav>
+        </AboutTop>
 
-        <P.IntroBlock data-reveal>
-          <P.IntroPanel>
-            <P.Kicker>Trusted Partner</P.Kicker>
-            <P.Title>{t('신뢰할 수 있는 동반자', 'A Trusted Partner')}</P.Title>
-            <P.Lead>
+        <HeroStatement data-reveal>
+          <div>
+            <HeroEyebrow>Shinhan Customs Service</HeroEyebrow>
+            <HeroTitle>
               {t(
-                '신한관세법인은 1965년 창립 이래로 수출입 무역 업체의 든든한 동반자로서 고객사와 함께 해왔습니다.',
-                'Since its founding in 1965, Shinhan Customs Service has stood with clients as a trusted partner to import and export businesses.',
+                '고객의 무역 문제를 해결하고 가치를 더합니다.',
+                'We solve trade challenges and add lasting value.',
               )}
-            </P.Lead>
-            <P.Lead>
+            </HeroTitle>
+          </div>
+          <HeroLeadGrid>
+            <HeroLead>
+              {t(
+                '신한관세법인은 1965년 창립 이래 수출입 무역 업체의 든든한 동반자로서 고객과 함께 성장해왔습니다. 오랜 신뢰와 KNOW-HOW를 바탕으로 통관, 컨설팅, 물류를 연결한 전문 서비스를 제공합니다.',
+                'Since its founding in 1965, Shinhan Customs Service has grown with import and export companies as a trusted partner. Built on long-standing trust and know-how, we connect customs clearance, consulting, and logistics into one professional service.',
+              )}
+            </HeroLead>
+            <HeroFacts>
+              <HeroFact>
+                <HeroFactValue>1965</HeroFactValue>
+                <HeroFactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>60+</HeroFactValue>
+                <HeroFactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</HeroFactLabel>
+              </HeroFact>
+              <HeroFact>
+                <HeroFactValue>All-in-One</HeroFactValue>
+                <HeroFactLabel>{t('통관·컨설팅·물류 통합 지원', 'Clearance, consulting, and logistics')}</HeroFactLabel>
+              </HeroFact>
+            </HeroFacts>
+          </HeroLeadGrid>
+        </HeroStatement>
+      </EditorialHero>
+
+      <EditorialSection>
+        <IntroLayout data-reveal>
+          <div>
+            <SectionLabel>About Shinhan</SectionLabel>
+            <EditorialTitle>{t('신뢰와 실무 전문성으로 고객의 다음을 준비합니다.', 'Preparing what comes next with trust and practical expertise.')}</EditorialTitle>
+          </div>
+          <BodyStack>
+            <EditorialBody>
               {t(
                 '오랜 기간 동안 쌓아온 신뢰와 KNOW-HOW를 바탕으로 신한의 관세전문가들이 깊이 있는 관세 서비스를 여러분께 제공하고 있습니다.',
                 'Built on trust and KNOW-HOW accumulated over many years, Shinhan’s customs professionals provide clients with deep and reliable customs services.',
               )}
-            </P.Lead>
-            <P.Lead>
+            </EditorialBody>
+            <EditorialBody>
               {t(
-                '정기적인 고객사 교육을 통하여 신한관세법인만의 관세 및 무역에 관한 KNOW-HOW를 고객사와 공유하고자 노력하고 있습니다. 급변하는 세계의 무역환경에서 앞서 나갈 수 있도록 IT분야의 지속적인 투자 및 개발을 하여, 전통과 혁신이 융합된 최선의 서비스를 제공합니다.',
-                'Through regular client education, we share Shinhan Customs Service’s customs and trade KNOW-HOW with our clients. We continue investing in and developing IT capabilities so clients can stay ahead in a rapidly changing global trade environment, delivering the best service through a combination of tradition and innovation.',
+                '정기적인 고객사 교육을 통하여 신한관세법인만의 관세 및 무역에 관한 KNOW-HOW를 고객사와 공유하고자 노력하고 있습니다.',
+                'Through regular client education, we share Shinhan Customs Service’s customs and trade KNOW-HOW with our clients.',
               )}
-            </P.Lead>
-            <IdentityPoints>
-              <IdentityPoint>{t('1965년 창립', 'Founded in 1965')}</IdentityPoint>
-              <IdentityPoint>{t('신뢰와 KNOW-HOW', 'Trust and KNOW-HOW')}</IdentityPoint>
-              <IdentityPoint>{t('전통과 혁신의 융합', 'Tradition and Innovation')}</IdentityPoint>
-            </IdentityPoints>
-          </P.IntroPanel>
-          <IntroVisual image="/subpages/about-mt14.jpg" minHeight={390} aria-hidden="true" />
-        </P.IntroBlock>
-      </P.HeroSection>
+            </EditorialBody>
+            <EditorialBody>
+              {t(
+                '급변하는 세계의 무역환경에서 앞서 나갈 수 있도록 IT분야의 지속적인 투자 및 개발을 하여, 전통과 혁신이 융합된 최선의 서비스를 제공합니다.',
+                'We continue investing in and developing IT capabilities so clients can stay ahead in a rapidly changing global trade environment, delivering the best service through a combination of tradition and innovation.',
+              )}
+            </EditorialBody>
+            <Rule />
+          </BodyStack>
+        </IntroLayout>
+      </EditorialSection>
 
-      <AllInOneSection>
-        <AllInOneInner data-reveal>
-          <P.Kicker style={{ color: '#d7e8ff' }}>All-in-One Service</P.Kicker>
-          <AllInOneTitle>ALL-IN-ONE SERVICE</AllInOneTitle>
-          <AllInOneBody>
-            {t(
-              '통관, 환급, FTA, AEO, 심사, 물류, 행정쟁송과 관세 및 무역에 관한 ALL-IN ONE SERVICE를 제공합니다.',
-              'We provide ALL-IN ONE SERVICE across customs clearance, refunds, FTA, AEO, audits, logistics, administrative disputes, and customs and trade operations.',
-            )}
-          </AllInOneBody>
-        </AllInOneInner>
-      </AllInOneSection>
-
-      <ServiceSection>
+      <EditorialSection $tone="soft">
         <P.PageContainer data-reveal>
-          <P.Kicker>Service Areas</P.Kicker>
-          <P.SectionTitle>{t('서비스 3축', 'Three Service Pillars')}</P.SectionTitle>
-          <ServiceIntro>
+          <SectionLabel>All-in-One Service</SectionLabel>
+          <EditorialTitle>
             {t(
-              '원본 회사소개 페이지의 서비스 구성을 기준으로, 컨설팅서비스·통관서비스·물류서비스를 한 화면에서 바로 확인할 수 있도록 정리했습니다.',
-              'Based on the original company introduction page, the three service groups of consulting, clearance, and logistics are organized so they can be reviewed at a glance.',
+              '통관부터 물류, 자문까지 하나의 흐름으로 연결합니다.',
+              'From clearance to logistics and advisory, every step works as one flow.',
             )}
-          </ServiceIntro>
-          <ServiceColumns>
-            <ServiceCard>
-              <ServiceCardHead>
-                <ServiceTag>{t('Consulting', 'Consulting')}</ServiceTag>
-                <ServiceIndex>{servicePillarMeta[0].index}</ServiceIndex>
-              </ServiceCardHead>
-              <P.CardTitle>{t('컨설팅서비스', 'Consulting Service')}</P.CardTitle>
-              <ServiceDescription>
-                {t(
-                  '관세심사, 해외 법률자문, AEO, FTA, 환급, 무역 이슈까지 폭넓은 자문 항목을 제공합니다.',
-                  'We provide a broad advisory range covering customs audits, overseas legal support, AEO, FTA, refunds, and trade issues.',
-                )}
-              </ServiceDescription>
-              <ServiceList>
-                {consultingItemsKo.map((item, index) => (
-                  <li key={item}>{t(item, consultingItemsEn[index] ?? item)}</li>
-                ))}
-              </ServiceList>
-            </ServiceCard>
-            <ServiceCard>
-              <ServiceCardHead>
-                <ServiceTag>{t('Clearance', 'Clearance')}</ServiceTag>
-                <ServiceIndex>{servicePillarMeta[1].index}</ServiceIndex>
-              </ServiceCardHead>
-              <P.CardTitle>{t('통관서비스', 'Clearance Service')}</P.CardTitle>
-              <ServiceDescription>
-                {t(
-                  '분석 자료, 리포트, 사후심사 시스템, 교육과 요건 확인 컨설팅까지 통관 운영 전반을 지원합니다.',
-                  'We support the full clearance operation through analytics, reporting, post-audit systems, education, and requirement verification consulting.',
-                )}
-              </ServiceDescription>
-              <ServiceList>
-                {clearanceItemsKo.map((item, index) => (
-                  <li key={item}>{t(item, clearanceItemsEn[index] ?? item)}</li>
-                ))}
-              </ServiceList>
-            </ServiceCard>
-            <ServiceCard>
-              <ServiceCardHead>
-                <ServiceTag>{t('Logistics', 'Logistics')}</ServiceTag>
-                <ServiceIndex>{servicePillarMeta[2].index}</ServiceIndex>
-              </ServiceCardHead>
-              <P.CardTitle>{t('물류서비스', 'Logistics Service')}</P.CardTitle>
-              <ServiceDescription>
-                {t(
-                  '보세 화물 보관부터 국내 보세운송과 내륙 운송, 3PL과 물류 컨설팅까지 실무 실행을 이어갑니다.',
-                  'We extend execution from bonded storage to domestic bonded transport, inland delivery, 3PL, and logistics consulting.',
-                )}
-              </ServiceDescription>
-              <ServiceList>
-                {logisticsItemsKo.map((item, index) => (
-                  <li key={item}>{t(item, logisticsItemsEn[index] ?? item)}</li>
-                ))}
-              </ServiceList>
-            </ServiceCard>
-          </ServiceColumns>
-        </P.PageContainer>
-      </ServiceSection>
-
-      <P.PageSection tone="soft">
-        <P.PageContainer data-reveal>
-          <ImageStrip>
-            {aboutGalleryItems.map((item) => (
-              <StripCard key={item.titleKo} src={item.src} $span={item.span} $height={item.height}>
-                <StripContent>
-                  <StripLabel>{t(item.labelKo, item.labelEn)}</StripLabel>
-                  <StripTitle>{t(item.titleKo, item.titleEn)}</StripTitle>
-                  <StripText>{t(item.bodyKo, item.bodyEn)}</StripText>
-                </StripContent>
-              </StripCard>
+          </EditorialTitle>
+          <ServiceGrid>
+            {servicePillars.map((pillar) => (
+              <ServiceColumn key={pillar.index}>
+                <ServiceIndex>{pillar.index}</ServiceIndex>
+                <ServiceTitle>{t(pillar.titleKo, pillar.titleEn)}</ServiceTitle>
+                <ServiceDescription>{t(pillar.bodyKo, pillar.bodyEn)}</ServiceDescription>
+                <ServiceList>
+                  {pillar.itemsKo.map((item, index) => (
+                    <ServiceItem key={item}>{t(item, pillar.itemsEn[index] ?? item)}</ServiceItem>
+                  ))}
+                </ServiceList>
+              </ServiceColumn>
             ))}
-          </ImageStrip>
+          </ServiceGrid>
         </P.PageContainer>
-      </P.PageSection>
+      </EditorialSection>
 
-      <P.PageSection>
-        <P.PageContainer data-reveal>
-          <P.Kicker>Vision</P.Kicker>
-          <P.SectionTitle>VISION</P.SectionTitle>
-          <VisionPanel as={P.QuotePanel}>
-            <VisionLead>
+      <EditorialSection $tone="navy">
+        <NavyInner data-reveal>
+          <div>
+            <SectionLabel $light>Core Value</SectionLabel>
+            <EditorialTitle $light>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
+            <Rule $light />
+            <EditorialBody $light>
               {t(
-                '고객의 성공을 위한 차이를 만들어내겠다는 신한의 방향을 4대 가치와 하나의 경영이념으로 연결해 보여줍니다.',
-                'Shinhan’s promise to make the difference for clients’ success is expressed through four core values connected to one management philosophy.',
+                '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
+                'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
               )}
-            </VisionLead>
-            <VisionDiagram>
-              <VisionSide>
-                {leftVisionValues.map((value) => (
-                  <VisionCard key={value.title}>
-                    <VisionValueTitle>{value.title}</VisionValueTitle>
-                    <VisionValueKo>{t(visionValueLabels[value.title].ko, visionValueLabels[value.title].en)}</VisionValueKo>
-                    <VisionValueBody>{t(value.body, value.body)}</VisionValueBody>
-                  </VisionCard>
-                ))}
-              </VisionSide>
-              <VisionCore>
-                <VisionCoreLabel>{t('Management Principle', 'Management Principle')}</VisionCoreLabel>
-                <VisionCoreTitle>{t('경영이념', 'Management Philosophy')}</VisionCoreTitle>
-                <VisionCoreRule />
-                <VisionCoreBody>
-                  {t(
-                    '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
-                    'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
-                  )}
-                </VisionCoreBody>
-              </VisionCore>
-              <VisionSide>
-                {rightVisionValues.map((value) => (
-                  <VisionCard key={value.title}>
-                    <VisionValueTitle>{value.title}</VisionValueTitle>
-                    <VisionValueKo>{t(visionValueLabels[value.title].ko, visionValueLabels[value.title].en)}</VisionValueKo>
-                    <VisionValueBody>{t(value.body, value.body)}</VisionValueBody>
-                  </VisionCard>
-                ))}
-              </VisionSide>
-            </VisionDiagram>
-            <SloganBand>
-              <Slogan>We make the difference for your successful business!</Slogan>
-            </SloganBand>
-            <P.SectionDivider />
-            <VisionCopyGroup>
-              <VisionCopy>
-                {t(
-                  '최선의 서비스가 고객에게 최고의 서비스임을 약속드리며, 신한관세법인이 추구하는 최고의 가치는 고객의 지속적인 성공입니다.',
-                  'We promise that the best service creates the best outcomes for our clients, and the value we pursue is our clients’ sustained success.',
-                )}
-              </VisionCopy>
-              <VisionCopy>
-                {t(
-                  '신한의 모든 구성원은 Teamwork, Passion, Innovation, Integrity를 바탕으로 고객의 비즈니스 파트너가 되겠습니다.',
-                  'Every member of Shinhan stands with clients as a business partner through teamwork, passion, innovation, and integrity.',
-                )}
-              </VisionCopy>
-            </VisionCopyGroup>
-          </VisionPanel>
+            </EditorialBody>
+          </div>
+          <ValueList>
+            {managementValues.map((item) => (
+              <ValueRow key={item.title}>
+                <ValueTitle>{tx(item.title)}</ValueTitle>
+                <ValueBody>{tx(item.body)}</ValueBody>
+              </ValueRow>
+            ))}
+          </ValueList>
+        </NavyInner>
+      </EditorialSection>
+
+      <EditorialSection>
+        <GalleryGrid data-reveal>
+          {aboutGalleryItems.map((item) => (
+            <GalleryCard key={item.titleKo} src={item.src} $span={item.span} $height={item.height}>
+              <GalleryContent>
+                <GalleryLabel>{t(item.labelKo, item.labelEn)}</GalleryLabel>
+                <GalleryTitle>{t(item.titleKo, item.titleEn)}</GalleryTitle>
+                <GalleryText>{t(item.bodyKo, item.bodyEn)}</GalleryText>
+              </GalleryContent>
+            </GalleryCard>
+          ))}
+        </GalleryGrid>
+        <P.PageContainer data-reveal>
+          <SloganBand>
+            <Slogan>We make the difference for your successful business!</Slogan>
+          </SloganBand>
         </P.PageContainer>
-      </P.PageSection>
+      </EditorialSection>
     </>
   );
 }

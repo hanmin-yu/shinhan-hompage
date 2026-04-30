@@ -16,9 +16,8 @@ export const headerNavigation: NavItem[] = [
   {
     id: 'members',
     label: '구성원',
-    to: '/members',
+    to: '/members/executives',
     children: [
-      { id: 'members-org', label: '조직도', to: '/members/org' },
       { id: 'members-executives', label: '임원진', to: '/members/executives' },
       { id: 'members-experts', label: '분야별 전문가', to: '/members/experts' },
     ],
@@ -57,7 +56,6 @@ export const headerNavigation: NavItem[] = [
     label: '소식/자료',
     to: '/news',
     children: [
-      { id: 'news-report', label: '이슈리포트', to: '/news/issue-report' },
       { id: 'news-shinhan', label: '신한 NEWS', to: '/news/shinhan-news' },
       { id: 'news-seminar', label: '세미나', to: '/news/seminar' },
       { id: 'news-newsletter', label: '소식지', to: '/news/newsletter' },

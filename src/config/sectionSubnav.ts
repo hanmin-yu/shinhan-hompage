@@ -40,10 +40,9 @@ export const sectionSubnav = {
     kickerEn: 'Professionals',
     title: '구성원',
     titleEn: 'Professionals',
-    summary: '조직 구조와 분야별 전문가를 통해 신한의 실무 대응 체계를 확인할 수 있습니다.',
-    summaryEn: 'Review Shinhan’s execution system through its organization and field-specific experts.',
+    summary: '임원진과 분야별 전문가를 통해 신한의 실무 대응 체계를 확인할 수 있습니다.',
+    summaryEn: 'Review Shinhan’s execution system through executives and field-specific experts.',
     items: [
-      { label: '조직도', labelEn: 'Organization', to: '/members/org' },
       { label: '임원진', labelEn: 'Executives', to: '/members/executives' },
       { label: '분야별 전문가', labelEn: 'Experts', to: '/members/experts' },
     ],
@@ -96,10 +95,9 @@ export const sectionSubnav = {
     kickerEn: 'News & Resources',
     title: '소식/자료',
     titleEn: 'News & Resources',
-    summary: '이슈리포트와 주요 소식 리스트를 기관·채널별로 확인할 수 있습니다.',
-    summaryEn: 'Browse issue reports and key news lists by institution and channel.',
+    summary: '신한 NEWS, 세미나, 소식지를 채널별로 확인할 수 있습니다.',
+    summaryEn: 'Browse Shinhan NEWS, seminars, and newsletters by channel.',
     items: [
-      { label: '이슈리포트', labelEn: 'Issue Reports', to: '/news/issue-report' },
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news' },
       {
         label: '세미나',

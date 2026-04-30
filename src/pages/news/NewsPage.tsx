@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { useIssueReports } from '../../hooks/useIssueReports';
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -75,13 +74,11 @@ const ItemLink = styled(P.CardLink)`
 `;
 
 export function NewsPage() {
-  const { t, tx } = useI18n();
+  const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
-  const { reports } = useIssueReports();
   const { items: shinhanNewsItems } = useShinhanNewsRecords();
   const { items: newsletters } = useNewsletterRecords();
 
-  const issuePreview = reports.filter((item) => item.status !== 'placeholder').slice(0, 3);
   const shinhanNewsPreview = shinhanNewsItems.filter((item) => item.category !== 'seminar').slice(0, 3);
   const seminarPreview = shinhanNewsItems.filter((item) => item.category === 'seminar').slice(0, 3);
   const newsletterPreview = newsletters.slice(0, 3);
@@ -107,15 +104,14 @@ export function NewsPage() {
             <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
             <P.Lead>
               {t(
-                '이슈리포트, 신한 NEWS, 소식지를 한 화면에서 확인할 수 있도록 편집형 아카이브로 구성했습니다.',
-                'Issue reports, Shinhan NEWS, and newsletters are organized in one editorial view.',
+                '신한 NEWS, 세미나, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
+                'Shinhan NEWS, seminars, and newsletters are organized in one quick editorial view.',
               )}
             </P.Lead>
             <IntroList>
-              <li>{t('이슈리포트: 기관 출처 기반 핵심 이슈 정리', 'Issue Reports: Source-based issue briefs')}</li>
-              <li>{t('신한 NEWS: 공지와 FLASH 중심 아카이브', 'Shinhan NEWS: Notice and FLASH archive')}</li>
-              <li>{t('세미나: 교육·세미나 카드형 아카이브', 'Seminar: Training and seminar card archive')}</li>
-              <li>{t('소식지: 월별 국문/영문 발행물 열람·다운로드', 'Newsletter: Monthly KR/EN publication archive')}</li>
+              <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
+              <li>{t('세미나: 최신 교육·세미나 3건', 'Seminar: 3 latest seminar updates')}</li>
+              <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
             </IntroList>
           </P.IntroPanel>
           <P.IntroVisualPanel image="/subpages/about-coms2.jpg" minHeight={340} aria-hidden="true" />
@@ -124,23 +120,6 @@ export function NewsPage() {
 
       <P.PageSection tone="soft">
         <P.PageContainer data-reveal>
-          <EditorialSection>
-            <P.Kicker>Issue Reports</P.Kicker>
-            <P.SectionTitle>{t('이슈리포트', 'Issue Reports')}</P.SectionTitle>
-            <EditorialList>
-              {issuePreview.map((item) => (
-                <EditorialItem key={item.id}>
-                  <ItemDate>{item.publishedAt}</ItemDate>
-                  <ItemMeta>
-                    <ItemTitle>{tx(item.title)}</ItemTitle>
-                    <ItemSummary>{tx(item.summary)}</ItemSummary>
-                  </ItemMeta>
-                  <ItemLink to="/news/issue-report">{t('목록 보기', 'View')}</ItemLink>
-                </EditorialItem>
-              ))}
-            </EditorialList>
-          </EditorialSection>
-
           <EditorialSection>
             <P.Kicker>Shinhan NEWS</P.Kicker>
             <P.SectionTitle>{t('신한 NEWS', 'Shinhan NEWS')}</P.SectionTitle>

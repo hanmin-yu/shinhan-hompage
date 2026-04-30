@@ -1,9 +1,8 @@
 import { HeroSection } from '../components/home/sections/HeroSection';
 import { IssueReportSection } from '../components/home/sections/IssueReportSection';
-import { ItSection } from '../components/home/sections/ItSection';
 import { OfficesSection } from '../components/home/sections/OfficesSection';
 import { PracticeSection } from '../components/home/sections/PracticeSection';
-import { NewsSection } from '../components/home/sections/NewsSection';
+import { ShinhanUpdatesSection } from '../components/home/sections/ShinhanUpdatesSection';
 
 export function HomePage() {
   return (
@@ -11,8 +10,7 @@ export function HomePage() {
       <HeroSection />
       <PracticeSection />
       <IssueReportSection />
-      <ItSection />
-      <NewsSection />
+      <ShinhanUpdatesSection />
       <OfficesSection />
     </>
   );

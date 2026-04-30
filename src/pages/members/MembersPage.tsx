@@ -117,7 +117,7 @@ const ExecutiveCard = styled.article`
 
 const PortraitFrame = styled.div`
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   background: linear-gradient(180deg, #f2f5f9, #e8edf4);
   overflow: hidden;
 `;

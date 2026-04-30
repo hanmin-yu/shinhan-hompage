@@ -360,7 +360,6 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
 ];
 
 export const newsHubCards: LinkCard[] = [
-  { title: '이슈 리포트', body: '외부기관 이슈를 기반으로 관세·통상 핵심 쟁점을 정리한 리포트', href: '/news/issue-report' },
   { title: '신한 NEWS', body: '공지와 FLASH를 중심으로 정리한 내부 활동·인사이트 아카이브', href: '/news/shinhan-news' },
   { title: '세미나', body: '교육·세미나 일정을 카드형으로 확인하는 전용 아카이브', href: '/news/seminar' },
   { title: '소식지', body: '월별 주요 정책 변화와 실무 체크포인트 요약', href: '/news/newsletter' },
@@ -868,7 +867,7 @@ const usFdaContacts: ServiceContactPoint[] = [
   {
     name: '김다혜',
     role: '과장 / KORD Partners US',
-    phone: '010-2128-7393',
+    phone: '010-3449-7731',
     email: 'dana@kordpartners.com',
   },
 ];
@@ -1501,8 +1500,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
       },
       {
         name: '이미경',
-        phone: '070-4343-7742',
-        email: 'sjcho@shcs.kr',
+        phone: '070-4397-2051',
+        email: 'mklee@customsservice.co.kr',
         role: '국제물류, 창고, 3PL, 내륙운송',
       },
     ],

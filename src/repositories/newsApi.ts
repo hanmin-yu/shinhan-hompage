@@ -3,7 +3,7 @@ import type { NewsletterRecord, ShinhanNewsRecord } from '../types/site';
 import {
   getNewsletterRecord as getStaticNewsletterRecord,
   getNewsletterRecords as getStaticNewsletterRecords,
-  getShinhanNewsRecord as getStaticShinhanNewsRecord,
+  getShinhanNewsRecordWithDetail as getStaticShinhanNewsRecordWithDetail,
   getShinhanNewsRecords as getStaticShinhanNewsRecords,
 } from './newsRepository';
 import { sortShinhanNewsRecords } from '../utils/shinhanNews';
@@ -12,10 +12,10 @@ type NewsListResponse<T> = {
   items: T[];
 };
 
-const API_TIMEOUT_MS = 3500;
+const API_TIMEOUT_MS = 800;
 
 function isEnabledMode() {
-  return resolveNewsAdminMode() === 'enabled';
+  return import.meta.env.VITE_NEWS_ADMIN_MODE === 'enabled' && resolveNewsAdminMode() === 'enabled';
 }
 
 function mergeRecordsById<T extends { id: string }>(baseItems: T[], overrideItems: T[]) {
@@ -65,13 +65,13 @@ export async function loadShinhanNewsRecords() {
 
 export async function loadShinhanNewsRecord(newsId: string) {
   if (!isEnabledMode()) {
-    return getStaticShinhanNewsRecord(newsId);
+    return getStaticShinhanNewsRecordWithDetail(newsId);
   }
 
   try {
     return await fetchJson<ShinhanNewsRecord>(`/api/news/shinhan-news/${newsId}`);
   } catch {
-    return getStaticShinhanNewsRecord(newsId);
+    return getStaticShinhanNewsRecordWithDetail(newsId);
   }
 }
 

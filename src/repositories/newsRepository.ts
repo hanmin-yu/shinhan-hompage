@@ -1,22 +1,21 @@
 import { newsletterItems, shinhanNewsItems } from '../data/newsStaticSeeds';
-import { shinhanNewsDetails } from '../data/shinhanNewsDetails';
-import type { NewsletterRecord, ShinhanNewsRecord } from '../types/site';
+import type { NewsletterRecord, ShinhanNewsDetail, ShinhanNewsRecord } from '../types/site';
 import { sortShinhanNewsRecords } from '../utils/shinhanNews';
 
-function buildShinhanNewsRecords(): ShinhanNewsRecord[] {
-  return shinhanNewsItems.map((item) => {
-    const detail = shinhanNewsDetails[item.id];
+function toShinhanNewsRecord(item: (typeof shinhanNewsItems)[number], detail?: ShinhanNewsDetail): ShinhanNewsRecord {
+  return {
+    ...item,
+    titleEn: item.title,
+    summaryEn: item.summary,
+    author: detail?.author,
+    bodyHtml: detail?.bodyHtml,
+    status: 'published',
+    updatedAt: item.publishedAt,
+  };
+}
 
-    return {
-      ...item,
-      titleEn: item.title,
-      summaryEn: item.summary,
-      author: detail?.author,
-      bodyHtml: detail?.bodyHtml,
-      status: 'published',
-      updatedAt: item.publishedAt,
-    };
-  });
+function buildShinhanNewsRecords(): ShinhanNewsRecord[] {
+  return shinhanNewsItems.map((item) => toShinhanNewsRecord(item));
 }
 
 function buildNewsletterRecords(): NewsletterRecord[] {
@@ -43,7 +42,18 @@ export function getShinhanNewsRecords() {
 }
 
 export function getShinhanNewsRecord(newsId: string) {
-  return shinhanNewsRecords.find((item) => item.id === newsId) ?? null;
+  return shinhanNewsItems.find((item) => item.id === newsId) ?? null;
+}
+
+export async function getShinhanNewsRecordWithDetail(newsId: string) {
+  const item = getShinhanNewsRecord(newsId);
+
+  if (!item) {
+    return null;
+  }
+
+  const { shinhanNewsDetails } = await import('../data/shinhanNewsDetails');
+  return toShinhanNewsRecord(item, shinhanNewsDetails[newsId]);
 }
 
 export function getNewsletterRecords() {

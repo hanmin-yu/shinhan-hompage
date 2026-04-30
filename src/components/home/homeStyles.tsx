@@ -429,10 +429,15 @@ export const MenuArea = styled.div`
 export const Brand = styled(Link)`
   display: inline-flex;
   align-items: center;
+  gap: 16px;
   justify-self: start;
   flex: 0 0 auto;
   width: fit-content;
   min-width: 0;
+
+  @media (max-width: 520px) {
+    gap: 10px;
+  }
 `;
 
 export const HeaderBrandImage = styled.img`
@@ -1088,11 +1093,11 @@ export const HeaderUtilityLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
-  padding: 0 10px;
+  min-height: 38px;
+  padding: 0 12px;
   color: ${palette.textBody};
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
   word-break: keep-all;
@@ -1118,8 +1123,8 @@ export const HeaderUtilityIconLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   color: ${palette.textBody};
   transition:
     color 0.18s ease,
@@ -1131,8 +1136,8 @@ export const HeaderUtilityIconLink = styled(Link)`
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     display: block;
     fill: none;
     stroke: currentColor;
@@ -1146,13 +1151,13 @@ export const HeaderUtilityButton = styled.button`
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 26px;
-  padding: 0 10px;
+  min-height: 38px;
+  padding: 0 12px;
   border: 0;
   background: transparent;
   color: ${palette.textBody};
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.96rem;
+  font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
   word-break: keep-all;

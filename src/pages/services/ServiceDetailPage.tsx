@@ -74,10 +74,6 @@ const ChecklistGrid = styled(P.Grid)`
   margin-top: 14px;
 `;
 
-const ResourceGrid = styled(P.Grid)`
-  margin-top: 8px;
-`;
-
 const DocumentStack = styled.div`
   display: grid;
   gap: 18px;
@@ -336,54 +332,39 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
       <P.PageSection tone="soft">
         <P.PageContainer data-reveal>
-          <P.SplitGrid>
-            <P.QuotePanel>
-              <P.Kicker>{hasContactPoints ? t('연락처', 'Contact') : t('관련 전문가', 'Related Experts')}</P.Kicker>
-              <P.SectionTitle>{hasContactPoints ? t('Contact Point', 'Contact Point') : t('전문가 연계', 'Expert Connection')}</P.SectionTitle>
-              <P.SectionDivider />
-              {hasContactPoints ? (
-                <ContactGrid columns={2}>
-                  {content.contactPoints?.map((contact) => (
-                    <P.Card key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
-                      <P.CardTitle>{tx(contact.name)}</P.CardTitle>
-                      {contact.role ? <P.CardText>{tx(contact.role)}</P.CardText> : null}
-                      {contact.phone ? (
-                        <ContactMeta>
-                          <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
-                          <ContactValue href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}>{contact.phone}</ContactValue>
-                        </ContactMeta>
-                      ) : null}
-                      {contact.email ? (
-                        <ContactMeta>
-                          <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
-                          <ContactValue href={`mailto:${contact.email}`}>{contact.email}</ContactValue>
-                        </ContactMeta>
-                      ) : null}
-                    </P.Card>
-                  ))}
-                </ContactGrid>
-              ) : (
-                <P.BulletList>
-                  {content.relatedExpertNames.map((name) => (
-                    <li key={name}>{tx(name)}</li>
-                  ))}
-                </P.BulletList>
-              )}
-            </P.QuotePanel>
-            <P.StatementBlock>
-              <P.Kicker>{t('관련 자료', 'Related Resources')}</P.Kicker>
-              <P.SectionTitle>{t('참고 자료', 'Related Resources')}</P.SectionTitle>
-              <P.SectionDivider />
-              <ResourceGrid columns={1}>
-                {content.relatedResources.map((resource) => (
-                  <P.Card key={resource.label}>
-                    <P.CardTitle>{tx(resource.label)}</P.CardTitle>
-                    <P.CardLink to={resource.href}>{t('자료 보기', 'View Resource')}</P.CardLink>
+          <P.QuotePanel>
+            <P.Kicker>{hasContactPoints ? t('연락처', 'Contact') : t('관련 전문가', 'Related Experts')}</P.Kicker>
+            <P.SectionTitle>{hasContactPoints ? t('Contact Point', 'Contact Point') : t('전문가 연계', 'Expert Connection')}</P.SectionTitle>
+            <P.SectionDivider />
+            {hasContactPoints ? (
+              <ContactGrid columns={2}>
+                {content.contactPoints?.map((contact) => (
+                  <P.Card key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
+                    <P.CardTitle>{tx(contact.name)}</P.CardTitle>
+                    {contact.role ? <P.CardText>{tx(contact.role)}</P.CardText> : null}
+                    {contact.phone ? (
+                      <ContactMeta>
+                        <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
+                        <ContactValue href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}>{contact.phone}</ContactValue>
+                      </ContactMeta>
+                    ) : null}
+                    {contact.email ? (
+                      <ContactMeta>
+                        <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
+                        <ContactValue href={`mailto:${contact.email}`}>{contact.email}</ContactValue>
+                      </ContactMeta>
+                    ) : null}
                   </P.Card>
                 ))}
-              </ResourceGrid>
-            </P.StatementBlock>
-          </P.SplitGrid>
+              </ContactGrid>
+            ) : (
+              <P.BulletList>
+                {content.relatedExpertNames.map((name) => (
+                  <li key={name}>{tx(name)}</li>
+                ))}
+              </P.BulletList>
+            )}
+          </P.QuotePanel>
         </P.PageContainer>
       </P.PageSection>
     </>

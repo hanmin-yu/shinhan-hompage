@@ -1,416 +1,373 @@
-import { useMemo, useState } from 'react';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import koreaMapAsset from '../../../assets/map-korea.svg';
-import vietnamMapAsset from '../../../assets/map-vietnam.svg';
 import { officeBranches } from '../../../data/home';
 import { useI18n } from '../../../i18n/useI18n';
-import { getGoogleMapUrl, getNaverMapUrl } from '../../../utils/mapLinks';
 import * as S from '../homeStyles';
 
-const PRIMARY_OFFICE_IDS = ['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi'] as const;
-const NETWORK_OFFICE_IDS = ['invista', 'vietnam', 'kord'] as const;
+const officeFallbackImages: Record<string, string> = {
+  seoul: '/hero/homepage/office-blue-sky.jpg',
+  airport: '/hero/homepage/cargo-plane-sky.jpg',
+  incheon: '/hero/incheon-airport.jpg',
+  busan: '/hero/busan-port.jpg',
+  cheongju: '/hero/homepage/office-tower-clear-sky.jpg',
+  gumi: '/hero/auto-parts.jpg',
+  invista: '/hero/practice-aeo-warehouse.jpg',
+  vietnam: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+};
 
 const Section = styled.section`
   position: relative;
-  padding: 88px 0 92px;
+  min-height: 780px;
+  padding: 104px 0 112px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.13), transparent 22%),
-    radial-gradient(circle at 86% 18%, rgba(23, 159, 150, 0.14), transparent 18%),
-    linear-gradient(180deg, #0b2b59 0%, #174d9a 28%, #e5f1ff 76%, #fbfdff 100%);
-  border-top: 0;
+    linear-gradient(128deg, rgba(239, 247, 253, 0.88) 0%, rgba(255, 255, 255, 0.74) 46%, rgba(233, 246, 244, 0.68) 100%),
+    linear-gradient(180deg, #fbfdff 0%, #f5f8fb 100%);
+  border-top: 1px solid rgba(22, 54, 96, 0.08);
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: -140px;
+    top: -180px;
+    width: min(42vw, 620px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(44, 157, 198, 0.14), rgba(44, 157, 198, 0.04) 42%, transparent 70%);
+  }
+
+  &::after {
+    content: none;
+  }
+
+  @keyframes officePulse {
+    0% {
+      opacity: 0.72;
+      transform: scale(0.44);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.9);
+    }
+  }
+
+  @media (max-width: 860px) {
+    min-height: auto;
+    padding: 82px 0;
+
+    &::before {
+      width: 80vw;
+      right: -46vw;
+      top: -80px;
+    }
+
+  }
+`;
+
+const MapLabel = styled.span`
+  position: absolute;
+  right: clamp(18px, 5vw, 76px);
+  bottom: clamp(24px, 6vw, 78px);
+  z-index: 0;
+  color: rgba(15, 43, 89, 0.055);
+  font-size: clamp(4rem, 9vw, 9.2rem);
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  white-space: nowrap;
+
+  @media (max-width: 860px) {
+    display: none;
+  }
 `;
 
 const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.7fr) minmax(340px, 0.78fr) minmax(420px, 0.9fr);
+  gap: clamp(28px, 4vw, 58px);
+  align-items: center;
+
+  @media (max-width: 1180px) {
+    grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+    align-items: start;
+  }
+
+  @media (max-width: 780px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const Head = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 24px;
+const Copy = styled.div`
+  display: grid;
+  gap: 26px;
+  min-height: 420px;
+  align-content: center;
+
+  @media (max-width: 1080px) {
+    min-height: 0;
+  }
 `;
 
-const Title = styled.h2`
-  margin: 10px 0 0;
-  color: #ffffff;
-  font-size: clamp(2rem, 3.8vw, 2.9rem);
-  font-weight: 800;
-  line-height: 1.14;
-  letter-spacing: -0.03em;
-  text-shadow: 0 16px 38px rgba(3, 15, 34, 0.34);
+const MapStage = styled.div`
+  position: relative;
+  min-height: 640px;
+  display: grid;
+  place-items: center;
+
+  @media (max-width: 1180px) {
+    min-height: 560px;
+  }
+
+  @media (max-width: 780px) {
+    min-height: 500px;
+  }
+`;
+
+const MapPanel = styled.div`
+  position: relative;
+  width: min(118%, 680px);
+  aspect-ratio: 0.86;
+`;
+
+const KoreaMapImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.42;
+  filter: grayscale(1) contrast(1.42);
+`;
+
+const MapHalo = styled.span`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(70, 181, 209, 0.14), rgba(70, 181, 209, 0.035) 45%, transparent 70%);
+  transform: translate(-50%, -50%);
+`;
+
+const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
+  position: absolute;
+  left: ${({ x }) => x}%;
+  top: ${({ y }) => y}%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: ${({ accent }) => accent};
+  box-shadow: 0 0 0 6px rgba(70, 181, 209, 0.16), 0 14px 28px rgba(15, 43, 89, 0.16);
+  transform: translate(-50%, -50%);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px solid rgba(70, 181, 209, 0.36);
+    animation: officePulse 2.8s ease-out infinite;
+  }
+
+  &::after {
+    animation-delay: 1.4s;
+  }
 `;
 
 const Label = styled.span`
-  color: rgba(235, 246, 255, 0.94);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-`;
-
-const Intro = styled.p`
-  max-width: 720px;
-  margin: 14px 0 0;
-  color: rgba(235, 246, 255, 0.86);
-  font-size: 0.95rem;
-  line-height: 1.76;
-`;
-
-const TabGroups = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  gap: 16px 24px;
-
-  @media (max-width: 1120px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const TabGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-`;
-
-const TabGroupLabel = styled.span`
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: rgba(235, 246, 255, 0.94);
-  font-size: 0.92rem;
+  gap: 12px;
+  color: #1c5aa9;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 
   &::before {
     content: '';
-    width: 22px;
+    width: 36px;
     height: 1px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(23, 159, 150, 0.58));
+    background: rgba(33, 101, 193, 0.48);
   }
 `;
 
-const OfficeTabs = styled.div`
+const CountLine = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const OfficeTab = styled.button<{ $active: boolean }>`
-  min-height: 40px;
-  padding: 0 16px;
-  border-radius: 7px;
-  border: 1px solid ${({ $active }) => ($active ? 'rgba(225, 238, 255, 0.46)' : 'rgba(225, 238, 255, 0.24)')};
-  background: ${({ $active }) =>
-    $active
-      ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 243, 255, 0.9))'
-      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(220, 237, 255, 0.32))'};
-  color: ${({ $active }) => ($active ? S.palette.blueInk : 'rgba(255, 255, 255, 0.9)')};
-  font-size: 0.92rem;
-  font-weight: ${({ $active }) => ($active ? 800 : 700)};
-  box-shadow: ${({ $active }) =>
-    $active ? '0 10px 18px rgba(16, 53, 114, 0.12)' : '0 8px 18px rgba(3, 15, 34, 0.12)'};
-  text-shadow: ${({ $active }) => ($active ? 'none' : '0 1px 8px rgba(3, 15, 34, 0.28)')};
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    color: ${({ $active }) => ($active ? S.palette.blueInk : '#ffffff')};
-    border-color: rgba(255, 255, 255, 0.52);
-    background: ${({ $active }) =>
-      $active
-        ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 243, 255, 0.9))'
-        : 'linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(220, 237, 255, 0.42))'};
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
-  gap: 24px;
-
-  @media (max-width: 1080px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const InfoCard = styled.article`
-  display: flex;
-  flex-direction: column;
+  align-items: flex-end;
   gap: 22px;
-  padding: 28px;
-  border-radius: 12px;
-  border: 1px solid rgba(225, 238, 255, 0.34);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(231, 243, 255, 0.9), rgba(211, 235, 248, 0.82));
-  box-shadow: 0 18px 36px rgba(3, 15, 34, 0.16);
-  position: relative;
-  overflow: hidden;
+  color: #2c2e33;
 
-  &::before {
+  @media (max-width: 700px) {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+`;
+
+const Count = styled.strong`
+  color: #2f3136;
+  font-size: clamp(5.8rem, 13vw, 10rem);
+  font-weight: 800;
+  line-height: 0.84;
+  letter-spacing: 0;
+`;
+
+const CountLabel = styled.span`
+  position: relative;
+  display: inline-flex;
+  padding-bottom: 0.22em;
+  color: #30343a;
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  font-weight: 500;
+  line-height: 0.98;
+  white-space: nowrap;
+
+  &::after {
     content: '';
     position: absolute;
-    inset: 0 auto auto 0;
-    width: 96px;
-    height: 2px;
-    background: linear-gradient(90deg, #1d5aa9, rgba(23, 159, 150, 0.34), rgba(29, 90, 169, 0));
+    left: 0;
+    right: -8px;
+    bottom: 0;
+    height: 10px;
+    background: rgba(70, 181, 209, 0.64);
+    z-index: -1;
   }
 `;
 
-const Badge = styled.span`
+const Summary = styled.p`
+  max-width: 620px;
+  margin: 0;
+  color: #52697f;
+  font-size: 1rem;
+  line-height: 1.78;
+`;
+
+const ViewAll = styled(Link)`
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  min-height: 24px;
-  padding: 0;
-  color: ${S.palette.textMuted};
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
-const OfficeName = styled.h3`
-  margin: 0;
-  color: ${S.palette.textPrimary};
-  font-size: clamp(1.7rem, 2vw, 2.1rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-`;
-
-const OfficeSummary = styled.p`
-  margin: 0;
-  color: ${S.palette.textBody};
-  font-size: 0.98rem;
-  line-height: 1.76;
-`;
-
-const FactGrid = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const Fact = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 18px 18px 16px;
-  border-radius: 10px;
-  border: 1px solid ${S.palette.lineSoft};
-  background: linear-gradient(180deg, #fcfdfe 0%, #f5f9fd 100%);
-`;
-
-const FactIconWrap = styled.div`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 8px 16px rgba(20, 55, 101, 0.06);
-  flex: 0 0 auto;
-`;
-
-const FactContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-`;
-
-const FactLabel = styled.strong`
-  display: block;
-  color: ${S.palette.textBody};
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-`;
-
-const FactValue = styled.p`
-  margin: 8px 0 0;
-  color: ${S.palette.textBody};
-  font-size: 0.98rem;
-  line-height: 1.62;
-`;
-
-const ActionRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ActionButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 16px;
-  border-radius: 10px;
-  border: 1px solid ${S.palette.line};
-  color: ${S.palette.blueDeep};
+  color: #164f99;
   font-size: 0.92rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
-  background: rgba(255, 255, 255, 0.94);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 20px rgba(20, 55, 101, 0.1);
-  }
-`;
-
-const PrimaryAction = styled(ActionButton)`
-  border-color: rgba(23, 159, 150, 0.18);
-  background: linear-gradient(180deg, #f4f9fd 0%, #edf6fb 100%);
-  color: ${S.palette.blueInk};
-  box-shadow: 0 10px 18px rgba(20, 55, 101, 0.08);
-`;
-
-const SecondaryAction = styled(ActionButton)`
-  color: #ffffff;
-  background:
-    linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 28%),
-    linear-gradient(180deg, #1d5aa9 0%, #174987 100%);
-  border-color: transparent;
-  box-shadow: 0 14px 24px rgba(23, 77, 152, 0.18);
-`;
-
-const UtilityLinks = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: -2px;
-`;
-
-const UtilityLink = styled.a`
-  color: ${S.palette.textMuted};
-  font-size: 0.8rem;
-  font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(104, 122, 147, 0.32);
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease;
 
-  &:hover {
-    color: ${S.palette.blueDeep};
-    border-color: rgba(37, 75, 128, 0.46);
+  &::after {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: currentColor;
   }
 `;
 
-const FactIcon = ({ kind }: { kind: 'pin' | 'phone' }) => {
-  if (kind === 'pin') {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M12 20C15.5 15.9 18 13 18 9.5C18 6.46 15.54 4 12.5 4C9.46 4 7 6.46 7 9.5C7 13 9.5 15.9 12 20Z"
-          fill="#1C5AB0"
-        />
-        <circle cx="12.5" cy="9.5" r="2.4" fill="white" />
-      </svg>
-    );
+const Tiles = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 86px;
+  gap: 18px;
+
+  @media (max-width: 1180px) {
+    grid-column: 1 / -1;
+    grid-auto-rows: 100px;
   }
 
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M7.4 5.5C7.8 5.1 8.4 5 8.9 5.2L10.9 6.1C11.5 6.3 11.8 7 11.7 7.6L11.3 9.5C11.2 9.9 11.3 10.3 11.6 10.6L13.4 12.4C13.7 12.7 14.1 12.8 14.5 12.7L16.4 12.3C17 12.2 17.7 12.5 17.9 13.1L18.8 15.1C19 15.6 18.9 16.2 18.5 16.6L17.4 17.7C16.8 18.3 15.9 18.5 15.1 18.2C12.7 17.3 10.5 15.8 8.7 14C6.9 12.2 5.4 10 4.5 7.6C4.2 6.8 4.4 5.9 5 5.3L7.4 5.5Z"
-        fill="#1C5AB0"
-      />
-    </svg>
-  );
-};
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 180px;
+    gap: 12px;
+  }
+`;
 
-const ActionIcon = ({ kind }: { kind: 'phone' | 'pin' | 'mail' }) => {
-  if (kind === 'mail') {
-    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 7.5L12 13.5L20 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="4" y="6" width="16" height="12" rx="2.5" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    );
+const OfficeTile = styled(Link)<{ index: number }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 0;
+  grid-column: ${({ index }) => {
+    const spans = ['1 / span 4', '5 / span 4', '9 / span 4', '2 / span 4', '6 / span 4', '10 / span 3', '4 / span 4', '8 / span 4'];
+    return spans[index % spans.length];
+  }};
+  grid-row: ${({ index }) => {
+    const rows = ['1 / span 2', '2 / span 2', '1 / span 2', '4 / span 2', '4 / span 2', '3 / span 2', '6 / span 2', '6 / span 2'];
+    return rows[index % rows.length];
+  }};
+  padding: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  background: #d9e3ed;
+  box-shadow: 0 18px 34px rgba(15, 43, 89, 0.12);
+  overflow: hidden;
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    filter 0.24s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 42px rgba(15, 43, 89, 0.16);
+    filter: saturate(1.05);
   }
 
-  if (kind === 'pin') {
-    return (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M12 20C15.5 15.9 18 13 18 9.5C18 6.46 15.54 4 12.5 4C9.46 4 7 6.46 7 9.5C7 13 9.5 15.9 12 20Z"
-          fill="currentColor"
-        />
-        <circle cx="12.5" cy="9.5" r="2.4" fill="white" />
-      </svg>
-    );
+  @media (max-width: 700px) {
+    grid-column: auto;
+    grid-row: auto;
   }
+`;
 
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M7.4 5.5C7.8 5.1 8.4 5 8.9 5.2L10.9 6.1C11.5 6.3 11.8 7 11.7 7.6L11.3 9.5C11.2 9.9 11.3 10.3 11.6 10.6L13.4 12.4C13.7 12.7 14.1 12.8 14.5 12.7L16.4 12.3C17 12.2 17.7 12.5 17.9 13.1L18.8 15.1C19 15.6 18.9 16.2 18.5 16.6L17.4 17.7C16.8 18.3 15.9 18.5 15.1 18.2C12.7 17.3 10.5 15.8 8.7 14C6.9 12.2 5.4 10 4.5 7.6C4.2 6.8 4.4 5.9 5 5.3L7.4 5.5Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-};
+const OfficeImage = styled.img<{ position?: string }>`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: ${({ position }) => position ?? 'center'};
+  transition:
+    transform 0.32s ease,
+    filter 0.32s ease;
 
-function getOfficeGroup(officeId: string) {
-  if (PRIMARY_OFFICE_IDS.includes(officeId as (typeof PRIMARY_OFFICE_IDS)[number])) return 'primary';
-  if (NETWORK_OFFICE_IDS.includes(officeId as (typeof NETWORK_OFFICE_IDS)[number])) return 'network';
-  return 'primary';
-}
+  ${OfficeTile}:hover & {
+    transform: scale(1.04);
+    filter: saturate(1.05);
+  }
+`;
 
-function getDialNumber(tel: string) {
-  const [first] = tel.split('~');
-  return first.replace(/[^\d+]/g, '');
-}
+const OfficeShade = styled.span`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 20, 42, 0.02), rgba(3, 20, 42, 0.64));
+`;
+
+const OfficeRegion = styled.span`
+  position: relative;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.34);
+`;
+
+const OfficeName = styled.strong`
+  position: relative;
+  margin-top: 8px;
+  color: #ffffff;
+  font-size: clamp(1.02rem, 1.5vw, 1.4rem);
+  font-weight: 900;
+  line-height: 1.18;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.34);
+`;
 
 export function OfficesSection() {
   const { t } = useI18n();
-  const [selectedOfficeId, setSelectedOfficeId] = useState('incheon');
-  const selectedOffice = officeBranches.find((office) => office.id === selectedOfficeId) ?? officeBranches[0];
-  const mapQuery = t(selectedOffice.mapQuery ?? selectedOffice.label, selectedOffice.mapQueryEn ?? selectedOffice.labelEn);
-
-  const primaryOffices = officeBranches.filter((office) => getOfficeGroup(office.id) === 'primary');
-  const networkOffices = officeBranches.filter((office) => getOfficeGroup(office.id) === 'network');
-  const koreaMapOffices = officeBranches.filter((office) => office.id !== 'vietnam');
-  const vietnamOffice = officeBranches.find((office) => office.id === 'vietnam');
-
-  const phoneHref = useMemo(() => `tel:${getDialNumber(selectedOffice.tel)}`, [selectedOffice.tel]);
-  const googleMapUrl = useMemo(
-    () => getGoogleMapUrl(selectedOffice.address, mapQuery),
-    [mapQuery, selectedOffice.address],
-  );
-  const naverMapUrl = useMemo(
-    () => getNaverMapUrl(selectedOffice.address, mapQuery),
-    [mapQuery, selectedOffice.address],
-  );
-  const directionsUrl = selectedOffice.id === 'vietnam' ? googleMapUrl : naverMapUrl;
-
-  if (!selectedOffice) return null;
+  const visibleOffices = officeBranches.filter((office) => office.id !== 'kord').slice(0, 8);
+  const domesticOffices = visibleOffices.filter((office) => office.id !== 'vietnam');
 
   return (
     <>
@@ -418,200 +375,62 @@ export function OfficesSection() {
       <S.SectionAnchor id="contact" />
 
       <Section>
+        <MapLabel aria-hidden="true">NETWORK</MapLabel>
         <Inner data-reveal>
-          <Head>
-            <div>
-              <Label>Offices</Label>
-              <Title>{t('사무소', 'Offices')}</Title>
-              <Intro>
-                {t(
-                  '국내 주요 지사와 해외 네트워크를 통해 고객 실무에 가까운 관세 지원 체계를 운영합니다.',
-                  'Our domestic offices and overseas network provide customs support close to where client operations happen.',
-                )}
-              </Intro>
-            </div>
-          </Head>
+          <Copy>
+            <Label>Offices</Label>
+            <CountLine aria-label={t('8개 사무소', '8 offices')}>
+              <Count>{visibleOffices.length}</Count>
+              <CountLabel>Offices</CountLabel>
+            </CountLine>
+            <Summary>
+              {t(
+                '국내 주요 지사와 베트남 현지 법인을 연결해 고객사의 통관과 물류 현장 가까이에서 대응합니다.',
+                'Our domestic branches and Vietnam office support customs and logistics operations close to client sites.',
+              )}
+            </Summary>
+            <ViewAll to="/offices">{t('사무소 전체보기', 'View all offices')}</ViewAll>
+          </Copy>
 
-          <TabGroups>
-            <TabGroup>
-              <TabGroupLabel>{t('국내 주요 지사', 'Domestic Offices')}</TabGroupLabel>
-              <OfficeTabs>
-                {primaryOffices.map((office) => (
-                  <OfficeTab
-                    key={office.id}
-                    type="button"
-                    $active={office.id === selectedOffice.id}
-                    onClick={() => setSelectedOfficeId(office.id)}
-                  >
-                    {t(office.label, office.labelEn)}
-                  </OfficeTab>
-                ))}
-              </OfficeTabs>
-            </TabGroup>
+          <MapStage aria-label={t('국내 사무소 위치 지도', 'Domestic office location map')}>
+            <MapPanel>
+              <MapHalo aria-hidden="true" />
+              <KoreaMapImage src={koreaMapAsset} alt="" />
+              {domesticOffices.map((office) => (
+                <MapPoint
+                  key={`${office.id}-point`}
+                  x={office.x}
+                  y={office.y}
+                  accent={office.accent}
+                  aria-label={t(office.label, office.labelEn)}
+                />
+              ))}
+            </MapPanel>
+          </MapStage>
 
-            <TabGroup>
-              <TabGroupLabel>{t('해외 · 네트워크', 'Overseas / Network')}</TabGroupLabel>
-              <OfficeTabs>
-                {networkOffices.map((office) => (
-                  <OfficeTab
-                    key={office.id}
-                    type="button"
-                    $active={office.id === selectedOffice.id}
-                    onClick={() => setSelectedOfficeId(office.id)}
-                  >
-                    {t(office.label, office.labelEn)}
-                  </OfficeTab>
-                ))}
-              </OfficeTabs>
-            </TabGroup>
-          </TabGroups>
-
-          <Grid>
-            <InfoCard>
-              <Badge>{t(selectedOffice.region, selectedOffice.regionEn)}</Badge>
-              <OfficeName>{t(selectedOffice.label, selectedOffice.labelEn)}</OfficeName>
-              <OfficeSummary>{t(selectedOffice.summary, selectedOffice.summaryEn)}</OfficeSummary>
-
-              <FactGrid>
-                <Fact>
-                  <FactIconWrap>
-                    <FactIcon kind="pin" />
-                  </FactIconWrap>
-                  <FactContent>
-                    <FactLabel>Address</FactLabel>
-                    <FactValue>{t(selectedOffice.address, selectedOffice.addressEn)}</FactValue>
-                  </FactContent>
-                </Fact>
-                <Fact>
-                  <FactIconWrap>
-                    <FactIcon kind="phone" />
-                  </FactIconWrap>
-                  <FactContent>
-                    <FactLabel>Contact</FactLabel>
-                    <FactValue>
-                      TEL. {selectedOffice.tel}
-                      {selectedOffice.fax ? `  |  FAX. ${selectedOffice.fax}` : ''}
-                    </FactValue>
-                  </FactContent>
-                </Fact>
-              </FactGrid>
-
-              <ActionRow>
-                <PrimaryAction href={phoneHref}>
-                  <ActionIcon kind="phone" />
-                  {t('전화 문의', 'Phone Inquiry')}
-                </PrimaryAction>
-                <SecondaryAction href={directionsUrl} target="_blank" rel="noreferrer">
-                  <ActionIcon kind="pin" />
-                  {t('오시는 길', 'Directions')}
-                </SecondaryAction>
-              </ActionRow>
-
-              <UtilityLinks>
-                <UtilityLink href={googleMapUrl} target="_blank" rel="noreferrer">
-                  {t('Google 지도 열기', 'Open in Google Maps')}
-                </UtilityLink>
-                {selectedOffice.id !== 'vietnam' ? (
-                  <UtilityLink href={naverMapUrl} target="_blank" rel="noreferrer">
-                    {t('네이버 지도 열기', 'Open in Naver Map')}
-                  </UtilityLink>
-                ) : null}
-              </UtilityLinks>
-            </InfoCard>
-
-            <S.OfficesMapCard>
-              <S.OfficesMapHeader>
-                <S.OfficesMapTitle>{t('국내 지사 네트워크', 'Domestic Office Network')}</S.OfficesMapTitle>
-                <S.OfficesMapBody>
-                  {t(
-                    '국내 주요 지사를 한 화면에서 확인할 수 있도록 정리한 미니맵입니다.',
-                    'A minimap showing our domestic office network at a glance.',
-                  )}
-                </S.OfficesMapBody>
-              </S.OfficesMapHeader>
-
-              <S.OfficesMiniMap>
-                <S.OfficesMiniMapKoreaZone>
-                  <S.OfficesMiniMapKoreaImage src={koreaMapAsset} alt={t('대한민국 지사 지도', 'Korea branch map')} />
-
-                  <S.OfficesMapLines viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    {koreaMapOffices.map((office) => (
-                      <line
-                        key={`${office.id}-line`}
-                        x1={office.x}
-                        y1={office.y}
-                        x2={office.labelX}
-                        y2={office.labelY}
-                        stroke={office.id === selectedOffice.id ? 'rgba(44, 81, 138, 0.42)' : 'rgba(92, 114, 145, 0.18)'}
-                        strokeWidth={office.id === selectedOffice.id ? 0.9 : 0.7}
-                        strokeLinecap="round"
-                      />
-                    ))}
-                  </S.OfficesMapLines>
-
-                  {koreaMapOffices.map((office) => (
-                    <S.OfficesMapAnchor
-                      key={office.id}
-                      type="button"
-                      active={office.id === selectedOffice.id}
-                      accent={office.accent}
-                      x={office.x}
-                      y={office.y}
-                      onClick={() => setSelectedOfficeId(office.id)}
-                      aria-label={`${t(office.label, office.labelEn)} ${t('보기', 'view')}`}
-                    >
-                      <S.OfficesMapAnchorDot active={office.id === selectedOffice.id} accent={office.accent} />
-                    </S.OfficesMapAnchor>
-                  ))}
-
-                  {koreaMapOffices.map((office) => (
-                    <S.OfficesMapLabel
-                      key={`${office.id}-label`}
-                      type="button"
-                      x={office.labelX}
-                      y={office.labelY}
-                      active={office.id === selectedOffice.id}
-                      accent={office.accent}
-                      onClick={() => setSelectedOfficeId(office.id)}
-                      aria-label={`${t(office.label, office.labelEn)} ${t('보기', 'view')}`}
-                    >
-                      {t(office.label, office.labelEn)}
-                    </S.OfficesMapLabel>
-                  ))}
-                </S.OfficesMiniMapKoreaZone>
-
-                {vietnamOffice ? (
-                  <S.OfficesMiniMapVietnamZone data-active={selectedOffice.id === vietnamOffice.id}>
-                    <S.OfficesMiniMapInsetTitle>Overseas</S.OfficesMiniMapInsetTitle>
-                    <S.OfficesMiniMapVietnamImage src={vietnamMapAsset} alt={t('베트남 법인 지도', 'Vietnam office map')} />
-                    <S.OfficesMiniMapInsetMeta>
-                      <S.OfficesMiniMapInsetCity>Hanoi</S.OfficesMiniMapInsetCity>
-                    </S.OfficesMiniMapInsetMeta>
-
-                    <S.OfficesMapAnchor
-                      type="button"
-                      active={selectedOffice.id === vietnamOffice.id}
-                      accent={vietnamOffice.accent}
-                      x={vietnamOffice.x}
-                      y={vietnamOffice.y}
-                      onClick={() => setSelectedOfficeId(vietnamOffice.id)}
-                      aria-label={`${t(vietnamOffice.label, vietnamOffice.labelEn)} ${t('보기', 'view')}`}
-                    >
-                      <S.OfficesMapAnchorDot
-                        active={selectedOffice.id === vietnamOffice.id}
-                        accent={vietnamOffice.accent}
-                      />
-                    </S.OfficesMapAnchor>
-                  </S.OfficesMiniMapVietnamZone>
-                ) : null}
-              </S.OfficesMiniMap>
-
-              <S.OfficesMapHint>
-                {t('선택 지사', 'Selected Office')}: <strong>{t(selectedOffice.label, selectedOffice.labelEn)}</strong> ·{' '}
-                {t(selectedOffice.region, selectedOffice.regionEn)}
-              </S.OfficesMapHint>
-            </S.OfficesMapCard>
-          </Grid>
+          <Tiles aria-label={t('사무소 목록', 'Office list')}>
+            {visibleOffices.map((office, index) => (
+              <OfficeTile
+                key={office.id}
+                to="/offices"
+                index={index}
+              >
+                <OfficeImage
+                  src={officeFallbackImages[office.id] ?? office.image ?? '/hero/homepage/office-blue-sky.jpg'}
+                  alt=""
+                  position={office.imagePosition}
+                  onError={(event) => {
+                    const fallback = officeFallbackImages[office.id] ?? '/hero/homepage/office-blue-sky.jpg';
+                    if (event.currentTarget.src.endsWith(fallback)) return;
+                    event.currentTarget.src = fallback;
+                  }}
+                />
+                <OfficeShade aria-hidden="true" />
+                <OfficeRegion>{t(office.region, office.regionEn)}</OfficeRegion>
+                <OfficeName>{t(office.label, office.labelEn)}</OfficeName>
+              </OfficeTile>
+            ))}
+          </Tiles>
         </Inner>
       </Section>
     </>

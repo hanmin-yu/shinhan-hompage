@@ -106,6 +106,12 @@ const FeaturedBody = styled.p`
   line-height: 1.66;
 `;
 
+const FeaturedSummary = styled(FeaturedBody)`
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+`;
+
 const FeaturedHint = styled.span`
   margin-top: auto;
   width: fit-content;
@@ -165,6 +171,11 @@ const ItemBody = styled.p`
   line-height: 1.58;
 `;
 
+const ItemSummary = styled(ItemBody)`
+  color: ${S.palette.textPrimary};
+  font-weight: 700;
+`;
+
 export function ItSection() {
   const { t } = useI18n();
   const [featuredService, ...secondaryServices] = itServices;
@@ -185,15 +196,17 @@ export function ItSection() {
           <Featured>
             <FeaturedMeta>{t(featuredService.category, featuredService.categoryEn)}</FeaturedMeta>
             <FeaturedTitle>{t(featuredService.title, featuredService.titleEn)}</FeaturedTitle>
+            {featuredService.summary ? <FeaturedSummary>{t(featuredService.summary, featuredService.summaryEn ?? featuredService.summary)}</FeaturedSummary> : null}
             <FeaturedBody>{t(featuredService.body, featuredService.bodyEn)}</FeaturedBody>
             <FeaturedHint>{t('주요 기능 보기', 'View key capabilities')}</FeaturedHint>
           </Featured>
 
           <List>
-            {secondaryServices.slice(0, 3).map((item) => (
+            {secondaryServices.map((item) => (
               <Item key={item.title}>
                 <ItemCategory>{t(item.category, item.categoryEn)}</ItemCategory>
                 <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                {item.summary ? <ItemSummary>{t(item.summary, item.summaryEn ?? item.summary)}</ItemSummary> : null}
                 <ItemBody>{t(item.body, item.bodyEn)}</ItemBody>
               </Item>
             ))}

@@ -39,7 +39,7 @@ const expertAssignments = {
   ACVA: ['조원희', '이하나'],
   관세자문: ['김정훈', '김유진'],
   '검역/요건': ['서정용', '이경심'],
-  물류: ['김유경', '권민성'],
+  물류: ['권민성', '이미경'],
   베트남: ['신종호', '김선웅'],
   '미국 FDA': ['김다혜', '엄동규'],
   IT: ['최대규', '홍성훈'],
@@ -259,7 +259,7 @@ const ExpertCard = styled.article`
 
 const PortraitFrame = styled.div`
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   background: linear-gradient(180deg, #f2f5f9, #e8edf4);
   overflow: hidden;
 `;
