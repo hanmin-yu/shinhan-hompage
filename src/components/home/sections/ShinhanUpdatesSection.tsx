@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
@@ -8,50 +9,29 @@ import type { NewsletterRecord, ShinhanNewsRecord } from '../../../types/site';
 import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../../utils/shinhanNews';
 import * as S from '../homeStyles';
 
+const newsVisuals = {
+  flash: '/hero/issue-report-ai-insight.png',
+  newsletter: '/hero/homepage/shinhan-glass-facade.jpg',
+};
+
 const Section = styled.section`
   position: relative;
-  padding: 108px 0 112px;
+  padding: clamp(98px, 10vw, 142px) 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 12% 12%, rgba(33, 101, 193, 0.14), transparent 28%),
-    radial-gradient(circle at 86% 20%, rgba(23, 159, 150, 0.12), transparent 24%),
-    linear-gradient(135deg, rgba(247, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.96) 46%, rgba(238, 247, 252, 0.92) 100%);
+    linear-gradient(90deg, rgba(15, 43, 89, 0.055) 1px, transparent 1px) 0 0 / 20vw 100%,
+    radial-gradient(circle at 18% 18%, rgba(33, 101, 193, 0.1), transparent 30%),
+    linear-gradient(135deg, #eef5fa 0%, #f8fbfd 48%, #eaf3f8 100%);
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'S H I N H A N';
-    position: absolute;
-    left: 24px;
-    top: 28px;
-    color: rgba(15, 35, 62, 0.055);
-    font-size: clamp(3.8rem, 8vw, 8.9rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.12em;
-    white-space: nowrap;
-  }
-
-  &::after {
     content: '';
     position: absolute;
-    right: -120px;
-    bottom: -170px;
-    width: min(42vw, 560px);
-    aspect-ratio: 1;
-    pointer-events: none;
-    background: url('/brand-mark.svg') center / contain no-repeat;
-    opacity: 0.035;
-    transform: rotate(-14deg);
-  }
-
-  @media (max-width: 860px) {
-    padding: 82px 0;
-
-    &::after {
-      width: 86vw;
-      right: -46vw;
-      bottom: -90px;
-    }
+    left: 0;
+    top: 24%;
+    width: 4px;
+    height: 142px;
+    background: linear-gradient(180deg, rgba(28, 90, 169, 0.1), #1c8ec2, rgba(28, 90, 169, 0.1));
   }
 `;
 
@@ -59,18 +39,20 @@ const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 40px;
-`;
+  grid-template-columns: minmax(220px, 0.26fr) minmax(0, 1fr);
+  gap: clamp(34px, 5vw, 78px);
+  align-items: center;
 
-const Head = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 24px;
-
-  @media (max-width: 780px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
+`;
+
+const Rail = styled.div`
+  display: grid;
+  gap: 34px;
+  align-content: center;
+  min-height: 520px;
 `;
 
 const Label = styled.span`
@@ -78,7 +60,7 @@ const Label = styled.span`
   align-items: center;
   gap: 12px;
   color: #1c5aa9;
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -92,28 +74,60 @@ const Label = styled.span`
 `;
 
 const Title = styled.h2`
-  margin: 12px 0 0;
-  color: #222a34;
-  font-size: clamp(2.8rem, 5.8vw, 5.8rem);
+  margin: 14px 0 0;
+  color: #2c3137;
+  font-size: clamp(3rem, 5.6vw, 6.4rem);
   font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.055em;
+  line-height: 0.92;
+  letter-spacing: -0.065em;
 `;
 
 const HeadText = styled.p`
-  max-width: 640px;
+  max-width: 320px;
   margin: 18px 0 0;
   color: #5c6d7c;
-  font-size: 1rem;
+  font-size: 1.14rem;
   line-height: 1.7;
+`;
+
+const Controls = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+const ControlButton = styled.button`
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(15, 43, 89, 0.1);
+  border-radius: 50%;
+  color: #6b7481;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 34px rgba(15, 43, 89, 0.08);
+  font-size: 2rem;
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    color: #1c5aa9;
+    border-color: rgba(28, 90, 169, 0.24);
+    box-shadow: 0 22px 42px rgba(15, 43, 89, 0.13);
+  }
 `;
 
 const ViewAll = styled(Link)`
   display: inline-flex;
   align-items: center;
+  width: fit-content;
   gap: 10px;
   color: #164f99;
-  font-size: 0.92rem;
+  font-size: 1.06rem;
   font-weight: 800;
   text-decoration: none;
 
@@ -125,196 +139,160 @@ const ViewAll = styled(Link)`
   }
 `;
 
-const Columns = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 2.6vw, 34px);
-  align-items: stretch;
+const Carousel = styled.div`
+  min-width: 0;
+  overflow: visible;
+`;
 
-  @media (max-width: 1100px) {
-    grid-template-columns: 1fr;
+const Viewport = styled.div`
+  --card-width: clamp(390px, 33vw, 540px);
+  --card-gap: clamp(44px, 5vw, 82px);
+  overflow: hidden;
+  padding: 36px 0 74px;
+
+  @media (max-width: 780px) {
+    --card-width: min(84vw, 420px);
+    overflow-x: auto;
+    padding-bottom: 34px;
+    scroll-snap-type: x mandatory;
   }
 `;
 
-const Column = styled.section<{ $accent: string }>`
+const Track = styled.div<{ $activeIndex: number }>`
+  display: flex;
+  align-items: flex-start;
+  gap: var(--card-gap);
+  transform: translate3d(calc(${({ $activeIndex }) => $activeIndex} * -1 * (var(--card-width) + var(--card-gap))), 0, 0);
+  transition: transform 0.56s cubic-bezier(0.2, 0.82, 0.2, 1);
+
+  @media (max-width: 780px) {
+    transform: none;
+  }
+`;
+
+const Card = styled(Link)<{ $accent: string; $visual: string }>`
   position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 20px;
-  min-width: 0;
-  min-height: 520px;
-  padding: 28px;
-  border: 1px solid rgba(15, 43, 89, 0.12);
-  border-radius: 4px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(244, 249, 253, 0.78)),
-    #ffffff;
-  box-shadow: 0 24px 54px rgba(15, 43, 89, 0.08);
-  overflow: hidden;
-  transition:
-    transform 0.24s ease,
-    box-shadow 0.24s ease,
-    border-color 0.24s ease;
+  flex: 0 0 var(--card-width);
+  min-height: 430px;
+  color: #30343a;
+  text-decoration: none;
+  scroll-snap-align: start;
+  --accent: ${({ $accent }) => $accent};
 
   &::before {
     content: '';
     position: absolute;
-    left: 28px;
+    left: 0;
+    right: 0;
     top: 0;
-    width: 42px;
-    height: 6px;
-    background: ${({ $accent }) => $accent};
+    height: 178px;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 70%, #ffffff), rgba(255, 255, 255, 0.08)),
+      url(${({ $visual }) => $visual}) center / cover no-repeat;
+    filter: saturate(0.9);
   }
+
+  &:hover article {
+    transform: translateY(-7px);
+    border-color: color-mix(in srgb, var(--accent) 76%, #ffffff);
+    box-shadow: 0 34px 70px rgba(15, 43, 89, 0.15);
+  }
+`;
+
+const CardPanel = styled.article`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 22px;
+  min-height: 316px;
+  margin: 96px 30px 0;
+  padding: 46px 42px 30px;
+  border: 1px solid rgba(15, 43, 89, 0.08);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 253, 0.9)),
+    #ffffff;
+  box-shadow: 0 24px 58px rgba(15, 43, 89, 0.08);
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
 
   &::after {
     content: '';
     position: absolute;
-    right: -54px;
-    top: -54px;
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    background: ${({ $accent }) => $accent};
-    opacity: 0.08;
+    right: 0;
+    bottom: 0;
+    width: 44px;
+    height: 44px;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
   }
-
-  &:hover {
-    transform: translateY(-6px);
-    border-color: rgba(33, 101, 193, 0.22);
-    box-shadow: 0 30px 66px rgba(15, 43, 89, 0.12);
-  }
-
-  @media (max-width: 1100px) {
-    min-height: 0;
-  }
-`;
-
-const ColumnHead = styled.div`
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 18px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(15, 43, 89, 0.14);
-`;
-
-const ColumnTitle = styled.h3`
-  margin: 0;
-  color: #2b3138;
-  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
-  font-weight: 800;
-  line-height: 1.08;
-`;
-
-const ColumnLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  gap: 8px;
-  color: #1c5aa9;
-  font-size: 0.84rem;
-  font-weight: 800;
-  white-space: nowrap;
-  text-decoration: none;
-
-  &::after {
-    content: '';
-    width: 22px;
-    height: 1px;
-    background: currentColor;
-  }
-`;
-
-const ColumnIntro = styled.p`
-  margin: 0;
-  color: #667789;
-  font-size: 0.9rem;
-  line-height: 1.62;
-`;
-
-const List = styled.div`
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-rows: repeat(3, minmax(128px, 1fr));
-  height: 100%;
 
   @media (max-width: 640px) {
-    grid-template-rows: none;
+    margin-inline: 16px;
+    padding: 36px 28px 26px;
   }
 `;
 
-const ItemLink = styled(Link)`
-  display: grid;
-  grid-template-rows: auto minmax(0, auto) minmax(0, 1fr);
-  gap: 10px;
-  min-height: 128px;
-  padding: 18px 0 17px;
-  border-bottom: 1px solid rgba(15, 43, 89, 0.14);
-  text-decoration: none;
-  min-width: 0;
-  transition:
-    padding-left 0.24s ease,
-    border-color 0.24s ease;
-
-  &:hover {
-    padding-left: 12px;
-    border-color: rgba(28, 90, 169, 0.42);
-  }
-
-  &:last-of-type {
-    border-bottom: 0;
-  }
-`;
-
-const ItemTop = styled.div`
+const CardMeta = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  min-height: 22px;
-`;
-
-const ItemCategory = styled.span`
-  color: #1c5aa9;
-  font-size: 0.76rem;
+  gap: 16px;
+  color: var(--accent);
+  font-size: 1rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  letter-spacing: 0.02em;
 `;
 
-const ItemDate = styled.span`
-  color: #677684;
-  font-size: 0.84rem;
+const CardDate = styled.span`
+  color: #8a949d;
+  font-size: 0.96rem;
   font-weight: 800;
   white-space: nowrap;
 `;
 
-const ItemTitle = styled.strong`
-  color: #2d3339;
-  font-size: clamp(1.08rem, 1.5vw, 1.34rem);
-  font-weight: 800;
+const CardTitle = styled.strong`
+  display: -webkit-box;
+  color: #33373c;
+  font-size: clamp(1.46rem, 2vw, 2rem);
+  font-weight: 850;
   line-height: 1.42;
+  letter-spacing: -0.035em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+`;
+
+const CardText = styled.p`
   display: -webkit-box;
-  min-height: calc(1em * 1.42 * 2);
+  margin: 0;
+  color: #637180;
+  font-size: 1.04rem;
+  line-height: 1.62;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 `;
 
-const ItemText = styled.p`
-  margin: 0;
-  color: #5c6d7c;
-  font-size: 0.92rem;
-  line-height: 1.64;
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+const CardFoot = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  color: #8a949d;
+  font-size: 0.98rem;
+  font-weight: 800;
+
+  &::after {
+    content: '→';
+    color: var(--accent);
+    font-size: 1.7rem;
+    line-height: 1;
+  }
 `;
 
 type NewsListItem = {
@@ -326,6 +304,12 @@ type NewsListItem = {
   summaryEn: string;
   publishedAt: string;
   href: string;
+};
+
+type CarouselItem = NewsListItem & {
+  accent: string;
+  groupLabel: string;
+  visual: string;
 };
 
 function buildShinhanNewsItems(items: ShinhanNewsRecord[], category: 'flash' | 'seminar'): NewsListItem[] {
@@ -364,81 +348,88 @@ export function ShinhanUpdatesSection() {
   const { t } = useI18n();
   const { items: dynamicShinhanNewsItems } = useShinhanNewsRecords();
   const { items: dynamicNewsletterItems } = useNewsletterRecords();
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const shinhanNewsItems = dynamicShinhanNewsItems.length > 0 ? dynamicShinhanNewsItems : getShinhanNewsRecords();
   const newsletterItems = dynamicNewsletterItems.length > 0 ? dynamicNewsletterItems : getNewsletterRecords();
-  const seminarList = buildShinhanNewsItems(shinhanNewsItems, 'seminar');
   const flashList = buildShinhanNewsItems(shinhanNewsItems, 'flash');
   const newsletterList = buildNewsletterItems(newsletterItems);
-  const groups = [
-    {
-      id: 'seminar',
-      title: t('세미나', 'Seminar'),
-      intro: t('교육과 실무 세미나 소식을 빠르게 확인합니다.', 'Review training and practical seminar updates.'),
-      href: '/news/seminar',
+  const carouselItems: CarouselItem[] = [
+    ...flashList.map((item) => ({
+      ...item,
       accent: '#1c5aa9',
-      items: seminarList,
-    },
-    {
-      id: 'flash',
-      title: 'FLASH',
-      intro: t('신한 NEWS와 주요 공지, 실무 업데이트를 정리합니다.', 'Browse Shinhan NEWS, notices, and practical updates.'),
-      href: '/news/shinhan-news',
-      accent: '#179f96',
-      items: flashList,
-    },
-    {
-      id: 'newsletter',
-      title: t('소식지', 'Newsletter'),
-      intro: t('월별 정책 변화와 실무 체크포인트를 모았습니다.', 'Monthly policy changes and practice checkpoints.'),
-      href: '/news/newsletter',
+      groupLabel: t('신한 NEWS', 'Shinhan NEWS'),
+      visual: newsVisuals.flash,
+    })),
+    ...newsletterList.map((item) => ({
+      ...item,
       accent: '#123f85',
-      items: newsletterList,
-    },
+      groupLabel: t('소식지', 'Newsletter'),
+      visual: newsVisuals.newsletter,
+    })),
   ];
+  const normalizedActiveIndex = carouselItems.length > 0 ? activeIndex % carouselItems.length : 0;
 
-  if (groups.every((group) => group.items.length === 0)) return null;
+  const moveSlide = (direction: 'prev' | 'next') => {
+    setActiveIndex((current) => {
+      if (carouselItems.length <= 1) return 0;
+      if (direction === 'prev') return (current - 1 + carouselItems.length) % carouselItems.length;
+      return (current + 1) % carouselItems.length;
+    });
+  };
+
+  if (carouselItems.length === 0) return null;
 
   return (
     <Section>
       <Inner data-reveal>
-        <Head>
+        <Rail>
           <div>
             <Label>Shinhan Updates</Label>
             <Title>{t('신한 소식', 'Shinhan Updates')}</Title>
             <HeadText>
               {t(
-                '세미나, FLASH, 소식지를 한 화면에서 확인할 수 있도록 핵심 소식을 정리했습니다.',
-                'Seminars, FLASH updates, and newsletters are organized in one editorial view.',
+                '신한 NEWS와 소식지를 가로형 카드로 넘겨보며 확인할 수 있습니다.',
+                'Browse Shinhan NEWS and newsletters through a horizontal editorial carousel.',
               )}
             </HeadText>
           </div>
+          <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
+            <ControlButton type="button" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')}>
+              ‹
+            </ControlButton>
+            <ControlButton type="button" aria-label={t('다음 소식', 'Next update')} onClick={() => moveSlide('next')}>
+              ›
+            </ControlButton>
+          </Controls>
           <ViewAll to="/news">{t('소식 전체보기', 'View all news')}</ViewAll>
-        </Head>
+        </Rail>
 
-        <Columns>
-          {groups.map((group) => (
-            <Column key={group.id} $accent={group.accent} aria-labelledby={`home-${group.id}-title`}>
-              <ColumnHead>
-                <ColumnTitle id={`home-${group.id}-title`}>{group.title}</ColumnTitle>
-                <ColumnIntro>{group.intro}</ColumnIntro>
-                <ColumnLink to={group.href}>{t('전체보기', 'View all')}</ColumnLink>
-              </ColumnHead>
-              <List>
-                {group.items.map((item) => (
-                  <ItemLink key={item.id} to={item.href}>
-                    <ItemTop>
-                      <ItemCategory>{item.category}</ItemCategory>
-                      <ItemDate>{item.publishedAt}</ItemDate>
-                    </ItemTop>
-                    <ItemTitle>{t(item.titleKo, item.titleEn)}</ItemTitle>
-                    <ItemText>{t(item.summaryKo, item.summaryEn)}</ItemText>
-                  </ItemLink>
-                ))}
-              </List>
-            </Column>
-          ))}
-        </Columns>
+        <Carousel>
+          <Viewport>
+            <Track $activeIndex={normalizedActiveIndex}>
+              {carouselItems.map((item, index) => (
+                <Card
+                  key={`${item.href}-${index}`}
+                  to={item.href}
+                  $accent={item.accent}
+                  $visual={item.visual}
+                  aria-label={t(item.titleKo, item.titleEn)}
+                >
+                  <CardPanel>
+                    <CardMeta>
+                      <span>{item.groupLabel}</span>
+                      <CardDate>{item.publishedAt}</CardDate>
+                    </CardMeta>
+                    <CardTitle>{t(item.titleKo, item.titleEn)}</CardTitle>
+                    <CardText>{t(item.summaryKo, item.summaryEn)}</CardText>
+                    <CardFoot>{item.category}</CardFoot>
+                  </CardPanel>
+                </Card>
+              ))}
+            </Track>
+          </Viewport>
+        </Carousel>
       </Inner>
     </Section>
   );

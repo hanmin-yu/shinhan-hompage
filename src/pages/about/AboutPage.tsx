@@ -112,9 +112,9 @@ const AboutNavLink = styled(Link)`
   padding: 0 clamp(18px, 2vw, 30px);
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
-  font-size: 0.98rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 1.12rem;
+  font-weight: 900;
+  letter-spacing: 0;
 
   &:first-of-type {
     border-left: 1px solid #e4e7ec;
@@ -142,6 +142,7 @@ const AboutNavLink = styled(Link)`
     min-height: 52px;
     min-width: auto;
     padding: 0 18px;
+    font-size: 0.98rem;
   }
 `;
 

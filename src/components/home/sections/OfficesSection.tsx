@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import koreaMapAsset from '../../../assets/map-korea.svg';
@@ -7,15 +8,85 @@ import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 const officeFallbackImages: Record<string, string> = {
-  seoul: '/hero/homepage/office-blue-sky.jpg',
+  seoul: '/hero/homepage/shinhan-hq-building.jpg',
   airport: '/hero/homepage/cargo-plane-sky.jpg',
-  incheon: '/hero/incheon-airport.jpg',
+  incheon: '/hero/homepage/port-cranes-blue-sky.jpg',
   busan: '/hero/busan-port.jpg',
   cheongju: '/hero/homepage/office-tower-clear-sky.jpg',
   gumi: '/hero/auto-parts.jpg',
   invista: '/hero/practice-aeo-warehouse.jpg',
   vietnam: '/hero/homepage/seoul-skyline-blue-sky.jpg',
 };
+
+function useCountUp(target: number, duration = 1100) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [value, setValue] = useState(target);
+  const [isCounting, setIsCounting] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      setValue(target);
+      setIsCounting(false);
+      return;
+    }
+
+    setValue(0);
+    setIsCounting(false);
+    let frameId = 0;
+
+    const runCount = () => {
+      let startedAt = 0;
+
+      setValue(0);
+      setIsCounting(true);
+
+      const tick = (timestamp: number) => {
+        if (!startedAt) startedAt = timestamp;
+        const progress = Math.min((timestamp - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const pulse = Math.sin(progress * Math.PI * 5) * 0.05;
+        setValue(Math.max(1, Math.round(target * Math.min(eased + pulse, 1))));
+
+        if (progress < 1) {
+          frameId = window.requestAnimationFrame(tick);
+        } else {
+          setValue(target);
+          window.setTimeout(() => setIsCounting(false), 260);
+        }
+      };
+
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        window.cancelAnimationFrame(frameId);
+
+        if (entry.isIntersecting) {
+          runCount();
+          return;
+        }
+
+        setValue(0);
+        setIsCounting(false);
+      },
+      { threshold: 0.36 },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [duration, target]);
+
+  return { ref, value, isCounting };
+}
 
 const Section = styled.section`
   position: relative;
@@ -57,6 +128,28 @@ const Section = styled.section`
   @keyframes officeDash {
     to {
       stroke-dashoffset: -22;
+    }
+  }
+
+  @keyframes countPop {
+    0% {
+      transform: translateY(10px) scale(0.92);
+      filter: drop-shadow(0 0 0 rgba(39, 111, 207, 0));
+    }
+
+    36% {
+      transform: translateY(-8px) scale(1.08);
+      color: #165cb8;
+      filter: drop-shadow(0 18px 24px rgba(39, 111, 207, 0.2));
+    }
+
+    72% {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    100% {
+      transform: translateY(0) scale(1);
+      filter: drop-shadow(0 0 0 rgba(39, 111, 207, 0));
     }
   }
 
@@ -177,32 +270,41 @@ const MapHalo = styled.span`
   opacity: 0.72;
 `;
 
-const MapPoint = styled.span<{ x: number; y: number; accent: string }>`
+const MapPoint = styled.span<{ x: number; y: number; accent: string; $active: boolean }>`
   position: absolute;
   left: ${({ x }) => x}%;
   top: ${({ y }) => y}%;
-  z-index: 2;
+  z-index: ${({ $active }) => ($active ? 4 : 2)};
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: ${({ $active }) => ($active ? '38px' : '30px')};
+  height: ${({ $active }) => ($active ? '38px' : '30px')};
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.92);
-  background: ${({ accent }) => accent};
+  background: ${({ $active, accent }) => ($active ? '#165cb8' : accent)};
   color: transparent;
   font-size: 0;
   line-height: 0;
-  box-shadow: 0 0 0 7px rgba(70, 181, 209, 0.14), 0 18px 30px rgba(15, 43, 89, 0.18);
-  transform: translate(-50%, -50%);
+  box-shadow: ${({ $active }) =>
+    $active
+      ? '0 0 0 10px rgba(39, 111, 207, 0.18), 0 0 0 22px rgba(39, 111, 207, 0.08), 0 26px 42px rgba(15, 43, 89, 0.24)'
+      : '0 0 0 7px rgba(39, 111, 207, 0.13), 0 18px 30px rgba(15, 43, 89, 0.18)'};
+  transform: translate(-50%, -50%) scale(${({ $active }) => ($active ? 1.08 : 1)});
+  transition:
+    width 0.24s ease,
+    height 0.24s ease,
+    background 0.24s ease,
+    box-shadow 0.24s ease,
+    transform 0.24s ease;
 
   &::before,
   &::after {
     content: '';
     position: absolute;
-    inset: -22px;
+    inset: ${({ $active }) => ($active ? '-30px' : '-22px')};
     border-radius: 50%;
-    border: 1px solid rgba(70, 181, 209, 0.36);
-    animation: officePulse 2.8s ease-out infinite;
+    border: 1px solid ${({ $active }) => ($active ? 'rgba(39, 111, 207, 0.48)' : 'rgba(39, 111, 207, 0.32)')};
+    animation: officePulse ${({ $active }) => ($active ? '1.65s' : '2.8s')} ease-out infinite;
   }
 
   &::after {
@@ -215,8 +317,8 @@ const Label = styled.span`
   align-items: center;
   gap: 12px;
   color: #1c5aa9;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: clamp(0.98rem, 1.3vw, 1.18rem);
+  font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 
@@ -240,12 +342,18 @@ const CountLine = styled.div`
   }
 `;
 
-const Count = styled.strong`
+const Count = styled.strong<{ $counting: boolean }>`
+  display: inline-block;
   color: #2f3136;
   font-size: clamp(5.8rem, 13vw, 10rem);
   font-weight: 800;
   line-height: 0.84;
   letter-spacing: 0;
+  transform-origin: 50% 78%;
+  animation: ${({ $counting }) => ($counting ? 'countPop 0.38s cubic-bezier(0.2, 0.9, 0.24, 1.28)' : 'none')};
+  transition:
+    color 0.18s ease,
+    filter 0.18s ease;
 `;
 
 const CountLabel = styled.span`
@@ -265,7 +373,7 @@ const CountLabel = styled.span`
     right: -8px;
     bottom: 0;
     height: 10px;
-    background: rgba(70, 181, 209, 0.64);
+    background: rgba(39, 111, 207, 0.58);
     z-index: -1;
   }
 `;
@@ -274,7 +382,7 @@ const Summary = styled.p`
   max-width: 620px;
   margin: 0;
   color: #52697f;
-  font-size: 1rem;
+  font-size: clamp(1.14rem, 1.35vw, 1.28rem);
   line-height: 1.78;
 `;
 
@@ -284,8 +392,8 @@ const ViewAll = styled(Link)`
   width: fit-content;
   gap: 10px;
   color: #164f99;
-  font-size: 0.92rem;
-  font-weight: 800;
+  font-size: clamp(1.08rem, 1.45vw, 1.3rem);
+  font-weight: 900;
   text-decoration: none;
 
   &::after {
@@ -377,7 +485,7 @@ const OfficeShade = styled.span`
 const OfficeRegion = styled.span`
   position: relative;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.34);
 `;
@@ -396,6 +504,8 @@ export function OfficesSection() {
   const { t } = useI18n();
   const visibleOffices = officeBranches.filter((office) => office.id !== 'kord').slice(0, 8);
   const domesticOffices = visibleOffices.filter((office) => office.id !== 'vietnam');
+  const [activeOfficeId, setActiveOfficeId] = useState<string | null>(null);
+  const { ref: countRef, value: officeCount, isCounting } = useCountUp(visibleOffices.length);
 
   return (
     <>
@@ -407,8 +517,8 @@ export function OfficesSection() {
         <Inner data-reveal>
           <Copy>
             <Label>Offices</Label>
-            <CountLine aria-label={t('8개 사무소', '8 offices')}>
-              <Count>{visibleOffices.length}</Count>
+            <CountLine ref={countRef} aria-label={t('8개 사무소', '8 offices')}>
+              <Count key={officeCount} $counting={isCounting}>{officeCount}</Count>
               <CountLabel>Offices</CountLabel>
             </CountLine>
             <Summary>
@@ -430,6 +540,7 @@ export function OfficesSection() {
                   x={office.x}
                   y={office.y}
                   accent={office.accent}
+                  $active={activeOfficeId === office.id}
                   aria-label={t(office.label, office.labelEn)}
                 />
               ))}
@@ -442,6 +553,10 @@ export function OfficesSection() {
                 key={office.id}
                 to="/offices"
                 index={index}
+                onMouseEnter={() => setActiveOfficeId(office.id)}
+                onMouseLeave={() => setActiveOfficeId(null)}
+                onFocus={() => setActiveOfficeId(office.id)}
+                onBlur={() => setActiveOfficeId(null)}
               >
                 <OfficeImage
                   src={officeFallbackImages[office.id] ?? office.image ?? '/hero/homepage/office-blue-sky.jpg'}

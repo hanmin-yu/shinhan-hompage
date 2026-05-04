@@ -10,7 +10,7 @@ const issueReportVisual = '/hero/issue-report-ai-insight.png';
 
 const Section = styled.section`
   position: relative;
-  padding: 108px 0 104px;
+  padding: 104px 0 72px;
   overflow: hidden;
   background:
     linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
@@ -58,7 +58,7 @@ const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 38px;
+  gap: 34px;
 `;
 
 const Head = styled.div`
@@ -77,7 +77,7 @@ const Label = styled.span`
   align-items: center;
   gap: 12px;
   color: #1c5aa9;
-  font-size: 0.78rem;
+  font-size: clamp(0.92rem, 1.08vw, 1.04rem);
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -104,7 +104,7 @@ const ViewAll = styled.a`
   align-items: center;
   gap: 10px;
   color: #164f99;
-  font-size: 0.92rem;
+  font-size: clamp(1.02rem, 1.18vw, 1.16rem);
   font-weight: 800;
   text-decoration: none;
 
@@ -118,7 +118,7 @@ const ViewAll = styled.a`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: minmax(320px, 0.86fr) minmax(0, 1.14fr);
+  grid-template-columns: minmax(380px, 0.96fr) minmax(0, 1.04fr);
   gap: clamp(28px, 5vw, 72px);
   align-items: start;
 
@@ -129,7 +129,7 @@ const Content = styled.div`
 
 const Featured = styled.a`
   display: grid;
-  min-height: 440px;
+  min-height: clamp(520px, 39vw, 620px);
   color: #ffffff;
   text-decoration: none;
   background:
@@ -141,7 +141,7 @@ const Featured = styled.a`
   overflow: hidden;
 
   @media (max-width: 700px) {
-    min-height: 360px;
+    min-height: 420px;
   }
 `;
 
@@ -159,7 +159,7 @@ const Meta = styled.div`
   align-items: center;
   gap: 8px;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.82rem;
+  font-size: 0.98rem;
   font-weight: 800;
 `;
 
@@ -185,7 +185,7 @@ const FeaturedText = styled.p`
   max-width: 54ch;
   margin: 0;
   color: rgba(255, 255, 255, 0.84);
-  font-size: 0.96rem;
+  font-size: 1.08rem;
   line-height: 1.68;
 `;
 
@@ -219,7 +219,7 @@ const ReportLink = styled.a`
 
 const ReportDate = styled.span`
   color: #677684;
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 800;
   white-space: nowrap;
 `;
@@ -231,7 +231,7 @@ const ReportCopy = styled.span`
 
 const ReportSource = styled.span`
   color: #1c5aa9;
-  font-size: 0.76rem;
+  font-size: 0.9rem;
   font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -239,7 +239,7 @@ const ReportSource = styled.span`
 
 const ReportTitle = styled.strong`
   color: #2d3339;
-  font-size: clamp(1.05rem, 1.5vw, 1.34rem);
+  font-size: clamp(1.16rem, 1.62vw, 1.46rem);
   font-weight: 800;
   line-height: 1.38;
 `;
@@ -251,7 +251,7 @@ export function IssueReportSection() {
   const latestReports = reports.filter((report) => report.status !== 'placeholder');
   const visibleReports = (latestReports.length > 0 ? latestReports : issueReports).slice(0, 9);
   const featured = visibleReports[0];
-  const sideReports = visibleReports.slice(1);
+  const sideReports = visibleReports.slice(1, 6);
 
   if (!featured) return null;
 

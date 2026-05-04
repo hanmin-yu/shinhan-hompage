@@ -33,7 +33,7 @@ const Label = styled.span`
   align-items: center;
   gap: 9px;
   color: #22549a;
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -122,28 +122,28 @@ const Avatar = styled.div<{ image?: string; accent: string }>`
 
 const Name = styled.strong`
   color: #11407b;
-  font-size: 1.05rem;
+  font-size: 1.18rem;
   font-weight: 700;
 `;
 
 const TitleText = styled.p`
   margin: 0;
   color: #4a6a92;
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.5;
 `;
 
 const Desc = styled.p`
   margin: 0;
   color: #40638d;
-  font-size: 0.92rem;
+  font-size: 1.06rem;
   line-height: 1.6;
 `;
 
 const Contact = styled.p`
   margin: 0;
   color: #1f56a3;
-  font-size: 0.86rem;
+  font-size: 0.98rem;
   font-weight: 700;
 `;
 

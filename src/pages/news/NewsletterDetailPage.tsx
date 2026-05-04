@@ -7,6 +7,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
+import { getNewsletterPdfFileName } from '../../utils/newsletter';
 import { NewsFlushPageSection, NewsHeroSection } from './newsLayout';
 
 type NewsletterManifest = {
@@ -251,8 +252,11 @@ export function NewsletterDetailPage() {
                 <ActionRow>
                   <P.CardLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</P.CardLink>
                   {item?.downloadUrl ? (
-                    <DownloadLink href={item.downloadUrl} target="_blank" rel="noreferrer">
-                      {t('원본 다운로드', 'Download Original')}
+                    <DownloadLink
+                      href={item.downloadUrl}
+                      download={getNewsletterPdfFileName(t(item.title, item.titleEn))}
+                    >
+                      {t('PDF 다운로드', 'Download PDF')}
                     </DownloadLink>
                   ) : null}
                 </ActionRow>
@@ -310,8 +314,8 @@ export function NewsletterDetailPage() {
               {!loadingPreview && !imageUrls.length ? (
                 <P.CardText>
                   {t(
-                    '웹 미리보기 파일이 아직 준비되지 않았습니다. 원본 다운로드 버튼으로 확인해주세요.',
-                    'Web preview files are not available yet. Please use the original download button.',
+                    '웹 미리보기 파일이 아직 준비되지 않았습니다. PDF 다운로드 버튼으로 확인해주세요.',
+                    'Web preview files are not available yet. Please use the PDF download button.',
                   )}
                 </P.CardText>
               ) : null}

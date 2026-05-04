@@ -196,16 +196,23 @@ const HeroKicker = styled.span`
 const HeroTitle = styled.h1`
   margin: 0;
   color: #ffffff;
-  font-family: 'Times New Roman', Georgia, serif;
-  font-size: clamp(3.3rem, 8.4vw, 9rem);
-  font-weight: 700;
-  line-height: 0.82;
-  letter-spacing: 0.01em;
+  font-family:
+    'Helvetica Neue',
+    'Avenir Next',
+    'Inter',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    system-ui,
+    sans-serif;
+  font-size: clamp(3.2rem, 7.9vw, 8.6rem);
+  font-weight: 750;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
   max-width: none;
   text-shadow:
-    0 18px 46px rgba(3, 15, 34, 0.56),
-    0 2px 8px rgba(3, 15, 34, 0.34);
-  text-transform: uppercase;
+    0 18px 44px rgba(3, 15, 34, 0.48),
+    0 2px 7px rgba(3, 15, 34, 0.28);
+  text-transform: none;
 
   @media (max-width: 920px) {
     font-size: clamp(4rem, 17vw, 8rem);
@@ -257,7 +264,7 @@ const HeroValueChip = styled.span`
   color: rgba(255, 255, 255, 0.94);
   box-shadow: 0 10px 20px rgba(3, 15, 34, 0.16);
   backdrop-filter: blur(10px);
-  font-size: 0.82rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: -0.01em;
 `;
@@ -266,12 +273,12 @@ const HeroDescription = styled.p`
   margin: 4px 0 0;
   color: rgba(248, 251, 255, 0.94);
   text-shadow: 0 8px 24px rgba(3, 15, 34, 0.44);
-  font-size: 1.08rem;
+  font-size: clamp(1.16rem, 1.35vw, 1.32rem);
   line-height: 1.68;
   max-width: 760px;
 
   @media (max-width: 920px) {
-    font-size: 0.94rem;
+    font-size: 1.04rem;
     line-height: 1.62;
     max-width: 44ch;
   }
@@ -477,7 +484,7 @@ export function HeroSection() {
           <HeroCopy data-reveal="slide-left">
             <HeroGuideLine />
             <HeroKicker>{t(slide.eyebrow, slide.eyebrowEn ?? slide.eyebrow)}</HeroKicker>
-            <HeroTitle>ShinHan</HeroTitle>
+            <HeroTitle>SHINHAN</HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>

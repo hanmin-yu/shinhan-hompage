@@ -1,4 +1,5 @@
 import type { NewsletterItem, ShinhanNewsItem } from '../types/site';
+import { withNewsletterTitleBrand } from '../utils/newsletter';
 import { shinhanNewsArchive } from './shinhanNewsArchive';
 
 export const shinhanNewsItems: ShinhanNewsItem[] = shinhanNewsArchive;
@@ -103,8 +104,8 @@ const rawNewsletterItems = [
 export const newsletterItems: NewsletterItem[] = rawNewsletterItems.map((item, index) => ({
   id: `newsletter-${index + 1}`,
   issue: item.date,
-  title: item.title,
-  titleEn: getNewsletterTitleEn(item.title),
+  title: withNewsletterTitleBrand(item.title),
+  titleEn: withNewsletterTitleBrand(getNewsletterTitleEn(item.title)),
   summary: item.body,
   summaryEn: getNewsletterSummaryEn(item.body),
   publishedAt: item.date,

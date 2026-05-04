@@ -51,7 +51,7 @@ const Label = styled.span`
   align-items: center;
   gap: 9px;
   color: #21549a;
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -128,7 +128,7 @@ const FeatureLabel = styled.span`
   background: rgba(238, 246, 255, 0.14);
   border: 1px solid rgba(220, 234, 252, 0.4);
   color: #d9e9ff;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -137,7 +137,7 @@ const FeatureLabel = styled.span`
 const CardTitle = styled.h3<{ light?: boolean }>`
   margin: 0;
   color: ${({ light }) => (light ? '#f5f9ff' : '#11407c')};
-  font-size: 1.16rem;
+  font-size: 1.32rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 `;
@@ -145,7 +145,7 @@ const CardTitle = styled.h3<{ light?: boolean }>`
 const CardBody = styled.p<{ light?: boolean }>`
   margin: 12px 0 0;
   color: ${({ light }) => (light ? 'rgba(232, 241, 255, 0.92)' : '#42658f')};
-  font-size: 0.92rem;
+  font-size: 1.06rem;
   line-height: 1.66;
 `;
 
@@ -191,7 +191,7 @@ const SideLabel = styled.span`
   border: 1px solid rgba(20, 76, 158, 0.26);
   color: #26579c;
   background: #f5f9ff;
-  font-size: 0.74rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;

@@ -9,6 +9,7 @@ export type NewsListTableAction = {
   to?: string;
   external?: boolean;
   disabled?: boolean;
+  downloadFileName?: string;
 };
 
 export type NewsListTableRow = {
@@ -240,6 +241,7 @@ function renderAction(action: NewsListTableAction, key: string) {
     <ActionAnchor
       key={key}
       href={action.href}
+      download={action.downloadFileName}
       target={action.external ? '_blank' : undefined}
       rel={action.external ? 'noreferrer' : undefined}
     >

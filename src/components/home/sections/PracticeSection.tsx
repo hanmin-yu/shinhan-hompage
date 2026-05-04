@@ -83,25 +83,38 @@ function useCountUp(target: number, duration = 1200) {
 
     setValue(0);
     let frameId = 0;
-    let startedAt = 0;
+
+    const runCount = () => {
+      let startedAt = 0;
+
+      setValue(0);
+
+      const tick = (timestamp: number) => {
+        if (!startedAt) startedAt = timestamp;
+        const progress = Math.min((timestamp - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setValue(Math.round(target * eased));
+
+        if (progress < 1) {
+          frameId = window.requestAnimationFrame(tick);
+        } else {
+          setValue(target);
+        }
+      };
+
+      frameId = window.requestAnimationFrame(tick);
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
+        window.cancelAnimationFrame(frameId);
 
-        const tick = (timestamp: number) => {
-          if (!startedAt) startedAt = timestamp;
-          const progress = Math.min((timestamp - startedAt) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          setValue(Math.round(target * eased));
+        if (entry.isIntersecting) {
+          runCount();
+          return;
+        }
 
-          if (progress < 1) {
-            frameId = window.requestAnimationFrame(tick);
-          }
-        };
-
-        frameId = window.requestAnimationFrame(tick);
-        observer.disconnect();
+        setValue(0);
       },
       { threshold: 0.36 },
     );
@@ -262,7 +275,7 @@ const Summary = styled.p`
   max-width: 620px;
   margin: 0;
   color: #52697f;
-  font-size: 1rem;
+  font-size: clamp(1.14rem, 1.35vw, 1.28rem);
   line-height: 1.78;
 `;
 
@@ -364,7 +377,7 @@ const PracticeTitle = styled.strong`
 
 const PracticeMeta = styled.span`
   color: #687782;
-  font-size: 0.94rem;
+  font-size: clamp(1.06rem, 1.2vw, 1.18rem);
   font-weight: 800;
   line-height: 1.38;
 `;

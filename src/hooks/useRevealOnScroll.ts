@@ -11,23 +11,20 @@ export function useRevealOnScroll(routeKey?: string) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const hasPassedViewportTop = entry.boundingClientRect.top < 0;
-          if (!entry.isIntersecting && !hasPassedViewportTop) return;
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
         });
       },
-      { threshold: 0.16, rootMargin: '0px 0px -10% 0px' },
+      { threshold: 0.18, rootMargin: '-6% 0px -12% 0px' },
     );
 
     const observeRevealTargets = () => {
       const revealTargets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
 
       revealTargets.forEach((node, index) => {
-        if (observed.has(node) || node.classList.contains('is-visible')) return;
-        node.style.transitionDelay = `${Math.min(index % 6, 4) * 60}ms`;
-        observed.add(node);
+        if (observed.has(node)) return;
+        node.style.transitionDelay = `${Math.min(index % 6, 4) * 54}ms`;
         observer.observe(node);
+        observed.add(node);
       });
     };
 

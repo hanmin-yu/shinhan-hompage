@@ -1,5 +1,6 @@
 import { newsletterItems, shinhanNewsItems } from '../data/newsStaticSeeds';
 import type { NewsletterRecord, ShinhanNewsDetail, ShinhanNewsRecord } from '../types/site';
+import { getNewsletterAssetSlug, getNewsletterPdfFileName, getNewsletterPdfUrl } from '../utils/newsletter';
 import { sortShinhanNewsRecords } from '../utils/shinhanNews';
 
 function toShinhanNewsRecord(item: (typeof shinhanNewsItems)[number], detail?: ShinhanNewsDetail): ShinhanNewsRecord {
@@ -20,13 +21,13 @@ function buildShinhanNewsRecords(): ShinhanNewsRecord[] {
 
 function buildNewsletterRecords(): NewsletterRecord[] {
   return newsletterItems.map((item) => {
-    const previewManifestUrl = item.downloadHref
-      ? `/newsletters/render/${item.downloadHref.split('/').pop()?.replace(/\.zip$/i, '')}/manifest.json`
-      : null;
+    const assetSlug = getNewsletterAssetSlug(item.downloadHref);
+    const previewManifestUrl = assetSlug ? `/newsletters/render/${assetSlug}/manifest.json` : null;
 
     return {
       ...item,
-      downloadUrl: item.downloadHref,
+      downloadUrl: getNewsletterPdfUrl(item.downloadHref, previewManifestUrl) ?? undefined,
+      downloadFileName: getNewsletterPdfFileName(item.title),
       status: 'published',
       previewManifestUrl,
       updatedAt: item.publishedAt,

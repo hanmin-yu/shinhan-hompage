@@ -178,9 +178,9 @@ const TabLink = styled(Link)`
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 0.98rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 1.12rem;
+  font-weight: 900;
+  letter-spacing: 0;
   line-height: 1;
   position: relative;
   transition: color 0.18s ease;
@@ -221,7 +221,7 @@ const TabLink = styled(Link)`
     min-height: 52px;
     padding: 0 18px;
     min-width: auto;
-    font-size: 0.84rem;
+    font-size: 0.98rem;
   }
 `;
 

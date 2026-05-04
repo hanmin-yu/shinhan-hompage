@@ -29,7 +29,7 @@ const Head = styled.div`
 const Label = styled.span`
   display: block;
   color: #52647c;
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -68,7 +68,7 @@ const Featured = styled.article`
 
 const FeaturedMeta = styled.span`
   color: rgba(45, 58, 76, 0.34);
-  font-size: 0.78rem;
+  font-size: 0.94rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -86,13 +86,13 @@ const FeaturedTitle = styled.h3`
 const FeaturedBody = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.98rem;
+  font-size: 1.1rem;
   line-height: 1.76;
 `;
 
 const FeaturedSummary = styled(FeaturedBody)`
   color: #172337;
-  font-size: 1rem;
+  font-size: 1.14rem;
   font-weight: 800;
 `;
 
@@ -101,7 +101,7 @@ const FeaturedHint = styled.span`
   padding-top: 18px;
   border-top: 1px solid #e2e6ec;
   color: #4b596b;
-  font-size: 0.84rem;
+  font-size: 0.98rem;
   font-weight: 800;
 `;
 
@@ -125,7 +125,7 @@ const Item = styled.article`
 
 const ItemCategory = styled.span`
   color: #52647c;
-  font-size: 0.74rem;
+  font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -143,7 +143,7 @@ const ItemTitle = styled.h4`
 const ItemBody = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.94rem;
+  font-size: 1.06rem;
   line-height: 1.72;
 `;
 

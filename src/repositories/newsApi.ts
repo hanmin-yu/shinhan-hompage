@@ -1,5 +1,6 @@
 import { resolveNewsAdminMode } from '../config/newsAdminMode';
 import type { NewsletterRecord, ShinhanNewsRecord } from '../types/site';
+import { getNewsletterPdfFileName, getNewsletterPdfUrl, withNewsletterTitleBrandRecord } from '../utils/newsletter';
 import {
   getNewsletterRecord as getStaticNewsletterRecord,
   getNewsletterRecords as getStaticNewsletterRecords,
@@ -26,6 +27,16 @@ function mergeRecordsById<T extends { id: string }>(baseItems: T[], overrideItem
   });
 
   return [...records.values()];
+}
+
+function normalizeNewsletterRecord(item: NewsletterRecord): NewsletterRecord {
+  const brandedItem = withNewsletterTitleBrandRecord(item);
+
+  return {
+    ...brandedItem,
+    downloadUrl: getNewsletterPdfUrl(item.downloadUrl ?? item.downloadHref, item.previewManifestUrl) ?? undefined,
+    downloadFileName: getNewsletterPdfFileName(brandedItem.title),
+  };
 }
 
 async function fetchJson<T>(url: string) {
@@ -84,9 +95,9 @@ export async function loadNewsletterRecords() {
 
   try {
     const payload = await fetchJson<NewsListResponse<NewsletterRecord>>('/api/news/newsletters');
-    return mergeRecordsById(staticItems, payload.items ?? []).sort((left, right) =>
-      right.publishedAt.localeCompare(left.publishedAt),
-    );
+    return mergeRecordsById(staticItems, payload.items ?? [])
+      .map(normalizeNewsletterRecord)
+      .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt));
   } catch {
     return staticItems;
   }
@@ -98,7 +109,7 @@ export async function loadNewsletterRecord(newsletterId: string) {
   }
 
   try {
-    return await fetchJson<NewsletterRecord>(`/api/news/newsletters/${newsletterId}`);
+    return normalizeNewsletterRecord(await fetchJson<NewsletterRecord>(`/api/news/newsletters/${newsletterId}`));
   } catch {
     return getStaticNewsletterRecord(newsletterId);
   }

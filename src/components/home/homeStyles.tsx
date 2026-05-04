@@ -852,7 +852,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   text-align: center;
   color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.58rem;
+  font-size: 1.72rem;
   font-weight: 900;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -862,18 +862,18 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   @media (max-width: 1680px) {
     gap: 8px;
     padding: 0 14px;
-    font-size: 1.42rem;
+    font-size: 1.54rem;
   }
 
   @media (max-width: 1480px) {
     padding: 0 9px;
-    font-size: 1.22rem;
+    font-size: 1.32rem;
   }
 
   @media (max-width: 1380px) {
     min-height: 78px;
     padding: 0 7px;
-    font-size: 0.92rem;
+    font-size: 1.02rem;
   }
 
   &::before {
@@ -1175,16 +1175,16 @@ const megaMenuLinkStyles = `
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 54px;
-  padding: 0 18px;
+  min-height: 62px;
+  padding: 0 22px;
   border-radius: 0;
   border: 1px solid transparent;
   border-bottom-color: rgba(15, 54, 112, 0.08);
   background: #ffffff;
   color: ${palette.blueInk};
-  font-size: 1.04rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0;
   text-align: left;
   white-space: normal;
   word-break: keep-all;

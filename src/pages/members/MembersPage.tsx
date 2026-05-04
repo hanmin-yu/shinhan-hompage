@@ -33,15 +33,17 @@ export function MembersPage() {
         <P.Grid columns={3}>
           {executives.map((member) => (
             <ExecutiveCard key={member.name} tabIndex={0}>
+              <ProfileHeader>
+                <Name>{tx(member.name)}</Name>
+                <Title>{tx(member.title)}</Title>
+                <Division>{tx(member.department)}</Division>
+              </ProfileHeader>
               {member.image ? (
                 <PortraitFrame>
                   <Portrait src={member.image} alt={tx(member.name)} $position={member.imagePosition} />
                 </PortraitFrame>
               ) : null}
               <Content>
-                <Name>{tx(member.name)}</Name>
-                <Title>{tx(member.title)}</Title>
-                <Division>{tx(member.department)}</Division>
                 {member.practice ? (
                   <Practice>
                     <Label>{t('업무분야', 'Practice')}</Label>
@@ -138,6 +140,15 @@ const ExecutiveCard = styled.article`
   }
 `;
 
+const ProfileHeader = styled.div`
+  display: grid;
+  gap: 6px;
+  padding: 24px 22px 20px;
+  border-bottom: 1px solid rgba(18, 72, 143, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 251, 255, 0.92));
+  text-align: center;
+`;
+
 const PortraitFrame = styled.div`
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -170,7 +181,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 22px 22px 24px;
+  padding: 20px 22px 24px;
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 
   ${ExecutiveCard}:hover &,
