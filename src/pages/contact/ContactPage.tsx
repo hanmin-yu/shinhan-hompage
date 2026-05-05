@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { utilitySubnav } from '../../config/utilitySubnav';
@@ -20,22 +21,45 @@ export function ContactPage() {
         config={utilitySubnav}
         title="문의"
         titleEn="Contact"
-        heroImage="/hero/homepage/office-blue-sky.jpg"
+        heroImage="/hero/homepage/office-tower-clear-sky.jpg"
         heroPosition="center 42%"
       />
 
       <ContactSection>
         <SectionInner>
+          <E.Statement data-reveal>
+            <div>
+              <E.Eyebrow>Contact Us</E.Eyebrow>
+              <E.Title>{t('문의', 'Contact')}</E.Title>
+            </div>
+            <E.LeadGrid>
+              <E.Lead>
+                {t(
+                  '신한관세법인의 대표 연락 정보입니다. 문의가 필요하신 경우 아래 연락처 또는 온라인 문의 양식을 이용해주세요.',
+                  'Primary contact details for Shinhan Customs Service. Use the contact information or online inquiry form below.',
+                )}
+              </E.Lead>
+              <E.FactGrid>
+                <E.Fact>
+                  <E.FactValue>Tel</E.FactValue>
+                  <E.FactLabel>{officePhone}</E.FactLabel>
+                </E.Fact>
+                <E.Fact>
+                  <E.FactValue>Email</E.FactValue>
+                  <E.FactLabel>{siteContact.email}</E.FactLabel>
+                </E.Fact>
+                <E.Fact>
+                  <E.FactValue>HQ</E.FactValue>
+                  <E.FactLabel>{t('서울본사', 'Seoul HQ')}</E.FactLabel>
+                </E.Fact>
+              </E.FactGrid>
+            </E.LeadGrid>
+          </E.Statement>
+
           <ContactGrid>
             <InfoPanel>
-              <P.Kicker>Contact Us</P.Kicker>
-              <P.SectionTitle>{t('문의', 'Contact')}</P.SectionTitle>
-              <P.Lead>
-                {t(
-                  '신한관세법인의 대표 연락 정보입니다. 문의가 필요하신 경우 아래 연락처로 편하게 연락해주세요.',
-                  'Primary contact details for Shinhan Customs Service.',
-                )}
-              </P.Lead>
+              <E.Eyebrow>Contact Information</E.Eyebrow>
+              <PanelTitle>{t('대표 연락처', 'Main Contact')}</PanelTitle>
 
               <InfoActions>
                 <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
@@ -70,7 +94,7 @@ export function ContactPage() {
 
             <InquiryPanel>
               <InquiryHeader>
-                <P.Kicker>Online Inquiry</P.Kicker>
+                <E.Eyebrow>Online Inquiry</E.Eyebrow>
                 <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
                 <InquiryText>
                   {t(
@@ -124,12 +148,8 @@ export function ContactPage() {
   );
 }
 
-const ContactSection = styled(P.PageSection)`
+const ContactSection = styled(E.Section)`
   background: #ffffff;
-
-  &::after {
-    display: none;
-  }
 `;
 
 const SectionInner = styled(P.PageContainer)`
@@ -141,7 +161,7 @@ const SectionInner = styled(P.PageContainer)`
 const ContactGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  gap: clamp(24px, 4vw, 58px);
   align-items: stretch;
 
   @media (max-width: 1024px) {
@@ -149,12 +169,21 @@ const ContactGrid = styled.div`
   }
 `;
 
-const InfoPanel = styled(P.Panel)`
+const InfoPanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 12px;
   height: 100%;
-  padding: clamp(28px, 3vw, 40px);
+  padding: clamp(28px, 3vw, 40px) 0;
+`;
+
+const PanelTitle = styled.h2`
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.8rem, 3.2vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
 `;
 
 const InfoActions = styled(P.HeroActions)`
@@ -167,7 +196,7 @@ const InfoActionLink = styled.a`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 6px;
+  border-radius: 0;
   border: 1px solid rgba(18, 78, 160, 0.16);
   background: rgba(255, 255, 255, 0.94);
   color: #1a4f9a;
@@ -186,10 +215,9 @@ const InfoItem = styled.div`
   grid-template-columns: 118px minmax(0, 1fr);
   gap: 12px;
   align-items: start;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(18, 72, 143, 0.09);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 255, 0.96));
+  padding: 14px 0;
+  border-bottom: 1px solid #d8dee8;
+  background: transparent;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -219,15 +247,12 @@ const InfoValueLink = styled.a`
   word-break: break-word;
 `;
 
-const InquiryPanel = styled(P.Panel)`
+const InquiryPanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 20px;
   height: 100%;
-  padding: clamp(24px, 3vw, 34px);
-  background:
-    radial-gradient(circle at top right, rgba(31, 93, 184, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(244, 249, 255, 0.98));
+  padding: clamp(24px, 3vw, 34px) 0;
 `;
 
 const InquiryHeader = styled.div`

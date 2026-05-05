@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import styled from '@emotion/styled';
 
 import { NewsListPagination } from '../../components/site/NewsListPagination';
 import { NewsListTable, type NewsListTableRow } from '../../components/site/NewsListTable';
@@ -13,6 +14,10 @@ import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
+const ShinhanNewsStartSection = styled(NewsFlushPageSection)`
+  padding-top: clamp(20px, 2.6vw, 36px);
+`;
+
 function normalizeSearch(value: string) {
   return value.toLowerCase().replace(/\s+/g, '');
 }
@@ -22,20 +27,11 @@ export function ShinhanNewsPage() {
   const newsSubnav = sectionSubnav.news;
   const { items, loading } = useShinhanNewsRecords();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'flash'>('all');
   const [currentPage, setCurrentPage] = useState(1);
-
-  const categoryOptions = useMemo(
-    () => [
-      { value: 'all', label: t('전체', 'All') },
-      { value: 'flash', label: 'FLASH' },
-    ],
-    [t],
-  );
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery]);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
@@ -46,10 +42,6 @@ export function ShinhanNewsPage() {
           return false;
         }
 
-        if (selectedCategory !== 'all' && item.category !== selectedCategory) {
-          return false;
-        }
-
         if (!normalizedQuery) {
           return true;
         }
@@ -57,7 +49,7 @@ export function ShinhanNewsPage() {
         const target = normalizeSearch([item.title, item.summary, item.categoryLabel, item.publishedAt].join(' '));
         return target.includes(normalizedQuery);
       });
-  }, [items, searchQuery, selectedCategory]);
+  }, [items, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -105,17 +97,13 @@ export function ShinhanNewsPage() {
         </P.PageContainer>
       </NewsCompactHeroSection>
 
-      <NewsFlushPageSection>
+      <ShinhanNewsStartSection>
         <P.PageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
             searchPlaceholder={t('제목, 요약, 구분, 날짜로 검색', 'Search by title, summary, category, or date')}
             onSearchChange={setSearchQuery}
-            chipLabel={t('구분 필터', 'Category Filter')}
-            chipOptions={categoryOptions}
-            selectedChip={selectedCategory}
-            onChipChange={(value) => setSelectedCategory(value as typeof selectedCategory)}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
           />
           {loading ? <P.CardText>{t('소식을 불러오는 중입니다.', 'Loading news items.')}</P.CardText> : null}
@@ -135,7 +123,7 @@ export function ShinhanNewsPage() {
             onPageChange={setCurrentPage}
           />
         </P.PageContainer>
-      </NewsFlushPageSection>
+      </ShinhanNewsStartSection>
     </>
   );
 }

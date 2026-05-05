@@ -78,15 +78,27 @@ const HeroLead = styled.p`
 
 const ServiceFacts = styled.div`
   display: grid;
-  border-top: 1px solid #d5dbe4;
-  border-bottom: 1px solid #d5dbe4;
+  border: 1px solid #d5dbe4;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96)),
+    #ffffff;
+  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
+  overflow: hidden;
 `;
 
 const ServiceFact = styled.div`
+  position: relative;
   display: grid;
-  gap: 8px;
-  padding: 18px 0;
+  gap: 12px;
+  padding: 22px 22px 20px;
   border-bottom: 1px solid #dbe0e8;
+
+  &::before {
+    content: '';
+    width: 34px;
+    height: 3px;
+    background: linear-gradient(90deg, #1d5fb6, #1aa398);
+  }
 
   &:last-of-type {
     border-bottom: 0;
@@ -95,15 +107,18 @@ const ServiceFact = styled.div`
 
 const ServiceFactValue = styled.strong`
   color: #172337;
-  font-size: clamp(1.24rem, 2vw, 1.72rem);
+  font-size: clamp(1.24rem, 1.8vw, 1.62rem);
   font-weight: 800;
   line-height: 1.12;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
 `;
 
 const ServiceFactLabel = styled.span`
   color: #687385;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  overflow-wrap: anywhere;
 `;
 
 const SubtitleText = styled.p`

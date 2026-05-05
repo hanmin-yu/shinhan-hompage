@@ -46,24 +46,6 @@ const Inner = styled(S.Container)`
   gap: 32px;
 `;
 
-const Label = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: #21549a;
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 28px;
-    height: 1px;
-    background: rgba(41, 93, 173, 0.54);
-  }
-`;
-
 const Title = styled.h2`
   margin: 10px 0 0;
   color: #103a72;
@@ -207,7 +189,6 @@ export function StrengthSection() {
     <Section>
       <Inner data-reveal>
         <div>
-          <Label>Shinhan Strength</Label>
           <Title>{t('신한의 강점', 'Why Shinhan')}</Title>
         </div>
 

@@ -22,7 +22,7 @@ export function NewsSection() {
 
         <S.NewsletterGrid>
           <S.NewsletterCard>
-            <S.CaseCategory style={{ color: '#04325a' }}>{t('이슈 리포트', 'Issue Report')}</S.CaseCategory>
+            <S.CaseCategory style={{ color: '#04325a' }}>Trade Insights</S.CaseCategory>
             <S.CardHeadline>{tx(featuredItem.title)}</S.CardHeadline>
             <S.CardText>{tx(featuredItem.summary)}</S.CardText>
             <S.LandingLink href="/news/issue-report">{t('자료 보기', 'View Resource')}</S.LandingLink>

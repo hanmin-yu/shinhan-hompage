@@ -365,7 +365,7 @@ async function buildIssueReports(): Promise<IssueReportApiResponse> {
   );
 
   if (normalizedReports.length === 0) {
-    throw new Error('Failed to collect any issue reports');
+    throw new Error('Failed to collect any Trade Insights');
   }
 
   return {

@@ -2,36 +2,63 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { useNewsletterRecords, useShinhanNewsRecords } from '../../../hooks/useNewsContent';
-import { getNewsletterRecords, getShinhanNewsRecords } from '../../../repositories/newsRepository';
+import { useNewsletterRecords } from '../../../hooks/useNewsContent';
+import { getNewsletterRecords } from '../../../repositories/newsRepository';
 import { useI18n } from '../../../i18n/useI18n';
-import type { NewsletterRecord, ShinhanNewsRecord } from '../../../types/site';
-import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../../utils/shinhanNews';
+import type { NewsletterRecord } from '../../../types/site';
 import * as S from '../homeStyles';
 
-const newsVisuals = {
-  flash: '/hero/issue-report-ai-insight.png',
-  newsletter: '/hero/homepage/shinhan-glass-facade.jpg',
-};
+const newsletterVisuals = [
+  '/hero/trade-insights-ai-1.png',
+  '/hero/trade-insights-ai-2.png',
+  '/hero/trade-insights-ai-3.png',
+  '/hero/trade-insights-ai-4.png',
+  '/hero/trade-insights-ai-5.png',
+];
 
 const Section = styled.section`
   position: relative;
-  padding: clamp(98px, 10vw, 142px) 0;
+  padding: 104px 0 78px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(15, 43, 89, 0.055) 1px, transparent 1px) 0 0 / 20vw 100%,
-    radial-gradient(circle at 18% 18%, rgba(33, 101, 193, 0.1), transparent 30%),
-    linear-gradient(135deg, #eef5fa 0%, #f8fbfd 48%, #eaf3f8 100%);
+    linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
+    content: 'SHINHAN REPORT';
+    position: absolute;
+    left: 24px;
+    top: 26px;
+    color: rgba(15, 35, 62, 0.055);
+    font-size: clamp(3.6rem, 8vw, 8.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  &::after {
     content: '';
     position: absolute;
-    left: 0;
-    top: 24%;
-    width: 4px;
-    height: 142px;
-    background: linear-gradient(180deg, rgba(28, 90, 169, 0.1), #1c8ec2, rgba(28, 90, 169, 0.1));
+    right: -120px;
+    top: 42px;
+    width: min(42vw, 560px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url('/brand-mark-shinhan.png') center / contain no-repeat;
+    opacity: 0.034;
+    transform: rotate(8deg);
+  }
+
+  @media (max-width: 860px) {
+    padding: 82px 0;
+
+    &::after {
+      width: 82vw;
+      right: -42vw;
+      top: 120px;
+    }
   }
 `;
 
@@ -39,55 +66,27 @@ const Inner = styled(S.Container)`
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(220px, 0.26fr) minmax(0, 1fr);
-  gap: clamp(34px, 5vw, 78px);
-  align-items: center;
+  gap: 34px;
+`;
 
-  @media (max-width: 900px) {
+const Head = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+
+  @media (max-width: 780px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const Rail = styled.div`
-  display: grid;
-  gap: 34px;
-  align-content: center;
-  min-height: 520px;
-`;
-
-const Label = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: #1c5aa9;
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 36px;
-    height: 1px;
-    background: rgba(33, 101, 193, 0.48);
-  }
-`;
-
 const Title = styled.h2`
-  margin: 14px 0 0;
-  color: #2c3137;
-  font-size: clamp(3rem, 5.6vw, 6.4rem);
-  font-weight: 900;
+  margin: 12px 0 0;
+  color: #222a34;
+  font-size: clamp(2.8rem, 7vw, 6.2rem);
+  font-weight: 800;
   line-height: 0.92;
-  letter-spacing: -0.065em;
-`;
-
-const HeadText = styled.p`
-  max-width: 320px;
-  margin: 18px 0 0;
-  color: #5c6d7c;
-  font-size: 1.14rem;
-  line-height: 1.7;
+  letter-spacing: 0.04em;
 `;
 
 const Controls = styled.div`
@@ -95,29 +94,56 @@ const Controls = styled.div`
   gap: 16px;
 `;
 
-const ControlButton = styled.button`
+const HeadActions = styled.div`
+  display: grid;
+  justify-items: end;
+  gap: 18px;
+
+  @media (max-width: 780px) {
+    justify-items: start;
+  }
+`;
+
+const ControlButton = styled.button<{ $direction: 'prev' | 'next' }>`
   display: inline-grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  border: 1px solid rgba(15, 43, 89, 0.1);
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(28, 90, 169, 0.14);
   border-radius: 50%;
-  color: #6b7481;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 18px 34px rgba(15, 43, 89, 0.08);
-  font-size: 2rem;
+  color: #164f99;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(239, 247, 252, 0.88));
+  box-shadow:
+    0 18px 34px rgba(15, 43, 89, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   cursor: pointer;
   transition:
     transform 0.22s ease,
-    color 0.22s ease,
+    background 0.22s ease,
     border-color 0.22s ease,
     box-shadow 0.22s ease;
 
+  &::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: ${({ $direction }) => ($direction === 'prev' ? 'rotate(-135deg) translate(-1px, -1px)' : 'rotate(45deg) translate(-1px, 1px)')};
+    transition: transform 0.22s ease;
+  }
+
   &:hover {
     transform: translateY(-3px);
-    color: #1c5aa9;
-    border-color: rgba(28, 90, 169, 0.24);
+    border-color: rgba(28, 90, 169, 0.34);
+    background:
+      linear-gradient(145deg, #ffffff, rgba(232, 244, 252, 0.96));
     box-shadow: 0 22px 42px rgba(15, 43, 89, 0.13);
+  }
+
+  &:hover::before {
+    transform: ${({ $direction }) => ($direction === 'prev' ? 'rotate(-135deg) translate(2px, 2px)' : 'rotate(45deg) translate(2px, -2px)')};
   }
 `;
 
@@ -145,10 +171,10 @@ const Carousel = styled.div`
 `;
 
 const Viewport = styled.div`
-  --card-width: clamp(390px, 33vw, 540px);
-  --card-gap: clamp(44px, 5vw, 82px);
+  --card-width: clamp(360px, 31vw, 500px);
+  --card-gap: clamp(28px, 4vw, 58px);
   overflow: hidden;
-  padding: 36px 0 74px;
+  padding: 22px 0 64px;
 
   @media (max-width: 780px) {
     --card-width: min(84vw, 420px);
@@ -173,7 +199,7 @@ const Track = styled.div<{ $activeIndex: number }>`
 const Card = styled(Link)<{ $accent: string; $visual: string }>`
   position: relative;
   flex: 0 0 var(--card-width);
-  min-height: 430px;
+  height: 530px;
   color: #30343a;
   text-decoration: none;
   scroll-snap-align: start;
@@ -203,11 +229,11 @@ const CardPanel = styled.article`
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 22px;
-  min-height: 316px;
+  grid-template-rows: auto auto minmax(64px, 1fr) auto;
+  gap: 18px;
+  height: 398px;
   margin: 96px 30px 0;
-  padding: 46px 42px 30px;
+  padding: 42px 42px 30px;
   border: 1px solid rgba(15, 43, 89, 0.08);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 253, 0.9)),
@@ -230,8 +256,9 @@ const CardPanel = styled.article`
   }
 
   @media (max-width: 640px) {
+    height: 386px;
     margin-inline: 16px;
-    padding: 36px 28px 26px;
+    padding: 34px 28px 26px;
   }
 `;
 
@@ -256,9 +283,9 @@ const CardDate = styled.span`
 const CardTitle = styled.strong`
   display: -webkit-box;
   color: #33373c;
-  font-size: clamp(1.46rem, 2vw, 2rem);
+  font-size: clamp(1.34rem, 1.72vw, 1.76rem);
   font-weight: 850;
-  line-height: 1.42;
+  line-height: 1.36;
   letter-spacing: -0.035em;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -269,8 +296,8 @@ const CardText = styled.p`
   display: -webkit-box;
   margin: 0;
   color: #637180;
-  font-size: 1.04rem;
-  line-height: 1.62;
+  font-size: 0.98rem;
+  line-height: 1.58;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -312,29 +339,13 @@ type CarouselItem = NewsListItem & {
   visual: string;
 };
 
-function buildShinhanNewsItems(items: ShinhanNewsRecord[], category: 'flash' | 'seminar'): NewsListItem[] {
-  return sortShinhanNewsRecords(items)
-    .filter((item) => item.category === category)
-    .slice(0, 3)
-    .map((item) => ({
-      id: item.id,
-      category: category === 'seminar' ? 'SEMINAR' : getShinhanNewsSourceLabel(item, 'SEMINAR'),
-      titleKo: item.title,
-      titleEn: item.titleEn,
-      summaryKo: item.summary,
-      summaryEn: item.summaryEn,
-      publishedAt: item.publishedAt,
-      href: category === 'seminar' ? `/news/seminar/${item.id}` : `/news/shinhan-news/${item.id}`,
-    }));
-}
-
 function buildNewsletterItems(items: NewsletterRecord[]): NewsListItem[] {
   return [...items]
     .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
-    .slice(0, 3)
+    .slice(0, 10)
     .map((item) => ({
       id: item.id,
-      category: item.language ?? 'Newsletter',
+      category: item.language ?? 'Shinhan Report',
       titleKo: item.title,
       titleEn: item.titleEn,
       summaryKo: item.summary,
@@ -346,28 +357,17 @@ function buildNewsletterItems(items: NewsletterRecord[]): NewsListItem[] {
 
 export function ShinhanUpdatesSection() {
   const { t } = useI18n();
-  const { items: dynamicShinhanNewsItems } = useShinhanNewsRecords();
   const { items: dynamicNewsletterItems } = useNewsletterRecords();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const shinhanNewsItems = dynamicShinhanNewsItems.length > 0 ? dynamicShinhanNewsItems : getShinhanNewsRecords();
   const newsletterItems = dynamicNewsletterItems.length > 0 ? dynamicNewsletterItems : getNewsletterRecords();
-  const flashList = buildShinhanNewsItems(shinhanNewsItems, 'flash');
   const newsletterList = buildNewsletterItems(newsletterItems);
-  const carouselItems: CarouselItem[] = [
-    ...flashList.map((item) => ({
-      ...item,
-      accent: '#1c5aa9',
-      groupLabel: t('신한 NEWS', 'Shinhan NEWS'),
-      visual: newsVisuals.flash,
-    })),
-    ...newsletterList.map((item) => ({
+  const carouselItems: CarouselItem[] = newsletterList.map((item, index) => ({
       ...item,
       accent: '#123f85',
-      groupLabel: t('소식지', 'Newsletter'),
-      visual: newsVisuals.newsletter,
-    })),
-  ];
+      groupLabel: t('소식지', 'Shinhan Report'),
+      visual: newsletterVisuals[index % newsletterVisuals.length],
+    }));
   const normalizedActiveIndex = carouselItems.length > 0 ? activeIndex % carouselItems.length : 0;
 
   const moveSlide = (direction: 'prev' | 'next') => {
@@ -382,28 +382,19 @@ export function ShinhanUpdatesSection() {
 
   return (
     <Section>
-      <Inner data-reveal>
-        <Rail>
+      <Inner>
+        <Head>
           <div>
-            <Label>Shinhan Updates</Label>
-            <Title>{t('신한 소식', 'Shinhan Updates')}</Title>
-            <HeadText>
-              {t(
-                '신한 NEWS와 소식지를 가로형 카드로 넘겨보며 확인할 수 있습니다.',
-                'Browse Shinhan NEWS and newsletters through a horizontal editorial carousel.',
-              )}
-            </HeadText>
+            <Title>{t('소식지', 'Shinhan Report')}</Title>
           </div>
-          <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
-            <ControlButton type="button" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')}>
-              ‹
-            </ControlButton>
-            <ControlButton type="button" aria-label={t('다음 소식', 'Next update')} onClick={() => moveSlide('next')}>
-              ›
-            </ControlButton>
-          </Controls>
-          <ViewAll to="/news">{t('소식 전체보기', 'View all news')}</ViewAll>
-        </Rail>
+          <HeadActions>
+            <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
+              <ControlButton type="button" $direction="prev" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')} />
+              <ControlButton type="button" $direction="next" aria-label={t('다음 소식', 'Next update')} onClick={() => moveSlide('next')} />
+            </Controls>
+            <ViewAll to="/news/newsletter">{t('소식지 전체보기', 'View all Shinhan Reports')}</ViewAll>
+          </HeadActions>
+        </Head>
 
         <Carousel>
           <Viewport>
@@ -423,7 +414,7 @@ export function ShinhanUpdatesSection() {
                     </CardMeta>
                     <CardTitle>{t(item.titleKo, item.titleEn)}</CardTitle>
                     <CardText>{t(item.summaryKo, item.summaryEn)}</CardText>
-                    <CardFoot>{item.category}</CardFoot>
+                    <CardFoot>{item.groupLabel}</CardFoot>
                   </CardPanel>
                 </Card>
               ))}

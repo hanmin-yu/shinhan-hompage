@@ -26,15 +26,6 @@ const Head = styled.div`
   gap: 16px;
 `;
 
-const Label = styled.span`
-  display: block;
-  color: #52647c;
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-`;
-
 const Title = styled.h2`
   max-width: 860px;
   margin: 12px 0 0;
@@ -168,7 +159,6 @@ export function ItSection() {
       <Inner data-reveal>
         <Head>
           <div>
-            <Label>IT Services</Label>
             <Title>{t('관세·IT 융합 서비스', 'Customs + IT Services')}</Title>
           </div>
         </Head>

@@ -28,7 +28,8 @@ export const koToEnTextMap: Record<string, string> = {
   '소식/자료': 'News & Insights',
   '소식·자료': 'News & Resources',
   '소식/자료 전체보기': 'All News & Resources',
-  '이슈 리포트': 'Issue Report',
+  'Trade Insights': 'Trade Insights',
+  'Trade Insights 전체보기': 'View all Trade Insights',
   '신한 NEWS': 'Shinhan NEWS',
   소식지: 'Newsletter',
   세미나: 'Seminar',
@@ -52,7 +53,7 @@ export const koToEnTextMap: Record<string, string> = {
   '대표 구성원': 'Key Professionals',
   '핵심 업무분야': 'Core Service Areas',
   '신한의 강점': 'Why Shinhan',
-  '대표 이슈 리포트 / 소식': 'Featured Report / News',
+  '대표 Trade Insights / 소식': 'Featured Trade Insights / News',
   '관세·IT 융합 서비스': 'Customs + IT Services',
   '사무소 / 문의': 'Offices / Contact',
   '지사 미니맵': 'Office Mini Map',
@@ -139,8 +140,8 @@ export const koToEnTextMap: Record<string, string> = {
     'Our service framework spans import/export clearance, quarantine & requirements, consulting, and specialized services tailored to each business.',
   '핵심 컨설팅 카테고리를 기반으로 조사·검증·불복·환급 등 세부 과제를 구조적으로 지원합니다.':
     'Based on core consulting categories, we provide structured support for audits, verification, appeals, and refunds.',
-  '이슈 리포트, 신한 NEWS, 소식지 3개 카테고리 중심으로 핵심 자료 접근성을 단순화했습니다.':
-    'Access is streamlined into three core categories: Issue Reports, Shinhan NEWS, and Newsletters.',
+  'Trade Insights, 신한 NEWS, 소식지 3개 카테고리 중심으로 핵심 자료 접근성을 단순화했습니다.':
+    'Access is streamlined into three core categories: Trade Insights, Shinhan NEWS, and Newsletters.',
   '기존 FLASH와 세미나 자료를 하나의 뉴스 피드로 통합해 운영합니다.':
     'Legacy FLASH updates and seminar materials are integrated into one unified news feed.',
   '통관본부, 컨설팅본부, IT/운영지원 조직이 유기적으로 연결되어 고객 과제를 지원합니다.':
@@ -521,8 +522,8 @@ export const koToEnTextMap: Record<string, string> = {
   '신한 IT팀은 통관 업무와 시스템을 연결해 자동화, 데이터 분석, 운영 인프라 관리를 담당합니다.':
     'The Shinhan IT team connects customs operations and systems for automation, data analytics, and infrastructure management.',
   '주요 기능 보기': 'View key capabilities',
-  '이슈 리포트, 신한 NEWS, 소식지를 확인할 수 있습니다.':
-    'You can review issue reports, Shinhan NEWS, and newsletters.',
+  'Trade Insights, 신한 NEWS, 소식지를 확인할 수 있습니다.':
+    'You can review Trade Insights, Shinhan NEWS, and newsletters.',
   '국내 지사와 해외 법인 정보, 문의 채널을 확인할 수 있습니다.':
     'You can check domestic and overseas offices with contact channels.',
   '전화 또는 온라인 문의로 필요한 상담 채널을 안내해드립니다.':

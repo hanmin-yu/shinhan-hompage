@@ -111,33 +111,30 @@ export const GlobalStyle = () => (
       }
 
       [data-reveal] {
-        opacity: 0;
-        filter: blur(18px) saturate(0.9);
-        transform: translate3d(0, 72px, 0) scale(0.94) rotateX(7deg);
+        opacity: 1;
+        filter: none;
+        transform: none;
         transform-origin: center top;
-        transition:
-          opacity 0.92s cubic-bezier(0.18, 0.9, 0.28, 1),
-          filter 0.92s cubic-bezier(0.18, 0.9, 0.28, 1),
-          transform 0.92s cubic-bezier(0.18, 0.9, 0.28, 1);
-        will-change: opacity, filter, transform;
+        transition: none;
+        will-change: auto;
       }
 
       [data-reveal].is-visible {
         opacity: 1;
-        filter: blur(0) saturate(1);
-        transform: translate3d(0, 0, 0) scale(1) rotateX(0);
+        filter: none;
+        transform: none;
       }
 
       [data-reveal='slide-left'] {
-        transform: translate3d(-96px, 46px, 0) scale(0.95) rotateY(-8deg);
+        transform: none;
       }
 
       [data-reveal='slide-right'] {
-        transform: translate3d(96px, 46px, 0) scale(0.95) rotateY(8deg);
+        transform: none;
       }
 
       [data-reveal='zoom'] {
-        transform: translate3d(0, 42px, 0) scale(0.88);
+        transform: none;
       }
 
       @keyframes bodyRender {
@@ -320,6 +317,17 @@ export const Header = styled.header<{ $overHero?: boolean }>`
     box-shadow 0.24s ease,
     backdrop-filter 0.24s ease;
 
+  > div > a:first-of-type span[data-brand-established='true'],
+  > div > a:first-of-type span[data-brand-word='true'],
+  > div > a:first-of-type span[data-brand-sub='true'] {
+    color: ${({ $overHero }) => ($overHero ? '#ffffff' : palette.blueDeep)};
+  }
+
+  > div > a:first-of-type span[data-brand-established='true'],
+  > div > a:first-of-type span[data-brand-sub='true'] {
+    color: ${({ $overHero }) => ($overHero ? 'rgba(255, 255, 255, 0.92)' : '#5d7493')};
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -345,10 +353,6 @@ export const Header = styled.header<{ $overHero?: boolean }>`
   ${({ $overHero }) =>
     $overHero
       ? `
-    > div > a:first-of-type img {
-      filter: drop-shadow(0 10px 22px rgba(0, 24, 70, 0.46));
-    }
-
     > div > a:first-of-type strong {
       color: rgba(255, 255, 255, 0.98);
       text-shadow: 0 4px 14px rgba(0, 24, 70, 0.7);
@@ -359,8 +363,8 @@ export const Header = styled.header<{ $overHero?: boolean }>`
       text-shadow: 0 3px 10px rgba(0, 24, 70, 0.62);
     }
 
-    > div > a:first-of-type span span:first-of-type {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.68), rgba(151, 213, 255, 0.34));
+    > div > a:first-of-type span[data-brand-established='true'] {
+      background: transparent;
     }
 
     nav > div > a {
@@ -381,12 +385,15 @@ export const Header = styled.header<{ $overHero?: boolean }>`
     }
 
     a[href='/contact'] {
-      border-color: rgba(255, 255, 255, 0.72);
+      border-color: rgba(255, 255, 255, 0.9);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
-        linear-gradient(135deg, rgba(24, 111, 221, 0.82), rgba(6, 57, 132, 0.84));
-      color: #ffffff;
-      box-shadow: 0 16px 34px rgba(0, 24, 70, 0.34);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(229, 241, 255, 0.9)),
+        #ffffff;
+      color: #123f85;
+      text-shadow: none;
+      box-shadow:
+        0 18px 36px rgba(0, 24, 70, 0.26),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.54);
       backdrop-filter: blur(12px);
     }
 
@@ -415,26 +422,23 @@ export const Header = styled.header<{ $overHero?: boolean }>`
       height: 76px;
     }
 
-    &:has(nav > div:hover) > div > a:first-of-type img,
-    &:has(nav > div:focus-within) > div > a:first-of-type img {
-      filter: none;
-    }
-
-    &:has(nav > div:hover) > div > a:first-of-type strong,
-    &:has(nav > div:focus-within) > div > a:first-of-type strong {
+    &:has(nav > div:hover) > div > a:first-of-type span[data-brand-word='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type span[data-brand-word='true'] {
       color: ${palette.blueDeep};
       text-shadow: none;
     }
 
-    &:has(nav > div:hover) > div > a:first-of-type span,
-    &:has(nav > div:focus-within) > div > a:first-of-type span {
-      color: ${palette.textMuted};
+    &:has(nav > div:hover) > div > a:first-of-type span[data-brand-established='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type span[data-brand-established='true'],
+    &:has(nav > div:hover) > div > a:first-of-type span[data-brand-sub='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type span[data-brand-sub='true'] {
+      color: #5d7493;
       text-shadow: none;
     }
 
-    &:has(nav > div:hover) > div > a:first-of-type span span:first-of-type,
-    &:has(nav > div:focus-within) > div > a:first-of-type span span:first-of-type {
-      background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(23, 159, 150, 0.3));
+    &:has(nav > div:hover) > div > a:first-of-type span[data-brand-established='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type span[data-brand-established='true'] {
+      background: transparent;
     }
 
     &:has(nav > div:hover) nav > div > a,
@@ -568,6 +572,10 @@ export const HeaderInner = styled(Container)`
     gap: 12px;
   }
 
+  @media (max-width: 1400px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   @media (max-width: 768px) {
     width: calc(100% - 28px);
   }
@@ -625,27 +633,130 @@ export const Brand = styled(Link)`
   }
 `;
 
-export const HeaderBrandImage = styled.img`
-  display: block;
-  width: auto;
-  max-width: 460px;
-  height: auto;
-  max-height: 72px;
-  object-fit: contain;
+export const HeaderLogoFrame = styled.span`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(285px, 24vw);
+  min-height: 58px;
+  transform: translateY(-1px);
 
   @media (max-width: 1320px) {
-    max-width: 340px;
-    max-height: 58px;
+    width: 224px;
+    min-height: 52px;
   }
 
   @media (max-width: 980px) {
-    max-width: 300px;
-    max-height: 52px;
+    width: 199px;
   }
 
   @media (max-width: 520px) {
-    max-width: 220px;
-    max-height: 40px;
+    width: 153px;
+    min-height: 42px;
+  }
+`;
+
+export const HeaderBrandEstablished = styled.span`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: 122px;
+  margin-bottom: -1px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-shadow:
+    0 0 1px rgba(5, 13, 25, 0.9),
+    0 3px 8px rgba(5, 13, 25, 0.56),
+    0 14px 28px rgba(0, 24, 70, 0.32);
+  transition:
+    color 0.22s ease,
+    text-shadow 0.22s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    width: 78px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.72;
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: 1320px) {
+    font-size: 0.68rem;
+    margin-left: 96px;
+
+    &::before {
+      width: 58px;
+      right: calc(100% + 8px);
+    }
+  }
+
+  @media (max-width: 520px) {
+    display: none;
+  }
+`;
+
+export const HeaderBrandWord = styled.span`
+  display: block;
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: clamp(2.28rem, 3vw, 3.18rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 0.88;
+  text-shadow:
+    0 0 1px rgba(5, 13, 25, 0.9),
+    0 3px 8px rgba(5, 13, 25, 0.56),
+    0 14px 28px rgba(0, 24, 70, 0.42);
+  transition:
+    color 0.22s ease,
+    text-shadow 0.22s ease;
+  white-space: nowrap;
+
+  @media (max-width: 1320px) {
+    font-size: 2.36rem;
+  }
+
+  @media (max-width: 980px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 520px) {
+    font-size: 1.58rem;
+  }
+`;
+
+export const HeaderBrandSub = styled.span`
+  display: block;
+  margin-left: 3px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.06;
+  text-shadow:
+    0 0 1px rgba(5, 13, 25, 0.78),
+    0 2px 7px rgba(5, 13, 25, 0.48),
+    0 12px 24px rgba(0, 24, 70, 0.28);
+  transition:
+    color 0.22s ease,
+    text-shadow 0.22s ease;
+  white-space: nowrap;
+
+  @media (max-width: 1320px) {
+    font-size: 0.67rem;
+  }
+
+  @media (max-width: 520px) {
+    display: none;
   }
 `;
 
@@ -1249,6 +1360,10 @@ export const HeaderTools = styled.div`
     margin-right: 0;
   }
 
+  @media (max-width: 1400px) {
+    margin-right: 0;
+  }
+
   @media (max-width: 560px) {
     gap: 8px;
   }
@@ -1262,7 +1377,7 @@ export const HeaderUtilityLinks = styled.div`
   padding-left: 18px;
   border-left: 1px solid rgba(70, 102, 144, 0.22);
 
-  @media (max-width: 1320px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `;
@@ -1490,7 +1605,7 @@ export const ContactButton = styled(Link)`
 export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
   display: none;
 
-  @media (max-width: 1320px) {
+  @media (max-width: 1400px) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3614,6 +3729,20 @@ export const FooterBrandWrap = styled.div`
   flex-wrap: wrap;
 `;
 
+export const FooterBrandLogo = styled.img`
+  display: block;
+  width: min(320px, 42vw);
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 1px 1px rgba(0, 12, 34, 0.52))
+    drop-shadow(0 10px 24px rgba(0, 12, 34, 0.28));
+
+  @media (max-width: 768px) {
+    width: min(280px, 78vw);
+  }
+`;
+
 export const FooterTopAside = styled.div`
   display: flex;
   align-items: center;
@@ -3624,7 +3753,7 @@ export const FooterTopAside = styled.div`
   @media (max-width: 900px) {
     width: 100%;
     justify-content: flex-start;
-    margin-left: 68px;
+    margin-left: 0;
   }
 
   @media (max-width: 768px) {

@@ -1,49 +1,16 @@
 import styled from '@emotion/styled';
 
-import { LandingSubnav } from '../../components/site/LandingSubnav';
+import * as E from '../../components/site/EditorialBlocks';
+import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { aboutTimeline, historyMilestones } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const FeaturedMilestone = styled(P.QuotePanel)`
+const FeaturedMilestone = styled(E.LinePanel)`
   display: grid;
   gap: 12px;
-  margin-bottom: 20px;
-`;
-
-const HistoryHero = styled(P.HeroSection)`
-  margin-top: 0;
-  min-height: auto;
-  padding-top: 0;
-  padding-bottom: 0;
-  background: transparent;
-
-  &::before,
-  &::after {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    min-height: auto;
-    padding-bottom: 0;
-  }
-`;
-
-const HistoryContentSection = styled(P.PageSection)`
-  background: #ffffff;
-
-  &::after {
-    display: none;
-  }
-`;
-
-const HistoryLead = styled(P.Lead)`
-  margin-top: clamp(28px, 3.2vw, 44px);
-`;
-
-const HistoryDivider = styled(P.SectionDivider)`
-  margin-top: clamp(28px, 3vw, 40px);
+  margin: 26px 0 20px;
 `;
 
 const FeaturedYear = styled.span`
@@ -120,21 +87,22 @@ const Year = styled.strong`
 
 const Event = styled.div`
   padding: 14px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(20, 76, 158, 0.16);
+  border-radius: 0;
+  border-top: 1px solid #d8dee8;
   background: #ffffff;
   color: #35567f;
   font-size: 0.94rem;
   line-height: 1.64;
 `;
 
-const EraPanel = styled(P.Panel)`
+const EraPanel = styled.section`
   margin-top: 18px;
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 255, 0.94));
+  padding: 24px 0;
+  border-top: 1px solid #d8dee8;
+  background: transparent;
 `;
 
-const MilestoneCard = styled(P.StatementBlock)`
+const MilestoneCard = styled(E.LinePanel)`
   gap: 8px;
   min-height: 100%;
 `;
@@ -209,54 +177,76 @@ export function HistoryPage() {
 
   return (
     <>
-      <HistoryHero>
-        <P.PageContainer>
-          <LandingSubnav
-            kicker={aboutSubnav.kicker}
-            kickerEn={aboutSubnav.kickerEn}
-            title={aboutSubnav.title}
-            titleEn={aboutSubnav.titleEn}
-            summary={aboutSubnav.summary}
-            summaryEn={aboutSubnav.summaryEn}
-            items={aboutSubnav.items}
-            matchAboutHero
-          />
-        </P.PageContainer>
-      </HistoryHero>
+      <EditorialPageHeader
+        config={aboutSubnav}
+        title="연혁"
+        titleEn="History"
+        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroPosition="center 50%"
+      />
 
-      <HistoryContentSection>
+      <E.Section>
+        <E.Statement data-reveal>
+          <div>
+            <E.Eyebrow>History</E.Eyebrow>
+            <E.Title>
+              {t(
+                '1965년부터 이어온 신한의 성장 기록',
+                'A record of Shinhan’s growth since 1965.',
+              )}
+            </E.Title>
+          </div>
+          <E.LeadGrid>
+            <E.Lead>
+              {t(
+                '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
+                'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
+              )}
+            </E.Lead>
+            <E.FactGrid>
+              <E.Fact>
+                <E.FactValue>1965</E.FactValue>
+                <E.FactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</E.FactLabel>
+              </E.Fact>
+              <E.Fact>
+                <E.FactValue>60+</E.FactValue>
+                <E.FactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</E.FactLabel>
+              </E.Fact>
+              <E.Fact>
+                <E.FactValue>Global</E.FactValue>
+                <E.FactLabel>{t('국내외 네트워크 확장', 'Domestic and overseas network')}</E.FactLabel>
+              </E.Fact>
+            </E.FactGrid>
+          </E.LeadGrid>
+        </E.Statement>
+      </E.Section>
+
+      <E.Section $tone="soft">
         <P.PageContainer data-reveal>
-          <P.Kicker>History</P.Kicker>
-          <P.Title>
+          <E.Eyebrow>Milestone</E.Eyebrow>
+          <E.SectionTitle>{t('주요 이정표', 'Key Milestones')}</E.SectionTitle>
+          <E.Rule />
+          <E.Body style={{ marginTop: 24 }}>
             {t(
-              '1965년부터 이어온 신한의 성장 기록',
-              'A record of Shinhan’s growth since 1965.',
+              '신한관세법인은 창립 이후 고객의 무역 실무를 가까이에서 지원하며 서비스 영역과 네트워크를 확장해 왔습니다.',
+              'Since its founding, Shinhan Customs Service has expanded its service scope and network by supporting clients close to the trade field.',
             )}
-          </P.Title>
-          <HistoryLead>
-            {t(
-              '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
-              'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
-            )}
-          </HistoryLead>
-          <HistoryDivider />
-          <P.Kicker>Milestone</P.Kicker>
-          <P.SectionTitle>{t('주요 이정표', 'Key Milestones')}</P.SectionTitle>
+          </E.Body>
           {featuredMilestone ? (
             <FeaturedMilestone>
               <FeaturedYear>{featuredMilestone.year}</FeaturedYear>
-              <P.SectionTitle style={{ marginTop: 0 }}>
+              <E.SectionTitle style={{ marginTop: 0, fontSize: 'clamp(1.8rem, 3.4vw, 3.4rem)' }}>
                 {t(featuredMilestone.ko, featuredMilestone.en)}
-              </P.SectionTitle>
-              <P.CardText>
+              </E.SectionTitle>
+              <E.Body>
                 {t(
                   '신한관세법인은 1965년 창립 이후 2025년 창립 60주년을 맞이하며, 국내외 네트워크와 서비스 체계를 지속적으로 확장해 왔습니다.',
                   'Since 1965, Shinhan Customs Service has reached its 60th anniversary in 2025 while continuously expanding its domestic and overseas network.',
                 )}
-              </P.CardText>
+              </E.Body>
             </FeaturedMilestone>
           ) : null}
-          <P.MilestoneBand>
+          <P.MilestoneBand style={{ marginTop: 20 }}>
             {supportingMilestones.map((item) => (
               <MilestoneCard key={item.year}>
                 <MilestoneYear>{item.year}</MilestoneYear>
@@ -265,12 +255,12 @@ export function HistoryPage() {
             ))}
           </P.MilestoneBand>
         </P.PageContainer>
-      </HistoryContentSection>
+      </E.Section>
 
-      <P.PageSection tone="soft">
+      <E.Section>
         <P.PageContainer data-reveal>
-          <P.Kicker>Timeline</P.Kicker>
-          <P.SectionTitle>{t('연대별 상세 연혁', 'Timeline by Era')}</P.SectionTitle>
+          <E.Eyebrow>Timeline</E.Eyebrow>
+          <E.SectionTitle>{t('연대별 상세 연혁', 'Timeline by Era')}</E.SectionTitle>
 
           {groupedByPeriod.map((group) => (
             <EraPanel key={group.period}>
@@ -295,7 +285,7 @@ export function HistoryPage() {
             </EraPanel>
           ))}
         </P.PageContainer>
-      </P.PageSection>
+      </E.Section>
     </>
   );
 }

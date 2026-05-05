@@ -59,8 +59,12 @@ const HeroLead = styled.p`
 const HeroFacts = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid #d5dbe4;
-  border-bottom: 1px solid #d5dbe4;
+  border: 1px solid #d5dbe4;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96)),
+    #ffffff;
+  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
+  overflow: hidden;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -68,17 +72,28 @@ const HeroFacts = styled.div`
 `;
 
 const HeroFact = styled.div`
+  position: relative;
   display: grid;
-  gap: 8px;
-  padding: 18px 18px 18px 0;
+  align-content: start;
+  gap: 12px;
+  min-height: 136px;
+  padding: 24px 24px 22px;
   border-right: 1px solid #dbe0e8;
+
+  &::before {
+    content: '';
+    width: 34px;
+    height: 3px;
+    background: linear-gradient(90deg, #1d5fb6, #1aa398);
+  }
 
   &:last-of-type {
     border-right: 0;
   }
 
   @media (max-width: 640px) {
-    padding-right: 0;
+    min-height: auto;
+    padding: 22px 20px;
     border-right: 0;
     border-bottom: 1px solid #dbe0e8;
 
@@ -90,15 +105,18 @@ const HeroFact = styled.div`
 
 const HeroFactValue = styled.strong`
   color: #172337;
-  font-size: clamp(1.34rem, 2.4vw, 2rem);
+  font-size: clamp(1.32rem, 2vw, 1.92rem);
   font-weight: 800;
   line-height: 1.08;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
 `;
 
 const HeroFactLabel = styled.span`
   color: #687385;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  overflow-wrap: anywhere;
 `;
 
 const SectionLabel = styled.span`

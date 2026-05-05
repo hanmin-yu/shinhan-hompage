@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { utilitySubnav } from '../../config/utilitySubnav';
@@ -11,31 +12,23 @@ import {
 } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const RecruitIntroSection = styled(P.PageSection)`
+const RecruitIntroSection = styled(E.Section)`
   background: #ffffff;
-
-  &::after {
-    display: none;
-  }
 `;
 
-const RecruitBenefitsSection = styled(P.CompactPageSection)`
-  padding-top: clamp(18px, 3vw, 28px);
+const RecruitBenefitsSection = styled(E.Section)`
+  padding-top: clamp(64px, 7vw, 96px);
+  background: linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%);
 `;
 
-const IntroLayout = styled(P.SplitGrid)`
-  align-items: stretch;
+const IntroLayout = styled(E.LeadGrid)`
+  align-items: start;
 `;
 
-const IntroPanel = styled(P.Panel)`
+const IntroPanel = styled.div`
   display: grid;
   align-content: center;
-  gap: 12px;
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: 22px;
-  background:
-    radial-gradient(circle at top right, rgba(47, 103, 183, 0.1), transparent 32%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 255, 0.98));
+  gap: 18px;
 `;
 
 const ActionRow = styled.div`
@@ -51,7 +44,7 @@ const PrimaryAction = styled.a`
   justify-content: center;
   min-height: 46px;
   padding: 0 20px;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgba(19, 84, 180, 0.34);
   background: linear-gradient(180deg, #2567c2, #174d9a);
   color: #ffffff;
@@ -65,16 +58,24 @@ const SecondaryAction = styled(PrimaryAction)`
   color: #1a4f9a;
 `;
 
-const RolePanel = styled(P.Panel)`
+const RolePanel = styled(E.LinePanel)`
   display: grid;
   gap: 18px;
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: 22px;
+  padding: 24px 0;
 `;
 
 const RoleHead = styled.div`
   display: grid;
   gap: 8px;
+`;
+
+const PanelTitle = styled.h2`
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.56rem, 2.8vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.05em;
 `;
 
 const RoleCloud = styled.div`
@@ -88,10 +89,10 @@ const RoleChip = styled.span`
   align-items: center;
   min-height: 38px;
   padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(21, 87, 182, 0.12);
-  background: #f7faff;
-  color: #184b95;
+  border-radius: 0;
+  border: 1px solid #d8dee8;
+  background: #ffffff;
+  color: #172337;
   font-size: 0.88rem;
   font-weight: 700;
 `;
@@ -108,16 +109,12 @@ const BenefitSummaryGrid = styled(P.Grid)`
   margin-top: 44px;
 `;
 
-const BenefitSummaryCard = styled(P.Panel)`
+const BenefitSummaryCard = styled(E.LinePanel)`
   display: grid;
   gap: 16px;
   min-height: 100%;
-  padding: 28px 24px 24px;
-  border-radius: 28px;
+  padding: 24px 0;
   text-align: center;
-  background:
-    radial-gradient(circle at top center, rgba(255, 255, 255, 0.98), rgba(247, 250, 255, 0.98) 72%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 255, 0.98));
 `;
 
 const BenefitSummaryVisualRing = styled.div`
@@ -126,7 +123,7 @@ const BenefitSummaryVisualRing = styled.div`
   justify-self: center;
   width: 124px;
   height: 124px;
-  border-radius: 32px;
+  border-radius: 0;
   border: 1px solid rgba(28, 86, 170, 0.08);
   background:
     radial-gradient(circle at 30% 25%, rgba(228, 240, 255, 0.98), rgba(255, 255, 255, 0.98) 60%),
@@ -158,7 +155,7 @@ const BenefitAccent = styled.span`
   width: fit-content;
   min-height: 30px;
   padding: 0 11px;
-  border-radius: 999px;
+  border-radius: 0;
   background: #ecf3ff;
   color: #2258a7;
   font-size: 0.78rem;
@@ -193,18 +190,17 @@ const Tag = styled.span`
   align-items: center;
   min-height: 30px;
   padding: 0 10px;
-  border-radius: 999px;
+  border-radius: 0;
   background: #f4f8ff;
   color: #2358a7;
   font-size: 0.8rem;
   font-weight: 700;
 `;
 
-const MatrixPanel = styled(P.Panel)`
+const MatrixPanel = styled(E.LinePanel)`
   display: grid;
   gap: 24px;
-  padding: clamp(24px, 3vw, 30px);
-  border-radius: 24px;
+  padding: clamp(24px, 3vw, 30px) 0;
 `;
 
 const MatrixHead = styled.div`
@@ -221,9 +217,10 @@ const MatrixCategoryBlock = styled.section`
   display: grid;
   gap: 16px;
   padding: 24px;
-  border-radius: 22px;
-  border: 1px solid rgba(18, 74, 151, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 251, 255, 0.98));
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid #d8dee8;
+  background: transparent;
 `;
 
 const MatrixCardGroup = styled.div`
@@ -277,7 +274,7 @@ const MatrixCount = styled.span`
   min-width: 40px;
   min-height: 30px;
   padding: 0 10px;
-  border-radius: 999px;
+  border-radius: 0;
   background: #eaf2ff;
   color: #1e58a7;
   font-size: 0.8rem;
@@ -299,7 +296,7 @@ const MatrixItemBadge = styled.span`
   min-width: 34px;
   min-height: 24px;
   padding: 0 8px;
-  border-radius: 999px;
+  border-radius: 0;
   background: #eef4ff;
   color: #1e58a7;
   font-size: 0.72rem;
@@ -328,18 +325,16 @@ const MatrixItemText = styled.p`
   line-height: 1.55;
 `;
 
-const BottomCta = styled(P.Panel)`
+const BottomCta = styled(E.LinePanel)`
   display: grid;
   gap: 14px;
-  padding: 24px;
-  border-radius: 22px;
-  background:
-    linear-gradient(130deg, rgba(12, 46, 95, 0.98), rgba(21, 77, 154, 0.96));
+  padding: 28px 0;
+  background: transparent;
 `;
 
 const BottomCtaTitle = styled.h3`
   margin: 0;
-  color: #ffffff;
+  color: #172337;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -347,7 +342,7 @@ const BottomCtaTitle = styled.h3`
 
 const BottomCtaText = styled.p`
   margin: 0;
-  color: rgba(229, 239, 255, 0.94);
+  color: #4d5a6c;
   font-size: 0.94rem;
   line-height: 1.72;
 `;
@@ -380,54 +375,58 @@ export function RecruitPage() {
         config={utilitySubnav}
         title="채용"
         titleEn="Recruit"
-        heroImage="/subpages/about-mt14.jpg"
-        heroPosition="center 48%"
+        heroImage="/hero/homepage/office-tower-clear-sky.jpg"
+        heroPosition="center 42%"
       />
 
       <RecruitIntroSection>
-        <IntroLayout data-reveal>
-          <IntroPanel>
-            <P.Kicker>Recruit</P.Kicker>
-            <P.SectionTitle>{t('채용', 'Recruit')}</P.SectionTitle>
-            <P.Lead>
-              {t(
-                '신한관세법인은 유능한 인재를 기다립니다.',
-                'Shinhan Customs Service is looking for exceptional talent.',
-              )}
-            </P.Lead>
-          </IntroPanel>
+        <E.Statement data-reveal>
+          <div>
+            <E.Eyebrow>Recruit</E.Eyebrow>
+            <E.Title>{t('신한과 함께 성장할 인재를 기다립니다.', 'Grow your career with Shinhan.')}</E.Title>
+          </div>
+          <IntroLayout>
+            <IntroPanel>
+              <E.Lead>
+                {t(
+                  '신한관세법인은 관세·무역 현장에서 전문성과 책임감을 바탕으로 함께 성장할 유능한 인재를 기다립니다.',
+                  'Shinhan Customs Service welcomes talented people who can grow with professionalism and responsibility in customs and trade practice.',
+                )}
+              </E.Lead>
+            </IntroPanel>
 
-          <RolePanel>
-            <RoleHead>
-              <P.Kicker>{t('모집 직무', 'Open Roles')}</P.Kicker>
-              <P.SectionTitle style={{ fontSize: '1.8rem' }}>{t('모집 중인 직무', 'Open roles')}</P.SectionTitle>
-            </RoleHead>
-            <RoleHint>
-              {t('모집 중인 직무입니다.', 'Current openings.')}
-            </RoleHint>
-            <RoleCloud>
-              {recruitRoles.map((role) => (
-                <RoleChip key={role.title}>{t(role.title, role.titleEn)}</RoleChip>
-              ))}
-            </RoleCloud>
-          </RolePanel>
-        </IntroLayout>
+            <RolePanel>
+              <RoleHead>
+                <E.Eyebrow>{t('모집 직무', 'Open Roles')}</E.Eyebrow>
+                <PanelTitle>{t('모집 중인 직무', 'Open roles')}</PanelTitle>
+              </RoleHead>
+              <RoleHint>
+                {t('현재 모집 중인 직무입니다.', 'Current openings.')}
+              </RoleHint>
+              <RoleCloud>
+                {recruitRoles.map((role) => (
+                  <RoleChip key={role.title}>{t(role.title, role.titleEn)}</RoleChip>
+                ))}
+              </RoleCloud>
+            </RolePanel>
+          </IntroLayout>
+        </E.Statement>
       </RecruitIntroSection>
 
       <RecruitBenefitsSection>
         <P.PageContainer>
           <P.SectionHead>
             <div>
-              <P.Kicker>{t('복리후생', 'Benefits')}</P.Kicker>
-              <P.SectionTitle>{t('근무 및 지원 제도', 'Benefits & Support')}</P.SectionTitle>
+              <E.Eyebrow>{t('복리후생', 'Benefits')}</E.Eyebrow>
+              <E.SectionTitle>{t('근무 및 지원 제도', 'Benefits & Support')}</E.SectionTitle>
             </div>
           </P.SectionHead>
-          <P.Lead style={{ marginBottom: 24 }}>
+          <E.Lead style={{ marginBottom: 24 }}>
             {t(
               '보상, 유연근무, 성장 지원 중심의 복리후생입니다.',
               'Benefits centered on compensation, flexibility, and growth support.',
             )}
-          </P.Lead>
+          </E.Lead>
 
           <BenefitSummaryGrid columns={3}>
             {recruitBenefitSummaryCards.map((card) => (
@@ -449,10 +448,10 @@ export function RecruitPage() {
 
           <MatrixPanel style={{ marginTop: 18 }}>
             <MatrixHead>
-              <P.Kicker>{t('세부 복리후생', 'Detailed Benefits')}</P.Kicker>
-              <P.SectionTitle style={{ fontSize: '1.6rem', marginTop: 8 }}>
+              <E.Eyebrow>{t('세부 복리후생', 'Detailed Benefits')}</E.Eyebrow>
+              <PanelTitle>
                 {t('카테고리별 전체 혜택', 'Full Benefits by Category')}
-              </P.SectionTitle>
+              </PanelTitle>
             </MatrixHead>
             <MatrixGrid>
               {recruitBenefitDisplayGroups.map((group) => (
@@ -479,7 +478,7 @@ export function RecruitPage() {
           </MatrixPanel>
 
           <BottomCta style={{ marginTop: 18 }}>
-            <P.Kicker style={{ color: 'rgba(220, 234, 255, 0.9)' }}>{t('지원 안내', 'Apply')}</P.Kicker>
+            <E.Eyebrow>{t('지원 안내', 'Apply')}</E.Eyebrow>
             <BottomCtaTitle>{t('채용 공고 바로가기', 'Current openings')}</BottomCtaTitle>
             <BottomCtaText>
               {t('채용 공고는 아래 채널에서 확인하세요.', 'Openings are available through the channels below.')}

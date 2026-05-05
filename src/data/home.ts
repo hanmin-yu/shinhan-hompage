@@ -15,7 +15,7 @@ import { newsletterItems as legacyNewsletterItems } from './pageContent';
 import { shinhanNewsArchive } from './shinhanNewsArchive';
 import { withNewsletterTitleBrand } from '../utils/newsletter';
 
-export const brandMarkPath = '/brand-mark.svg';
+export const brandMarkPath = '/brand-mark-shinhan.png';
 
 export const utilityLinks: LinkItem[] = [
   { id: 'kor', label: 'KOR', href: '/' },
@@ -51,18 +51,18 @@ export const siteContact: SiteContact = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    label: '신한관세법인 본사',
-    labelEn: 'Shinhan Headquarters',
-    eyebrow: 'Shinhan Customs Service',
-    eyebrowEn: 'Shinhan Customs Service',
-    headline: '기업의 무역 현장과 함께하는\n관세 전문 파트너',
-    headlineEn: 'A customs partner aligned\nwith global trade operations',
-    summary: '신한관세법인은 수출입통관, 관세·무역 컨설팅, 물류서비스를 통합 지원합니다.',
-    summaryEn: 'Shinhan Customs Service supports customs clearance, trade consulting, and logistics services.',
-    image: '/hero/homepage/shinhan-corporate-blue-office.jpg',
-    mobileImage: '/hero/homepage/shinhan-corporate-blue-office.jpg',
-    objectPosition: '70% 50%',
-    mobileObjectPosition: '62% center',
+    label: '통합 관세 자문',
+    labelEn: 'Integrated Advisory',
+    eyebrow: 'Customs Risk Management',
+    eyebrowEn: 'Customs Risk Management',
+    headline: '기업의 관세 리스크를\n입체적으로 설계합니다',
+    headlineEn: 'Designing customs risk\nwith a broader perspective',
+    summary: '통관, 요건, FTA, 관세조사까지 복잡한 이슈를 하나의 전략 안에서 정리합니다.',
+    summaryEn: 'We align clearance, requirements, FTA, and customs audits into one practical strategy.',
+    image: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    mobileImage: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    objectPosition: '74% 50%',
+    mobileObjectPosition: '66% center',
     theme: 'deep-blue',
   },
   {
@@ -74,25 +74,25 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'A customs standard\nbuilt since 1965',
     summary: '서울통관사에서 시작한 신한의 경험을 바탕으로 기업의 관세 리스크를 깊이 있게 점검합니다.',
     summaryEn: 'From Seoul Tongkwansa to Shinhan, we bring decades of practical customs experience to enterprise risk review.',
-    image: '/hero/homepage/shinhan-history-building.jpg',
-    mobileImage: '/hero/homepage/shinhan-history-building.jpg',
-    objectPosition: '58% 50%',
-    mobileObjectPosition: '54% center',
+    image: '/hero/homepage/shinhan-history-sign.jpg',
+    mobileImage: '/hero/homepage/shinhan-history-sign.jpg',
+    objectPosition: '62% 50%',
+    mobileObjectPosition: '58% center',
     theme: 'deep-blue',
   },
   {
-    label: '통합 관세 자문',
-    labelEn: 'Integrated Advisory',
-    eyebrow: 'Customs Risk Management',
-    eyebrowEn: 'Customs Risk Management',
-    headline: '기업의 관세 리스크를\n입체적으로 설계합니다',
-    headlineEn: 'Designing customs risk\nwith a broader perspective',
-    summary: '통관, 요건, FTA, 관세조사까지 복잡한 이슈를 하나의 전략 안에서 정리합니다.',
-    summaryEn: 'We align clearance, requirements, FTA, and customs audits into one practical strategy.',
-    image: '/hero/homepage/shinhan-glass-facade.jpg',
-    mobileImage: '/hero/homepage/shinhan-glass-facade.jpg',
-    objectPosition: '72% 48%',
-    mobileObjectPosition: '60% center',
+    label: '항공 물류',
+    labelEn: 'Air Logistics',
+    eyebrow: 'Air Cargo Network',
+    eyebrowEn: 'Air Cargo Network',
+    headline: '글로벌 항공 물류와 함께\n통관 흐름을 연결합니다',
+    headlineEn: 'Connecting customs flow\nwith global air cargo',
+    summary: '신한관세법인은 DHL 등 글로벌 물류 고객사의 항공 화물 통관과 무역 현장을 지원합니다.',
+    summaryEn: 'Shinhan Customs Service supports air cargo clearance and trade operations for global logistics clients including DHL.',
+    image: '/hero/homepage/dhl-cargo-plane-heathrow-right.jpg',
+    mobileImage: '/hero/homepage/dhl-cargo-plane-heathrow-right.jpg',
+    objectPosition: '70% 50%',
+    mobileObjectPosition: '66% center',
     theme: 'deep-blue',
   },
   {
@@ -104,25 +104,25 @@ export const heroSlides: HeroSlide[] = [
     headlineEn: 'Managing customs risk\nthrough a global network',
     summary: '국내 주요 지사와 베트남 법인, KORD Partners를 연결해 현장 가까운 관세 지원 체계를 운영합니다.',
     summaryEn: 'Our Korean branches, Vietnam entity, and KORD Partners provide customs support close to each operation.',
-    image: '/hero/homepage/seoul-skyline-blue-sky.jpg',
-    mobileImage: '/hero/homepage/seoul-skyline-blue-sky.jpg',
-    objectPosition: '74% 50%',
-    mobileObjectPosition: '66% center',
+    image: '/hero/homepage/global-customs-network.png',
+    mobileImage: '/hero/homepage/global-customs-network.png',
+    objectPosition: '72% 50%',
+    mobileObjectPosition: '62% center',
     theme: 'deep-blue',
   },
   {
-    label: '전문 컨설팅',
-    labelEn: 'Professional Consulting',
-    eyebrow: 'FTA · AEO · ACVA',
-    eyebrowEn: 'FTA · AEO · ACVA',
-    headline: '복잡한 관세 이슈를\n전문 컨설팅으로 풉니다',
-    headlineEn: 'Solving complex customs issues\nwith expert consulting',
-    summary: 'FTA, AEO, ACVA, 관세조사, 조세불복 등 기업 리스크를 사전에 진단하고 대응합니다.',
-    summaryEn: 'We diagnose and respond to enterprise risk across FTA, AEO, ACVA, customs audits, and tax appeals.',
-    image: '/hero/homepage/office-tower-clear-sky.jpg',
-    mobileImage: '/hero/homepage/office-tower-clear-sky.jpg',
-    objectPosition: '74% 50%',
-    mobileObjectPosition: '64% center',
+    label: '해상 물류',
+    labelEn: 'Ocean Logistics',
+    eyebrow: 'Busan New Port',
+    eyebrowEn: 'Busan New Port',
+    headline: '바다 위 수출 동맥까지\n관세 전략으로 잇습니다',
+    headlineEn: 'Customs strategy for\nthe export routes at sea',
+    summary: '컨테이너선과 항만 물류 흐름을 이해하고 수출입 기업의 통관 리스크를 현장 가까이에서 관리합니다.',
+    summaryEn: 'We understand vessel and port logistics flows and manage customs risk close to import and export operations.',
+    image: '/hero/homepage/busan-container-vessel-kmib.jpg',
+    mobileImage: '/hero/homepage/busan-container-vessel-kmib.jpg',
+    objectPosition: '62% 52%',
+    mobileObjectPosition: '56% center',
     theme: 'deep-blue',
   },
 ];
@@ -556,9 +556,59 @@ export const officeBranches: OfficeBranch[] = [
     imagePosition: '50% 50%',
     accent: '#1c4f96',
     x: 42,
-    y: 32,
-    labelX: -34,
-    labelY: 36,
+    y: 24,
+    labelX: 18,
+    labelY: 14,
+  },
+  {
+    id: 'kord-systems',
+    label: 'KORD 시스템즈',
+    labelEn: 'KORD Systems',
+    mapQuery: '신한관세법인 서울본사',
+    mapQueryEn: 'Shinhan Customs Service Seoul HQ',
+    shortLabel: 'KORD SYS',
+    shortLabelEn: 'KORD SYS',
+    region: '서울본사',
+    regionEn: 'Seoul HQ',
+    summary: '관세 업무와 IT 시스템을 연결하는 디지털 실행 조직으로 KORD 기반 원산지·재고 관리 서비스를 지원합니다.',
+    summaryEn:
+      'A digital execution team connecting customs operations with IT systems, supporting KORD-based origin and inventory management services.',
+    address: '서울시 강남구 논현로 704',
+    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    tel: '02-3448-1181',
+    fax: '02-540-2323',
+    image: '/offices/kord-systems.jpg',
+    imagePosition: '50% 50%',
+    accent: '#2d719d',
+    x: 38,
+    y: 28,
+    labelX: 18,
+    labelY: 30,
+  },
+  {
+    id: 'kord',
+    label: 'KORD Partners',
+    labelEn: 'KORD Partners',
+    mapQuery: '신한관세법인 서울본사',
+    mapQueryEn: 'Shinhan Customs Service Seoul HQ',
+    shortLabel: 'KORD',
+    shortLabelEn: 'KORD',
+    region: '서울본사',
+    regionEn: 'Seoul HQ',
+    summary: '미국 FDA 및 해외 통관 프로젝트와 연계되는 전문 파트너 조직으로 협업형 자문과 운영 지원을 담당합니다.',
+    summaryEn:
+      'A specialized partner organization supporting U.S. FDA and overseas customs projects through collaborative advisory and operations.',
+    address: '서울시 강남구 논현로 704',
+    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    tel: '070-4343-7791',
+    fax: '02-3448-1184',
+    image: '/offices/kord.jpg',
+    imagePosition: '50% 50%',
+    accent: '#365c92',
+    x: 39,
+    y: 29,
+    labelX: 18,
+    labelY: 46,
   },
   {
     id: 'airport',
@@ -580,10 +630,10 @@ export const officeBranches: OfficeBranch[] = [
     image: '/offices/airport.jpg',
     imagePosition: '50% 50%',
     accent: '#2f78bf',
-    x: 28,
-    y: 28,
-    labelX: 125,
-    labelY: 26,
+    x: 33,
+    y: 29,
+    labelX: 36,
+    labelY: 50,
   },
   {
     id: 'incheon',
@@ -607,9 +657,34 @@ export const officeBranches: OfficeBranch[] = [
     imagePosition: '50% 50%',
     accent: '#3c6ca8',
     x: 32,
+    y: 32,
+    labelX: 18,
+    labelY: 66,
+  },
+  {
+    id: 'sh-food',
+    label: 'SH FOOD 컨설팅',
+    labelEn: 'SH FOOD Consulting',
+    mapQuery: '신한관세법인 인천경기지사',
+    mapQueryEn: 'Shinhan Customs Service Incheon-Gyeonggi Branch',
+    shortLabel: 'SH FOOD',
+    shortLabelEn: 'SH FOOD',
+    region: '인천경기지사',
+    regionEn: 'Incheon-Gyeonggi Branch',
+    summary: '식품 수입 요건, 검역, 식약처 신고 흐름을 전문적으로 지원하는 식품 통관 컨설팅 조직입니다.',
+    summaryEn:
+      'A food import consulting team specializing in requirements, quarantine, and MFDS declaration workflows.',
+    address: '인천광역시 연수구 인천타워대로 301, A동 906호',
+    addressEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
+    tel: '032-772-1181',
+    fax: '032-773-1181',
+    image: '/offices/sh-food.jpg',
+    imagePosition: '50% 50%',
+    accent: '#408a94',
+    x: 32,
     y: 37,
-    labelX: -38,
-    labelY: 49,
+    labelX: 18,
+    labelY: 82,
   },
   {
     id: 'busan',
@@ -631,10 +706,10 @@ export const officeBranches: OfficeBranch[] = [
     image: '/offices/busan.jpg',
     imagePosition: '50% 50%',
     accent: '#0f5a8f',
-    x: 72,
-    y: 77,
-    labelX: 124,
-    labelY: 84,
+    x: 70,
+    y: 70,
+    labelX: 76,
+    labelY: 61,
   },
   {
     id: 'cheongju',
@@ -654,13 +729,13 @@ export const officeBranches: OfficeBranch[] = [
       'Suite 216 / 221, 2F, Building 1, Cheongju Techno S Tower, 530 Jikji-daero, Heungdeok-gu, Cheongju-si, Chungcheongbuk-do, Korea',
     tel: '043-273-3160~1',
     fax: '043-273-3162',
-    image: '/offices/cheongju.jpg',
+    image: '/offices/cheongju-techno-city.png',
     imagePosition: '50% 50%',
     accent: '#5a7fb2',
     x: 48,
-    y: 49,
-    labelX: -20,
-    labelY: 62,
+    y: 39,
+    labelX: 72,
+    labelY: 13,
   },
   {
     id: 'gumi',
@@ -682,10 +757,10 @@ export const officeBranches: OfficeBranch[] = [
     image: '/offices/gumi.jpg',
     imagePosition: '50% 50%',
     accent: '#4a73a2',
-    x: 63,
-    y: 62,
-    labelX: 132,
-    labelY: 66,
+    x: 59,
+    y: 54,
+    labelX: 84,
+    labelY: 36,
   },
   {
     id: 'invista',
@@ -708,9 +783,9 @@ export const officeBranches: OfficeBranch[] = [
     imagePosition: '50% 50%',
     accent: '#2f689b',
     x: 35,
-    y: 30,
-    labelX: -44,
-    labelY: 25,
+    y: 26,
+    labelX: 70,
+    labelY: 92,
   },
   {
     id: 'vietnam',
@@ -731,35 +806,10 @@ export const officeBranches: OfficeBranch[] = [
     image: '/offices/vietnam.jpg',
     imagePosition: '50% 50%',
     accent: '#2f84ae',
-    x: 54,
-    y: 40,
-    labelX: 58,
-    labelY: 104,
-  },
-  {
-    id: 'kord',
-    label: 'KORD Partners',
-    labelEn: 'KORD Partners',
-    mapQuery: 'KORD Partners',
-    mapQueryEn: 'KORD Partners',
-    shortLabel: 'KORD',
-    shortLabelEn: 'KORD',
-    region: '서울 강남',
-    regionEn: 'Gangnam, Seoul',
-    summary: '관세·통관 프로젝트와 연계되는 전문 파트너 조직으로, 협업형 자문과 운영 지원 기능을 담당합니다.',
-    summaryEn:
-      'A specialized partner organization supporting customs projects through collaborative advisory and operational support.',
-    address: '서울시 강남구 논현로 704',
-    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
-    tel: '070-4343-7791',
-    fax: '02-3448-1184',
-    image: '/offices/kord.jpg',
-    imagePosition: '50% 50%',
-    accent: '#365c92',
-    x: 43,
-    y: 34,
-    labelX: 127,
-    labelY: 41,
+    x: 55,
+    y: 82,
+    labelX: 84,
+    labelY: 78,
   },
 ];
 
@@ -957,22 +1007,22 @@ export const shinhanNewsItems: ShinhanNewsItem[] = shinhanNewsArchive;
 
 function getNewsletterTitleEn(title: string) {
   switch (title) {
-    case '2026년 4월호 소식지 (국문)':
-      return 'April 2026 Newsletter (Korean)';
-    case '2026년 4월호 소식지 (영문)':
-      return 'April 2026 Newsletter (English)';
-    case '2026년 3월호 소식지 (국문)':
-      return 'March 2026 Newsletter (Korean)';
-    case '2026년 3월호 소식지 (영문)':
-      return 'March 2026 Newsletter (English)';
-    case '2026년 2월호 소식지 (국문)':
-      return 'February 2026 Newsletter (Korean)';
-    case '2026년 2월호 소식지 (영문)':
-      return 'February 2026 Newsletter (English)';
-    case '2025년 12월~2026년 1월 통합 소식지 (국문)':
-      return 'December 2025 to January 2026 Combined Newsletter (Korean)';
-    case '2025년 12월~2026년 1월 통합 소식지 (영문)':
-      return 'December 2025 to January 2026 Combined Newsletter (English)';
+    case '[2026년 4월호 소식지] Zoom In Trade - 낯선 길':
+      return '[April 2026 Newsletter] Zoom In Trade - The Unfamiliar Road';
+    case '[2026년 4월호 소식지] Zoom In Trade - The Unfamiliar Road':
+      return '[April 2026 Newsletter] Zoom In Trade - The Unfamiliar Road';
+    case '[2026년 3월호 소식지] Zoom In Trade - Lower you go, taller the trees':
+      return '[March 2026 Newsletter] Zoom In Trade - Lower You Go, Taller the Trees';
+    case '[2026년 3월호 소식지] Zoom In Trade - Lower You Go, Taller the Trees':
+      return '[March 2026 Newsletter] Zoom In Trade - Lower You Go, Taller the Trees';
+    case '[2026년 2월호 소식지] Zoom In Trade - 날실과 씨실':
+      return '[February 2026 Newsletter] Zoom In Trade - Warp and Weft';
+    case '[2026년 2월호 소식지] Zoom In Trade - Warp and Weft':
+      return '[February 2026 Newsletter] Zoom In Trade - Warp and Weft';
+    case '[2025년 12월~2026년 1월 통합 소식지] Zoom In Trade - 사과나무를 심으며':
+      return '[December 2025 to January 2026 Combined Newsletter] Zoom In Trade - Planting an apple tree';
+    case '[2025년 12월~2026년 1월 통합 소식지] Zoom In Trade - Planting an apple tree':
+      return '[December 2025 to January 2026 Combined Newsletter] Zoom In Trade - Planting an apple tree';
     default:
       return title;
   }

@@ -67,7 +67,7 @@ export function useIssueReports() {
         });
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch issue reports: ${response.status}`);
+          throw new Error(`Failed to fetch Trade Insights: ${response.status}`);
         }
 
         const data = (await response.json()) as IssueReportResponse;
@@ -108,7 +108,7 @@ export function useIssueReports() {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to refresh issue reports: ${response.status}`);
+        throw new Error(`Failed to refresh Trade Insights: ${response.status}`);
       }
 
       const data = (await response.json()) as IssueReportResponse;

@@ -11,11 +11,12 @@ const EditorialHero = styled(P.HeroSection)`
   min-height: clamp(260px, 31vw, 410px);
   display: grid;
   place-items: center;
+  overflow: hidden;
   padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
   padding-bottom: clamp(34px, 5vw, 56px);
   background:
     linear-gradient(180deg, rgba(8, 17, 31, 0.1) 0%, rgba(8, 17, 31, 0.12) 48%, rgba(8, 17, 31, 0.28) 100%),
-    url('/hero/homepage/office-tower-clear-sky.jpg') center 42% / cover no-repeat;
+    url('/hero/menu-about-shinhan-ai.png') center 50% / cover no-repeat;
 
   &::before,
   &::after {
@@ -30,6 +31,7 @@ const EditorialHero = styled(P.HeroSection)`
 `;
 
 const HeroVisualTitle = styled.h1`
+  max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
   font-size: clamp(2.6rem, 5vw, 4.9rem);
@@ -45,6 +47,7 @@ const HeroVisualTitle = styled.h1`
 const SubnavBand = styled.section`
   background: #ffffff;
   border-bottom: 1px solid #e4e7ec;
+  overflow: hidden;
 `;
 
 const SubnavInner = styled(P.PageContainer)`
@@ -54,6 +57,7 @@ const SubnavInner = styled(P.PageContainer)`
   min-height: 66px;
   border-left: 1px solid #e4e7ec;
   border-right: 1px solid #e4e7ec;
+  overflow: hidden;
 
   @media (max-width: 760px) {
     flex-direction: column;
@@ -91,6 +95,7 @@ const AboutNav = styled.nav`
   align-items: stretch;
   flex: 1;
   justify-content: flex-end;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -115,6 +120,7 @@ const AboutNavLink = styled(Link)`
   font-size: 1.12rem;
   font-weight: 900;
   letter-spacing: 0;
+  white-space: nowrap;
 
   &:first-of-type {
     border-left: 1px solid #e4e7ec;
@@ -197,8 +203,12 @@ const HeroLead = styled.p`
 const HeroFacts = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid #d5dbe4;
-  border-bottom: 1px solid #d5dbe4;
+  border: 1px solid #d5dbe4;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96)),
+    #ffffff;
+  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
+  overflow: hidden;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -206,17 +216,28 @@ const HeroFacts = styled.div`
 `;
 
 const HeroFact = styled.div`
+  position: relative;
   display: grid;
-  gap: 8px;
-  padding: 18px 18px 18px 0;
+  align-content: start;
+  gap: 12px;
+  min-height: 136px;
+  padding: 24px 24px 22px;
   border-right: 1px solid #dbe0e8;
+
+  &::before {
+    content: '';
+    width: 34px;
+    height: 3px;
+    background: linear-gradient(90deg, #1d5fb6, #1aa398);
+  }
 
   &:last-of-type {
     border-right: 0;
   }
 
   @media (max-width: 640px) {
-    padding-right: 0;
+    min-height: auto;
+    padding: 22px 20px;
     border-right: 0;
     border-bottom: 1px solid #dbe0e8;
 
@@ -228,15 +249,18 @@ const HeroFact = styled.div`
 
 const HeroFactValue = styled.strong`
   color: #172337;
-  font-size: clamp(1.42rem, 2.3vw, 2.06rem);
+  font-size: clamp(1.32rem, 2vw, 1.92rem);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
 `;
 
 const HeroFactLabel = styled.span`
   color: #687385;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  overflow-wrap: anywhere;
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
@@ -485,20 +509,49 @@ const GalleryText = styled.p`
 `;
 
 const SloganBand = styled.div`
-  margin-top: clamp(34px, 5vw, 60px);
-  padding-top: clamp(22px, 3vw, 34px);
-  border-top: 1px solid #d5dbe4;
+  position: relative;
+  margin-top: clamp(52px, 7vw, 92px);
+  padding: clamp(64px, 8vw, 112px) 0 clamp(70px, 9vw, 124px);
+  text-align: center;
+  border-top: 1px solid rgba(15, 43, 89, 0.08);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -52px;
+    width: 1px;
+    height: 52px;
+    background: linear-gradient(180deg, transparent, rgba(15, 43, 89, 0.22));
+  }
 `;
 
 const Slogan = styled.p`
-  max-width: 980px;
-  margin: 0;
-  color: #172337;
-  font-size: clamp(1.64rem, 3.3vw, 3.2rem);
-  font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.045em;
+  position: relative;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  color: #0e55a3;
+  font-size: clamp(2.25rem, 5.7vw, 6.4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.055em;
   text-wrap: balance;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: clamp(92px, 11vw, 170px);
+    height: 2px;
+    background: #0e55a3;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
+  }
 `;
 
 const consultingItemsKo = [

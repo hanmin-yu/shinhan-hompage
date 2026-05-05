@@ -55,17 +55,11 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
     <S.Header $overHero={overHero}>
       <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/" aria-label={t('신한관세법인 홈', 'Shinhan Customs Service home')}>
-          <S.BrandMark aria-hidden="true">
-            <S.BrandMarkImage src="/brand-mark.svg" alt="" />
-          </S.BrandMark>
-          <S.BrandText>
-            <S.BrandTop>
-              <S.BrandTopLine />
-              <S.BrandEstablished>Established 1965</S.BrandEstablished>
-            </S.BrandTop>
-            <S.BrandTitle>SHINHAN</S.BrandTitle>
-            <S.BrandSub>SHINHAN Customs Service Inc.</S.BrandSub>
-          </S.BrandText>
+          <S.HeaderLogoFrame>
+            <S.HeaderBrandEstablished data-brand-established="true">Established 1965</S.HeaderBrandEstablished>
+            <S.HeaderBrandWord data-brand-word="true">SHINHAN</S.HeaderBrandWord>
+            <S.HeaderBrandSub data-brand-sub="true">SHINHAN Customs Service Inc.</S.HeaderBrandSub>
+          </S.HeaderLogoFrame>
         </S.Brand>
 
         <S.MenuArea>

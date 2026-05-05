@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
+import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
-import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { utilitySubnav } from '../../config/utilitySubnav';
@@ -9,30 +9,8 @@ import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
 
-const LocationHero = styled(P.HeroSection)`
-  margin-top: 0;
-  min-height: auto;
-  padding-top: 0;
-  padding-bottom: 0;
-  background: transparent;
-
-  &::before,
-  &::after {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    min-height: auto;
-    padding-bottom: 0;
-  }
-`;
-
-const LocationContentSection = styled(P.PageSection)`
+const LocationContentSection = styled(E.Section)`
   background: #ffffff;
-
-  &::after {
-    display: none;
-  }
 `;
 
 type LocationViewData = {
@@ -74,25 +52,28 @@ export function LocationPage() {
 
   return (
     <>
-      <LocationHero>
-        <P.PageContainer>
-          <LandingSubnav
-            kicker={aboutSubnav.kicker}
-            kickerEn={aboutSubnav.kickerEn}
-            title={aboutSubnav.title}
-            titleEn={aboutSubnav.titleEn}
-            items={aboutSubnav.items}
-            matchAboutHero
-          />
-        </P.PageContainer>
-      </LocationHero>
+      <EditorialPageHeader
+        config={aboutSubnav}
+        title="오시는 길"
+        titleEn="Directions"
+        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroPosition="center 50%"
+      />
 
       <LocationContentSection>
         <P.PageContainer data-reveal>
+          <E.Eyebrow>Directions</E.Eyebrow>
+          <E.Title>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</E.Title>
+          <E.Lead style={{ marginTop: 24, marginBottom: 46 }}>
+            {t(
+              '방문 전 연락처와 위치를 확인하실 수 있도록 본사 주소, 연락처, 지도 정보를 한 화면에 정리했습니다.',
+              'Review Seoul HQ address, contact details, and map information in one place before visiting.',
+            )}
+          </E.Lead>
           <DirectionsGrid>
             <LocationInfoPanel>
-              <P.Kicker>Office Information</P.Kicker>
-              <P.SectionTitle>{t('서울본사', 'Seoul HQ')}</P.SectionTitle>
+              <E.Eyebrow>Office Information</E.Eyebrow>
+              <OfficePanelTitle>{t('서울본사', 'Seoul HQ')}</OfficePanelTitle>
               <InfoRows>
                 <InfoRow>
                   <InfoLabel>{t('주소', 'Address')}</InfoLabel>
@@ -122,14 +103,14 @@ export function LocationPage() {
             </LocationInfoPanel>
 
             <MapPanel>
-              <P.Kicker>Map</P.Kicker>
-              <P.SectionTitle>{t('본사 지도 안내', 'HQ Map')}</P.SectionTitle>
-              <P.CardText>
+              <E.Eyebrow>Map</E.Eyebrow>
+              <OfficePanelTitle>{t('본사 지도 안내', 'HQ Map')}</OfficePanelTitle>
+              <E.Body>
                 {t(
                   '지도를 통해 본사 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
                   'Use the map to review the HQ location. For precise route guidance, open Naver Map or Google Maps.',
                 )}
-              </P.CardText>
+              </E.Body>
               <MapFrame>
                 <iframe
                   src={location.googleMapEmbedUrl}
@@ -156,27 +137,27 @@ export function DirectionsPage() {
         config={utilitySubnav}
         title="오시는 길"
         titleEn="Directions"
-        heroImage="/hero/homepage/seoul-skyline-blue-sky.jpg"
-        heroPosition="center 45%"
+        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroPosition="center 50%"
       />
 
       <LocationContentSection>
         <StandaloneContainer data-reveal>
           <StandaloneHead>
-            <P.Kicker>Directions</P.Kicker>
-            <P.Title>{t('오시는 길', 'Directions')}</P.Title>
-            <P.Lead>
+            <E.Eyebrow>Directions</E.Eyebrow>
+            <E.Title>{t('오시는 길', 'Directions')}</E.Title>
+            <E.Lead>
               {t(
                 '신한관세법인 서울본사 위치와 연락처를 한눈에 확인하실 수 있습니다.',
                 'Find Shinhan Customs Service Seoul HQ location and contact details at a glance.',
               )}
-            </P.Lead>
+            </E.Lead>
           </StandaloneHead>
 
           <StandaloneGrid>
             <LocationInfoPanel>
-              <P.Kicker>Seoul HQ</P.Kicker>
-              <P.SectionTitle>{t('서울본사', 'Seoul HQ')}</P.SectionTitle>
+              <E.Eyebrow>Seoul HQ</E.Eyebrow>
+              <OfficePanelTitle>{t('서울본사', 'Seoul HQ')}</OfficePanelTitle>
               <InfoRows>
                 <InfoRow>
                   <InfoLabel>{t('주소', 'Address')}</InfoLabel>
@@ -233,11 +214,20 @@ const DirectionsGrid = styled.div`
   }
 `;
 
-const LocationInfoPanel = styled(P.Panel)`
+const LocationInfoPanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: clamp(24px, 2.6vw, 34px);
+  padding: clamp(24px, 2.6vw, 34px) 0;
+`;
+
+const OfficePanelTitle = styled.h2`
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.8rem, 3.2vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
 `;
 
 const InfoRows = styled.div`
@@ -249,10 +239,9 @@ const InfoRow = styled.div`
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
   gap: 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(18, 72, 143, 0.09);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 255, 0.96));
+  padding: 14px 0;
+  border-bottom: 1px solid #d8dee8;
+  background: transparent;
 
   @media (max-width: 620px) {
     grid-template-columns: 1fr;
@@ -295,7 +284,7 @@ const MapLink = styled.a`
   justify-content: center;
   min-height: 42px;
   padding: 0 16px;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgba(20, 75, 157, 0.2);
   background: #ffffff;
   color: #1d4f97;
@@ -313,7 +302,12 @@ const MapPanel = styled(P.Panel)`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: clamp(22px, 2.4vw, 28px);
+  padding: clamp(24px, 2.6vw, 34px) 0;
+  border: 0;
+  border-top: 1px solid #d8dee8;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 `;
 
 const MapFrame = styled.div<{ $compact?: boolean }>`

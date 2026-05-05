@@ -1,6 +1,5 @@
 import { footerLinks, footerSocialLinks, siteContact } from '../../../data/home';
 import { useI18n } from '../../../i18n/useI18n';
-import { BrandMarkGraphic } from '../BrandMarkGraphic';
 import * as S from '../homeStyles';
 
 export function SiteFooter() {
@@ -11,13 +10,7 @@ export function SiteFooter() {
       <S.FooterInner>
         <S.FooterTop>
           <S.FooterBrandWrap>
-            <S.BrandMark aria-hidden="true">
-              <BrandMarkGraphic alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
-            </S.BrandMark>
-            <S.FooterBrandText>
-              <S.FooterBrandTitle>SHINHAN</S.FooterBrandTitle>
-              <S.FooterBrandSub>{t('신한관세법인', 'Shinhan Customs Service')}</S.FooterBrandSub>
-            </S.FooterBrandText>
+            <S.FooterBrandLogo src="/brand-header-logo-transparent.png" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
             <S.FooterTopAside>
               <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
               <S.FooterSocialRow>

@@ -94,7 +94,6 @@ export function NewsletterPage() {
     [pagedItems, t],
   );
 
-  const filtersChanged = searchQuery !== '' || selectedLanguage !== 'all';
   const emptyMessage = t(
     '검색어와 필터 조건에 맞는 소식지가 없습니다. 다른 조건으로 다시 확인해주세요.',
     'No newsletters match the current filters. Please try another keyword or filter.',
@@ -130,13 +129,6 @@ export function NewsletterPage() {
             selectedChip={selectedLanguage}
             onChipChange={setSelectedLanguage}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
-            resetLabel={t('초기화', 'Reset')}
-            onReset={() => {
-              setSearchQuery('');
-              setSelectedLanguage('all');
-              setCurrentPage(1);
-            }}
-            resetDisabled={!filtersChanged}
           />
           {loading ? <P.CardText>{t('소식지를 불러오는 중입니다.', 'Loading newsletters.')}</P.CardText> : null}
           <NewsListTable

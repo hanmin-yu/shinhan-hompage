@@ -1,12 +1,18 @@
 import styled from '@emotion/styled';
-import type { CSSProperties } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 
 import { issueReports } from '../../../data/home';
 import { useIssueReports } from '../../../hooks/useIssueReports';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
-const issueReportVisual = '/hero/issue-report-ai-insight.png';
+const tradeInsightVisuals = [
+  '/hero/trade-insights-ai-1.png',
+  '/hero/trade-insights-ai-2.png',
+  '/hero/trade-insights-ai-3.png',
+  '/hero/trade-insights-ai-4.png',
+  '/hero/trade-insights-ai-5.png',
+];
 
 const Section = styled.section`
   position: relative;
@@ -18,7 +24,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'I N S I G H T';
+    content: 'TRADE INSIGHTS';
     position: absolute;
     left: 24px;
     top: 26px;
@@ -38,7 +44,7 @@ const Section = styled.section`
     width: min(42vw, 560px);
     aspect-ratio: 1;
     pointer-events: none;
-    background: url('/brand-mark.svg') center / contain no-repeat;
+    background: url('/brand-mark-shinhan.png') center / contain no-repeat;
     opacity: 0.034;
     transform: rotate(8deg);
   }
@@ -72,24 +78,6 @@ const Head = styled.div`
   }
 `;
 
-const Label = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: #1c5aa9;
-  font-size: clamp(0.92rem, 1.08vw, 1.04rem);
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 36px;
-    height: 1px;
-    background: rgba(33, 101, 193, 0.48);
-  }
-`;
-
 const Title = styled.h2`
   margin: 12px 0 0;
   color: #222a34;
@@ -117,19 +105,22 @@ const ViewAll = styled.a`
 `;
 
 const Content = styled.div`
+  --insight-panel-height: clamp(500px, 35vw, 570px);
   display: grid;
   grid-template-columns: minmax(380px, 0.96fr) minmax(0, 1.04fr);
   gap: clamp(28px, 5vw, 72px);
-  align-items: start;
+  align-items: stretch;
 
   @media (max-width: 980px) {
+    --insight-panel-height: auto;
     grid-template-columns: 1fr;
   }
 `;
 
 const Featured = styled.a`
   display: grid;
-  min-height: clamp(520px, 39vw, 620px);
+  height: var(--insight-panel-height);
+  min-height: 0;
   color: #ffffff;
   text-decoration: none;
   background:
@@ -190,16 +181,25 @@ const FeaturedText = styled.p`
 `;
 
 const List = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  height: var(--insight-panel-height);
   border-top: 1px solid rgba(15, 43, 89, 0.18);
+
+  @media (max-width: 980px) {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 const ReportLink = styled.a`
   display: grid;
   grid-template-columns: minmax(92px, 0.18fr) minmax(0, 1fr);
   gap: 22px;
-  padding: 23px 0 22px;
+  align-items: center;
+  min-height: 0;
+  padding: 18px 0;
   border-bottom: 1px solid rgba(15, 43, 89, 0.14);
   text-decoration: none;
   transition:
@@ -247,6 +247,10 @@ const ReportTitle = styled.strong`
 export function IssueReportSection() {
   const { t } = useI18n();
   const { reports } = useIssueReports();
+  const featuredImage = useMemo(() => {
+    const index = Math.floor(Math.random() * tradeInsightVisuals.length);
+    return tradeInsightVisuals[index];
+  }, []);
 
   const latestReports = reports.filter((report) => report.status !== 'placeholder');
   const visibleReports = (latestReports.length > 0 ? latestReports : issueReports).slice(0, 9);
@@ -260,13 +264,12 @@ export function IssueReportSection() {
       <S.SectionAnchor id="issue-report" />
       <S.SectionAnchor id="news" />
       <Section>
-        <Inner data-reveal>
+        <Inner>
           <Head>
             <div>
-              <Label>Issue Report</Label>
-              <Title>INSIGHT</Title>
+              <Title>Trade Insights</Title>
             </div>
-            <ViewAll href="/news/issue-report">{t('이슈 리포트 전체보기', 'View all issue reports')}</ViewAll>
+            <ViewAll href="/news/issue-report">{t('Trade Insights 전체보기', 'View all Trade Insights')}</ViewAll>
           </Head>
 
           <Content>
@@ -274,7 +277,7 @@ export function IssueReportSection() {
               href={featured.url}
               target="_blank"
               rel="noreferrer"
-              style={{ '--report-image': `url(${featured.image ?? issueReportVisual})` } as CSSProperties & Record<'--report-image', string>}
+              style={{ '--report-image': `url(${featuredImage})` } as CSSProperties & Record<'--report-image', string>}
             >
               <FeaturedBody>
                 <Meta>

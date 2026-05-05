@@ -47,9 +47,6 @@ export const headerNavigation: NavItem[] = [
     id: 'it',
     label: 'IT',
     to: '/it',
-    children: [
-      { id: 'it-main', label: 'IT 서비스 소개', to: '/it' },
-    ],
   },
   {
     id: 'news',
@@ -57,6 +54,7 @@ export const headerNavigation: NavItem[] = [
     to: '/news',
     children: [
       { id: 'news-shinhan', label: '신한 NEWS', to: '/news/shinhan-news' },
+      { id: 'news-issue-report', label: 'Trade Insights', to: '/news/issue-report' },
       { id: 'news-seminar', label: '세미나', to: '/news/seminar' },
       { id: 'news-newsletter', label: '소식지', to: '/news/newsletter' },
     ],

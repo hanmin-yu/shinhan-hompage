@@ -47,7 +47,7 @@ export const NewsContentSection = styled(P.PageSection)`
 `;
 
 export const NewsFlushPageSection = styled(P.CompactPageSection)`
-  padding-top: 0;
+  padding-top: clamp(20px, 2.6vw, 36px);
   background: #ffffff;
 
   &::after {

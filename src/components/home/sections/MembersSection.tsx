@@ -28,24 +28,6 @@ const Head = styled.div`
   }
 `;
 
-const Label = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: #22549a;
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 28px;
-    height: 1px;
-    background: rgba(29, 87, 170, 0.54);
-  }
-`;
-
 const Title = styled.h2`
   margin: 10px 0 0;
   color: #103a72;
@@ -156,7 +138,6 @@ export function MembersSection() {
       <Inner data-reveal>
         <Head>
           <div>
-            <Label>Members</Label>
             <Title>{t('대표 구성원', 'Key Professionals')}</Title>
           </div>
         </Head>

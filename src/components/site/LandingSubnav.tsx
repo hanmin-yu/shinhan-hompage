@@ -23,20 +23,22 @@ type LandingSubnavProps = {
 };
 
 const heroImagesByTitle: Record<string, { image: string; position: string }> = {
-  '신한 소개': { image: '/hero/homepage/office-tower-clear-sky.jpg', position: 'center 42%' },
-  'About Shinhan': { image: '/hero/homepage/office-tower-clear-sky.jpg', position: 'center 42%' },
+  '신한 소개': { image: '/hero/menu-about-shinhan-ai.png', position: 'center 50%' },
+  'About Shinhan': { image: '/hero/menu-about-shinhan-ai.png', position: 'center 50%' },
   구성원: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
   Professionals: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
   업무분야: { image: '/hero/busan-port.jpg', position: 'center 48%' },
   Services: { image: '/hero/busan-port.jpg', position: 'center 48%' },
-  IT: { image: '/hero/semiconductor.jpg', position: 'center 46%' },
+  IT: { image: '/hero/it-server-room.png', position: 'center 50%' },
   '소식/자료': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
   'News & Resources': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
 };
 
 const Wrap = styled.section<{ $compactBottom?: boolean; $matchAboutHero?: boolean }>`
+  position: relative;
+  left: 50%;
   width: 100vw;
-  margin-left: calc(50% - 50vw);
+  margin-left: -50vw;
   margin-top: ${({ $compactBottom, $matchAboutHero }) => {
     if ($matchAboutHero) {
       return '0';
@@ -45,6 +47,7 @@ const Wrap = styled.section<{ $compactBottom?: boolean; $matchAboutHero?: boolea
   }};
   margin-bottom: 0;
   color: #121c2b;
+  overflow: hidden;
 
   @media (max-width: 980px) {
     margin-bottom: 0;
@@ -59,10 +62,12 @@ const VisualHero = styled.div<{ $image: string; $position: string }>`
   min-height: clamp(260px, 31vw, 410px);
   display: grid;
   place-items: center;
-  padding: calc(82px + 38px + clamp(18px, 3vw, 34px)) 24px clamp(34px, 5vw, 56px);
+  width: 100%;
+  padding: calc(82px + 38px + clamp(18px, 3vw, 34px)) max(24px, env(safe-area-inset-left)) clamp(34px, 5vw, 56px);
   background:
     linear-gradient(180deg, rgba(8, 17, 31, 0.08) 0%, rgba(8, 17, 31, 0.13) 58%, rgba(8, 17, 31, 0.28) 100%),
     ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+  overflow: hidden;
 
   &[data-title='구성원'],
   &[data-title='Professionals'] {
@@ -74,7 +79,7 @@ const VisualHero = styled.div<{ $image: string; $position: string }>`
 
   @media (max-width: 768px) {
     min-height: clamp(260px, 44vh, 380px);
-    padding-top: clamp(44px, 8vw, 70px);
+    padding-top: calc(70px + clamp(26px, 6vw, 46px));
 
     &[data-title='구성원'],
     &[data-title='Professionals'] {
@@ -90,6 +95,7 @@ const Eyebrow = styled.span`
 `;
 
 const IntroTitle = styled.h1`
+  max-width: min(100%, 920px);
   margin: 0;
   color: #ffffff;
   font-size: clamp(2.54rem, 5vw, 4.9rem);
@@ -111,8 +117,10 @@ const IntroSummary = styled.p`
 `;
 
 const SubnavBand = styled.div`
+  width: 100%;
   background: #ffffff;
   border-bottom: 1px solid #e4e7ec;
+  overflow: hidden;
 `;
 
 const SubnavInner = styled.div`
@@ -125,6 +133,7 @@ const SubnavInner = styled.div`
   margin: 0 auto;
   border-left: 1px solid #e4e7ec;
   border-right: 1px solid #e4e7ec;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     width: calc(100% - 28px);
@@ -161,6 +170,7 @@ const Tabs = styled.nav`
   flex: 1;
   justify-content: flex-end;
   white-space: nowrap;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -215,6 +225,8 @@ const TabLink = styled(Link)`
 
   @media (max-width: 980px) {
     min-height: 58px;
+    min-width: 118px;
+    padding: 0 18px;
   }
 
   @media (max-width: 640px) {

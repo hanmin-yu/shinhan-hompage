@@ -18,6 +18,7 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
   min-height: clamp(260px, 31vw, 410px);
   display: grid;
   place-items: center;
+  overflow: hidden;
   padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
   padding-bottom: clamp(34px, 5vw, 56px);
   background:
@@ -37,6 +38,7 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
 `;
 
 const VisualTitle = styled.h1`
+  max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
   font-size: clamp(2.6rem, 5vw, 4.9rem);
@@ -52,6 +54,7 @@ const VisualTitle = styled.h1`
 const SubnavBand = styled.section`
   background: #ffffff;
   border-bottom: 1px solid #e4e7ec;
+  overflow: hidden;
 `;
 
 const SubnavInner = styled(P.PageContainer)`
@@ -61,6 +64,7 @@ const SubnavInner = styled(P.PageContainer)`
   min-height: 66px;
   border-left: 1px solid #e4e7ec;
   border-right: 1px solid #e4e7ec;
+  overflow: hidden;
 
   @media (max-width: 760px) {
     flex-direction: column;
@@ -98,6 +102,7 @@ const SectionNav = styled.nav`
   align-items: stretch;
   flex: 1;
   justify-content: flex-end;
+  min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
 

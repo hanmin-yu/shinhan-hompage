@@ -243,9 +243,13 @@ const HeroStatement = styled.p`
 const HeroValues = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   width: min(720px, 100%);
+
+  @media (max-width: 920px) {
+    justify-content: center;
+  }
 
   @media (max-width: 760px) {
     gap: 8px;
@@ -408,7 +412,7 @@ const SeminarQuickCard = styled(Link)`
   overflow: hidden;
   background:
     linear-gradient(135deg, rgba(3, 15, 34, 0.86), rgba(8, 28, 64, 0.54)),
-    url('/source-site/news-newsletter.png') center / cover no-repeat;
+    url('/hero/homepage/seminar-quick-card-ai.png') center / cover no-repeat;
   color: #ffffff;
   box-shadow: 0 22px 44px rgba(3, 15, 34, 0.28);
 

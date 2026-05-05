@@ -70,6 +70,7 @@ const practiceItems = [
 function useCountUp(target: number, duration = 1200) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [value, setValue] = useState(target);
+  const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
@@ -78,27 +79,32 @@ function useCountUp(target: number, duration = 1200) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) {
       setValue(target);
+      setIsCounting(false);
       return;
     }
 
     setValue(0);
+    setIsCounting(false);
     let frameId = 0;
 
     const runCount = () => {
       let startedAt = 0;
 
       setValue(0);
+      setIsCounting(true);
 
       const tick = (timestamp: number) => {
         if (!startedAt) startedAt = timestamp;
         const progress = Math.min((timestamp - startedAt) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setValue(Math.round(target * eased));
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const pulse = Math.sin(progress * Math.PI * 5) * 0.05;
+        setValue(Math.max(1, Math.round(target * Math.min(eased + pulse, 1))));
 
         if (progress < 1) {
           frameId = window.requestAnimationFrame(tick);
         } else {
           setValue(target);
+          window.setTimeout(() => setIsCounting(false), 260);
         }
       };
 
@@ -115,6 +121,7 @@ function useCountUp(target: number, duration = 1200) {
         }
 
         setValue(0);
+        setIsCounting(false);
       },
       { threshold: 0.36 },
     );
@@ -127,7 +134,7 @@ function useCountUp(target: number, duration = 1200) {
     };
   }, [duration, target]);
 
-  return { ref, value };
+  return { ref, value, isCounting };
 }
 
 const Section = styled.section`
@@ -155,14 +162,36 @@ const Section = styled.section`
   &::after {
     content: '';
     position: absolute;
-    right: -150px;
-    bottom: -190px;
-    width: min(54vw, 720px);
+    right: -110px;
+    bottom: clamp(18px, 4vw, 58px);
+    width: min(46vw, 620px);
     aspect-ratio: 1;
     pointer-events: none;
-    background: url('/brand-mark.svg') center / contain no-repeat;
+    background: url('/brand-mark-shinhan.png') center / contain no-repeat;
     opacity: 0.045;
     transform: rotate(-10deg);
+  }
+
+  @keyframes countPop {
+    0% {
+      transform: translateY(10px) scale(0.92);
+      filter: drop-shadow(0 0 0 rgba(39, 111, 207, 0));
+    }
+
+    36% {
+      transform: translateY(-8px) scale(1.08);
+      color: #165cb8;
+      filter: drop-shadow(0 18px 24px rgba(39, 111, 207, 0.2));
+    }
+
+    72% {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    100% {
+      transform: translateY(0) scale(1);
+      filter: drop-shadow(0 0 0 rgba(39, 111, 207, 0));
+    }
   }
 
   @media (max-width: 860px) {
@@ -170,9 +199,10 @@ const Section = styled.section`
     padding: 82px 0 76px;
 
     &::after {
-      width: 92vw;
-      right: -44vw;
-      bottom: -90px;
+      width: 82vw;
+      right: -42vw;
+      bottom: 18px;
+      background-size: 84%;
       opacity: 0.035;
     }
   }
@@ -197,24 +227,6 @@ const Inner = styled(S.Container)`
 const CountPanel = styled.div`
   display: grid;
   gap: 28px;
-`;
-
-const Label = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: #1c5aa9;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 36px;
-    height: 1px;
-    background: rgba(33, 101, 193, 0.48);
-  }
 `;
 
 const CountLine = styled.div`
@@ -262,7 +274,7 @@ const CountLabel = styled.span`
     right: -8px;
     bottom: 0;
     height: 10px;
-    background: rgba(70, 181, 209, 0.64);
+    background: linear-gradient(90deg, rgba(28, 90, 169, 0.72), rgba(33, 101, 193, 0.28));
     z-index: -1;
   }
 
@@ -277,6 +289,16 @@ const Summary = styled.p`
   color: #52697f;
   font-size: clamp(1.14rem, 1.35vw, 1.28rem);
   line-height: 1.78;
+`;
+
+const CountNumber = styled.span<{ $counting: boolean }>`
+  display: inline-flex;
+  align-items: flex-start;
+  transform-origin: 50% 78%;
+  animation: ${({ $counting }) => ($counting ? 'countPop 0.38s cubic-bezier(0.2, 0.9, 0.24, 1.28)' : 'none')};
+  transition:
+    color 0.18s ease,
+    filter 0.18s ease;
 `;
 
 const List = styled.div`
@@ -410,8 +432,8 @@ const PracticeArrow = styled.span`
 `;
 
 export function PracticeSection() {
-  const { language, t } = useI18n();
-  const { ref, value } = useCountUp(100);
+  const { t } = useI18n();
+  const { ref, value, isCounting } = useCountUp(100);
 
   return (
     <>
@@ -422,10 +444,9 @@ export function PracticeSection() {
       <Section id="practice">
         <Inner data-reveal>
           <CountPanel ref={ref}>
-            <Label>Practice Areas</Label>
             <CountLine aria-label={t('100명 이상의 전문 인력', 'More than 100 professionals')}>
               <CountValue>
-                {value}
+                <CountNumber key={value} $counting={isCounting}>{value}</CountNumber>
                 <Plus>+</Plus>
               </CountValue>
               <CountLabel>Professionals</CountLabel>
@@ -442,8 +463,8 @@ export function PracticeSection() {
             {practiceItems.map((item) => (
               <PracticeLink key={item.id} id={item.id} to={item.href}>
                 <PracticeCopy>
-                  <PracticeTitle>{item.titleEn}</PracticeTitle>
-                  <PracticeMeta>{language === 'ko' ? item.title : item.label}</PracticeMeta>
+                  <PracticeTitle>{item.title}</PracticeTitle>
+                  <PracticeMeta>{item.titleEn}</PracticeMeta>
                 </PracticeCopy>
                 <PracticeArrow aria-hidden="true">&gt;</PracticeArrow>
               </PracticeLink>

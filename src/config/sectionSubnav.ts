@@ -108,6 +108,7 @@ export const sectionSubnav = {
     summaryEn: 'Browse Shinhan NEWS, seminars, and newsletters by channel.',
     items: [
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news' },
+      { label: 'Trade Insights', labelEn: 'Trade Insights', to: '/news/issue-report' },
       {
         label: '세미나',
         labelEn: 'Seminar',

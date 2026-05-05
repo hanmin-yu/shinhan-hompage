@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
+import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
@@ -34,9 +36,7 @@ const googleMapQueryOverrides: Record<string, string> = {
 function useOfficeViewData(): OfficeViewData[] {
   const { t } = useI18n();
 
-  return officeBranches
-    .filter((office) => office.id !== 'kord')
-    .map((office) => {
+  return officeBranches.map((office) => {
       const isVietnamOffice = office.id === 'vietnam';
       const useAddressOnly = addressOnlyMapOfficeIds.has(office.id);
       const mapSearchQuery = useAddressOnly
@@ -61,14 +61,28 @@ function useOfficeViewData(): OfficeViewData[] {
         googleMapUrl: getGoogleMapUrl(googleMapQuery),
         googleMapEmbedUrl: getGoogleMapEmbedUrl(googleMapQuery),
       };
-    });
+  });
 }
 
 export function OfficesPage() {
   const { t } = useI18n();
+  const [searchParams, setSearchParams] = useSearchParams();
   const offices = useOfficeViewData();
-  const [selectedOfficeId, setSelectedOfficeId] = useState(offices[0]?.id ?? '');
+  const requestedOfficeId = searchParams.get('office');
+  const initialOfficeId = offices.some((office) => office.id === requestedOfficeId) ? requestedOfficeId ?? '' : offices[0]?.id ?? '';
+  const [selectedOfficeId, setSelectedOfficeId] = useState(initialOfficeId);
   const selectedOffice = offices.find((office) => office.id === selectedOfficeId) ?? offices[0];
+
+  useEffect(() => {
+    if (!requestedOfficeId) return;
+    if (!offices.some((office) => office.id === requestedOfficeId)) return;
+    setSelectedOfficeId(requestedOfficeId);
+  }, [offices, requestedOfficeId]);
+
+  const selectOffice = (officeId: string) => {
+    setSelectedOfficeId(officeId);
+    setSearchParams({ office: officeId });
+  };
 
   return (
     <>
@@ -76,21 +90,40 @@ export function OfficesPage() {
         config={sectionSubnav.about}
         title="사무소"
         titleEn="Offices"
-        heroImage="/hero/homepage/seoul-skyline-blue-sky.jpg"
-        heroPosition="center 45%"
+        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroPosition="center 50%"
       />
 
       <OfficesSection>
         <P.PageContainer>
-          <P.Kicker>Office Network</P.Kicker>
-          <P.Title>{t('신한관세법인 사무소 안내', 'Shinhan Customs Service Office Network')}</P.Title>
-          <P.Lead>
-            {t(
-              '전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다. 방문 전 담당 사무소와 일정을 조율해 주세요.',
-              'Find contact details and map locations for Shinhan offices across Korea and Vietnam. Please coordinate with the relevant office before visiting.',
-            )}
-          </P.Lead>
-          <P.SectionDivider />
+          <E.Statement data-reveal>
+            <div>
+              <E.Eyebrow>Office Network</E.Eyebrow>
+              <E.Title>{t('신한관세법인 사무소 안내', 'Shinhan Customs Service Office Network')}</E.Title>
+            </div>
+            <E.LeadGrid>
+              <E.Lead>
+                {t(
+                  '전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다. 방문 전 담당 사무소와 일정을 조율해 주세요.',
+                  'Find contact details and map locations for Shinhan offices across Korea and Vietnam. Please coordinate with the relevant office before visiting.',
+                )}
+              </E.Lead>
+              <E.FactGrid>
+                <E.Fact>
+                  <E.FactValue>7</E.FactValue>
+                  <E.FactLabel>{t('국내외 주요 거점', 'Domestic and overseas offices')}</E.FactLabel>
+                </E.Fact>
+                <E.Fact>
+                  <E.FactValue>Seoul</E.FactValue>
+                  <E.FactLabel>{t('서울본사 중심 운영', 'HQ-centered operations')}</E.FactLabel>
+                </E.Fact>
+                <E.Fact>
+                  <E.FactValue>Vietnam</E.FactValue>
+                  <E.FactLabel>{t('해외 법인 연계', 'Overseas entity connection')}</E.FactLabel>
+                </E.Fact>
+              </E.FactGrid>
+            </E.LeadGrid>
+          </E.Statement>
 
           {selectedOffice ? (
             <>
@@ -104,7 +137,7 @@ export function OfficesPage() {
                       type="button"
                       aria-selected={isActive}
                       data-active={isActive}
-                      onClick={() => setSelectedOfficeId(office.id)}
+                      onClick={() => selectOffice(office.id)}
                     >
                       <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
                       <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
@@ -115,7 +148,7 @@ export function OfficesPage() {
 
               <OfficeBlock aria-live="polite">
                 <OfficeInfoPanel>
-                  <P.Kicker>Office Information</P.Kicker>
+                  <E.Eyebrow>Office Information</E.Eyebrow>
                   <OfficeName>{t(selectedOffice.label, selectedOffice.labelEn)}</OfficeName>
                   <OfficeRegion>{t(selectedOffice.region, selectedOffice.regionEn)}</OfficeRegion>
                   <OfficeSummary>{t(selectedOffice.summary, selectedOffice.summaryEn)}</OfficeSummary>
@@ -160,14 +193,14 @@ export function OfficesPage() {
                 </OfficeInfoPanel>
 
                 <OfficeMapPanel>
-                  <P.Kicker>Map</P.Kicker>
-                  <P.SectionTitle>{t(`${selectedOffice.label} 지도 안내`, `${selectedOffice.labelEn} Map`)}</P.SectionTitle>
-                  <P.CardText>
+                  <E.Eyebrow>Map</E.Eyebrow>
+                  <MapTitle>{t(`${selectedOffice.label} 지도 안내`, `${selectedOffice.labelEn} Map`)}</MapTitle>
+                  <E.Body>
                     {t(
                       '지도를 통해 사무소 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
                       'Use the map to review this office location. For precise route guidance, open Naver Map or Google Maps.',
                     )}
-                  </P.CardText>
+                  </E.Body>
                   <MapFrame>
                     <iframe
                       key={selectedOffice.id}
@@ -187,22 +220,19 @@ export function OfficesPage() {
   );
 }
 
-const OfficesSection = styled(P.PageSection)`
+const OfficesSection = styled(E.Section)`
   background: #ffffff;
-
-  &::after {
-    display: none;
-  }
 `;
 
 const OfficeTabs = styled.div`
   display: flex;
-  gap: 10px;
-  margin-top: clamp(30px, 4vw, 46px);
-  margin-bottom: 22px;
-  padding-bottom: 8px;
+  gap: 0;
+  margin-top: clamp(50px, 6vw, 76px);
+  margin-bottom: 34px;
   overflow-x: auto;
   scrollbar-width: none;
+  border-top: 1px solid #d8dee8;
+  border-bottom: 1px solid #d8dee8;
 
   &::-webkit-scrollbar {
     display: none;
@@ -210,14 +240,16 @@ const OfficeTabs = styled.div`
 `;
 
 const OfficeTab = styled.button`
+  position: relative;
   display: grid;
   flex: 0 0 auto;
   gap: 4px;
-  min-width: 154px;
-  min-height: 74px;
-  padding: 14px 16px;
-  border: 1px solid rgba(18, 72, 143, 0.12);
-  border-radius: 12px;
+  min-width: 158px;
+  min-height: 76px;
+  padding: 15px 18px;
+  border: 0;
+  border-right: 1px solid #d8dee8;
+  border-radius: 0;
   background: #ffffff;
   color: #496582;
   text-align: left;
@@ -229,10 +261,18 @@ const OfficeTab = styled.button`
     box-shadow 0.18s ease;
 
   &[data-active='true'] {
-    border-color: rgba(24, 79, 159, 0.36);
-    background: linear-gradient(180deg, #1f65c3, #184f9f);
-    color: #ffffff;
-    box-shadow: 0 16px 28px rgba(24, 74, 149, 0.16);
+    color: #172337;
+    box-shadow: none;
+  }
+
+  &[data-active='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    background: #172337;
   }
 
   &:focus-visible {
@@ -267,15 +307,12 @@ const OfficeBlock = styled.section`
   }
 `;
 
-const OfficeInfoPanel = styled(P.Panel)`
+const OfficeInfoPanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 14px;
   min-height: 100%;
-  padding: clamp(24px, 3vw, 40px);
-  background:
-    radial-gradient(circle at 100% 0%, rgba(43, 105, 190, 0.08), transparent 32%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(247, 251, 255, 0.98));
+  padding: clamp(24px, 3vw, 40px) 0;
 `;
 
 const OfficeName = styled.h2`
@@ -285,6 +322,15 @@ const OfficeName = styled.h2`
   font-weight: 800;
   line-height: 1.06;
   letter-spacing: -0.055em;
+`;
+
+const MapTitle = styled.h2`
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.72rem, 3vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
 `;
 
 const OfficeRegion = styled.p`
@@ -312,10 +358,9 @@ const InfoRow = styled.div`
   grid-template-columns: 118px minmax(0, 1fr);
   gap: 16px;
   align-items: start;
-  padding: 16px 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(18, 72, 143, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(246, 250, 255, 0.96));
+  padding: 16px 0;
+  border-bottom: 1px solid #d8dee8;
+  background: transparent;
 
   @media (max-width: 620px) {
     grid-template-columns: 1fr;
@@ -363,7 +408,7 @@ const MapLink = styled.a`
   justify-content: center;
   min-height: 46px;
   padding: 0 18px;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgba(20, 75, 157, 0.2);
   background: #ffffff;
   color: #1d4f97;
@@ -377,18 +422,18 @@ const PrimaryMapLink = styled(MapLink)`
   color: #ffffff;
 `;
 
-const OfficeMapPanel = styled(P.Panel)`
+const OfficeMapPanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 14px;
   min-height: 100%;
-  padding: clamp(22px, 2.5vw, 34px);
+  padding: clamp(22px, 2.5vw, 34px) 0;
 `;
 
 const MapFrame = styled.div`
   width: 100%;
   min-height: 520px;
-  border-radius: 16px;
+  border-radius: 0;
   border: 1px solid rgba(19, 75, 154, 0.14);
   overflow: hidden;
   background: #edf4ff;

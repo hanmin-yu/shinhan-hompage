@@ -173,8 +173,8 @@ export function IssueReportPage() {
   const emptyMessage = loading
     ? undefined
     : filteredReports.length === 0 && reports.length > 0
-      ? t('검색 조건에 맞는 이슈리포트가 없습니다.', 'No issue reports match the current filters.')
-      : t('표시할 이슈리포트가 없습니다.', 'No issue reports are available right now.');
+      ? t('검색 조건에 맞는 Trade Insights가 없습니다.', 'No Trade Insights match the current filters.')
+      : t('표시할 Trade Insights가 없습니다.', 'No Trade Insights are available right now.');
 
   return (
     <>
@@ -196,6 +196,17 @@ export function IssueReportPage() {
 
       <NewsFlushPageSection>
         <P.PageContainer data-reveal>
+          <NewsListToolbar
+            searchLabel={t('검색', 'Search')}
+            searchValue={searchQuery}
+            searchPlaceholder={t('제목, 출처, 날짜로 검색', 'Search by title, source, or date')}
+            onSearchChange={setSearchQuery}
+            chipLabel={t('출처 필터', 'Source Filter')}
+            chipOptions={sourceOptions}
+            selectedChip={selectedSource}
+            onChipChange={setSelectedSource}
+            resultLabel={t(`총 ${filteredReports.length}건`, `${filteredReports.length} results`)}
+          />
           {loading ? <StatusNote>{t('기관 목록을 불러오는 중입니다.', 'Loading source feeds.')}</StatusNote> : null}
           {refreshing ? (
             <StatusNote>{t('새로 수집 중입니다. 현재 목록은 유지됩니다.', 'Refreshing feeds while keeping the current list visible.')}</StatusNote>
@@ -227,22 +238,11 @@ export function IssueReportPage() {
           {!loading && failedSources.length > 0 && reports.length === 0 ? (
             <StatusNote>
               {t(
-                `${failedSourcesLabel} 수집에 실패했습니다. 현재 표시할 이슈리포트가 없습니다.`,
-                `Failed to load ${failedSourcesLabel}. There are no issue reports to display right now.`,
+                `${failedSourcesLabel} 수집에 실패했습니다. 현재 표시할 Trade Insights가 없습니다.`,
+                `Failed to load ${failedSourcesLabel}. There are no Trade Insights to display right now.`,
               )}
             </StatusNote>
           ) : null}
-          <NewsListToolbar
-            searchLabel={t('검색', 'Search')}
-            searchValue={searchQuery}
-            searchPlaceholder={t('제목, 출처, 날짜로 검색', 'Search by title, source, or date')}
-            onSearchChange={setSearchQuery}
-            chipLabel={t('출처 필터', 'Source Filter')}
-            chipOptions={sourceOptions}
-            selectedChip={selectedSource}
-            onChipChange={setSelectedSource}
-            resultLabel={t(`총 ${filteredReports.length}건`, `${filteredReports.length} results`)}
-          />
           <NewsListTable
             rows={rows}
             dateLabel={t('일자', 'Date')}
