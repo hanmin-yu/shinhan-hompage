@@ -314,8 +314,8 @@ export function ServicesPage() {
         config={servicesSubnav}
         title={servicesSubnav.title}
         titleEn={servicesSubnav.titleEn}
-        heroImage="/hero/busan-port.jpg"
-        heroPosition="center 48%"
+        heroImage="/hero/menu-services-ai.png"
+        heroPosition="center 50%"
       />
 
       <EditorialSection>

@@ -100,7 +100,7 @@ export function ConsultingPage() {
         config={servicesSubnav}
         title="컨설팅"
         titleEn="Consulting"
-        heroImage="/subpages/service-main-consulting.jpg"
+        heroImage="/hero/menu-services-consulting-ai.png"
         heroPosition="center 50%"
       />
 

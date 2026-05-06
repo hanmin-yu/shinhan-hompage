@@ -181,7 +181,7 @@ export function HistoryPage() {
         config={aboutSubnav}
         title="연혁"
         titleEn="History"
-        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroImage="/hero/menu-about-history-ai.png"
         heroPosition="center 50%"
       />
 

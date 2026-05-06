@@ -252,7 +252,7 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     primaryHref: '/services/import-export',
     description: '신고부터 환급까지 통관 운영 전 과정을 연결해 실무 효율과 정확도를 함께 관리합니다.',
     descriptionEn: 'From declarations to refunds, we connect the full clearance workflow for operational accuracy.',
-    image: '/subpages/service-main-import.jpg',
+    image: '/hero/menu-services-clearance-ai.png',
     items: [
       {
         label: '수출입통관',
@@ -279,7 +279,7 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     primaryHref: '/services/quarantine',
     description: '검역, 신고, 인증, 허가, 표시기준까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
     descriptionEn: 'We review quarantine, declarations, certifications, permits, and labeling standards together to reduce import-stage delays.',
-    image: '/subpages/service-import-export.jpg',
+    image: '/hero/menu-services-quarantine-wine-ai.png',
     items: [
       {
         label: '검역·요건',
@@ -299,7 +299,7 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     primaryHref: '/services/consulting/fta',
     description: '조사 대응, 원산지/FTA, AEO, ACVA, 조세불복까지 기업 리스크 관리를 지원합니다.',
     descriptionEn: 'We support enterprise risk management across audits, FTA, AEO, ACVA, and tax appeals.',
-    image: '/subpages/service-main-consulting.jpg',
+    image: '/hero/menu-services-consulting-ai.png',
     items: [
       { label: 'FTA', labelEn: 'FTA', href: '/services/consulting/fta', parentTitle: '컨설팅', parentTitleEn: 'Consulting' },
       { label: 'AEO', labelEn: 'AEO', href: '/services/consulting/aeo', parentTitle: '컨설팅', parentTitleEn: 'Consulting' },
@@ -350,7 +350,7 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     primaryHref: '/services/logistics',
     description: '물류, 베트남 법인, 미국 FDA 대응 등 통관 이후 확장 업무를 지원합니다.',
     descriptionEn: 'We cover extended operations including logistics, Vietnam entity support, and U.S. FDA response.',
-    image: '/subpages/service-main-vietnam.jpg',
+    image: '/hero/menu-services-specialized-ai.png',
     items: [
       { label: '물류', labelEn: 'Logistics', href: '/services/logistics', parentTitle: '기타', parentTitleEn: 'Specialized' },
       { label: '베트남', labelEn: 'Vietnam', href: '/services/vietnam', parentTitle: '기타', parentTitleEn: 'Specialized' },
@@ -1120,7 +1120,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     title: '수출입통관',
     summary: '정확한 법령 해석과 실무 경험을 기반으로 복잡한 수출입 통관을 빠르고 안정적으로 지원합니다.',
     subtitle: '복잡한 수출입 통관, 분야별 통관 전문가가 빠르고 정확하게 해결합니다.',
-    heroImage: '/services/heroes/import-export.jpg',
+    heroImage: '/hero/menu-services-clearance-ai.png',
     heroImageAlt: '수출입통관 서비스',
     overview:
       '수출입 통관 전 과정에 대해 정확한 법령 해석과 실무 경험을 기반으로 신속하고 안정적인 서비스를 제공합니다. PI(Process Innovation)팀의 AI 기반 수출입 및 전후 절차 간소화와 CI(Customs Innovation)팀의 통관 SOP 최적화를 결합해 효율성과 정확성을 동시에 확보하며, 자체 개발 iOOM 시스템으로 통관 현황과 데이터를 실시간 관리합니다.',
@@ -1153,7 +1153,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitleEn: 'Quarantine / Requirements',
     title: '검역·요건',
     summary: '검역, 인허가, 신고, 표시사항까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
-    heroImage: '/services/heroes/quarantine.jpg',
+    heroImage: '/hero/menu-services-quarantine-wine-ai.png',
     heroImageAlt: '검역 및 요건 서비스',
     subtitle:
       '정확한 법령 검토와 실무 중심의 대응으로, 수입 단계별 검역·인허가·표시사항 리스크를 사전에 점검하고 안정적인 통관을 지원합니다.',
@@ -1223,7 +1223,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '20년의 FTA 컨설팅 경험을 보유한 전담팀이 공급망 전 과정의 원산지 리스크를 선제적으로 진단합니다.',
     subtitle:
       '20년의 FTA 컨설팅 경험을 보유한 전담팀이 공급망 전 과정의 원산지 리스크를 선제적으로 진단하고, 전략적인 관리 체계를 통해 글로벌 통상 환경에서의 경영 안정성과 이익을 극대화합니다.',
-    heroImage: '/services/heroes/fta.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '원산지 FTA 컨설팅',
     overview:
       '원산지는 물품의 경제적 국적을 규정하는 기준으로, 세율과 수입 규제의 적용 방향을 결정하는 핵심 지표입니다. 신한은 일반 원산지 규정을 통한 무역 질서 준수와 FTA 원산지 규정 활용을 통한 실질적 관세 절감을 함께 지원하며, 전략적인 관리 체계를 통해 글로벌 통상 환경에서의 경영 안정성과 이익 극대화를 돕습니다.',
@@ -1250,7 +1250,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '글로벌 관세 규제가 급변하는 환경 속에서 AEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.',
     subtitle:
       '글로벌 관세 규제가 급변하는 환경 속에서, 전 세계 무역 안전을 위한 글로벌 약속인 AEO는 다변화된 통관 리스크를 선제적으로 차단하고 기업의 비즈니스 연속성을 보장하는 강력한 안전장치입니다.',
-    heroImage: '/services/heroes/aeo.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: 'AEO 컨설팅',
     overview:
       '신한은 관세업계 최초로 AEO 공인을 획득한 이후 제도 도입 초기부터 현재까지 다양한 산업군의 고객사를 대상으로 수준 높은 컨설팅을 제공해 왔습니다. 단순한 인증 획득에 그치지 않고, 효율성 추구와 AEO 역량 내재화를 원칙으로 삼아 실효성 있는 AEO 체계가 조직 내에 안정적으로 정착되도록 지원합니다.',
@@ -1276,7 +1276,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     title: '관세조사',
     summary: '치밀한 사전 리스크 분석과 입체적인 대응 전략으로 관세조사의 불확실성을 줄이고 경영 안정성을 지원합니다.',
     subtitle: '치밀한 사전 리스크 분석과 입체적인 대응 전략으로, 관세조사의 불확실성을 제거하고 기업의 경영 안정성을 실현합니다.',
-    heroImage: '/services/heroes/customs-audit.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '관세조사 대응',
     overview:
       '관세조사는 관세의 과세표준과 세액의 결정 또는 경정을 위하여 방문 또는 서면으로 납세자의 장부·서류 등을 조사하는 절차입니다. 통관 후 세액심사 외에도 통관적법성 전반에 대해 기업 단위로 적정성을 확인하는 과정이기 때문에, 신한은 사전 리스크 분석과 전략적 대응으로 조사 불확실성을 낮추고 경영 안정성을 돕습니다.',
@@ -1295,7 +1295,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitleEn: 'Consulting',
     title: '외환검사/조사',
     summary: '외환 규정과 거래 구조를 함께 점검해 검사 대응 리스크를 줄입니다.',
-    heroImage: '/services/heroes/foreign-exchange.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '외환검사 조사 대응',
     overview:
       '대금결제 구조, 계약 조건, 증빙 체계를 통합 점검해 외환검사·조사에 대비합니다. 관세 이슈와 연결되는 외환 리스크를 함께 관리해 대응 효율을 높입니다.',
@@ -1313,7 +1313,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     title: 'ACVA',
     summary: 'ACVA 컨설팅은 특수관계자간 과세가격의 안정성을 제공하고 관세 리스크를 줄이는 데 초점을 둡니다.',
     subtitle: 'ACVA 컨설팅은 특수관계자간 과세가격의 안정성을 제공합니다.',
-    heroImage: '/services/heroes/acva.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: 'ACVA 컨설팅',
     overview:
       'ACVA는 특수관계자간 과세가격 결정방법 사전심사 제도로, 특수관계자간에 거래되는 수입물품의 과세가격 결정방법을 납세자의 신청에 따라 과세당국과 상호 합의해 사전에 결정하는 제도입니다. 관세조사 유예, 가산세 면제, 과세가격 결정자료 제출 생략 등 실질적 이점을 통해 기업의 신뢰성과 경영 안정성을 높입니다.',
@@ -1338,7 +1338,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '법령 전문성과 풍부한 대관 경험을 바탕으로 조사 대응부터 형사 리스크 관리까지 통합 지원합니다.',
     subtitle:
       '관세법령에 대한 전문성과 풍부한 대관 경험을 바탕으로, 법무법인과의 협업을 통해 조사 대응부터 형사 리스크 관리까지 전 과정을 아우르는 통합 솔루션을 제공합니다.',
-    heroImage: '/services/heroes/penalty-investigation.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '범칙조사 대응',
     overview:
       '세관은 관세법, 대외무역법, 외국환거래법, 특정경제범죄가중처벌등에관한법률 등을 위반한 혐의가 있다고 판단되는 경우 범칙조사를 실시합니다. 신한은 법무법인과의 협업을 통해 임의·강제 조사 대응부터 통고처분, 검찰 조사와 형사 리스크 관리까지 전 과정을 아우르는 통합 솔루션을 제공합니다.',
@@ -1363,7 +1363,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     title: '조세불복',
     summary: '불합리한 과세 처분에 대해 치밀한 법리 검토와 풍부한 실무 경험으로 권리구제 절차를 지원합니다.',
     subtitle: '불합리한 과세 처분, 치밀한 법리 검토와 풍부한 실무 경험으로 대응합니다.',
-    heroImage: '/services/heroes/tax-appeal.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '조세불복 자문',
     overview:
       '조세불복은 세관의 위법 또는 부당한 처분으로 인해 기업의 권리나 이익이 침해되었을 때 이를 법적으로 바로잡기 위해 다투는 모든 절차를 의미합니다. 세관 현장의 풍부한 실무 경험과 과세관청의 심사 메커니즘에 대한 깊은 이해를 바탕으로 과세전적부심사부터 심판과 소송 단계까지 치밀한 전략을 제공합니다.',
@@ -1384,7 +1384,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출하고 과다·과소환급 리스크를 줄입니다.',
     subtitle:
       '환급 진단 컨설팅부터 신청, 심사 대응, 제도 개선 건의까지 실무 흐름 전반을 지원합니다.',
-    heroImage: '/services/heroes/refund.jpg',
+    heroImage: '/hero/menu-services-clearance-ai.png',
     heroImageAlt: '관세 환급 서비스',
     overview:
       '원가·거래 구조와 신고 데이터를 기반으로 환급 가능성을 진단하고, 환급대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출합니다. 사전 검토, 증빙 정비, 환급 신청, 심사 대응, 제도 개선 대응까지 연결해 과다·과소환급 리스크를 최소화합니다.',
@@ -1415,7 +1415,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '사전심사 제도를 활용해 수출입 전 불확실성을 줄이고 기업의 경영 안정성을 지원합니다.',
     subtitle:
       '관세법 및 자유무역협정의 이행을 위한 관세법의 특례에 관한 법(FTA관세법)에 규정된 사전심사 제도를 활용하여 고객사의 불확실성을 제거하고 기업의 경영 안정성을 실현합니다.',
-    heroImage: '/services/heroes/trade-consulting.jpg',
+    heroImage: '/hero/menu-services-consulting-ai.png',
     heroImageAlt: '관세무역 컨설팅',
     overview:
       '관세법과 FTA관세법에 규정된 사전심사 제도를 활용해 과세가격, 품목번호, 원산지 결정기준 충족 여부 등을 신고 전에 미리 검토함으로써 고객사의 불확실성을 제거하고 경영 안정성을 실현합니다.',
@@ -1437,7 +1437,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '국제 포워딩, 창고 보관, 국내 운송까지 연결하는 One Stop Logistics Service를 제공합니다.',
     subtitle:
       '신한인비스타는 2007년 설립 이래 국내 수출입 기업과 다국적 기업, 외국계 기업의 국제 포워딩 업무 및 입항 이후의 창고 보관, 국내 운송 서비스를 제공하는 One Stop Logistics Service Provider입니다.',
-    heroImage: '/services/heroes/logistics.jpg',
+    heroImage: '/hero/menu-services-specialized-ai.png',
     heroImageAlt: '물류 서비스',
     overview:
       '신한인비스타는 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리, 3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다. 수출입 기업, 다국적 기업, 외국계 기업의 운영 특성에 맞춰 항공·해상·복합운송과 창고, 트럭킹 서비스를 통합 지원합니다.',
@@ -1518,7 +1518,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '한국 60년 관세 전문성과 베트남 현지 네트워크를 결합해 베트남 진출 기업의 관세 리스크를 선제적으로 관리합니다.',
     subtitle:
       '한국 60년 역사의 관세 전문성과 베트남 현지 네트워크를 결합한 독자적인 역량을 바탕으로, 신한관세법인 베트남(Shinhan Customs Vietnam)은 베트남 진출 한국 기업의 가장 신뢰받는 파트너를 지향합니다.',
-    heroImage: '/services/heroes/vietnam.jpg',
+    heroImage: '/hero/menu-services-specialized-ai.png',
     heroImageAlt: '베트남 현지 관세 컨설팅',
     overview:
       '신한관세법인 베트남(Shinhan Customs Vietnam)은 2019년 하노이에 설립된 베트남 관세총국 인가 관세법인으로, 한국 관세사와 베트남 관세사·컨설턴트가 함께 현지 한국 기업의 세관 리스크를 관리합니다. 수출입 통관부터 수책관리, FTA, 관세심사, 상시 자문까지 종합 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.',
@@ -1546,7 +1546,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     summary: '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다.',
     subtitle:
       '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
-    heroImage: '/services/heroes/us-fda.jpg',
+    heroImage: '/hero/menu-services-specialized-ai.png',
     heroImageAlt: '미국 FDA 대응 서비스',
     overview:
       '코드 파트너스 US와 연계해 제품 통관 사전검토부터 원료 검토, 미국 규제 준수, 라벨링·영양성분표, FDA 공장 등록, FCE/SID, FSVP, NDI, HACCP 및 각종 Permit 검토까지 미국 상품인증 실무를 종합 지원합니다.',

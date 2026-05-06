@@ -56,7 +56,7 @@ export function LocationPage() {
         config={aboutSubnav}
         title="오시는 길"
         titleEn="Directions"
-        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroImage="/hero/menu-about-offices-ai.png"
         heroPosition="center 50%"
       />
 
@@ -137,7 +137,7 @@ export function DirectionsPage() {
         config={utilitySubnav}
         title="오시는 길"
         titleEn="Directions"
-        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroImage="/hero/menu-about-offices-ai.png"
         heroPosition="center 50%"
       />
 

@@ -8,6 +8,8 @@ export type LandingSubnavItem = {
   labelEn?: string;
   to: string;
   matchPrefixes?: string[];
+  heroImage?: string;
+  heroPosition?: string;
 };
 
 type LandingSubnavProps = {
@@ -25,13 +27,13 @@ type LandingSubnavProps = {
 const heroImagesByTitle: Record<string, { image: string; position: string }> = {
   '신한 소개': { image: '/hero/menu-about-shinhan-ai.png', position: 'center 50%' },
   'About Shinhan': { image: '/hero/menu-about-shinhan-ai.png', position: 'center 50%' },
-  구성원: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
-  Professionals: { image: '/source-site/main-hero-desktop.jpg', position: 'center 52%' },
-  업무분야: { image: '/hero/busan-port.jpg', position: 'center 48%' },
-  Services: { image: '/hero/busan-port.jpg', position: 'center 48%' },
-  IT: { image: '/hero/it-server-room.png', position: 'center 50%' },
-  '소식/자료': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
-  'News & Resources': { image: '/hero/homepage/seoul-skyline-blue-sky.jpg', position: 'center 44%' },
+  구성원: { image: '/hero/menu-members-executives-ai.png', position: 'center 50%' },
+  Professionals: { image: '/hero/menu-members-executives-ai.png', position: 'center 50%' },
+  업무분야: { image: '/hero/menu-services-ai.png', position: 'center 50%' },
+  Services: { image: '/hero/menu-services-ai.png', position: 'center 50%' },
+  IT: { image: '/hero/menu-it-ai.png', position: 'center 50%' },
+  '소식/자료': { image: '/hero/menu-news-shinhan-ai.png', position: 'center 50%' },
+  'News & Resources': { image: '/hero/menu-news-shinhan-ai.png', position: 'center 50%' },
 };
 
 const Wrap = styled.section<{ $compactBottom?: boolean; $matchAboutHero?: boolean }>`
@@ -250,7 +252,7 @@ export function LandingSubnav({
 }: LandingSubnavProps) {
   const { t } = useI18n();
   const { pathname } = useLocation();
-  const hero = heroImagesByTitle[title] ?? heroImagesByTitle[titleEn] ?? heroImagesByTitle['신한 소개'];
+  const baseHero = heroImagesByTitle[title] ?? heroImagesByTitle[titleEn] ?? heroImagesByTitle['신한 소개'];
 
   const isActivePath = (item: LandingSubnavItem) => {
     if (pathname === item.to) {
@@ -259,6 +261,10 @@ export function LandingSubnav({
     return (item.matchPrefixes ?? []).some((prefix) => pathname.startsWith(prefix));
   };
   const activeItem = items.find(isActivePath);
+  const hero = {
+    image: activeItem?.heroImage ?? baseHero.image,
+    position: activeItem?.heroPosition ?? baseHero.position,
+  };
   const visualTitle = activeItem ? t(activeItem.label, activeItem.labelEn ?? activeItem.label) : t(title, titleEn);
 
   return (

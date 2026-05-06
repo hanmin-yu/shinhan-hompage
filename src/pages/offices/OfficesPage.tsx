@@ -90,7 +90,7 @@ export function OfficesPage() {
         config={sectionSubnav.about}
         title="사무소"
         titleEn="Offices"
-        heroImage="/hero/menu-about-shinhan-ai.png"
+        heroImage="/hero/menu-about-offices-ai.png"
         heroPosition="center 50%"
       />
 

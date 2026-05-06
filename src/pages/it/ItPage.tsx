@@ -134,7 +134,7 @@ export function ItPage() {
 
   return (
     <>
-      <EditorialPageHeader config={itSubnav} heroImage="/hero/it-server-room.png" heroPosition="center 50%" />
+      <EditorialPageHeader config={itSubnav} heroImage="/hero/menu-it-ai.png" heroPosition="center 50%" />
 
       <EditorialSection>
         <HeroStatement data-reveal>
