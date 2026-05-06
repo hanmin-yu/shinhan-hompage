@@ -7,6 +7,8 @@ import { managementValues } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialHero = styled(P.HeroSection)`
+  position: relative;
+  isolation: isolate;
   margin-top: 0;
   min-height: clamp(260px, 31vw, 410px);
   display: grid;
@@ -14,13 +16,36 @@ const EditorialHero = styled(P.HeroSection)`
   overflow: hidden;
   padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
   padding-bottom: clamp(34px, 5vw, 56px);
-  background:
-    linear-gradient(180deg, rgba(8, 17, 31, 0.1) 0%, rgba(8, 17, 31, 0.12) 48%, rgba(8, 17, 31, 0.28) 100%),
-    url('/hero/menu-about-shinhan-ai.png') center 50% / cover no-repeat;
+  background: #d8e0e8;
 
-  &::before,
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: url('/hero/menu-about-shinhan-ai.png') center 50% / cover no-repeat;
+    filter: brightness(1.2) contrast(0.97) saturate(1.03);
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
   &::after {
-    opacity: 0.08;
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(8, 17, 31, 0.04) 0%, rgba(8, 17, 31, 0.08) 54%, rgba(8, 17, 31, 0.22) 100%),
+      linear-gradient(90deg, rgba(4, 12, 24, 0.26) 0%, rgba(4, 12, 24, 0.06) 48%, rgba(4, 12, 24, 0.1) 100%);
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   @media (max-width: 768px) {
@@ -31,6 +56,8 @@ const EditorialHero = styled(P.HeroSection)`
 `;
 
 const HeroVisualTitle = styled.h1`
+  position: relative;
+  z-index: 1;
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;

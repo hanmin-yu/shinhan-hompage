@@ -61,34 +61,40 @@ const Wrap = styled.section<{ $compactBottom?: boolean; $matchAboutHero?: boolea
 `;
 
 const VisualHero = styled.div<{ $image: string; $position: string }>`
+  position: relative;
+  isolation: isolate;
   min-height: clamp(260px, 31vw, 410px);
   display: grid;
   place-items: center;
   width: 100%;
   padding: calc(82px + 38px + clamp(18px, 3vw, 34px)) max(24px, env(safe-area-inset-left)) clamp(34px, 5vw, 56px);
-  background:
-    linear-gradient(180deg, rgba(8, 17, 31, 0.08) 0%, rgba(8, 17, 31, 0.13) 58%, rgba(8, 17, 31, 0.28) 100%),
-    ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+  background: #d8e0e8;
   overflow: hidden;
 
-  &[data-title='구성원'],
-  &[data-title='Professionals'] {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+    filter: brightness(1.2) contrast(0.97) saturate(1.03);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(5, 23, 48, 0.72) 0%, rgba(5, 23, 48, 0.38) 42%, rgba(5, 23, 48, 0.5) 100%),
-      linear-gradient(180deg, rgba(5, 15, 30, 0.08) 0%, rgba(5, 15, 30, 0.34) 100%),
-      ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
+      linear-gradient(180deg, rgba(8, 17, 31, 0.04) 0%, rgba(8, 17, 31, 0.08) 54%, rgba(8, 17, 31, 0.22) 100%),
+      linear-gradient(90deg, rgba(4, 12, 24, 0.26) 0%, rgba(4, 12, 24, 0.06) 48%, rgba(4, 12, 24, 0.1) 100%);
   }
 
   @media (max-width: 768px) {
     min-height: clamp(260px, 44vh, 380px);
     padding-top: calc(70px + clamp(26px, 6vw, 46px));
-
-    &[data-title='구성원'],
-    &[data-title='Professionals'] {
-      background:
-        linear-gradient(180deg, rgba(5, 23, 48, 0.32) 0%, rgba(5, 23, 48, 0.58) 100%),
-        ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
-    }
   }
 `;
 
@@ -97,6 +103,8 @@ const Eyebrow = styled.span`
 `;
 
 const IntroTitle = styled.h1`
+  position: relative;
+  z-index: 1;
   max-width: min(100%, 920px);
   margin: 0;
   color: #ffffff;
