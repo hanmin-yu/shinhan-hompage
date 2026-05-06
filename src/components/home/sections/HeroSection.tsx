@@ -118,8 +118,7 @@ const HeroBottomBlend = styled.div`
   height: min(28vh, 260px);
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(8, 28, 64, 0) 0%, rgba(10, 43, 89, 0.62) 46%, rgba(11, 43, 89, 1) 100%),
-    radial-gradient(circle at 80% 100%, rgba(23, 159, 150, 0.18), transparent 42%);
+    linear-gradient(180deg, rgba(16, 35, 58, 0) 0%, rgba(22, 48, 78, 0.58) 48%, rgba(24, 48, 78, 1) 100%);
 `;
 
 const HeroInner = styled(S.Container)`
