@@ -257,7 +257,7 @@ const InfoLabel = styled.span`
 
 const InfoValue = styled.span`
   color: #496582;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   font-weight: 600;
   line-height: 1.56;
   word-break: break-word;
@@ -265,7 +265,7 @@ const InfoValue = styled.span`
 
 const InfoValueLink = styled.a`
   color: #163a70;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   font-weight: 800;
   line-height: 1.56;
   word-break: break-word;
@@ -288,7 +288,7 @@ const MapLink = styled.a`
   border: 1px solid rgba(20, 75, 157, 0.2);
   background: #ffffff;
   color: #1d4f97;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   font-weight: 800;
 `;
 

@@ -72,7 +72,7 @@ const HeroLead = styled.p`
   max-width: 820px;
   margin: 0;
   color: #4d5a6c;
-  font-size: clamp(1.04rem, 1.45vw, 1.22rem);
+  font-size: clamp(1.1rem, 1.55vw, 1.3rem);
   line-height: 1.82;
 `;
 
@@ -116,7 +116,7 @@ const ServiceFactValue = styled.strong`
 
 const ServiceFactLabel = styled.span`
   color: #687385;
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   line-height: 1.58;
   overflow-wrap: anywhere;
 `;
@@ -124,7 +124,7 @@ const ServiceFactLabel = styled.span`
 const SubtitleText = styled.p`
   margin: 0;
   color: #52647c;
-  font-size: 0.98rem;
+  font-size: 1.06rem;
   font-weight: 800;
   line-height: 1.7;
 `;
@@ -203,7 +203,7 @@ const FeaturedTitle = styled.h3`
 const FeaturedBody = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.98rem;
+  font-size: 1.06rem;
   line-height: 1.76;
 `;
 
@@ -250,7 +250,7 @@ const ItemTitle = styled.h4`
 const ItemBody = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.94rem;
+  font-size: 1.04rem;
   line-height: 1.72;
 `;
 
@@ -280,7 +280,7 @@ const SectionParagraph = styled.p`
   max-width: none;
   margin: 0;
   color: #4e5d70;
-  font-size: 0.96rem;
+  font-size: 1.06rem;
   line-height: 1.78;
 `;
 
@@ -288,7 +288,7 @@ const SectionList = styled.ul`
   margin: 0;
   padding-left: 20px;
   color: #486485;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   line-height: 1.72;
 `;
 
@@ -296,7 +296,7 @@ const StepList = styled.ol`
   margin: 0;
   padding-left: 22px;
   color: #486485;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   line-height: 1.72;
 `;
 
@@ -332,7 +332,7 @@ const ContactName = styled.h3`
 const ContactRole = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.94rem;
+  font-size: 1.04rem;
   line-height: 1.72;
 `;
 
@@ -351,7 +351,7 @@ const ContactLabel = styled.span`
 
 const ContactValue = styled.a`
   color: #1d4f96;
-  font-size: 0.94rem;
+  font-size: 1.02rem;
   font-weight: 700;
   text-decoration: none;
 

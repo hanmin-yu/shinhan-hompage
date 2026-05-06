@@ -100,7 +100,7 @@ const RoleChip = styled.span`
 const RoleHint = styled.p`
   margin: 0;
   color: #50708f;
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.7;
 `;
 
@@ -174,7 +174,7 @@ const BenefitSummaryTitle = styled.h3`
 const BenefitSummaryText = styled.p`
   margin: 0;
   color: #4b678a;
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   line-height: 1.68;
 `;
 
@@ -193,7 +193,7 @@ const Tag = styled.span`
   border-radius: 0;
   background: #f4f8ff;
   color: #2358a7;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
 `;
 
@@ -321,7 +321,7 @@ const MatrixItemTitle = styled.h5`
 const MatrixItemText = styled.p`
   margin: 0;
   color: #5a708f;
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.55;
 `;
 
@@ -343,7 +343,7 @@ const BottomCtaTitle = styled.h3`
 const BottomCtaText = styled.p`
   margin: 0;
   color: #4d5a6c;
-  font-size: 0.94rem;
+  font-size: 1.02rem;
   line-height: 1.72;
 `;
 

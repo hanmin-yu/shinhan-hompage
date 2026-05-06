@@ -223,7 +223,7 @@ const HeroLead = styled.p`
   max-width: 760px;
   margin: 0;
   color: #4d5a6c;
-  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  font-size: clamp(1.1rem, 1.7vw, 1.34rem);
   line-height: 1.82;
 `;
 
@@ -285,7 +285,7 @@ const HeroFactValue = styled.strong`
 
 const HeroFactLabel = styled.span`
   color: #687385;
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   line-height: 1.58;
   overflow-wrap: anywhere;
 `;
@@ -343,7 +343,7 @@ const BodyStack = styled.div`
 const EditorialBody = styled.p<{ $light?: boolean }>`
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.8)' : '#4d5a6c')};
-  font-size: clamp(1rem, 1.2vw, 1.08rem);
+  font-size: clamp(1.08rem, 1.3vw, 1.18rem);
   line-height: 1.88;
 `;
 
@@ -407,7 +407,7 @@ const ServiceTitle = styled.h3`
 const ServiceDescription = styled.p`
   margin: 0;
   color: #4e5d70;
-  font-size: 0.98rem;
+  font-size: 1.06rem;
   line-height: 1.76;
 `;
 
@@ -424,7 +424,7 @@ const ServiceItem = styled.li`
   position: relative;
   padding-left: 14px;
   color: #4b596b;
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.62;
 
   &::before {
@@ -478,7 +478,7 @@ const ValueTitle = styled.h3`
 const ValueBody = styled.p`
   margin: 0;
   color: rgba(226, 231, 238, 0.72);
-  font-size: 0.98rem;
+  font-size: 1.06rem;
   line-height: 1.78;
 `;
 
@@ -531,7 +531,7 @@ const GalleryTitle = styled.h3`
 const GalleryText = styled.p`
   margin: 10px 0 0;
   color: rgba(235, 238, 243, 0.84);
-  font-size: 0.94rem;
+  font-size: 1.02rem;
   line-height: 1.68;
 `;
 

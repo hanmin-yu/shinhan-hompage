@@ -52,7 +52,7 @@ const HeroLead = styled.p`
   max-width: 760px;
   margin: 0;
   color: #4d5a6c;
-  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  font-size: clamp(1.1rem, 1.7vw, 1.34rem);
   line-height: 1.82;
 `;
 
@@ -114,7 +114,7 @@ const HeroFactValue = styled.strong`
 
 const HeroFactLabel = styled.span`
   color: #687385;
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   line-height: 1.58;
   overflow-wrap: anywhere;
 `;
@@ -218,7 +218,7 @@ const ServiceMapTag = styled.span`
   padding: 0 10px;
   border: 1px solid #dbe0e8;
   color: #4f5661;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 800;
 `;
 
@@ -273,7 +273,7 @@ const GroupTitle = styled.h3`
 const GroupText = styled.p`
   margin: 0;
   color: #52647c;
-  font-size: 1rem;
+  font-size: 1.08rem;
   line-height: 1.76;
 `;
 
@@ -290,7 +290,7 @@ const ItemLink = styled(Link)`
   min-height: 56px;
   border-bottom: 1px solid #dbe0e8;
   color: #172337;
-  font-size: 0.98rem;
+  font-size: 1.04rem;
   font-weight: 800;
 
   &:hover {
@@ -300,7 +300,7 @@ const ItemLink = styled(Link)`
 
 const ItemHint = styled.span`
   color: #687385;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 800;
 `;
 

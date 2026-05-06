@@ -233,7 +233,7 @@ const InfoLabel = styled.span`
 
 const InfoValue = styled.span`
   color: #496582;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   font-weight: 600;
   line-height: 1.56;
   word-break: break-word;
@@ -241,7 +241,7 @@ const InfoValue = styled.span`
 
 const InfoValueLink = styled.a`
   color: #163a70;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   font-weight: 800;
   line-height: 1.56;
   word-break: break-word;
@@ -271,7 +271,7 @@ const InquiryTitle = styled.h3`
 const InquiryText = styled.p`
   margin: 0;
   color: #496582;
-  font-size: 0.96rem;
+  font-size: 1.04rem;
   line-height: 1.62;
 `;
 
@@ -293,7 +293,7 @@ const FieldGroup = styled.div<{ $wide?: boolean }>`
 
 const FieldLabel = styled.label`
   color: #112f56;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   font-weight: 800;
 `;
 
@@ -305,7 +305,7 @@ const InputBase = styled.input`
   border-radius: 0;
   background: #ffffff;
   color: #243f5f;
-  font-size: 0.94rem;
+  font-size: 1rem;
   outline: none;
 
   &::placeholder {
@@ -328,7 +328,7 @@ const SelectInput = styled.select`
   border-radius: 0;
   background: #ffffff;
   color: #55677b;
-  font-size: 0.94rem;
+  font-size: 1rem;
   outline: none;
 
   &:focus {
@@ -345,7 +345,7 @@ const TextArea = styled.textarea`
   border-radius: 0;
   background: #ffffff;
   color: #243f5f;
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.5;
   resize: vertical;
   outline: none;
@@ -366,7 +366,7 @@ const ConsentLabel = styled.label`
   align-items: center;
   gap: 8px;
   color: #4d6076;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
 
   input {
     width: 15px;

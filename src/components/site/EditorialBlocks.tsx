@@ -81,14 +81,14 @@ export const Lead = styled.p<{ $light?: boolean }>`
   max-width: 760px;
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(230, 238, 250, 0.84)' : '#4d5a6c')};
-  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
+  font-size: clamp(1.1rem, 1.7vw, 1.34rem);
   line-height: 1.82;
 `;
 
 export const Body = styled.p<{ $light?: boolean }>`
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(230, 238, 250, 0.82)' : '#4d5a6c')};
-  font-size: clamp(1rem, 1.28vw, 1.13rem);
+  font-size: clamp(1.06rem, 1.34vw, 1.2rem);
   line-height: 1.82;
 `;
 
@@ -161,7 +161,7 @@ export const FactValue = styled.strong`
 
 export const FactLabel = styled.span`
   color: #687385;
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   line-height: 1.58;
   overflow-wrap: anywhere;
 `;

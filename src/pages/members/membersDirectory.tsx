@@ -243,7 +243,7 @@ const Title = styled.p`
 const Division = styled.p`
   margin: 0;
   color: #6a7482;
-  font-size: 0.86rem;
+  font-size: 0.94rem;
   font-weight: 650;
   line-height: 1.45;
 `;
@@ -253,7 +253,7 @@ const Practice = styled.p`
   margin: 20px 0 0;
   overflow: hidden;
   color: #3f4c5e;
-  font-size: 0.95rem;
+  font-size: 1.04rem;
   font-weight: 500;
   line-height: 1.68;
   -webkit-box-orient: vertical;
@@ -271,7 +271,7 @@ const ContactList = styled.div`
 const ContactItem = styled.p`
   margin: 0;
   color: #526174;
-  font-size: 0.86rem;
+  font-size: 0.94rem;
   font-weight: 650;
   line-height: 1.45;
   overflow-wrap: anywhere;

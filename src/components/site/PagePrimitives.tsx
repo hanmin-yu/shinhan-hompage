@@ -226,7 +226,7 @@ export const SectionTitle = styled.h2`
 export const Lead = styled.p`
   margin: 16px 0 0;
   color: var(--page-lead-color, ${palette.textBody});
-  font-size: 1.02rem;
+  font-size: 1.08rem;
   line-height: 1.78;
   max-width: 720px;
   text-shadow: var(--page-text-shadow, none);
@@ -341,7 +341,7 @@ export const CardTitle = styled.h3`
 export const CardText = styled.p`
   margin: 0;
   color: ${palette.textBody};
-  font-size: 0.93rem;
+  font-size: 1.03rem;
   line-height: 1.64;
   ${wordSafeWrap};
 `;
@@ -358,7 +358,7 @@ export const BulletList = styled.ul`
   margin: 0;
   padding-left: 18px;
   color: ${palette.textBody};
-  font-size: 0.94rem;
+  font-size: 1.03rem;
   line-height: 1.68;
   ${wordSafeWrap};
 `;

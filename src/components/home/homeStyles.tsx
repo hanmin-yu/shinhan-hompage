@@ -3696,9 +3696,9 @@ export const OfficesMapHint = styled.p`
 export const Footer = styled.footer`
   position: relative;
   background:
-    radial-gradient(circle at top right, rgba(214, 154, 54, 0.16), transparent 22%),
-    radial-gradient(circle at 12% 18%, rgba(30, 126, 195, 0.18), transparent 24%),
-    linear-gradient(180deg, #0b264d 0%, #0d2e5f 52%, #10243f 100%);
+    radial-gradient(circle at 88% 0%, rgba(23, 159, 150, 0.12), transparent 24%),
+    radial-gradient(circle at 12% 18%, rgba(30, 126, 195, 0.14), transparent 26%),
+    linear-gradient(180deg, #0b2b59 0%, #0b2b59 46%, #0a244b 100%);
   color: rgba(255, 255, 255, 0.82);
   overflow: hidden;
 `;
