@@ -146,12 +146,10 @@ export const GlobalStyle = () => (
       @keyframes bodyRender {
         from {
           opacity: 0;
-          filter: blur(12px);
         }
 
         to {
           opacity: 1;
-          filter: blur(0);
         }
       }
 
@@ -304,10 +302,10 @@ export const UtilityLink = styled.a`
 
 export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }>`
   --site-header-height: 98px;
-  position: ${({ $overHero }) => ($overHero ? 'absolute' : 'sticky')};
+  position: fixed;
   top: 0;
-  left: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
-  right: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 12000;
   margin-bottom: 0;
