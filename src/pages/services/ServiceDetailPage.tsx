@@ -12,9 +12,10 @@ type ServiceDetailPageProps = {
 };
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
-  padding: clamp(78px, 9vw, 128px) 0;
+  font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  padding: clamp(72px, 8vw, 118px) 0;
   border-top: 1px solid #d8dee8;
-  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)' : '#ffffff')};
+  background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
 `;
 
 const ServiceNavSection = styled.section`
@@ -26,25 +27,26 @@ const ServiceNavSection = styled.section`
 
 const HeroStatement = styled(P.PageContainer)`
   display: grid;
-  gap: clamp(30px, 4vw, 54px);
+  gap: clamp(30px, 4vw, 52px);
+  max-width: 1280px;
 `;
 
 const HeroEyebrow = styled.span`
-  color: #52647c;
+  color: #1d5fb6;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 `;
 
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #172337;
-  font-size: clamp(2.44rem, 5.6vw, 5.4rem);
+  color: #111827;
+  font-size: clamp(2.2rem, 4.4vw, 4.35rem);
   font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 
   @media (max-width: 640px) {
@@ -52,86 +54,61 @@ const HeroTitle = styled.h1`
   }
 `;
 
-const HeroLeadGrid = styled.div`
+const IntroStack = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(280px, 0.42fr);
-  gap: clamp(28px, 5vw, 74px);
-  align-items: start;
+  gap: clamp(24px, 3.6vw, 44px);
+`;
 
-  @media (max-width: 920px) {
+const OneLineSummary = styled.p`
+  max-width: 1080px;
+  margin: 0;
+  color: #1f2937;
+  font-size: clamp(1.58rem, 3vw, 2.86rem);
+  font-weight: 800;
+  line-height: 1.24;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.03em;
+  }
+`;
+
+const OverviewBlock = styled.div`
+  display: grid;
+  grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  padding: clamp(28px, 3.5vw, 42px) 0;
+  border-top: 2px solid #1d5fb6;
+  border-bottom: 1px solid #d8dee8;
+
+  @media (max-width: 760px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 `;
 
-const BodyStack = styled.div`
-  display: grid;
-  gap: 18px;
+const OverviewTitle = styled.h2`
+  margin: 0;
+  color: #174d9a;
+  font-size: clamp(1.12rem, 1.6vw, 1.34rem);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
 `;
 
-const HeroLead = styled.p`
-  max-width: 820px;
+const OverviewText = styled.p`
+  max-width: 940px;
   margin: 0;
-  color: #4d5a6c;
-  font-size: clamp(1.1rem, 1.55vw, 1.3rem);
+  color: #475569;
+  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
   line-height: 1.82;
-`;
-
-const ServiceFacts = styled.div`
-  display: grid;
-  border: 1px solid #d5dbe4;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96)),
-    #ffffff;
-  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
-  overflow: hidden;
-`;
-
-const ServiceFact = styled.div`
-  position: relative;
-  display: grid;
-  gap: 12px;
-  padding: 22px 22px 20px;
-  border-bottom: 1px solid #dbe0e8;
-
-  &::before {
-    content: '';
-    width: 34px;
-    height: 3px;
-    background: linear-gradient(90deg, #1d5fb6, #1aa398);
-  }
-
-  &:last-of-type {
-    border-bottom: 0;
-  }
-`;
-
-const ServiceFactValue = styled.strong`
-  color: #172337;
-  font-size: clamp(1.24rem, 1.8vw, 1.62rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
-`;
-
-const ServiceFactLabel = styled.span`
-  color: #687385;
-  font-size: 1.02rem;
-  line-height: 1.58;
-  overflow-wrap: anywhere;
-`;
-
-const SubtitleText = styled.p`
-  margin: 0;
-  color: #52647c;
-  font-size: 1.06rem;
-  font-weight: 800;
-  line-height: 1.7;
 `;
 
 const SectionInner = styled(P.PageContainer)`
   display: grid;
   gap: clamp(34px, 5vw, 62px);
+  max-width: 1280px;
 `;
 
 const SectionHead = styled.div`
@@ -163,112 +140,36 @@ const EditorialTitle = styled.h2`
   }
 `;
 
-const ContentGrid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
-  gap: clamp(34px, 6vw, 86px);
-  align-items: start;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FeaturedPanel = styled.article`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: clamp(24px, 3vw, 38px);
-  border-top: 1px solid #d5dbe4;
-  border-bottom: 1px solid #d5dbe4;
-`;
-
-const FeaturedMeta = styled.span`
-  color: rgba(45, 58, 76, 0.34);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-`;
-
-const FeaturedTitle = styled.h3`
-  margin: 0;
-  color: #18283e;
-  font-size: clamp(1.36rem, 2vw, 1.72rem);
-  font-weight: 800;
-  line-height: 1.28;
-  letter-spacing: -0.03em;
-`;
-
-const FeaturedBody = styled.p`
-  margin: 0;
-  color: #4e5d70;
-  font-size: 1.06rem;
-  line-height: 1.76;
-`;
-
-const ItemList = styled.div`
-  display: grid;
-  border-top: 1px solid #d5dbe4;
-`;
-
-const Item = styled.article`
-  display: grid;
-  grid-template-columns: minmax(112px, 0.22fr) minmax(0, 1fr);
-  gap: 24px;
-  padding: 24px 0;
-  border-bottom: 1px solid #dbe0e8;
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-`;
-
-const ItemCategory = styled.span`
-  color: #52647c;
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-`;
-
 const ItemBodyStack = styled.div`
   display: grid;
   gap: 10px;
 `;
 
-const ItemTitle = styled.h4`
-  margin: 0;
-  color: #18283e;
-  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
-  font-weight: 800;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
-`;
-
-const ItemBody = styled.p`
-  margin: 0;
-  color: #4e5d70;
-  font-size: 1.04rem;
-  line-height: 1.72;
-`;
-
 const DocumentStack = styled.div`
   display: grid;
-  border-top: 1px solid #d5dbe4;
+  border-top: 2px solid #1d5fb6;
 `;
 
 const DocumentSectionCard = styled.article`
   display: grid;
-  grid-template-columns: minmax(140px, 0.24fr) minmax(0, 1fr);
-  gap: clamp(20px, 4vw, 48px);
-  padding: clamp(24px, 3vw, 34px) 0;
+  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 58px);
+  padding: clamp(28px, 3.4vw, 46px) 0;
   border-bottom: 1px solid #dbe0e8;
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
+`;
+
+const DocumentSectionTitle = styled.h3`
+  margin: 0;
+  color: #174d9a;
+  font-size: clamp(1.1rem, 1.7vw, 1.36rem);
+  font-weight: 900;
+  line-height: 1.34;
+  letter-spacing: -0.025em;
 `;
 
 const ParagraphStack = styled.div`
@@ -279,23 +180,79 @@ const ParagraphStack = styled.div`
 const SectionParagraph = styled.p`
   max-width: none;
   margin: 0;
-  color: #4e5d70;
+  color: #475569;
   font-size: 1.06rem;
   line-height: 1.78;
 `;
 
 const SectionList = styled.ul`
   margin: 0;
-  padding-left: 20px;
-  color: #486485;
+  padding-left: 18px;
+  color: #475569;
+  font-family: inherit;
   font-size: 1.04rem;
   line-height: 1.72;
+`;
+
+const DiagramList = styled.div`
+  counter-reset: service-diagram;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const DiagramItem = styled.div`
+  counter-increment: service-diagram;
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 18px;
+  min-height: 142px;
+  padding: 24px;
+  border: 1px solid #d8dee8;
+  border-top: 2px solid #1d5fb6;
+  background: #ffffff;
+
+  &::before {
+    content: counter(service-diagram, decimal-leading-zero);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #1d5fb6;
+    font-size: 0.82rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    padding-top: 4px;
+  }
+`;
+
+const DiagramTerm = styled.strong`
+  color: #111827;
+  font-size: clamp(1.04rem, 1.32vw, 1.18rem);
+  font-weight: 900;
+  line-height: 1.42;
+  letter-spacing: -0.015em;
+`;
+
+const DiagramDescription = styled.span`
+  grid-column: 2;
+  color: #475569;
+  font-size: clamp(1rem, 1.24vw, 1.08rem);
+  line-height: 1.68;
+  padding-top: 2px;
+  border-top: 1px solid #e4e8ef;
 `;
 
 const StepList = styled.ol`
   margin: 0;
   padding-left: 22px;
-  color: #486485;
+  color: #475569;
+  font-family: inherit;
   font-size: 1.04rem;
   line-height: 1.72;
 `;
@@ -307,22 +264,21 @@ const ContactGrid = styled(P.Grid)`
 const ContactPanel = styled.article`
   display: grid;
   gap: 20px;
-  padding: clamp(24px, 3vw, 38px);
-  border-top: 1px solid #d5dbe4;
+  border-top: 2px solid #1d5fb6;
   border-bottom: 1px solid #d5dbe4;
-  background: rgba(255, 255, 255, 0.58);
+  background: transparent;
 `;
 
 const ContactCard = styled.article`
   display: grid;
   gap: 12px;
-  padding: 20px 0;
-  border-top: 1px solid #dbe0e8;
+  padding: 22px 0;
+  border-bottom: 1px solid #dbe0e8;
 `;
 
 const ContactName = styled.h3`
   margin: 0;
-  color: #18283e;
+  color: #111827;
   font-size: clamp(1.12rem, 1.7vw, 1.38rem);
   font-weight: 800;
   line-height: 1.35;
@@ -360,13 +316,6 @@ const ContactValue = styled.a`
   }
 `;
 
-const SummaryImage = styled.div<{ image: string }>`
-  min-height: 220px;
-  border-radius: 10px;
-  border: 1px solid rgba(20, 76, 158, 0.14);
-  background: ${({ image }) => `url(${image}) center / cover no-repeat`};
-`;
-
 const FigureGrid = styled.div<{ columns: 1 | 2 }>`
   display: grid;
   grid-template-columns: repeat(${({ columns }) => columns}, minmax(0, 1fr));
@@ -391,6 +340,11 @@ const FigureImage = styled.img`
   object-fit: cover;
 `;
 
+function splitDiagramItem(item: string) {
+  const [term, description] = item.split('->').map((part) => part.trim());
+  return { term, description };
+}
+
 export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const { t, tx } = useI18n();
   const servicesSubnav = sectionSubnav.services;
@@ -411,7 +365,20 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const hasDocumentSections = Boolean(content.contentSections?.length);
   const hasContactPoints = Boolean(content.contactPoints?.length);
   const hasDocumentImages = Boolean(content.documentImages?.length);
-  const useDocumentLayout = hasDocumentSections || hasContactPoints || hasDocumentImages;
+  const contentDetailSections = content.contentSections?.filter((section) => section.heading !== '개요') ?? [];
+  const detailSections = hasDocumentSections
+    ? contentDetailSections
+    : [
+        {
+          heading: t('지원 범위', 'Support Scope'),
+          list: content.scope,
+        },
+        {
+          heading: t('절차 / 체크포인트', 'Process / Checkpoints'),
+          list: content.checkpoints,
+        },
+      ];
+  const contactPoints = content.contactPoints ?? [];
 
   return (
     <>
@@ -441,181 +408,97 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
       <EditorialSection>
         <HeroStatement data-reveal>
-          <div>
-            <HeroEyebrow>Service Detail</HeroEyebrow>
-            <HeroTitle>{tx(content.title)}</HeroTitle>
-          </div>
-          <HeroLeadGrid>
-            <BodyStack>
-              {content.subtitle ? <SubtitleText>{tx(content.subtitle)}</SubtitleText> : null}
-              <HeroLead>{tx(content.summary)}</HeroLead>
-              <HeroLead>{tx(content.overview)}</HeroLead>
-            </BodyStack>
-            <ServiceFacts>
-              <ServiceFact>
-                <ServiceFactValue>{t('업무분야', 'Practice')}</ServiceFactValue>
-                <ServiceFactLabel>{t(servicesSubnav.title, servicesSubnav.titleEn)}</ServiceFactLabel>
-              </ServiceFact>
-              <ServiceFact>
-                <ServiceFactValue>
-                  {t(
-                    serviceLandingGroups.find((group) => group.id === content.groupKey)?.title ?? servicesSubnav.title,
-                    serviceLandingGroups.find((group) => group.id === content.groupKey)?.titleEn ?? servicesSubnav.titleEn,
-                  )}
-                </ServiceFactValue>
-                <ServiceFactLabel>{t('중분류 기준의 서비스 체계', 'Service category')}</ServiceFactLabel>
-              </ServiceFact>
-              <ServiceFact>
-                <ServiceFactValue>{t('Detail', 'Detail')}</ServiceFactValue>
-                <ServiceFactLabel>{t('세부 업무 범위와 체크포인트', 'Detailed scope and checkpoints')}</ServiceFactLabel>
-              </ServiceFact>
-            </ServiceFacts>
-          </HeroLeadGrid>
+          <IntroStack>
+            <div>
+              <HeroEyebrow>{t('업무 분야', 'Service Detail')}</HeroEyebrow>
+              <HeroTitle>{tx(content.title)}</HeroTitle>
+            </div>
+            <OneLineSummary>{tx(content.subtitle ?? content.summary)}</OneLineSummary>
+            <OverviewBlock>
+              <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>
+              <OverviewText>{tx(content.overview)}</OverviewText>
+            </OverviewBlock>
+          </IntroStack>
         </HeroStatement>
       </EditorialSection>
 
-      {useDocumentLayout ? (
-        <>
-          {hasDocumentSections ? (
-            <EditorialSection $tone="soft">
-              <SectionInner data-reveal>
-                <SectionHead>
-                  <SectionLabel>{t('문서 구성', 'Document Flow')}</SectionLabel>
-                  <EditorialTitle>{t('상세 내용', 'Detailed Content')}</EditorialTitle>
-                </SectionHead>
-                <DocumentStack>
-                  {content.contentSections?.map((section, index) => (
-                    <DocumentSectionCard key={section.heading}>
-                      <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
-                      <ItemBodyStack>
-                        <ItemTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</ItemTitle>
-                        {section.body?.length ? (
-                          <ParagraphStack>
-                            {section.body.map((paragraph) => (
-                              <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
-                            ))}
-                          </ParagraphStack>
-                        ) : null}
-                        {section.list?.length ? (
-                          <SectionList>
-                            {section.list.map((item) => (
-                              <li key={item}>{tx(item)}</li>
-                            ))}
-                          </SectionList>
-                        ) : null}
-                        {section.steps?.length ? (
-                          <StepList>
-                            {section.steps.map((step) => (
-                              <li key={step}>{tx(step)}</li>
-                            ))}
-                          </StepList>
-                        ) : null}
-                      </ItemBodyStack>
-                    </DocumentSectionCard>
-                  ))}
-                  {!hasDocumentImages && content.sectionImage ? (
-                    <SummaryImage image={content.sectionImage} role="img" aria-hidden="true" />
+      <EditorialSection>
+        <SectionInner data-reveal>
+          <DocumentStack>
+            {detailSections?.map((section) => (
+              <DocumentSectionCard key={section.heading}>
+                <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>
+                <ItemBodyStack>
+                  {section.body?.length ? (
+                    <ParagraphStack>
+                      {section.body.map((paragraph) => (
+                        <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
+                      ))}
+                    </ParagraphStack>
                   ) : null}
-                </DocumentStack>
-              </SectionInner>
-            </EditorialSection>
-          ) : null}
+                  {section.list?.length ? (
+                    section.list.every((item) => item.includes('->')) ? (
+                      <DiagramList>
+                        {section.list.map((item) => {
+                          const { term, description } = splitDiagramItem(tx(item));
+                          return (
+                            <DiagramItem key={item}>
+                              <DiagramTerm>{term}</DiagramTerm>
+                              <DiagramDescription>{description}</DiagramDescription>
+                            </DiagramItem>
+                          );
+                        })}
+                      </DiagramList>
+                    ) : (
+                      <SectionList>
+                        {section.list.map((item) => (
+                          <li key={item}>{tx(item)}</li>
+                        ))}
+                      </SectionList>
+                    )
+                  ) : null}
+                  {section.steps?.length ? (
+                    <StepList>
+                      {section.steps.map((step) => (
+                        <li key={step}>{tx(step)}</li>
+                      ))}
+                    </StepList>
+                  ) : null}
+                </ItemBodyStack>
+              </DocumentSectionCard>
+            ))}
+          </DocumentStack>
+        </SectionInner>
+      </EditorialSection>
 
-          {hasDocumentImages ? (
-            <EditorialSection>
-              <SectionInner data-reveal>
-                <SectionHead>
-                  <SectionLabel>{t('자료/도식', 'Figures & Diagrams')}</SectionLabel>
-                  <EditorialTitle>{t('참고 이미지', 'Reference Images')}</EditorialTitle>
-                </SectionHead>
-                <FigureGrid columns={(content.documentImages?.length ?? 0) > 1 ? 2 : 1}>
-                  {content.documentImages?.map((image) => (
-                    <FigureCard key={image.src}>
-                      <FigureImage src={image.src} alt={tx(image.alt)} loading="lazy" />
-                    </FigureCard>
-                  ))}
-                </FigureGrid>
-              </SectionInner>
-            </EditorialSection>
-          ) : null}
-        </>
-      ) : (
-        <>
-          <EditorialSection $tone="soft">
-            <SectionInner data-reveal>
-              <SectionHead>
-                <SectionLabel>{t('주요 지원 범위', 'Scope')}</SectionLabel>
-                <EditorialTitle>{t('지원 범위', 'Support Scope')}</EditorialTitle>
-              </SectionHead>
-              <ContentGrid>
-                <FeaturedPanel>
-                  <FeaturedMeta>Service Scope</FeaturedMeta>
-                  <FeaturedTitle>{tx(content.title)}</FeaturedTitle>
-                  <FeaturedBody>
-                    {t(
-                      '현장 운영과 법령 적용을 함께 고려해 업무 범위와 우선순위를 정리합니다.',
-                      'We define scope and priorities by aligning field operations with regulatory application.',
-                    )}
-                  </FeaturedBody>
-                  {content.sectionImage ? <SummaryImage image={content.sectionImage} role="img" aria-hidden="true" /> : null}
-                </FeaturedPanel>
-                <ItemList>
-                  {content.scope.map((item, index) => (
-                    <Item key={item}>
-                      <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
-                      <ItemBodyStack>
-                        <ItemTitle>{tx(item)}</ItemTitle>
-                        <ItemBody>
-                          {t(
-                            '통관 실무와 사후 리스크를 함께 검토해 필요한 대응 범위를 구체화합니다.',
-                            'We define the practical response by reviewing customs operations and post-clearance risk together.',
-                          )}
-                        </ItemBody>
-                      </ItemBodyStack>
-                    </Item>
-                  ))}
-                </ItemList>
-              </ContentGrid>
-            </SectionInner>
-          </EditorialSection>
+      {hasDocumentImages ? (
+        <EditorialSection>
+          <SectionInner data-reveal>
+            <SectionHead>
+              <SectionLabel>{t('자료/도식', 'Figures & Diagrams')}</SectionLabel>
+              <EditorialTitle>{t('참고 이미지', 'Reference Images')}</EditorialTitle>
+            </SectionHead>
+            <FigureGrid columns={(content.documentImages?.length ?? 0) > 1 ? 2 : 1}>
+              {content.documentImages?.map((image) => (
+                <FigureCard key={image.src}>
+                  <FigureImage src={image.src} alt={tx(image.alt)} loading="lazy" />
+                </FigureCard>
+              ))}
+            </FigureGrid>
+          </SectionInner>
+        </EditorialSection>
+      ) : null}
 
-          <EditorialSection>
-            <SectionInner data-reveal>
-              <SectionHead>
-                <SectionLabel>Checklist</SectionLabel>
-                <EditorialTitle>{t('절차 / 체크포인트', 'Process / Checkpoints')}</EditorialTitle>
-              </SectionHead>
-              <ItemList>
-                {content.checkpoints.map((point, index) => (
-                  <Item key={point}>
-                    <ItemCategory>{String(index + 1).padStart(2, '0')}</ItemCategory>
-                    <ItemBodyStack>
-                      <ItemTitle>{tx(point)}</ItemTitle>
-                      <ItemBody>
-                        {t(
-                          '각 단계별로 필요한 자료와 확인 항목을 정리해 대응합니다.',
-                          'We organize required documents and checkpoints for each phase.',
-                        )}
-                      </ItemBody>
-                    </ItemBodyStack>
-                  </Item>
-                ))}
-              </ItemList>
-            </SectionInner>
-          </EditorialSection>
-        </>
-      )}
-
-      <EditorialSection $tone="soft">
+      <EditorialSection>
         <SectionInner data-reveal>
           <SectionHead>
-            <SectionLabel>{hasContactPoints ? t('연락처', 'Contact') : t('관련 전문가', 'Related Experts')}</SectionLabel>
-            <EditorialTitle>{hasContactPoints ? t('Contact Point', 'Contact Point') : t('전문가 연계', 'Expert Connection')}</EditorialTitle>
+            <SectionLabel>Contact</SectionLabel>
+            <EditorialTitle>{t('담당자(Contact Point)', 'Contact Point')}</EditorialTitle>
           </SectionHead>
           <ContactPanel>
             {hasContactPoints ? (
               <ContactGrid columns={2}>
-                {content.contactPoints?.map((contact) => (
+                {contactPoints.map((contact) => (
                   <ContactCard key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
                     <ContactName>{tx(contact.name)}</ContactName>
                     {contact.role ? <ContactRole>{tx(contact.role)}</ContactRole> : null}

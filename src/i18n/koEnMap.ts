@@ -662,6 +662,7 @@ export const koToEnTextMap: Record<string, string> = {
   '신청서·견본·원재료내역 준비': 'Preparation of applications, samples, and bill-of-material details',
   '사전심사 신청 및 대응': 'Advance ruling application and response',
   '심사결과 운영 반영': 'Operational application of ruling results',
+  김정훈: 'Kim Junghoon',
   김유진: 'Kim Yujin',
   전인선: 'Jeon Inseon',
   '한국 60년 관세 전문성과 베트남 현지 네트워크를 결합해 베트남 진출 기업의 관세 리스크를 선제적으로 관리합니다.':

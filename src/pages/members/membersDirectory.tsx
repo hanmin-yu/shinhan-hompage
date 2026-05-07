@@ -261,14 +261,16 @@ const Practice = styled.p`
 `;
 
 const ContactList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
+  display: grid;
+  gap: 8px;
   margin-top: auto;
   padding-top: 18px;
 `;
 
 const ContactItem = styled.p`
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
   margin: 0;
   color: #526174;
   font-size: 0.94rem;
@@ -277,7 +279,8 @@ const ContactItem = styled.p`
   overflow-wrap: anywhere;
 
   span {
-    margin-right: 6px;
+    flex: 0 0 44px;
+    margin-right: 0;
     color: #0c4e96;
     font-weight: 900;
   }
@@ -315,17 +318,48 @@ const PhotoPanel = styled.div`
     background: #ffffff;
     clip-path: polygon(0 0, 100% 0, 44% 100%, 0 100%);
   }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 58%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(28, 90, 167, 0.1));
+  }
 `;
 
-const Portrait = styled.img<{ $position?: string }>`
-  position: relative;
-  z-index: 1;
+const PortraitFrame = styled.div`
+  position: absolute;
+  right: 8px;
+  bottom: 0;
+  z-index: 2;
+  width: 126px;
+  height: 184px;
+  overflow: hidden;
+  border-radius: 10px 10px 8px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.94), rgba(240, 245, 251, 0.9) 44%, rgba(218, 229, 242, 0.92)),
+    #eef3f8;
+  box-shadow:
+    0 16px 28px rgba(19, 58, 105, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+
+  @media (max-width: 560px) {
+    right: 0;
+    width: 92px;
+    height: 134px;
+  }
+`;
+
+const Portrait = styled.img<{ $fit?: 'contain' | 'cover' }>`
   width: 100%;
-  max-width: 126px;
   height: 100%;
-  max-height: 184px;
-  object-fit: contain;
-  object-position: ${({ $position }) => $position ?? '50% 100%'};
+  display: block;
+  object-fit: ${({ $fit }) => $fit ?? 'cover'};
+  object-position: 50% 20%;
   filter: saturate(0.98) contrast(1.01);
 `;
 
@@ -395,7 +429,9 @@ export function ProfessionalCardGrid({ members, emptyMessage }: ProfessionalCard
           </CardBody>
           <PhotoPanel>
             {member.image ? (
-              <Portrait src={member.image} alt={tx(member.name)} $position={member.imagePosition} loading="lazy" />
+              <PortraitFrame>
+                <Portrait src={member.image} alt={tx(member.name)} $fit={member.imageFit} loading="lazy" />
+              </PortraitFrame>
             ) : (
               <InitialMark aria-hidden="true">{tx(member.name).slice(0, 1)}</InitialMark>
             )}

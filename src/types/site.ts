@@ -48,6 +48,7 @@ export type Member = {
   practice: string;
   accent: string;
   image?: string;
+  imageFit?: 'contain' | 'cover';
   imagePosition?: string;
 };
 

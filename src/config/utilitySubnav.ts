@@ -9,6 +9,7 @@ export const utilitySubnav = {
   summaryEn: 'Find contact, recruiting, and directions information quickly.',
   items: [
     { label: '문의', labelEn: 'Contact', to: '/contact' },
+    { label: '부정행위 접수창구', labelEn: 'Ethics Reporting', to: '/contact/ethics' },
     { label: '채용', labelEn: 'Recruit', to: '/recruit' },
     { label: '오시는 길', labelEn: 'Directions', to: '/location' },
   ],

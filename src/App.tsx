@@ -16,6 +16,7 @@ import { HistoryPage } from './pages/about/HistoryPage';
 import { DirectionsPage, LocationPage } from './pages/about/LocationPage';
 import { MessagePage } from './pages/about/MessagePage';
 import { ContactPage } from './pages/contact/ContactPage';
+import { EthicsReportPage } from './pages/contact/EthicsReportPage';
 import { HomePage } from './pages/HomePage';
 import { ItPage } from './pages/it/ItPage';
 import { ExpertsPage } from './pages/members/ExpertsPage';
@@ -159,6 +160,7 @@ function AppShell() {
 
               <Route path="/offices" element={<OfficesPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/contact/ethics" element={<EthicsReportPage />} />
               <Route path="/recruit" element={<RecruitPage />} />
               <Route path="/legal" element={<Navigate to="/legal/terms" replace />} />
               <Route path="/legal/terms" element={<LegalPage pageKey="terms" />} />
