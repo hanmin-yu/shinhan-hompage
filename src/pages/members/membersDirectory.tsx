@@ -187,6 +187,14 @@ const ProfileCard = styled.article`
     outline: none;
   }
 
+  &:hover .career-overlay,
+  &:focus-visible .career-overlay,
+  &:focus-within .career-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
   @media (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 92px;
     min-height: 190px;
@@ -368,6 +376,104 @@ const InitialMark = styled.div`
   font-weight: 900;
 `;
 
+const CareerOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(16px, 2vw, 24px);
+  background:
+    linear-gradient(135deg, rgba(10, 31, 61, 0.96), rgba(22, 76, 136, 0.94)),
+    #10233f;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  @media (hover: none) {
+    position: relative;
+    grid-column: 1 / -1;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    max-height: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+`;
+
+const CareerHeader = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+`;
+
+const CareerTitle = styled.strong`
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 900;
+  line-height: 1.3;
+  word-break: keep-all;
+`;
+
+const CareerName = styled.span`
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.35;
+  white-space: nowrap;
+`;
+
+const CareerList = styled.ul`
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+const CareerItem = styled.li`
+  position: relative;
+  padding-left: 11px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(0.68rem, 0.84vw, 0.78rem);
+  font-weight: 650;
+  line-height: 1.38;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.64em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #42d6cf;
+    box-shadow: 0 0 0 3px rgba(66, 214, 207, 0.16);
+  }
+`;
+
 const EmptyText = styled.p`
   margin: 0;
   color: #607083;
@@ -425,6 +531,19 @@ export function ProfessionalCardGrid({ members, emptyMessage }: ProfessionalCard
               <InitialMark aria-hidden="true">{tx(member.name).slice(0, 1)}</InitialMark>
             )}
           </PhotoPanel>
+          {member.careerHighlights?.length ? (
+            <CareerOverlay className="career-overlay" aria-label={`${tx(member.name)} 주요 경력`}>
+              <CareerHeader>
+                <CareerTitle>{t('주요 경력', 'Career highlights')}</CareerTitle>
+                <CareerName>{tx(member.name)}</CareerName>
+              </CareerHeader>
+              <CareerList>
+                {member.careerHighlights.map((highlight) => (
+                  <CareerItem key={highlight}>{tx(highlight)}</CareerItem>
+                ))}
+              </CareerList>
+            </CareerOverlay>
+          ) : null}
         </ProfileCard>
       ))}
     </DirectoryGrid>

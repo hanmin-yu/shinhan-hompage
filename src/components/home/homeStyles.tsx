@@ -944,20 +944,20 @@ export const Nav = styled.nav`
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 12px;
-  font-size: 1.26rem;
+  gap: 22px;
+  font-size: 1.34rem;
   color: ${palette.textPrimary};
   text-align: center;
   white-space: nowrap;
 
   @media (max-width: 1680px) {
-    gap: 8px;
-    font-size: 1.18rem;
+    gap: 16px;
+    font-size: 1.24rem;
   }
 
   @media (max-width: 1480px) {
-    gap: 4px;
-    font-size: 1.05rem;
+    gap: 10px;
+    font-size: 1.12rem;
   }
 `;
 
@@ -1024,12 +1024,12 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   justify-content: center;
   gap: 10px;
   min-height: 88px;
-  padding: 0 18px;
+  padding: 0 22px;
   position: relative;
   text-align: center;
   color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.42rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -1038,19 +1038,19 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
 
   @media (max-width: 1680px) {
     gap: 8px;
-    padding: 0 14px;
-    font-size: 1.28rem;
+    padding: 0 18px;
+    font-size: 1.36rem;
   }
 
   @media (max-width: 1480px) {
-    padding: 0 9px;
-    font-size: 1.12rem;
+    padding: 0 12px;
+    font-size: 1.18rem;
   }
 
   @media (max-width: 1380px) {
     min-height: 82px;
-    padding: 0 7px;
-    font-size: 0.96rem;
+    padding: 0 9px;
+    font-size: 1.05rem;
   }
 
   &::before {

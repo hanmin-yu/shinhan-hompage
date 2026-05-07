@@ -426,9 +426,9 @@ const CountLabelStack = styled.span`
 const Count = styled.strong<{ $counting: boolean }>`
   display: inline-block;
   color: #2f3136;
-  font-size: clamp(3.2rem, 8vw, 6.2rem);
-  font-weight: 800;
-  line-height: 0.84;
+  font-size: clamp(4.2rem, 10vw, 8.4rem);
+  font-weight: 900;
+  line-height: 0.78;
   letter-spacing: 0;
   transform-origin: 50% 78%;
   animation: ${({ $counting }) => ($counting ? 'countPop 0.38s cubic-bezier(0.2, 0.9, 0.24, 1.28)' : 'none')};

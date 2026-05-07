@@ -284,9 +284,9 @@ const CountValue = styled.strong`
   display: inline-flex;
   align-items: flex-start;
   color: #2f3136;
-  font-size: clamp(3.2rem, 8vw, 6.2rem);
-  font-weight: 800;
-  line-height: 0.84;
+  font-size: clamp(4.2rem, 10vw, 8.4rem);
+  font-weight: 900;
+  line-height: 0.78;
   letter-spacing: 0;
 `;
 

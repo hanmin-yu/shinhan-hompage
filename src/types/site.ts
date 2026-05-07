@@ -50,6 +50,7 @@ export type Member = {
   image?: string;
   imageFit?: 'contain' | 'cover';
   imagePosition?: string;
+  careerHighlights?: string[];
 };
 
 export type HeroSlide = {
