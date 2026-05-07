@@ -209,7 +209,7 @@ export function HistoryPage() {
                 <E.FactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</E.FactLabel>
               </E.Fact>
               <E.Fact>
-                <E.FactValue>60+</E.FactValue>
+                <E.FactValue>60 Years+</E.FactValue>
                 <E.FactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</E.FactLabel>
               </E.Fact>
               <E.Fact>

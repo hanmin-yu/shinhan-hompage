@@ -8,32 +8,33 @@ import { itOverview } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
-  padding: clamp(78px, 9vw, 128px) 0;
-  border-top: 1px solid #d8dee8;
-  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)' : '#ffffff')};
+  font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  padding: clamp(72px, 8vw, 118px) 0;
+  background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
 `;
 
 const HeroStatement = styled(P.PageContainer)`
   display: grid;
-  gap: clamp(30px, 4vw, 54px);
+  gap: clamp(30px, 4vw, 52px);
+  max-width: 1280px;
 `;
 
 const HeroEyebrow = styled.span`
-  color: #52647c;
+  color: #1d5fb6;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 `;
 
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #172337;
-  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
+  color: #111827;
+  font-size: clamp(2.2rem, 4.4vw, 4.35rem);
   font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 
   @media (max-width: 640px) {
@@ -41,91 +42,66 @@ const HeroTitle = styled.h1`
   }
 `;
 
-const HeroLeadGrid = styled.div`
+const IntroStack = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.42fr);
-  gap: clamp(28px, 5vw, 74px);
-  align-items: end;
-
-  @media (max-width: 920px) {
-    grid-template-columns: 1fr;
-  }
+  gap: clamp(24px, 3.6vw, 44px);
 `;
 
-const HeroLead = styled.p`
-  max-width: 760px;
+const OneLineSummary = styled.p`
+  max-width: 1240px;
   margin: 0;
-  color: #4d5a6c;
-  font-size: clamp(1.04rem, 1.6vw, 1.28rem);
-  line-height: 1.82;
-`;
-
-const LeadStack = styled.div`
-  display: grid;
-  gap: 18px;
-`;
-
-const HeroFacts = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border: 1px solid #d5dbe4;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96)),
-    #ffffff;
-  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
-  overflow: hidden;
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const HeroFact = styled.div`
-  position: relative;
-  display: grid;
-  align-content: start;
-  gap: 12px;
-  min-height: 136px;
-  padding: 24px 24px 22px;
-  border-right: 1px solid #dbe0e8;
-
-  &::before {
-    content: '';
-    width: 34px;
-    height: 3px;
-    background: linear-gradient(90deg, #1d5fb6, #1aa398);
-  }
-
-  &:last-of-type {
-    border-right: 0;
-  }
-
-  @media (max-width: 640px) {
-    min-height: auto;
-    padding: 22px 20px;
-    border-right: 0;
-    border-bottom: 1px solid #dbe0e8;
-
-    &:last-of-type {
-      border-bottom: 0;
-    }
-  }
-`;
-
-const HeroFactValue = styled.strong`
-  color: #172337;
-  font-size: clamp(1.32rem, 2vw, 1.92rem);
+  color: #1f2937;
+  font-size: clamp(1.32rem, 1.86vw, 1.96rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
+  line-height: 1.36;
+  letter-spacing: -0.016em;
+  line-break: strict;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  white-space: pre-line;
+  word-break: keep-all;
+
+  @supports not (text-wrap: pretty) {
+    text-wrap: balance;
+  }
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+    font-size: clamp(1.28rem, 7vw, 1.68rem);
+    letter-spacing: -0.018em;
+    line-height: 1.45;
+  }
 `;
 
-const HeroFactLabel = styled.span`
-  color: #687385;
-  font-size: 0.92rem;
-  line-height: 1.58;
-  overflow-wrap: anywhere;
+const OverviewBlock = styled.div`
+  display: grid;
+  grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  padding: clamp(28px, 3.5vw, 42px) 0;
+  border-top: 2px solid #1d5fb6;
+  border-bottom: 1px solid #d8dee8;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+`;
+
+const OverviewTitle = styled.h2`
+  margin: 0;
+  color: #174d9a;
+  font-size: clamp(1.12rem, 1.6vw, 1.34rem);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+`;
+
+const OverviewText = styled.p`
+  max-width: 940px;
+  margin: 0;
+  color: #475569;
+  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  line-height: 1.82;
 `;
 
 export function ItPage() {
@@ -138,30 +114,17 @@ export function ItPage() {
 
       <EditorialSection>
         <HeroStatement data-reveal>
-          <div>
-            <HeroEyebrow>IT Service</HeroEyebrow>
-            <HeroTitle>{t(itOverview.title, itOverview.titleEn)}</HeroTitle>
-          </div>
-          <HeroLeadGrid>
-            <LeadStack>
-              <HeroLead>{t(itOverview.summary, itOverview.summaryEn)}</HeroLead>
-              <HeroLead>{t(itOverview.body, itOverview.bodyEn)}</HeroLead>
-            </LeadStack>
-            <HeroFacts>
-              <HeroFact>
-                <HeroFactValue>AX</HeroFactValue>
-                <HeroFactLabel>{t('업무 자동화와 AI 전환', 'Automation and AI transformation')}</HeroFactLabel>
-              </HeroFact>
-              <HeroFact>
-                <HeroFactValue>iOOM</HeroFactValue>
-                <HeroFactLabel>{t('고객 통관 모니터링 시스템', 'Client customs monitoring system')}</HeroFactLabel>
-              </HeroFact>
-              <HeroFact>
-                <HeroFactValue>Data</HeroFactValue>
-                <HeroFactLabel>{t('데이터 중심 통관 운영', 'Data-driven customs operations')}</HeroFactLabel>
-              </HeroFact>
-            </HeroFacts>
-          </HeroLeadGrid>
+          <IntroStack>
+            <div>
+              <HeroEyebrow>IT Service</HeroEyebrow>
+              <HeroTitle>{t(itOverview.title, itOverview.titleEn)}</HeroTitle>
+            </div>
+            <OneLineSummary>{t(itOverview.summary, itOverview.summaryEn)}</OneLineSummary>
+            <OverviewBlock>
+              <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>
+              <OverviewText>{t(itOverview.body, itOverview.bodyEn)}</OverviewText>
+            </OverviewBlock>
+          </IntroStack>
         </HeroStatement>
       </EditorialSection>
 

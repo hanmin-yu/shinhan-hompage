@@ -6,45 +6,26 @@ import * as P from '../../site/PagePrimitives';
 
 const Section = styled.section`
   position: relative;
-  padding: clamp(78px, 9vw, 128px) 0;
-  border-top: 1px solid #d8dee8;
-  background: linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%);
+  padding: clamp(72px, 8vw, 118px) 0;
+  background: #ffffff;
 `;
 
 const Inner = styled(P.PageContainer)`
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(34px, 5vw, 62px);
-`;
-
-const Head = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: end;
-  gap: 16px;
-`;
-
-const Title = styled.h2`
-  max-width: 860px;
-  margin: 12px 0 0;
-  color: #172337;
-  font-size: clamp(2.14rem, 4.2vw, 4.22rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.05em;
-  text-wrap: balance;
+  gap: clamp(34px, 5vw, 62px);
+  max-width: 1280px;
 `;
 
 const Grid = styled.div`
   display: grid;
-  border-top: 1px solid #d5dbe4;
+  border-top: 2px solid #1d5fb6;
 `;
 
 const Item = styled.article`
   display: grid;
-  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 0.72fr);
+  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 1fr);
   gap: clamp(22px, 4vw, 58px);
   padding: clamp(28px, 3.4vw, 46px) 0;
   border-bottom: 1px solid #dbe0e8;
@@ -58,19 +39,19 @@ const Item = styled.article`
 const ItemCategory = styled.span`
   display: block;
   color: #52647c;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
 const ItemTitle = styled.h4`
   margin: 10px 0 0;
-  color: #18283e;
-  font-size: clamp(1.22rem, 2vw, 1.72rem);
-  font-weight: 800;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  color: #174d9a;
+  font-size: clamp(1.1rem, 1.7vw, 1.36rem);
+  font-weight: 900;
+  line-height: 1.34;
+  letter-spacing: -0.025em;
 `;
 
 const ItemBody = styled.p`
@@ -129,12 +110,6 @@ export function ItSection() {
   return (
     <Section id="it">
       <Inner data-reveal>
-        <Head>
-          <div>
-            <Title>{t('관세·IT 융합 서비스', 'Customs + IT Services')}</Title>
-          </div>
-        </Head>
-
         <Grid>
           {itServices.map((item) => (
             <Item key={item.title}>

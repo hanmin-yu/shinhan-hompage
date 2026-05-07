@@ -358,6 +358,7 @@ const Rule = styled.div<{ $light?: boolean }>`
 const ServiceGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 0;
   margin-top: clamp(36px, 5vw, 62px);
   border-top: 1px solid #d5dbe4;
@@ -370,6 +371,7 @@ const ServiceGrid = styled.div`
 
 const ServiceColumn = styled.article`
   display: grid;
+  grid-template-rows: auto auto minmax(7.5em, auto) 1fr;
   gap: 18px;
   padding: clamp(24px, 3vw, 38px);
   border-right: 1px solid #dbe0e8;
@@ -379,6 +381,7 @@ const ServiceColumn = styled.article`
   }
 
   @media (max-width: 980px) {
+    grid-template-rows: auto;
     border-right: 0;
     border-bottom: 1px solid #dbe0e8;
 
@@ -401,6 +404,7 @@ const ServiceTitle = styled.h3`
   color: #18283e;
   font-size: clamp(1.36rem, 2vw, 1.72rem);
   font-weight: 800;
+  line-height: 1.18;
   letter-spacing: -0.03em;
 `;
 
@@ -763,7 +767,7 @@ export function AboutPage() {
                 <HeroFactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</HeroFactLabel>
               </HeroFact>
               <HeroFact>
-                <HeroFactValue>60+</HeroFactValue>
+                <HeroFactValue>60 Years+</HeroFactValue>
                 <HeroFactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</HeroFactLabel>
               </HeroFact>
               <HeroFact>

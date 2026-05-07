@@ -504,12 +504,10 @@ export const recruitBenefitGroups: RecruitBenefitGroup[] = [
       { label: '상여금', labelEn: 'Bonuses', detail: '기본 보상 외 상여금을 제공합니다.', detailEn: 'Bonuses are provided in addition to base compensation.' },
       { label: '장기근속자 포상', labelEn: 'Long-service awards', detail: '오랜 근속에 대한 포상을 운영합니다.', detailEn: 'Long-service awards recognize continued tenure.' },
       { label: '퇴직금', labelEn: 'Severance pay', detail: '퇴직 시 지급되는 퇴직금 제도입니다.', detailEn: 'Severance pay is provided at the end of employment.' },
-      { label: '성과급', labelEn: 'Performance bonuses', detail: '성과에 따른 보상 체계를 운영합니다.', detailEn: 'Performance-based bonuses are part of the package.' },
       { label: '야근수당', labelEn: 'Overtime pay', detail: '야간 근무에 대한 수당을 지급합니다.', detailEn: 'Overtime pay is available for late work hours.' },
       { label: '휴일(특근)수당', labelEn: 'Holiday and special duty pay', detail: '휴일과 특근에 대한 수당을 제공합니다.', detailEn: 'Holiday and special duty pay is provided.' },
       { label: '직책수당', labelEn: 'Position allowance', detail: '직책에 따른 수당을 운영합니다.', detailEn: 'Position-based allowances are provided.' },
       { label: '자격증수당', labelEn: 'Certification allowance', detail: '자격 보유에 따른 수당을 지급합니다.', detailEn: 'Allowances are available for certifications.' },
-      { label: '장기근속수당', labelEn: 'Long-service allowance', detail: '장기근속에 따른 추가 수당이 있습니다.', detailEn: 'An additional allowance supports long-service employees.' },
       { label: '4대 보험', labelEn: 'Four major social insurances', detail: '4대 보험을 기본으로 제공합니다.', detailEn: 'The four major social insurances are included.' },
     ],
   },
@@ -580,9 +578,9 @@ export const recruitBenefitSummaryCards: RecruitBenefitSummaryCard[] = [
   {
     title: '보상과 안정',
     titleEn: 'Compensation & Stability',
-    description: '퇴직연금, 성과급, 장기근속 포상과 4대 보험 등 기본적인 보상 체계를 폭넓게 갖추고 있습니다.',
+    description: '퇴직연금, 장기근속 포상과 4대 보험 등 기본적인 보상 체계를 폭넓게 갖추고 있습니다.',
     descriptionEn:
-      'The package provides broad foundational support including retirement pension, performance bonuses, long-service awards, and social insurance.',
+      'The package provides broad foundational support including retirement pension, long-service awards, and social insurance.',
     accent: '급여·보험 중심',
     accentEn: 'Pay & insurance',
     image: benefitSummaryCompensation,
@@ -590,7 +588,7 @@ export const recruitBenefitSummaryCards: RecruitBenefitSummaryCard[] = [
     imageAltEn: 'Illustration representing compensation and stability benefits',
     tags: [
       { label: '퇴직연금', labelEn: 'Retirement pension' },
-      { label: '성과급', labelEn: 'Performance bonus' },
+      { label: '상여금', labelEn: 'Bonuses' },
       { label: '4대 보험', labelEn: 'Social insurance' },
     ],
   },
@@ -633,24 +631,6 @@ export const recruitBenefitSummaryCards: RecruitBenefitSummaryCard[] = [
 const sharedResources = [
   { label: 'Trade Insights', href: '/news/issue-report' },
   { label: '관련 전문가', href: '/members/experts' },
-];
-
-const ioomDocumentImages: ServiceDocumentImage[] = [
-  { src: '/it-systems/ioom/ioom-import-status.png', alt: 'iOOM 수입신고 현황 화면' },
-  { src: '/it-systems/ioom/ioom-dashboard.png', alt: 'iOOM 대시보드 화면' },
-  { src: '/it-systems/ioom/ioom-analytics.png', alt: 'iOOM 통계 분석 화면' },
-];
-
-const ftaDocumentImages: ServiceDocumentImage[] = [
-  { src: '/it-systems/fta/fta-login.png', alt: 'KORD FTA 로그인 화면' },
-  { src: '/it-systems/fta/fta-dashboard.png', alt: 'KORD FTA 대시보드 화면' },
-  { src: '/it-systems/fta/fta-origin-review.png', alt: 'KORD FTA 원산지 판정 화면' },
-];
-
-const liqDocumentImages: ServiceDocumentImage[] = [
-  { src: '/it-systems/liq/liq-login.png', alt: 'KORD LIQ 로그인 화면' },
-  { src: '/it-systems/liq/liq-dashboard.png', alt: 'KORD LIQ 대시보드 화면' },
-  { src: '/it-systems/liq/liq-result-report.png', alt: 'KORD LIQ 결과 보고서 화면' },
 ];
 
 const importExportSections: ServiceDetailSection[] = [
@@ -1128,7 +1108,6 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     ],
     contentSections: importExportSections,
     contactPoints: importExportContacts,
-    documentImages: ioomDocumentImages,
     relatedExpertNames: ['차미정', '조나현', '오규태', '손성곤'],
     relatedResources: sharedResources,
   },
@@ -1219,7 +1198,6 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     checkpoints: ['협정·품목별 원산지 기준 분석', '입증자료 및 증빙 체계 정비', '인증수출자·증명서 운영 지원', '원산지 검증 대응 자료 작성', '시스템·DB 기반 상시 관리'],
     contentSections: ftaSections,
     contactPoints: ftaContacts,
-    documentImages: ftaDocumentImages,
     relatedExpertNames: ['박성현', '오보람', '강민지', '조석현'],
     relatedResources: sharedResources,
   },
@@ -1500,7 +1478,6 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     checkpoints: ['현지 관세 리스크 진단', '서비스 범위별 운영체계 설계', '월별 수책·FTA·통관 관리', '관세심사 및 규정 변화 대응', '상시 자문 및 교육 연계'],
     contentSections: vietnamSections,
     contactPoints: vietnamContacts,
-    documentImages: [...liqDocumentImages, ...ftaDocumentImages],
     relatedExpertNames: ['신종호', '김선웅'],
     relatedResources: sharedResources,
   },
