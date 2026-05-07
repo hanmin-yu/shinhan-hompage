@@ -62,13 +62,13 @@ export const HeroSection = styled(PageSection)`
   --page-title-color: #ffffff;
   --page-heading-color: #ffffff;
   --page-lead-color: rgba(232, 242, 255, 0.9);
-  --page-text-shadow: 0 18px 42px rgba(3, 15, 34, 0.42);
+  --page-text-shadow: 0 14px 34px rgba(3, 15, 34, 0.3);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(241, 247, 255, 0.82) 13%, rgba(154, 190, 231, 0.5) 27%, rgba(20, 69, 137, 0.5) 42%, rgba(8, 28, 64, 0.9) 100%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.08) 0%, rgba(22, 91, 176, 0.22) 36%, rgba(8, 24, 54, 0.28) 72%),
-    radial-gradient(circle at 82% 86%, rgba(23, 159, 150, 0.3), transparent 34%),
-    radial-gradient(circle at 16% 12%, rgba(33, 101, 193, 0.34), transparent 30%),
-    #102744;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 249, 255, 0.9) 16%, rgba(178, 211, 244, 0.56) 34%, rgba(44, 111, 190, 0.48) 56%, rgba(21, 70, 139, 0.72) 100%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, rgba(42, 118, 207, 0.2) 36%, rgba(18, 72, 142, 0.18) 72%),
+    radial-gradient(circle at 82% 86%, rgba(23, 159, 150, 0.24), transparent 34%),
+    radial-gradient(circle at 16% 12%, rgba(33, 101, 193, 0.26), transparent 30%),
+    #2b6fb4;
 
   &::before,
   &::after {

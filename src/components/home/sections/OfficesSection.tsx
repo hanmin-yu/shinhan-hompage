@@ -477,7 +477,7 @@ const Tiles = styled.div`
   }
 `;
 
-const OfficeTile = styled(Link)<{ x: number; y: number; $active: boolean }>`
+const OfficeTile = styled.a<{ x: number; y: number; $active: boolean }>`
   position: absolute;
   left: ${({ x }) => x}%;
   top: ${({ y }) => y}%;
@@ -669,7 +669,9 @@ export function OfficesSection() {
                   return (
                     <OfficeTile
                       key={office.id}
-                      to={`/offices?office=${office.id}`}
+                      href={office.websiteUrl ?? `/offices?office=${office.id}`}
+                      target={office.websiteUrl ? '_blank' : undefined}
+                      rel={office.websiteUrl ? 'noreferrer' : undefined}
                       x={tilePoint.x}
                       y={tilePoint.y}
                       $active={activeOfficeId === office.id}

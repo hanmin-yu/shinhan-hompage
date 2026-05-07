@@ -25,7 +25,7 @@ const EditorialHero = styled(P.HeroSection)`
     z-index: -2;
     pointer-events: none;
     background: url('/hero/menu-about-shinhan-ai.png') center 50% / cover no-repeat;
-    filter: brightness(1.2) contrast(0.97) saturate(1.03);
+    filter: brightness(1.34) contrast(0.94) saturate(1.06);
     opacity: 1;
     transform: none;
     animation: none;
@@ -41,8 +41,8 @@ const EditorialHero = styled(P.HeroSection)`
     border-radius: 0;
     pointer-events: none;
     background:
-      linear-gradient(180deg, rgba(8, 17, 31, 0.04) 0%, rgba(8, 17, 31, 0.08) 54%, rgba(8, 17, 31, 0.22) 100%),
-      linear-gradient(90deg, rgba(4, 12, 24, 0.26) 0%, rgba(4, 12, 24, 0.06) 48%, rgba(4, 12, 24, 0.1) 100%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(232, 242, 255, 0.08) 48%, rgba(18, 64, 128, 0.16) 100%),
+      linear-gradient(90deg, rgba(8, 32, 72, 0.16) 0%, rgba(8, 32, 72, 0.02) 48%, rgba(8, 32, 72, 0.06) 100%);
     opacity: 1;
     transform: none;
     animation: none;
@@ -67,8 +67,8 @@ const HeroVisualTitle = styled.h1`
   letter-spacing: -0.05em;
   text-align: center;
   text-shadow:
-    0 18px 36px rgba(4, 12, 24, 0.36),
-    0 2px 10px rgba(4, 12, 24, 0.32);
+    0 14px 30px rgba(4, 12, 24, 0.24),
+    0 2px 8px rgba(4, 12, 24, 0.22);
 `;
 
 const SubnavBand = styled.section`

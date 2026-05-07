@@ -566,7 +566,7 @@ export const HeaderInner = styled(Container)`
   grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   align-items: center;
   gap: 24px;
-  min-height: 74px;
+  min-height: 88px;
   padding-top: 10px;
 
   @media (max-width: 1200px) {
@@ -583,7 +583,7 @@ export const HeaderInner = styled(Container)`
   }
 
   @media (max-width: 1320px) {
-    min-height: 72px;
+    min-height: 82px;
   }
 
   @media (max-width: 1024px) {
@@ -612,7 +612,7 @@ export const MenuArea = styled.div`
   justify-content: center;
   width: max-content;
   flex: 0 0 auto;
-  min-height: 82px;
+  min-height: 90px;
   min-width: 0;
   overflow: visible;
 
@@ -641,12 +641,12 @@ export const HeaderLogoFrame = styled.span`
   flex-direction: column;
   justify-content: center;
   width: min(285px, 24vw);
-  min-height: 58px;
+  min-height: 70px;
   transform: translateY(-1px);
 
   @media (max-width: 1320px) {
     width: 224px;
-    min-height: 52px;
+    min-height: 62px;
   }
 
   @media (max-width: 980px) {
@@ -904,7 +904,7 @@ export const NavItem = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 82px;
+  min-height: 90px;
 
   &:hover > div,
   &:focus-within > div {
@@ -950,7 +950,7 @@ export const NavItem = styled.div`
   }
 
   @media (max-width: 1320px) {
-    min-height: 78px;
+    min-height: 82px;
   }
 `;
 
@@ -959,7 +959,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 80px;
+  min-height: 88px;
   padding: 0 18px;
   position: relative;
   text-align: center;
@@ -984,7 +984,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   }
 
   @media (max-width: 1380px) {
-    min-height: 78px;
+    min-height: 82px;
     padding: 0 7px;
     font-size: 0.96rem;
   }
@@ -1132,7 +1132,7 @@ export const MegaMenu = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  top: 76px;
+  top: 98px;
   z-index: 24;
   min-height: 392px;
   padding: 42px 0 50px;
@@ -1213,7 +1213,7 @@ export const MegaMenu = styled.div`
   }
 
   @media (max-width: 1320px) {
-    top: 70px;
+    top: 92px;
   }
 `;
 

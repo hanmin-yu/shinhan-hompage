@@ -4,6 +4,7 @@ import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { ServiceDetailSubnav } from '../../components/site/ServiceDetailSubnav';
 import { sectionSubnav } from '../../config/sectionSubnav';
+import { expertMembers } from '../../data/home';
 import { serviceDetailPages, serviceLandingGroups } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
 
@@ -14,7 +15,6 @@ type ServiceDetailPageProps = {
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   padding: clamp(72px, 8vw, 118px) 0;
-  border-top: 1px solid #d8dee8;
   background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
 `;
 
@@ -60,17 +60,28 @@ const IntroStack = styled.div`
 `;
 
 const OneLineSummary = styled.p`
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0;
   color: #1f2937;
-  font-size: clamp(1.58rem, 3vw, 2.86rem);
+  font-size: clamp(1.32rem, 1.86vw, 1.96rem);
   font-weight: 800;
-  line-height: 1.24;
-  letter-spacing: -0.032em;
-  text-wrap: balance;
+  line-height: 1.36;
+  letter-spacing: -0.016em;
+  line-break: strict;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  white-space: pre-line;
+  word-break: keep-all;
+
+  @supports not (text-wrap: pretty) {
+    text-wrap: balance;
+  }
 
   @media (max-width: 640px) {
-    letter-spacing: -0.03em;
+    max-width: 100%;
+    font-size: clamp(1.28rem, 7vw, 1.68rem);
+    letter-spacing: -0.018em;
+    line-height: 1.45;
   }
 `;
 
@@ -257,63 +268,147 @@ const StepList = styled.ol`
   line-height: 1.72;
 `;
 
-const ContactGrid = styled(P.Grid)`
-  margin-top: 0;
-`;
-
 const ContactPanel = styled.article`
   display: grid;
-  gap: 20px;
+  gap: clamp(18px, 3vw, 28px);
   border-top: 2px solid #1d5fb6;
-  border-bottom: 1px solid #d5dbe4;
+  padding-top: clamp(22px, 3vw, 32px);
   background: transparent;
 `;
 
-const ContactCard = styled.article`
+const ContactProfileGrid = styled.div`
   display: grid;
-  gap: 12px;
-  padding: 22px 0;
-  border-bottom: 1px solid #dbe0e8;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 24px);
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ContactProfileCard = styled.article<{ $accent: string }>`
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(112px, 10vw, 150px);
+  min-height: 214px;
+  overflow: hidden;
+  border: 1px solid rgba(29, 95, 182, 0.14);
+  border-top: 3px solid ${({ $accent }) => $accent};
+  background:
+    linear-gradient(135deg, rgba(29, 95, 182, 0.08), rgba(255, 255, 255, 0) 45%),
+    #ffffff;
+  box-shadow: 0 20px 45px rgba(15, 38, 76, 0.08);
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ContactProfileBody = styled.div`
+  display: grid;
+  align-content: space-between;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 30px);
 `;
 
 const ContactName = styled.h3`
   margin: 0;
   color: #111827;
-  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
-  font-weight: 800;
-  line-height: 1.35;
+  font-size: clamp(1.3rem, 2vw, 1.66rem);
+  font-weight: 900;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 `;
 
 const ContactRole = styled.p`
-  margin: 0;
-  color: #4e5d70;
-  font-size: 1.04rem;
-  line-height: 1.72;
+  margin: 8px 0 0;
+  color: #174d9a;
+  font-size: 0.98rem;
+  font-weight: 800;
+  line-height: 1.52;
+`;
+
+const ContactDepartment = styled.p`
+  margin: 10px 0 0;
+  color: #52647c;
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.56;
+`;
+
+const ContactPractice = styled.p`
+  margin: 12px 0 0;
+  color: #475569;
+  font-size: 0.98rem;
+  line-height: 1.68;
 `;
 
 const ContactMeta = styled.div`
-  display: grid;
-  gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
 `;
 
 const ContactLabel = styled.span`
-  color: #5a7395;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: #7890ad;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
 `;
 
 const ContactValue = styled.a`
-  color: #1d4f96;
-  font-size: 1.02rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(29, 95, 182, 0.14);
+  background: rgba(29, 95, 182, 0.05);
+  color: #174d9a;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.35;
   text-decoration: none;
+  overflow-wrap: anywhere;
 
   &:hover {
-    text-decoration: underline;
+    border-color: rgba(29, 95, 182, 0.3);
+    background: rgba(29, 95, 182, 0.09);
   }
+`;
+
+const ContactPhotoPanel = styled.div<{ $accent: string }>`
+  position: relative;
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0)),
+    ${({ $accent }) => $accent};
+
+  @media (max-width: 540px) {
+    min-height: 210px;
+  }
+`;
+
+const ContactPortrait = styled.img<{ $fit?: 'contain' | 'cover'; $position?: string }>`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: ${({ $fit }) => $fit ?? 'cover'};
+  object-position: ${({ $position }) => $position ?? '50% 18%'};
+`;
+
+const ContactInitialMark = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
 `;
 
 const FigureGrid = styled.div<{ columns: 1 | 2 }>`
@@ -337,12 +432,30 @@ const FigureImage = styled.img`
   display: block;
   border-radius: 8px;
   border: 1px solid rgba(20, 76, 158, 0.1);
-  object-fit: cover;
+  object-fit: contain;
+  background: #ffffff;
 `;
 
 function splitDiagramItem(item: string) {
-  const [term, description] = item.split('->').map((part) => part.trim());
+  if (item.includes('->')) {
+    const [term, description] = item.split('->').map((part) => part.trim());
+    return { term, description };
+  }
+
+  const separatorIndex = item.indexOf(':');
+  if (separatorIndex >= 0) {
+    return {
+      term: item.slice(0, separatorIndex).trim(),
+      description: item.slice(separatorIndex + 1).trim(),
+    };
+  }
+
+  const [term, description] = [item, ''];
   return { term, description };
+}
+
+function isDiagramList(items: string[]) {
+  return items.every((item) => item.includes('->') || item.includes(':'));
 }
 
 export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
@@ -379,6 +492,10 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         },
       ];
   const contactPoints = content.contactPoints ?? [];
+  const contactProfiles = contactPoints.map((contact) => ({
+    contact,
+    member: expertMembers.find((member) => member.name === contact.name),
+  }));
 
   return (
     <>
@@ -437,7 +554,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                     </ParagraphStack>
                   ) : null}
                   {section.list?.length ? (
-                    section.list.every((item) => item.includes('->')) ? (
+                    isDiagramList(section.list) ? (
                       <DiagramList>
                         {section.list.map((item) => {
                           const { term, description } = splitDiagramItem(tx(item));
@@ -497,26 +614,54 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           </SectionHead>
           <ContactPanel>
             {hasContactPoints ? (
-              <ContactGrid columns={2}>
-                {contactPoints.map((contact) => (
-                  <ContactCard key={`${contact.name}-${contact.phone ?? ''}-${contact.email ?? ''}`}>
-                    <ContactName>{tx(contact.name)}</ContactName>
-                    {contact.role ? <ContactRole>{tx(contact.role)}</ContactRole> : null}
-                    {contact.phone ? (
-                      <ContactMeta>
-                        <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
-                        <ContactValue href={`tel:${contact.phone.replace(/[^+\d]/g, '')}`}>{contact.phone}</ContactValue>
-                      </ContactMeta>
-                    ) : null}
-                    {contact.email ? (
-                      <ContactMeta>
-                        <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
-                        <ContactValue href={`mailto:${contact.email}`}>{contact.email}</ContactValue>
-                      </ContactMeta>
-                    ) : null}
-                  </ContactCard>
-                ))}
-              </ContactGrid>
+              <ContactProfileGrid>
+                {contactProfiles.map(({ contact, member }) => {
+                  const phone = contact.phone ?? member?.phone;
+                  const email = contact.email ?? member?.email;
+                  const role = contact.role ?? member?.title;
+                  const accent = member?.accent ?? '#1d5fb6';
+
+                  return (
+                    <ContactProfileCard key={`${contact.name}-${phone ?? ''}-${email ?? ''}`} $accent={accent}>
+                      <ContactProfileBody>
+                        <div>
+                          <ContactName>{tx(contact.name)}</ContactName>
+                          {role ? <ContactRole>{tx(role)}</ContactRole> : null}
+                          {member?.department ? <ContactDepartment>{tx(member.department)}</ContactDepartment> : null}
+                          {member?.practice ? <ContactPractice>{tx(member.practice)}</ContactPractice> : null}
+                        </div>
+                        <ContactMeta>
+                          {phone ? (
+                            <ContactValue href={`tel:${phone.replace(/[^+\d]/g, '')}`}>
+                              <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
+                              {phone}
+                            </ContactValue>
+                          ) : null}
+                          {email ? (
+                            <ContactValue href={`mailto:${email}`}>
+                              <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
+                              {email}
+                            </ContactValue>
+                          ) : null}
+                        </ContactMeta>
+                      </ContactProfileBody>
+                      <ContactPhotoPanel $accent={accent}>
+                        {member?.image ? (
+                          <ContactPortrait
+                            src={member.image}
+                            alt={tx(contact.name)}
+                            loading="lazy"
+                            $fit={member.imageFit}
+                            $position={member.imagePosition}
+                          />
+                        ) : (
+                          <ContactInitialMark>{tx(contact.name).slice(0, 1)}</ContactInitialMark>
+                        )}
+                      </ContactPhotoPanel>
+                    </ContactProfileCard>
+                  );
+                })}
+              </ContactProfileGrid>
             ) : (
               <P.BulletList>
                 {content.relatedExpertNames.map((name) => (

@@ -1,5 +1,6 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import * as E from '../../components/site/EditorialBlocks';
@@ -22,6 +23,8 @@ type OfficeViewData = {
   addressEn: string;
   tel: string;
   fax?: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
   showNaverMap: boolean;
   naverMapUrl?: string;
   googleMapUrl: string;
@@ -56,6 +59,8 @@ function useOfficeViewData(): OfficeViewData[] {
         addressEn: office.addressEn,
         tel: office.tel,
         fax: office.fax,
+        websiteUrl: office.websiteUrl,
+        websiteLabel: office.websiteLabel,
         showNaverMap: !isVietnamOffice,
         naverMapUrl: isVietnamOffice ? undefined : getNaverMapUrl(mapSearchQuery),
         googleMapUrl: getGoogleMapUrl(googleMapQuery),
@@ -67,6 +72,7 @@ function useOfficeViewData(): OfficeViewData[] {
 export function OfficesPage() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
+  const officeTabsRef = useRef<HTMLDivElement | null>(null);
   const offices = useOfficeViewData();
   const requestedOfficeId = searchParams.get('office');
   const initialOfficeId = offices.some((office) => office.id === requestedOfficeId) ? requestedOfficeId ?? '' : offices[0]?.id ?? '';
@@ -82,6 +88,13 @@ export function OfficesPage() {
   const selectOffice = (officeId: string) => {
     setSelectedOfficeId(officeId);
     setSearchParams({ office: officeId });
+  };
+  const scrollOfficeTabs = (direction: 'prev' | 'next') => {
+    const tabs = officeTabsRef.current;
+    if (!tabs) return;
+
+    const offset = tabs.clientWidth * 0.72 * (direction === 'prev' ? -1 : 1);
+    tabs.scrollBy({ left: offset, behavior: 'smooth' });
   };
 
   return (
@@ -127,24 +140,57 @@ export function OfficesPage() {
 
           {selectedOffice ? (
             <>
-              <OfficeTabs aria-label={t('사무소 선택', 'Select office')}>
-                {offices.map((office) => {
-                  const isActive = office.id === selectedOffice.id;
+              <OfficeTabsShell>
+                <OfficeScrollControls aria-label={t('사무소 목록 스크롤', 'Scroll office list')}>
+                  <OfficeScrollButton
+                    type="button"
+                    aria-label={t('이전 사무소 보기', 'Show previous offices')}
+                    onClick={() => scrollOfficeTabs('prev')}
+                  >
+                    ‹
+                  </OfficeScrollButton>
+                  <OfficeScrollButton
+                    type="button"
+                    aria-label={t('다음 사무소 보기', 'Show next offices')}
+                    onClick={() => scrollOfficeTabs('next')}
+                  >
+                    ›
+                  </OfficeScrollButton>
+                </OfficeScrollControls>
+                <OfficeTabs ref={officeTabsRef} aria-label={t('사무소 선택', 'Select office')}>
+                  {offices.map((office) => {
+                    const isActive = office.id === selectedOffice.id;
 
-                  return (
-                    <OfficeTab
-                      key={office.id}
-                      type="button"
-                      aria-selected={isActive}
-                      data-active={isActive}
-                      onClick={() => selectOffice(office.id)}
-                    >
-                      <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
-                      <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
-                    </OfficeTab>
-                  );
-                })}
-              </OfficeTabs>
+                    if (office.websiteUrl) {
+                      return (
+                        <OfficeTabLink
+                          key={office.id}
+                          href={office.websiteUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={t(`${office.label} 홈페이지 열기`, `Open ${office.labelEn} website`)}
+                        >
+                          <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
+                          <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
+                        </OfficeTabLink>
+                      );
+                    }
+
+                    return (
+                      <OfficeTab
+                        key={office.id}
+                        type="button"
+                        aria-selected={isActive}
+                        data-active={isActive}
+                        onClick={() => selectOffice(office.id)}
+                      >
+                        <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
+                        <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
+                      </OfficeTab>
+                    );
+                  })}
+                </OfficeTabs>
+              </OfficeTabsShell>
 
               <OfficeBlock aria-live="polite">
                 <OfficeInfoPanel>
@@ -172,6 +218,14 @@ export function OfficesPage() {
                       <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
                       <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
                     </InfoRow>
+                    {selectedOffice.websiteUrl ? (
+                      <InfoRow>
+                        <InfoLabel>{t('사이트', 'Website')}</InfoLabel>
+                        <InfoValueLink href={selectedOffice.websiteUrl} target="_blank" rel="noreferrer">
+                          {selectedOffice.websiteLabel ?? selectedOffice.websiteUrl}
+                        </InfoValueLink>
+                      </InfoRow>
+                    ) : null}
                   </InfoRows>
 
                   <ActionRow>
@@ -189,6 +243,11 @@ export function OfficesPage() {
                         {t('Google 지도 열기', 'Open Google Maps')}
                       </PrimaryMapLink>
                     )}
+                    {selectedOffice.websiteUrl ? (
+                      <MapLink href={selectedOffice.websiteUrl} target="_blank" rel="noreferrer">
+                        {t('사이트 바로가기', 'Visit Website')}
+                      </MapLink>
+                    ) : null}
                   </ActionRow>
                 </OfficeInfoPanel>
 
@@ -224,12 +283,65 @@ const OfficesSection = styled(E.Section)`
   background: #ffffff;
 `;
 
+const OfficeTabsShell = styled.div`
+  position: relative;
+  margin-top: clamp(50px, 6vw, 76px);
+  margin-bottom: 34px;
+`;
+
+const OfficeScrollControls = styled.div`
+  position: absolute;
+  right: 0;
+  top: -52px;
+  z-index: 2;
+  display: inline-flex;
+  gap: 8px;
+
+  @media (max-width: 620px) {
+    position: static;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+`;
+
+const OfficeScrollButton = styled.button`
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(24, 86, 178, 0.18);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1f5cb2;
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(16, 54, 112, 0.08);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: rgba(24, 86, 178, 0.36);
+    color: #173b73;
+    box-shadow: 0 16px 30px rgba(16, 54, 112, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(24, 86, 178, 0.46);
+    outline-offset: 3px;
+  }
+`;
+
 const OfficeTabs = styled.div`
   display: flex;
   gap: 0;
-  margin-top: clamp(50px, 6vw, 76px);
-  margin-bottom: 34px;
   overflow-x: auto;
+  scroll-behavior: smooth;
   scrollbar-width: none;
   border-top: 1px solid #d8dee8;
   border-bottom: 1px solid #d8dee8;
@@ -239,7 +351,7 @@ const OfficeTabs = styled.div`
   }
 `;
 
-const OfficeTab = styled.button`
+const officeTabBase = css`
   position: relative;
   display: grid;
   flex: 0 0 auto;
@@ -279,6 +391,15 @@ const OfficeTab = styled.button`
     outline: 2px solid rgba(24, 86, 178, 0.46);
     outline-offset: 2px;
   }
+`;
+
+const OfficeTab = styled.button`
+  ${officeTabBase}
+`;
+
+const OfficeTabLink = styled.a`
+  ${officeTabBase}
+  text-decoration: none;
 `;
 
 const OfficeTabLabel = styled.span`

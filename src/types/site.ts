@@ -87,6 +87,8 @@ export type OfficeBranch = {
   addressEn: string;
   tel: string;
   fax?: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
   image?: string;
   imagePosition?: string;
   accent: string;
@@ -126,6 +128,11 @@ export type ItService = {
   summaryEn?: string;
   body: string;
   bodyEn: string;
+  images?: {
+    src: string;
+    alt: string;
+    altEn?: string;
+  }[];
 };
 
 export type ShinhanNewsItem = {

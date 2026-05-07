@@ -39,82 +39,24 @@ const Title = styled.h2`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
-  gap: clamp(34px, 6vw, 86px);
-  align-items: start;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Featured = styled.article`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: clamp(24px, 3vw, 38px);
-  border-top: 1px solid #d5dbe4;
-  border-bottom: 1px solid #d5dbe4;
-`;
-
-const FeaturedMeta = styled.span`
-  color: rgba(45, 58, 76, 0.34);
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-`;
-
-const FeaturedTitle = styled.h3`
-  margin: 0;
-  color: #18283e;
-  font-size: clamp(1.36rem, 2vw, 1.72rem);
-  font-weight: 800;
-  line-height: 1.28;
-  letter-spacing: -0.03em;
-`;
-
-const FeaturedBody = styled.p`
-  margin: 0;
-  color: #4e5d70;
-  font-size: 1.1rem;
-  line-height: 1.76;
-`;
-
-const FeaturedSummary = styled(FeaturedBody)`
-  color: #172337;
-  font-size: 1.14rem;
-  font-weight: 800;
-`;
-
-const FeaturedHint = styled.span`
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid #e2e6ec;
-  color: #4b596b;
-  font-size: 0.98rem;
-  font-weight: 800;
-`;
-
-const List = styled.div`
-  display: grid;
   border-top: 1px solid #d5dbe4;
 `;
 
 const Item = styled.article`
   display: grid;
-  grid-template-columns: minmax(110px, 0.22fr) minmax(0, 1fr);
-  gap: 24px;
-  padding: 24px 0;
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 0.72fr);
+  gap: clamp(22px, 4vw, 58px);
+  padding: clamp(28px, 3.4vw, 46px) 0;
   border-bottom: 1px solid #dbe0e8;
 
-  @media (max-width: 640px) {
+  @media (max-width: 820px) {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 16px;
   }
 `;
 
 const ItemCategory = styled.span`
+  display: block;
   color: #52647c;
   font-size: 0.9rem;
   font-weight: 800;
@@ -123,9 +65,9 @@ const ItemCategory = styled.span`
 `;
 
 const ItemTitle = styled.h4`
-  margin: 0;
+  margin: 10px 0 0;
   color: #18283e;
-  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
+  font-size: clamp(1.22rem, 2vw, 1.72rem);
   font-weight: 800;
   line-height: 1.35;
   letter-spacing: -0.02em;
@@ -148,11 +90,41 @@ const ItemBodyStack = styled.div`
   gap: 8px;
 `;
 
+const ItemContent = styled.div`
+  display: grid;
+  gap: 18px;
+`;
+
+const ImageGrid = styled.div<{ $count: number }>`
+  display: grid;
+  grid-template-columns: repeat(${({ $count }) => ($count > 1 ? 2 : 1)}, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ImageFrame = styled.figure`
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid #d5dbe4;
+`;
+
+const ServiceImage = styled.img`
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  object-position: top left;
+  border: 1px solid rgba(20, 76, 158, 0.12);
+  background: #ffffff;
+`;
+
 export function ItSection() {
   const { t } = useI18n();
-  const [featuredService, ...secondaryServices] = itServices;
 
-  if (!featuredService) return null;
+  if (!itServices.length) return null;
 
   return (
     <Section id="it">
@@ -164,26 +136,29 @@ export function ItSection() {
         </Head>
 
         <Grid>
-          <Featured>
-            <FeaturedMeta>{t(featuredService.category, featuredService.categoryEn)}</FeaturedMeta>
-            <FeaturedTitle>{t(featuredService.title, featuredService.titleEn)}</FeaturedTitle>
-            {featuredService.summary ? <FeaturedSummary>{t(featuredService.summary, featuredService.summaryEn ?? featuredService.summary)}</FeaturedSummary> : null}
-            <FeaturedBody>{t(featuredService.body, featuredService.bodyEn)}</FeaturedBody>
-            <FeaturedHint>{t('주요 기능 보기', 'View key capabilities')}</FeaturedHint>
-          </Featured>
-
-          <List>
-            {secondaryServices.map((item) => (
-              <Item key={item.title}>
+          {itServices.map((item) => (
+            <Item key={item.title}>
+              <div>
                 <ItemCategory>{t(item.category, item.categoryEn)}</ItemCategory>
+                <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+              </div>
+              <ItemContent>
                 <ItemBodyStack>
-                  <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
                   {item.summary ? <ItemSummary>{t(item.summary, item.summaryEn ?? item.summary)}</ItemSummary> : null}
                   <ItemBody>{t(item.body, item.bodyEn)}</ItemBody>
                 </ItemBodyStack>
-              </Item>
-            ))}
-          </List>
+                {item.images?.length ? (
+                  <ImageGrid $count={item.images.length}>
+                    {item.images.map((image) => (
+                      <ImageFrame key={image.src}>
+                        <ServiceImage src={image.src} alt={t(image.alt, image.altEn ?? image.alt)} loading="lazy" />
+                      </ImageFrame>
+                    ))}
+                  </ImageGrid>
+                ) : null}
+              </ItemContent>
+            </Item>
+          ))}
         </Grid>
       </Inner>
     </Section>
