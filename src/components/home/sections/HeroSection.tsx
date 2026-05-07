@@ -10,7 +10,7 @@ const HeroShell = styled.section`
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: #102744;
+  background: #dcecff;
   border-bottom: 0;
 
   &::before,
@@ -43,7 +43,7 @@ const HeroShell = styled.section`
     width: min(62vw, 820px);
     aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(23, 159, 150, 0.28), rgba(33, 101, 193, 0.16) 42%, transparent 68%);
+    background: radial-gradient(circle, rgba(78, 164, 218, 0.28), rgba(72, 137, 214, 0.18) 42%, transparent 68%);
     transform: translate3d(0, calc(var(--viewport-progress) * -120px), 0);
     animation: glowPulse 8s ease-in-out infinite;
   }
@@ -99,13 +99,13 @@ const HeroBackdropOverlay = styled.div`
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(238, 246, 255, 0.28) 18%, rgba(14, 38, 78, 0.14) 46%, rgba(8, 28, 64, 0.84) 100%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(22, 91, 176, 0.16) 38%, rgba(8, 24, 54, 0.08) 70%, rgba(8, 24, 54, 0.28) 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 246, 255, 0.34) 18%, rgba(44, 94, 158, 0.12) 48%, rgba(45, 98, 160, 0.54) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.38) 0%, rgba(50, 116, 202, 0.18) 38%, rgba(38, 89, 151, 0.08) 70%, rgba(42, 96, 158, 0.18) 100%);
 
   @media (max-width: 768px) {
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 246, 255, 0.28) 22%, rgba(14, 38, 78, 0.18) 58%, rgba(8, 28, 64, 0.84) 100%),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(8, 24, 54, 0.18));
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(238, 246, 255, 0.34) 22%, rgba(44, 94, 158, 0.14) 58%, rgba(45, 98, 160, 0.52) 100%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(42, 96, 158, 0.16));
   }
 `;
 
@@ -118,7 +118,7 @@ const HeroBottomBlend = styled.div`
   height: min(28vh, 260px);
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(16, 35, 58, 0) 0%, rgba(22, 48, 78, 0.58) 48%, rgba(24, 48, 78, 1) 100%);
+    linear-gradient(180deg, rgba(222, 237, 255, 0) 0%, rgba(203, 224, 248, 0.58) 50%, rgba(239, 246, 255, 0.98) 100%);
 `;
 
 const HeroInner = styled(S.Container)`
@@ -127,7 +127,7 @@ const HeroInner = styled(S.Container)`
   min-height: inherit;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: clamp(116px, 15vh, 150px) 0 clamp(40px, 8vh, 78px);
 
   @media (max-width: 1120px) {
@@ -146,49 +146,18 @@ const HeroCopy = styled.div`
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 24px;
-  width: min(980px, 58vw);
-  text-align: left;
-  transform: translate3d(0, calc(var(--viewport-progress) * -34px), 0);
+  align-items: center;
+  gap: clamp(26px, 2.5vw, 38px);
+  width: min(980px, 74vw);
+  text-align: center;
+  transform: translate3d(0, calc(-56px + (var(--viewport-progress) * -34px)), 0);
   transition: transform 0.16s linear;
 
   @media (max-width: 920px) {
     width: min(100%, 680px);
     text-align: center;
     align-items: center;
-    gap: 14px;
-  }
-`;
-
-const HeroGuideLine = styled.span`
-  position: absolute;
-  left: 0;
-  top: -54px;
-  width: min(460px, 54vw);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.82), transparent);
-
-  @media (max-width: 1120px) {
-    top: -38px;
-  }
-`;
-
-const HeroKicker = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: rgba(232, 242, 255, 0.96);
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-
-  &::before {
-    content: '';
-    width: 30px;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(225, 238, 255, 0.72), rgba(23, 159, 150, 0.62));
+    gap: 18px;
   }
 `;
 
@@ -205,8 +174,8 @@ const HeroTitle = styled.h1`
     sans-serif;
   font-size: clamp(3.2rem, 7.9vw, 8.6rem);
   font-weight: 750;
-  line-height: 0.86;
-  letter-spacing: -0.055em;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
   max-width: none;
   text-shadow:
     0 18px 44px rgba(3, 15, 34, 0.48),
@@ -221,69 +190,23 @@ const HeroTitle = styled.h1`
 const HeroStatement = styled.p`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.2rem, 4.8vw, 5.2rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.72rem, 3.35vw, 3.72rem);
+  font-weight: 520;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  word-break: keep-all;
+  text-wrap: balance;
   white-space: pre-line;
   text-shadow:
     0 16px 42px rgba(3, 15, 34, 0.62),
     0 2px 8px rgba(3, 15, 34, 0.38);
 
   b {
-    font-weight: 800;
+    font-weight: 600;
   }
 
   @media (max-width: 768px) {
-    font-size: clamp(1.5rem, 7vw, 2.8rem);
-  }
-`;
-
-const HeroValues = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 12px;
-  width: min(720px, 100%);
-
-  @media (max-width: 920px) {
-    justify-content: center;
-  }
-
-  @media (max-width: 760px) {
-    gap: 8px;
-  }
-`;
-
-const HeroValueChip = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 18px;
-  border-radius: 6px;
-  border: 1px solid rgba(225, 238, 255, 0.34);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(22, 91, 176, 0.12));
-  color: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 10px 20px rgba(3, 15, 34, 0.16);
-  backdrop-filter: blur(10px);
-  font-size: 0.94rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-`;
-
-const HeroDescription = styled.p`
-  margin: 4px 0 0;
-  color: rgba(248, 251, 255, 0.94);
-  text-shadow: 0 8px 24px rgba(3, 15, 34, 0.44);
-  font-size: clamp(1.16rem, 1.35vw, 1.32rem);
-  line-height: 1.68;
-  max-width: 760px;
-
-  @media (max-width: 920px) {
-    font-size: 1.04rem;
-    line-height: 1.62;
-    max-width: 44ch;
+    font-size: clamp(1.28rem, 5.6vw, 2.18rem);
   }
 `;
 
@@ -291,7 +214,7 @@ const HeroScroll = styled.span`
   position: absolute;
   left: 50%;
   bottom: 38px;
-  color: rgba(255, 255, 255, 0.84);
+  color: rgba(24, 72, 132, 0.76);
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
@@ -306,7 +229,7 @@ const HeroScroll = styled.span`
     bottom: -48px;
     width: 1px;
     height: 38px;
-    background: rgba(255, 255, 255, 0.58);
+    background: rgba(24, 72, 132, 0.38);
     transform: translateX(-50%);
   }
 
@@ -485,21 +408,10 @@ export function HeroSection() {
         <HeroBottomBlend />
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
-            <HeroGuideLine />
-            <HeroKicker>{t(slide.eyebrow, slide.eyebrowEn ?? slide.eyebrow)}</HeroKicker>
             <HeroTitle>SHINHAN</HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>
-            <HeroValues>
-              <HeroValueChip>수출입통관</HeroValueChip>
-              <HeroValueChip>관세·무역 컨설팅</HeroValueChip>
-              <HeroValueChip>물류서비스</HeroValueChip>
-              <HeroValueChip>해외 관세 자문</HeroValueChip>
-            </HeroValues>
-            <HeroDescription>
-              {t(slide.summary, slide.summaryEn ?? slide.summary)}
-            </HeroDescription>
           </HeroCopy>
 
           <HeroControls aria-label={t('대표 이미지 슬라이드', 'Hero image slider')}>

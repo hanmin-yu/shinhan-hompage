@@ -561,12 +561,13 @@ export const HeaderSubnavAnchor = styled.a`
 export const HeaderInner = styled(Container)`
   position: relative;
   z-index: 1;
-  width: calc(100% - 48px);
+  width: calc(100% - 72px);
   display: grid;
   grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   align-items: center;
   gap: 24px;
   min-height: 74px;
+  padding-top: 10px;
 
   @media (max-width: 1200px) {
     gap: 12px;
@@ -578,6 +579,7 @@ export const HeaderInner = styled(Container)`
 
   @media (max-width: 768px) {
     width: calc(100% - 28px);
+    padding-top: 6px;
   }
 
   @media (max-width: 1320px) {
@@ -963,8 +965,8 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   text-align: center;
   color: ${palette.textPrimary};
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.72rem;
-  font-weight: 900;
+  font-size: 1.42rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
   word-break: keep-all;
@@ -973,18 +975,18 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
   @media (max-width: 1680px) {
     gap: 8px;
     padding: 0 14px;
-    font-size: 1.54rem;
+    font-size: 1.28rem;
   }
 
   @media (max-width: 1480px) {
     padding: 0 9px;
-    font-size: 1.32rem;
+    font-size: 1.12rem;
   }
 
   @media (max-width: 1380px) {
     min-height: 78px;
     padding: 0 7px;
-    font-size: 1.02rem;
+    font-size: 0.96rem;
   }
 
   &::before {
@@ -3695,7 +3697,10 @@ export const OfficesMapHint = styled.p`
 
 export const Footer = styled.footer`
   position: relative;
-  background: #18304e;
+  background:
+    radial-gradient(circle at 84% 12%, rgba(126, 183, 235, 0.32), transparent 24%),
+    radial-gradient(circle at 10% 86%, rgba(73, 154, 213, 0.26), transparent 28%),
+    linear-gradient(180deg, #2f7ec6 0%, #236bb3 54%, #1d5fa5 100%);
   color: rgba(255, 255, 255, 0.82);
   overflow: hidden;
 `;
@@ -3705,13 +3710,26 @@ export const FooterInner = styled(Container)`
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 46px 0 54px;
+  gap: 34px;
+  padding: 44px 0 50px;
+`;
+
+export const FooterBody = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(34px, 6vw, 96px);
+
+  @media (max-width: 980px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `;
 
 export const FooterTop = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 24px;
 
   @media (max-width: 900px) {
@@ -3722,8 +3740,10 @@ export const FooterTop = styled.div`
 export const FooterBrandWrap = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const FooterBrandLogo = styled.img`
@@ -3745,7 +3765,7 @@ export const FooterTopAside = styled.div`
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  margin-left: clamp(10px, 1.4vw, 20px);
+  margin-left: auto;
 
   @media (max-width: 900px) {
     width: 100%;
@@ -3780,10 +3800,9 @@ export const FooterBrandSub = styled.span`
 export const FooterPolicyRow = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 16px 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 14px clamp(28px, 4.8vw, 68px);
 `;
 
 export const FooterPolicyLink = styled(Link)`
@@ -3808,6 +3827,7 @@ export const FooterSocialLabel = styled.span`
 export const FooterSocialRow = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
 `;
@@ -3839,7 +3859,9 @@ export const FooterSocialImage = styled.img`
 export const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  flex: 1 1 auto;
+  gap: 36px;
+  min-width: 0;
 `;
 
 export const FooterLine = styled.p`
@@ -3849,14 +3871,49 @@ export const FooterLine = styled.p`
   line-height: 1.8;
 `;
 
+export const FooterInfoGrid = styled.div`
+  display: grid;
+  grid-template-columns: minmax(300px, 1.08fr) repeat(3, minmax(150px, 0.54fr));
+  gap: 18px clamp(54px, 7vw, 116px);
+  align-items: start;
+  justify-content: start;
+  text-align: left;
+
+  @media (max-width: 980px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+`;
+
+export const FooterInfoItem = styled.div`
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+`;
+
 export const FooterLabel = styled.strong`
   color: #ffffff;
   font-weight: 800;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+`;
+
+export const FooterValue = styled.span`
+  color: rgba(230, 239, 255, 0.74);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 `;
 
 export const FooterCopyright = styled.p`
-  margin: 8px 0 0;
+  margin: 0;
   color: rgba(222, 233, 251, 0.48);
   font-size: 0.86rem;
   letter-spacing: 0.02em;
+  text-align: left;
 `;

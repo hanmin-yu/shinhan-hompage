@@ -241,6 +241,12 @@ const CountLine = styled.div`
   }
 `;
 
+const CountLabelStack = styled.span`
+  display: inline-grid;
+  gap: 10px;
+  padding-bottom: 0.22em;
+`;
+
 const CountValue = styled.strong`
   display: inline-flex;
   align-items: flex-start;
@@ -260,7 +266,6 @@ const Plus = styled.span`
 const CountLabel = styled.span`
   position: relative;
   display: inline-flex;
-  padding-bottom: 0.22em;
   color: #30343a;
   font-size: clamp(2.1rem, 4vw, 4rem);
   font-weight: 500;
@@ -281,6 +286,14 @@ const CountLabel = styled.span`
   @media (max-width: 700px) {
     white-space: normal;
   }
+`;
+
+const CountLabelKo = styled.span`
+  color: #1c5aa9;
+  font-size: clamp(1.12rem, 1.8vw, 1.7rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 `;
 
 const Summary = styled.p`
@@ -449,7 +462,10 @@ export function PracticeSection() {
                 <CountNumber key={value} $counting={isCounting}>{value}</CountNumber>
                 <Plus>+</Plus>
               </CountValue>
-              <CountLabel>Professionals</CountLabel>
+              <CountLabelStack>
+                <CountLabelKo>업무분야</CountLabelKo>
+                <CountLabel>Professionals</CountLabel>
+              </CountLabelStack>
             </CountLine>
             <Summary>
               {t(

@@ -26,7 +26,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'SHINHAN REPORT';
+    content: 'SHINHAN NEWSLETTER';
     position: absolute;
     left: 24px;
     top: 26px;
@@ -365,7 +365,7 @@ export function ShinhanUpdatesSection() {
   const carouselItems: CarouselItem[] = newsletterList.map((item, index) => ({
       ...item,
       accent: '#123f85',
-      groupLabel: t('소식지', 'Shinhan Report'),
+      groupLabel: t('소식지', 'Shinhan Newsletter'),
       visual: newsletterVisuals[index % newsletterVisuals.length],
     }));
   const normalizedActiveIndex = carouselItems.length > 0 ? activeIndex % carouselItems.length : 0;
@@ -385,14 +385,14 @@ export function ShinhanUpdatesSection() {
       <Inner>
         <Head>
           <div>
-            <Title>{t('소식지', 'Shinhan Report')}</Title>
+            <Title>{t('소식지', 'Shinhan Newsletter')}</Title>
           </div>
           <HeadActions>
             <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
               <ControlButton type="button" $direction="prev" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')} />
               <ControlButton type="button" $direction="next" aria-label={t('다음 소식', 'Next update')} onClick={() => moveSlide('next')} />
             </Controls>
-            <ViewAll to="/news/newsletter">{t('소식지 전체보기', 'View all Shinhan Reports')}</ViewAll>
+            <ViewAll to="/news/newsletter">{t('소식지 전체보기', 'View all Shinhan Newsletters')}</ViewAll>
           </HeadActions>
         </Head>
 

@@ -29,6 +29,8 @@ const officeMapAliases: Record<string, string> = {
   'sh-food': 'incheon',
 };
 
+const clampCoordinate = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+
 function useCountUp(target: number, duration = 1100) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [value, setValue] = useState(target);
@@ -218,12 +220,12 @@ const Copy = styled.div`
 
 const MapStage = styled.div`
   position: relative;
-  min-height: 720px;
+  min-height: 760px;
   display: grid;
   place-items: center;
 
   @media (max-width: 1180px) {
-    min-height: 700px;
+    min-height: 730px;
   }
 
   @media (max-width: 780px) {
@@ -233,15 +235,15 @@ const MapStage = styled.div`
 
 const MapPanel = styled.div`
   position: relative;
-  width: min(100%, 1040px);
-  aspect-ratio: 1.46;
+  width: min(100%, 1120px);
+  aspect-ratio: 1.42;
 
   &::before {
     content: '';
     position: absolute;
     left: 54%;
     top: 50%;
-    width: min(54%, 610px);
+    width: min(62%, 700px);
     aspect-ratio: 1;
     border-radius: 50%;
     border: 1px solid rgba(70, 181, 209, 0.2);
@@ -263,8 +265,8 @@ const KoreaMapImage = styled.img`
   position: absolute;
   left: 54%;
   top: 50%;
-  width: min(50%, 570px);
-  height: 94%;
+  width: min(58%, 670px);
+  height: 100%;
   object-fit: contain;
   opacity: 0.2;
   filter: grayscale(1) contrast(1.1) drop-shadow(0 18px 26px rgba(20, 62, 121, 0.08));
@@ -285,7 +287,7 @@ const MapHalo = styled.span`
   position: absolute;
   left: 54%;
   top: 50%;
-  width: min(58%, 650px);
+  width: min(66%, 740px);
   aspect-ratio: 1;
   border-radius: 50%;
   background:
@@ -384,6 +386,12 @@ const CountLine = styled.div`
   }
 `;
 
+const CountLabelStack = styled.span`
+  display: inline-grid;
+  gap: 10px;
+  padding-bottom: 0.22em;
+`;
+
 const Count = styled.strong<{ $counting: boolean }>`
   display: inline-block;
   color: #2f3136;
@@ -401,7 +409,6 @@ const Count = styled.strong<{ $counting: boolean }>`
 const CountLabel = styled.span`
   position: relative;
   display: inline-flex;
-  padding-bottom: 0.22em;
   color: #30343a;
   font-size: clamp(2.1rem, 4vw, 4rem);
   font-weight: 500;
@@ -418,6 +425,14 @@ const CountLabel = styled.span`
     background: rgba(39, 111, 207, 0.58);
     z-index: -1;
   }
+`;
+
+const CountLabelKo = styled.span`
+  color: #1c5aa9;
+  font-size: clamp(1.12rem, 1.8vw, 1.7rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 `;
 
 const Summary = styled.p`
@@ -456,8 +471,8 @@ const Tiles = styled.div`
     position: static;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 164px;
-    gap: 12px;
+    grid-auto-rows: 184px;
+    gap: 18px;
     pointer-events: auto;
   }
 `;
@@ -469,9 +484,9 @@ const OfficeTile = styled(Link)<{ x: number; y: number; $active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: clamp(132px, 13.6vw, 186px);
-  min-height: 112px;
-  padding: 13px;
+  width: clamp(150px, 15vw, 214px);
+  min-height: 128px;
+  padding: 15px;
   color: #ffffff;
   text-decoration: none;
   background: #d9e3ed;
@@ -500,7 +515,7 @@ const OfficeTile = styled(Link)<{ x: number; y: number; $active: boolean }>`
     grid-column: auto;
     grid-row: auto;
     width: auto;
-    min-height: 158px;
+    min-height: 178px;
     transform: none;
 
     &:hover {
@@ -562,16 +577,25 @@ export function OfficesSection() {
     x: 33 + office.x * 0.42,
     y: 6 + office.y * 0.88,
   });
+  const getTilePoint = (office: (typeof visibleOffices)[number]) => {
+    const centerX = 54;
+    const centerY = 50;
+
+    return {
+      x: clampCoordinate(centerX + (office.labelX - centerX) * 1.1, 9, 91),
+      y: clampCoordinate(centerY + (office.labelY - centerY) * 1.08, 8, 92),
+    };
+  };
   const getMapOffice = (office: (typeof visibleOffices)[number]) => {
     const mapOfficeId = officeMapAliases[office.id] ?? office.id;
 
     return visibleOffices.find((candidate) => candidate.id === mapOfficeId) ?? office;
   };
-  const getCardAnchor = (office: (typeof visibleOffices)[number], point: { x: number; y: number }) => {
-    const cardHalfWidth = 7.4;
-    const x = office.labelX < point.x ? office.labelX + cardHalfWidth : office.labelX - cardHalfWidth;
+  const getCardAnchor = (tilePoint: { x: number; y: number }, point: { x: number; y: number }) => {
+    const cardHalfWidth = 8.8;
+    const x = tilePoint.x < point.x ? tilePoint.x + cardHalfWidth : tilePoint.x - cardHalfWidth;
 
-    return { x, y: office.labelY };
+    return { x, y: tilePoint.y };
   };
 
   return (
@@ -585,7 +609,10 @@ export function OfficesSection() {
           <Copy>
             <CountLine ref={countRef} aria-label={t(`${visibleOffices.length}개 사무소`, `${visibleOffices.length} offices`)}>
               <Count key={officeCount} $counting={isCounting}>{officeCount}</Count>
-              <CountLabel>Offices</CountLabel>
+              <CountLabelStack>
+                <CountLabelKo>사무소</CountLabelKo>
+                <CountLabel>Offices</CountLabel>
+              </CountLabelStack>
             </CountLine>
             <Summary>
               {t(
@@ -602,7 +629,8 @@ export function OfficesSection() {
                 {connectorOffices.map((office) => {
                   const mapOffice = getMapOffice(office);
                   const point = getStagePoint(mapOffice);
-                  const cardAnchor = getCardAnchor(office, point);
+                  const tilePoint = getTilePoint(office);
+                  const cardAnchor = getCardAnchor(tilePoint, point);
 
                   return (
                     <ConnectorLine
@@ -635,33 +663,37 @@ export function OfficesSection() {
               })}
 
               <Tiles aria-label={t('사무소 목록', 'Office list')}>
-                {visibleOffices.map((office) => (
-                  <OfficeTile
-                    key={office.id}
-                    to={`/offices?office=${office.id}`}
-                    x={office.labelX}
-                    y={office.labelY}
-                    $active={activeOfficeId === office.id}
-                    onMouseEnter={() => setActiveOfficeId(office.id)}
-                    onMouseLeave={() => setActiveOfficeId(null)}
-                    onFocus={() => setActiveOfficeId(office.id)}
-                    onBlur={() => setActiveOfficeId(null)}
-                  >
-                    <OfficeImage
-                      src={officeFallbackImages[office.id] ?? office.image ?? '/hero/homepage/office-blue-sky.jpg'}
-                      alt=""
-                      position={office.imagePosition}
-                      onError={(event) => {
-                        const fallback = officeFallbackImages[office.id] ?? '/hero/homepage/office-blue-sky.jpg';
-                        if (event.currentTarget.src.endsWith(fallback)) return;
-                        event.currentTarget.src = fallback;
-                      }}
-                    />
-                    <OfficeShade aria-hidden="true" />
-                    <OfficeRegion>{t(office.region, office.regionEn)}</OfficeRegion>
-                    <OfficeName>{t(office.label, office.labelEn)}</OfficeName>
-                  </OfficeTile>
-                ))}
+                {visibleOffices.map((office) => {
+                  const tilePoint = getTilePoint(office);
+
+                  return (
+                    <OfficeTile
+                      key={office.id}
+                      to={`/offices?office=${office.id}`}
+                      x={tilePoint.x}
+                      y={tilePoint.y}
+                      $active={activeOfficeId === office.id}
+                      onMouseEnter={() => setActiveOfficeId(office.id)}
+                      onMouseLeave={() => setActiveOfficeId(null)}
+                      onFocus={() => setActiveOfficeId(office.id)}
+                      onBlur={() => setActiveOfficeId(null)}
+                    >
+                      <OfficeImage
+                        src={officeFallbackImages[office.id] ?? office.image ?? '/hero/homepage/office-blue-sky.jpg'}
+                        alt=""
+                        position={office.imagePosition}
+                        onError={(event) => {
+                          const fallback = officeFallbackImages[office.id] ?? '/hero/homepage/office-blue-sky.jpg';
+                          if (event.currentTarget.src.endsWith(fallback)) return;
+                          event.currentTarget.src = fallback;
+                        }}
+                      />
+                      <OfficeShade aria-hidden="true" />
+                      <OfficeRegion>{t(office.region, office.regionEn)}</OfficeRegion>
+                      <OfficeName>{t(office.label, office.labelEn)}</OfficeName>
+                    </OfficeTile>
+                  );
+                })}
               </Tiles>
             </MapPanel>
           </MapStage>

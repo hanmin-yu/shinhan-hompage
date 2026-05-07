@@ -8,31 +8,6 @@ export function SiteFooter() {
   return (
     <S.Footer>
       <S.FooterInner>
-        <S.FooterTop>
-          <S.FooterBrandWrap>
-            <S.FooterBrandLogo src="/brand-header-logo-transparent.png" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} />
-            <S.FooterTopAside>
-              <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
-              <S.FooterSocialRow>
-                {footerSocialLinks.map((item) => (
-                  <S.FooterSocialLink
-                    key={item.id}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
-                  >
-                    <S.FooterSocialImage
-                      src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
-                      alt={tx(item.label)}
-                    />
-                  </S.FooterSocialLink>
-                ))}
-              </S.FooterSocialRow>
-            </S.FooterTopAside>
-          </S.FooterBrandWrap>
-        </S.FooterTop>
-
         <S.FooterPolicyRow>
           {footerLinks.map((item) => (
             <S.FooterPolicyLink key={item.id} to={item.to ?? '/'}>
@@ -41,21 +16,51 @@ export function SiteFooter() {
           ))}
         </S.FooterPolicyRow>
 
-        <S.FooterInfo>
-          <S.FooterLine>
-            <S.FooterLabel>{t('주소', 'Address')}</S.FooterLabel> {t(siteContact.address, siteContact.addressEn)}
-          </S.FooterLine>
-          <S.FooterLine>
-            <S.FooterLabel>T.</S.FooterLabel> {siteContact.phone} | <S.FooterLabel>E.</S.FooterLabel>{' '}
-            {siteContact.email}
-          </S.FooterLine>
-          <S.FooterLine>
-            <S.FooterLabel>{t('사업자등록번호', 'Business Registration No.')}</S.FooterLabel> {siteContact.businessNumber}
-          </S.FooterLine>
-          <S.FooterCopyright>
-            {t('COPYRIGHT © 신한관세법인 ALL RIGHTS RESERVED.', 'COPYRIGHT © SHINHAN CUSTOMS SERVICE INC. ALL RIGHTS RESERVED.')}
-          </S.FooterCopyright>
-        </S.FooterInfo>
+        <S.FooterBody>
+          <S.FooterInfo>
+            <S.FooterInfoGrid>
+              <S.FooterInfoItem>
+                <S.FooterLabel>{t('주소', 'Address')}</S.FooterLabel>
+                <S.FooterValue>{t(siteContact.address, siteContact.addressEn)}</S.FooterValue>
+              </S.FooterInfoItem>
+              <S.FooterInfoItem>
+                <S.FooterLabel>{t('대표전화', 'Tel')}</S.FooterLabel>
+                <S.FooterValue>{siteContact.phone}</S.FooterValue>
+              </S.FooterInfoItem>
+              <S.FooterInfoItem>
+                <S.FooterLabel>{t('이메일', 'Email')}</S.FooterLabel>
+                <S.FooterValue>{siteContact.email}</S.FooterValue>
+              </S.FooterInfoItem>
+              <S.FooterInfoItem>
+                <S.FooterLabel>{t('사업자등록번호', 'Business Registration No.')}</S.FooterLabel>
+                <S.FooterValue>{siteContact.businessNumber}</S.FooterValue>
+              </S.FooterInfoItem>
+            </S.FooterInfoGrid>
+            <S.FooterCopyright>
+              {t('COPYRIGHT © 신한관세법인 ALL RIGHTS RESERVED.', 'COPYRIGHT © SHINHAN CUSTOMS SERVICE INC. ALL RIGHTS RESERVED.')}
+            </S.FooterCopyright>
+          </S.FooterInfo>
+
+          <S.FooterTopAside>
+            <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
+            <S.FooterSocialRow>
+              {footerSocialLinks.map((item) => (
+                <S.FooterSocialLink
+                  key={item.id}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
+                >
+                  <S.FooterSocialImage
+                    src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
+                    alt={tx(item.label)}
+                  />
+                </S.FooterSocialLink>
+              ))}
+            </S.FooterSocialRow>
+          </S.FooterTopAside>
+        </S.FooterBody>
       </S.FooterInner>
     </S.Footer>
   );

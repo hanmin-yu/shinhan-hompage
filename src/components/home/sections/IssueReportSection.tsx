@@ -87,6 +87,15 @@ const Title = styled.h2`
   letter-spacing: 0.04em;
 `;
 
+const TitleKo = styled.span`
+  display: block;
+  color: #1c5aa9;
+  font-size: clamp(1.08rem, 1.8vw, 1.62rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+`;
+
 const ViewAll = styled.a`
   display: inline-flex;
   align-items: center;
@@ -267,6 +276,7 @@ export function IssueReportSection() {
         <Inner>
           <Head>
             <div>
+              <TitleKo>무역 동향</TitleKo>
               <Title>Trade Insights</Title>
             </div>
             <ViewAll href="/news/issue-report">{t('Trade Insights 전체보기', 'View all Trade Insights')}</ViewAll>
