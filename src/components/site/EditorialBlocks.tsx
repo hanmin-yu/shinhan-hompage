@@ -35,19 +35,19 @@ export const TwoColumn = styled(P.PageContainer)`
 export const Eyebrow = styled.span<{ $light?: boolean }>`
   color: ${({ $light }) => ($light ? 'rgba(221, 232, 247, 0.72)' : '#52647c')};
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;
 
 export const Title = styled.h1<{ $light?: boolean }>`
-  max-width: 1120px;
+  max-width: 1040px;
   margin: 0;
   color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2.64rem, 6.1vw, 6rem);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  font-size: clamp(2.24rem, 5.2vw, 5.1rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 
   @media (max-width: 640px) {
@@ -156,14 +156,16 @@ export const FactValue = styled.strong`
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 export const FactLabel = styled.span`
   color: #687385;
   font-size: 1.02rem;
   line-height: 1.58;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 export const LinePanel = styled.div`

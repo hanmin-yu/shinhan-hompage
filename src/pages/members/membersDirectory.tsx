@@ -248,18 +248,6 @@ const Division = styled.p`
   line-height: 1.45;
 `;
 
-const Practice = styled.p`
-  display: -webkit-box;
-  margin: 20px 0 0;
-  overflow: hidden;
-  color: #3f4c5e;
-  font-size: 1.04rem;
-  font-weight: 500;
-  line-height: 1.68;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-`;
-
 const ContactList = styled.div`
   display: grid;
   gap: 8px;
@@ -276,7 +264,8 @@ const ContactItem = styled.p`
   font-size: 0.94rem;
   font-weight: 650;
   line-height: 1.45;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 
   span {
     flex: 0 0 44px;
@@ -333,7 +322,7 @@ const PhotoPanel = styled.div`
 const PortraitFrame = styled.div`
   position: absolute;
   right: 8px;
-  bottom: 0;
+  top: 50%;
   z-index: 2;
   width: 126px;
   height: 184px;
@@ -346,6 +335,7 @@ const PortraitFrame = styled.div`
   box-shadow:
     0 16px 28px rgba(19, 58, 105, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  transform: translateY(-50%);
 
   @media (max-width: 560px) {
     right: 0;
@@ -359,7 +349,7 @@ const Portrait = styled.img<{ $fit?: 'contain' | 'cover' }>`
   height: 100%;
   display: block;
   object-fit: ${({ $fit }) => $fit ?? 'cover'};
-  object-position: 50% 20%;
+  object-position: 50% 18%;
   filter: saturate(0.98) contrast(1.01);
 `;
 
@@ -411,7 +401,6 @@ export function ProfessionalCardGrid({ members, emptyMessage }: ProfessionalCard
                 {member.department ? <Division>{tx(member.department)}</Division> : null}
               </RoleStack>
             </TitleRow>
-            {member.practice ? <Practice>{tx(member.practice)}</Practice> : null}
             <ContactList>
               {member.phone ? (
                 <ContactItem>

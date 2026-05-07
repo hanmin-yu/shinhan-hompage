@@ -271,26 +271,6 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     ],
   },
   {
-    id: 'quarantine-requirements',
-    heading: '중분류',
-    headingEn: 'Category',
-    title: '검역/요건',
-    titleEn: 'Quarantine / Requirements',
-    primaryHref: '/services/quarantine',
-    description: '검역, 신고, 인증, 허가, 표시기준까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
-    descriptionEn: 'We review quarantine, declarations, certifications, permits, and labeling standards together to reduce import-stage delays.',
-    image: '/hero/menu-services-quarantine-wine-ai.png',
-    items: [
-      {
-        label: '검역·요건',
-        labelEn: 'Quarantine / Requirements',
-        href: '/services/quarantine',
-        parentTitle: '검역/요건',
-        parentTitleEn: 'Quarantine / Requirements',
-      },
-    ],
-  },
-  {
     id: 'consulting',
     heading: '중분류',
     headingEn: 'Category',
@@ -338,6 +318,26 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
         href: '/services/consulting/trade-consulting',
         parentTitle: '컨설팅',
         parentTitleEn: 'Consulting',
+      },
+    ],
+  },
+  {
+    id: 'quarantine-requirements',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '검역/요건',
+    titleEn: 'Quarantine / Requirements',
+    primaryHref: '/services/quarantine',
+    description: '검역, 신고, 인증, 허가, 표시기준까지 함께 검토해 수입 단계의 지연과 보완 리스크를 줄입니다.',
+    descriptionEn: 'We review quarantine, declarations, certifications, permits, and labeling standards together to reduce import-stage delays.',
+    image: '/hero/menu-services-quarantine-wine-ai.png',
+    items: [
+      {
+        label: '검역·요건',
+        labelEn: 'Quarantine / Requirements',
+        href: '/services/quarantine',
+        parentTitle: '검역/요건',
+        parentTitleEn: 'Quarantine / Requirements',
       },
     ],
   },
@@ -703,7 +703,7 @@ const foreignExchangeContacts: ServiceContactPoint[] = [
 const customsAuditImages: ServiceDocumentImage[] = [
   {
     src: '/services/docs/customs-audit/image1.png',
-    alt: '관세조사 주요 조사 분야 도식',
+    alt: '관세조사 주요 조사 분야',
     caption: '관세평가, 품목분류, 관세환급, 감면, 외국환거래, 통관요건, 보세화물 관리 등 관세조사 주요 쟁점을 한눈에 보여주는 자료입니다.',
   },
 ];
@@ -749,12 +749,12 @@ const penaltyInvestigationContacts: ServiceContactPoint[] = [
 const penaltyInvestigationImages: ServiceDocumentImage[] = [
   {
     src: '/services/docs/penalty-investigation/image1.png',
-    alt: '범칙조사 세관조사 및 통고처분 절차 도식',
-    caption: '세관조사 단계와 통고처분 흐름을 정리한 참고 도식입니다.',
+    alt: '범칙조사 세관조사 및 통고처분 절차',
+    caption: '세관조사 단계와 통고처분 흐름을 정리한 자료입니다.',
   },
   {
     src: '/services/docs/penalty-investigation/image2.png',
-    alt: '범칙조사 검찰조사 및 형사처분 절차 도식',
+    alt: '범칙조사 검찰조사 및 형사처분 절차',
     caption: '검찰조사 이후 불기소, 공판기소, 약식기소로 이어지는 형사 절차를 정리한 자료입니다.',
   },
 ];
@@ -764,8 +764,8 @@ const vietnamSections: ServiceDetailSection[] = [
     heading: '개요',
     headingEn: 'Overview',
     body: [
-      '한국은 누적 투자 기준 베트남 최대 외국인 투자국으로, 약 900억 달러 이상의 투자와 약 1만여 개의 기업이 현지에 진출해 있습니다. 신한관세법인 베트남은 이러한 한·베트남 경제 협력의 최전선에서 한국 기업의 베트남 세관 리스크를 선제적으로 관리하고, 실질적인 비용 절감과 컴플라이언스 강화를 지원하기 위해 2019년 하노이에 설립되었습니다.',
-      '베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 베트남 원산지 및 수책관리 시스템 컨설팅까지 종합적인 서비스를 제공합니다.',
+      '신한관세법인 베트남(Shinhan Customs Vietnam)은 2019년 하노이에 설립된 베트남 관세총국 인가 관세법인으로, 한국 관세사와 베트남 관세사·컨설턴트가 함께 현지 한국 기업의 세관 리스크를 관리합니다.',
+      '베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 수책관리, FTA, 관세심사, 상시자문까지 종합적인 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.',
     ],
   },
   {
@@ -793,7 +793,7 @@ const vietnamSections: ServiceDetailSection[] = [
     heading: '4. 관세심사',
     headingEn: 'Key Service 4. Customs Review',
     body: [
-      '수입신고일로부터 5년 이내에 수입신고 내역의 적정성에 대해 관세 사후조사를 할 수 있습니다. 사전에 세관 조사 주요 항목에 대해 점검을 하며, 기업의 관세 업무 현황에 대한 면밀한 분석으로 세관의 제기 이슈에 대응 논리를 수립합니다.',
+      '수입신고일로부터 5년 이내에 수입신고내역의 적정성에 대해 관세 사후조사를 할 수 있습니다. 사전에 세관 조사 주요항목에 대해 점검을 하며, 기업의 관세 업무 현황에 대한 면밀한 분석으로 세관의 제기 이슈에 대응 논리를 수립합니다.',
     ],
   },
   {
@@ -996,7 +996,6 @@ const aeoSections: ServiceDetailSection[] = [
   {
     heading: 'AEO 컨설팅 전략',
     headingEn: 'AEO Consulting Strategy',
-    body: ['신규인증·갱신심사 전략과 사후관리 전략은 아래 도식으로 정리했습니다.'],
   },
 ];
 
@@ -1008,8 +1007,8 @@ const aeoContacts: ServiceContactPoint[] = [
 const aeoImages: ServiceDocumentImage[] = [
   {
     src: '/services/docs/aeo/image1.png',
-    alt: 'AEO 신규인증 및 갱신심사 전략 도식',
-    caption: '현황진단부터 현장심사 대응, 심의위원회 준비까지 신규인증·갱신심사 전략을 정리한 도식입니다.',
+    alt: 'AEO 신규인증 및 갱신심사 전략',
+    caption: '현황진단부터 현장심사 대응, 심의위원회 준비까지 신규인증·갱신심사 전략을 정리한 자료입니다.',
   },
 ];
 
@@ -1466,7 +1465,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     heroImage: '/hero/menu-services-specialized-ai.png',
     heroImageAlt: '베트남 현지 관세 컨설팅',
     overview:
-      '신한관세법인 베트남(Shinhan Customs Vietnam)은 2019년 하노이에 설립된 베트남 관세총국 인가 관세법인으로, 한국 관세사와 베트남 관세사·컨설턴트가 함께 현지 한국 기업의 세관 리스크를 관리합니다. 베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 수책관리, FTA, 관세심사, 상시 자문까지 종합적인 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.',
+      '신한관세법인 베트남(Shinhan Customs Vietnam)은 2019년 하노이에 설립된 베트남 관세총국 인가 관세법인으로, 한국 관세사와 베트남 관세사·컨설턴트가 함께 현지 한국 기업의 세관 리스크를 관리합니다. 베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 수책관리, FTA, 관세심사, 상시자문까지 종합적인 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.',
     scope: [
       '수책(Liquidation) 관리 및 월별 컨설팅',
       'FTA 컨설팅 및 원산지증명서 발급',

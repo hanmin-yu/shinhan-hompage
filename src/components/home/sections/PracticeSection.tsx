@@ -140,7 +140,7 @@ function useCountUp(target: number, duration = 1200) {
 const Section = styled.section`
   position: relative;
   min-height: 760px;
-  padding: 104px 0 96px;
+  padding: 78px 0 96px;
   overflow: hidden;
   background:
     linear-gradient(126deg, rgba(238, 246, 252, 0.88) 0%, rgba(255, 255, 255, 0.6) 44%, rgba(232, 243, 247, 0.64) 100%),
@@ -148,15 +148,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'PRACTICE';
-    position: absolute;
-    left: 24px;
-    top: 22px;
-    color: rgba(15, 35, 62, 0.05);
-    font-size: clamp(4.6rem, 10vw, 10.5rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0;
+    content: none;
   }
 
   &::after {
@@ -225,14 +217,55 @@ const Inner = styled(S.Container)`
 `;
 
 const CountPanel = styled.div`
+  align-self: start;
   display: grid;
-  gap: 28px;
+  gap: 38px;
+`;
+
+const SectionTitleBlock = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 820px;
+  min-height: clamp(76px, 9vw, 128px);
+  overflow: visible;
+`;
+
+const SectionTitleGhost = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(15, 35, 62, 0.062);
+  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+
+  @media (max-width: 640px) {
+    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    letter-spacing: 0.04em;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #222a34;
+  font-size: clamp(2.05rem, 4.6vw, 4.35rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
 `;
 
 const CountLine = styled.div`
   display: flex;
   align-items: flex-end;
-  gap: 22px;
+  gap: 16px;
   color: #2c2e33;
 
   @media (max-width: 700px) {
@@ -251,7 +284,7 @@ const CountValue = styled.strong`
   display: inline-flex;
   align-items: flex-start;
   color: #2f3136;
-  font-size: clamp(5.8rem, 14vw, 10.4rem);
+  font-size: clamp(3.2rem, 8vw, 6.2rem);
   font-weight: 800;
   line-height: 0.84;
   letter-spacing: 0;
@@ -267,9 +300,10 @@ const CountLabel = styled.span`
   position: relative;
   display: inline-flex;
   color: #30343a;
-  font-size: clamp(2.1rem, 4vw, 4rem);
-  font-weight: 500;
-  line-height: 0.98;
+  font-size: clamp(1.1rem, 1.9vw, 1.62rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   white-space: nowrap;
 
   &::after {
@@ -286,14 +320,6 @@ const CountLabel = styled.span`
   @media (max-width: 700px) {
     white-space: normal;
   }
-`;
-
-const CountLabelKo = styled.span`
-  color: #1c5aa9;
-  font-size: clamp(1.12rem, 1.8vw, 1.7rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
 `;
 
 const Summary = styled.p`
@@ -457,13 +483,16 @@ export function PracticeSection() {
       <Section id="practice">
         <Inner data-reveal>
           <CountPanel ref={ref}>
+            <SectionTitleBlock>
+              <SectionTitleGhost aria-hidden="true">PRACTICE AREAS</SectionTitleGhost>
+              <SectionTitle>업무 분야</SectionTitle>
+            </SectionTitleBlock>
             <CountLine aria-label={t('100명 이상의 전문 인력', 'More than 100 professionals')}>
               <CountValue>
                 <CountNumber key={value} $counting={isCounting}>{value}</CountNumber>
                 <Plus>+</Plus>
               </CountValue>
               <CountLabelStack>
-                <CountLabelKo>업무분야</CountLabelKo>
                 <CountLabel>Professionals</CountLabel>
               </CountLabelStack>
             </CountLine>

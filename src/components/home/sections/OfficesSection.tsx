@@ -104,7 +104,7 @@ function useCountUp(target: number, duration = 1100) {
 const Section = styled.section`
   position: relative;
   min-height: 860px;
-  padding: 96px 0 108px;
+  padding: 72px 0 108px;
   overflow: hidden;
   background:
     linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
@@ -112,16 +112,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'OFFICES';
-    position: absolute;
-    left: 24px;
-    top: 26px;
-    color: rgba(15, 35, 62, 0.055);
-    font-size: clamp(3.8rem, 8vw, 9.2rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
+    content: none;
   }
 
   &::after {
@@ -181,7 +172,7 @@ const MapLabel = styled.span`
   bottom: clamp(24px, 6vw, 78px);
   z-index: 0;
   color: rgba(15, 43, 89, 0.045);
-  font-size: clamp(4rem, 9vw, 9.2rem);
+  font-size: clamp(2.2rem, 5vw, 5rem);
   font-weight: 900;
   line-height: 0.86;
   letter-spacing: 0.08em;
@@ -209,13 +200,53 @@ const Inner = styled(S.Container)`
 const Copy = styled.div`
   display: grid;
   width: min(100%, 440px);
-  gap: 24px;
-  padding-top: clamp(28px, 5vw, 70px);
+  gap: 38px;
+  padding-top: 0;
 
   @media (max-width: 1080px) {
     width: min(100%, 620px);
     padding-top: 0;
   }
+`;
+
+const SectionTitleBlock = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 720px;
+  min-height: clamp(76px, 9vw, 128px);
+  overflow: visible;
+`;
+
+const SectionTitleGhost = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(15, 35, 62, 0.062);
+  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+
+  @media (max-width: 640px) {
+    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    letter-spacing: 0.04em;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #222a34;
+  font-size: clamp(2.05rem, 4.6vw, 4.35rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
 `;
 
 const MapStage = styled.div`
@@ -377,7 +408,7 @@ const ConnectorLine = styled.line<{ $active: boolean; accent: string }>`
 const CountLine = styled.div`
   display: flex;
   align-items: flex-end;
-  gap: 22px;
+  gap: 16px;
   color: #2c2e33;
 
   @media (max-width: 700px) {
@@ -395,7 +426,7 @@ const CountLabelStack = styled.span`
 const Count = styled.strong<{ $counting: boolean }>`
   display: inline-block;
   color: #2f3136;
-  font-size: clamp(5.8rem, 13vw, 10rem);
+  font-size: clamp(3.2rem, 8vw, 6.2rem);
   font-weight: 800;
   line-height: 0.84;
   letter-spacing: 0;
@@ -410,9 +441,10 @@ const CountLabel = styled.span`
   position: relative;
   display: inline-flex;
   color: #30343a;
-  font-size: clamp(2.1rem, 4vw, 4rem);
-  font-weight: 500;
-  line-height: 0.98;
+  font-size: clamp(1.1rem, 1.9vw, 1.62rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   white-space: nowrap;
 
   &::after {
@@ -425,14 +457,6 @@ const CountLabel = styled.span`
     background: rgba(39, 111, 207, 0.58);
     z-index: -1;
   }
-`;
-
-const CountLabelKo = styled.span`
-  color: #1c5aa9;
-  font-size: clamp(1.12rem, 1.8vw, 1.7rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
 `;
 
 const Summary = styled.p`
@@ -607,10 +631,13 @@ export function OfficesSection() {
         <MapLabel aria-hidden="true">NETWORK</MapLabel>
         <Inner data-reveal>
           <Copy>
+            <SectionTitleBlock>
+              <SectionTitleGhost aria-hidden="true">OFFICES</SectionTitleGhost>
+              <SectionTitle>사무소</SectionTitle>
+            </SectionTitleBlock>
             <CountLine ref={countRef} aria-label={t(`${visibleOffices.length}개 사무소`, `${visibleOffices.length} offices`)}>
               <Count key={officeCount} $counting={isCounting}>{officeCount}</Count>
               <CountLabelStack>
-                <CountLabelKo>사무소</CountLabelKo>
                 <CountLabel>Offices</CountLabel>
               </CountLabelStack>
             </CountLine>

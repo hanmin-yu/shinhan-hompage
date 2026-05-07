@@ -68,8 +68,8 @@ const VisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.6rem, 5vw, 4.9rem);
-  font-weight: 800;
+  font-size: clamp(2.25rem, 4.2vw, 4.05rem);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
   text-align: center;
@@ -147,8 +147,8 @@ const SectionNavLink = styled(Link)`
   padding: 0 clamp(18px, 2vw, 30px);
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
-  font-size: 1.12rem;
-  font-weight: 900;
+  font-size: 0.9rem;
+  font-weight: 600;
   letter-spacing: 0;
   white-space: nowrap;
 

@@ -41,15 +41,15 @@ const SecondaryMeta = styled.div`
 const SecondaryLabel = styled.span`
   color: #52647c;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
 const SecondaryTitle = styled.strong`
   color: #172337;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 0.9rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 
@@ -76,8 +76,8 @@ const SecondaryLink = styled(Link)<{ $active: boolean }>`
   border: 1px solid ${({ $active }) => ($active ? '#121c2b' : '#d5dbe4')};
   background: ${({ $active }) => ($active ? '#121c2b' : '#ffffff')};
   color: ${({ $active }) => ($active ? '#ffffff' : '#4f5661')};
-  font-size: 0.84rem;
-  font-weight: 800;
+  font-size: 0.78rem;
+  font-weight: 600;
   letter-spacing: 0;
   transition:
     border-color 0.18s ease,

@@ -260,7 +260,8 @@ const InfoValue = styled.span`
   font-size: 1.04rem;
   font-weight: 600;
   line-height: 1.56;
-  word-break: break-word;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const InfoValueLink = styled.a`
@@ -268,7 +269,8 @@ const InfoValueLink = styled.a`
   font-size: 1.04rem;
   font-weight: 800;
   line-height: 1.56;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 `;
 
 const ActionRow = styled.div`

@@ -87,6 +87,10 @@ export const GlobalStyle = () => (
       }
 
       p,
+      span,
+      strong,
+      em,
+      small,
       h1,
       h2,
       h3,
@@ -97,7 +101,9 @@ export const GlobalStyle = () => (
       dt,
       dd,
       blockquote,
-      figcaption {
+      figcaption,
+      a,
+      button {
         ${wordSafeWrap};
       }
 
@@ -296,18 +302,21 @@ export const UtilityLink = styled.a`
   }
 `;
 
-export const Header = styled.header<{ $overHero?: boolean }>`
+export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }>`
+  --site-header-height: 98px;
   position: ${({ $overHero }) => ($overHero ? 'absolute' : 'sticky')};
   top: 0;
   left: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
   right: ${({ $overHero }) => ($overHero ? 0 : 'auto')};
-  z-index: 25;
-  background: ${({ $overHero }) =>
-    $overHero
+  width: 100%;
+  z-index: 12000;
+  margin-bottom: 0;
+  background: ${({ $overHero, $scrolled }) =>
+    $overHero && !$scrolled
       ? 'transparent'
       : '#ffffff'};
-  border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'transparent' : '#e5ebf3')};
-  box-shadow: ${({ $overHero }) => ($overHero ? 'none' : '0 10px 28px rgba(18, 36, 60, 0.06)')};
+  border-bottom: 1px solid ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'transparent' : '#e5ebf3')};
+  box-shadow: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'none' : '0 10px 28px rgba(18, 36, 60, 0.06)')};
   backdrop-filter: none;
   overflow: visible;
   isolation: isolate;
@@ -317,15 +326,62 @@ export const Header = styled.header<{ $overHero?: boolean }>`
     box-shadow 0.24s ease,
     backdrop-filter 0.24s ease;
 
+  ${({ $scrolled }) =>
+    $scrolled
+      ? `
+    background: #ffffff;
+    border-bottom-color: #e5ebf3;
+    box-shadow: 0 10px 28px rgba(18, 36, 60, 0.06);
+
+    &::before {
+      opacity: 0;
+      height: 0;
+    }
+
+    > div > a:first-of-type span[data-brand-word='true'] {
+      color: ${palette.blueDeep};
+      text-shadow: none;
+    }
+
+    > div > a:first-of-type span[data-brand-established='true'],
+    > div > a:first-of-type span[data-brand-sub='true'] {
+      color: #5d7493;
+      text-shadow: none;
+    }
+
+    nav > div > a,
+    a[href='/recruit'],
+    button,
+    a[aria-label] {
+      color: ${palette.textPrimary};
+      text-shadow: none;
+    }
+
+    nav > div > a:hover,
+    nav > div > a[data-active='true'] {
+      color: ${palette.blueDeep};
+    }
+
+    nav > div > a::before {
+      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+      box-shadow: none;
+    }
+
+    div {
+      border-left-color: rgba(70, 102, 144, 0.22);
+    }
+  `
+      : ''}
+
   > div > a:first-of-type span[data-brand-established='true'],
   > div > a:first-of-type span[data-brand-word='true'],
   > div > a:first-of-type span[data-brand-sub='true'] {
-    color: ${({ $overHero }) => ($overHero ? '#ffffff' : palette.blueDeep)};
+    color: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? '#ffffff' : palette.blueDeep)};
   }
 
   > div > a:first-of-type span[data-brand-established='true'],
   > div > a:first-of-type span[data-brand-sub='true'] {
-    color: ${({ $overHero }) => ($overHero ? 'rgba(255, 255, 255, 0.92)' : '#5d7493')};
+    color: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'rgba(255, 255, 255, 0.92)' : '#5d7493')};
   }
 
   &::before {
@@ -334,10 +390,10 @@ export const Header = styled.header<{ $overHero?: boolean }>`
     left: 0;
     right: 0;
     top: 0;
-    height: ${({ $overHero }) => ($overHero ? '148px' : '0')};
+    height: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? '148px' : '0')};
     pointer-events: none;
     z-index: 0;
-    opacity: ${({ $overHero }) => ($overHero ? 1 : 0)};
+    opacity: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 1 : 0)};
     background: linear-gradient(
       180deg,
       rgba(0, 51, 116, 0.86) 0%,
@@ -350,8 +406,8 @@ export const Header = styled.header<{ $overHero?: boolean }>`
       height 0.24s ease;
   }
 
-  ${({ $overHero }) =>
-    $overHero
+  ${({ $overHero, $scrolled }) =>
+    $overHero && !$scrolled
       ? `
     > div > a:first-of-type strong {
       color: rgba(255, 255, 255, 0.98);
@@ -488,10 +544,17 @@ export const Header = styled.header<{ $overHero?: boolean }>`
       : ''}
 
   @media (max-width: 768px) {
+    --site-header-height: 72px;
     top: 0;
-    background: ${({ $overHero }) =>
-      $overHero ? 'linear-gradient(180deg, rgba(3, 15, 34, 0.42), rgba(3, 15, 34, 0.12))' : '#ffffff'};
-    border-bottom: 1px solid ${({ $overHero }) => ($overHero ? 'rgba(255, 255, 255, 0.1)' : '#e5ebf3')};
+    background: ${({ $overHero, $scrolled }) =>
+      $overHero && !$scrolled
+        ? 'linear-gradient(180deg, rgba(3, 15, 34, 0.42), rgba(3, 15, 34, 0.12))'
+        : '#ffffff'};
+    border-bottom: 1px solid ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'rgba(255, 255, 255, 0.1)' : '#e5ebf3')};
+  }
+
+  @media (min-width: 769px) and (max-width: 1320px) {
+    --site-header-height: 92px;
   }
 `;
 
@@ -907,7 +970,8 @@ export const NavItem = styled.div`
   min-height: 90px;
 
   &:hover > div,
-  &:focus-within > div {
+  &:focus-within > div,
+  > div[data-open='true'] {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -1132,8 +1196,8 @@ export const MegaMenu = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  top: 98px;
-  z-index: 24;
+  top: calc(var(--site-header-height, 98px) - 1px);
+  z-index: 12010;
   min-height: 392px;
   padding: 42px 0 50px;
   opacity: 0;
@@ -1150,6 +1214,48 @@ export const MegaMenu = styled.div`
   border-bottom: 1px solid rgba(15, 54, 112, 0.12);
   box-shadow: 0 24px 44px rgba(3, 15, 34, 0.1);
   backdrop-filter: none;
+
+  &[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  &[data-open='true']::before {
+    transform: translateX(0);
+  }
+
+  &[data-open='true']::after {
+    opacity: 0.7;
+    transform: translate3d(0, 0, 0);
+  }
+
+  &[data-open='true'] [data-mega-title],
+  &[data-open='true'] [data-mega-link] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0);
+  }
+
+  &[data-open='true'] [data-mega-link]:nth-of-type(1) {
+    transition-delay: 0.08s;
+  }
+
+  &[data-open='true'] [data-mega-link]:nth-of-type(2) {
+    transition-delay: 0.12s;
+  }
+
+  &[data-open='true'] [data-mega-link]:nth-of-type(3) {
+    transition-delay: 0.16s;
+  }
+
+  &[data-open='true'] [data-mega-link]:nth-of-type(4) {
+    transition-delay: 0.2s;
+  }
+
+  &[data-open='true'] [data-mega-link]:nth-of-type(n + 5) {
+    transition-delay: 0.24s;
+  }
 
   [data-mega-suppressed='true'] & {
     opacity: 0 !important;
@@ -1213,7 +1319,7 @@ export const MegaMenu = styled.div`
   }
 
   @media (max-width: 1320px) {
-    top: 92px;
+    top: calc(var(--site-header-height, 92px) - 1px);
   }
 `;
 
@@ -3697,12 +3803,10 @@ export const OfficesMapHint = styled.p`
 
 export const Footer = styled.footer`
   position: relative;
-  background:
-    radial-gradient(circle at 84% 12%, rgba(126, 183, 235, 0.32), transparent 24%),
-    radial-gradient(circle at 10% 86%, rgba(73, 154, 213, 0.26), transparent 28%),
-    linear-gradient(180deg, #2f7ec6 0%, #236bb3 54%, #1d5fa5 100%);
-  color: rgba(255, 255, 255, 0.82);
+  background: #ffffff;
+  color: #6b7788;
   overflow: hidden;
+  border-top: 1px solid #dbe3ee;
 `;
 
 export const FooterInner = styled(Container)`
@@ -3712,6 +3816,7 @@ export const FooterInner = styled(Container)`
   flex-direction: column;
   gap: 34px;
   padding: 44px 0 50px;
+  border-bottom: 1px solid #e5ebf3;
 `;
 
 export const FooterBody = styled.div`
@@ -3808,7 +3913,7 @@ export const FooterPolicyRow = styled.div`
 export const FooterPolicyLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  color: rgba(255, 255, 255, 0.9);
+  color: #173b73;
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1;
@@ -3817,7 +3922,7 @@ export const FooterPolicyLink = styled(Link)`
 `;
 
 export const FooterSocialLabel = styled.span`
-  color: rgba(255, 255, 255, 0.64);
+  color: #7b8797;
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -3866,7 +3971,7 @@ export const FooterInfo = styled.div`
 
 export const FooterLine = styled.p`
   margin: 0;
-  color: rgba(230, 239, 255, 0.74);
+  color: #6b7788;
   font-size: 0.92rem;
   line-height: 1.8;
 `;
@@ -3896,7 +4001,7 @@ export const FooterInfoItem = styled.div`
 `;
 
 export const FooterLabel = styled.strong`
-  color: #ffffff;
+  color: #173b73;
   font-weight: 800;
   font-size: 0.82rem;
   line-height: 1.2;
@@ -3904,15 +4009,16 @@ export const FooterLabel = styled.strong`
 `;
 
 export const FooterValue = styled.span`
-  color: rgba(230, 239, 255, 0.74);
+  color: #6b7788;
   font-size: 0.92rem;
   line-height: 1.7;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 export const FooterCopyright = styled.p`
   margin: 0;
-  color: rgba(222, 233, 251, 0.48);
+  color: #9aa4b2;
   font-size: 0.86rem;
   letter-spacing: 0.02em;
   text-align: left;

@@ -108,8 +108,8 @@ const IntroTitle = styled.h1`
   max-width: min(100%, 920px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.54rem, 5vw, 4.9rem);
-  font-weight: 800;
+  font-size: clamp(2.25rem, 4.2vw, 4.05rem);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
   text-align: center;
@@ -118,7 +118,7 @@ const IntroTitle = styled.h1`
     0 2px 8px rgba(4, 12, 24, 0.22);
 
   @media (max-width: 640px) {
-    font-size: clamp(2.2rem, 11vw, 3.8rem);
+    font-size: clamp(2rem, 9.6vw, 3.35rem);
   }
 `;
 
@@ -198,8 +198,8 @@ const TabLink = styled(Link)`
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
   font-family: 'Noto Sans KR', 'NanumSquare', sans-serif;
-  font-size: 1.12rem;
-  font-weight: 900;
+  font-size: 0.9rem;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1;
   position: relative;
@@ -243,7 +243,7 @@ const TabLink = styled(Link)`
     min-height: 52px;
     padding: 0 18px;
     min-width: auto;
-    font-size: 0.98rem;
+    font-size: 0.86rem;
   }
 `;
 

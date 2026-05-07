@@ -33,7 +33,7 @@ const expertCategories = [
 type ExpertCategory = (typeof expertCategories)[number];
 
 const expertAssignments = {
-  수출입통관: ['차미정', '조나현', '오규태', '손성곤'],
+  수출입통관: ['차미정', '조나현', '손성곤', '오규태'],
   환급: ['김학현', '나지원'],
   'FTA/CO': ['박성현', '오보람', '강민지', '조석현'],
   AEO: ['홍동엽', '강현우'],

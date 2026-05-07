@@ -61,8 +61,8 @@ const HeroVisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.6rem, 5vw, 4.9rem);
-  font-weight: 800;
+  font-size: clamp(2.25rem, 4.2vw, 4.05rem);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
   text-align: center;
@@ -144,8 +144,8 @@ const AboutNavLink = styled(Link)`
   padding: 0 clamp(18px, 2vw, 30px);
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
-  font-size: 1.12rem;
-  font-weight: 900;
+  font-size: 0.9rem;
+  font-weight: 600;
   letter-spacing: 0;
   white-space: nowrap;
 
@@ -187,7 +187,7 @@ const HeroStatement = styled(P.PageContainer)`
 const HeroEyebrow = styled.span`
   color: #52647c;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;
@@ -196,10 +196,10 @@ const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
   color: #172337;
-  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  font-size: clamp(2.24rem, 5.2vw, 5.1rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   text-shadow: none;
 
@@ -280,14 +280,16 @@ const HeroFactValue = styled.strong`
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const HeroFactLabel = styled.span`
   color: #687385;
   font-size: 1.02rem;
   line-height: 1.58;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`

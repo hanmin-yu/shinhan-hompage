@@ -15,7 +15,9 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
   const overHero = !pathname.startsWith('/admin');
+  const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
+  const [activeMegaMenuId, setActiveMegaMenuId] = useState<string | null>(null);
 
   const isActive = (path?: string) => {
     if (!path) return false;
@@ -23,6 +25,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   };
 
   const closeMegaMenu = () => {
+    setActiveMegaMenuId(null);
     setMegaMenuSuppressed(true);
 
     if (document.activeElement instanceof HTMLElement) {
@@ -30,14 +33,40 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
     }
   };
 
-  const handlePrimaryNavClick = (event: MouseEvent<HTMLAnchorElement>, hasChildren: boolean) => {
+  const openMegaMenu = (itemId: string, hasChildren: boolean) => {
+    if (!hasChildren) {
+      setActiveMegaMenuId(null);
+      return;
+    }
+
+    setMegaMenuSuppressed(false);
+    setActiveMegaMenuId(itemId);
+  };
+
+  const handlePrimaryNavClick = (event: MouseEvent<HTMLAnchorElement>, itemId: string, hasChildren: boolean) => {
     if (hasChildren) {
       event.preventDefault();
+      setMegaMenuSuppressed(false);
+      setActiveMegaMenuId((current) => (current === itemId ? null : itemId));
       return;
     }
 
     closeMegaMenu();
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      setIsScrolled(scrollTop > 8);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!megaMenuSuppressed) return;
@@ -52,7 +81,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   }, [megaMenuSuppressed, pathname]);
 
   return (
-    <S.Header $overHero={overHero}>
+    <S.Header $overHero={overHero} $scrolled={isScrolled} onMouseLeave={() => setActiveMegaMenuId(null)}>
       <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/" aria-label={t('신한관세법인 홈', 'Shinhan Customs Service home')}>
           <S.HeaderLogoFrame>
@@ -65,17 +94,21 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
         <S.MenuArea>
           <S.Nav>
             {headerNavigation.map((item) => (
-              <S.NavItem key={item.id}>
+              <S.NavItem
+                key={item.id}
+                onMouseEnter={() => openMegaMenu(item.id, Boolean(item.children?.length))}
+                onFocus={() => openMegaMenu(item.id, Boolean(item.children?.length))}
+              >
                 <S.NavLink
                   to={item.to ?? item.href ?? '/'}
                   hasChildren={Boolean(item.children?.length)}
                   data-active={isActive(item.to ?? item.href)}
-                  onClick={(event) => handlePrimaryNavClick(event, Boolean(item.children?.length))}
+                  onClick={(event) => handlePrimaryNavClick(event, item.id, Boolean(item.children?.length))}
                 >
                   {item.label}
                 </S.NavLink>
                 {item.children && item.children.length > 0 ? (
-                  <S.MegaMenu>
+                  <S.MegaMenu data-open={activeMegaMenuId === item.id ? 'true' : undefined}>
                     <S.MegaMenuInner>
                       <S.MegaMenuTitleBlock data-mega-title>
                         <S.MegaMenuKicker>SHINHAN</S.MegaMenuKicker>

@@ -20,7 +20,7 @@ const HeroStatement = styled(P.PageContainer)`
 const HeroEyebrow = styled.span`
   color: #52647c;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;
@@ -29,10 +29,10 @@ const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
   color: #172337;
-  font-size: clamp(2.64rem, 6.4vw, 6.2rem);
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.055em;
+  font-size: clamp(2.24rem, 5.2vw, 5.1rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 `;
 
@@ -49,7 +49,7 @@ const SectionLabel = styled.span`
   margin-bottom: 16px;
   color: #52647c;
   font-size: 0.76rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;

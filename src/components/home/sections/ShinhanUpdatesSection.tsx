@@ -18,7 +18,7 @@ const newsletterVisuals = [
 
 const Section = styled.section`
   position: relative;
-  padding: 104px 0 78px;
+  padding: 76px 0 78px;
   overflow: hidden;
   background:
     linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
@@ -26,16 +26,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'SHINHAN NEWSLETTER';
-    position: absolute;
-    left: 24px;
-    top: 26px;
-    color: rgba(15, 35, 62, 0.055);
-    font-size: clamp(3.6rem, 8vw, 8.8rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
+    content: none;
   }
 
   &::after {
@@ -80,13 +71,44 @@ const Head = styled.div`
   }
 `;
 
+const TitleBlock = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1040px;
+  min-height: clamp(76px, 9vw, 128px);
+  overflow: visible;
+`;
+
+const TitleGhost = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(15, 35, 62, 0.062);
+  font-size: clamp(2.5rem, 5.4vw, 5.2rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+
+  @media (max-width: 640px) {
+    font-size: clamp(2.2rem, 10.5vw, 4rem);
+    letter-spacing: 0.04em;
+  }
+`;
+
 const Title = styled.h2`
-  margin: 12px 0 0;
+  position: relative;
+  z-index: 1;
+  margin: 0;
   color: #222a34;
-  font-size: clamp(2.8rem, 7vw, 6.2rem);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: 0.04em;
+  font-size: clamp(2.05rem, 4.6vw, 4.35rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
 `;
 
 const Controls = styled.div`
@@ -384,9 +406,10 @@ export function ShinhanUpdatesSection() {
     <Section>
       <Inner>
         <Head>
-          <div>
+          <TitleBlock>
+            <TitleGhost aria-hidden="true">SHINHAN NEWSLETTER</TitleGhost>
             <Title>{t('소식지', 'Shinhan Newsletter')}</Title>
-          </div>
+          </TitleBlock>
           <HeadActions>
             <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
               <ControlButton type="button" $direction="prev" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')} />

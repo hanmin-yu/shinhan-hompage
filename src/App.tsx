@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { MobileMenu } from './components/home/layout/MobileMenu';
@@ -66,12 +66,18 @@ function App() {
 function AppShell() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const previousPathname = useRef(location.pathname);
 
   useRevealOnScroll(`${location.pathname}:${location.key}`);
 
   useEffect(() => {
+    if (previousPathname.current === location.pathname) {
+      return;
+    }
+
+    previousPathname.current = location.pathname;
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [location.pathname, location.key]);
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileMenuOpen(false);

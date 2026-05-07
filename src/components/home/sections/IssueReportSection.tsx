@@ -16,7 +16,7 @@ const tradeInsightVisuals = [
 
 const Section = styled.section`
   position: relative;
-  padding: 104px 0 72px;
+  padding: 76px 0 72px;
   overflow: hidden;
   background:
     linear-gradient(132deg, rgba(237, 245, 251, 0.82) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(242, 249, 247, 0.76) 100%),
@@ -24,16 +24,7 @@ const Section = styled.section`
   border-top: 1px solid rgba(22, 54, 96, 0.08);
 
   &::before {
-    content: 'TRADE INSIGHTS';
-    position: absolute;
-    left: 24px;
-    top: 26px;
-    color: rgba(15, 35, 62, 0.055);
-    font-size: clamp(3.6rem, 8vw, 8.8rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
+    content: none;
   }
 
   &::after {
@@ -78,22 +69,44 @@ const Head = styled.div`
   }
 `;
 
-const Title = styled.h2`
-  margin: 12px 0 0;
-  color: #222a34;
-  font-size: clamp(2.8rem, 7vw, 6.2rem);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: 0.04em;
+const TitleBlock = styled.div`
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 920px;
+  min-height: clamp(76px, 9vw, 128px);
+  overflow: visible;
 `;
 
-const TitleKo = styled.span`
-  display: block;
-  color: #1c5aa9;
-  font-size: clamp(1.08rem, 1.8vw, 1.62rem);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+const TitleGhost = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(15, 35, 62, 0.062);
+  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+
+  @media (max-width: 640px) {
+    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    letter-spacing: 0.04em;
+  }
+`;
+
+const Title = styled.h2`
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #222a34;
+  font-size: clamp(2.05rem, 4.6vw, 4.35rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
 `;
 
 const ViewAll = styled.a`
@@ -275,11 +288,11 @@ export function IssueReportSection() {
       <Section>
         <Inner>
           <Head>
-            <div>
-              <TitleKo>무역 동향</TitleKo>
-              <Title>Trade Insights</Title>
-            </div>
-            <ViewAll href="/news/issue-report">{t('Trade Insights 전체보기', 'View all Trade Insights')}</ViewAll>
+            <TitleBlock>
+              <TitleGhost aria-hidden="true">TRADE INSIGHTS</TitleGhost>
+              <Title>무역 동향</Title>
+            </TitleBlock>
+            <ViewAll href="/news/issue-report">{t('무역 동향 전체보기', 'View all Trade Insights')}</ViewAll>
           </Head>
 
           <Content>

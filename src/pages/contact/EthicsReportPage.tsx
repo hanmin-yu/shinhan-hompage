@@ -258,7 +258,8 @@ const ContactLink = styled.a`
   font-size: 1.04rem;
   font-weight: 800;
   line-height: 1.56;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 `;
 
 const ActionLink = styled.a`

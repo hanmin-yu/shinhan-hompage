@@ -54,8 +54,8 @@ export const sectionSubnav = {
     kickerEn: 'Practice Areas',
     title: '업무분야',
     titleEn: 'Services',
-    summary: '통관, 검역·요건, 컨설팅, 특화 서비스까지 업무 체계를 한눈에 확인할 수 있습니다.',
-    summaryEn: 'Review the full service system across clearance, requirements, consulting, and specialized support.',
+    summary: '통관, 컨설팅, 검역·요건, 특화 서비스까지 업무 체계를 한눈에 확인할 수 있습니다.',
+    summaryEn: 'Review the full service system across clearance, consulting, requirements, and specialized support.',
     items: [
       {
         label: '수출입통관 및 환급',
@@ -63,14 +63,6 @@ export const sectionSubnav = {
         to: getServicePrimaryHref('clearance-refund'),
         matchPrefixes: ['/services/import-export', '/services/consulting/refund'],
         heroImage: '/hero/menu-services-clearance-ai.png',
-        heroPosition: 'center 50%',
-      },
-      {
-        label: '검역·요건',
-        labelEn: 'Quarantine / Requirements',
-        to: getServicePrimaryHref('quarantine-requirements'),
-        matchPrefixes: ['/services/quarantine', '/services/requirements'],
-        heroImage: '/hero/menu-services-quarantine-wine-ai.png',
         heroPosition: 'center 50%',
       },
       {
@@ -88,6 +80,14 @@ export const sectionSubnav = {
           '/services/consulting/trade-consulting',
         ],
         heroImage: '/hero/menu-services-consulting-ai.png',
+        heroPosition: 'center 50%',
+      },
+      {
+        label: '검역·요건',
+        labelEn: 'Quarantine / Requirements',
+        to: getServicePrimaryHref('quarantine-requirements'),
+        matchPrefixes: ['/services/quarantine', '/services/requirements'],
+        heroImage: '/hero/menu-services-quarantine-wine-ai.png',
         heroPosition: 'center 50%',
       },
       {

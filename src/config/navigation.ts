@@ -29,7 +29,6 @@ export const headerNavigation: NavItem[] = [
     children: [
       { id: 'service-import', label: '수출입통관', to: '/services/import-export' },
       { id: 'service-refund', label: '환급', to: '/services/consulting/refund' },
-      { id: 'service-quarantine', label: '검역·요건', to: '/services/quarantine' },
       { id: 'service-fta', label: 'FTA', to: '/services/consulting/fta' },
       { id: 'service-aeo', label: 'AEO', to: '/services/consulting/aeo' },
       { id: 'service-audit', label: '관세조사', to: '/services/consulting/customs-audit' },
@@ -38,6 +37,7 @@ export const headerNavigation: NavItem[] = [
       { id: 'service-penalty', label: '범칙조사', to: '/services/consulting/penalty-investigation' },
       { id: 'service-tax', label: '조세불복', to: '/services/consulting/tax-appeal' },
       { id: 'service-trade', label: '관세무역컨설팅', to: '/services/consulting/trade-consulting' },
+      { id: 'service-quarantine', label: '검역·요건', to: '/services/quarantine' },
       { id: 'service-logistics', label: '물류', to: '/services/logistics' },
       { id: 'service-vietnam', label: '베트남', to: '/services/vietnam' },
       { id: 'service-fda', label: '미국 FDA', to: '/services/us-fda' },

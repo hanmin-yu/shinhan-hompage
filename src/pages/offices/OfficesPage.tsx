@@ -87,7 +87,7 @@ export function OfficesPage() {
 
   const selectOffice = (officeId: string) => {
     setSelectedOfficeId(officeId);
-    setSearchParams({ office: officeId });
+    setSearchParams({ office: officeId }, { preventScrollReset: true });
   };
   const scrollOfficeTabs = (direction: 'prev' | 'next') => {
     const tabs = officeTabsRef.current;
@@ -116,10 +116,9 @@ export function OfficesPage() {
             </div>
             <E.LeadGrid>
               <E.Lead>
-                {t(
-                  '전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다. 방문 전 담당 사무소와 일정을 조율해 주세요.',
-                  'Find contact details and map locations for Shinhan offices across Korea and Vietnam. Please coordinate with the relevant office before visiting.',
-                )}
+                {t('전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다.', 'Find contact details and map locations for Shinhan offices across Korea and Vietnam.')}
+                <br />
+                {t('방문 전 담당 사무소와 일정을 조율해 주세요.', 'Please coordinate with the relevant office before visiting.')}
               </E.Lead>
               <E.FactGrid>
                 <E.Fact>
@@ -500,7 +499,8 @@ const InfoValue = styled.span`
   font-size: 1.04rem;
   font-weight: 600;
   line-height: 1.56;
-  word-break: break-word;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const InfoValueLink = styled.a`
@@ -508,7 +508,8 @@ const InfoValueLink = styled.a`
   font-size: 1.04rem;
   font-weight: 800;
   line-height: 1.56;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
 `;
 
 const ActionRow = styled.div`

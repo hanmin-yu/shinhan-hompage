@@ -172,10 +172,10 @@ const HeroTitle = styled.h1`
     'Apple SD Gothic Neo',
     system-ui,
     sans-serif;
-  font-size: clamp(3.2rem, 7.9vw, 8.6rem);
+  font-size: clamp(2.9rem, 5vw, 5.4rem);
   font-weight: 750;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
   max-width: none;
   text-shadow:
     0 18px 44px rgba(3, 15, 34, 0.48),
@@ -183,16 +183,16 @@ const HeroTitle = styled.h1`
   text-transform: none;
 
   @media (max-width: 920px) {
-    font-size: clamp(4rem, 17vw, 8rem);
+    font-size: clamp(3rem, 13vw, 5.4rem);
   }
 `;
 
 const HeroStatement = styled.p`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.72rem, 3.35vw, 3.72rem);
+  font-size: clamp(1.34rem, 2.2vw, 2.35rem);
   font-weight: 520;
-  line-height: 1.18;
+  line-height: 1.28;
   letter-spacing: -0.012em;
   word-break: keep-all;
   text-wrap: balance;
@@ -206,7 +206,7 @@ const HeroStatement = styled.p`
   }
 
   @media (max-width: 768px) {
-    font-size: clamp(1.28rem, 5.6vw, 2.18rem);
+    font-size: clamp(1.12rem, 4.8vw, 1.72rem);
   }
 `;
 

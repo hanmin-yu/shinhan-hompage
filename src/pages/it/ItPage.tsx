@@ -22,7 +22,7 @@ const HeroStatement = styled(P.PageContainer)`
 const HeroEyebrow = styled.span`
   color: #1d5fb6;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 `;
@@ -31,8 +31,8 @@ const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
   color: #111827;
-  font-size: clamp(2.2rem, 4.4vw, 4.35rem);
-  font-weight: 800;
+  font-size: clamp(1.92rem, 3.7vw, 3.72rem);
+  font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.045em;
   text-wrap: balance;
@@ -51,8 +51,8 @@ const OneLineSummary = styled.p`
   max-width: 1240px;
   margin: 0;
   color: #1f2937;
-  font-size: clamp(1.32rem, 1.86vw, 1.96rem);
-  font-weight: 800;
+  font-size: clamp(1.14rem, 1.58vw, 1.68rem);
+  font-weight: 700;
   line-height: 1.36;
   letter-spacing: -0.016em;
   line-break: strict;
@@ -91,7 +91,7 @@ const OverviewTitle = styled.h2`
   margin: 0;
   color: #174d9a;
   font-size: clamp(1.12rem, 1.6vw, 1.34rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.025em;
 `;
