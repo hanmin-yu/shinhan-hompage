@@ -5,11 +5,10 @@ import { NewsListPagination } from '../../components/site/NewsListPagination';
 import { NewsListTable, type NewsListTableRow } from '../../components/site/NewsListTable';
 import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
-import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useIssueReports } from '../../hooks/useIssueReports';
 import { useI18n } from '../../i18n/useI18n';
-import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
+import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
@@ -179,7 +178,7 @@ export function IssueReportPage() {
   return (
     <>
       <NewsCompactHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -191,11 +190,11 @@ export function IssueReportPage() {
             compactBottom
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsCompactHeroSection>
 
       <NewsFlushPageSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
@@ -272,7 +271,7 @@ export function IssueReportPage() {
             nextLabel={t('다음', 'Next')}
             onPageChange={setCurrentPage}
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsFlushPageSection>
     </>
   );

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { ItSection } from '../../components/home/sections/ItSection';
+import { palette } from '../../components/home/homeStyles';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
@@ -20,7 +21,7 @@ const HeroStatement = styled(P.PageContainer)`
 `;
 
 const HeroEyebrow = styled.span`
-  color: #1d5fb6;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -30,7 +31,7 @@ const HeroEyebrow = styled.span`
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #111827;
+  color: ${palette.blue};
   font-size: clamp(1.92rem, 3.7vw, 3.72rem);
   font-weight: 700;
   line-height: 1.08;
@@ -78,7 +79,7 @@ const OverviewBlock = styled.div`
   grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
   gap: clamp(20px, 4vw, 56px);
   padding: clamp(28px, 3.5vw, 42px) 0;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   border-bottom: 1px solid #d8dee8;
 
   @media (max-width: 760px) {
@@ -89,7 +90,7 @@ const OverviewBlock = styled.div`
 
 const OverviewTitle = styled.h2`
   margin: 0;
-  color: #174d9a;
+  color: ${palette.blue};
   font-size: clamp(1.12rem, 1.6vw, 1.34rem);
   font-weight: 700;
   line-height: 1.28;

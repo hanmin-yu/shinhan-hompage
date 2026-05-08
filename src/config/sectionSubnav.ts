@@ -118,7 +118,7 @@ export const sectionSubnav = {
     summaryEn: 'Browse Shinhan NEWS, seminars, and newsletters by channel.',
     items: [
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news', heroImage: '/hero/menu-news-shinhan-ai.png', heroPosition: 'center 50%' },
-      { label: 'Trade Insights', labelEn: 'Trade Insights', to: '/news/issue-report', heroImage: '/hero/menu-news-trade-insights-ai.png', heroPosition: 'center 50%' },
+      { label: '무역 동향', labelEn: 'Trade Insights', to: '/news/issue-report', heroImage: '/hero/menu-news-trade-insights-ai.png', heroPosition: 'center 50%' },
       {
         label: '세미나',
         labelEn: 'Seminar',

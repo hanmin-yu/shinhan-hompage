@@ -10,7 +10,7 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../utils/shinhanNews';
-import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
+import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
@@ -82,7 +82,7 @@ export function ShinhanNewsPage() {
   return (
     <>
       <NewsCompactHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -94,11 +94,11 @@ export function ShinhanNewsPage() {
             compactBottom
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsCompactHeroSection>
 
       <ShinhanNewsStartSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
@@ -122,7 +122,7 @@ export function ShinhanNewsPage() {
             nextLabel={t('다음', 'Next')}
             onPageChange={setCurrentPage}
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </ShinhanNewsStartSection>
     </>
   );

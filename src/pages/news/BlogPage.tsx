@@ -4,7 +4,7 @@ import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useI18n } from '../../i18n/useI18n';
-import { NewsContentSection, NewsHeroSection } from './newsLayout';
+import { NewsContentSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
 
 const blogSeries = [
   {
@@ -79,7 +79,7 @@ export function BlogPage() {
   return (
     <>
       <NewsHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -90,11 +90,11 @@ export function BlogPage() {
             items={newsSubnav.items}
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsHeroSection>
 
       <NewsContentSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <P.Kicker>Blog Archive</P.Kicker>
           <P.Title>{t('블로그', 'Blog')}</P.Title>
           <P.Lead>
@@ -115,7 +115,7 @@ export function BlogPage() {
               </ArchiveItem>
             ))}
           </ArchiveList>
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsContentSection>
     </>
   );

@@ -10,6 +10,7 @@ export type NewsListTableAction = {
   external?: boolean;
   disabled?: boolean;
   downloadFileName?: string;
+  variant?: 'default' | 'primary';
 };
 
 export type NewsListTableRow = {
@@ -35,8 +36,20 @@ type NewsListTableProps = {
 };
 
 const Wrap = styled.div`
-  border-top: 2px solid ${palette.blueInk};
-  background: rgba(255, 255, 255, 0.86);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(18, 63, 133, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 22px 42px rgba(10, 45, 99, 0.08);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, #123f85, #2567c2, #8eb8ed);
+  }
 `;
 
 const List = styled.ul`
@@ -48,24 +61,39 @@ const List = styled.ul`
 `;
 
 const Row = styled.li`
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(140px, 0.18fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(132px, 0.16fr) minmax(0, 1fr) auto;
   gap: 22px;
   align-items: center;
-  padding: 28px 6px;
-  border-bottom: 1px solid rgba(16, 39, 68, 0.14);
+  padding: 24px 24px;
+  border-bottom: 1px solid rgba(18, 63, 133, 0.1);
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease;
+
+  &:first-of-type {
+    padding-top: 28px;
+  }
+
+  &:hover {
+    background: linear-gradient(90deg, rgba(18, 63, 133, 0.052), rgba(37, 103, 194, 0.035));
+  }
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
 
   @media (max-width: 920px) {
     grid-template-columns: 1fr;
     gap: 14px;
-    padding: 24px 0;
+    padding: 22px 18px;
   }
 `;
 
 const EmptyMessage = styled.p`
   margin: 0;
-  padding: 42px 8px;
-  border-bottom: 1px solid rgba(16, 39, 68, 0.14);
+  padding: 48px 18px 44px;
   color: ${palette.textMuted};
   font-size: 0.94rem;
   font-weight: 600;
@@ -74,11 +102,18 @@ const EmptyMessage = styled.p`
 `;
 
 const DateText = styled.span`
-  display: block;
-  color: ${palette.textMuted};
-  font-size: 1rem;
+  display: inline-flex;
+  width: fit-content;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(18, 63, 133, 0.1);
+  background: rgba(244, 248, 253, 0.92);
+  color: ${palette.blueInk};
+  font-size: 0.88rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 `;
 
 const Content = styled.div`
@@ -88,9 +123,15 @@ const Content = styled.div`
 `;
 
 const SourceText = styled.span`
-  display: block;
+  display: inline-flex;
+  width: fit-content;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(37, 103, 194, 0.1);
   color: ${palette.blueDeep};
-  font-size: 0.92rem;
+  font-size: 0.78rem;
   font-weight: 800;
   line-height: 1.35;
 `;
@@ -98,7 +139,7 @@ const SourceText = styled.span`
 const TitleText = styled.span<{ $disabled?: boolean }>`
   display: block;
   color: ${({ $disabled }) => ($disabled ? '#7f93ad' : palette.textStrong)};
-  font-size: clamp(1.05rem, 1.6vw, 1.32rem);
+  font-size: clamp(1.03rem, 1.28vw, 1.2rem);
   font-weight: 800;
   line-height: 1.45;
 `;
@@ -116,55 +157,78 @@ const ActionGroup = styled.div`
   }
 `;
 
-const ActionAnchor = styled.a<{ $disabled?: boolean }>`
+const ActionAnchor = styled.a<{ $disabled?: boolean; $variant?: 'default' | 'primary' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 86px;
   min-height: 38px;
   padding: 0 14px;
-  border-radius: 0;
-  border: 1px solid ${({ $disabled }) => ($disabled ? 'rgba(127, 147, 173, 0.28)' : 'rgba(16, 39, 68, 0.42)')};
-  color: ${({ $disabled }) => ($disabled ? '#7f93ad' : palette.blueInk)};
+  border-radius: 8px;
+  border: 1px solid
+    ${({ $disabled, $variant = 'default' }) =>
+      $disabled && $variant === 'primary'
+        ? 'rgba(18, 63, 133, 0.26)'
+        : $disabled
+          ? 'rgba(127, 147, 173, 0.24)'
+          : $variant === 'primary'
+            ? 'rgba(18, 63, 133, 0.26)'
+            : 'rgba(18, 63, 133, 0.18)'};
+  color: ${({ $disabled, $variant = 'default' }) =>
+    $disabled && $variant === 'primary' ? '#ffffff' : $disabled ? '#7f93ad' : $variant === 'primary' ? '#ffffff' : palette.blueInk};
   font-size: 0.82rem;
   font-weight: 800;
   pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
-  background: ${({ $disabled }) => ($disabled ? 'rgba(127, 147, 173, 0.08)' : '#ffffff')};
+  background: ${({ $disabled, $variant = 'default' }) =>
+    $disabled && $variant === 'primary'
+      ? 'linear-gradient(135deg, #123f85, #2567c2)'
+      : $disabled
+        ? 'rgba(127, 147, 173, 0.08)'
+        : $variant === 'primary'
+          ? 'linear-gradient(135deg, #123f85, #2567c2)'
+          : 'rgba(255, 255, 255, 0.92)'};
   text-decoration: none;
+  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    color 0.18s ease;
+    color 0.18s ease,
+    box-shadow 0.18s ease;
 
   &:hover {
     border-color: ${palette.blueInk};
     background: ${palette.blueInk};
     color: #ffffff;
+    box-shadow: 0 10px 18px rgba(18, 63, 133, 0.18);
   }
 `;
 
-const ActionRouterLink = styled(Link)`
+const ActionRouterLink = styled(Link)<{ $variant?: 'default' | 'primary' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 86px;
   min-height: 38px;
   padding: 0 14px;
-  border-radius: 0;
-  border: 1px solid rgba(16, 39, 68, 0.42);
-  color: ${palette.blueInk};
+  border-radius: 8px;
+  border: 1px solid ${({ $variant = 'default' }) => ($variant === 'primary' ? 'rgba(18, 63, 133, 0.26)' : 'rgba(18, 63, 133, 0.18)')};
+  color: ${({ $variant = 'default' }) => ($variant === 'primary' ? '#ffffff' : palette.blueInk)};
   font-size: 0.82rem;
   font-weight: 800;
+  background: ${({ $variant = 'default' }) => ($variant === 'primary' ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'rgba(255, 255, 255, 0.92)')};
+  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
   text-decoration: none;
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    color 0.18s ease;
+    color 0.18s ease,
+    box-shadow 0.18s ease;
 
   &:hover {
     border-color: ${palette.blueInk};
     background: ${palette.blueInk};
     color: #ffffff;
+    box-shadow: 0 10px 18px rgba(18, 63, 133, 0.18);
   }
 `;
 
@@ -223,7 +287,7 @@ function renderTitle(row: NewsListTableRow) {
 function renderAction(action: NewsListTableAction, key: string) {
   if (action.disabled || (!action.href && !action.to)) {
     return (
-      <ActionAnchor key={key} as="span" $disabled={action.disabled}>
+      <ActionAnchor key={key} as="span" $disabled $variant={action.variant}>
         {action.label}
       </ActionAnchor>
     );
@@ -231,7 +295,7 @@ function renderAction(action: NewsListTableAction, key: string) {
 
   if (action.to) {
     return (
-      <ActionRouterLink key={key} to={action.to}>
+      <ActionRouterLink key={key} to={action.to} $variant={action.variant}>
         {action.label}
       </ActionRouterLink>
     );
@@ -244,6 +308,7 @@ function renderAction(action: NewsListTableAction, key: string) {
       download={action.downloadFileName}
       target={action.external ? '_blank' : undefined}
       rel={action.external ? 'noreferrer' : undefined}
+      $variant={action.variant}
     >
       {action.label}
     </ActionAnchor>

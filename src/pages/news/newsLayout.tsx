@@ -2,6 +2,15 @@ import styled from '@emotion/styled';
 
 import * as P from '../../components/site/PagePrimitives';
 
+export const NewsPageContainer = styled(P.PageContainer)`
+  width: min(1360px, calc(100% - 48px));
+  max-width: 1360px;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 28px);
+  }
+`;
+
 export const NewsHeroSection = styled(P.HeroSection)`
   margin-top: 0;
   min-height: auto;

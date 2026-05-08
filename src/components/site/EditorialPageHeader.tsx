@@ -17,12 +17,12 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
   position: relative;
   isolation: isolate;
   margin-top: 0;
-  min-height: clamp(260px, 31vw, 410px);
+  min-height: clamp(430px, 52vh, 620px);
   display: grid;
   place-items: center;
   overflow: hidden;
   padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
-  padding-bottom: clamp(34px, 5vw, 56px);
+  padding-bottom: clamp(54px, 7vw, 86px);
   background: #d8e0e8;
 
   &::before {
@@ -57,7 +57,7 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
 
   @media (max-width: 768px) {
     margin-top: 0;
-    min-height: clamp(260px, 44vh, 380px);
+    min-height: clamp(340px, 50vh, 480px);
     padding-top: clamp(44px, 8vw, 70px);
   }
 `;
@@ -68,10 +68,10 @@ const VisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.25rem, 4.2vw, 4.05rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
   text-align: center;
   text-shadow:
     0 14px 30px rgba(4, 12, 24, 0.24),
@@ -148,7 +148,7 @@ const SectionNavLink = styled(Link)`
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0;
   white-space: nowrap;
 
@@ -178,7 +178,7 @@ const SectionNavLink = styled(Link)`
     min-height: 52px;
     min-width: auto;
     padding: 0 18px;
-    font-size: 0.98rem;
+    font-size: 0.9rem;
   }
 `;
 

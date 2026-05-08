@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { palette } from '../../components/home/homeStyles';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
@@ -10,7 +11,23 @@ import { useI18n } from '../../i18n/useI18n';
 import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
 
 const LocationContentSection = styled(E.Section)`
+  padding: clamp(92px, 10vw, 156px) 0;
   background: #ffffff;
+`;
+
+const LocationTitle = styled(E.Title)`
+  max-width: 1160px;
+  color: #172337;
+  font-size: clamp(2.42rem, 4.9vw, 4.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+`;
+
+const LocationLead = styled(E.Lead)`
+  max-width: 980px;
+  color: #4d5a6c;
+  font-size: clamp(1.12rem, 1.38vw, 1.28rem);
+  line-height: 1.82;
 `;
 
 type LocationViewData = {
@@ -63,13 +80,13 @@ export function LocationPage() {
       <LocationContentSection>
         <P.PageContainer data-reveal>
           <E.Eyebrow>Directions</E.Eyebrow>
-          <E.Title>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</E.Title>
-          <E.Lead style={{ marginTop: 24, marginBottom: 46 }}>
+          <LocationTitle>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</LocationTitle>
+          <LocationLead style={{ marginTop: 24, marginBottom: 46 }}>
             {t(
               '방문 전 연락처와 위치를 확인하실 수 있도록 본사 주소, 연락처, 지도 정보를 한 화면에 정리했습니다.',
               'Review Seoul HQ address, contact details, and map information in one place before visiting.',
             )}
-          </E.Lead>
+          </LocationLead>
           <DirectionsGrid>
             <LocationInfoPanel>
               <E.Eyebrow>Office Information</E.Eyebrow>
@@ -145,13 +162,13 @@ export function DirectionsPage() {
         <StandaloneContainer data-reveal>
           <StandaloneHead>
             <E.Eyebrow>Directions</E.Eyebrow>
-            <E.Title>{t('오시는 길', 'Directions')}</E.Title>
-            <E.Lead>
+            <LocationTitle>{t('오시는 길', 'Directions')}</LocationTitle>
+            <LocationLead>
               {t(
                 '신한관세법인 서울본사 위치와 연락처를 한눈에 확인하실 수 있습니다.',
                 'Find Shinhan Customs Service Seoul HQ location and contact details at a glance.',
               )}
-            </E.Lead>
+            </LocationLead>
           </StandaloneHead>
 
           <StandaloneGrid>
@@ -223,11 +240,11 @@ const LocationInfoPanel = styled(E.LinePanel)`
 
 const OfficePanelTitle = styled.h2`
   margin: 0;
-  color: #172337;
-  font-size: clamp(1.8rem, 3.2vw, 3.1rem);
+  color: #0f3f84;
+  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
   font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.05em;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
 `;
 
 const InfoRows = styled.div`
@@ -250,14 +267,14 @@ const InfoRow = styled.div`
 `;
 
 const InfoLabel = styled.span`
-  color: #1f5cb2;
-  font-size: 0.84rem;
+  color: ${palette.blue};
+  font-size: 0.82rem;
   font-weight: 800;
 `;
 
 const InfoValue = styled.span`
   color: #496582;
-  font-size: 1.04rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.56;
   word-break: keep-all;
@@ -265,8 +282,8 @@ const InfoValue = styled.span`
 `;
 
 const InfoValueLink = styled.a`
-  color: #163a70;
-  font-size: 1.04rem;
+  color: ${palette.blue};
+  font-size: 1rem;
   font-weight: 800;
   line-height: 1.56;
   word-break: normal;
@@ -289,8 +306,8 @@ const MapLink = styled.a`
   border-radius: 0;
   border: 1px solid rgba(20, 75, 157, 0.2);
   background: #ffffff;
-  color: #1d4f97;
-  font-size: 0.98rem;
+  color: ${palette.blue};
+  font-size: 0.94rem;
   font-weight: 800;
 `;
 

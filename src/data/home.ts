@@ -44,8 +44,8 @@ export const footerSocialLinks: LinkItem[] = [
 export const siteContact: SiteContact = {
   phone: '02-3448-1181',
   email: 'shinhan@shcs.kr',
-  address: '서울시 강남구 논현로 704',
-  addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+  address: '서울시 강남구 논현로 704, 6·7층',
+  addressEn: '6·7F, 704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
   businessNumber: '211-86-05953',
 };
 
@@ -675,8 +675,8 @@ export const officeBranches: OfficeBranch[] = [
     summary: '컨설팅본부와 통관본부를 중심으로 전국 화주사 대응, 기업심사, 조사 대응, FTA 및 통관 자문을 총괄하는 메인 허브입니다.',
     summaryEn:
       'Our main hub integrates the consulting and clearance divisions to lead nationwide client support across corporate audits, investigations, FTA, and customs advisory.',
-    address: '서울시 강남구 논현로 704',
-    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    address: '서울시 강남구 논현로 704, 6·7층',
+    addressEn: '6·7F, 704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '02-3448-1181',
     fax: '02-540-2323',
     image: '/offices/seoul.jpg',
@@ -700,8 +700,8 @@ export const officeBranches: OfficeBranch[] = [
     summary: '관세 업무와 IT 시스템을 연결하는 디지털 실행 조직으로 KORD 기반 원산지·재고 관리 서비스를 지원합니다.',
     summaryEn:
       'A digital execution team connecting customs operations with IT systems, supporting KORD-based origin and inventory management services.',
-    address: '서울시 강남구 논현로 704',
-    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    address: '서울시 강남구 논현로 704, 6·7층',
+    addressEn: '6·7F, 704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '02-3448-1181',
     fax: '02-540-2323',
     websiteUrl: 'https://kordsystems.com/',
@@ -727,8 +727,8 @@ export const officeBranches: OfficeBranch[] = [
     summary: '미국 FDA 및 해외 통관 프로젝트와 연계되는 전문 파트너 조직으로 협업형 자문과 운영 지원을 담당합니다.',
     summaryEn:
       'A specialized partner organization supporting U.S. FDA and overseas customs projects through collaborative advisory and operations.',
-    address: '서울시 강남구 논현로 704',
-    addressEn: '704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    address: '서울시 강남구 논현로 704, 6·7층',
+    addressEn: '6·7F, 704, Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     tel: '070-4343-7791',
     fax: '02-3448-1184',
     websiteUrl: 'https://kordpartners.co.kr/',
@@ -1061,11 +1061,6 @@ export const itServices: ItService[] = [
       '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
     bodyEn:
       '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
-    images: [
-      { src: '/it-systems/ioom/ioom-import-status.png', alt: 'iOOM 수입신고 현황 화면', altEn: 'iOOM import declaration status screen' },
-      { src: '/it-systems/ioom/ioom-dashboard.png', alt: 'iOOM 대시보드 화면', altEn: 'iOOM dashboard screen' },
-      { src: '/it-systems/ioom/ioom-analytics.png', alt: 'iOOM 통계 분석 화면', altEn: 'iOOM analytics screen' },
-    ],
   },
   {
     category: 'IT',
@@ -1080,11 +1075,6 @@ export const itServices: ItService[] = [
       '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
     bodyEn:
       '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
-    images: [
-      { src: '/it-systems/ioom-q/ioom-q-dashboard.png', alt: 'iOOM Q 대시보드 화면', altEn: 'iOOM Q dashboard screen' },
-      { src: '/it-systems/ioom-q/ioom-q-export-auto.png', alt: 'iOOM Q 수출 자동신고 화면', altEn: 'iOOM Q export automation screen' },
-      { src: '/it-systems/ioom-q/ioom-q-alerts.png', alt: 'iOOM Q 화물 추적 관리 화면', altEn: 'iOOM Q cargo tracking management screen' },
-    ],
   },
   {
     category: 'IT',
@@ -1099,11 +1089,6 @@ export const itServices: ItService[] = [
       '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
     bodyEn:
       '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
-    images: [
-      { src: '/it-systems/fta/fta-login.png', alt: 'KORD FTA 로그인 화면', altEn: 'KORD FTA login screen' },
-      { src: '/it-systems/fta/fta-dashboard.png', alt: 'KORD FTA 대시보드 화면', altEn: 'KORD FTA dashboard screen' },
-      { src: '/it-systems/fta/fta-origin-review.png', alt: 'KORD FTA 원산지 판정 화면', altEn: 'KORD FTA origin review screen' },
-    ],
   },
   {
     category: 'IT',
@@ -1118,11 +1103,6 @@ export const itServices: ItService[] = [
       '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
     bodyEn:
       '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
-    images: [
-      { src: '/it-systems/liq/liq-login.png', alt: 'KORD LIQ 로그인 화면', altEn: 'KORD LIQ login screen' },
-      { src: '/it-systems/liq/liq-dashboard.png', alt: 'KORD LIQ 대시보드 화면', altEn: 'KORD LIQ dashboard screen' },
-      { src: '/it-systems/liq/liq-result-report.png', alt: 'KORD LIQ 결과 보고서 화면', altEn: 'KORD LIQ result report screen' },
-    ],
   },
   {
     category: 'IT',

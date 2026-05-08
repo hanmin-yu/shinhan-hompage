@@ -14,7 +14,7 @@ export const palette = {
   panelBackgroundStrong:
     'linear-gradient(160deg, rgba(255, 255, 255, 0.99) 0%, rgba(239, 247, 255, 0.95) 62%, rgba(231, 246, 245, 0.9) 100%)',
   chipBackground: 'rgba(247, 251, 255, 0.92)',
-  chipBackgroundActive: 'linear-gradient(135deg, #2667c2 0%, #174d9a 100%)',
+  chipBackgroundActive: 'linear-gradient(135deg, #123f85 0%, #123f85 100%)',
   line: 'rgba(28, 90, 170, 0.16)',
   lineStrong: 'rgba(26, 88, 168, 0.3)',
   lineSoft: 'rgba(53, 116, 194, 0.12)',
@@ -24,9 +24,9 @@ export const palette = {
   textPrimary: '#153a72',
   textBody: '#496687',
   textMuted: '#6681a3',
-  blue: '#2165c1',
-  blueDeep: '#0f3f85',
-  blueInk: '#0b2b59',
+  blue: '#123f85',
+  blueDeep: '#123f85',
+  blueInk: '#123f85',
   teal: '#179f96',
   tealSoft: 'rgba(23, 159, 150, 0.14)',
   gold: '#d69a36',
@@ -300,7 +300,7 @@ export const UtilityLink = styled.a`
   }
 `;
 
-export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }>`
+export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; $megaMenuOpen?: boolean }>`
   --site-header-height: 98px;
   position: fixed;
   top: 0;
@@ -309,12 +309,12 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
   width: 100%;
   z-index: 12000;
   margin-bottom: 0;
-  background: ${({ $overHero, $scrolled }) =>
-    $overHero && !$scrolled
+  background: ${({ $overHero, $scrolled, $megaMenuOpen }) =>
+    $overHero && !$scrolled && !$megaMenuOpen
       ? 'transparent'
       : '#ffffff'};
-  border-bottom: 1px solid ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'transparent' : '#e5ebf3')};
-  box-shadow: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'none' : '0 10px 28px rgba(18, 36, 60, 0.06)')};
+  border-bottom: 1px solid ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 'transparent' : '#e5ebf3')};
+  box-shadow: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 'none' : '0 10px 28px rgba(18, 36, 60, 0.06)')};
   backdrop-filter: none;
   overflow: visible;
   isolation: isolate;
@@ -361,7 +361,7 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
     }
 
     nav > div > a::before {
-      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+      background: ${palette.blue};
       box-shadow: none;
     }
 
@@ -374,12 +374,20 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
   > div > a:first-of-type span[data-brand-established='true'],
   > div > a:first-of-type span[data-brand-word='true'],
   > div > a:first-of-type span[data-brand-sub='true'] {
-    color: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? '#ffffff' : palette.blueDeep)};
+    color: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? '#ffffff' : palette.blueDeep)};
   }
 
   > div > a:first-of-type span[data-brand-established='true'],
   > div > a:first-of-type span[data-brand-sub='true'] {
-    color: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'rgba(255, 255, 255, 0.92)' : '#5d7493')};
+    color: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 'rgba(255, 255, 255, 0.92)' : '#5d7493')};
+  }
+
+  > div > a:first-of-type img[data-logo-blue='true'] {
+    opacity: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 0 : 1)};
+  }
+
+  > div > a:first-of-type img[data-logo-light='true'] {
+    opacity: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 1 : 0)};
   }
 
   &::before {
@@ -388,24 +396,18 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
     left: 0;
     right: 0;
     top: 0;
-    height: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? '148px' : '0')};
+    height: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? '148px' : '0')};
     pointer-events: none;
     z-index: 0;
-    opacity: ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 1 : 0)};
-    background: linear-gradient(
-      180deg,
-      rgba(0, 51, 116, 0.86) 0%,
-      rgba(0, 87, 176, 0.56) 45%,
-      rgba(36, 140, 215, 0.2) 76%,
-      rgba(36, 140, 215, 0) 100%
-    );
+    opacity: ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 1 : 0)};
+    background: transparent;
     transition:
       opacity 0.24s ease,
       height 0.24s ease;
   }
 
-  ${({ $overHero, $scrolled }) =>
-    $overHero && !$scrolled
+  ${({ $overHero, $scrolled, $megaMenuOpen }) =>
+    $overHero && !$scrolled && !$megaMenuOpen
       ? `
     > div > a:first-of-type strong {
       color: rgba(255, 255, 255, 0.98);
@@ -434,20 +436,18 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
     }
 
     nav > div > a::before {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), ${palette.teal});
+      background: rgba(255, 255, 255, 0.98);
       box-shadow: 0 6px 18px rgba(23, 159, 150, 0.22);
     }
 
     a[href='/contact'] {
-      border-color: rgba(255, 255, 255, 0.9);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(229, 241, 255, 0.9)),
-        #ffffff;
-      color: #123f85;
+      border-color: transparent;
+      background: ${palette.blue};
+      color: #ffffff;
       text-shadow: none;
       box-shadow:
-        0 18px 36px rgba(0, 24, 70, 0.26),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.54);
+        -14px 16px 34px rgba(18, 63, 133, 0.16),
+        inset 1px 0 0 rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(12px);
     }
 
@@ -495,6 +495,16 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
       background: transparent;
     }
 
+    &:has(nav > div:hover) > div > a:first-of-type img[data-logo-blue='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type img[data-logo-blue='true'] {
+      opacity: 1;
+    }
+
+    &:has(nav > div:hover) > div > a:first-of-type img[data-logo-light='true'],
+    &:has(nav > div:focus-within) > div > a:first-of-type img[data-logo-light='true'] {
+      opacity: 0;
+    }
+
     &:has(nav > div:hover) nav > div > a,
     &:has(nav > div:focus-within) nav > div > a {
       color: ${palette.textPrimary};
@@ -510,18 +520,18 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
 
     &:has(nav > div:hover) nav > div > a::before,
     &:has(nav > div:focus-within) nav > div > a::before {
-      background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+      background: ${palette.blue};
       box-shadow: none;
     }
 
     &:has(nav > div:hover) a[href='/contact'],
     &:has(nav > div:focus-within) a[href='/contact'] {
-      border-color: rgba(214, 154, 54, 0.22);
-      background:
-        linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
-        linear-gradient(135deg, #2a72d2 0%, #1a56ac 56%, #123f85 100%);
+      border-color: transparent;
+      background: ${palette.blue};
       color: #ffffff;
-      box-shadow: 0 14px 26px rgba(16, 84, 177, 0.2);
+      box-shadow:
+        -14px 16px 34px rgba(18, 63, 133, 0.16),
+        inset 1px 0 0 rgba(255, 255, 255, 0.18);
     }
 
     &:has(nav > div:hover) a[href='/recruit'],
@@ -544,11 +554,11 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean }
   @media (max-width: 768px) {
     --site-header-height: 72px;
     top: 0;
-    background: ${({ $overHero, $scrolled }) =>
-      $overHero && !$scrolled
-        ? 'linear-gradient(180deg, rgba(3, 15, 34, 0.42), rgba(3, 15, 34, 0.12))'
+    background: ${({ $overHero, $scrolled, $megaMenuOpen }) =>
+      $overHero && !$scrolled && !$megaMenuOpen
+        ? 'transparent'
         : '#ffffff'};
-    border-bottom: 1px solid ${({ $overHero, $scrolled }) => ($overHero && !$scrolled ? 'rgba(255, 255, 255, 0.1)' : '#e5ebf3')};
+    border-bottom: 1px solid ${({ $overHero, $scrolled, $megaMenuOpen }) => ($overHero && !$scrolled && !$megaMenuOpen ? 'rgba(255, 255, 255, 0.1)' : '#e5ebf3')};
   }
 
   @media (min-width: 769px) and (max-width: 1320px) {
@@ -698,25 +708,37 @@ export const Brand = styled(Link)`
 
 export const HeaderLogoFrame = styled.span`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: min(285px, 24vw);
-  min-height: 70px;
-  transform: translateY(-1px);
+  display: block;
+  width: min(230px, 18vw);
+  aspect-ratio: 706 / 268;
+  overflow: hidden;
+  transform: translateY(1px);
 
   @media (max-width: 1320px) {
-    width: 224px;
-    min-height: 62px;
+    width: 206px;
   }
 
   @media (max-width: 980px) {
-    width: 199px;
+    width: 184px;
   }
 
   @media (max-width: 520px) {
-    width: 153px;
-    min-height: 42px;
+    width: 150px;
+  }
+`;
+
+export const HeaderLogoImage = styled.img`
+  display: block;
+  width: auto;
+  max-width: none;
+  height: 100%;
+  object-fit: contain;
+  transform: translateX(-31.25%);
+  transition: opacity 0.22s ease;
+
+  &[data-logo-light='true'] {
+    position: absolute;
+    inset: 0;
   }
 `;
 
@@ -764,7 +786,14 @@ export const HeaderBrandEstablished = styled.span`
   }
 
   @media (max-width: 520px) {
-    display: none;
+    display: flex;
+    margin-left: 72px;
+    font-size: 0.52rem;
+
+    &::before {
+      width: 38px;
+      right: calc(100% + 6px);
+    }
   }
 `;
 
@@ -819,7 +848,10 @@ export const HeaderBrandSub = styled.span`
   }
 
   @media (max-width: 520px) {
-    display: none;
+    display: block;
+    margin-left: 2px;
+    font-size: 0.48rem;
+    line-height: 1;
   }
 `;
 
@@ -876,7 +908,7 @@ export const BrandTop = styled.span`
 export const BrandTopLine = styled.span`
   width: 64px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(33, 101, 193, 0.5), rgba(23, 159, 150, 0.3));
+  background: rgba(33, 101, 193, 0.5);
 
   @media (max-width: 980px) {
     display: none;
@@ -1060,7 +1092,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
     bottom: 19px;
     height: 4px;
     border-radius: 999px;
-    background: linear-gradient(90deg, ${palette.blue}, ${palette.teal});
+    background: ${palette.blue};
     transform: scaleX(0.35);
     transform-origin: center;
     opacity: 0;
@@ -1281,7 +1313,7 @@ export const MegaMenu = styled.div`
     top: 0;
     bottom: 0;
     width: min(31vw, 420px);
-    background: linear-gradient(180deg, rgba(245, 248, 252, 0.98), rgba(255, 255, 255, 0.98));
+    background: #f5f8fc;
     border-right: 1px solid rgba(15, 54, 112, 0.07);
     opacity: 1;
     transform: translateX(0);
@@ -1380,7 +1412,7 @@ export const MegaMenuLinks = styled.div`
     right: 0;
     top: -18px;
     height: 1px;
-    background: linear-gradient(90deg, rgba(33, 101, 193, 0.26), rgba(23, 159, 150, 0.18), transparent);
+    background: rgba(33, 101, 193, 0.26);
   }
 
   @media (max-width: 1600px) {
@@ -1668,27 +1700,75 @@ export const ContactButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  padding: 0 20px;
-  border: 1px solid rgba(214, 154, 54, 0.22);
-  border-radius: 8px;
+  position: fixed;
+  top: calc(var(--site-header-height, 98px) + 26px);
+  right: 0;
+  z-index: 2;
+  overflow: hidden;
+  width: 72px;
+  height: 232px;
+  min-height: 0;
+  min-width: 0;
+  padding: 28px 0 76px;
+  border: 0;
+  border-radius: 0;
   color: #ffffff;
-  background:
-    linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
-    linear-gradient(135deg, #2a72d2 0%, #1a56ac 56%, #123f85 100%);
-  box-shadow: 0 14px 26px rgba(16, 84, 177, 0.2);
-  font-size: 0.94rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  background: ${palette.blue};
+  box-shadow:
+    -14px 16px 34px rgba(18, 63, 133, 0.16),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18);
+  font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
   transition:
-    transform 0.18s ease,
     box-shadow 0.18s ease,
-    filter 0.18s ease;
+    background-color 0.18s ease,
+    color 0.18s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 72px;
+    background: #ffffff;
+    transition: background-color 0.18s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 25px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid ${palette.blue};
+    border-top: 0;
+    border-left: 0;
+    transform: translateX(-50%) rotate(45deg);
+    transition: transform 0.18s ease;
+  }
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 18px 30px rgba(16, 84, 177, 0.24);
-    filter: saturate(1.04);
+    background: #0b53a6;
+    box-shadow:
+      -18px 18px 42px rgba(18, 63, 133, 0.22),
+      inset 1px 0 0 rgba(255, 255, 255, 0.22);
+  }
+
+  &:hover::before {
+    background: #f7fbff;
+  }
+
+  &:hover::after {
+    transform: translate(-50%, 3px) rotate(45deg);
   }
 
   @media (max-width: 1180px) {
@@ -1696,15 +1776,15 @@ export const ContactButton = styled(Link)`
   }
 
   @media (max-width: 1320px) {
-    min-height: 40px;
-    padding: 0 16px;
-    font-size: 0.9rem;
-  }
+    top: calc(var(--site-header-height, 92px) + 22px);
+    width: 66px;
+    height: 212px;
+    padding-bottom: 68px;
+    font-size: 0.76rem;
 
-  @media (max-width: 768px) {
-    min-height: 38px;
-    padding: 0 14px;
-    font-size: 0.88rem;
+    &::before {
+      height: 66px;
+    }
   }
 `;
 
@@ -1719,7 +1799,7 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
     height: 38px;
     border: 1px solid ${palette.line};
     border-radius: 50%;
-    background: ${palette.panelBackground};
+    background: #ffffff;
     position: relative;
     color: ${palette.textPrimary};
     cursor: pointer;
@@ -2910,7 +2990,7 @@ export const LandingTitle = styled.h2`
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.04em;
-  color: #111111;
+  color: ${palette.blue};
 `;
 
 export const LandingLink = styled.a`
@@ -2921,7 +3001,7 @@ export const LandingLink = styled.a`
   padding: 0 20px;
   border-radius: 999px;
   border: 1px solid rgba(4, 50, 90, 0.24);
-  color: #04325a;
+  color: ${palette.blue};
   font-weight: 700;
   background: rgba(255, 255, 255, 0.58);
   backdrop-filter: blur(10px);
@@ -3075,7 +3155,7 @@ export const IssueDot = styled.button<{ active: boolean }>`
   height: 10px;
   border: 0;
   border-radius: 999px;
-  background: ${({ active }) => (active ? '#04325a' : 'rgba(4, 50, 90, 0.18)')};
+  background: ${({ active }) => (active ? palette.blue : 'rgba(18, 63, 133, 0.18)')};
   cursor: pointer;
   transition: all 0.22s ease;
 `;
@@ -3091,7 +3171,7 @@ export const ArrowButton = styled.button`
   height: 48px;
   border: 1px solid rgba(4, 50, 90, 0.18);
   background: #ffffff;
-  color: #04325a;
+  color: ${palette.blue};
   border-radius: 50%;
   cursor: pointer;
 `;
@@ -3266,13 +3346,41 @@ export const CaseCategory = styled.span`
 `;
 
 export const CardHeadline = styled.h3`
+  display: grid;
+  align-content: start;
+  gap: 4px;
   margin: 0;
+  min-height: 96px;
   font-size: 1.34rem;
   font-weight: 700;
   line-height: 1.55;
   letter-spacing: -0.03em;
   color: #111111;
   ${wordSafeWrap};
+
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
+`;
+
+export const CardHeadlineMeta = styled.span`
+  color: ${palette.blue};
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.35;
+`;
+
+export const CardHeadlineBrand = styled.span`
+  color: #6d7a88;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+export const CardHeadlineTitle = styled.span`
+  color: inherit;
 `;
 
 export const DarkCardHeadline = styled(CardHeadline)`
@@ -3787,7 +3895,7 @@ export const OfficesMiniMapInsetDivider = styled.span`
 `;
 
 export const OfficesMiniMapInsetCity = styled.span`
-  color: #19487f;
+  color: ${palette.blue};
   font-size: 0.75rem;
   font-weight: 700;
 `;
@@ -3813,18 +3921,22 @@ export const FooterInner = styled(Container)`
   display: flex;
   flex-direction: column;
   gap: 34px;
+  max-width: 1180px;
   padding: 44px 0 50px;
   border-bottom: 1px solid #e5ebf3;
+
+  @media (max-width: 768px) {
+    max-width: none;
+  }
 `;
 
 export const FooterBody = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(34px, 6vw, 96px);
+  gap: clamp(28px, 5vw, 76px);
 
-  @media (max-width: 980px) {
-    align-items: flex-start;
+  @media (max-width: 900px) {
     flex-direction: column;
   }
 `;
@@ -3868,10 +3980,11 @@ export const FooterTopAside = styled.div`
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: flex-end;
   margin-left: auto;
+  flex: 0 0 auto;
 
   @media (max-width: 900px) {
-    width: 100%;
     justify-content: flex-start;
     margin-left: 0;
   }
@@ -3911,7 +4024,7 @@ export const FooterPolicyRow = styled.div`
 export const FooterPolicyLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  color: #173b73;
+  color: ${palette.blue};
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1;
@@ -3933,6 +4046,10 @@ export const FooterSocialRow = styled.div`
   justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
+
+  @media (max-width: 900px) {
+    justify-content: flex-start;
+  }
 `;
 
 export const FooterSocialLink = styled.a`
@@ -3963,7 +4080,8 @@ export const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  gap: 36px;
+  align-items: flex-start;
+  gap: 22px;
   min-width: 0;
 `;
 
@@ -3975,31 +4093,23 @@ export const FooterLine = styled.p`
 `;
 
 export const FooterInfoGrid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(300px, 1.08fr) repeat(3, minmax(150px, 0.54fr));
-  gap: 18px clamp(54px, 7vw, 116px);
-  align-items: start;
-  justify-content: start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px 28px;
   text-align: left;
-
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (max-width: 620px) {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
 `;
 
 export const FooterInfoItem = styled.div`
-  display: grid;
-  gap: 7px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
   min-width: 0;
 `;
 
 export const FooterLabel = styled.strong`
-  color: #173b73;
+  color: ${palette.blue};
   font-weight: 800;
   font-size: 0.82rem;
   line-height: 1.2;

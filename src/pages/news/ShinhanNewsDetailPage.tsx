@@ -8,7 +8,7 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel } from '../../utils/shinhanNews';
-import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
+import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const DetailSection = styled(NewsFlushPageSection)`
   padding-top: 0;
@@ -129,7 +129,7 @@ export function ShinhanNewsDetailPage() {
   return (
     <>
       <NewsCompactHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -141,11 +141,11 @@ export function ShinhanNewsDetailPage() {
             compactBottom
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsCompactHeroSection>
 
       <DetailSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <DetailCard>
             <MetaRow>
               <CategoryBadge>{item ? getShinhanNewsSourceLabel(item, t('세미나', 'Seminar')) : 'FLASH'}</CategoryBadge>
@@ -162,7 +162,7 @@ export function ShinhanNewsDetailPage() {
               <StatusText>{t('상세 내용을 찾을 수 없습니다.', 'The article content could not be found.')}</StatusText>
             ) : null}
           </DetailCard>
-        </P.PageContainer>
+        </NewsPageContainer>
       </DetailSection>
     </>
   );

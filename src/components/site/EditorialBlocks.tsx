@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { palette } from '../home/homeStyles';
 import * as P from './PagePrimitives';
 
 export const Section = styled.section<{ $tone?: 'soft' | 'navy' }>`
@@ -33,9 +34,11 @@ export const TwoColumn = styled(P.PageContainer)`
 `;
 
 export const Eyebrow = styled.span<{ $light?: boolean }>`
-  color: ${({ $light }) => ($light ? 'rgba(221, 232, 247, 0.72)' : '#52647c')};
-  font-size: 0.78rem;
-  font-weight: 700;
+  display: block;
+  margin: 0 0 10px 6px;
+  color: ${({ $light }) => ($light ? 'rgba(221, 232, 247, 0.72)' : palette.blue)};
+  font-size: 0.76rem;
+  font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;
@@ -43,10 +46,10 @@ export const Eyebrow = styled.span<{ $light?: boolean }>`
 export const Title = styled.h1<{ $light?: boolean }>`
   max-width: 1040px;
   margin: 0;
-  color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2.24rem, 5.2vw, 5.1rem);
-  font-weight: 700;
-  line-height: 1.08;
+  color: ${({ $light }) => ($light ? '#ffffff' : palette.blue)};
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.12;
   letter-spacing: -0.04em;
   text-wrap: balance;
 
@@ -57,12 +60,12 @@ export const Title = styled.h1<{ $light?: boolean }>`
 
 export const SectionTitle = styled.h2<{ $light?: boolean }>`
   max-width: 900px;
-  margin: 10px 0 0;
-  color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2rem, 4.2vw, 4.1rem);
+  margin: 0;
+  color: ${({ $light }) => ($light ? '#ffffff' : palette.blue)};
+  font-size: clamp(1.72rem, 3vw, 2.82rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.05em;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 `;
 
@@ -81,15 +84,15 @@ export const Lead = styled.p<{ $light?: boolean }>`
   max-width: 760px;
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(230, 238, 250, 0.84)' : '#4d5a6c')};
-  font-size: clamp(1.1rem, 1.7vw, 1.34rem);
-  line-height: 1.82;
+  font-size: clamp(1.04rem, 1.25vw, 1.16rem);
+  line-height: 1.78;
 `;
 
 export const Body = styled.p<{ $light?: boolean }>`
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(230, 238, 250, 0.82)' : '#4d5a6c')};
-  font-size: clamp(1.06rem, 1.34vw, 1.2rem);
-  line-height: 1.82;
+  font-size: clamp(1rem, 1.08vw, 1.06rem);
+  line-height: 1.78;
 `;
 
 export const BodyStack = styled.div`
@@ -151,8 +154,8 @@ export const Fact = styled.div`
 `;
 
 export const FactValue = styled.strong`
-  color: #172337;
-  font-size: clamp(1.32rem, 2vw, 1.92rem);
+  color: ${palette.blue};
+  font-size: clamp(1.26rem, 1.7vw, 1.68rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.035em;
@@ -162,7 +165,7 @@ export const FactValue = styled.strong`
 
 export const FactLabel = styled.span`
   color: #687385;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   line-height: 1.58;
   word-break: keep-all;
   overflow-wrap: normal;

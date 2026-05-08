@@ -15,6 +15,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
   const overHero = !pathname.startsWith('/admin');
+  const isHomePage = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
   const [activeMegaMenuId, setActiveMegaMenuId] = useState<string | null>(null);
@@ -81,13 +82,12 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   }, [megaMenuSuppressed, pathname]);
 
   return (
-    <S.Header $overHero={overHero} $scrolled={isScrolled} onMouseLeave={() => setActiveMegaMenuId(null)}>
+    <S.Header $overHero={overHero} $scrolled={isScrolled} $megaMenuOpen={Boolean(activeMegaMenuId)} onMouseLeave={() => setActiveMegaMenuId(null)}>
       <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/" aria-label={t('신한관세법인 홈', 'Shinhan Customs Service home')}>
           <S.HeaderLogoFrame>
-            <S.HeaderBrandEstablished data-brand-established="true">Established 1965</S.HeaderBrandEstablished>
-            <S.HeaderBrandWord data-brand-word="true">SHINHAN</S.HeaderBrandWord>
-            <S.HeaderBrandSub data-brand-sub="true">SHINHAN Customs Service Inc.</S.HeaderBrandSub>
+            <S.HeaderLogoImage src="/brand-header-logo-blue-transparent.png" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} data-logo-blue="true" />
+            <S.HeaderLogoImage src="/brand-header-logo-transparent.png" alt="" aria-hidden="true" data-logo-light="true" />
           </S.HeaderLogoFrame>
         </S.Brand>
 
@@ -137,7 +137,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
 
         <S.HeaderRight>
           <S.HeaderTools>
-            <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton>
+            {isHomePage ? <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton> : null}
             <S.HeaderUtilityLinks>
               <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>

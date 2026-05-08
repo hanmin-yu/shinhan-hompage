@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link, useLocation } from 'react-router-dom';
 
+import { palette } from '../../components/home/homeStyles';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { managementValues } from '../../data/pageContent';
@@ -10,12 +11,12 @@ const EditorialHero = styled(P.HeroSection)`
   position: relative;
   isolation: isolate;
   margin-top: 0;
-  min-height: clamp(260px, 31vw, 410px);
+  min-height: clamp(430px, 52vh, 620px);
   display: grid;
   place-items: center;
   overflow: hidden;
   padding-top: calc(82px + 38px + clamp(18px, 3vw, 34px));
-  padding-bottom: clamp(34px, 5vw, 56px);
+  padding-bottom: clamp(54px, 7vw, 86px);
   background: #d8e0e8;
 
   &::before {
@@ -50,7 +51,7 @@ const EditorialHero = styled(P.HeroSection)`
 
   @media (max-width: 768px) {
     margin-top: 0;
-    min-height: clamp(260px, 44vh, 380px);
+    min-height: clamp(340px, 50vh, 480px);
     padding-top: clamp(44px, 8vw, 70px);
   }
 `;
@@ -61,10 +62,10 @@ const HeroVisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.25rem, 4.2vw, 4.05rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
   text-align: center;
   text-shadow:
     0 14px 30px rgba(4, 12, 24, 0.24),
@@ -145,7 +146,7 @@ const AboutNavLink = styled(Link)`
   border-right: 1px solid #e4e7ec;
   color: #4f5661;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0;
   white-space: nowrap;
 
@@ -175,29 +176,32 @@ const AboutNavLink = styled(Link)`
     min-height: 52px;
     min-width: auto;
     padding: 0 18px;
-    font-size: 0.98rem;
+    font-size: 0.9rem;
   }
 `;
 
 const HeroStatement = styled(P.PageContainer)`
   display: grid;
-  gap: clamp(30px, 4vw, 54px);
+  gap: clamp(44px, 5.6vw, 82px);
+  max-width: 1320px;
 `;
 
 const HeroEyebrow = styled.span`
-  color: #52647c;
-  font-size: 0.78rem;
-  font-weight: 700;
+  display: block;
+  margin: 0 0 10px 6px;
+  color: ${palette.blue};
+  font-size: 0.76rem;
+  font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 `;
 
 const HeroTitle = styled.h1`
-  max-width: 1040px;
+  max-width: 1160px;
   margin: 0;
   color: #172337;
-  font-size: clamp(2.24rem, 5.2vw, 5.1rem);
-  font-weight: 700;
+  font-size: clamp(2.42rem, 4.9vw, 4.6rem);
+  font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -210,9 +214,8 @@ const HeroTitle = styled.h1`
 
 const HeroLeadGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.42fr);
-  gap: clamp(28px, 5vw, 74px);
-  align-items: end;
+  gap: clamp(38px, 5vw, 72px);
+  align-items: start;
 
   @media (max-width: 920px) {
     grid-template-columns: 1fr;
@@ -220,10 +223,10 @@ const HeroLeadGrid = styled.div`
 `;
 
 const HeroLead = styled.p`
-  max-width: 760px;
+  max-width: 980px;
   margin: 0;
   color: #4d5a6c;
-  font-size: clamp(1.1rem, 1.7vw, 1.34rem);
+  font-size: clamp(1.12rem, 1.38vw, 1.28rem);
   line-height: 1.82;
 `;
 
@@ -245,15 +248,19 @@ const HeroFacts = styled.div`
 const HeroFact = styled.div`
   position: relative;
   display: grid;
-  align-content: start;
-  gap: 12px;
-  min-height: 136px;
-  padding: 24px 24px 22px;
+  grid-template-columns: minmax(130px, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 34px);
+  min-height: 138px;
+  padding: clamp(28px, 3vw, 42px) clamp(28px, 3.5vw, 52px);
   border-right: 1px solid #dbe0e8;
 
   &::before {
     content: '';
-    width: 34px;
+    position: absolute;
+    left: clamp(28px, 3.5vw, 52px);
+    top: 26px;
+    width: 38px;
     height: 3px;
     background: linear-gradient(90deg, #1d5fb6, #1aa398);
   }
@@ -264,6 +271,8 @@ const HeroFact = styled.div`
 
   @media (max-width: 640px) {
     min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 12px;
     padding: 22px 20px;
     border-right: 0;
     border-bottom: 1px solid #dbe0e8;
@@ -275,25 +284,27 @@ const HeroFact = styled.div`
 `;
 
 const HeroFactValue = styled.strong`
-  color: #172337;
-  font-size: clamp(1.32rem, 2vw, 1.92rem);
+  color: ${palette.blue};
+  font-size: clamp(1.62rem, 2.4vw, 2.5rem);
   font-weight: 800;
   line-height: 1.08;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   word-break: keep-all;
   overflow-wrap: normal;
+  white-space: nowrap;
 `;
 
 const HeroFactLabel = styled.span`
   color: #687385;
-  font-size: 1.02rem;
-  line-height: 1.58;
+  font-size: 1.04rem;
+  line-height: 1.62;
   word-break: keep-all;
   overflow-wrap: normal;
+  max-width: 220px;
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
-  padding: clamp(78px, 9vw, 128px) 0;
+  padding: clamp(92px, 10vw, 156px) 0;
   border-top: 1px solid ${({ $tone }) => ($tone === 'navy' ? 'rgba(226, 231, 238, 0.12)' : '#d8dee8')};
   background: ${({ $tone }) => {
     if ($tone === 'navy') {
@@ -308,9 +319,10 @@ const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
 
 const IntroLayout = styled(P.PageContainer)`
   display: grid;
-  grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.44fr);
-  gap: clamp(36px, 6vw, 88px);
+  grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
+  gap: clamp(44px, 6vw, 96px);
   align-items: start;
+  max-width: 1240px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -319,40 +331,41 @@ const IntroLayout = styled(P.PageContainer)`
 
 const SectionLabel = styled.span<{ $light?: boolean }>`
   display: block;
-  color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.7)' : '#52647c')};
-  font-size: 0.78rem;
+  margin: 0 0 14px 6px;
+  color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.7)' : palette.blue)};
+  font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 `;
 
 const EditorialTitle = styled.h2<{ $light?: boolean }>`
-  max-width: 860px;
-  margin: 12px 0 0;
+  max-width: 980px;
+  margin: 0;
   color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2.14rem, 4.2vw, 4.22rem);
+  font-size: clamp(2.12rem, 3.65vw, 3.48rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.05em;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 `;
 
 const BodyStack = styled.div`
   display: grid;
-  gap: 20px;
+  gap: 26px;
 `;
 
 const EditorialBody = styled.p<{ $light?: boolean }>`
   margin: 0;
   color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.8)' : '#4d5a6c')};
-  font-size: clamp(1.08rem, 1.3vw, 1.18rem);
-  line-height: 1.88;
+  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  line-height: 1.84;
 `;
 
 const Rule = styled.div<{ $light?: boolean }>`
   width: 100%;
   height: 1px;
-  margin: 8px 0;
+  margin: 14px 0;
   background: ${({ $light }) =>
     $light ? 'rgba(226, 231, 238, 0.18)' : 'linear-gradient(90deg, #4d5e74, rgba(77, 94, 116, 0))'};
 `;
@@ -362,7 +375,7 @@ const ServiceGrid = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: 1fr;
   gap: 0;
-  margin-top: clamp(36px, 5vw, 62px);
+  margin-top: clamp(56px, 7vw, 96px);
   border-top: 1px solid #d5dbe4;
   border-bottom: 1px solid #d5dbe4;
 
@@ -371,11 +384,15 @@ const ServiceGrid = styled.div`
   }
 `;
 
+const AboutSectionContainer = styled(P.PageContainer)`
+  max-width: 1320px;
+`;
+
 const ServiceColumn = styled.article`
   display: grid;
   grid-template-rows: auto auto minmax(7.5em, auto) 1fr;
-  gap: 18px;
-  padding: clamp(24px, 3vw, 38px);
+  gap: 24px;
+  padding: clamp(30px, 3.5vw, 48px);
   border-right: 1px solid #dbe0e8;
 
   &:last-of-type {
@@ -394,8 +411,8 @@ const ServiceColumn = styled.article`
 `;
 
 const ServiceIndex = styled.span`
-  color: rgba(45, 58, 76, 0.22);
-  font-size: clamp(2.5rem, 4vw, 4rem);
+  color: rgba(18, 63, 133, 0.22);
+  font-size: clamp(2.6rem, 4vw, 4.1rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
@@ -403,8 +420,8 @@ const ServiceIndex = styled.span`
 
 const ServiceTitle = styled.h3`
   margin: 0;
-  color: #18283e;
-  font-size: clamp(1.36rem, 2vw, 1.72rem);
+  color: #0f3f84;
+  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
   font-weight: 800;
   line-height: 1.18;
   letter-spacing: -0.03em;
@@ -414,14 +431,14 @@ const ServiceDescription = styled.p`
   margin: 0;
   color: #4e5d70;
   font-size: 1.06rem;
-  line-height: 1.76;
+  line-height: 1.78;
 `;
 
 const ServiceList = styled.ul`
   display: grid;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
-  padding: 18px 0 0;
+  padding: 22px 0 0;
   border-top: 1px solid #e2e6ec;
   list-style: none;
 `;
@@ -430,7 +447,7 @@ const ServiceItem = styled.li`
   position: relative;
   padding-left: 14px;
   color: #4b596b;
-  font-size: 1rem;
+  font-size: 0.98rem;
   line-height: 1.62;
 
   &::before {
@@ -447,8 +464,9 @@ const ServiceItem = styled.li`
 const NavyInner = styled(P.PageContainer)`
   display: grid;
   grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
-  gap: clamp(34px, 6vw, 86px);
+  gap: clamp(44px, 6vw, 96px);
   align-items: start;
+  max-width: 1240px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -463,8 +481,8 @@ const ValueList = styled.div`
 const ValueRow = styled.article`
   display: grid;
   grid-template-columns: minmax(140px, 0.32fr) minmax(0, 1fr);
-  gap: 24px;
-  padding: 24px 0;
+  gap: 30px;
+  padding: 32px 0;
   border-bottom: 1px solid rgba(226, 231, 238, 0.16);
 
   @media (max-width: 640px) {
@@ -476,7 +494,7 @@ const ValueRow = styled.article`
 const ValueTitle = styled.h3`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.2rem, 1.8vw, 1.54rem);
+  font-size: clamp(1.24rem, 1.75vw, 1.58rem);
   font-weight: 800;
   letter-spacing: -0.02em;
 `;
@@ -491,7 +509,8 @@ const ValueBody = styled.p`
 const GalleryGrid = styled(P.PageContainer)`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 18px;
+  gap: 24px;
+  max-width: 1320px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -503,7 +522,7 @@ const GalleryCard = styled.article<{ src: string; $span: number; $height?: numbe
   min-height: ${({ $height = 300 }) => `${$height}px`};
   display: flex;
   align-items: flex-end;
-  padding: clamp(20px, 3vw, 30px);
+  padding: clamp(26px, 3.6vw, 44px);
   background:
     linear-gradient(180deg, rgba(10, 18, 30, 0.04) 0%, rgba(10, 18, 30, 0.72) 100%),
     ${({ src }) => `url(${src}) center / cover no-repeat`};
@@ -515,7 +534,7 @@ const GalleryCard = styled.article<{ src: string; $span: number; $height?: numbe
 `;
 
 const GalleryContent = styled.div`
-  max-width: 330px;
+  max-width: 390px;
 `;
 
 const GalleryLabel = styled.span`
@@ -529,22 +548,22 @@ const GalleryLabel = styled.span`
 const GalleryTitle = styled.h3`
   margin: 10px 0 0;
   color: #ffffff;
-  font-size: 1.34rem;
+  font-size: clamp(1.28rem, 1.8vw, 1.72rem);
   font-weight: 800;
   letter-spacing: -0.03em;
 `;
 
 const GalleryText = styled.p`
-  margin: 10px 0 0;
+  margin: 14px 0 0;
   color: rgba(235, 238, 243, 0.84);
-  font-size: 1.02rem;
-  line-height: 1.68;
+  font-size: 1.04rem;
+  line-height: 1.74;
 `;
 
 const SloganBand = styled.div`
   position: relative;
-  margin-top: clamp(52px, 7vw, 92px);
-  padding: clamp(64px, 8vw, 112px) 0 clamp(70px, 9vw, 124px);
+  margin-top: clamp(68px, 8vw, 118px);
+  padding: clamp(82px, 9vw, 132px) 0 clamp(88px, 10vw, 148px);
   text-align: center;
   border-top: 1px solid rgba(15, 43, 89, 0.08);
 
@@ -564,8 +583,8 @@ const Slogan = styled.p`
   max-width: 1320px;
   margin: 0 auto;
   padding-bottom: 30px;
-  color: #0e55a3;
-  font-size: clamp(2.25rem, 5.7vw, 6.4rem);
+  color: #172337;
+  font-size: clamp(2.42rem, 5vw, 5.5rem);
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -0.055em;
@@ -578,7 +597,7 @@ const Slogan = styled.p`
     bottom: 0;
     width: clamp(92px, 11vw, 170px);
     height: 2px;
-    background: #0e55a3;
+    background: #172337;
     transform: translateX(-50%);
   }
 
@@ -812,7 +831,7 @@ export function AboutPage() {
       </EditorialSection>
 
       <EditorialSection $tone="soft">
-        <P.PageContainer data-reveal>
+        <AboutSectionContainer data-reveal>
           <SectionLabel>All-in-One Service</SectionLabel>
           <EditorialTitle>
             {t(
@@ -834,7 +853,7 @@ export function AboutPage() {
               </ServiceColumn>
             ))}
           </ServiceGrid>
-        </P.PageContainer>
+        </AboutSectionContainer>
       </EditorialSection>
 
       <EditorialSection $tone="navy">
@@ -873,11 +892,11 @@ export function AboutPage() {
             </GalleryCard>
           ))}
         </GalleryGrid>
-        <P.PageContainer data-reveal>
+        <AboutSectionContainer data-reveal>
           <SloganBand>
             <Slogan>We make the difference for your successful business!</Slogan>
           </SloganBand>
-        </P.PageContainer>
+        </AboutSectionContainer>
       </EditorialSection>
     </>
   );

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
@@ -25,15 +26,17 @@ const MessageHero = styled(P.HeroSection)`
 `;
 
 const Kicker = styled.span<{ $light?: boolean }>`
-  color: ${({ $light }) => ($light ? 'rgba(219, 235, 255, 0.78)' : '#1c5aa7')};
-  font-size: 0.78rem;
+  display: block;
+  margin: 0 0 10px 6px;
+  color: ${({ $light }) => ($light ? 'rgba(219, 235, 255, 0.78)' : palette.blue)};
+  font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.17em;
   text-transform: uppercase;
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'soft' | 'navy' }>`
-  padding: clamp(78px, 9vw, 128px) 0;
+  padding: clamp(92px, 10vw, 156px) 0;
   border-top: 1px solid ${({ $tone }) => ($tone === 'navy' ? 'rgba(219, 235, 255, 0.12)' : '#dbe7f6')};
   background: ${({ $tone }) => {
     if ($tone === 'navy') {
@@ -48,9 +51,10 @@ const EditorialSection = styled.section<{ $tone?: 'soft' | 'navy' }>`
 
 const MessageLayout = styled(P.PageContainer)`
   display: grid;
-  grid-template-columns: minmax(300px, 0.38fr) minmax(0, 0.62fr);
-  gap: clamp(36px, 6vw, 92px);
+  grid-template-columns: minmax(320px, 0.36fr) minmax(0, 0.64fr);
+  gap: clamp(42px, 6.2vw, 104px);
   align-items: start;
+  max-width: 1440px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -58,36 +62,13 @@ const MessageLayout = styled(P.PageContainer)`
 `;
 
 const CeoFigure = styled.figure`
-  position: sticky;
-  top: 108px;
   margin: 0;
-
-  @media (max-width: 980px) {
-    position: static;
-  }
 `;
 
-const CeoImage = styled.div`
-  min-height: clamp(360px, 44vw, 620px);
-  background:
-    linear-gradient(180deg, rgba(6, 24, 51, 0.02), rgba(6, 24, 51, 0.28)),
-    url('/subpages/message-ceo.jpg') center / cover no-repeat;
-`;
-
-const FigureCaption = styled.figcaption`
-  display: grid;
-  gap: 6px;
-  padding-top: 18px;
-  margin-top: 18px;
-  border-top: 1px solid #d5e0ef;
-  color: #516b88;
-  font-size: 0.92rem;
-  line-height: 1.6;
-`;
-
-const CaptionName = styled.strong`
-  color: #09254c;
-  font-size: 1.08rem;
+const CeoImage = styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
 `;
 
 const MessageArticle = styled.article`
@@ -96,13 +77,13 @@ const MessageArticle = styled.article`
 `;
 
 const SectionTitle = styled.h2<{ $light?: boolean }>`
-  max-width: 860px;
-  margin: 12px 0 0;
-  color: ${({ $light }) => ($light ? '#ffffff' : '#071f43')};
-  font-size: clamp(2.1rem, 4vw, 4rem);
+  max-width: 980px;
+  margin: 0;
+  color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
+  font-size: clamp(2.12rem, 3.65vw, 3.48rem);
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.05em;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 `;
 
@@ -113,16 +94,14 @@ const BodyStack = styled.div`
 
 const MessageBody = styled.p<{ $light?: boolean }>`
   margin: 0;
-  color: ${({ $light }) => ($light ? 'rgba(225, 238, 255, 0.82)' : '#405a78')};
-  font-size: clamp(1rem, 1.18vw, 1.08rem);
-  line-height: 1.92;
+  color: ${({ $light }) => ($light ? 'rgba(225, 238, 255, 0.82)' : '#4d5a6c')};
+  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  line-height: 1.84;
 `;
 
 const LeadBody = styled(MessageBody)`
-  color: #102f5e;
-  font-size: clamp(1.14rem, 1.5vw, 1.34rem);
-  font-weight: 700;
-  line-height: 1.72;
+  color: #4d5a6c;
+  font-weight: 400;
 `;
 
 const Rule = styled.div<{ $light?: boolean }>`
@@ -185,8 +164,8 @@ const MetricCard = styled.article`
 `;
 
 const Metric = styled.strong`
-  color: rgba(15, 61, 125, 0.28);
-  font-size: clamp(2.3rem, 4vw, 4rem);
+  color: rgba(18, 63, 133, 0.28);
+  font-size: clamp(2.1rem, 3.2vw, 3.2rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
@@ -194,27 +173,33 @@ const Metric = styled.strong`
 
 const MetricTitle = styled.h3`
   margin: 0;
-  color: #0a2854;
-  font-size: 1.18rem;
+  color: #0f3f84;
+  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.18;
 `;
 
 const MetricBody = styled.p`
   margin: 0;
-  color: #48627e;
-  font-size: 0.94rem;
-  line-height: 1.72;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  line-height: 1.84;
 `;
 
 const NavyLayout = styled(P.PageContainer)`
   display: grid;
   grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
-  gap: clamp(34px, 6vw, 86px);
+  gap: clamp(42px, 6.2vw, 104px);
+  max-width: 1440px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
   }
+`;
+
+const MessageSectionContainer = styled(P.PageContainer)`
+  max-width: 1480px;
 `;
 
 const ValueList = styled.div`
@@ -238,15 +223,15 @@ const ValueRow = styled.article`
 const ValueTitle = styled.h3`
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.18rem, 1.8vw, 1.5rem);
+  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
   font-weight: 800;
 `;
 
 const ValueBody = styled.p`
   margin: 0;
   color: rgba(225, 238, 255, 0.76);
-  font-size: 0.98rem;
-  line-height: 1.78;
+  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  line-height: 1.84;
 `;
 
 const Closing = styled.div`
@@ -256,8 +241,8 @@ const Closing = styled.div`
 
 const Thanks = styled.p`
   margin: 0;
-  color: #071f43;
-  font-size: clamp(1.72rem, 3.2vw, 3.1rem);
+  color: #172337;
+  font-size: clamp(1.48rem, 2.3vw, 2.2rem);
   font-weight: 800;
   line-height: 1.18;
   letter-spacing: -0.045em;
@@ -320,11 +305,7 @@ export function MessagePage() {
       <EditorialSection>
         <MessageLayout data-reveal>
           <CeoFigure>
-            <CeoImage aria-hidden="true" />
-            <FigureCaption>
-              <CaptionName>{t('신한관세법인', 'Shinhan Customs Service')}</CaptionName>
-              <span>{t('대표 인사말', 'Leadership Message')}</span>
-            </FigureCaption>
+            <CeoImage src="/subpages/message-ceo.jpg" alt="" aria-hidden="true" />
           </CeoFigure>
 
           <MessageArticle>
@@ -387,7 +368,7 @@ export function MessagePage() {
       </EditorialSection>
 
       <EditorialSection $tone="soft">
-        <P.PageContainer data-reveal>
+        <MessageSectionContainer data-reveal>
           <Kicker>Network & Scale</Kicker>
           <SectionTitle>{t('현재 조직과 운영 네트워크', 'Current Organization & Network')}</SectionTitle>
           <MetricGrid>
@@ -399,7 +380,7 @@ export function MessagePage() {
               </MetricCard>
             ))}
           </MetricGrid>
-        </P.PageContainer>
+        </MessageSectionContainer>
       </EditorialSection>
 
       <EditorialSection $tone="navy">

@@ -86,7 +86,7 @@ const TitleGhost = styled.span`
   left: 0;
   top: 0;
   color: rgba(15, 35, 62, 0.062);
-  font-size: clamp(2.5rem, 5.4vw, 5.2rem);
+  font-size: clamp(2.25rem, 4.8vw, 4.55rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: 0.08em;
@@ -95,7 +95,7 @@ const TitleGhost = styled.span`
   pointer-events: none;
 
   @media (max-width: 640px) {
-    font-size: clamp(2.2rem, 10.5vw, 4rem);
+    font-size: clamp(2rem, 9.5vw, 3.55rem);
     letter-spacing: 0.04em;
   }
 `;
@@ -104,7 +104,7 @@ const Title = styled.h2`
   position: relative;
   z-index: 1;
   margin: 0;
-  color: #222a34;
+  color: ${S.palette.blue};
   font-size: clamp(2.05rem, 4.6vw, 4.35rem);
   font-weight: 900;
   line-height: 0.98;
@@ -120,9 +120,11 @@ const HeadActions = styled.div`
   display: grid;
   justify-items: end;
   gap: 18px;
+  padding-right: clamp(18px, 3vw, 46px);
 
   @media (max-width: 780px) {
     justify-items: start;
+    padding-right: 0;
   }
 `;
 
@@ -133,7 +135,7 @@ const ControlButton = styled.button<{ $direction: 'prev' | 'next' }>`
   height: 66px;
   border: 1px solid rgba(28, 90, 169, 0.14);
   border-radius: 50%;
-  color: #164f99;
+  color: ${S.palette.blue};
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(239, 247, 252, 0.88));
   box-shadow:
@@ -174,7 +176,7 @@ const ViewAll = styled(Link)`
   align-items: center;
   width: fit-content;
   gap: 10px;
-  color: #164f99;
+  color: ${S.palette.blue};
   font-size: 1.06rem;
   font-weight: 800;
   text-decoration: none;
@@ -196,7 +198,7 @@ const Viewport = styled.div`
   --card-width: clamp(360px, 31vw, 500px);
   --card-gap: clamp(28px, 4vw, 58px);
   overflow: hidden;
-  padding: 22px 0 64px;
+  padding: 22px clamp(22px, 3vw, 54px) 64px;
 
   @media (max-width: 780px) {
     --card-width: min(84vw, 420px);
@@ -303,15 +305,43 @@ const CardDate = styled.span`
 `;
 
 const CardTitle = styled.strong`
-  display: -webkit-box;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 108px;
   color: #33373c;
+  letter-spacing: -0.035em;
+
+  @media (max-width: 640px) {
+    min-height: 100px;
+  }
+`;
+
+const CardTitlePrefix = styled.span`
+  color: var(--accent);
+  font-size: clamp(0.92rem, 1.08vw, 1.04rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+`;
+
+const CardTitleBrand = styled.span`
+  color: #6d7a88;
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+`;
+
+const CardTitleText = styled.span`
+  display: -webkit-box;
   font-size: clamp(1.34rem, 1.72vw, 1.76rem);
   font-weight: 850;
   line-height: 1.36;
-  letter-spacing: -0.035em;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 `;
 
 const CardText = styled.p`
@@ -361,8 +391,22 @@ type CarouselItem = NewsListItem & {
   visual: string;
 };
 
+function splitNewsletterTitle(title: string) {
+  const match = title.match(/^(\[[^\]]*(?:소식지|Newsletter)[^\]]*\])\s*(.*)$/i);
+  const prefix = match ? match[1] : null;
+  const body = (match ? match[2] : title).trim();
+  const brandMatch = body.match(/^(Zoom In Trade)\s*[-–—:]\s*(.*)$/i);
+
+  return {
+    prefix,
+    brand: brandMatch ? brandMatch[1] : null,
+    title: brandMatch ? brandMatch[2] || body : body,
+  };
+}
+
 function buildNewsletterItems(items: NewsletterRecord[]): NewsListItem[] {
   return [...items]
+    .filter((item) => item.language !== '영문')
     .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
     .slice(0, 10)
     .map((item) => ({
@@ -386,7 +430,7 @@ export function ShinhanUpdatesSection() {
   const newsletterList = buildNewsletterItems(newsletterItems);
   const carouselItems: CarouselItem[] = newsletterList.map((item, index) => ({
       ...item,
-      accent: '#123f85',
+      accent: S.palette.blue,
       groupLabel: t('소식지', 'Shinhan Newsletter'),
       visual: newsletterVisuals[index % newsletterVisuals.length],
     }));
@@ -407,7 +451,7 @@ export function ShinhanUpdatesSection() {
       <Inner>
         <Head>
           <TitleBlock>
-            <TitleGhost aria-hidden="true">SHINHAN NEWSLETTER</TitleGhost>
+            <TitleGhost aria-hidden="true">NEWSLETTER</TitleGhost>
             <Title>{t('소식지', 'Shinhan Newsletter')}</Title>
           </TitleBlock>
           <HeadActions>
@@ -435,7 +479,17 @@ export function ShinhanUpdatesSection() {
                       <span>{item.groupLabel}</span>
                       <CardDate>{item.publishedAt}</CardDate>
                     </CardMeta>
-                    <CardTitle>{t(item.titleKo, item.titleEn)}</CardTitle>
+                    {(() => {
+                      const title = splitNewsletterTitle(t(item.titleKo, item.titleEn));
+
+                      return (
+                        <CardTitle>
+                          {title.prefix ? <CardTitlePrefix>{title.prefix}</CardTitlePrefix> : null}
+                          {title.brand ? <CardTitleBrand>{title.brand}</CardTitleBrand> : null}
+                          <CardTitleText>{title.title}</CardTitleText>
+                        </CardTitle>
+                      );
+                    })()}
                     <CardText>{t(item.summaryKo, item.summaryEn)}</CardText>
                     <CardFoot>{item.groupLabel}</CardFoot>
                   </CardPanel>

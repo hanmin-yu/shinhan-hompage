@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import type { ServiceLandingGroup } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
+import { palette } from '../home/homeStyles';
 type ServiceDetailSubnavProps = {
   kicker?: string;
   kickerEn?: string;
@@ -39,7 +40,7 @@ const SecondaryMeta = styled.div`
 `;
 
 const SecondaryLabel = styled.span`
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -47,7 +48,7 @@ const SecondaryLabel = styled.span`
 `;
 
 const SecondaryTitle = styled.strong`
-  color: #172337;
+  color: ${palette.blue};
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: -0.02em;

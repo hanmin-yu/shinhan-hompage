@@ -84,7 +84,7 @@ const TitleGhost = styled.span`
   left: 0;
   top: 0;
   color: rgba(15, 35, 62, 0.062);
-  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-size: clamp(2.45rem, 5.2vw, 5.1rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: 0.08em;
@@ -93,7 +93,7 @@ const TitleGhost = styled.span`
   pointer-events: none;
 
   @media (max-width: 640px) {
-    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    font-size: clamp(2.2rem, 10.6vw, 3.9rem);
     letter-spacing: 0.04em;
   }
 `;
@@ -102,7 +102,7 @@ const Title = styled.h2`
   position: relative;
   z-index: 1;
   margin: 0;
-  color: #222a34;
+  color: ${S.palette.blue};
   font-size: clamp(2.05rem, 4.6vw, 4.35rem);
   font-weight: 900;
   line-height: 0.98;
@@ -113,7 +113,8 @@ const ViewAll = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #164f99;
+  margin-right: clamp(18px, 3vw, 46px);
+  color: ${S.palette.blue};
   font-size: clamp(1.02rem, 1.18vw, 1.16rem);
   font-weight: 800;
   text-decoration: none;
@@ -124,6 +125,11 @@ const ViewAll = styled.a`
     height: 1px;
     background: currentColor;
   }
+
+  @media (max-width: 780px) {
+    margin-right: 0;
+    width: fit-content;
+  }
 `;
 
 const Content = styled.div`
@@ -132,10 +138,12 @@ const Content = styled.div`
   grid-template-columns: minmax(380px, 0.96fr) minmax(0, 1.04fr);
   gap: clamp(28px, 5vw, 72px);
   align-items: stretch;
+  padding-inline: clamp(18px, 3vw, 48px);
 
   @media (max-width: 980px) {
     --insight-panel-height: auto;
     grid-template-columns: 1fr;
+    padding-inline: 0;
   }
 `;
 
@@ -252,7 +260,7 @@ const ReportCopy = styled.span`
 `;
 
 const ReportSource = styled.span`
-  color: #1c5aa9;
+  color: ${S.palette.blue};
   font-size: 0.9rem;
   font-weight: 900;
   letter-spacing: 0.1em;

@@ -30,7 +30,7 @@ const Head = styled.div`
 
 const Title = styled.h2`
   margin: 10px 0 0;
-  color: #103a72;
+  color: ${S.palette.blue};
   font-size: clamp(2rem, 3.5vw, 2.85rem);
   font-weight: 800;
   line-height: 1.14;

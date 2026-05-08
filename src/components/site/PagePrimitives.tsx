@@ -159,8 +159,8 @@ export const IntroPanel = styled.div`
   border: 1px solid rgba(225, 238, 255, 0.34);
   color: ${palette.textStrong};
   --page-kicker-color: ${palette.blue};
-  --page-title-color: ${palette.textStrong};
-  --page-heading-color: ${palette.textPrimary};
+  --page-title-color: ${palette.blue};
+  --page-heading-color: ${palette.blue};
   --page-lead-color: ${palette.textBody};
   --page-text-shadow: none;
   background:
@@ -203,7 +203,7 @@ export const Kicker = styled.span`
 
 export const Title = styled.h1`
   margin: 12px 0 0;
-  color: var(--page-title-color, ${palette.textStrong});
+  color: var(--page-title-color, ${palette.blue});
   font-size: clamp(2.76rem, 5.6vw, 5.4rem);
   font-weight: 800;
   line-height: 0.98;
@@ -214,7 +214,7 @@ export const Title = styled.h1`
 
 export const SectionTitle = styled.h2`
   margin: 10px 0 0;
-  color: var(--page-heading-color, ${palette.textPrimary});
+  color: var(--page-heading-color, ${palette.blue});
   font-size: clamp(2.18rem, 3.9vw, 3.34rem);
   font-weight: 800;
   line-height: 1.12;
@@ -250,7 +250,7 @@ export const PrimaryButton = styled(Link)`
   border: 1px solid rgba(214, 154, 54, 0.24);
   background:
     linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
-    linear-gradient(180deg, #2a72d2, #174d9a);
+    linear-gradient(180deg, ${palette.blue}, ${palette.blue});
   color: #ffffff;
   font-size: 0.92rem;
   font-weight: 700;

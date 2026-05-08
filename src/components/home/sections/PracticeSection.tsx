@@ -172,7 +172,7 @@ const Section = styled.section`
 
     36% {
       transform: translateY(-8px) scale(1.08);
-      color: #165cb8;
+      color: ${S.palette.blue};
       filter: drop-shadow(0 18px 24px rgba(39, 111, 207, 0.2));
     }
 
@@ -237,7 +237,7 @@ const SectionTitleGhost = styled.span`
   left: 0;
   top: 0;
   color: rgba(15, 35, 62, 0.062);
-  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-size: clamp(2.45rem, 5.2vw, 5.1rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: 0.08em;
@@ -246,7 +246,7 @@ const SectionTitleGhost = styled.span`
   pointer-events: none;
 
   @media (max-width: 640px) {
-    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    font-size: clamp(2.2rem, 10.6vw, 3.9rem);
     letter-spacing: 0.04em;
   }
 `;
@@ -255,7 +255,7 @@ const SectionTitle = styled.h2`
   position: relative;
   z-index: 1;
   margin: 0;
-  color: #222a34;
+  color: ${S.palette.blue};
   font-size: clamp(2.05rem, 4.6vw, 4.35rem);
   font-weight: 900;
   line-height: 0.98;
@@ -267,10 +267,12 @@ const CountLine = styled.div`
   align-items: flex-end;
   gap: 16px;
   color: #2c2e33;
+  margin: clamp(42px, 6vw, 92px) 0 0 clamp(92px, 13vw, 220px);
 
   @media (max-width: 700px) {
     flex-wrap: wrap;
     gap: 10px 16px;
+    margin-left: 0;
   }
 `;
 
@@ -283,11 +285,14 @@ const CountLabelStack = styled.span`
 const CountValue = styled.strong`
   display: inline-flex;
   align-items: flex-start;
-  color: #2f3136;
-  font-size: clamp(4.2rem, 10vw, 8.4rem);
+  color: ${S.palette.blue};
+  font-size: clamp(6.8rem, 14vw, 12.8rem);
   font-weight: 900;
   line-height: 0.78;
   letter-spacing: 0;
+  text-shadow:
+    0 16px 34px rgba(20, 41, 75, 0.1),
+    0 2px 0 rgba(255, 255, 255, 0.82);
 `;
 
 const Plus = styled.span`
@@ -324,10 +329,14 @@ const CountLabel = styled.span`
 
 const Summary = styled.p`
   max-width: 620px;
-  margin: 0;
+  margin: 0 0 0 clamp(92px, 13vw, 220px);
   color: #52697f;
   font-size: clamp(1.14rem, 1.35vw, 1.28rem);
   line-height: 1.78;
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+  }
 `;
 
 const CountNumber = styled.span<{ $counting: boolean }>`
@@ -400,7 +409,7 @@ const PracticeLink = styled(Link)`
     border-color: rgba(28, 90, 169, 0.42);
 
     &::before {
-      background: #1c5aa9;
+      background: ${S.palette.blue};
       transform: scaleY(1);
     }
   }
@@ -429,7 +438,7 @@ const PracticeCopy = styled.span`
 `;
 
 const PracticeTitle = styled.strong`
-  color: #2f3338;
+  color: ${S.palette.blue};
   font-size: clamp(1.62rem, 2.6vw, 2.38rem);
   font-weight: 800;
   line-height: 1.06;
@@ -451,7 +460,7 @@ const PracticeArrow = styled.span`
   height: 38px;
   border: 1px solid rgba(15, 43, 89, 0.12);
   border-radius: 50%;
-  color: #1c5aa9;
+  color: ${S.palette.blue};
   font-size: 1.08rem;
   font-weight: 800;
   transition:

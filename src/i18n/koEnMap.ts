@@ -29,6 +29,8 @@ export const koToEnTextMap: Record<string, string> = {
   '소식·자료': 'News & Resources',
   '소식/자료 전체보기': 'All News & Resources',
   'Trade Insights': 'Trade Insights',
+  '무역 동향': 'Trade Insights',
+  '무역 동향 전체보기': 'View all Trade Insights',
   'Trade Insights 전체보기': 'View all Trade Insights',
   '신한 NEWS': 'Shinhan NEWS',
   소식지: 'Newsletter',

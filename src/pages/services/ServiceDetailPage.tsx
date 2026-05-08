@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { ServiceDetailSubnav } from '../../components/site/ServiceDetailSubnav';
+import { palette } from '../../components/home/homeStyles';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { expertMembers } from '../../data/home';
 import { serviceDetailPages, serviceLandingGroups } from '../../data/pageContent';
@@ -32,7 +33,7 @@ const HeroStatement = styled(P.PageContainer)`
 `;
 
 const HeroEyebrow = styled.span`
-  color: #1d5fb6;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -42,7 +43,7 @@ const HeroEyebrow = styled.span`
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #111827;
+  color: ${palette.blue};
   font-size: clamp(1.92rem, 3vw, 3.18rem);
   font-weight: 700;
   line-height: 1.08;
@@ -90,7 +91,7 @@ const OverviewBlock = styled.div`
   grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
   gap: clamp(20px, 4vw, 56px);
   padding: clamp(28px, 3.5vw, 42px) 0;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   border-bottom: 1px solid #d8dee8;
 
   @media (max-width: 760px) {
@@ -101,7 +102,7 @@ const OverviewBlock = styled.div`
 
 const OverviewTitle = styled.h2`
   margin: 0;
-  color: #174d9a;
+  color: ${palette.blue};
   font-size: clamp(1.02rem, 1.45vw, 1.22rem);
   font-weight: 700;
   line-height: 1.28;
@@ -130,7 +131,7 @@ const SectionHead = styled.div`
 
 const SectionLabel = styled.span`
   display: block;
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -140,7 +141,7 @@ const SectionLabel = styled.span`
 const EditorialTitle = styled.h2`
   max-width: 860px;
   margin: 0;
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(1.92rem, 3vw, 3.18rem);
   font-weight: 700;
   line-height: 1.08;
@@ -159,7 +160,7 @@ const ItemBodyStack = styled.div`
 
 const DocumentStack = styled.div`
   display: grid;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
 `;
 
 const DocumentSectionCard = styled.article`
@@ -177,7 +178,7 @@ const DocumentSectionCard = styled.article`
 
 const DocumentSectionTitle = styled.h3`
   margin: 0;
-  color: #174d9a;
+  color: ${palette.blue};
   font-size: clamp(1.02rem, 1.48vw, 1.22rem);
   font-weight: 700;
   line-height: 1.34;
@@ -199,8 +200,8 @@ const SectionParagraph = styled.p`
 `;
 
 const ImportExportFlow = styled.div`
-  --flow-line: rgba(29, 95, 182, 0.22);
-  --flow-text: #172337;
+  --flow-line: color-mix(in srgb, ${palette.blue} 22%, transparent);
+  --flow-text: ${palette.blue};
   --flow-muted: #687385;
 
   position: relative;
@@ -209,10 +210,10 @@ const ImportExportFlow = styled.div`
   padding: clamp(30px, 4vw, 50px);
   border-radius: 8px;
   border: 1px solid #d8dee8;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   background:
-    linear-gradient(90deg, rgba(29, 95, 182, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
-    linear-gradient(0deg, rgba(29, 95, 182, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(90deg, rgba(18, 63, 133, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(0deg, rgba(18, 63, 133, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
     linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
 
@@ -254,7 +255,7 @@ const FlowHeader = styled.div`
 `;
 
 const FlowKicker = styled.span`
-  color: #1d5fb6;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -336,7 +337,7 @@ const FlowCard = styled.article<{ $index: number; $accent: string }>`
     border: 2px solid ${({ $accent }) => $accent};
     border-radius: 999px;
     background: #ffffff;
-    color: #174d9a;
+    color: ${palette.blue};
     font-size: 0.64rem;
     font-weight: 900;
     line-height: 1;
@@ -405,10 +406,10 @@ const RefundFlow = styled.div`
   overflow: hidden;
   padding: clamp(34px, 4.6vw, 56px) clamp(22px, 4vw, 46px);
   border: 1px solid #d8dee8;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   border-radius: 8px;
   background:
-    radial-gradient(circle at 50% 22%, rgba(29, 95, 182, 0.06), transparent 34%),
+    radial-gradient(circle at 50% 22%, rgba(18, 63, 133, 0.06), transparent 34%),
     linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 
   &::before {
@@ -439,7 +440,7 @@ const RefundHeader = styled.div`
 `;
 
 const RefundKicker = styled.span`
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -448,7 +449,7 @@ const RefundKicker = styled.span`
 
 const RefundTitle = styled.h4`
   margin: 0;
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(1.24rem, 2vw, 1.78rem);
   font-weight: 700;
   line-height: 1.2;
@@ -498,7 +499,7 @@ const RefundStep = styled.article<{ $accent: string }>`
     border-radius: 999px;
     background:
       linear-gradient(180deg, #ffffff 0%, #f6f9fd 100%);
-    color: #174d9a;
+    color: ${palette.blue};
     font-size: clamp(1rem, 1.35vw, 1.24rem);
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -558,7 +559,7 @@ const RefundStep = styled.article<{ $accent: string }>`
 `;
 
 const RefundStepTitle = styled.strong`
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(0.92rem, 1.08vw, 1rem);
   font-weight: 700;
   line-height: 1.36;
@@ -581,7 +582,7 @@ const ProcessStrip = styled.div`
   gap: 18px 26px;
   padding: clamp(28px, 4vw, 44px);
   border: 1px solid #d8dee8;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   border-radius: 8px;
   background:
     radial-gradient(circle at 16% 20%, rgba(31, 199, 195, 0.18), transparent 28%),
@@ -608,7 +609,7 @@ const ProcessNode = styled.article<{ $accent: string }>`
     background:
       radial-gradient(circle at 50% 50%, #ffffff 0 44%, transparent 45%),
       conic-gradient(${({ $accent }) => $accent} 0 82%, rgba(216, 222, 232, 0.9) 82% 100%);
-    color: #172337;
+    color: ${palette.blue};
     font-size: clamp(0.94rem, 1.2vw, 1.08rem);
     font-weight: 900;
     box-shadow: 0 18px 34px color-mix(in srgb, ${({ $accent }) => $accent} 22%, transparent);
@@ -639,7 +640,7 @@ const ProcessNode = styled.article<{ $accent: string }>`
 `;
 
 const ProcessNodeTitle = styled.strong`
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(0.94rem, 1.12vw, 1.04rem);
   font-weight: 800;
   line-height: 1.34;
@@ -801,7 +802,7 @@ const MetricItemText = styled.span`
 const ContactPanel = styled.article`
   display: grid;
   gap: clamp(18px, 3vw, 28px);
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${palette.blue};
   padding-top: clamp(22px, 3vw, 32px);
   background: transparent;
 `;
@@ -852,7 +853,7 @@ const ContactName = styled.h3`
 
 const ContactRole = styled.p`
   margin: 8px 0 0;
-  color: #174d9a;
+  color: ${palette.blue};
   font-size: 0.98rem;
   font-weight: 800;
   line-height: 1.52;
@@ -894,9 +895,9 @@ const ContactValue = styled.a`
   max-width: 100%;
   min-height: 34px;
   padding: 0 12px;
-  border: 1px solid rgba(29, 95, 182, 0.14);
-  background: rgba(29, 95, 182, 0.05);
-  color: #174d9a;
+  border: 1px solid rgba(18, 63, 133, 0.14);
+  background: rgba(18, 63, 133, 0.05);
+  color: ${palette.blue};
   font-size: 0.92rem;
   font-weight: 800;
   line-height: 1.35;

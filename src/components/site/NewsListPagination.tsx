@@ -23,7 +23,7 @@ type PaginationItem =
 const Wrap = styled.nav`
   display: flex;
   justify-content: center;
-  margin-top: 18px;
+  margin-top: 24px;
 `;
 
 const Inner = styled.div`
@@ -32,6 +32,10 @@ const Inner = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  padding: 8px;
+  border: 1px solid rgba(18, 63, 133, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
 `;
 
 const NavButton = styled.button<{ $active?: boolean }>`
@@ -41,9 +45,9 @@ const NavButton = styled.button<{ $active?: boolean }>`
   min-width: 40px;
   min-height: 40px;
   padding: 0 12px;
-  border-radius: 999px;
+  border-radius: 8px;
   border: 1px solid ${({ $active }) => ($active ? 'rgba(214, 154, 54, 0.24)' : palette.line)};
-  background: ${({ $active }) => ($active ? palette.chipBackgroundActive : 'rgba(255, 255, 255, 0.94)')};
+  background: ${({ $active }) => ($active ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'rgba(255, 255, 255, 0.94)')};
   color: ${({ $active }) => ($active ? '#ffffff' : palette.textBody)};
   font-size: 0.88rem;
   font-weight: 800;

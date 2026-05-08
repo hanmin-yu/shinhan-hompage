@@ -9,12 +9,36 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { sortShinhanNewsRecords } from '../../utils/shinhanNews';
-import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
+import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
 function normalizeSearch(value: string) {
   return value.toLowerCase().replace(/\s+/g, '');
+}
+
+function getSeminarEventDate(title: string) {
+  const match = title.match(/\[(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+
+  if (!match) {
+    return null;
+  }
+
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day), 23, 59, 59, 999);
+}
+
+function isSeminarRecruiting(title: string) {
+  const eventDate = getSeminarEventDate(title);
+
+  if (!eventDate) {
+    return false;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return eventDate >= today;
 }
 
 export function SeminarPage() {
@@ -51,20 +75,36 @@ export function SeminarPage() {
   );
   const rows = useMemo<NewsListTableRow[]>(
     () =>
-      pagedItems.map((item) => ({
-        id: item.id,
-        anchorId: item.id,
-        publishedAt: item.publishedAt,
-        sourceLabel: t('세미나', 'Seminar'),
-        title: t(item.title, item.titleEn),
-        to: `/news/seminar/${item.id}`,
-        actions: [
-          {
-            label: t('상세 보기', 'View Detail'),
-            to: `/news/seminar/${item.id}`,
-          },
-        ],
-      })),
+      pagedItems.map((item) => {
+        const isRecruiting = isSeminarRecruiting(item.title);
+
+        return {
+          id: item.id,
+          anchorId: item.id,
+          publishedAt: item.publishedAt,
+          sourceLabel: t('세미나', 'Seminar'),
+          title: t(item.title, item.titleEn),
+          to: `/news/seminar/${item.id}`,
+          actions: isRecruiting
+            ? [
+                {
+                  label: t('모집중', 'Open'),
+                  disabled: true,
+                  variant: 'primary' as const,
+                },
+                {
+                  label: t('상세 보기', 'View Detail'),
+                  to: `/news/seminar/${item.id}`,
+                },
+              ]
+            : [
+                {
+                  label: t('상세 보기', 'View Detail'),
+                  to: `/news/seminar/${item.id}`,
+                },
+              ],
+        };
+      }),
     [pagedItems, t],
   );
   const emptyMessage = t('검색 조건에 맞는 세미나가 없습니다.', 'No seminars match the current filters.');
@@ -72,7 +112,7 @@ export function SeminarPage() {
   return (
     <>
       <NewsCompactHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -84,11 +124,11 @@ export function SeminarPage() {
             compactBottom
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsCompactHeroSection>
 
       <NewsFlushPageSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
@@ -114,7 +154,7 @@ export function SeminarPage() {
             nextLabel={t('다음', 'Next')}
             onPageChange={setCurrentPage}
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsFlushPageSection>
     </>
   );

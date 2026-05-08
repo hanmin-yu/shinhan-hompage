@@ -5,10 +5,10 @@ import { Navigate, useParams } from 'react-router-dom';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { useNewsletterRecord } from '../../hooks/useNewsContent';
+import { useNewsletterRecord, useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getNewsletterPdfFileName } from '../../utils/newsletter';
-import { NewsFlushPageSection, NewsHeroSection } from './newsLayout';
+import { NewsFlushPageSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
 
 type NewsletterManifest = {
   slug: string;
@@ -160,6 +160,7 @@ export function NewsletterDetailPage() {
   const { newsletterId } = useParams<{ newsletterId: string }>();
 
   const { item, loading: loadingItem } = useNewsletterRecord(newsletterId);
+  const { items: allNewsletterItems } = useNewsletterRecords();
   const [manifest, setManifest] = useState<NewsletterManifest | null>(null);
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [activePageIndex, setActivePageIndex] = useState(0);
@@ -223,6 +224,16 @@ export function NewsletterDetailPage() {
     setActivePageIndex((current) => Math.min(Math.max(current + direction, 0), imageUrls.length - 1));
   };
 
+  const newsletterDownloadItems = item
+    ? [item, ...allNewsletterItems.filter((candidate) => candidate.id !== item.id && candidate.publishedAt === item.publishedAt)]
+        .filter((candidate) => Boolean(candidate.downloadUrl))
+        .filter((candidate, index, items) => items.findIndex((current) => (current.language ?? current.id) === (candidate.language ?? candidate.id)) === index)
+        .sort((left, right) => {
+          const languageOrder = (language?: string) => (language === '국문' ? 0 : language === '영문' ? 1 : 2);
+          return languageOrder(left.language) - languageOrder(right.language);
+        })
+    : [];
+
   if (!loadingItem && !item) {
     return <Navigate to="/news/newsletter" replace />;
   }
@@ -230,7 +241,7 @@ export function NewsletterDetailPage() {
   return (
     <>
       <NewsHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -241,24 +252,25 @@ export function NewsletterDetailPage() {
             items={newsSubnav.items}
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsHeroSection>
 
       <NewsFlushPageSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <ContentBlock data-reveal>
             <ViewerWrap>
               <ViewerHeader>
                 <ActionRow>
                   <P.CardLink to="/news/newsletter">{t('소식지 목록', 'Newsletter List')}</P.CardLink>
-                  {item?.downloadUrl ? (
+                  {newsletterDownloadItems.map((downloadItem) => (
                     <DownloadLink
-                      href={item.downloadUrl}
-                      download={getNewsletterPdfFileName(t(item.title, item.titleEn))}
+                      key={downloadItem.id}
+                      href={downloadItem.downloadUrl}
+                      download={getNewsletterPdfFileName(t(downloadItem.title, downloadItem.titleEn))}
                     >
-                      {t('PDF 다운로드', 'Download PDF')}
+                      {downloadItem.language === '영문' ? t('영문 PDF 다운로드', 'English PDF') : t('국문 PDF 다운로드', 'Korean PDF')}
                     </DownloadLink>
-                  ) : null}
+                  ))}
                 </ActionRow>
                 {imageUrls.length ? (
                   <ViewerControls>
@@ -321,7 +333,7 @@ export function NewsletterDetailPage() {
               ) : null}
             </ViewerWrap>
           </ContentBlock>
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsFlushPageSection>
     </>
   );

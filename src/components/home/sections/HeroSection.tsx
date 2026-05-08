@@ -18,19 +18,12 @@ const HeroShell = styled.section`
     content: '';
     position: absolute;
     pointer-events: none;
+    display: none;
   }
 
   &::before {
     inset: -24% -16%;
-    background:
-      linear-gradient(105deg, transparent 16%, rgba(255, 255, 255, 0.2) 31%, transparent 46%),
-      repeating-linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.06) 0,
-        rgba(255, 255, 255, 0.06) 1px,
-        transparent 1px,
-        transparent 118px
-      );
+    background: transparent;
     opacity: 0.62;
     transform: translate3d(calc(var(--viewport-progress) * 92px), calc(var(--viewport-progress) * -34px), 0)
       rotate(-4deg);
@@ -43,7 +36,7 @@ const HeroShell = styled.section`
     width: min(62vw, 820px);
     aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(78, 164, 218, 0.28), rgba(72, 137, 214, 0.18) 42%, transparent 68%);
+    background: transparent;
     transform: translate3d(0, calc(var(--viewport-progress) * -120px), 0);
     animation: glowPulse 8s ease-in-out infinite;
   }
@@ -98,14 +91,10 @@ const HeroBackdropOverlay = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 246, 255, 0.34) 18%, rgba(44, 94, 158, 0.12) 48%, rgba(45, 98, 160, 0.54) 100%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.38) 0%, rgba(50, 116, 202, 0.18) 38%, rgba(38, 89, 151, 0.08) 70%, rgba(42, 96, 158, 0.18) 100%);
+  background: transparent;
 
   @media (max-width: 768px) {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(238, 246, 255, 0.34) 22%, rgba(44, 94, 158, 0.14) 58%, rgba(45, 98, 160, 0.52) 100%),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(42, 96, 158, 0.16));
+    background: transparent;
   }
 `;
 
@@ -117,8 +106,7 @@ const HeroBottomBlend = styled.div`
   z-index: 1;
   height: min(28vh, 260px);
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(222, 237, 255, 0) 0%, rgba(203, 224, 248, 0.58) 50%, rgba(239, 246, 255, 0.98) 100%);
+  background: transparent;
 `;
 
 const HeroInner = styled(S.Container)`
@@ -147,8 +135,8 @@ const HeroCopy = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(26px, 2.5vw, 38px);
-  width: min(980px, 74vw);
+  gap: clamp(22px, 2.2vw, 34px);
+  width: min(1120px, 82vw);
   text-align: center;
   transform: translate3d(0, calc(-56px + (var(--viewport-progress) * -34px)), 0);
   transition: transform 0.16s linear;
@@ -162,28 +150,74 @@ const HeroCopy = styled.div`
 `;
 
 const HeroTitle = styled.h1`
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
+  padding: 0 0 clamp(16px, 1.8vw, 24px);
   color: #ffffff;
   font-family:
-    'Helvetica Neue',
-    'Avenir Next',
-    'Inter',
     'Segoe UI',
     'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Pretendard',
     system-ui,
     sans-serif;
-  font-size: clamp(2.9rem, 5vw, 5.4rem);
-  font-weight: 750;
-  line-height: 0.96;
-  letter-spacing: -0.035em;
-  max-width: none;
+  font-size: clamp(3.18rem, 6.8vw, 7.35rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: 0;
+  word-break: keep-all;
+  white-space: nowrap;
   text-shadow:
-    0 18px 44px rgba(3, 15, 34, 0.48),
-    0 2px 7px rgba(3, 15, 34, 0.28);
+    0 26px 58px rgba(3, 15, 34, 0.58),
+    0 8px 20px rgba(3, 15, 34, 0.38),
+    0 0 1px rgba(255, 255, 255, 0.72);
   text-transform: none;
 
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -22% -8% 8%;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(13, 73, 146, 0.36), transparent 62%),
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+    filter: blur(18px);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: min(74%, 520px);
+    height: clamp(4px, 0.42vw, 7px);
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(18, 63, 133, 0.18) 12%,
+      rgba(18, 63, 133, 0.46) 32%,
+      rgba(18, 63, 133, 0.68) 50%,
+      rgba(18, 63, 133, 0.46) 68%,
+      rgba(18, 63, 133, 0.18) 88%,
+      rgba(255, 255, 255, 0)
+    );
+    box-shadow: 0 10px 22px rgba(18, 63, 133, 0.22);
+    transform: translateX(-50%);
+  }
+
   @media (max-width: 920px) {
-    font-size: clamp(3rem, 13vw, 5.4rem);
+    font-size: clamp(2.82rem, 10.6vw, 5.15rem);
+  }
+
+  @media (max-width: 520px) {
+    white-space: normal;
+    font-size: clamp(2.48rem, 12vw, 3.85rem);
   }
 `;
 
@@ -303,7 +337,7 @@ const HeroControlButton = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.36);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.84);
-  color: #174d9a;
+  color: ${S.palette.blue};
   font-size: 1.45rem;
   font-weight: 800;
   cursor: pointer;
@@ -326,15 +360,12 @@ const SeminarQuickCard = styled(Link)`
   bottom: clamp(54px, 8vh, 92px);
   z-index: 3;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 46px;
+  grid-template-columns: minmax(0, 1fr) 40px;
   align-items: stretch;
-  width: min(320px, 22vw);
-  min-width: 240px;
-  min-height: 110px;
+  width: 224px;
+  min-height: 100px;
   overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(3, 15, 34, 0.86), rgba(8, 28, 64, 0.54)),
-    url('/hero/homepage/seminar-quick-card-ai.png') center / cover no-repeat;
+  background: url('/hero/homepage/seminar-quick-card-ai.png') center / cover no-repeat;
   color: #ffffff;
   box-shadow: 0 22px 44px rgba(3, 15, 34, 0.28);
 
@@ -347,27 +378,28 @@ const SeminarQuickCopy = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 8px;
-  padding: 18px 20px;
+  gap: 7px;
+  padding: 16px 18px;
 `;
 
 const SeminarQuickTitle = styled.strong`
-  font-size: 1.24rem;
+  font-size: 1.12rem;
   font-weight: 900;
   line-height: 1;
   text-transform: uppercase;
 `;
 
 const SeminarQuickText = styled.span`
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 800;
 `;
 
 const SeminarQuickArrow = styled.span`
   display: grid;
   place-items: center;
-  background: #1fa6d8;
-  font-size: 1.8rem;
+  background: #ffffff;
+  color: ${S.palette.blue};
+  font-size: 1.62rem;
   font-weight: 300;
 `;
 
@@ -408,7 +440,7 @@ export function HeroSection() {
         <HeroBottomBlend />
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
-            <HeroTitle>SHINHAN</HeroTitle>
+            <HeroTitle>신한관세법인</HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>

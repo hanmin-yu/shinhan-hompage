@@ -38,8 +38,13 @@ const ToolbarCard = styled.div`
   display: grid;
   gap: 16px;
   margin: 0 0 22px;
-  padding: 0;
-  background: transparent;
+  padding: clamp(16px, 2vw, 22px);
+  border: 1px solid rgba(18, 63, 133, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(18, 63, 133, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.94));
+  box-shadow: 0 18px 34px rgba(10, 45, 99, 0.08);
 
   @media (max-width: 720px) {
     gap: 12px;
@@ -94,9 +99,9 @@ const SearchInput = styled.input`
   min-height: 52px;
   padding: 0 18px;
   width: 100%;
-  border-radius: 0;
-  border: 1px solid rgba(16, 39, 68, 0.22);
-  background: rgba(255, 255, 255, 0.98);
+  border-radius: 8px;
+  border: 1px solid rgba(18, 63, 133, 0.18);
+  background: rgba(255, 255, 255, 0.96);
   color: ${palette.blueInk};
   font-size: 0.91rem;
   outline: none;
@@ -106,7 +111,12 @@ const SearchInput = styled.input`
 
   &:focus {
     border-color: ${palette.blueInk};
-    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.1);
+    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.12);
+    background: #ffffff;
+  }
+
+  &::placeholder {
+    color: #7c91ad;
   }
 `;
 
@@ -114,9 +124,9 @@ const SelectInput = styled.select`
   min-height: 52px;
   padding: 0 38px 0 12px;
   width: 100%;
-  border-radius: 0;
-  border: 1px solid rgba(16, 39, 68, 0.22);
-  background: rgba(255, 255, 255, 0.98);
+  border-radius: 8px;
+  border: 1px solid rgba(18, 63, 133, 0.18);
+  background: rgba(255, 255, 255, 0.96);
   color: ${palette.blueInk};
   font-size: 0.91rem;
   outline: none;
@@ -126,7 +136,8 @@ const SelectInput = styled.select`
 
   &:focus {
     border-color: ${palette.blueInk};
-    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.1);
+    box-shadow: 0 0 0 3px rgba(36, 101, 190, 0.12);
+    background: #ffffff;
   }
 `;
 
@@ -164,9 +175,10 @@ const ActionRow = styled.div`
 
 const ResultCount = styled.p`
   margin: 0;
-  color: ${palette.textBody};
+  color: ${palette.blueInk};
   font-size: 0.88rem;
   font-weight: 800;
+  white-space: nowrap;
 `;
 
 const ActionButton = styled.button`
@@ -175,11 +187,11 @@ const ActionButton = styled.button`
   justify-content: center;
   min-height: 36px;
   padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(214, 154, 54, 0.24);
+  border-radius: 8px;
+  border: 1px solid rgba(18, 63, 133, 0.22);
   background:
-    linear-gradient(135deg, rgba(214, 154, 54, 0.18), rgba(214, 154, 54, 0) 30%),
-    linear-gradient(180deg, #1f69c5 0%, #184a95 100%);
+    linear-gradient(135deg, rgba(75, 137, 220, 0.24), rgba(75, 137, 220, 0) 34%),
+    linear-gradient(180deg, #2567c2 0%, #123f85 100%);
   color: #ffffff;
   font-size: 0.84rem;
   font-weight: 800;
@@ -228,8 +240,10 @@ const ChipGroup = styled.div`
   flex-wrap: wrap;
   gap: 0;
   min-width: 0;
-  border: 1px solid rgba(16, 39, 68, 0.18);
-  background: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+  border: 1px solid rgba(18, 63, 133, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
 `;
 
 const ChipButton = styled.button<{ $active: boolean }>`
@@ -239,8 +253,8 @@ const ChipButton = styled.button<{ $active: boolean }>`
   min-height: 42px;
   padding: 0 18px;
   border: 0;
-  border-right: 1px solid rgba(16, 39, 68, 0.12);
-  background: ${({ $active }) => ($active ? palette.blueInk : 'transparent')};
+  border-right: 1px solid rgba(18, 63, 133, 0.1);
+  background: ${({ $active }) => ($active ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'transparent')};
   color: ${({ $active }) => ($active ? '#ffffff' : palette.textBody)};
   font-size: 0.84rem;
   font-weight: 800;

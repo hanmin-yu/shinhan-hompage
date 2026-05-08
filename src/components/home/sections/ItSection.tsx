@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { itServices } from '../../../data/home';
 import { useI18n } from '../../../i18n/useI18n';
 import * as P from '../../site/PagePrimitives';
+import * as S from '../homeStyles';
 
 const Section = styled.section`
   position: relative;
@@ -20,7 +21,7 @@ const Inner = styled(P.PageContainer)`
 
 const Grid = styled.div`
   display: grid;
-  border-top: 2px solid #1d5fb6;
+  border-top: 2px solid ${S.palette.blue};
 `;
 
 const Item = styled.article`
@@ -47,7 +48,7 @@ const ItemCategory = styled.span`
 
 const ItemTitle = styled.h4`
   margin: 10px 0 0;
-  color: #174d9a;
+  color: ${S.palette.blue};
   font-size: clamp(1.1rem, 1.7vw, 1.36rem);
   font-weight: 900;
   line-height: 1.34;
@@ -62,7 +63,7 @@ const ItemBody = styled.p`
 `;
 
 const ItemSummary = styled(ItemBody)`
-  color: #172337;
+  color: ${S.palette.blue};
   font-weight: 800;
 `;
 

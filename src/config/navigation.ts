@@ -54,7 +54,7 @@ export const headerNavigation: NavItem[] = [
     to: '/news',
     children: [
       { id: 'news-shinhan', label: '신한 NEWS', to: '/news/shinhan-news' },
-      { id: 'news-issue-report', label: 'Trade Insights', to: '/news/issue-report' },
+      { id: 'news-issue-report', label: '무역 동향', to: '/news/issue-report' },
       { id: 'news-seminar', label: '세미나', to: '/news/seminar' },
       { id: 'news-newsletter', label: '소식지', to: '/news/newsletter' },
     ],

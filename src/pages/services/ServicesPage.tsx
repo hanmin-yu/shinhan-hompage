@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
+import { palette } from '../../components/home/homeStyles';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { serviceLandingGroups } from '../../data/pageContent';
 import { useI18n } from '../../i18n/useI18n';
@@ -19,7 +20,7 @@ const HeroStatement = styled(P.PageContainer)`
 `;
 
 const HeroEyebrow = styled.span`
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -29,7 +30,7 @@ const HeroEyebrow = styled.span`
 const HeroTitle = styled.h1`
   max-width: 1040px;
   margin: 0;
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(2.24rem, 5.2vw, 5.1rem);
   font-weight: 700;
   line-height: 1.08;
@@ -84,7 +85,7 @@ const HeroFact = styled.div`
     content: '';
     width: 34px;
     height: 3px;
-    background: linear-gradient(90deg, #1d5fb6, #1aa398);
+    background: ${palette.blue};
   }
 
   &:last-of-type {
@@ -104,7 +105,7 @@ const HeroFact = styled.div`
 `;
 
 const HeroFactValue = styled.strong`
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(1.32rem, 2vw, 1.92rem);
   font-weight: 800;
   line-height: 1.08;
@@ -124,7 +125,7 @@ const HeroFactLabel = styled.span`
 const SectionLabel = styled.span`
   display: inline-flex;
   margin-bottom: 16px;
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -134,7 +135,7 @@ const SectionLabel = styled.span`
 const EditorialTitle = styled.h2`
   max-width: 940px;
   margin: 0 0 clamp(28px, 4vw, 48px);
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(2.2rem, 4.8vw, 4.8rem);
   font-weight: 800;
   line-height: 1.08;
@@ -164,7 +165,7 @@ const ServiceMapCard = styled.a`
   min-height: 210px;
   padding: clamp(20px, 2.6vw, 34px);
   border-right: 1px solid #dbe0e8;
-  color: #172337;
+  color: ${palette.blue};
 
   &:last-of-type {
     border-right: 0;
@@ -191,7 +192,7 @@ const ServiceMapCard = styled.a`
 `;
 
 const ServiceMapMeta = styled.span`
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -200,7 +201,7 @@ const ServiceMapMeta = styled.span`
 
 const ServiceMapTitle = styled.h3`
   margin: 0;
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(1.3rem, 2.2vw, 1.82rem);
   font-weight: 800;
   line-height: 1.2;
@@ -256,7 +257,7 @@ const GroupBody = styled.div`
 `;
 
 const GroupMeta = styled.span`
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -265,7 +266,7 @@ const GroupMeta = styled.span`
 
 const GroupTitle = styled.h3`
   margin: 0;
-  color: #172337;
+  color: ${palette.blue};
   font-size: clamp(2rem, 3.6vw, 3.6rem);
   font-weight: 800;
   line-height: 1.08;
@@ -291,7 +292,7 @@ const ItemLink = styled(Link)`
   gap: 14px;
   min-height: 56px;
   border-bottom: 1px solid #dbe0e8;
-  color: #172337;
+  color: ${palette.blue};
   font-size: 1.04rem;
   font-weight: 800;
 

@@ -34,13 +34,16 @@ const CategoryMenuWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0;
+  gap: 8px;
   width: 100%;
-  max-width: 1180px;
+  max-width: 1260px;
   margin: 0 auto clamp(42px, 5vw, 72px);
-  border-top: 1px solid #d8dee8;
-  border-left: 1px solid #d8dee8;
-  background: #ffffff;
+  padding: 10px;
+  border: 1px solid #d8e2f0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 255, 0.96)),
+    #ffffff;
+  box-shadow: 0 18px 44px rgba(13, 52, 105, 0.08);
 
   @media (max-width: 760px) {
     justify-content: flex-start;
@@ -52,33 +55,38 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 158px;
-  min-width: 132px;
-  min-height: 64px;
-  padding: 0 22px;
+  flex: 1 1 168px;
+  min-width: 148px;
+  min-height: 74px;
+  padding: 0 24px;
   border: 0;
-  border-right: 1px solid #d8dee8;
-  border-bottom: 1px solid #d8dee8;
-  border-radius: 0;
-  background: #ffffff;
-  color: ${({ $active }) => ($active ? '#172337' : '#526174')};
-  font-size: 0.96rem;
-  font-weight: 850;
+  border-radius: 6px;
+  background: ${({ $active }) =>
+    $active
+      ? 'linear-gradient(135deg, #082a57 0%, #1557a8 100%)'
+      : 'linear-gradient(180deg, #ffffff 0%, #f9fbff 100%)'};
+  color: ${({ $active }) => ($active ? '#ffffff' : '#26364d')};
+  font-size: clamp(1.05rem, 1.08vw, 1.18rem);
+  font-weight: 900;
   letter-spacing: 0;
   white-space: nowrap;
   cursor: pointer;
   transition:
+    transform 0.18s ease,
     color 0.18s ease,
-    background-color 0.18s ease;
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+  box-shadow: ${({ $active }) =>
+    $active ? '0 14px 28px rgba(21, 87, 168, 0.24)' : 'inset 0 0 0 1px rgba(216, 226, 240, 0.9)'};
 
   &::before {
     content: '';
     position: absolute;
-    left: 18px;
-    right: 18px;
-    bottom: -1px;
-    height: 3px;
-    background: #172337;
+    left: 20px;
+    right: 20px;
+    bottom: 12px;
+    height: 2px;
+    background: ${({ $active }) => ($active ? 'rgba(255, 255, 255, 0.58)' : '#1557a8')};
     opacity: ${({ $active }) => ($active ? 1 : 0)};
     transform: scaleX(${({ $active }) => ($active ? 1 : 0.6)});
     transform-origin: center;
@@ -89,8 +97,16 @@ const CategoryButton = styled.button<{ $active: boolean }>`
 
   &:hover,
   &:focus-visible {
-    background: #f7f9fc;
-    color: #172337;
+    transform: translateY(-2px);
+    background: ${({ $active }) =>
+      $active
+        ? 'linear-gradient(135deg, #082a57 0%, #1557a8 100%)'
+        : 'linear-gradient(180deg, #f7fbff 0%, #ffffff 100%)'};
+    color: ${({ $active }) => ($active ? '#ffffff' : '#0c4e96')};
+    box-shadow: ${({ $active }) =>
+      $active
+        ? '0 16px 34px rgba(21, 87, 168, 0.28)'
+        : '0 10px 24px rgba(13, 52, 105, 0.1), inset 0 0 0 1px rgba(21, 87, 168, 0.18)'};
     outline: none;
   }
 
@@ -102,9 +118,9 @@ const CategoryButton = styled.button<{ $active: boolean }>`
 
   @media (max-width: 760px) {
     flex-basis: 50%;
-    min-height: 58px;
+    min-height: 62px;
     padding: 0 18px;
-    font-size: 0.92rem;
+    font-size: 0.98rem;
   }
 
   @media (max-width: 420px) {
@@ -147,43 +163,54 @@ export function ProfessionalCategoryMenu<T extends string>({
 
 const DirectoryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(360px, 520px));
+  grid-template-columns: repeat(2, minmax(400px, 590px));
   justify-content: center;
-  gap: clamp(22px, 3vw, 42px);
-  width: min(100%, 1120px);
+  gap: clamp(24px, 3vw, 44px);
+  width: min(100%, 1240px);
   margin: 0 auto;
 
   @media (max-width: 980px) {
-    grid-template-columns: minmax(0, 560px);
+    grid-template-columns: minmax(0, 590px);
   }
 `;
 
 const ProfileCard = styled.article`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(108px, 9vw, 138px);
-  min-height: 218px;
+  grid-template-columns: minmax(0, 1fr) clamp(158px, 13vw, 206px);
+  min-height: 268px;
   overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(22, 88, 172, 0.14);
+  border-radius: 8px;
+  border: 1px solid rgba(17, 69, 132, 0.16);
   background:
-    linear-gradient(135deg, rgba(240, 247, 255, 0.98), rgba(255, 255, 255, 0.98) 44%),
+    linear-gradient(135deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.98) 45%),
+    radial-gradient(circle at 4% 0%, rgba(21, 87, 168, 0.09), transparent 34%),
     #ffffff;
   box-shadow:
-    16px 16px 42px rgba(13, 52, 105, 0.12),
-    -16px -16px 42px rgba(255, 255, 255, 0.88);
+    0 18px 48px rgba(13, 52, 105, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.92) inset;
   transition:
     transform 0.22s ease,
     border-color 0.22s ease,
     box-shadow 0.22s ease;
 
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    z-index: 3;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #071f43 0%, #1557a8 54%, #69a7e8 100%);
+  }
+
   &:hover,
   &:focus-visible {
     transform: translateY(-4px);
-    border-color: rgba(28, 90, 167, 0.38);
+    border-color: rgba(21, 87, 168, 0.32);
     box-shadow:
-      18px 22px 48px rgba(13, 52, 105, 0.18),
-      -18px -18px 42px rgba(255, 255, 255, 0.9);
+      0 26px 62px rgba(13, 52, 105, 0.16),
+      0 1px 0 rgba(255, 255, 255, 0.96) inset;
     outline: none;
   }
 
@@ -196,9 +223,9 @@ const ProfileCard = styled.article`
   }
 
   @media (max-width: 560px) {
-    grid-template-columns: minmax(0, 1fr) 92px;
-    min-height: 190px;
-    border-radius: 14px;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    min-height: 228px;
+    border-radius: 8px;
   }
 `;
 
@@ -206,13 +233,13 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: clamp(20px, 2.4vw, 30px);
+  padding: clamp(24px, 3vw, 38px);
 `;
 
 const TitleRow = styled.div`
   display: flex;
-  align-items: center;
-  gap: 13px;
+  align-items: flex-start;
+  gap: 14px;
   min-width: 0;
 `;
 
@@ -220,7 +247,7 @@ const Name = styled.h3`
   flex: 0 0 auto;
   margin: 0;
   color: #121c2b;
-  font-size: clamp(1.52rem, 2.2vw, 2.08rem);
+  font-size: clamp(1.66rem, 2.35vw, 2.22rem);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0;
@@ -229,9 +256,10 @@ const Name = styled.h3`
 const NameDivider = styled.span`
   flex: 0 0 auto;
   width: 2px;
-  height: 32px;
-  background: #121c2b;
-  opacity: 0.86;
+  height: 38px;
+  margin-top: 2px;
+  background: linear-gradient(180deg, #102a55, #1d5fb6);
+  opacity: 0.9;
 `;
 
 const RoleStack = styled.div`
@@ -243,7 +271,7 @@ const RoleStack = styled.div`
 const Title = styled.p`
   margin: 0;
   color: #0c4e96;
-  font-size: 0.96rem;
+  font-size: 1rem;
   font-weight: 850;
   line-height: 1.38;
 `;
@@ -251,16 +279,16 @@ const Title = styled.p`
 const Division = styled.p`
   margin: 0;
   color: #6a7482;
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   font-weight: 650;
   line-height: 1.45;
 `;
 
 const ContactList = styled.div`
   display: grid;
-  gap: 8px;
+  gap: 9px;
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 22px;
 `;
 
 const ContactItem = styled.p`
@@ -269,14 +297,14 @@ const ContactItem = styled.p`
   gap: 8px;
   margin: 0;
   color: #526174;
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   font-weight: 650;
   line-height: 1.45;
   word-break: keep-all;
   overflow-wrap: normal;
 
   span {
-    flex: 0 0 44px;
+    flex: 0 0 48px;
     margin-right: 0;
     color: #0c4e96;
     font-weight: 900;
@@ -303,62 +331,46 @@ const PhotoPanel = styled.div`
   justify-content: center;
   min-width: 0;
   overflow: hidden;
+  border-left: 1px solid rgba(17, 69, 132, 0.12);
   background:
-    linear-gradient(135deg, rgba(18, 82, 166, 0.22), rgba(18, 82, 166, 0.04) 58%),
-    #dfeaf7;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 -34px;
-    width: 68px;
-    background: #ffffff;
-    clip-path: polygon(0 0, 100% 0, 44% 100%, 0 100%);
-  }
+    linear-gradient(145deg, rgba(249, 252, 255, 0.94) 0%, rgba(219, 234, 252, 0.96) 100%),
+    #eef5fd;
 
   &::after {
     content: '';
     position: absolute;
+    z-index: 3;
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 58%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(28, 90, 167, 0.1));
+    height: 42%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(7, 31, 67, 0.1));
+    pointer-events: none;
   }
 `;
 
 const PortraitFrame = styled.div`
   position: absolute;
-  right: 8px;
-  top: 50%;
+  inset: 14px 12px 0;
   z-index: 2;
-  width: 126px;
-  height: 184px;
   overflow: hidden;
-  border-radius: 10px 10px 8px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 999px 999px 0 0;
   background:
-    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.94), rgba(240, 245, 251, 0.9) 44%, rgba(218, 229, 242, 0.92)),
-    #eef3f8;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(236, 245, 255, 0.76)),
+    #ffffff;
   box-shadow:
-    0 16px 28px rgba(19, 58, 105, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  transform: translateY(-50%);
-
-  @media (max-width: 560px) {
-    right: 0;
-    width: 92px;
-    height: 134px;
-  }
+    0 14px 28px rgba(13, 52, 105, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.92);
 `;
 
 const Portrait = styled.img<{ $fit?: 'contain' | 'cover' }>`
   width: 100%;
   height: 100%;
   display: block;
+  background: #ffffff;
   object-fit: ${({ $fit }) => $fit ?? 'cover'};
   object-position: 50% 18%;
-  filter: saturate(0.98) contrast(1.01);
+  filter: saturate(1.01) contrast(1.02);
 `;
 
 const InitialMark = styled.div`
@@ -378,25 +390,44 @@ const InitialMark = styled.div`
 
 const CareerOverlay = styled.div`
   position: absolute;
-  inset: 0;
+  inset: 10px;
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: clamp(16px, 2vw, 24px);
+  gap: 16px;
+  padding: clamp(18px, 2vw, 26px);
+  border-radius: 8px;
+  border: 1px solid rgba(213, 231, 255, 0.3);
   background:
-    linear-gradient(135deg, rgba(10, 31, 61, 0.96), rgba(22, 76, 136, 0.94)),
-    #10233f;
+    linear-gradient(135deg, rgba(7, 31, 67, 0.99) 0%, rgba(12, 55, 111, 0.985) 100%),
+    #071f43;
   color: #ffffff;
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(18px) scale(0.98);
   pointer-events: none;
   transition:
     opacity 0.22s ease,
     transform 0.22s ease;
   overflow: auto;
+  box-shadow:
+    0 28px 60px rgba(4, 18, 42, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.1), transparent 28%);
+    opacity: 0.42;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   &::-webkit-scrollbar {
     width: 7px;
@@ -409,43 +440,68 @@ const CareerOverlay = styled.div`
 
   @media (hover: none) {
     position: relative;
+    inset: auto;
     grid-column: 1 / -1;
     opacity: 1;
     transform: none;
     pointer-events: auto;
     max-height: none;
+    border-radius: 0;
+    border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.16);
   }
 `;
 
 const CareerHeader = styled.div`
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 18px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid rgba(213, 231, 255, 0.22);
 `;
 
 const CareerTitle = styled.strong`
-  color: #ffffff;
-  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.9rem;
   font-weight: 900;
   line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   word-break: keep-all;
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 3px;
+    background: rgba(213, 231, 255, 0.82);
+  }
 `;
 
 const CareerName = styled.span`
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.78rem;
-  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(213, 235, 255, 0.24);
+  background: rgba(221, 240, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.82rem;
+  font-weight: 900;
   line-height: 1.35;
   white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 `;
 
 const CareerList = styled.ul`
   display: grid;
-  gap: 5px;
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -453,24 +509,39 @@ const CareerList = styled.ul`
 
 const CareerItem = styled.li`
   position: relative;
-  padding-left: 11px;
-  color: rgba(255, 255, 255, 0.86);
-  font-size: clamp(0.68rem, 0.84vw, 0.78rem);
+  padding: 8px 0 8px 24px;
+  border-bottom: 1px solid rgba(213, 231, 255, 0.1);
+  color: rgba(242, 248, 255, 0.9);
+  font-size: clamp(0.72rem, 0.86vw, 0.82rem);
   font-weight: 650;
-  line-height: 1.38;
+  line-height: 1.46;
   word-break: keep-all;
   overflow-wrap: break-word;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
 
   &::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0.64em;
-    width: 5px;
-    height: 5px;
+    left: 1px;
+    top: 1.05em;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #42d6cf;
-    box-shadow: 0 0 0 3px rgba(66, 214, 207, 0.16);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 0 4px rgba(213, 231, 255, 0.16);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: calc(1.05em + 8px);
+    bottom: -7px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(213, 231, 255, 0.24), transparent);
   }
 `;
 

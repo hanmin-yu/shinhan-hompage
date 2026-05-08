@@ -13,7 +13,7 @@ const officeFallbackImages: Record<string, string> = {
   kord: '/hero/it-digital-network.png',
   airport: '/hero/homepage/cargo-plane-sky.jpg',
   incheon: '/hero/homepage/port-cranes-blue-sky.jpg',
-  'sh-food': '/hero/pharma.jpg',
+  'sh-food': '/offices/sh-food.jpg',
   busan: '/hero/busan-port.jpg',
   cheongju: '/offices/cheongju-techno-city.png',
   gumi: '/hero/auto-parts.jpg',
@@ -21,12 +21,28 @@ const officeFallbackImages: Record<string, string> = {
   vietnam: '/hero/homepage/seoul-skyline-blue-sky.jpg',
 };
 
-const officeMapIds = new Set(['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi', 'invista']);
+const mapPinGroups = [
+  { id: 'seoul-hq', officeIds: ['seoul', 'kord-systems', 'kord'], x: 33.4, y: 21.3, accent: '#1c4f96' },
+  { id: 'gimpo', officeIds: ['invista'], x: 29.2, y: 20.7, accent: '#2f689b' },
+  { id: 'incheon-airport', officeIds: ['airport'], x: 25.1, y: 21.9, accent: '#2f78bf' },
+  { id: 'songdo', officeIds: ['incheon', 'sh-food'], x: 27.7, y: 23.5, accent: '#3c6ca8' },
+  { id: 'cheongju', officeIds: ['cheongju'], x: 44.0, y: 36.4, accent: '#5a7fb2' },
+  { id: 'gumi', officeIds: ['gumi'], x: 56.8, y: 48.4, accent: '#4a73a2' },
+  { id: 'busan', officeIds: ['busan'], x: 75.0, y: 62.1, accent: '#0f5a8f' },
+];
 
-const officeMapAliases: Record<string, string> = {
-  'kord-systems': 'seoul',
-  kord: 'seoul',
-  'sh-food': 'incheon',
+const homeTilePoints: Record<string, { x: number; y: number }> = {
+  seoul: { x: 12, y: 12 },
+  'kord-systems': { x: 16, y: 31 },
+  kord: { x: 10, y: 50 },
+  invista: { x: 17, y: 70 },
+  airport: { x: 36, y: 8 },
+  incheon: { x: 84, y: 15 },
+  'sh-food': { x: 90, y: 34 },
+  cheongju: { x: 88, y: 53 },
+  gumi: { x: 86, y: 72 },
+  vietnam: { x: 54, y: 92 },
+  busan: { x: 74, y: 92 },
 };
 
 const clampCoordinate = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -145,7 +161,7 @@ const Section = styled.section`
 
     36% {
       transform: translateY(-8px) scale(1.08);
-      color: #165cb8;
+      color: ${S.palette.blue};
       filter: drop-shadow(0 18px 24px rgba(39, 111, 207, 0.2));
     }
 
@@ -172,7 +188,7 @@ const MapLabel = styled.span`
   bottom: clamp(24px, 6vw, 78px);
   z-index: 0;
   color: rgba(15, 43, 89, 0.045);
-  font-size: clamp(2.2rem, 5vw, 5rem);
+  font-size: clamp(2rem, 4.4vw, 4.4rem);
   font-weight: 900;
   line-height: 0.86;
   letter-spacing: 0.08em;
@@ -224,7 +240,7 @@ const SectionTitleGhost = styled.span`
   left: 0;
   top: 0;
   color: rgba(15, 35, 62, 0.062);
-  font-size: clamp(2.8rem, 6vw, 5.9rem);
+  font-size: clamp(2.45rem, 5.2vw, 5.1rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: 0.08em;
@@ -233,7 +249,7 @@ const SectionTitleGhost = styled.span`
   pointer-events: none;
 
   @media (max-width: 640px) {
-    font-size: clamp(2.5rem, 12vw, 4.4rem);
+    font-size: clamp(2.2rem, 10.6vw, 3.9rem);
     letter-spacing: 0.04em;
   }
 `;
@@ -242,7 +258,7 @@ const SectionTitle = styled.h2`
   position: relative;
   z-index: 1;
   margin: 0;
-  color: #222a34;
+  color: ${S.palette.blue};
   font-size: clamp(2.05rem, 4.6vw, 4.35rem);
   font-weight: 900;
   line-height: 0.98;
@@ -260,24 +276,24 @@ const MapStage = styled.div`
   }
 
   @media (max-width: 780px) {
-    min-height: 500px;
+    display: none;
   }
 `;
 
 const MapPanel = styled.div`
   position: relative;
-  width: min(100%, 1120px);
-  aspect-ratio: 1.42;
+  width: min(100%, 1240px);
+  min-height: 760px;
 
   &::before {
     content: '';
     position: absolute;
-    left: 54%;
+    left: 50%;
     top: 50%;
-    width: min(62%, 700px);
+    width: min(68%, 760px);
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid rgba(70, 181, 209, 0.2);
+    border: 1px solid rgba(38, 103, 175, 0.22);
     transform: translate(-50%, -50%);
   }
 
@@ -292,15 +308,13 @@ const MapPanel = styled.div`
   }
 `;
 
-const KoreaMapImage = styled.img`
+const KoreaMapCanvas = styled.div`
   position: absolute;
-  left: 54%;
+  left: 50%;
   top: 50%;
-  width: min(58%, 670px);
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.2;
-  filter: grayscale(1) contrast(1.1) drop-shadow(0 18px 26px rgba(20, 62, 121, 0.08));
+  z-index: 1;
+  height: clamp(640px, 64vw, 760px);
+  aspect-ratio: 800 / 1200;
   transform: translate(-50%, -50%);
 
   @media (max-width: 700px) {
@@ -314,18 +328,27 @@ const KoreaMapImage = styled.img`
   }
 `;
 
+const KoreaMapImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.72;
+  filter: grayscale(0.28) contrast(1.42) saturate(0.82) drop-shadow(0 26px 40px rgba(20, 62, 121, 0.18));
+`;
+
 const MapHalo = styled.span`
   position: absolute;
-  left: 54%;
+  left: 50%;
   top: 50%;
-  width: min(66%, 740px);
+  width: min(72%, 820px);
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(70, 181, 209, 0.16), rgba(70, 181, 209, 0.04) 42%, transparent 68%),
-    conic-gradient(from 16deg, rgba(70, 181, 209, 0.16), transparent 16%, rgba(70, 181, 209, 0.12), transparent 38%, rgba(70, 181, 209, 0.14), transparent 62%);
+    radial-gradient(circle, rgba(48, 116, 193, 0.16), rgba(48, 116, 193, 0.04) 42%, transparent 68%),
+    conic-gradient(from 16deg, rgba(23, 159, 150, 0.14), transparent 16%, rgba(48, 116, 193, 0.12), transparent 38%, rgba(214, 154, 54, 0.12), transparent 62%);
   transform: translate(-50%, -50%);
-  opacity: 0.22;
+  opacity: 0.5;
 
   @media (max-width: 700px) {
     display: none;
@@ -339,19 +362,20 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string; $active: bo
   z-index: ${({ $active }) => ($active ? 4 : 2)};
   display: grid;
   place-items: center;
-  width: ${({ $active }) => ($active ? '22px' : '16px')};
-  height: ${({ $active }) => ($active ? '22px' : '16px')};
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.92);
-  background: ${({ $active, accent }) => ($active ? '#165cb8' : accent)};
+  width: ${({ $active }) => ($active ? '22px' : '17px')};
+  height: ${({ $active }) => ($active ? '22px' : '17px')};
+  border-radius: 999px 999px 999px 0;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  background: ${({ $active, accent }) => ($active ? S.palette.blue : accent)};
   color: transparent;
   font-size: 0;
   line-height: 0;
   box-shadow: ${({ $active }) =>
     $active
-      ? '0 0 0 8px rgba(39, 111, 207, 0.14), 0 0 0 16px rgba(39, 111, 207, 0.06), 0 18px 30px rgba(15, 43, 89, 0.18)'
-      : '0 0 0 5px rgba(39, 111, 207, 0.09), 0 12px 22px rgba(15, 43, 89, 0.12)'};
-  transform: translate(-50%, -50%) scale(${({ $active }) => ($active ? 1.08 : 1)});
+      ? '0 0 0 8px rgba(39, 111, 207, 0.14), 0 0 0 16px rgba(39, 111, 207, 0.06), 0 18px 30px rgba(15, 43, 89, 0.22)'
+      : '0 0 0 5px rgba(39, 111, 207, 0.1), 0 12px 22px rgba(15, 43, 89, 0.16)'};
+  transform: translate(-50%, -100%) rotate(-45deg) scale(${({ $active }) => ($active ? 1.08 : 1)});
+  transform-origin: 50% 100%;
   transition:
     width 0.24s ease,
     height 0.24s ease,
@@ -359,50 +383,18 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string; $active: bo
     box-shadow 0.24s ease,
     transform 0.24s ease;
 
-  &::before,
-  &::after {
+  &::before {
     content: '';
-    position: absolute;
-    inset: ${({ $active }) => ($active ? '-20px' : '-16px')};
+    width: 42%;
+    height: 42%;
     border-radius: 50%;
-    border: 1px solid ${({ $active }) => ($active ? 'rgba(39, 111, 207, 0.48)' : 'rgba(39, 111, 207, 0.32)')};
-    animation: officePulse ${({ $active }) => ($active ? '1.65s' : '2.8s')} ease-out infinite;
-  }
-
-  &::after {
-    animation-delay: 1.4s;
+    background: rgba(255, 255, 255, 0.96);
+    transform: rotate(45deg);
   }
 
   @media (max-width: 700px) {
     display: none;
   }
-`;
-
-const ConnectorLayer = styled.svg`
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-
-  @media (max-width: 780px) {
-    display: none;
-  }
-`;
-
-const ConnectorLine = styled.line<{ $active: boolean; accent: string }>`
-  stroke: ${({ $active, accent }) => ($active ? accent : 'rgba(38, 137, 182, 0.34)')};
-  stroke-width: ${({ $active }) => ($active ? 0.82 : 0.42)};
-  stroke-linecap: round;
-  stroke-dasharray: ${({ $active }) => ($active ? 'none' : '1.6 2.4')};
-  vector-effect: non-scaling-stroke;
-  filter: ${({ $active }) => ($active ? 'drop-shadow(0 8px 10px rgba(15, 43, 89, 0.18))' : 'none')};
-  transition:
-    stroke 0.2s ease,
-    stroke-width 0.2s ease,
-    filter 0.2s ease;
 `;
 
 const CountLine = styled.div`
@@ -410,10 +402,12 @@ const CountLine = styled.div`
   align-items: flex-end;
   gap: 16px;
   color: #2c2e33;
+  margin: clamp(42px, 6vw, 92px) 0 0 clamp(92px, 13vw, 220px);
 
   @media (max-width: 700px) {
     flex-wrap: wrap;
     gap: 10px 16px;
+    margin-left: 0;
   }
 `;
 
@@ -425,13 +419,16 @@ const CountLabelStack = styled.span`
 
 const Count = styled.strong<{ $counting: boolean }>`
   display: inline-block;
-  color: #2f3136;
-  font-size: clamp(4.2rem, 10vw, 8.4rem);
+  color: ${S.palette.blue};
+  font-size: clamp(6.8rem, 14vw, 12.8rem);
   font-weight: 900;
   line-height: 0.78;
   letter-spacing: 0;
   transform-origin: 50% 78%;
   animation: ${({ $counting }) => ($counting ? 'countPop 0.38s cubic-bezier(0.2, 0.9, 0.24, 1.28)' : 'none')};
+  text-shadow:
+    0 16px 34px rgba(20, 41, 75, 0.1),
+    0 2px 0 rgba(255, 255, 255, 0.82);
   transition:
     color 0.18s ease,
     filter 0.18s ease;
@@ -461,10 +458,14 @@ const CountLabel = styled.span`
 
 const Summary = styled.p`
   max-width: 620px;
-  margin: 0;
+  margin: 0 0 0 clamp(92px, 13vw, 220px);
   color: #52697f;
   font-size: clamp(1.14rem, 1.35vw, 1.28rem);
   line-height: 1.78;
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+  }
 `;
 
 const ViewAll = styled(Link)`
@@ -472,7 +473,8 @@ const ViewAll = styled(Link)`
   align-items: center;
   width: fit-content;
   gap: 10px;
-  color: #164f99;
+  margin-left: clamp(92px, 13vw, 220px);
+  color: ${S.palette.blue};
   font-size: clamp(1.08rem, 1.45vw, 1.3rem);
   font-weight: 900;
   text-decoration: none;
@@ -482,6 +484,10 @@ const ViewAll = styled(Link)`
     width: 36px;
     height: 1px;
     background: currentColor;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
   }
 `;
 
@@ -508,9 +514,9 @@ const OfficeTile = styled.a<{ x: number; y: number; $active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: clamp(150px, 15vw, 214px);
-  min-height: 128px;
-  padding: 15px;
+  width: clamp(148px, 13.5vw, 194px);
+  min-height: 122px;
+  padding: 14px;
   color: #ffffff;
   text-decoration: none;
   background: #d9e3ed;
@@ -592,16 +598,12 @@ const OfficeName = styled.strong`
 export function OfficesSection() {
   const { t } = useI18n();
   const visibleOffices = officeBranches;
-  const mapOffices = visibleOffices.filter((office) => officeMapIds.has(office.id));
-  const connectorOffices = visibleOffices.filter((office) => office.id !== 'vietnam');
   const [activeOfficeId, setActiveOfficeId] = useState<string | null>(null);
-  const activeMapOfficeId = activeOfficeId ? (officeMapAliases[activeOfficeId] ?? activeOfficeId) : null;
   const { ref: countRef, value: officeCount, isCounting } = useCountUp(visibleOffices.length);
-  const getStagePoint = (office: (typeof visibleOffices)[number]) => ({
-    x: 33 + office.x * 0.42,
-    y: 6 + office.y * 0.88,
-  });
   const getTilePoint = (office: (typeof visibleOffices)[number]) => {
+    const spreadPoint = homeTilePoints[office.id];
+    if (spreadPoint) return spreadPoint;
+
     const centerX = 54;
     const centerY = 50;
 
@@ -610,18 +612,6 @@ export function OfficesSection() {
       y: clampCoordinate(centerY + (office.labelY - centerY) * 1.08, 8, 92),
     };
   };
-  const getMapOffice = (office: (typeof visibleOffices)[number]) => {
-    const mapOfficeId = officeMapAliases[office.id] ?? office.id;
-
-    return visibleOffices.find((candidate) => candidate.id === mapOfficeId) ?? office;
-  };
-  const getCardAnchor = (tilePoint: { x: number; y: number }, point: { x: number; y: number }) => {
-    const cardHalfWidth = 8.8;
-    const x = tilePoint.x < point.x ? tilePoint.x + cardHalfWidth : tilePoint.x - cardHalfWidth;
-
-    return { x, y: tilePoint.y };
-  };
-
   return (
     <>
       <S.SectionAnchor id="offices" />
@@ -652,42 +642,26 @@ export function OfficesSection() {
 
           <MapStage aria-label={t('국내 사무소 위치 지도', 'Domestic office location map')}>
             <MapPanel>
-              <ConnectorLayer viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                {connectorOffices.map((office) => {
-                  const mapOffice = getMapOffice(office);
-                  const point = getStagePoint(mapOffice);
-                  const tilePoint = getTilePoint(office);
-                  const cardAnchor = getCardAnchor(tilePoint, point);
-
-                  return (
-                    <ConnectorLine
-                      key={`${office.id}-connector`}
-                      x1={point.x}
-                      y1={point.y}
-                      x2={cardAnchor.x}
-                      y2={cardAnchor.y}
-                      accent={mapOffice.accent}
-                      $active={activeOfficeId === office.id || activeMapOfficeId === mapOffice.id}
-                    />
-                  );
-                })}
-              </ConnectorLayer>
               <MapHalo aria-hidden="true" />
-              <KoreaMapImage src={koreaMapAsset} alt="" />
-              {mapOffices.map((office) => {
-                const point = getStagePoint(office);
-
-                return (
+              <KoreaMapCanvas>
+                <KoreaMapImage src={koreaMapAsset} alt="" />
+                {mapPinGroups.map((pin) => (
                   <MapPoint
-                    key={`${office.id}-point`}
-                    x={point.x}
-                    y={point.y}
-                    accent={office.accent}
-                    $active={activeMapOfficeId === office.id}
-                    aria-label={t(office.label, office.labelEn)}
+                    key={`${pin.id}-point`}
+                    x={pin.x}
+                    y={pin.y}
+                    accent={pin.accent}
+                    $active={activeOfficeId ? pin.officeIds.includes(activeOfficeId) : false}
+                    aria-label={pin.officeIds
+                      .map((officeId) => {
+                        const office = visibleOffices.find((candidate) => candidate.id === officeId);
+                        return office ? t(office.label, office.labelEn) : '';
+                      })
+                      .filter(Boolean)
+                      .join(', ')}
                   />
-                );
-              })}
+                ))}
+              </KoreaMapCanvas>
 
               <Tiles aria-label={t('사무소 목록', 'Office list')}>
                 {visibleOffices.map((office) => {

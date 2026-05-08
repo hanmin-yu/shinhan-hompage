@@ -5,7 +5,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
-import { NewsContentSection, NewsHeroSection } from './newsLayout';
+import { NewsContentSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
 
 const IntroList = styled.ul`
   margin: 0;
@@ -87,7 +87,7 @@ export function NewsPage() {
   return (
     <>
       <NewsHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -98,11 +98,11 @@ export function NewsPage() {
             items={newsSubnav.items}
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsHeroSection>
 
       <NewsContentSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <P.Kicker>Insights & Archive</P.Kicker>
           <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
           <P.Lead>
@@ -167,7 +167,7 @@ export function NewsPage() {
               ))}
             </EditorialList>
           </EditorialSection>
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsContentSection>
     </>
   );

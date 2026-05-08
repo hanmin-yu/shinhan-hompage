@@ -9,7 +9,7 @@ import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getNewsletterPdfFileName } from '../../utils/newsletter';
-import { NewsCompactHeroSection, NewsFlushPageSection } from './newsLayout';
+import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
@@ -22,27 +22,17 @@ export function NewsletterPage() {
   const newsSubnav = sectionSubnav.news;
   const { items, loading } = useNewsletterRecords();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-
-  const languageOptions = useMemo(
-    () => [
-      { value: 'all', label: t('전체', 'All') },
-      { value: '국문', label: t('국문', 'Korean') },
-      { value: '영문', label: t('영문', 'English') },
-    ],
-    [t],
-  );
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedLanguage]);
+  }, [searchQuery]);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
 
     const searched = items.filter((item) => {
-      if (selectedLanguage !== 'all' && (item.language ?? '') !== selectedLanguage) {
+      if (item.language === '영문') {
         return false;
       }
 
@@ -54,14 +44,13 @@ export function NewsletterPage() {
           language === 'en' ? item.summaryEn : item.summary,
           item.issue,
           item.publishedAt,
-          language === 'en' ? item.languageEn ?? item.language ?? '' : item.language ?? '',
         ].join(' '),
       );
 
       return target.includes(normalizedQuery);
     });
     return searched;
-  }, [items, language, searchQuery, selectedLanguage]);
+  }, [items, language, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -75,7 +64,7 @@ export function NewsletterPage() {
       pagedItems.map((item) => ({
         id: item.id,
         publishedAt: item.issue,
-        sourceLabel: t(item.language ?? '소식지', item.languageEn ?? 'Newsletter'),
+        sourceLabel: t('소식지', 'Newsletter'),
         title: t(item.title, item.titleEn),
         to: `/news/newsletter/${item.id}`,
         actions: [
@@ -102,7 +91,7 @@ export function NewsletterPage() {
   return (
     <>
       <NewsCompactHeroSection>
-        <P.PageContainer>
+        <NewsPageContainer>
           <LandingSubnav
             kicker={newsSubnav.kicker}
             kickerEn={newsSubnav.kickerEn}
@@ -114,20 +103,16 @@ export function NewsletterPage() {
             compactBottom
             matchAboutHero
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsCompactHeroSection>
 
       <NewsFlushPageSection>
-        <P.PageContainer data-reveal>
+        <NewsPageContainer data-reveal>
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
             searchPlaceholder={t('제목, 요약, 발행월로 검색', 'Search by title, summary, or issue')}
             onSearchChange={setSearchQuery}
-            chipLabel={t('언어 필터', 'Language Filter')}
-            chipOptions={languageOptions}
-            selectedChip={selectedLanguage}
-            onChipChange={setSelectedLanguage}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
           />
           {loading ? <P.CardText>{t('소식지를 불러오는 중입니다.', 'Loading newsletters.')}</P.CardText> : null}
@@ -146,7 +131,7 @@ export function NewsletterPage() {
             nextLabel={t('다음', 'Next')}
             onPageChange={setCurrentPage}
           />
-        </P.PageContainer>
+        </NewsPageContainer>
       </NewsFlushPageSection>
     </>
   );
