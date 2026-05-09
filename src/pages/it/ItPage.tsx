@@ -167,11 +167,20 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
   min-height: 214px;
   overflow: hidden;
   border: 1px solid rgba(29, 95, 182, 0.14);
-  border-top: 3px solid ${({ $accent }) => $accent};
   background:
     linear-gradient(135deg, rgba(29, 95, 182, 0.08), rgba(255, 255, 255, 0) 45%),
     #ffffff;
   box-shadow: 0 20px 45px rgba(15, 38, 76, 0.08);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: #123f85;
+    box-shadow: 0 24px 56px rgba(13, 35, 66, 0.12);
+  }
 
   @media (max-width: 540px) {
     grid-template-columns: 1fr;

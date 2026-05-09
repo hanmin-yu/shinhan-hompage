@@ -32,7 +32,7 @@ export const headerNavigation: NavItem[] = [
       { id: 'service-fta', label: 'FTA', to: '/services/consulting/fta' },
       { id: 'service-aeo', label: 'AEO', to: '/services/consulting/aeo' },
       { id: 'service-audit', label: '관세조사', to: '/services/consulting/customs-audit' },
-      { id: 'service-forex', label: '외환검사·조사', to: '/services/consulting/foreign-exchange' },
+      { id: 'service-forex', label: '외환 검사·조사', to: '/services/consulting/foreign-exchange' },
       { id: 'service-acva', label: 'ACVA', to: '/services/consulting/acva' },
       { id: 'service-penalty', label: '범칙조사', to: '/services/consulting/penalty-investigation' },
       { id: 'service-tax', label: '조세불복', to: '/services/consulting/tax-appeal' },

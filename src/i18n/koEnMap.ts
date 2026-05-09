@@ -16,7 +16,7 @@ export const koToEnTextMap: Record<string, string> = {
   '베트남 법인': 'Vietnam Office',
   관세조사: 'Customs Audit',
   'AEO 컨설팅': 'AEO Consulting',
-  '외환검사/조사': 'FX Inspection / Audit',
+  '외환 검사·조사': 'FX Inspection / Audit',
   범칙조사: 'Penalty Investigation',
   조세불복: 'Tax Appeal',
   환급: 'Refund',

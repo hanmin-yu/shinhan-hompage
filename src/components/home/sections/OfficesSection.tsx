@@ -22,16 +22,16 @@ const officeFallbackImages: Record<string, string> = {
 };
 
 const homeOfficeOrder = [
-  'invista',
   'seoul',
-  'kord-systems',
-  'kord',
   'airport',
   'incheon',
-  'sh-food',
+  'busan',
   'cheongju',
   'gumi',
-  'busan',
+  'kord-systems',
+  'kord',
+  'sh-food',
+  'invista',
   'vietnam',
 ];
 

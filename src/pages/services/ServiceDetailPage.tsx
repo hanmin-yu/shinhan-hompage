@@ -885,19 +885,9 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
     border-color 0.22s ease,
     box-shadow 0.22s ease;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto auto 0;
-    z-index: 3;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #071f43 0%, #1557a8 54%, #69a7e8 100%);
-  }
-
   &:hover {
     transform: translateY(-3px);
-    border-color: rgba(18, 63, 133, 0.24);
+    border-color: #123f85;
     box-shadow:
       0 24px 56px rgba(13, 35, 66, 0.12),
       0 1px 0 rgba(255, 255, 255, 0.96) inset;
