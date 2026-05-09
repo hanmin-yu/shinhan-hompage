@@ -23,11 +23,11 @@ const LocationTitle = styled(E.Title)`
   letter-spacing: -0.04em;
 `;
 
-const LocationLead = styled(E.Lead)`
-  max-width: 980px;
-  color: #4d5a6c;
-  font-size: clamp(1.12rem, 1.38vw, 1.28rem);
-  line-height: 1.82;
+const LocationHead = styled.div`
+  display: grid;
+  gap: 24px;
+  max-width: 1160px;
+  margin: 0 0 46px;
 `;
 
 type LocationViewData = {
@@ -73,20 +73,16 @@ export function LocationPage() {
         config={aboutSubnav}
         title="오시는 길"
         titleEn="Directions"
-        heroImage="/hero/menu-about-offices-ai.png"
+        heroImage="/hero/menu-utility-directions-ai.png"
         heroPosition="center 50%"
       />
 
       <LocationContentSection>
         <P.PageContainer data-reveal>
-          <E.Eyebrow>Directions</E.Eyebrow>
-          <LocationTitle>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</LocationTitle>
-          <LocationLead style={{ marginTop: 24, marginBottom: 46 }}>
-            {t(
-              '방문 전 연락처와 위치를 확인하실 수 있도록 본사 주소, 연락처, 지도 정보를 한 화면에 정리했습니다.',
-              'Review Seoul HQ address, contact details, and map information in one place before visiting.',
-            )}
-          </LocationLead>
+          <LocationHead>
+            <E.Eyebrow>Directions</E.Eyebrow>
+            <LocationTitle>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</LocationTitle>
+          </LocationHead>
           <DirectionsGrid>
             <LocationInfoPanel>
               <E.Eyebrow>Office Information</E.Eyebrow>
@@ -122,12 +118,6 @@ export function LocationPage() {
             <MapPanel>
               <E.Eyebrow>Map</E.Eyebrow>
               <OfficePanelTitle>{t('본사 지도 안내', 'HQ Map')}</OfficePanelTitle>
-              <E.Body>
-                {t(
-                  '지도를 통해 본사 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
-                  'Use the map to review the HQ location. For precise route guidance, open Naver Map or Google Maps.',
-                )}
-              </E.Body>
               <MapFrame>
                 <iframe
                   src={location.googleMapEmbedUrl}
@@ -154,7 +144,7 @@ export function DirectionsPage() {
         config={utilitySubnav}
         title="오시는 길"
         titleEn="Directions"
-        heroImage="/hero/menu-about-offices-ai.png"
+        heroImage="/hero/menu-utility-directions-ai.png"
         heroPosition="center 50%"
       />
 
@@ -163,12 +153,6 @@ export function DirectionsPage() {
           <StandaloneHead>
             <E.Eyebrow>Directions</E.Eyebrow>
             <LocationTitle>{t('오시는 길', 'Directions')}</LocationTitle>
-            <LocationLead>
-              {t(
-                '신한관세법인 서울본사 위치와 연락처를 한눈에 확인하실 수 있습니다.',
-                'Find Shinhan Customs Service Seoul HQ location and contact details at a glance.',
-              )}
-            </LocationLead>
           </StandaloneHead>
 
           <StandaloneGrid>
@@ -240,11 +224,11 @@ const LocationInfoPanel = styled(E.LinePanel)`
 
 const OfficePanelTitle = styled.h2`
   margin: 0;
-  color: #0f3f84;
-  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
+  color: #172337;
+  font-size: clamp(1.72rem, 3vw, 2.82rem);
   font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.025em;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
 `;
 
 const InfoRows = styled.div`
@@ -365,10 +349,14 @@ const StandaloneContainer = styled(P.PageContainer)`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  max-width: 1320px;
 `;
 
 const StandaloneHead = styled.div`
-  max-width: 760px;
+  display: grid;
+  gap: 24px;
+  max-width: 1160px;
+  margin: 0;
 `;
 
 const StandaloneGrid = styled.div`

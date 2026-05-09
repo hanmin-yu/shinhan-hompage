@@ -32,20 +32,18 @@ const mapPinGroups = [
 ];
 
 const homeTilePoints: Record<string, { x: number; y: number }> = {
-  seoul: { x: 12, y: 12 },
-  'kord-systems': { x: 16, y: 31 },
-  kord: { x: 10, y: 50 },
-  invista: { x: 17, y: 70 },
-  airport: { x: 36, y: 8 },
-  incheon: { x: 84, y: 15 },
-  'sh-food': { x: 90, y: 34 },
-  cheongju: { x: 88, y: 53 },
-  gumi: { x: 86, y: 72 },
-  vietnam: { x: 54, y: 92 },
-  busan: { x: 74, y: 92 },
+  seoul: { x: 13, y: 11 },
+  'kord-systems': { x: 20, y: 25 },
+  kord: { x: 14, y: 40 },
+  airport: { x: 21, y: 56 },
+  incheon: { x: 14, y: 72 },
+  'sh-food': { x: 21, y: 87 },
+  busan: { x: 87, y: 14 },
+  cheongju: { x: 80, y: 30 },
+  gumi: { x: 86, y: 47 },
+  invista: { x: 80, y: 64 },
+  vietnam: { x: 87, y: 81 },
 };
-
-const clampCoordinate = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 function useCountUp(target: number, duration = 1100) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -267,6 +265,7 @@ const SectionTitle = styled.h2`
 
 const MapStage = styled.div`
   position: relative;
+  min-width: 0;
   min-height: 760px;
   display: grid;
   place-items: center;
@@ -282,7 +281,9 @@ const MapStage = styled.div`
 
 const MapPanel = styled.div`
   position: relative;
-  width: min(100%, 1240px);
+  width: 100%;
+  max-width: 1240px;
+  min-width: 0;
   min-height: 760px;
 
   &::before {
@@ -295,6 +296,10 @@ const MapPanel = styled.div`
     border-radius: 50%;
     border: 1px solid rgba(38, 103, 175, 0.22);
     transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 1180px) {
+    min-height: 720px;
   }
 
   @media (max-width: 700px) {
@@ -313,7 +318,7 @@ const KoreaMapCanvas = styled.div`
   left: 50%;
   top: 50%;
   z-index: 1;
-  height: clamp(640px, 64vw, 760px);
+  height: clamp(620px, 48vw, 760px);
   aspect-ratio: 800 / 1200;
   transform: translate(-50%, -50%);
 
@@ -495,7 +500,7 @@ const Tiles = styled.div`
   position: absolute;
   inset: 0;
   z-index: 3;
-  pointer-events: none;
+  pointer-events: auto;
 
   @media (max-width: 700px) {
     position: static;
@@ -503,7 +508,6 @@ const Tiles = styled.div`
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 184px;
     gap: 18px;
-    pointer-events: auto;
   }
 `;
 
@@ -514,16 +518,16 @@ const OfficeTile = styled.a<{ x: number; y: number; $active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: clamp(148px, 13.5vw, 194px);
-  min-height: 122px;
+  width: clamp(136px, 12vw, 180px);
+  min-height: 112px;
   padding: 14px;
   color: #ffffff;
   text-decoration: none;
   background: #d9e3ed;
-  border: 1px solid rgba(255, 255, 255, 0.46);
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  border-radius: 3px;
   box-shadow: ${({ $active }) =>
-    $active ? '0 24px 46px rgba(15, 43, 89, 0.2)' : '0 16px 30px rgba(15, 43, 89, 0.1)'};
+    $active ? '0 20px 38px rgba(15, 43, 89, 0.18)' : '0 12px 24px rgba(15, 43, 89, 0.1)'};
   overflow: hidden;
   pointer-events: auto;
   transform: translate(-50%, -50%);
@@ -534,8 +538,13 @@ const OfficeTile = styled.a<{ x: number; y: number; $active: boolean }>`
 
   &:hover {
     transform: translate(-50%, calc(-50% - 4px));
-    box-shadow: 0 22px 40px rgba(15, 43, 89, 0.15);
-    filter: saturate(1.05);
+    box-shadow: 0 20px 34px rgba(15, 43, 89, 0.16);
+    filter: saturate(1.03);
+  }
+
+  @media (max-width: 1180px) {
+    width: clamp(126px, 15vw, 156px);
+    min-height: 104px;
   }
 
   @media (max-width: 700px) {
@@ -574,7 +583,9 @@ const OfficeImage = styled.img<{ position?: string }>`
 const OfficeShade = styled.span`
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(3, 20, 42, 0.02), rgba(3, 20, 42, 0.64));
+  background:
+    linear-gradient(180deg, rgba(3, 20, 42, 0.08), rgba(3, 20, 42, 0.68)),
+    linear-gradient(90deg, rgba(15, 43, 89, 0.3), rgba(15, 43, 89, 0));
 `;
 
 const OfficeRegion = styled.span`
@@ -600,18 +611,7 @@ export function OfficesSection() {
   const visibleOffices = officeBranches;
   const [activeOfficeId, setActiveOfficeId] = useState<string | null>(null);
   const { ref: countRef, value: officeCount, isCounting } = useCountUp(visibleOffices.length);
-  const getTilePoint = (office: (typeof visibleOffices)[number]) => {
-    const spreadPoint = homeTilePoints[office.id];
-    if (spreadPoint) return spreadPoint;
 
-    const centerX = 54;
-    const centerY = 50;
-
-    return {
-      x: clampCoordinate(centerX + (office.labelX - centerX) * 1.1, 9, 91),
-      y: clampCoordinate(centerY + (office.labelY - centerY) * 1.08, 8, 92),
-    };
-  };
   return (
     <>
       <S.SectionAnchor id="offices" />
@@ -665,7 +665,7 @@ export function OfficesSection() {
 
               <Tiles aria-label={t('사무소 목록', 'Office list')}>
                 {visibleOffices.map((office) => {
-                  const tilePoint = getTilePoint(office);
+                  const tilePoint = homeTilePoints[office.id] ?? { x: office.labelX, y: office.labelY };
 
                   return (
                     <OfficeTile

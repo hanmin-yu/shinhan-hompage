@@ -1,11 +1,8 @@
 import styled from '@emotion/styled';
 
-import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
-import { managementValues } from '../../data/pageContent';
-import { useI18n } from '../../i18n/useI18n';
 
 const MessageHero = styled(P.HeroSection)`
   margin-top: 0;
@@ -25,213 +22,130 @@ const MessageHero = styled(P.HeroSection)`
   }
 `;
 
-const Kicker = styled.span<{ $light?: boolean }>`
-  display: block;
-  margin: 0 0 10px 6px;
-  color: ${({ $light }) => ($light ? 'rgba(219, 235, 255, 0.78)' : palette.blue)};
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-`;
-
-const EditorialSection = styled.section<{ $tone?: 'soft' | 'navy' }>`
-  padding: clamp(92px, 10vw, 156px) 0;
-  border-top: 1px solid ${({ $tone }) => ($tone === 'navy' ? 'rgba(219, 235, 255, 0.12)' : '#dbe7f6')};
-  background: ${({ $tone }) => {
-    if ($tone === 'navy') {
-      return 'linear-gradient(180deg, #061833 0%, #09254c 100%)';
-    }
-    if ($tone === 'soft') {
-      return 'linear-gradient(180deg, #f3f7fc 0%, #fbfdff 100%)';
-    }
-    return '#ffffff';
-  }};
+const EditorialSection = styled.section`
+  padding: clamp(86px, 9vw, 138px) 0 clamp(96px, 11vw, 164px);
+  border-top: 1px solid #dbe7f6;
+  background:
+    linear-gradient(180deg, rgba(245, 249, 255, 0.84) 0%, rgba(255, 255, 255, 0) 310px),
+    #ffffff;
 `;
 
 const MessageLayout = styled(P.PageContainer)`
   display: grid;
-  grid-template-columns: minmax(320px, 0.36fr) minmax(0, 0.64fr);
-  gap: clamp(42px, 6.2vw, 104px);
-  align-items: start;
-  max-width: 1440px;
+  grid-template-columns: minmax(0, 0.56fr) minmax(340px, 0.44fr);
+  gap: clamp(38px, 5.4vw, 92px);
+  align-items: center;
+  max-width: 1420px;
+
+  & + & {
+    margin-top: clamp(70px, 8vw, 112px);
+    padding-top: clamp(70px, 8vw, 112px);
+    border-top: 1px solid #dce7f6;
+  }
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const CeoFigure = styled.figure`
+const CeoFigure = styled.figure<{ $reverse?: boolean }>`
+  width: 100%;
   margin: 0;
+  justify-self: ${({ $reverse }) => ($reverse ? 'start' : 'end')};
+  position: relative;
+  z-index: 0;
+  order: ${({ $reverse }) => ($reverse ? 1 : 2)};
+  padding: clamp(12px, 1.6vw, 22px);
+  background: linear-gradient(135deg, rgba(0, 88, 168, 0.08), rgba(18, 63, 133, 0.18));
+  box-shadow: 0 24px 60px rgba(23, 45, 78, 0.12);
+
+  @media (max-width: 980px) {
+    order: 2;
+    justify-self: stretch;
+  }
 `;
 
-const CeoImage = styled.img`
+const CeoImage = styled.img<{ $position?: string }>`
   display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 1.24 / 1;
+  object-fit: cover;
+  object-position: ${({ $position }) => $position ?? 'center'};
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
 `;
 
-const MessageArticle = styled.article`
+const MessageArticle = styled.article<{ $reverse?: boolean }>`
   display: grid;
-  gap: clamp(28px, 4vw, 48px);
+  gap: clamp(28px, 3.6vw, 46px);
+  order: ${({ $reverse }) => ($reverse ? 2 : 1)};
+
+  @media (max-width: 980px) {
+    order: 1;
+  }
 `;
 
-const SectionTitle = styled.h2<{ $light?: boolean }>`
-  max-width: 980px;
+const MessageHeader = styled.div`
+  display: grid;
+  gap: 16px;
+`;
+
+const MessageTitle = styled.h2`
+  position: relative;
+  max-width: 760px;
   margin: 0;
-  color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2.12rem, 3.65vw, 3.48rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+  padding-bottom: 24px;
+  color: #172337;
+  font-size: 3.32rem;
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: 0;
   text-wrap: balance;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: clamp(96px, 12vw, 156px);
+    height: 3px;
+    background: linear-gradient(90deg, #0058a8 0%, rgba(0, 88, 168, 0.16) 100%);
+  }
+
+  @media (max-width: 980px) {
+    font-size: 2.72rem;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 2.08rem;
+  }
 `;
 
 const BodyStack = styled.div`
   display: grid;
-  gap: 22px;
+  gap: clamp(18px, 2.2vw, 26px);
 `;
 
-const MessageBody = styled.p<{ $light?: boolean }>`
+const MessageBody = styled.p`
   margin: 0;
-  color: ${({ $light }) => ($light ? 'rgba(225, 238, 255, 0.82)' : '#4d5a6c')};
-  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  color: #4d5a6c;
+  font-size: 1.1rem;
   line-height: 1.84;
+  word-break: keep-all;
+
+  @media (max-width: 640px) {
+    font-size: 1rem;
+  }
 `;
 
 const LeadBody = styled(MessageBody)`
-  color: #4d5a6c;
-  font-weight: 400;
-`;
-
-const Rule = styled.div<{ $light?: boolean }>`
-  width: 100%;
-  height: 1px;
-  background: ${({ $light }) =>
-    $light ? 'rgba(219, 235, 255, 0.2)' : 'linear-gradient(90deg, #0f3d7d, rgba(15, 61, 125, 0))'};
-`;
-
-const MetricGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid #cddbef;
-  border-bottom: 1px solid #cddbef;
-
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (max-width: 560px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const MetricCard = styled.article`
-  display: grid;
-  gap: 12px;
-  min-height: 230px;
-  padding: clamp(22px, 3vw, 34px);
-  border-right: 1px solid #d6e2f1;
-
-  &:last-of-type {
-    border-right: 0;
-  }
-
-  @media (max-width: 980px) {
-    border-bottom: 1px solid #d6e2f1;
-
-    &:nth-of-type(2n) {
-      border-right: 0;
-    }
-
-    &:nth-last-of-type(-n + 2) {
-      border-bottom: 0;
-    }
-  }
-
-  @media (max-width: 560px) {
-    min-height: 0;
-    border-right: 0;
-
-    &:nth-last-of-type(-n + 2) {
-      border-bottom: 1px solid #d6e2f1;
-    }
-
-    &:last-of-type {
-      border-bottom: 0;
-    }
-  }
-`;
-
-const Metric = styled.strong`
-  color: rgba(18, 63, 133, 0.28);
-  font-size: clamp(2.1rem, 3.2vw, 3.2rem);
+  color: #172337;
+  font-size: 1.28rem;
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.06em;
-`;
-
-const MetricTitle = styled.h3`
-  margin: 0;
-  color: #0f3f84;
-  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.18;
-`;
-
-const MetricBody = styled.p`
-  margin: 0;
-  color: #4d5a6c;
-  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
-  line-height: 1.84;
-`;
-
-const NavyLayout = styled(P.PageContainer)`
-  display: grid;
-  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
-  gap: clamp(42px, 6.2vw, 104px);
-  max-width: 1440px;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const MessageSectionContainer = styled(P.PageContainer)`
-  max-width: 1480px;
-`;
-
-const ValueList = styled.div`
-  display: grid;
-  border-top: 1px solid rgba(219, 235, 255, 0.18);
-`;
-
-const ValueRow = styled.article`
-  display: grid;
-  grid-template-columns: minmax(130px, 0.3fr) minmax(0, 1fr);
-  gap: 24px;
-  padding: 24px 0;
-  border-bottom: 1px solid rgba(219, 235, 255, 0.18);
+  line-height: 1.68;
 
   @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    font-size: 1.12rem;
   }
-`;
-
-const ValueTitle = styled.h3`
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
-  font-weight: 800;
-`;
-
-const ValueBody = styled.p`
-  margin: 0;
-  color: rgba(225, 238, 255, 0.76);
-  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
-  line-height: 1.84;
 `;
 
 const Closing = styled.div`
@@ -242,49 +156,91 @@ const Closing = styled.div`
 const Thanks = styled.p`
   margin: 0;
   color: #172337;
-  font-size: clamp(1.48rem, 2.3vw, 2.2rem);
+  font-size: 2.02rem;
   font-weight: 800;
   line-height: 1.18;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
+
+  @media (max-width: 640px) {
+    font-size: 1.52rem;
+  }
 `;
 
-const messageNetworkCards = [
-  {
-    metricKo: '7개',
-    metricEn: '7',
-    titleKo: '전국 7개 도시 지사',
-    titleEn: 'Seven Domestic City Branches',
-    bodyKo: '주요 입항지를 비롯한 전국 7개 도시의 지사를 통해 고객에게 필요한 서비스를 제공합니다.',
-    bodyEn: 'We provide the services clients need through branches across seven domestic cities, including major port-of-entry locations.',
-  },
-  {
-    metricKo: '3PL',
-    metricEn: '3PL',
-    titleKo: '보세창고 기반 3PL 물류회사',
-    titleEn: 'Bonded-Warehouse 3PL Operation',
-    bodyKo: '보세창고를 운영하는 3PL 물류회사를 통해 통관 이후의 보관과 운송까지 이어갑니다.',
-    bodyEn: 'Through a 3PL logistics company operating bonded warehouses, we extend support into post-clearance storage and transportation.',
-  },
-  {
-    metricKo: '2개 거점',
-    metricEn: '2 Hubs',
-    titleKo: 'Los Angeles · Hanoi 관세물류법인',
-    titleEn: 'Los Angeles · Hanoi Customs Entities',
-    bodyKo: '미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인을 통해 현지 실무를 함께 지원합니다.',
-    bodyEn: 'We support local operations through customs and logistics entities in Los Angeles and Hanoi.',
-  },
-  {
-    metricKo: '100+',
-    metricEn: '100+',
-    titleKo: '100여 명의 직원',
-    titleEn: '100+ Team Members',
-    bodyKo: '국내외 조직 전반에서 100여 명의 직원이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
-    bodyEn: 'Across the domestic and overseas organization, more than 100 team members provide every service our clients need.',
-  },
-];
+const LegacyBand = styled(P.PageContainer)`
+  max-width: 1320px;
+`;
+
+const LegacyStatement = styled.div`
+  position: relative;
+  margin-top: clamp(76px, 8vw, 122px);
+  padding: clamp(72px, 8vw, 112px) 0 0;
+  border-top: 1px solid rgba(15, 43, 89, 0.08);
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -52px;
+    width: 1px;
+    height: 52px;
+    background: linear-gradient(180deg, transparent, rgba(0, 88, 168, 0.28));
+  }
+`;
+
+const LegacyText = styled.p`
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding-bottom: 28px;
+  color: #172337;
+  line-height: 1.08;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: clamp(92px, 11vw, 170px);
+    height: 2px;
+    background: #0058a8;
+    transform: translateX(-50%);
+  }
+`;
+
+const LegacyEstablished = styled.span`
+  color: #0067bd;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.22rem;
+  font-style: italic;
+  font-weight: 700;
+
+  @media (max-width: 640px) {
+    font-size: 1.02rem;
+  }
+`;
+
+const LegacyName = styled.span`
+  color: #123f85;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 3.34rem;
+  font-weight: 700;
+  letter-spacing: 0;
+
+  @media (max-width: 980px) {
+    font-size: 2.62rem;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 1.72rem;
+  }
+`;
 
 export function MessagePage() {
-  const { t, tx } = useI18n();
   const aboutSubnav = sectionSubnav.about;
 
   return (
@@ -304,107 +260,62 @@ export function MessagePage() {
 
       <EditorialSection>
         <MessageLayout data-reveal>
-          <CeoFigure>
-            <CeoImage src="/subpages/message-ceo.jpg" alt="" aria-hidden="true" />
-          </CeoFigure>
-
           <MessageArticle>
-            <div>
-              <Kicker>Message</Kicker>
-              <SectionTitle>{t('세 명으로 시작한 약속을 더 넓은 서비스로 이어갑니다.', 'A promise that began with three people now extends through a wider service network.')}</SectionTitle>
-            </div>
+            <MessageHeader>
+              <MessageTitle>세 명으로 시작한 신한의 약속</MessageTitle>
+            </MessageHeader>
 
             <BodyStack>
               <LeadBody>
-                {t(
-                  '1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.',
-                  'On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, was founded with three employees.',
-                )}
+                1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.
               </LeadBody>
               <MessageBody>
-                {t(
-                  '창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다.',
-                  'Since then, Shinhan Customs Service has steadily grown alongside the development of Korea’s economy and trade.',
-                )}
+                창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다. 현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.
+              </MessageBody>
+            </BodyStack>
+          </MessageArticle>
+
+          <CeoFigure>
+            <CeoImage src="/subpages/message-ceo-quote.jpg" alt="" aria-hidden="true" $position="center" />
+          </CeoFigure>
+        </MessageLayout>
+
+        <MessageLayout data-reveal>
+          <MessageArticle $reverse>
+            <MessageHeader>
+              <MessageTitle>100년의 Goal을 향해 계속 나아갑니다</MessageTitle>
+            </MessageHeader>
+
+            <BodyStack>
+              <LeadBody>
+                1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.
+              </LeadBody>
+              <MessageBody>
+                또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고100년의 Goal을 향해서 계속 나아가겠습니다.
               </MessageBody>
               <MessageBody>
-                {t(
-                  '현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여 명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
-                  'Today, through branches in seven domestic cities including major ports of entry, a 3PL logistics company operating bonded warehouses, and customs and logistics entities in Los Angeles and Hanoi, more than 100 employees provide every service our clients need.',
-                )}
-              </MessageBody>
-              <Rule />
-              <MessageBody>
-                {t(
-                  '1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.',
-                  'Since our founding in 1965, we have done our utmost every day and every year to provide fast and accurate import and export clearance services.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · 3PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 Goal을 향해서 계속 나아가겠습니다.',
-                  'To contribute to client growth, we have also expanded into services such as corporate audit advisory, representation in administrative disputes, AEO, FTA, refunds, requirements consulting, and 3PL logistics. Shinhan Customs Service will keep moving toward its 100-year goal without stopping these forward-looking efforts.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다.',
-                  'We extend our sincere thanks to all clients and partners who have stood with us and supported us.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.',
-                  'Every member of our company keeps in mind that our clients’ success and growth are our own, and we will continue striving today and tomorrow to provide truthful and distinguished service of the highest quality.',
-                )}
+                함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다. 고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.
               </MessageBody>
             </BodyStack>
 
             <Closing>
-              <Thanks>{t('감사합니다.', 'Thank you.')}</Thanks>
+              <Thanks>감사합니다.</Thanks>
             </Closing>
           </MessageArticle>
+
+          <CeoFigure $reverse>
+            <CeoImage src="/subpages/message-ceo.jpg" alt="" aria-hidden="true" $position="center 45%" />
+          </CeoFigure>
         </MessageLayout>
-      </EditorialSection>
 
-      <EditorialSection $tone="soft">
-        <MessageSectionContainer data-reveal>
-          <Kicker>Network & Scale</Kicker>
-          <SectionTitle>{t('현재 조직과 운영 네트워크', 'Current Organization & Network')}</SectionTitle>
-          <MetricGrid>
-            {messageNetworkCards.map((item) => (
-              <MetricCard key={item.titleKo}>
-                <Metric>{t(item.metricKo, item.metricEn)}</Metric>
-                <MetricTitle>{t(item.titleKo, item.titleEn)}</MetricTitle>
-                <MetricBody>{t(item.bodyKo, item.bodyEn)}</MetricBody>
-              </MetricCard>
-            ))}
-          </MetricGrid>
-        </MessageSectionContainer>
-      </EditorialSection>
-
-      <EditorialSection $tone="navy">
-        <NavyLayout data-reveal>
-          <div>
-            <Kicker $light>Core Value</Kicker>
-            <SectionTitle $light>{t('100년의 Goal을 향한 신한의 기준', 'Shinhan’s standard for the 100-year goal')}</SectionTitle>
-            <Rule $light />
-            <MessageBody $light>
-              {t(
-                '서비스의 폭은 넓어졌지만 기준은 분명합니다. 고객의 성공을 중심에 두고 정확한 실행과 신뢰의 태도로 움직입니다.',
-                'Our services have expanded, but our standard remains clear. We move with accurate execution and trust, centered on client success.',
-              )}
-            </MessageBody>
-          </div>
-          <ValueList>
-            {managementValues.map((item) => (
-              <ValueRow key={item.title}>
-                <ValueTitle>{tx(item.title)}</ValueTitle>
-                <ValueBody>{tx(item.body)}</ValueBody>
-              </ValueRow>
-            ))}
-          </ValueList>
-        </NavyLayout>
+        <LegacyBand data-reveal>
+          <LegacyStatement>
+            <LegacyText>
+              <LegacyEstablished>Established 1965</LegacyEstablished>
+              <LegacyName>SHINHAN Customs Service Inc.</LegacyName>
+            </LegacyText>
+          </LegacyStatement>
+        </LegacyBand>
       </EditorialSection>
     </>
   );

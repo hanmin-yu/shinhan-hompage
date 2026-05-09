@@ -442,13 +442,11 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
 
     a[href='/contact'] {
       border-color: transparent;
-      background: ${palette.blue};
+      background: transparent;
       color: #ffffff;
       text-shadow: none;
-      box-shadow:
-        -14px 16px 34px rgba(18, 63, 133, 0.16),
-        inset 1px 0 0 rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(12px);
+      box-shadow: none;
+      backdrop-filter: none;
     }
 
     a[href='/recruit'],
@@ -527,11 +525,9 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
     &:has(nav > div:hover) a[href='/contact'],
     &:has(nav > div:focus-within) a[href='/contact'] {
       border-color: transparent;
-      background: ${palette.blue};
-      color: #ffffff;
-      box-shadow:
-        -14px 16px 34px rgba(18, 63, 133, 0.16),
-        inset 1px 0 0 rgba(255, 255, 255, 0.18);
+      background: transparent;
+      color: ${palette.blue};
+      box-shadow: none;
     }
 
     &:has(nav > div:hover) a[href='/recruit'],
@@ -1697,78 +1693,68 @@ export const FontModeToggle = styled.button`
 `;
 
 export const ContactButton = styled(Link)`
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  top: calc(var(--site-header-height, 98px) + 26px);
-  right: 0;
-  z-index: 2;
-  overflow: hidden;
-  width: 72px;
-  height: 232px;
-  min-height: 0;
-  min-width: 0;
-  padding: 28px 0 76px;
+  gap: 9px;
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 6px;
   border: 0;
   border-radius: 0;
-  color: #ffffff;
-  background: ${palette.blue};
-  box-shadow:
-    -14px 16px 34px rgba(18, 63, 133, 0.16),
-    inset 1px 0 0 rgba(255, 255, 255, 0.18);
+  color: ${palette.blue};
+  background: transparent;
+  box-shadow: none;
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
   transition:
-    box-shadow 0.18s ease,
-    background-color 0.18s ease,
+    opacity 0.18s ease,
     color 0.18s ease;
 
   &::before {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 72px;
-    background: #ffffff;
-    transition: background-color 0.18s ease;
+    left: 6px;
+    right: 22px;
+    bottom: 3px;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.72;
+    transform: scaleX(0.34);
+    transform-origin: left center;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
   }
 
   &::after {
     content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 25px;
-    width: 18px;
-    height: 18px;
-    border: 1px solid ${palette.blue};
+    width: 6px;
+    height: 6px;
+    border: 1.6px solid currentColor;
     border-top: 0;
     border-left: 0;
-    transform: translateX(-50%) rotate(45deg);
+    transform: rotate(-45deg);
     transition: transform 0.18s ease;
   }
 
   &:hover {
-    background: #0b53a6;
-    box-shadow:
-      -18px 18px 42px rgba(18, 63, 133, 0.22),
-      inset 1px 0 0 rgba(255, 255, 255, 0.22);
+    color: #0b53a6;
   }
 
   &:hover::before {
-    background: #f7fbff;
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   &:hover::after {
-    transform: translate(-50%, 3px) rotate(45deg);
+    transform: translateX(3px) rotate(-45deg);
   }
 
   @media (max-width: 1180px) {
@@ -1776,15 +1762,7 @@ export const ContactButton = styled(Link)`
   }
 
   @media (max-width: 1320px) {
-    top: calc(var(--site-header-height, 92px) + 22px);
-    width: 66px;
-    height: 212px;
-    padding-bottom: 68px;
-    font-size: 0.76rem;
-
-    &::before {
-      height: 66px;
-    }
+    font-size: 0.88rem;
   }
 `;
 
@@ -2055,16 +2033,16 @@ export const HeroBanner = styled.div`
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 84% 20%, rgba(63, 132, 228, 0.22), transparent 30%),
-    radial-gradient(circle at 12% 80%, rgba(29, 69, 139, 0.24), transparent 28%),
-    linear-gradient(180deg, #050d1d 0%, #0a1730 48%, #0d223f 100%);
+    radial-gradient(circle at 84% 20%, rgba(45, 98, 180, 0.24), transparent 30%),
+    radial-gradient(circle at 12% 80%, rgba(18, 63, 133, 0.28), transparent 28%),
+    linear-gradient(180deg, #0f3473 0%, #123f85 50%, #0d326f 100%);
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(6, 18, 38, 0.24), rgba(10, 30, 58, 0.08) 28%, rgba(6, 18, 36, 0.28) 100%);
+      linear-gradient(180deg, rgba(7, 30, 69, 0.18), rgba(18, 63, 133, 0.04) 28%, rgba(7, 30, 69, 0.22) 100%);
     pointer-events: none;
     z-index: 1;
   }

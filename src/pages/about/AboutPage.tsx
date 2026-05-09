@@ -199,7 +199,7 @@ const HeroEyebrow = styled.span`
 const HeroTitle = styled.h1`
   max-width: 1160px;
   margin: 0;
-  color: #172337;
+  color: #123f85;
   font-size: clamp(2.42rem, 4.9vw, 4.6rem);
   font-weight: 800;
   line-height: 1.08;
@@ -308,7 +308,7 @@ const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
   border-top: 1px solid ${({ $tone }) => ($tone === 'navy' ? 'rgba(226, 231, 238, 0.12)' : '#d8dee8')};
   background: ${({ $tone }) => {
     if ($tone === 'navy') {
-      return 'linear-gradient(180deg, #0a1424 0%, #121f33 100%)';
+      return 'linear-gradient(180deg, #004a8e 0%, #0058a8 52%, #00427f 100%)';
     }
     if ($tone === 'soft') {
       return 'linear-gradient(180deg, #f5f6f8 0%, #fbfcfd 100%)';
@@ -583,7 +583,7 @@ const Slogan = styled.p`
   max-width: 1320px;
   margin: 0 auto;
   padding-bottom: 30px;
-  color: #172337;
+  color: #0058a8;
   font-size: clamp(2.42rem, 5vw, 5.5rem);
   font-weight: 900;
   line-height: 1.15;
@@ -597,7 +597,7 @@ const Slogan = styled.p`
     bottom: 0;
     width: clamp(92px, 11vw, 170px);
     height: 2px;
-    background: #172337;
+    background: #0058a8;
     transform: translateX(-50%);
   }
 

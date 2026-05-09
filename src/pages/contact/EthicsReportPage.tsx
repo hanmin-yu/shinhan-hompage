@@ -25,122 +25,126 @@ export function EthicsReportPage() {
         config={utilitySubnav}
         title="부정행위 접수창구"
         titleEn="Ethics Reporting"
-        heroImage="/hero/homepage/office-tower-clear-sky.jpg"
-        heroPosition="center 42%"
+        heroImage="/hero/menu-utility-ethics-ai.png"
+        heroPosition="center 50%"
       />
 
       <ReportSection>
         <ReportInner>
-          <E.Statement data-reveal>
-            <div>
-              <E.Eyebrow>Ethics Reporting</E.Eyebrow>
-              <E.Title>{t('부정행위 접수창구', 'Ethics Reporting')}</E.Title>
-            </div>
-            <IntroGrid>
-              <E.Lead>
-                {t(
-                  '신한관세법인은 공정하고 투명한 업무 환경을 위해 부정행위 접수창구를 운영하고 있습니다.',
-                  'Shinhan Customs Service operates an ethics reporting channel to support a fair and transparent workplace.',
-                )}
-              </E.Lead>
-              <NoticePanel>
-                <NoticeLabel>{t('비공개 관리', 'Confidential')}</NoticeLabel>
-                <NoticeText>
-                  {t(
-                    '접수된 내용과 신고자 정보는 관련 절차에 따라 비공개로 관리됩니다.',
-                    'Reports and reporter information are managed confidentially according to internal procedures.',
-                  )}
-                </NoticeText>
-              </NoticePanel>
-            </IntroGrid>
-          </E.Statement>
+          <ReportIntro data-reveal>
+            <E.Eyebrow>Ethics Reporting</E.Eyebrow>
+            <ReportTitle>{t('부정행위 접수창구', 'Ethics Reporting')}</ReportTitle>
+            <ReportLead>
+              {t(
+                '신한관세법인은 공정하고 투명한 업무 환경을 위해 부정행위 접수창구를 운영하고 있습니다.',
+                'Shinhan Customs Service operates an ethics reporting channel to support a fair and transparent workplace.',
+              )}
+            </ReportLead>
+          </ReportIntro>
 
           <ReportGrid>
-            <ReportPanel>
-              <E.Eyebrow>{t('접수 대상', 'Report Topics')}</E.Eyebrow>
-              <PanelTitle>{t('이런 내용을 접수할 수 있습니다.', 'Topics You Can Report')}</PanelTitle>
-              <SubjectList>
-                {reportSubjects.map((subject) => (
-                  <SubjectItem key={subject.ko}>{t(subject.ko, subject.en)}</SubjectItem>
-                ))}
-              </SubjectList>
-            </ReportPanel>
+            <GuidePanel>
+              <E.Eyebrow>{t('접수 안내', 'Report Guide')}</E.Eyebrow>
+              <PanelTitle>{t('접수 안내', 'Reporting Guide')}</PanelTitle>
 
-            <ReportPanel>
-              <E.Eyebrow>{t('접수 방법', 'How to Report')}</E.Eyebrow>
-              <PanelTitle>{t('아래 연락처로 접수해주세요.', 'Please use the contact below.')}</PanelTitle>
-              <ContactList>
-                <ContactItem>
-                  <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
-                  <ContactLink href={`mailto:${ethicsContactEmail}`}>{ethicsContactEmail}</ContactLink>
-                </ContactItem>
-                <ContactItem>
-                  <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
-                  <ContactLink href={`tel:${ethicsContactPhone.replace(/[^+\d]/g, '')}`}>{ethicsContactPhone}</ContactLink>
-                </ContactItem>
-              </ContactList>
-              <ActionLink href={`mailto:${ethicsContactEmail}`}>{t('이메일로 접수하기', 'Report by Email')}</ActionLink>
-            </ReportPanel>
-          </ReportGrid>
-
-          <OnlinePanel>
-            <OnlineHeader>
-              <E.Eyebrow>{t('온라인 접수', 'Online Report')}</E.Eyebrow>
-              <PanelTitle>{t('온라인으로 접수하기', 'Submit Online')}</PanelTitle>
-              <OnlineText>
+              <NoticeText>
                 {t(
-                  '아래 항목을 작성해주시면 담당자가 내용을 확인합니다.',
-                  'Complete the fields below and the responsible team will review your report.',
+                  '접수된 내용과 신고자 정보는 관련 절차에 따라 비공개로 관리됩니다.',
+                  'Reports and reporter information are managed confidentially according to internal procedures.',
                 )}
-              </OnlineText>
-            </OnlineHeader>
+              </NoticeText>
 
-            <ReportForm onSubmit={(event) => event.preventDefault()}>
-              <FieldGroup>
-                <FieldLabel htmlFor="ethics-category">{t('접수 유형', 'Report Type')}</FieldLabel>
-                <SelectInput id="ethics-category" name="category" defaultValue="">
-                  <option value="" disabled>
-                    {t('선택해주세요', 'Select a type')}
-                  </option>
+              <GuideBlock>
+                <GuideLabel>{t('접수 대상', 'Report Topics')}</GuideLabel>
+                <SubjectList>
                   {reportSubjects.map((subject) => (
-                    <option key={subject.ko} value={subject.ko}>
-                      {t(subject.ko, subject.en)}
-                    </option>
+                    <SubjectItem key={subject.ko}>{t(subject.ko, subject.en)}</SubjectItem>
                   ))}
-                </SelectInput>
-              </FieldGroup>
-              <FieldGroup>
-                <FieldLabel htmlFor="ethics-name">{t('이름', 'Name')}</FieldLabel>
-                <TextInput id="ethics-name" name="name" placeholder={t('선택 입력', 'Optional')} />
-              </FieldGroup>
-              <FieldGroup>
-                <FieldLabel htmlFor="ethics-contact">{t('연락처', 'Contact')}</FieldLabel>
-                <TextInput id="ethics-contact" name="contact" placeholder={t('이메일 또는 전화번호', 'Email or phone number')} />
-              </FieldGroup>
-              <FieldGroup>
-                <FieldLabel htmlFor="ethics-title">{t('제목', 'Subject')}</FieldLabel>
-                <TextInput id="ethics-title" name="title" placeholder={t('제목을 입력해주세요', 'Enter a subject')} />
-              </FieldGroup>
-              <FieldGroup $wide>
-                <FieldLabel htmlFor="ethics-message">{t('접수 내용', 'Details')}</FieldLabel>
-                <TextArea
-                  id="ethics-message"
-                  name="message"
-                  placeholder={t('접수 내용을 입력해주세요.', 'Enter the report details.')}
-                />
-              </FieldGroup>
-              <ConsentLabel>
-                <input type="checkbox" name="privacy" />
-                <span>
+                </SubjectList>
+              </GuideBlock>
+
+              <GuideBlock>
+                <GuideLabel>{t('접수 방법', 'How to Report')}</GuideLabel>
+                <ContactList>
+                  <ContactItem>
+                    <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
+                    <ContactLink href={`mailto:${ethicsContactEmail}`}>{ethicsContactEmail}</ContactLink>
+                  </ContactItem>
+                  <ContactItem>
+                    <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
+                    <ContactLink href={`tel:${ethicsContactPhone.replace(/[^+\d]/g, '')}`}>
+                      {ethicsContactPhone}
+                    </ContactLink>
+                  </ContactItem>
+                </ContactList>
+              </GuideBlock>
+
+              <ActionLink href={`mailto:${ethicsContactEmail}`}>{t('이메일로 접수하기', 'Report by Email')}</ActionLink>
+            </GuidePanel>
+
+            <OnlinePanel>
+              <OnlineHeader>
+                <E.Eyebrow>{t('온라인 접수', 'Online Report')}</E.Eyebrow>
+                <PanelTitle>{t('온라인으로 접수하기', 'Submit Online')}</PanelTitle>
+                <OnlineText>
                   {t(
-                    '접수 내용과 신고자 정보가 관련 절차에 따라 비공개로 관리되는 것에 동의합니다.',
-                    'I understand that report details and reporter information will be managed confidentially.',
+                    '아래 항목을 작성해주시면 담당자가 내용을 확인합니다.',
+                    'Complete the fields below and the responsible team will review your report.',
                   )}
-                </span>
-              </ConsentLabel>
-              <SubmitButton type="submit">{t('온라인 접수하기', 'Submit Report')}</SubmitButton>
-            </ReportForm>
-          </OnlinePanel>
+                </OnlineText>
+              </OnlineHeader>
+
+              <ReportForm onSubmit={(event) => event.preventDefault()}>
+                <FieldGroup>
+                  <FieldLabel htmlFor="ethics-category">{t('접수 유형', 'Report Type')}</FieldLabel>
+                  <SelectInput id="ethics-category" name="category" defaultValue="">
+                    <option value="" disabled>
+                      {t('선택해주세요', 'Select a type')}
+                    </option>
+                    {reportSubjects.map((subject) => (
+                      <option key={subject.ko} value={subject.ko}>
+                        {t(subject.ko, subject.en)}
+                      </option>
+                    ))}
+                  </SelectInput>
+                </FieldGroup>
+                <FieldGroup>
+                  <FieldLabel htmlFor="ethics-name">{t('이름', 'Name')}</FieldLabel>
+                  <TextInput id="ethics-name" name="name" placeholder={t('선택 입력', 'Optional')} />
+                </FieldGroup>
+                <FieldGroup>
+                  <FieldLabel htmlFor="ethics-contact">{t('연락처', 'Contact')}</FieldLabel>
+                  <TextInput
+                    id="ethics-contact"
+                    name="contact"
+                    placeholder={t('이메일 또는 전화번호', 'Email or phone number')}
+                  />
+                </FieldGroup>
+                <FieldGroup>
+                  <FieldLabel htmlFor="ethics-title">{t('제목', 'Subject')}</FieldLabel>
+                  <TextInput id="ethics-title" name="title" placeholder={t('제목을 입력해주세요', 'Enter a subject')} />
+                </FieldGroup>
+                <FieldGroup $wide>
+                  <FieldLabel htmlFor="ethics-message">{t('접수 내용', 'Details')}</FieldLabel>
+                  <TextArea
+                    id="ethics-message"
+                    name="message"
+                    placeholder={t('접수 내용을 입력해주세요.', 'Enter the report details.')}
+                  />
+                </FieldGroup>
+                <ConsentLabel>
+                  <input type="checkbox" name="privacy" />
+                  <span>
+                    {t(
+                      '접수 내용과 신고자 정보가 관련 절차에 따라 비공개로 관리되는 것에 동의합니다.',
+                      'I understand that report details and reporter information will be managed confidentially.',
+                    )}
+                  </span>
+                </ConsentLabel>
+                <SubmitButton type="submit">{t('온라인 접수하기', 'Submit Report')}</SubmitButton>
+              </ReportForm>
+            </OnlinePanel>
+          </ReportGrid>
         </ReportInner>
       </ReportSection>
     </>
@@ -148,66 +152,97 @@ export function EthicsReportPage() {
 }
 
 const ReportSection = styled(E.Section)`
+  padding: clamp(92px, 10vw, 156px) 0;
   background: #ffffff;
 `;
 
 const ReportInner = styled(P.PageContainer)`
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 44px);
+  gap: clamp(44px, 5.6vw, 82px);
+  max-width: 1320px;
 `;
 
-const IntroGrid = styled(E.LeadGrid)`
-  align-items: stretch;
+const ReportIntro = styled.div`
+  display: grid;
+  gap: 18px;
+  max-width: 1160px;
 `;
 
-const NoticePanel = styled(E.LinePanel)`
-  align-content: center;
-  gap: 10px;
-  padding: clamp(22px, 3vw, 30px) 0;
+const ReportTitle = styled.h1`
+  max-width: 1160px;
+  margin: 0;
+  color: #172337;
+  font-size: clamp(2.42rem, 4.9vw, 4.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+
+  @media (max-width: 640px) {
+    letter-spacing: -0.035em;
+  }
 `;
 
-const NoticeLabel = styled.strong`
-  color: #1f5cb2;
-  font-size: 0.86rem;
-  font-weight: 900;
+const ReportLead = styled.p`
+  max-width: 980px;
+  margin: 0;
+  color: #4d5a6c;
+  font-size: clamp(1.12rem, 1.38vw, 1.28rem);
+  font-weight: 400;
+  line-height: 1.82;
 `;
 
 const NoticeText = styled.p`
   margin: 0;
-  color: #4d6076;
-  font-size: 1.04rem;
-  line-height: 1.68;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.18vw, 1.14rem);
+  font-weight: 400;
+  line-height: 1.84;
   word-break: keep-all;
 `;
 
 const ReportGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(320px, 0.42fr) minmax(0, 0.58fr);
   gap: clamp(24px, 4vw, 58px);
+  align-items: start;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const ReportPanel = styled(E.LinePanel)`
+const GuidePanel = styled(E.LinePanel)`
   display: flex;
   flex-direction: column;
   gap: 16px;
   min-height: 100%;
-  padding: clamp(26px, 3vw, 36px) 0;
+  padding: clamp(24px, 3vw, 40px) 0;
 `;
 
 const PanelTitle = styled.h2`
+  max-width: 980px;
   margin: 0;
-  color: #172337;
-  font-size: clamp(1.38rem, 2.2vw, 2rem);
+  color: #0f3f84;
+  font-size: clamp(1.36rem, 1.9vw, 1.74rem);
   font-weight: 800;
-  line-height: 1.24;
-  letter-spacing: 0;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   word-break: keep-all;
+`;
+
+const GuideBlock = styled.div`
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+const GuideLabel = styled.strong`
+  color: #1f5cb2;
+  font-size: 0.84rem;
+  font-weight: 900;
 `;
 
 const SubjectList = styled.ul`
@@ -222,9 +257,9 @@ const SubjectItem = styled.li`
   padding: 14px 0;
   border-bottom: 1px solid #d8dee8;
   color: #496582;
-  font-size: 1.04rem;
-  font-weight: 700;
-  line-height: 1.52;
+  font-size: clamp(1.04rem, 1.25vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.78;
   word-break: keep-all;
 `;
 
@@ -282,9 +317,16 @@ const ActionLink = styled.a`
 `;
 
 const OnlinePanel = styled(E.LinePanel)`
-  display: grid;
-  gap: 22px;
-  padding: clamp(28px, 3vw, 40px) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  padding: clamp(28px, 3vw, 40px);
+  border: 1px solid #d8dee8;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 251, 255, 0.96)),
+    #ffffff;
+  box-shadow: 0 18px 36px rgba(23, 45, 78, 0.055);
 `;
 
 const OnlineHeader = styled.div`
@@ -293,10 +335,12 @@ const OnlineHeader = styled.div`
 `;
 
 const OnlineText = styled.p`
+  max-width: 980px;
   margin: 0;
-  color: #496582;
-  font-size: 1.04rem;
-  line-height: 1.62;
+  color: #4d5a6c;
+  font-size: clamp(1.04rem, 1.25vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.78;
   word-break: keep-all;
 `;
 
@@ -304,6 +348,7 @@ const ReportForm = styled.form`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px 18px;
+  width: 100%;
 
   @media (max-width: 720px) {
     grid-template-columns: 1fr;

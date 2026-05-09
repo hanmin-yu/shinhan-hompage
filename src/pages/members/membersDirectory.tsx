@@ -34,16 +34,16 @@ const CategoryMenuWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
-  max-width: 1260px;
-  margin: 0 auto clamp(42px, 5vw, 72px);
-  padding: 10px;
-  border: 1px solid #d8e2f0;
+  max-width: 1480px;
+  margin: 0 auto clamp(40px, 4.8vw, 58px);
+  padding: clamp(14px, 2vw, 20px);
+  border: 1px solid #d8dee8;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 255, 0.96)),
+    linear-gradient(180deg, rgba(248, 251, 255, 0.96), rgba(255, 255, 255, 0.98)),
     #ffffff;
-  box-shadow: 0 18px 44px rgba(13, 52, 105, 0.08);
+  box-shadow: none;
 
   @media (max-width: 760px) {
     justify-content: flex-start;
@@ -53,42 +53,44 @@ const CategoryMenuWrap = styled.div`
 const CategoryButton = styled.button<{ $active: boolean }>`
   position: relative;
   display: inline-flex;
+  flex: 1 1 190px;
+  min-width: 178px;
+  min-height: 76px;
+  padding: 14px 20px 15px 30px;
   align-items: center;
-  justify-content: center;
-  flex: 1 1 168px;
-  min-width: 148px;
-  min-height: 74px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 6px;
+  justify-content: flex-start;
+  border: 1px solid ${({ $active }) => ($active ? 'rgba(31, 92, 178, 0.34)' : 'rgba(31, 92, 178, 0.14)')};
+  border-radius: 8px;
   background: ${({ $active }) =>
     $active
-      ? 'linear-gradient(135deg, #082a57 0%, #1557a8 100%)'
-      : 'linear-gradient(180deg, #ffffff 0%, #f9fbff 100%)'};
-  color: ${({ $active }) => ($active ? '#ffffff' : '#26364d')};
-  font-size: clamp(1.05rem, 1.08vw, 1.18rem);
-  font-weight: 900;
+      ? 'linear-gradient(180deg, rgba(235, 244, 255, 0.98), rgba(255, 255, 255, 0.98)), #ffffff'
+      : '#ffffff'};
+  color: ${({ $active }) => ($active ? '#172337' : '#496582')};
+  font-size: clamp(0.98rem, 1.12vw, 1.1rem);
+  font-weight: 850;
   letter-spacing: 0;
   white-space: nowrap;
+  text-align: left;
   cursor: pointer;
+  box-shadow: ${({ $active }) => ($active ? 'none' : '0 8px 20px rgba(16, 54, 112, 0.04)')};
   transition:
-    transform 0.18s ease,
-    color 0.18s ease,
+    border-color 0.18s ease,
     background-color 0.18s ease,
-    box-shadow 0.18s ease;
-  box-shadow: ${({ $active }) =>
-    $active ? '0 14px 28px rgba(21, 87, 168, 0.24)' : 'inset 0 0 0 1px rgba(216, 226, 240, 0.9)'};
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 
   &::before {
     content: '';
     position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 12px;
-    height: 2px;
-    background: ${({ $active }) => ($active ? 'rgba(255, 255, 255, 0.58)' : '#1557a8')};
+    left: 12px;
+    top: 14px;
+    bottom: 14px;
+    width: 4px;
+    border-radius: 999px;
+    background: #1f5cb2;
     opacity: ${({ $active }) => ($active ? 1 : 0)};
-    transform: scaleX(${({ $active }) => ($active ? 1 : 0.6)});
+    transform: scaleY(${({ $active }) => ($active ? 1 : 0.45)});
     transform-origin: center;
     transition:
       opacity 0.18s ease,
@@ -97,30 +99,25 @@ const CategoryButton = styled.button<{ $active: boolean }>`
 
   &:hover,
   &:focus-visible {
-    transform: translateY(-2px);
-    background: ${({ $active }) =>
-      $active
-        ? 'linear-gradient(135deg, #082a57 0%, #1557a8 100%)'
-        : 'linear-gradient(180deg, #f7fbff 0%, #ffffff 100%)'};
-    color: ${({ $active }) => ($active ? '#ffffff' : '#0c4e96')};
-    box-shadow: ${({ $active }) =>
-      $active
-        ? '0 16px 34px rgba(21, 87, 168, 0.28)'
-        : '0 10px 24px rgba(13, 52, 105, 0.1), inset 0 0 0 1px rgba(21, 87, 168, 0.18)'};
+    transform: translateY(-1px);
+    border-color: rgba(31, 92, 178, 0.3);
+    background: #f7f9fc;
+    color: #172337;
+    box-shadow: 0 12px 24px rgba(16, 54, 112, 0.08);
     outline: none;
   }
 
   &:hover::before,
   &:focus-visible::before {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleY(1);
   }
 
   @media (max-width: 760px) {
     flex-basis: 50%;
-    min-height: 62px;
-    padding: 0 18px;
-    font-size: 0.98rem;
+    min-width: 0;
+    min-height: 72px;
+    padding: 12px 16px 13px 28px;
   }
 
   @media (max-width: 420px) {
@@ -181,13 +178,10 @@ const ProfileCard = styled.article`
   min-height: 268px;
   overflow: hidden;
   border-radius: 8px;
-  border: 1px solid rgba(17, 69, 132, 0.16);
-  background:
-    linear-gradient(135deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.98) 45%),
-    radial-gradient(circle at 4% 0%, rgba(21, 87, 168, 0.09), transparent 34%),
-    #ffffff;
+  border: 1px solid rgba(26, 55, 91, 0.14);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
   box-shadow:
-    0 18px 48px rgba(13, 52, 105, 0.1),
+    0 16px 38px rgba(13, 35, 66, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.92) inset;
   transition:
     transform 0.22s ease,
@@ -206,10 +200,10 @@ const ProfileCard = styled.article`
 
   &:hover,
   &:focus-visible {
-    transform: translateY(-4px);
-    border-color: rgba(21, 87, 168, 0.32);
+    transform: translateY(-3px);
+    border-color: rgba(18, 63, 133, 0.24);
     box-shadow:
-      0 26px 62px rgba(13, 52, 105, 0.16),
+      0 24px 56px rgba(13, 35, 66, 0.12),
       0 1px 0 rgba(255, 255, 255, 0.96) inset;
     outline: none;
   }
@@ -331,36 +325,19 @@ const PhotoPanel = styled.div`
   justify-content: center;
   min-width: 0;
   overflow: hidden;
-  border-left: 1px solid rgba(17, 69, 132, 0.12);
-  background:
-    linear-gradient(145deg, rgba(249, 252, 255, 0.94) 0%, rgba(219, 234, 252, 0.96) 100%),
-    #eef5fd;
-
-  &::after {
-    content: '';
-    position: absolute;
-    z-index: 3;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 42%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(7, 31, 67, 0.1));
-    pointer-events: none;
-  }
+  border-left: 1px solid rgba(26, 55, 91, 0.14);
+  background: #ffffff;
 `;
 
 const PortraitFrame = styled.div`
   position: absolute;
-  inset: 14px 12px 0;
+  inset: 0;
   z-index: 2;
   overflow: hidden;
-  border-radius: 999px 999px 0 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(236, 245, 255, 0.76)),
-    #ffffff;
-  box-shadow:
-    0 14px 28px rgba(13, 52, 105, 0.12),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.92);
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 `;
 
 const Portrait = styled.img<{ $fit?: 'contain' | 'cover' }>`
@@ -390,18 +367,16 @@ const InitialMark = styled.div`
 
 const CareerOverlay = styled.div`
   position: absolute;
-  inset: 10px;
+  inset: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: clamp(18px, 2vw, 26px);
   border-radius: 8px;
-  border: 1px solid rgba(213, 231, 255, 0.3);
-  background:
-    linear-gradient(135deg, rgba(7, 31, 67, 0.99) 0%, rgba(12, 55, 111, 0.985) 100%),
-    #071f43;
-  color: #ffffff;
+  border: 1px solid rgba(18, 63, 133, 0.1);
+  background: #f8fbff;
+  color: #172337;
   opacity: 0;
   transform: translateY(18px) scale(0.98);
   pointer-events: none;
@@ -410,18 +385,18 @@ const CareerOverlay = styled.div`
     transform 0.22s ease;
   overflow: auto;
   box-shadow:
-    0 28px 60px rgba(4, 18, 42, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    0 28px 60px rgba(13, 35, 66, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+  scrollbar-color: rgba(18, 63, 133, 0.3) transparent;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(115deg, rgba(255, 255, 255, 0.1), transparent 28%);
-    opacity: 0.42;
+    background: linear-gradient(90deg, rgba(15, 63, 132, 0.025), transparent 38%);
+    opacity: 1;
   }
 
   > * {
@@ -435,7 +410,7 @@ const CareerOverlay = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.36);
+    background: rgba(18, 63, 133, 0.3);
   }
 
   @media (hover: none) {
@@ -448,7 +423,7 @@ const CareerOverlay = styled.div`
     max-height: none;
     border-radius: 0;
     border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-top: 1px solid #d8dee8;
   }
 `;
 
@@ -458,14 +433,14 @@ const CareerHeader = styled.div`
   align-items: end;
   gap: 18px;
   padding: 0 0 14px;
-  border-bottom: 1px solid rgba(213, 231, 255, 0.22);
+  border-bottom: 1px solid rgba(216, 222, 232, 0.76);
 `;
 
 const CareerTitle = styled.strong`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.96);
+  color: #0f3f84;
   font-size: 0.9rem;
   font-weight: 900;
   line-height: 1.3;
@@ -477,7 +452,7 @@ const CareerTitle = styled.strong`
     content: '';
     width: 28px;
     height: 3px;
-    background: rgba(213, 231, 255, 0.82);
+    background: #0f3f84;
   }
 `;
 
@@ -489,14 +464,13 @@ const CareerName = styled.span`
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid rgba(213, 235, 255, 0.24);
-  background: rgba(221, 240, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(18, 63, 133, 0.12);
+  background: #ffffff;
+  color: #123f85;
   font-size: 0.82rem;
   font-weight: 900;
   line-height: 1.35;
   white-space: nowrap;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 `;
 
 const CareerList = styled.ul`
@@ -510,8 +484,8 @@ const CareerList = styled.ul`
 const CareerItem = styled.li`
   position: relative;
   padding: 8px 0 8px 24px;
-  border-bottom: 1px solid rgba(213, 231, 255, 0.1);
-  color: rgba(242, 248, 255, 0.9);
+  border-bottom: 1px solid rgba(216, 222, 232, 0.68);
+  color: #3f536b;
   font-size: clamp(0.72rem, 0.86vw, 0.82rem);
   font-weight: 650;
   line-height: 1.46;
@@ -529,9 +503,9 @@ const CareerItem = styled.li`
     top: 1.05em;
     width: 8px;
     height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 0 0 4px rgba(213, 231, 255, 0.16);
+    border-radius: 2px;
+    background: #1f5cb2;
+    box-shadow: 0 0 0 4px rgba(31, 92, 178, 0.08);
   }
 
   &::after {
@@ -541,7 +515,7 @@ const CareerItem = styled.li`
     top: calc(1.05em + 8px);
     bottom: -7px;
     width: 1px;
-    background: linear-gradient(180deg, rgba(213, 231, 255, 0.24), transparent);
+    background: linear-gradient(180deg, rgba(31, 92, 178, 0.22), transparent);
   }
 `;
 

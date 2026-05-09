@@ -820,105 +820,158 @@ const ContactProfileGrid = styled.div`
 const ContactProfileCard = styled.article<{ $accent: string }>`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(112px, 10vw, 150px);
-  min-height: 214px;
+  grid-template-columns: minmax(0, 1fr) clamp(158px, 13vw, 206px);
+  min-height: 268px;
   overflow: hidden;
-  border: 1px solid rgba(29, 95, 182, 0.14);
-  border-top: 3px solid ${({ $accent }) => $accent};
-  background:
-    linear-gradient(135deg, rgba(29, 95, 182, 0.08), rgba(255, 255, 255, 0) 45%),
-    #ffffff;
-  box-shadow: 0 20px 45px rgba(15, 38, 76, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(26, 55, 91, 0.14);
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  box-shadow:
+    0 16px 38px rgba(13, 35, 66, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.92) inset;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    z-index: 3;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #071f43 0%, #1557a8 54%, #69a7e8 100%);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(18, 63, 133, 0.24);
+    box-shadow:
+      0 24px 56px rgba(13, 35, 66, 0.12),
+      0 1px 0 rgba(255, 255, 255, 0.96) inset;
+  }
 
   @media (max-width: 540px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    min-height: 228px;
   }
 `;
 
 const ContactProfileBody = styled.div`
-  display: grid;
-  align-content: space-between;
-  gap: 24px;
-  padding: clamp(22px, 3vw, 30px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 38px);
+`;
+
+const ContactTitleRow = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
 `;
 
 const ContactName = styled.h3`
+  flex: 0 0 auto;
   margin: 0;
-  color: #111827;
-  font-size: clamp(1.3rem, 2vw, 1.66rem);
+  color: #121c2b;
+  font-size: clamp(1.66rem, 2.35vw, 2.22rem);
   font-weight: 900;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: 0;
+`;
+
+const ContactNameDivider = styled.span`
+  flex: 0 0 auto;
+  width: 2px;
+  height: 38px;
+  margin-top: 2px;
+  background: linear-gradient(180deg, #102a55, #1d5fb6);
+  opacity: 0.9;
+`;
+
+const ContactRoleStack = styled.div`
+  display: grid;
+  gap: 3px;
+  min-width: 0;
 `;
 
 const ContactRole = styled.p`
-  margin: 8px 0 0;
-  color: ${palette.blue};
-  font-size: 0.98rem;
-  font-weight: 800;
-  line-height: 1.52;
+  margin: 0;
+  color: #0c4e96;
+  font-size: 1rem;
+  font-weight: 850;
+  line-height: 1.38;
 `;
 
 const ContactDepartment = styled.p`
-  margin: 10px 0 0;
-  color: #52647c;
-  font-size: 0.94rem;
-  font-weight: 700;
-  line-height: 1.56;
+  margin: 0;
+  color: #6a7482;
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.45;
 `;
 
 const ContactPractice = styled.p`
-  margin: 12px 0 0;
-  color: #475569;
-  font-size: 0.98rem;
-  line-height: 1.68;
+  margin: 0;
+  color: #6a7482;
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.45;
   word-break: keep-all;
 `;
 
 const ContactMeta = styled.div`
+  display: grid;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 22px;
+`;
+
+const ContactMetaItem = styled.p`
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  color: #526174;
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.45;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const ContactLabel = styled.span`
-  color: #7890ad;
-  font-size: 0.76rem;
+  flex: 0 0 48px;
+  color: #0c4e96;
+  font-size: 0.96rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
 `;
 
 const ContactValue = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  max-width: 100%;
-  min-height: 34px;
-  padding: 0 12px;
-  border: 1px solid rgba(18, 63, 133, 0.14);
-  background: rgba(18, 63, 133, 0.05);
-  color: ${palette.blue};
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.35;
+  color: inherit;
   text-decoration: none;
   overflow-wrap: anywhere;
 
-  &:hover {
-    border-color: rgba(29, 95, 182, 0.3);
-    background: rgba(29, 95, 182, 0.09);
+  &:hover,
+  &:focus-visible {
+    color: #1c5aa7;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    outline: none;
   }
 `;
 
 const ContactPhotoPanel = styled.div<{ $accent: string }>`
   position: relative;
   min-height: 100%;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0)),
-    ${({ $accent }) => $accent};
+  overflow: hidden;
+  border-left: 1px solid rgba(26, 55, 91, 0.14);
+  background: #ffffff;
 
   @media (max-width: 540px) {
-    min-height: 210px;
+    min-height: 100%;
   }
 `;
 
@@ -937,7 +990,8 @@ const ContactInitialMark = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.88);
+  background: #0c4e96;
+  color: #ffffff;
   font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 900;
   letter-spacing: -0.04em;
@@ -1402,7 +1456,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         <SectionInner data-reveal>
           <SectionHead>
             <SectionLabel>Contact</SectionLabel>
-            <EditorialTitle>{t('담당자(Contact Point)', 'Contact Point')}</EditorialTitle>
+            <EditorialTitle>{t('담당자', 'Contact')}</EditorialTitle>
           </SectionHead>
           <ContactPanel>
             {hasContactPoints ? (
@@ -1416,24 +1470,27 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                   return (
                     <ContactProfileCard key={`${contact.name}-${phone ?? ''}-${email ?? ''}`} $accent={accent}>
                       <ContactProfileBody>
-                        <div>
+                        <ContactTitleRow>
                           <ContactName>{tx(contact.name)}</ContactName>
-                          {role ? <ContactRole>{tx(role)}</ContactRole> : null}
-                          {member?.department ? <ContactDepartment>{tx(member.department)}</ContactDepartment> : null}
-                          {member?.practice ? <ContactPractice>{tx(member.practice)}</ContactPractice> : null}
-                        </div>
+                          <ContactNameDivider aria-hidden="true" />
+                          <ContactRoleStack>
+                            {role ? <ContactRole>{tx(role)}</ContactRole> : null}
+                            {member?.department ? <ContactDepartment>{tx(member.department)}</ContactDepartment> : null}
+                            {member?.practice ? <ContactPractice>{tx(member.practice)}</ContactPractice> : null}
+                          </ContactRoleStack>
+                        </ContactTitleRow>
                         <ContactMeta>
                           {phone ? (
-                            <ContactValue href={`tel:${phone.replace(/[^+\d]/g, '')}`}>
+                            <ContactMetaItem>
                               <ContactLabel>{t('전화', 'Phone')}</ContactLabel>
-                              {phone}
-                            </ContactValue>
+                              <ContactValue href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</ContactValue>
+                            </ContactMetaItem>
                           ) : null}
                           {email ? (
-                            <ContactValue href={`mailto:${email}`}>
+                            <ContactMetaItem>
                               <ContactLabel>{t('이메일', 'Email')}</ContactLabel>
-                              {email}
-                            </ContactValue>
+                              <ContactValue href={`mailto:${email}`}>{email}</ContactValue>
+                            </ContactMetaItem>
                           ) : null}
                         </ContactMeta>
                       </ContactProfileBody>

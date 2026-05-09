@@ -115,13 +115,13 @@ export function OfficesPage() {
               <E.Eyebrow>Office Network</E.Eyebrow>
               <OfficePageTitle>{t('신한관세법인 사무소 안내', 'Shinhan Customs Service Office Network')}</OfficePageTitle>
             </div>
-            <E.LeadGrid>
+            <OfficeLeadGrid>
               <OfficePageLead>
                 {t('전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다.', 'Find contact details and map locations for Shinhan offices across Korea and Vietnam.')}
                 <br />
                 {t('방문 전 담당 사무소와 일정을 조율해 주세요.', 'Please coordinate with the relevant office before visiting.')}
               </OfficePageLead>
-              <E.FactGrid>
+              <OfficeFactGrid>
                 <E.Fact>
                   <E.FactValue>7</E.FactValue>
                   <E.FactLabel>{t('국내외 주요 거점', 'Domestic and overseas offices')}</E.FactLabel>
@@ -134,8 +134,8 @@ export function OfficesPage() {
                   <E.FactValue>Vietnam</E.FactValue>
                   <E.FactLabel>{t('해외 법인 연계', 'Overseas entity connection')}</E.FactLabel>
                 </E.Fact>
-              </E.FactGrid>
-            </E.LeadGrid>
+              </OfficeFactGrid>
+            </OfficeLeadGrid>
           </E.Statement>
 
           {selectedOffice ? (
@@ -305,6 +305,40 @@ const OfficePageLead = styled.p`
   color: #4d5a6c;
   font-size: clamp(1.12rem, 1.38vw, 1.28rem);
   line-height: 1.82;
+`;
+
+const OfficeLeadGrid = styled(E.LeadGrid)`
+  grid-template-columns: minmax(420px, 0.8fr) minmax(640px, 1fr);
+  gap: clamp(30px, 4vw, 58px);
+  align-items: stretch;
+
+  @media (max-width: 1180px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const OfficeFactGrid = styled(E.FactGrid)`
+  width: 100%;
+  min-width: 0;
+
+  ${E.Fact} {
+    min-height: 152px;
+    padding: 28px 26px 24px;
+  }
+
+  ${E.FactLabel} {
+    max-width: 180px;
+  }
+
+  @media (max-width: 1180px) {
+    max-width: 780px;
+  }
+
+  @media (max-width: 640px) {
+    ${E.FactLabel} {
+      max-width: none;
+    }
+  }
 `;
 
 const OfficeTabsShell = styled.div`

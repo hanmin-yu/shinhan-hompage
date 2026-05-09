@@ -15,7 +15,6 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
   const overHero = !pathname.startsWith('/admin');
-  const isHomePage = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
   const [activeMegaMenuId, setActiveMegaMenuId] = useState<string | null>(null);
@@ -137,7 +136,7 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
 
         <S.HeaderRight>
           <S.HeaderTools>
-            {isHomePage ? <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton> : null}
+            <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton>
             <S.HeaderUtilityLinks>
               <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
