@@ -712,7 +712,7 @@ export const executives: Member[] = [
     name: '차미정',
     phone: '070-4343-7755',
     email: 'mjcha@shcs.kr',
-    title: '팀장 / 관세사',
+    title: '이사 / 관세사',
     department: '서울본사 가치성장본부',
     practice: '통관, 품목분류, 요건확인, 잠정/확정신고, 관세/물류 컨설팅',
     accent: '#5b7597',

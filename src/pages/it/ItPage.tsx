@@ -223,14 +223,6 @@ const ContactDepartment = styled.p`
   line-height: 1.56;
 `;
 
-const ContactPractice = styled.p`
-  margin: 12px 0 0;
-  color: #475569;
-  font-size: 0.98rem;
-  line-height: 1.68;
-  word-break: keep-all;
-`;
-
 const ContactMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -331,8 +323,8 @@ export function ItPage() {
       <EditorialSection>
         <SectionInner data-reveal>
           <SectionHead>
-            <SectionLabel>Contact</SectionLabel>
-            <EditorialTitle>{t('담당자', 'Contact')}</EditorialTitle>
+            <SectionLabel>Contact Point</SectionLabel>
+            <EditorialTitle>{t('담당자', 'Contact Point')}</EditorialTitle>
           </SectionHead>
           <ContactPanel>
             <ContactProfileGrid>
@@ -346,7 +338,6 @@ export function ItPage() {
                         <ContactName>{tx(member?.name ?? '')}</ContactName>
                         {member?.title ? <ContactRole>{tx(member.title)}</ContactRole> : null}
                         {member?.department ? <ContactDepartment>{tx(member.department)}</ContactDepartment> : null}
-                        {member?.practice ? <ContactPractice>{tx(member.practice)}</ContactPractice> : null}
                       </div>
                       <ContactMeta>
                         {member?.phone ? (

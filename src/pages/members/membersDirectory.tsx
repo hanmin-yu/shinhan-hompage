@@ -420,10 +420,14 @@ const CareerOverlay = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: clamp(18px, 2vw, 26px);
+  padding: clamp(20px, 2.2vw, 28px);
   border-radius: 8px;
-  border: 1px solid rgba(18, 63, 133, 0.1);
-  background: #f8fbff;
+  border: 1px solid rgba(18, 63, 133, 0.16);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(18, 63, 133, 0.08), transparent 34%),
+    radial-gradient(circle at 12% 88%, rgba(52, 95, 151, 0.05), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.98)),
+    #ffffff;
   color: #172337;
   opacity: 0;
   transform: translateY(18px) scale(0.98);
@@ -433,18 +437,30 @@ const CareerOverlay = styled.div`
     transform 0.22s ease;
   overflow: auto;
   box-shadow:
-    0 28px 60px rgba(13, 35, 66, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    0 28px 60px rgba(13, 35, 66, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72);
   scrollbar-width: thin;
-  scrollbar-color: rgba(18, 63, 133, 0.3) transparent;
+  scrollbar-color: rgba(18, 63, 133, 0.28) transparent;
 
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto;
+    height: 3px;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(15, 63, 132, 0.025), transparent 38%);
-    opacity: 1;
+    background: #123f85;
+    opacity: 0.96;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px 0 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(18, 63, 133, 0.035), transparent 36%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 22%);
   }
 
   > * {
@@ -458,9 +474,8 @@ const CareerOverlay = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: rgba(18, 63, 133, 0.3);
+    background: rgba(18, 63, 133, 0.28);
   }
-
 `;
 
 const CareerHeader = styled.div`
@@ -468,27 +483,28 @@ const CareerHeader = styled.div`
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 18px;
-  padding: 0 0 14px;
-  border-bottom: 1px solid rgba(216, 222, 232, 0.76);
+  padding: 0 0 12px;
 `;
 
 const CareerTitle = styled.strong`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #0f3f84;
+  color: #123f85;
   font-size: 0.9rem;
   font-weight: 900;
   line-height: 1.3;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   word-break: keep-all;
 
   &::before {
     content: '';
-    width: 28px;
-    height: 3px;
-    background: #0f3f84;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #123f85;
+    box-shadow: 0 0 0 5px rgba(18, 63, 133, 0.08);
   }
 `;
 
@@ -507,11 +523,14 @@ const CareerName = styled.span`
   font-weight: 900;
   line-height: 1.35;
   white-space: nowrap;
+  box-shadow:
+    0 10px 22px rgba(13, 35, 66, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 `;
 
 const CareerList = styled.ul`
   display: grid;
-  gap: 0;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -519,39 +538,29 @@ const CareerList = styled.ul`
 
 const CareerItem = styled.li`
   position: relative;
-  padding: 8px 0 8px 24px;
-  border-bottom: 1px solid rgba(216, 222, 232, 0.68);
-  color: #3f536b;
-  font-size: clamp(0.72rem, 0.86vw, 0.82rem);
-  font-weight: 650;
-  line-height: 1.46;
+  padding: 9px 12px 9px 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.68);
+  color: #374a61;
+  font-size: clamp(0.73rem, 0.87vw, 0.84rem);
+  font-weight: 700;
+  line-height: 1.48;
   word-break: keep-all;
   overflow-wrap: break-word;
-
-  &:last-of-type {
-    border-bottom: 0;
-  }
+  box-shadow:
+    inset 0 0 0 1px rgba(18, 63, 133, 0.045),
+    0 6px 16px rgba(13, 35, 66, 0.035);
 
   &::before {
     content: '';
     position: absolute;
-    left: 1px;
-    top: 1.05em;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: #1f5cb2;
-    box-shadow: 0 0 0 4px rgba(31, 92, 178, 0.08);
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: calc(1.05em + 8px);
-    bottom: -7px;
-    width: 1px;
-    background: linear-gradient(180deg, rgba(31, 92, 178, 0.22), transparent);
+    left: 13px;
+    top: 1.25em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #123f85;
+    opacity: 0.62;
   }
 `;
 

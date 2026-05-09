@@ -974,19 +974,6 @@ const ContactDepartment = styled.p`
   }
 `;
 
-const ContactPractice = styled.p`
-  margin: 0;
-  color: #6a7482;
-  font-size: 0.96rem;
-  font-weight: 650;
-  line-height: 1.45;
-  word-break: keep-all;
-
-  @media (max-width: 540px) {
-    font-size: 0.88rem;
-  }
-`;
-
 const ContactMeta = styled.div`
   display: grid;
   gap: 9px;
@@ -1652,8 +1639,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       <EditorialSection>
         <SectionInner data-reveal>
           <SectionHead>
-            <SectionLabel>Contact</SectionLabel>
-            <EditorialTitle>{t('담당자', 'Contact')}</EditorialTitle>
+            <SectionLabel>Contact Point</SectionLabel>
+            <EditorialTitle>{t('담당자', 'Contact Point')}</EditorialTitle>
           </SectionHead>
           <ContactPanel>
             {hasContactPoints ? (
@@ -1673,7 +1660,6 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                           <ContactRoleStack>
                             {role ? <ContactRole>{tx(role)}</ContactRole> : null}
                             {member?.department ? <ContactDepartment>{tx(member.department)}</ContactDepartment> : null}
-                            {member?.practice ? <ContactPractice>{tx(member.practice)}</ContactPractice> : null}
                           </ContactRoleStack>
                         </ContactTitleRow>
                         <ContactMeta>
