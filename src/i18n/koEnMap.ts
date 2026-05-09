@@ -292,8 +292,19 @@ export const koToEnTextMap: Record<string, string> = {
   '개별 환급 또는 간이 정액 환급 신청': 'Individual or simplified fixed-rate refund filing',
   '환급 심사 및 추징 리스크 대응': 'Refund audit and reassessment risk response',
   '관세환급': 'Customs Refund',
+  '환급 종류': 'Types of Refund',
   '"관세환급"이란 일반적으로 『수출용 원재료에 대한 관세 등 환급에 관한 특례법』 상의 환급을 지칭하며, 수입 원재료를 수출 또는 외화획득용 원재료로 사용한 경우에 수입 때 납부한 관세를 수출자 또는 생산자에게 되돌려 주는 것을 말합니다.':
     '"Customs refund" generally refers to refunds under the Act on Special Cases Concerning the Refund of Duties, etc. on Raw Materials for Export, meaning the return of duties paid at import when imported raw materials are used for exports or other foreign-currency-earning production.',
+  '"관세환급"이란 일반적으로 『수출용 원재료에 대한 관세 등 환급에 관한 특례법』상의 환급을 지칭하며, 수입 원재료를 수출 또는 외화 획득용 원재료로 사용한 경우 수입 때 납부한 관세를 수출자 또는 생산자에게 되돌려 주는 것을 말합니다.':
+    '"Customs refund" generally refers to refunds under the Act on Special Cases Concerning the Refund of Duties, etc. on Raw Materials for Export, meaning the return of duties paid at import when imported raw materials are used for exports or other foreign-currency-earning production.',
+  '개별환급: 수출물품 생산에 소요된 원재료별 소요량과 납부세액을 확인·계산하여 실제 납부한 관세 등을 환급받는 제도':
+    'Individual refund: a system for refunding duties actually paid by verifying and calculating raw material usage and paid duties for exported goods.',
+  '간이정액환급: 중소기업의 환급 절차를 간소화하기 위해 정해진 환급률표에 따라 수출 신고 실적을 기준으로 환급받는 제도':
+    'Simplified fixed-rate refund: a system that simplifies SME refund procedures by applying a fixed refund rate table based on export declaration records.',
+  '위약환급: 계약 취소, 품질 불량, 규격 상이 등으로 수입 물품을 반송하거나 폐기하는 경우 납부한 관세 등을 환급받는 제도':
+    'Contract-breach refund: a system for refunding duties paid when imported goods are returned or destroyed due to cancellation, defects, or specification mismatch.',
+  '과오납환급: 신고·납부 과정에서 과다 납부하거나 착오 납부한 관세 등을 정정 절차를 통해 돌려받는 제도':
+    'Overpayment refund: a system for recovering duties overpaid or mistakenly paid through correction procedures.',
   '개별 환급: 수출물품 생산에 소요된 각각의 원재료별 소요량을 산출하고 각 원재료를 수입하는 때에 납부하였거나 납부할 관세 등의 세액을 확인·계산하여 환급금을 산출하는 제도':
     'Individual refund: a system that calculates the usage quantity of each raw material used to produce exported goods and determines the refund amount by verifying and calculating the duties paid or payable on each imported raw material.',
   '간이 환급: 중소기업의 환급절차를 간소화하기 위하여 중소기업이 생산하여 수출한 물품에 대하여 관세납부증명서와 소요량계산서 제출을 생략하고 수출신고필증만 확인하여 간소하게 환급하는 제도':
@@ -349,7 +360,7 @@ export const koToEnTextMap: Record<string, string> = {
   '제품 상세페이지 검수': 'Product detail page review',
   'FDA 수입경보 해제': 'FDA import alert resolution',
   'FDA / USDA 제조공장 인허가 검토 서비스': 'FDA / USDA manufacturing facility permit review',
-  '미국 유통채널 별 규정 준수': 'U.S. Channel Compliance',
+  '미국 유통채널별 규정 준수': 'U.S. Channel Compliance',
   '미국 수출에 필요한 통관 전 검토사항과 미국 수출 관련 규제 준수 항목을 연결해 검역·통관 및 관련 컨설팅을 진행합니다.':
     'We connect pre-clearance review points with U.S. export compliance requirements to support inspection, customs clearance, and related consulting.',
   '통관·신고 시스템 개발 및 운영': 'Customs Declaration System Development & Operations',
@@ -555,9 +566,22 @@ export const koToEnTextMap: Record<string, string> = {
   '수출입 통관 전 과정에 대해 정확한 법령 해석과 실무 경험을 기반으로 신속하고 안정적인 서비스를 제공합니다. PI(Process Innovation)팀의 AI 기반 수출입 및 전후 절차 간소화와 CI(Customs Innovation)팀의 통관 SOP 최적화를 결합해 효율성과 정확성을 동시에 확보하며, 자체 개발 iOOM 시스템으로 통관 현황과 데이터를 실시간 관리합니다.':
     'We provide fast and stable services across the full import/export clearance process based on accurate regulatory interpretation and practical experience. By combining AI-driven simplification of import/export and pre/post procedures from the PI (Process Innovation) team with customs SOP optimization from the CI (Customs Innovation) team, we secure both efficiency and accuracy while managing clearance status and data in real time through our in-house iOOM system.',
   'HS CODE 마스터 관리 시스템 운영': 'Operation of the HS CODE master management system',
+  'RMS 기반 통관 리스크 관리': 'RMS-based customs risk management',
   '풍부한 경험을 기반으로 한 통관 이슈 대응': 'Clearance issue response backed by extensive experience',
   '고객사 맞춤형 수출입통관 분석 데이터 제공': 'Tailored import/export clearance analytics for each client',
   '자체 개발 iOOM 시스템 기반 통관 현황·데이터 관리': 'Management of clearance status and data through the in-house iOOM system',
+  'HS CODE 마스터 관리 시스템 -> 품목 정보를 표준화해 신고 오류를 사전에 차단합니다.':
+    'HS CODE master management system -> Standardizes item data to prevent declaration errors in advance.',
+  'RMS 기반 리스크 관리 -> 업무 단계별 체크로 휴먼에러를 최소화합니다.':
+    'RMS-based risk management -> Minimizes human error through step-by-step operational checks.',
+  '풍부한 경험을 기반으로 한 통관 이슈 대응 -> 세관 심사와 보완 요청에 빠르게 대응해 리드타임을 줄입니다.':
+    'Clearance issue response backed by extensive experience -> Reduces lead time by responding quickly to customs reviews and correction requests.',
+  '고객사 시스템 연동 -> 반복 입력과 확인 업무를 자동화해 처리 속도를 높입니다.':
+    'Client system integration -> Improves processing speed by automating repetitive entry and verification tasks.',
+  '고객사 맞춤형 수출입 통관 분석 데이터 -> 사후 심사와 내부 관리에 필요한 근거 데이터를 제공합니다.':
+    'Client-tailored import/export clearance analytics -> Provides supporting data for post-clearance audits and internal management.',
+  '이음 시스템 활용 -> 통관 현황과 데이터를 체계적으로 관리합니다.':
+    'iOOM system utilization -> Systematically manages clearance status and data.',
   'HS CODE 및 세율 검토': 'HS CODE and tariff review',
   '요건확인 및 인증 대응': 'Requirements confirmation and certification response',
   '수입신고 및 세관 심사 대응': 'Import declaration and customs examination response',

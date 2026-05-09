@@ -131,6 +131,10 @@ const SubnavBand = styled.div`
   background: #ffffff;
   border-bottom: 1px solid #e4e7ec;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    background: #f7f9fc;
+  }
 `;
 
 const SubnavInner = styled.div`
@@ -147,6 +151,9 @@ const SubnavInner = styled.div`
 
   @media (max-width: 768px) {
     width: calc(100% - 28px);
+    min-height: 48px;
+    padding: 8px 0;
+    border: 0;
     overflow-x: auto;
   }
 `;
@@ -172,6 +179,20 @@ const HomeCell = styled(Link)`
     width: 56px;
     flex-basis: 56px;
   }
+
+  @media (max-width: 768px) {
+    width: 38px;
+    height: 34px;
+    flex-basis: 38px;
+    border: 1px solid #d9e0eb;
+    border-radius: 999px;
+    background: #ffffff;
+
+    &::before {
+      width: 15px;
+      height: 15px;
+    }
+  }
 `;
 
 const Tabs = styled.nav`
@@ -187,10 +208,18 @@ const Tabs = styled.nav`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media (max-width: 768px) {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding-left: 8px;
+  }
 `;
 
 const TabLink = styled(Link)`
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   min-width: 132px;
@@ -202,6 +231,8 @@ const TabLink = styled(Link)`
   font-weight: 850;
   letter-spacing: 0;
   line-height: 1;
+  white-space: nowrap;
+  word-break: keep-all;
   position: relative;
   transition: color 0.18s ease;
 
@@ -240,11 +271,31 @@ const TabLink = styled(Link)`
     padding: 0 18px;
   }
 
-  @media (max-width: 640px) {
-    min-height: 52px;
-    padding: 0 18px;
-    min-width: auto;
-    font-size: 0.9rem;
+  @media (max-width: 768px) {
+    min-height: 34px;
+    min-width: 0;
+    padding: 0 14px;
+    border: 1px solid #d9e0eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #526071;
+    font-size: 0.82rem;
+    font-weight: 800;
+
+    &:first-of-type {
+      border-left: 1px solid #d9e0eb;
+    }
+
+    &[data-active='true'] {
+      background: #123f85;
+      border-color: #123f85;
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
+    }
+
+    &[data-active='true']::after {
+      content: none;
+    }
   }
 `;
 

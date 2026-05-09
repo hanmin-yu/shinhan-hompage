@@ -1779,9 +1779,15 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
     border-radius: 50%;
     background: #ffffff;
     position: relative;
-    color: ${palette.textPrimary};
+    color: ${palette.blueDeep};
     cursor: pointer;
     flex: 0 0 auto;
+    box-shadow: 0 8px 20px rgba(16, 48, 91, 0.14);
+
+    && {
+      color: ${palette.blueDeep};
+      text-shadow: none;
+    }
 
     &::before,
     &::after {
@@ -1846,17 +1852,14 @@ export const MobileMenuPanel = styled.aside<{ open: boolean }>`
   @media (max-width: 1320px) {
     display: flex;
     position: fixed;
-    top: 0;
+    top: 82px;
     right: 0;
-    width: min(420px, 42vw);
-    height: 100vh;
-    padding: 30px 24px 34px;
+    width: min(340px, 34vw);
+    height: calc(100dvh - 82px);
+    padding: 22px 20px 28px;
     flex-direction: column;
-    gap: 22px;
-    background:
-      radial-gradient(circle at top right, rgba(214, 154, 54, 0.16), transparent 22%),
-      radial-gradient(circle at 18% 16%, rgba(38, 124, 226, 0.18), transparent 22%),
-      linear-gradient(180deg, rgba(10, 27, 55, 0.98) 0%, rgba(11, 36, 72, 0.98) 100%);
+    gap: 18px;
+    background: ${palette.blueDeep};
     color: #ffffff;
     transform: translateX(${({ open }) => (open ? '0' : '100%')});
     transition: transform 0.24s ease;
@@ -1866,8 +1869,15 @@ export const MobileMenuPanel = styled.aside<{ open: boolean }>`
   }
 
   @media (max-width: 768px) {
-    width: min(88vw, 360px);
-    padding: 28px 22px 32px;
+    top: 74px;
+    width: min(68vw, 286px);
+    height: calc(100dvh - 74px);
+    padding: 20px 16px 26px;
+    gap: 16px;
+  }
+
+  @media (max-width: 420px) {
+    width: min(64vw, 250px);
   }
 `;
 
@@ -1919,18 +1929,20 @@ export const MobileMenuClose = styled.button`
 export const MobileMenuSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-bottom: 18px;
+  gap: 8px;
+  padding-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 `;
 
 export const MobileMenuMainLink = styled(Link)`
   display: flex;
   align-items: center;
-  min-height: 40px;
-  font-size: 1.1rem;
+  min-height: 36px;
+  font-size: 1rem;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.96);
+  white-space: nowrap;
+  word-break: keep-all;
 `;
 
 export const MobileMenuSubLink = styled(Link)`
@@ -1964,22 +1976,22 @@ export const MobileMenuGroupTitle = styled.span`
 export const MobileMenuQuickRow = styled.div<{ $columns?: 1 | 2 }>`
   display: grid;
   grid-template-columns: repeat(${({ $columns = 2 }) => $columns}, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 `;
 
 export const MobileMenuQuickButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 12px;
+  min-height: 38px;
+  padding: 0 10px;
   border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06)),
     rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: #ffffff;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -1991,15 +2003,15 @@ export const MobileMenuQuickLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 12px;
+  min-height: 38px;
+  padding: 0 10px;
   border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06)),
     rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: rgba(255, 255, 255, 0.94);
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;

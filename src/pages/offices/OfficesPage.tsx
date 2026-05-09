@@ -345,6 +345,11 @@ const OfficeTabsShell = styled.div`
   position: relative;
   margin-top: clamp(50px, 6vw, 76px);
   margin-bottom: clamp(40px, 4.8vw, 58px);
+
+  @media (max-width: 760px) {
+    margin-top: 34px;
+    margin-bottom: 28px;
+  }
 `;
 
 const OfficeScrollControls = styled.div`
@@ -406,7 +411,13 @@ const OfficeTabs = styled.div`
   }
 
   @media (max-width: 760px) {
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    overflow-x: auto;
   }
 `;
 
@@ -484,14 +495,47 @@ const officeTabBase = css`
   }
 
   @media (max-width: 760px) {
-    flex-basis: 50%;
+    flex: 0 0 auto;
     min-width: 0;
-    min-height: 74px;
-    padding: 12px 16px 13px 18px;
-  }
+    min-height: 34px;
+    padding: 0 14px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border-color: #d9e0eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #526071;
+    box-shadow: none;
 
-  @media (max-width: 420px) {
-    flex-basis: 100%;
+    &[data-active='true'] {
+      border-color: #123f85;
+      background: #123f85;
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
+    }
+
+    &::before {
+      content: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+      border-color: #cbd6e6;
+      background: #ffffff;
+      color: #172337;
+      box-shadow: none;
+    }
+
+    &[data-active='true']:hover,
+    &[data-active='true']:focus-visible {
+      border-color: #123f85;
+      background: #123f85;
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
+    }
   }
 `;
 
@@ -510,6 +554,12 @@ const OfficeTabLabel = styled.span`
   font-weight: 850;
   letter-spacing: 0;
   white-space: nowrap;
+
+  @media (max-width: 760px) {
+    padding-left: 0;
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
 `;
 
 const OfficeTabRegion = styled.span`
@@ -519,6 +569,10 @@ const OfficeTabRegion = styled.span`
   font-size: clamp(0.78rem, 0.94vw, 0.88rem);
   font-weight: 800;
   white-space: nowrap;
+
+  @media (max-width: 760px) {
+    display: none;
+  }
 `;
 
 const OfficeBlock = styled.section`

@@ -120,7 +120,7 @@ function AppShell() {
       <S.GlobalStyle />
       <SiteLanguageProvider>
         <S.Page>
-          <SiteHeader mobileMenuOpen={mobileMenuOpen} onOpenMobileMenu={() => setMobileMenuOpen(true)} />
+          <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
           <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
           <S.Main id="top">

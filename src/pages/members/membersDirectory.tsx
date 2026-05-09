@@ -46,7 +46,19 @@ const CategoryMenuWrap = styled.div`
   box-shadow: none;
 
   @media (max-width: 760px) {
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 28px;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -114,14 +126,31 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   }
 
   @media (max-width: 760px) {
-    flex-basis: 50%;
+    flex: 0 0 auto;
     min-width: 0;
-    min-height: 72px;
-    padding: 12px 16px 13px 28px;
-  }
+    min-height: 34px;
+    padding: 0 14px;
+    justify-content: center;
+    border-color: ${({ $active }) => ($active ? '#123f85' : '#d9e0eb')};
+    border-radius: 999px;
+    background: ${({ $active }) => ($active ? '#123f85' : '#ffffff')};
+    color: ${({ $active }) => ($active ? '#ffffff' : '#526071')};
+    font-size: 0.82rem;
+    font-weight: 800;
+    box-shadow: ${({ $active }) => ($active ? '0 8px 16px rgba(18, 63, 133, 0.16)' : 'none')};
 
-  @media (max-width: 420px) {
-    flex-basis: 100%;
+    &::before {
+      content: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+      border-color: ${({ $active }) => ($active ? '#123f85' : '#cbd6e6')};
+      background: ${({ $active }) => ($active ? '#123f85' : '#ffffff')};
+      color: ${({ $active }) => ($active ? '#ffffff' : '#172337')};
+      box-shadow: ${({ $active }) => ($active ? '0 8px 16px rgba(18, 63, 133, 0.16)' : 'none')};
+    }
   }
 `;
 
@@ -217,8 +246,8 @@ const ProfileCard = styled.article`
   }
 
   @media (max-width: 560px) {
-    grid-template-columns: minmax(0, 1fr) 132px;
-    min-height: 228px;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    min-height: 198px;
     border-radius: 8px;
   }
 `;
@@ -228,6 +257,10 @@ const CardBody = styled.div`
   flex-direction: column;
   min-width: 0;
   padding: clamp(24px, 3vw, 38px);
+
+  @media (max-width: 560px) {
+    padding: 20px;
+  }
 `;
 
 const TitleRow = styled.div`
@@ -245,6 +278,10 @@ const Name = styled.h3`
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0;
+
+  @media (max-width: 560px) {
+    font-size: 1.42rem;
+  }
 `;
 
 const NameDivider = styled.span`
@@ -254,6 +291,10 @@ const NameDivider = styled.span`
   margin-top: 2px;
   background: linear-gradient(180deg, #102a55, #1d5fb6);
   opacity: 0.9;
+
+  @media (max-width: 560px) {
+    height: 32px;
+  }
 `;
 
 const RoleStack = styled.div`
@@ -268,6 +309,10 @@ const Title = styled.p`
   font-size: 1rem;
   font-weight: 850;
   line-height: 1.38;
+
+  @media (max-width: 560px) {
+    font-size: 0.92rem;
+  }
 `;
 
 const Division = styled.p`
@@ -276,6 +321,10 @@ const Division = styled.p`
   font-size: 0.96rem;
   font-weight: 650;
   line-height: 1.45;
+
+  @media (max-width: 560px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const ContactList = styled.div`
@@ -283,6 +332,11 @@ const ContactList = styled.div`
   gap: 9px;
   margin-top: auto;
   padding-top: 22px;
+
+  @media (max-width: 560px) {
+    gap: 7px;
+    padding-top: 18px;
+  }
 `;
 
 const ContactItem = styled.p`
@@ -296,6 +350,10 @@ const ContactItem = styled.p`
   line-height: 1.45;
   word-break: keep-all;
   overflow-wrap: normal;
+
+  @media (max-width: 560px) {
+    font-size: 0.88rem;
+  }
 
   span {
     flex: 0 0 48px;
@@ -413,18 +471,6 @@ const CareerOverlay = styled.div`
     background: rgba(18, 63, 133, 0.3);
   }
 
-  @media (hover: none) {
-    position: relative;
-    inset: auto;
-    grid-column: 1 / -1;
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-    max-height: none;
-    border-radius: 0;
-    border: 0;
-    border-top: 1px solid #d8dee8;
-  }
 `;
 
 const CareerHeader = styled.div`

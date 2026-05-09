@@ -2469,7 +2469,7 @@ export const shinhanNewsArchive: ShinhanNewsItem[] = [
   {
     id: "shinhan-news-flash-148",
     category: "flash",
-    categoryLabel: "공지",
+    categoryLabel: "FLASH",
     title: "신한 Academy 정기 고객 교육 - FDA 요건충족 & FTA 원산지검증 무료 교육 세미나",
     summary: "식품 • 화장품 기업 수출책임자를 위한 FDA 요건충족 & FTA 원산지검증 무료 교육 세미나 “K-Beauty, K-Food 의 미국진출 노하우 전수 ” 안녕하십니까? 내달 3일 화요일, 신한 Academy에서는 한국 화장품과 식품이 미국 FDA 요건충족과 한미 FTA 검증의 산을 넘어 세계 시장에서 최고 제품으로 인정",
     publishedAt: "2015.10.28",
@@ -2501,7 +2501,7 @@ export const shinhanNewsArchive: ShinhanNewsItem[] = [
   {
     id: "shinhan-news-flash-141",
     category: "flash",
-    categoryLabel: "공지",
+    categoryLabel: "FLASH",
     title: "신한 Academy 정기 고객 교육 - 품목분류(섬유와 자동차 부품)",
     summary: "신한 Academy 정기 고객 교육 - 섬유와 자동차 부품의 품목분류 - 안녕하십니까 ? 신한관세법인에서 품목분류 교육을 실시합니다 . 정확한 품목분류는 수출입 통관과 FTA 등 무역전반에 기본이 되는 중요한 사안입니다 . 품목분류 교육은 기본원칙의 숙지에 더하여 다양한 사례를 많이 접해야 합니다 . 따라서 이번 8 월 ",
     publishedAt: "2015.08.20",

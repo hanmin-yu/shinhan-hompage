@@ -7,10 +7,10 @@ import * as S from '../homeStyles';
 
 type SiteHeaderProps = {
   mobileMenuOpen: boolean;
-  onOpenMobileMenu: () => void;
+  onToggleMobileMenu: () => void;
 };
 
-export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps) {
+export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderProps) {
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
@@ -152,11 +152,11 @@ export function SiteHeader({ mobileMenuOpen, onOpenMobileMenu }: SiteHeaderProps
             <S.MobileIconButton
               type="button"
               kind="menu"
-              aria-label={t('메뉴', 'Menu')}
+              aria-label={mobileMenuOpen ? t('메뉴 닫기', 'Close Menu') : t('메뉴', 'Menu')}
               aria-haspopup="dialog"
               aria-expanded={mobileMenuOpen}
               aria-controls="site-mobile-menu"
-              onClick={onOpenMobileMenu}
+              onClick={onToggleMobileMenu}
             />
           </S.HeaderTools>
         </S.HeaderRight>

@@ -82,6 +82,10 @@ const SubnavBand = styled.section`
   background: #ffffff;
   border-bottom: 1px solid #e4e7ec;
   overflow: hidden;
+
+  @media (max-width: 760px) {
+    background: #f7f9fc;
+  }
 `;
 
 const SubnavInner = styled(P.PageContainer)`
@@ -94,10 +98,11 @@ const SubnavInner = styled(P.PageContainer)`
   overflow: hidden;
 
   @media (max-width: 760px) {
-    flex-direction: column;
-    min-height: 0;
+    min-height: 48px;
+    padding: 8px 14px;
     border-left: 0;
     border-right: 0;
+    overflow-x: auto;
   }
 `;
 
@@ -119,8 +124,17 @@ const HomeCell = styled(Link)`
   }
 
   @media (max-width: 760px) {
-    width: 56px;
-    flex-basis: 56px;
+    width: 38px;
+    height: 34px;
+    flex-basis: 38px;
+    border: 1px solid #d9e0eb;
+    border-radius: 999px;
+    background: #ffffff;
+
+    &::before {
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
@@ -136,11 +150,19 @@ const SectionNav = styled.nav`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media (max-width: 760px) {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-left: 8px;
+  }
 `;
 
 const SectionNavLink = styled(Link)`
   position: relative;
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   min-width: 132px;
@@ -151,6 +173,7 @@ const SectionNavLink = styled(Link)`
   font-weight: 700;
   letter-spacing: 0;
   white-space: nowrap;
+  word-break: keep-all;
 
   &:first-of-type {
     border-left: 1px solid #e4e7ec;
@@ -175,10 +198,30 @@ const SectionNavLink = styled(Link)`
   }
 
   @media (max-width: 760px) {
-    min-height: 52px;
-    min-width: auto;
-    padding: 0 18px;
-    font-size: 0.9rem;
+    min-height: 34px;
+    min-width: 0;
+    padding: 0 14px;
+    border: 1px solid #d9e0eb;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #526071;
+    font-size: 0.82rem;
+    font-weight: 800;
+
+    &:first-of-type {
+      border-left: 1px solid #d9e0eb;
+    }
+
+    &[data-active='true'] {
+      background: #123f85;
+      border-color: #123f85;
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
+    }
+
+    &[data-active='true']::after {
+      content: none;
+    }
   }
 `;
 

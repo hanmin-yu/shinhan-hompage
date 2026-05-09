@@ -24,6 +24,11 @@ const ServiceNavSection = styled.section`
   border-top: 1px solid #e4e7ec;
   border-bottom: 1px solid #e4e7ec;
   background: #ffffff;
+
+  @media (max-width: 760px) {
+    padding: 10px 0;
+    background: #f7f9fc;
+  }
 `;
 
 const HeroStatement = styled(P.PageContainer)`
@@ -200,196 +205,131 @@ const SectionParagraph = styled.p`
 `;
 
 const ImportExportFlow = styled.div`
-  --flow-line: color-mix(in srgb, ${palette.blue} 22%, transparent);
   --flow-text: ${palette.blue};
   --flow-muted: #687385;
 
   position: relative;
   overflow: hidden;
-  min-height: clamp(500px, 52vw, 610px);
-  padding: clamp(30px, 4vw, 50px);
+  display: grid;
+  padding: 0;
   border-radius: 8px;
   border: 1px solid #d8dee8;
-  border-top: 2px solid ${palette.blue};
-  background:
-    linear-gradient(90deg, rgba(18, 63, 133, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
-    linear-gradient(0deg, rgba(18, 63, 133, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
-    linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  background: #ffffff;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 120px 74px 98px;
-    background:
-      linear-gradient(var(--flow-line), var(--flow-line)) 12% 32% / 27% 2px no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 39% 32% / 2px 26% no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 39% 58% / 21% 2px no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 60% 58% / 2px 20% no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 60% 78% / 20% 2px no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 80% 34% / 2px 44% no-repeat,
-      linear-gradient(var(--flow-line), var(--flow-line)) 70% 34% / 10% 2px no-repeat;
-    pointer-events: none;
-  }
-
-  @media (max-width: 820px) {
-    min-height: auto;
-    padding: 28px 18px;
-
-    &::before {
-      inset: 160px auto 70px 34px;
-      width: 2px;
-      background: var(--flow-line);
-    }
-  }
 `;
 
 const FlowHeader = styled.div`
   position: relative;
   z-index: 1;
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-  margin-bottom: clamp(34px, 4vw, 48px);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px clamp(22px, 3vw, 32px);
+  background: ${palette.blue};
+  color: #ffffff;
 `;
 
 const FlowKicker = styled.span`
-  color: ${palette.blue};
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background:
+    linear-gradient(#ffffff, #ffffff) 50% 31% / 12px 2px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 50% 50% / 12px 2px no-repeat,
+    linear-gradient(#ffffff, #ffffff) 50% 69% / 12px 2px no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+  color: transparent;
+  font-size: 0;
 `;
 
 const FlowTitle = styled.h4`
   margin: 0;
-  color: var(--flow-text);
-  font-size: clamp(1.28rem, 2vw, 1.82rem);
+  color: #ffffff;
+  font-size: clamp(1.18rem, 1.8vw, 1.58rem);
   font-weight: 700;
   line-height: 1.18;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 `;
 
 const FlowCaption = styled.p`
-  max-width: 680px;
-  margin: 0;
-  color: var(--flow-muted);
-  font-size: 0.9rem;
-  line-height: 1.58;
-  word-break: keep-all;
+  display: none;
 `;
 
 const FlowGrid = styled.div`
-  counter-reset: flow-step;
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(104px, auto));
-  gap: clamp(18px, 3vw, 30px) clamp(28px, 5vw, 72px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px clamp(22px, 4vw, 52px);
+  padding: clamp(28px, 4vw, 46px) clamp(22px, 4vw, 40px);
+  background: #f8fafc;
 
   @media (max-width: 820px) {
     grid-template-columns: 1fr;
-    grid-template-rows: none;
-    gap: 18px;
-    padding-left: 34px;
+    gap: 14px;
   }
 `;
 
-const FlowCard = styled.article<{ $index: number; $accent: string }>`
+const FlowCard = styled.article<{ $accent: string }>`
   position: relative;
   display: grid;
-  align-content: center;
-  gap: 8px;
-  min-height: 108px;
-  padding: 18px 22px;
-  border: 1px solid #d8dee8;
-  border-top: 2px solid ${({ $accent }) => $accent};
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  min-height: 116px;
+  padding: 20px 24px;
+  border: 1px solid #edf0f5;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow:
-    0 16px 30px rgba(15, 38, 76, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-
-  ${({ $index }) => {
-    const positions = [
-      'grid-column: 1; grid-row: 2;',
-      'grid-column: 2; grid-row: 1;',
-      'grid-column: 3; grid-row: 1;',
-      'grid-column: 3; grid-row: 2;',
-      'grid-column: 3; grid-row: 3;',
-      'grid-column: 2; grid-row: 3;',
-    ];
-    return positions[$index] ?? '';
-  }}
-
-  &::before {
-    content: counter(flow-step, decimal-leading-zero);
-    counter-increment: flow-step;
-    position: absolute;
-    top: 50%;
-    left: -13px;
-    display: grid;
-    place-items: center;
-    width: 22px;
-    height: 22px;
-    border: 2px solid ${({ $accent }) => $accent};
-    border-radius: 999px;
-    background: #ffffff;
-    color: ${palette.blue};
-    font-size: 0.64rem;
-    font-weight: 900;
-    line-height: 1;
-    transform: translateY(-50%);
-    box-shadow: 0 0 0 4px #f8fbff;
-  }
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 38, 76, 0.045);
 
   &::after {
     content: '';
     position: absolute;
-    top: 50%;
-    right: -26px;
-    width: 9px;
-    height: 9px;
-    border-top: 2px solid rgba(29, 95, 182, 0.46);
-    border-right: 2px solid rgba(29, 95, 182, 0.46);
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  &:nth-of-type(3)::after,
-  &:last-of-type::after {
-    display: none;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 4px 0 0 ${({ $accent }) => $accent};
+    pointer-events: none;
   }
 
   @media (max-width: 820px) {
-    grid-column: auto;
-    grid-row: auto;
-    min-height: 96px;
-
-    &::before {
-      left: -44px;
-    }
-
-    &::after {
-      top: auto;
-      right: auto;
-      bottom: -17px;
-      left: -38px;
-      transform: rotate(135deg);
-    }
-
-    &:nth-of-type(3)::after {
-      display: block;
-    }
+    min-height: auto;
+    padding: 20px;
   }
+`;
+
+const FlowBadge = styled.span<{ $accent: string }>`
+  display: grid;
+  place-items: center;
+  width: 38px;
+  aspect-ratio: 1;
+  margin-top: 2px;
+  border-radius: 8px;
+  background: color-mix(in srgb, ${palette.blue} 10%, #ffffff);
+  color: ${palette.blue};
+  font-size: 0.96rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: inset 0 0 0 1px rgba(18, 63, 133, 0.14);
+
+  @media (max-width: 420px) {
+    width: 34px;
+  }
+`;
+
+const FlowCardBody = styled.div`
+  display: grid;
+  gap: 7px;
+  min-width: 0;
 `;
 
 const FlowTerm = styled.strong`
   color: var(--flow-text);
-  font-size: clamp(0.98rem, 1.28vw, 1.14rem);
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
   font-weight: 700;
-  line-height: 1.34;
+  line-height: 1.3;
   letter-spacing: -0.025em;
   word-break: keep-all;
 `;
@@ -401,7 +341,7 @@ const FlowDescription = styled.span`
   word-break: keep-all;
 `;
 
-const RefundFlow = styled.div`
+const RefundFlow = styled.div<{ $showConnector?: boolean }>`
   position: relative;
   overflow: hidden;
   padding: clamp(34px, 4.6vw, 56px) clamp(22px, 4vw, 46px);
@@ -420,6 +360,7 @@ const RefundFlow = styled.div`
     top: clamp(118px, 11vw, 146px);
     height: 2px;
     background: linear-gradient(90deg, transparent, rgba(29, 95, 182, 0.2), transparent);
+    display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
 
   @media (max-width: 900px) {
@@ -478,7 +419,7 @@ const RefundGrid = styled.div<{ $columns?: number }>`
   }
 `;
 
-const RefundStep = styled.article<{ $accent: string }>`
+const RefundStep = styled.article<{ $accent: string; $showConnector?: boolean }>`
   counter-increment: refund-step;
   position: relative;
   display: grid;
@@ -518,6 +459,7 @@ const RefundStep = styled.article<{ $accent: string }>`
     border-top: 2px solid rgba(29, 95, 182, 0.42);
     border-right: 2px solid rgba(29, 95, 182, 0.42);
     transform: rotate(45deg);
+    display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
 
   &:last-of-type::after {
@@ -532,7 +474,7 @@ const RefundStep = styled.article<{ $accent: string }>`
 
   @media (max-width: 700px) {
     &:nth-of-type(4)::after {
-      display: block;
+      display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
     }
 
     &:nth-of-type(2n)::after {
@@ -574,7 +516,7 @@ const RefundStepDescription = styled.span`
   word-break: keep-all;
 `;
 
-const ProcessStrip = styled.div`
+const ProcessStrip = styled.div<{ $tone?: 'default' | 'navy' }>`
   counter-reset: process-node;
   position: relative;
   display: grid;
@@ -584,13 +526,13 @@ const ProcessStrip = styled.div`
   border: 1px solid #d8dee8;
   border-top: 2px solid ${palette.blue};
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 16% 20%, rgba(31, 199, 195, 0.18), transparent 28%),
-    radial-gradient(circle at 86% 18%, rgba(107, 143, 242, 0.16), transparent 30%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  background: ${({ $tone = 'default' }) =>
+    $tone === 'navy'
+      ? 'radial-gradient(circle at 16% 20%, rgba(18, 63, 133, 0.12), transparent 28%), radial-gradient(circle at 86% 18%, rgba(29, 95, 182, 0.1), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'
+      : 'radial-gradient(circle at 16% 20%, rgba(31, 199, 195, 0.18), transparent 28%), radial-gradient(circle at 86% 18%, rgba(107, 143, 242, 0.16), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'};
 `;
 
-const ProcessNode = styled.article<{ $accent: string }>`
+const ProcessNode = styled.article<{ $accent: string; $showConnector?: boolean }>`
   counter-increment: process-node;
   position: relative;
   display: grid;
@@ -626,6 +568,7 @@ const ProcessNode = styled.article<{ $accent: string }>`
       linear-gradient(90deg, ${({ $accent }) => $accent}, ${({ $accent }) => $accent}) 0 50% / 18px 3px no-repeat,
       linear-gradient(45deg, transparent 50%, ${({ $accent }) => $accent} 51%) 16px 2px / 8px 8px no-repeat,
       linear-gradient(-45deg, transparent 50%, ${({ $accent }) => $accent} 51%) 16px 2px / 8px 8px no-repeat;
+    display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
 
   &:last-of-type::after {
@@ -655,6 +598,99 @@ const ProcessNodeText = styled.span`
   word-break: keep-all;
 `;
 
+const PenaltyProcedureBoard = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 28px);
+  padding: clamp(24px, 3.6vw, 42px);
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 16% 16%, rgba(18, 63, 133, 0.08), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const PenaltyProcedureLane = styled.article`
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 30px rgba(15, 38, 76, 0.06);
+`;
+
+const PenaltyProcedureLaneTitle = styled.h4`
+  margin: 0;
+  color: ${palette.blue};
+  font-size: clamp(1.08rem, 1.45vw, 1.28rem);
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+`;
+
+const PenaltyProcedureSteps = styled.ol`
+  counter-reset: penalty-step;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+const PenaltyProcedureStep = styled.li`
+  counter-increment: penalty-step;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  min-width: 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f6f9fd;
+
+  &::before {
+    content: counter(penalty-step, decimal-leading-zero);
+    display: grid;
+    place-items: center;
+    width: 34px;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: ${palette.blue};
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+`;
+
+const PenaltyProcedureStepBody = styled.div`
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+`;
+
+const PenaltyProcedureStepTitle = styled.strong`
+  color: ${palette.blue};
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.34;
+  word-break: keep-all;
+`;
+
+const PenaltyProcedureStepText = styled.span`
+  color: #687385;
+  font-size: 0.8rem;
+  line-height: 1.52;
+  word-break: keep-all;
+`;
+
 const StageCards = styled.div`
   counter-reset: stage-card;
   display: grid;
@@ -663,7 +699,7 @@ const StageCards = styled.div`
   padding-top: 18px;
 `;
 
-const StageCard = styled.article<{ $accent: string }>`
+const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>`
   counter-increment: stage-card;
   position: relative;
   display: grid;
@@ -671,11 +707,17 @@ const StageCard = styled.article<{ $accent: string }>`
   gap: 12px;
   min-height: 188px;
   padding: 58px 22px 24px;
+  border: ${({ $tone = 'solid' }) => ($tone === 'plain' ? '1px solid #cbdcf0' : '0')};
   border-radius: 22px 22px 10px 10px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, ${({ $accent }) => $accent} 74%, #ffffff), ${({ $accent }) => $accent});
-  color: #ffffff;
-  box-shadow: 0 22px 40px color-mix(in srgb, ${({ $accent }) => $accent} 24%, transparent);
+  background: ${({ $tone = 'solid', $accent }) =>
+    $tone === 'plain'
+      ? 'linear-gradient(180deg, #f6f9ff 0%, #eaf2fb 100%)'
+      : `linear-gradient(180deg, color-mix(in srgb, ${$accent} 74%, #ffffff), ${$accent})`};
+  color: ${({ $tone = 'solid' }) => ($tone === 'plain' ? '#143b6f' : '#ffffff')};
+  box-shadow: ${({ $tone = 'solid', $accent }) =>
+    $tone === 'plain'
+      ? '0 16px 30px rgba(18, 63, 133, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.86)'
+      : `0 22px 40px color-mix(in srgb, ${$accent} 24%, transparent)`};
   text-align: center;
 
   &::before {
@@ -687,9 +729,10 @@ const StageCard = styled.article<{ $accent: string }>`
     place-items: center;
     width: 56px;
     aspect-ratio: 1;
-    border: 7px solid #ffffff;
+    border: 7px solid ${({ $tone = 'solid' }) => ($tone === 'plain' ? '#f6f9ff' : '#ffffff')};
     border-radius: 999px;
-    background: color-mix(in srgb, ${({ $accent }) => $accent} 78%, #172337);
+    background: ${({ $tone = 'solid', $accent }) =>
+      $tone === 'plain' ? 'linear-gradient(180deg, #1d5fb6 0%, #123f85 100%)' : `color-mix(in srgb, ${$accent} 78%, #172337)`};
     color: #ffffff;
     font-size: 0.82rem;
     font-weight: 900;
@@ -707,30 +750,35 @@ const StageCardTitle = styled.strong`
 `;
 
 const StageCardText = styled.span`
-  color: rgba(255, 255, 255, 0.84);
+  color: inherit;
+  opacity: 0.72;
   font-size: 0.82rem;
   line-height: 1.56;
   word-break: keep-all;
 `;
 
-const MetricBoard = styled.div`
+const MetricBoard = styled.div<{ $tone?: 'dark' | 'plain' }>`
   display: grid;
   grid-template-columns: minmax(220px, 0.8fr) minmax(260px, 1.2fr);
   gap: clamp(24px, 4vw, 46px);
   padding: clamp(30px, 4.4vw, 52px);
+  border: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '1px solid #d8dee8' : '0')};
+  border-top: ${({ $tone = 'dark' }) => ($tone === 'plain' ? `2px solid ${palette.blue}` : '0')};
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 78% 44%, rgba(31, 199, 195, 0.2), transparent 30%),
-    linear-gradient(135deg, #172337 0%, #233247 100%);
-  color: #ffffff;
-  box-shadow: 0 24px 48px rgba(15, 38, 76, 0.18);
+  background: ${({ $tone = 'dark' }) =>
+    $tone === 'plain'
+      ? 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'
+      : 'radial-gradient(circle at 78% 44%, rgba(31, 199, 195, 0.2), transparent 30%), linear-gradient(135deg, #172337 0%, #233247 100%)'};
+  color: ${({ $tone = 'dark' }) => ($tone === 'plain' ? palette.blue : '#ffffff')};
+  box-shadow: ${({ $tone = 'dark' }) =>
+    $tone === 'plain' ? '0 18px 34px rgba(15, 38, 76, 0.07)' : '0 24px 48px rgba(15, 38, 76, 0.18)'};
 
   @media (max-width: 820px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const MetricBoardTitle = styled.div`
+const MetricBoardTitle = styled.div<{ $tone?: 'dark' | 'plain' }>`
   display: grid;
   align-content: center;
   gap: 16px;
@@ -743,7 +791,7 @@ const MetricBoardTitle = styled.div`
   }
 
   span {
-    color: rgba(255, 255, 255, 0.64);
+    color: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '#687385' : 'rgba(255, 255, 255, 0.64)')};
     font-size: 0.9rem;
     line-height: 1.58;
   }
@@ -759,16 +807,18 @@ const MetricGrid = styled.div`
   }
 `;
 
-const MetricItem = styled.article<{ $accent: string }>`
+const MetricItem = styled.article<{ $accent: string; $tone?: 'dark' | 'plain' }>`
   counter-increment: metric-item;
   display: grid;
   gap: 10px;
   padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px 999px 18px 18px;
-  background:
-    radial-gradient(circle at 50% 0%, color-mix(in srgb, ${({ $accent }) => $accent} 28%, transparent), transparent 48%),
-    rgba(255, 255, 255, 0.045);
+  border: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.12)')};
+  border-radius: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '8px' : '999px 999px 18px 18px')};
+  background: ${({ $tone = 'dark', $accent }) =>
+    $tone === 'plain'
+      ? '#ffffff'
+      : `radial-gradient(circle at 50% 0%, color-mix(in srgb, ${$accent} 28%, transparent), transparent 48%), rgba(255, 255, 255, 0.045)`};
+  box-shadow: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '0 12px 24px rgba(15, 38, 76, 0.05)' : 'none')};
 
   &::before {
     content: counter(metric-item, decimal-leading-zero);
@@ -776,24 +826,25 @@ const MetricItem = styled.article<{ $accent: string }>`
     place-items: center;
     width: 58px;
     aspect-ratio: 1;
-    border: 3px solid ${({ $accent }) => $accent};
+    border: ${({ $tone = 'dark', $accent }) => ($tone === 'plain' ? '0' : `3px solid ${$accent}`)};
     border-radius: 999px;
-    color: ${({ $accent }) => $accent};
+    background: ${({ $tone = 'dark' }) => ($tone === 'plain' ? palette.blue : 'transparent')};
+    color: ${({ $tone = 'dark', $accent }) => ($tone === 'plain' ? '#ffffff' : $accent)};
     font-size: 0.82rem;
     font-weight: 900;
   }
 `;
 
-const MetricItemTitle = styled.strong`
-  color: #ffffff;
+const MetricItemTitle = styled.strong<{ $tone?: 'dark' | 'plain' }>`
+  color: ${({ $tone = 'dark' }) => ($tone === 'plain' ? palette.blue : '#ffffff')};
   font-size: 1rem;
   font-weight: 800;
   line-height: 1.34;
   word-break: keep-all;
 `;
 
-const MetricItemText = styled.span`
-  color: rgba(255, 255, 255, 0.66);
+const MetricItemText = styled.span<{ $tone?: 'dark' | 'plain' }>`
+  color: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '#687385' : 'rgba(255, 255, 255, 0.66)')};
   font-size: 0.8rem;
   line-height: 1.54;
   word-break: keep-all;
@@ -853,8 +904,8 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
   }
 
   @media (max-width: 540px) {
-    grid-template-columns: minmax(0, 1fr) 132px;
-    min-height: 228px;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    min-height: 198px;
   }
 `;
 
@@ -863,6 +914,10 @@ const ContactProfileBody = styled.div`
   flex-direction: column;
   min-width: 0;
   padding: clamp(24px, 3vw, 38px);
+
+  @media (max-width: 540px) {
+    padding: 20px;
+  }
 `;
 
 const ContactTitleRow = styled.div`
@@ -880,6 +935,10 @@ const ContactName = styled.h3`
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0;
+
+  @media (max-width: 540px) {
+    font-size: 1.42rem;
+  }
 `;
 
 const ContactNameDivider = styled.span`
@@ -889,6 +948,10 @@ const ContactNameDivider = styled.span`
   margin-top: 2px;
   background: linear-gradient(180deg, #102a55, #1d5fb6);
   opacity: 0.9;
+
+  @media (max-width: 540px) {
+    height: 32px;
+  }
 `;
 
 const ContactRoleStack = styled.div`
@@ -903,6 +966,10 @@ const ContactRole = styled.p`
   font-size: 1rem;
   font-weight: 850;
   line-height: 1.38;
+
+  @media (max-width: 540px) {
+    font-size: 0.92rem;
+  }
 `;
 
 const ContactDepartment = styled.p`
@@ -911,6 +978,10 @@ const ContactDepartment = styled.p`
   font-size: 0.96rem;
   font-weight: 650;
   line-height: 1.45;
+
+  @media (max-width: 540px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const ContactPractice = styled.p`
@@ -920,6 +991,10 @@ const ContactPractice = styled.p`
   font-weight: 650;
   line-height: 1.45;
   word-break: keep-all;
+
+  @media (max-width: 540px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const ContactMeta = styled.div`
@@ -927,6 +1002,11 @@ const ContactMeta = styled.div`
   gap: 9px;
   margin-top: auto;
   padding-top: 22px;
+
+  @media (max-width: 540px) {
+    gap: 7px;
+    padding-top: 18px;
+  }
 `;
 
 const ContactMetaItem = styled.p`
@@ -940,6 +1020,10 @@ const ContactMetaItem = styled.p`
   line-height: 1.45;
   word-break: keep-all;
   overflow-wrap: normal;
+
+  @media (max-width: 540px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const ContactLabel = styled.span`
@@ -947,6 +1031,10 @@ const ContactLabel = styled.span`
   color: #0c4e96;
   font-size: 0.96rem;
   font-weight: 900;
+
+  @media (max-width: 540px) {
+    font-size: 0.88rem;
+  }
 `;
 
 const ContactValue = styled.a`
@@ -1015,12 +1103,12 @@ function splitDiagramItem(item: string) {
   return { term, description };
 }
 
-const importExportFlowAccents = ['#e58f77', '#9bb8d7', '#34d1d0', '#2cb6c9', '#8f7ed2', '#9bb8d7'];
-const refundFlowAccents = ['#1d5fb6', '#4d86c8', '#1d7d6a', '#7b8faa', '#2f8f7b', '#5d789f', '#174d9a'];
-const quarantineFlowAccents = ['#1d5fb6', '#1d7d6a', '#5d789f', '#2f8f7b', '#4d86c8', '#7b8faa', '#174d9a'];
+const importExportFlowAccents = [palette.blue];
+const refundFlowAccents = [palette.blue];
+const ftaCircleAccents = [palette.blue];
 const vividAccents = ['#1d5fb6', '#1fc7c3', '#6b8ff2', '#f36f8f', '#d59c2a', '#6f74a8', '#2f8f7b'];
 
-type DiagramKind = 'circle' | 'process' | 'stage' | 'metric';
+type DiagramKind = 'circle' | 'process' | 'stage' | 'metric' | 'split';
 
 type ReferenceDiagramSection = {
   heading: string;
@@ -1030,11 +1118,14 @@ type ReferenceDiagramSection = {
 };
 
 function getDiagramKind(contentId: string, heading: string, isSteps = false): DiagramKind {
-  if (isSteps) return 'stage';
+  if (isSteps) {
+    if (contentId === 'acva' && heading === 'ACVA 처리절차') return 'process';
+    return 'stage';
+  }
 
   if (contentId === 'import-export') return 'process';
   if (contentId === 'refund') {
-    if (heading === '관세환급') return 'circle';
+    if (heading === '환급 종류') return 'circle';
     if (heading === '주요 서비스') return 'stage';
   }
   if (contentId === 'quarantine') {
@@ -1044,16 +1135,21 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
   if (contentId === 'fta') {
     if (heading === '원산지 관리의 종류') return 'circle';
     if (heading === '일반 원산지 컨설팅') return 'stage';
-    if (heading === 'FTA 원산지 컨설팅') return 'process';
+    if (heading === 'FTA 원산지 컨설팅') return 'stage';
   }
   if (contentId === 'customs-audit') {
     if (heading === '관세조사의 종류') return 'circle';
+    if (heading === '주요 조사 분야') return 'process';
     return 'metric';
   }
   if (contentId === 'penalty-investigation') {
     if (heading === '범칙조사 구분') return 'circle';
     if (heading === '통고처분 및 검찰송치') return 'process';
     if (heading === '업무범위') return 'stage';
+  }
+  if (contentId === 'tax-appeal') {
+    if (heading === '업무범위') return 'stage';
+    return 'process';
   }
   if (contentId === 'trade-consulting') {
     if (heading === '사전심사 제도의 종류') return 'circle';
@@ -1072,15 +1168,13 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
   if (contentId === 'us-fda') {
     if (heading.includes('핵심 서비스')) return 'process';
     if (heading.includes('지원 카테고리')) return 'circle';
-    if (heading.includes('리스크')) return 'metric';
+    if (heading.includes('리스크')) return 'stage';
   }
-  if (contentId === 'acva' && heading === 'ACVA 이점') return 'metric';
+  if (contentId === 'acva' && heading === 'ACVA 이점') return 'process';
   if (heading.includes('종류') || heading.includes('구분') || heading.includes('카테고리')) {
     return 'circle';
   }
   if (
-    contentId === 'foreign-exchange' ||
-    contentId === 'tax-appeal' ||
     heading.includes('처리절차') ||
     heading.includes('통고처분')
   ) {
@@ -1110,46 +1204,24 @@ function getReferenceDiagramSections(contentId: string): ReferenceDiagramSection
     ];
   }
 
-  if (contentId === 'customs-audit') {
-    return [
-      {
-        heading: '관세조사 주요 쟁점',
-        kind: 'metric',
-        list: [
-          '관세평가: 거래가격과 가산·공제 요소의 적정성을 점검합니다.',
-          '품목분류: HS CODE 정합성과 세율 적용 리스크를 검토합니다.',
-          '관세환급: 환급 산정과 증빙 적정성을 확인합니다.',
-          '감면: 감면 요건 충족 여부와 사후관리 리스크를 점검합니다.',
-          '외국환거래: 지급 구조와 신고 의무 위반 가능성을 검토합니다.',
-          '통관요건: 인증·허가·표시 기준 등 수입 요건을 점검합니다.',
-          '보세화물 관리: 보세구역 반출입과 재고 관리 적정성을 확인합니다.',
-        ],
-      },
-    ];
-  }
+  if (contentId === 'customs-audit') return [];
 
   if (contentId === 'penalty-investigation') {
     return [
       {
-        heading: '세관조사 및 통고처분 절차',
-        kind: 'stage',
+        heading: '범칙조사 절차',
+        kind: 'split',
         list: [
-          '세관조사 착수: 조사 범위와 혐의 사실을 확인합니다.',
-          '자료 제출·입회: 요구 자료를 정리하고 조사 과정에 입회합니다.',
-          '의견진술: 사실관계와 법리 쟁점을 정리해 의견을 제출합니다.',
-          '통고처분 검토: 벌금·추징금 납부 여부와 사건 종결 가능성을 검토합니다.',
-          '종결 또는 송치: 통고처분 이행 시 종결, 불이행 시 검찰 송치로 이어집니다.',
-        ],
-      },
-      {
-        heading: '검찰조사 및 형사처분 절차',
-        kind: 'metric',
-        list: [
-          '검찰 송치: 세관조사 결과가 검찰 단계로 이관됩니다.',
-          '검찰 수사: 사실관계와 위법성, 고의성 여부를 검토합니다.',
-          '불기소 처분: 혐의 없음 또는 기소유예 등으로 사건이 종결될 수 있습니다.',
-          '약식기소: 약식명령 송달 후 벌금 납부 또는 정식재판 청구로 이어집니다.',
-          '공판기소: 정식 재판을 통해 판결 확정 단계로 진행됩니다.',
+          '세관조사 및 통고처분|세관조사 착수: 조사 범위와 혐의 사실을 확인합니다.',
+          '세관조사 및 통고처분|자료 제출·입회: 요구 자료를 정리하고 조사 과정에 입회합니다.',
+          '세관조사 및 통고처분|의견진술: 사실관계와 법리 쟁점을 정리해 의견을 제출합니다.',
+          '세관조사 및 통고처분|통고처분 검토: 벌금·추징금 납부 여부와 사건 종결 가능성을 검토합니다.',
+          '세관조사 및 통고처분|종결 또는 송치: 통고처분 이행 시 종결, 불이행 시 검찰 송치로 이어집니다.',
+          '검찰조사 및 형사처분|검찰 송치: 세관조사 결과가 검찰 단계로 이관됩니다.',
+          '검찰조사 및 형사처분|검찰 수사: 사실관계와 위법성, 고의성 여부를 검토합니다.',
+          '검찰조사 및 형사처분|불기소 처분: 혐의 없음 또는 기소유예 등으로 사건이 종결될 수 있습니다.',
+          '검찰조사 및 형사처분|약식기소: 약식명령 송달 후 벌금 납부 또는 정식재판 청구로 이어집니다.',
+          '검찰조사 및 형사처분|공판기소: 정식 재판을 통해 판결 확정 단계로 진행됩니다.',
         ],
       },
     ];
@@ -1215,17 +1287,53 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const isImportExportPage = content.id === 'import-export';
   const isRefundPage = content.id === 'refund';
   const isQuarantinePage = content.id === 'quarantine';
+  const isFtaPage = content.id === 'fta';
+  const isAeoPage = content.id === 'aeo';
+  const isCustomsAuditPage = content.id === 'customs-audit';
+  const isForeignExchangePage = content.id === 'foreign-exchange';
+  const isAcvaPage = content.id === 'acva';
+  const isPenaltyInvestigationPage = content.id === 'penalty-investigation';
+  const isTaxAppealPage = content.id === 'tax-appeal';
+  const isTradeConsultingPage = content.id === 'trade-consulting';
+  const isLogisticsPage = content.id === 'logistics';
+  const isVietnamPage = content.id === 'vietnam';
+  const isUsFdaPage = content.id === 'us-fda';
   const referenceDiagramSections = getReferenceDiagramSections(content.id);
   const showReferenceDiagramsFirst = content.id === 'vietnam';
+  const deferredDetailSections = isPenaltyInvestigationPage
+    ? detailSections.filter((section) => section.heading === '업무범위')
+    : [];
+  const primaryDetailSections = isPenaltyInvestigationPage
+    ? detailSections.filter((section) => section.heading !== '업무범위')
+    : detailSections;
 
   const renderCircleDiagram = (items: string[], sectionHeading: string) => {
-    const accents = isQuarantinePage ? quarantineFlowAccents : refundFlowAccents;
+    const accents = isQuarantinePage || isVietnamPage || isUsFdaPage ? [palette.blue] : isFtaPage ? ftaCircleAccents : refundFlowAccents;
+    const isRefundTypes = isRefundPage && sectionHeading === '환급 종류';
+    const isCustomsAuditTypes = isCustomsAuditPage && sectionHeading === '관세조사의 종류';
+    const isPenaltyInvestigationTypes = isPenaltyInvestigationPage && sectionHeading === '범칙조사 구분';
+    const isFtaOriginTypes = isFtaPage && sectionHeading === '원산지 관리의 종류';
+    const isTradeConsultingTypes = isTradeConsultingPage && sectionHeading === '사전심사 제도의 종류';
+    const isQuarantineTypes = isQuarantinePage && sectionHeading === '요건의 종류';
+    const isLogisticsTrucking = isLogisticsPage && sectionHeading.includes('Trucking');
+    const isVietnamSection = isVietnamPage;
+    const isUsFdaSection = isUsFdaPage;
+    const showConnector =
+      !isRefundTypes &&
+      !isCustomsAuditTypes &&
+      !isPenaltyInvestigationTypes &&
+      !isFtaOriginTypes &&
+      !isTradeConsultingTypes &&
+      !isQuarantineTypes &&
+      !isLogisticsTrucking &&
+      !isVietnamSection &&
+      !isUsFdaSection;
 
     return (
-      <RefundFlow>
+      <RefundFlow $showConnector={showConnector}>
         <RefundHeader>
           <RefundKicker>
-            {isQuarantinePage ? 'REQUIREMENT CHECK' : isRefundPage ? 'REFUND PROCESS' : 'SERVICE MAP'}
+            {isQuarantinePage ? 'REQUIREMENT CHECK' : isRefundTypes ? 'REFUND TYPES' : isRefundPage ? 'REFUND SERVICE' : 'SERVICE MAP'}
           </RefundKicker>
           <RefundTitle>
             {isQuarantinePage
@@ -1236,7 +1344,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                     : 'Quarantine & Requirement Service Flow',
                 )
               : isRefundPage
-                ? t('관세환급 주요 서비스 흐름', 'Customs Refund Service Flow')
+                ? t(sectionHeading, sectionHeading)
                 : t(sectionHeading, sectionHeading)}
           </RefundTitle>
         </RefundHeader>
@@ -1244,7 +1352,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           {items.map((item, index) => {
             const { term, description } = splitDiagramItem(tx(item));
             return (
-              <RefundStep key={item} $accent={accents[index % accents.length]}>
+              <RefundStep key={item} $accent={accents[index % accents.length]} $showConnector={showConnector}>
                 <RefundStepTitle>{term}</RefundStepTitle>
                 {description ? <RefundStepDescription>{description}</RefundStepDescription> : null}
               </RefundStep>
@@ -1255,27 +1363,44 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     );
   };
 
-  const renderProcessDiagram = (items: string[]) => {
-    if (isImportExportPage) {
+  const renderProcessDiagram = (items: string[], sectionHeading = '') => {
+    const isCustomsAuditFocus = isCustomsAuditPage && sectionHeading === '주요 조사 분야';
+    const isForeignExchangeService = isForeignExchangePage && sectionHeading === '주요 서비스 상세 설명';
+    const isAcvaBenefits = isAcvaPage && sectionHeading === 'ACVA 이점';
+    const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스 상세 설명';
+    const isUsFdaCoreService = isUsFdaPage && sectionHeading.includes('핵심 서비스');
+
+    if (isImportExportPage || isCustomsAuditFocus || isForeignExchangeService || isAcvaBenefits || isQuarantineService || isUsFdaCoreService) {
+      const accents = importExportFlowAccents;
+      const boardTitle = isImportExportPage
+        ? t('수출입 통관 운영 특장점', 'Import & Export Clearance Strengths')
+        : t(sectionHeading, sectionHeading);
+
       return (
         <ImportExportFlow>
           <FlowHeader>
-            <FlowKicker>PROCESS FLOW</FlowKicker>
-            <FlowTitle>{t('수출입 통관 운영 흐름', 'Import & Export Clearance Flow')}</FlowTitle>
+            <FlowKicker aria-hidden="true">LIST</FlowKicker>
+            <FlowTitle>{boardTitle}</FlowTitle>
             <FlowCaption>
-              {t(
-                '품목 관리부터 리스크 점검, 이슈 대응, 시스템 연동과 데이터 관리까지 하나의 흐름으로 연결합니다.',
-                'From item master management to risk control, issue response, system integration, and data management.',
-              )}
+              {isImportExportPage
+                ? t(
+                    '시스템 기반 관리와 실무 대응 역량을 중심으로 통관 운영의 강점을 정리했습니다.',
+                    'Key strengths of customs operations organized around system-based management and practical response capabilities.',
+                  )
+                : null}
             </FlowCaption>
           </FlowHeader>
           <FlowGrid>
             {items.map((item, index) => {
               const { term, description } = splitDiagramItem(tx(item));
+              const accent = accents[index % accents.length];
               return (
-                <FlowCard key={item} $index={index} $accent={importExportFlowAccents[index % importExportFlowAccents.length]}>
-                  <FlowTerm>{term}</FlowTerm>
-                  {description ? <FlowDescription>{description}</FlowDescription> : null}
+                <FlowCard key={item} $accent={accent}>
+                  <FlowBadge $accent={accent}>{index + 1}</FlowBadge>
+                  <FlowCardBody>
+                    <FlowTerm>{term}</FlowTerm>
+                    {description ? <FlowDescription>{description}</FlowDescription> : null}
+                  </FlowCardBody>
                 </FlowCard>
               );
             })}
@@ -1285,11 +1410,16 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     }
 
     return (
-      <ProcessStrip>
+      <ProcessStrip $tone={isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage ? 'navy' : 'default'}>
         {items.map((item, index) => {
           const { term, description } = splitDiagramItem(tx(item));
+          const accent =
+            isAeoPage || isFtaPage || isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage
+              ? palette.blue
+              : vividAccents[index % vividAccents.length];
+          const showConnector = !(isLogisticsPage && sectionHeading.includes('Forwarding')) && !isVietnamPage && !isUsFdaPage;
           return (
-            <ProcessNode key={item} $accent={vividAccents[index % vividAccents.length]}>
+            <ProcessNode key={item} $accent={accent} $showConnector={showConnector}>
               <ProcessNodeTitle>{term}</ProcessNodeTitle>
               {description ? <ProcessNodeText>{description}</ProcessNodeText> : null}
             </ProcessNode>
@@ -1299,12 +1429,62 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     );
   };
 
+  const renderPenaltyProcedureBoard = (items: string[]) => {
+    const groups = items.reduce<Array<{ title: string; items: string[] }>>((acc, item) => {
+      const [rawTitle, detail] = item.split('|');
+      const title = rawTitle?.trim();
+      const body = detail?.trim();
+      if (!title || !body) return acc;
+
+      const existing = acc.find((group) => group.title === title);
+      if (existing) {
+        existing.items.push(body);
+      } else {
+        acc.push({ title, items: [body] });
+      }
+      return acc;
+    }, []);
+
+    return (
+      <PenaltyProcedureBoard>
+        {groups.map((group) => (
+          <PenaltyProcedureLane key={group.title}>
+            <PenaltyProcedureLaneTitle>{tx(group.title)}</PenaltyProcedureLaneTitle>
+            <PenaltyProcedureSteps>
+              {group.items.map((item) => {
+                const { term, description } = splitDiagramItem(tx(item));
+                return (
+                  <PenaltyProcedureStep key={`${group.title}-${item}`}>
+                    <PenaltyProcedureStepBody>
+                      <PenaltyProcedureStepTitle>{term}</PenaltyProcedureStepTitle>
+                      {description ? <PenaltyProcedureStepText>{description}</PenaltyProcedureStepText> : null}
+                    </PenaltyProcedureStepBody>
+                  </PenaltyProcedureStep>
+                );
+              })}
+            </PenaltyProcedureSteps>
+          </PenaltyProcedureLane>
+        ))}
+      </PenaltyProcedureBoard>
+    );
+  };
+
   const renderStageDiagram = (items: string[]) => (
     <StageCards>
       {items.map((item, index) => {
         const { term, description } = splitDiagramItem(tx(item));
+        const accent =
+          isRefundPage
+            ? palette.blue
+            : isForeignExchangePage
+              ? palette.blue
+            : isAcvaPage
+              ? palette.blue
+            : isPenaltyInvestigationPage || isFtaPage || isTaxAppealPage || isTradeConsultingPage || isLogisticsPage || isVietnamPage || isUsFdaPage
+              ? palette.blue
+              : vividAccents[index % vividAccents.length];
         return (
-          <StageCard key={item} $accent={vividAccents[index % vividAccents.length]}>
+          <StageCard key={item} $accent={accent} $tone="plain">
             <StageCardTitle>{term}</StageCardTitle>
             {description ? <StageCardText>{description}</StageCardText> : null}
           </StageCard>
@@ -1313,9 +1493,13 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     </StageCards>
   );
 
-  const renderMetricDiagram = (items: string[], sectionHeading: string) => (
-    <MetricBoard>
-      <MetricBoardTitle>
+  const renderMetricDiagram = (items: string[], sectionHeading: string) => {
+    const tone = isCustomsAuditPage || isVietnamPage ? 'plain' : 'dark';
+    const accents = isCustomsAuditPage || isAcvaPage || isVietnamPage ? [palette.blue] : vividAccents;
+
+    return (
+      <MetricBoard $tone={tone}>
+      <MetricBoardTitle $tone={tone}>
         <strong>{t(sectionHeading, sectionHeading)}</strong>
         <span>{t('핵심 효과를 리스크 완화와 운영 안정성 관점에서 정리했습니다.', 'Key effects organized by risk reduction and operational stability.')}</span>
       </MetricBoardTitle>
@@ -1323,15 +1507,16 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         {items.map((item, index) => {
           const { term, description } = splitDiagramItem(tx(item));
           return (
-            <MetricItem key={item} $accent={vividAccents[index % vividAccents.length]}>
-              <MetricItemTitle>{term}</MetricItemTitle>
-              {description ? <MetricItemText>{description}</MetricItemText> : null}
+            <MetricItem key={item} $accent={accents[index % accents.length]} $tone={tone}>
+              <MetricItemTitle $tone={tone}>{term}</MetricItemTitle>
+              {description ? <MetricItemText $tone={tone}>{description}</MetricItemText> : null}
             </MetricItem>
           );
         })}
       </MetricGrid>
     </MetricBoard>
-  );
+    );
+  };
 
   const renderItemsDiagram = (items: string[], sectionHeading: string, isSteps = false) => {
     const kind = getDiagramKind(content.id, sectionHeading, isSteps);
@@ -1339,14 +1524,16 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
     if (kind === 'stage') return renderStageDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
-    return renderProcessDiagram(items);
+    if (kind === 'split') return renderPenaltyProcedureBoard(items);
+    return renderProcessDiagram(items, sectionHeading);
   };
 
   const renderDiagramByKind = (items: string[], sectionHeading: string, kind: DiagramKind) => {
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
     if (kind === 'stage') return renderStageDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
-    return renderProcessDiagram(items);
+    if (kind === 'split') return renderPenaltyProcedureBoard(items);
+    return renderProcessDiagram(items, sectionHeading);
   };
 
   return (
@@ -1411,7 +1598,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                   </DocumentSectionCard>
                 ))
               : null}
-            {detailSections?.map((section) => (
+            {primaryDetailSections?.map((section) => (
               <DocumentSectionCard key={section.heading}>
                 <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>
                 <ItemBodyStack>
@@ -1448,6 +1635,26 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                   </DocumentSectionCard>
                 ))
               : null}
+            {deferredDetailSections.map((section) => (
+              <DocumentSectionCard key={section.heading}>
+                <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>
+                <ItemBodyStack>
+                  {section.body?.length ? (
+                    <ParagraphStack>
+                      {section.body.map((paragraph) => (
+                        <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
+                      ))}
+                    </ParagraphStack>
+                  ) : null}
+                  {section.list?.length ? (
+                    renderItemsDiagram(section.list, section.heading)
+                  ) : null}
+                  {section.steps?.length ? (
+                    renderItemsDiagram(section.steps, section.heading, true)
+                  ) : null}
+                </ItemBodyStack>
+              </DocumentSectionCard>
+            ))}
           </DocumentStack>
         </SectionInner>
       </EditorialSection>

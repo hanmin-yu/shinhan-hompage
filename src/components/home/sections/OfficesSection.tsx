@@ -21,6 +21,22 @@ const officeFallbackImages: Record<string, string> = {
   vietnam: '/hero/homepage/seoul-skyline-blue-sky.jpg',
 };
 
+const homeOfficeOrder = [
+  'invista',
+  'seoul',
+  'kord-systems',
+  'kord',
+  'airport',
+  'incheon',
+  'sh-food',
+  'cheongju',
+  'gumi',
+  'busan',
+  'vietnam',
+];
+
+const homeOfficeRank = new Map(homeOfficeOrder.map((officeId, index) => [officeId, index]));
+
 const mapPinGroups = [
   { id: 'seoul-hq', officeIds: ['seoul', 'kord-systems', 'kord'], x: 33.4, y: 21.3, accent: '#1c4f96' },
   { id: 'gimpo', officeIds: ['invista'], x: 29.2, y: 20.7, accent: '#2f689b' },
@@ -38,10 +54,10 @@ const homeTilePoints: Record<string, { x: number; y: number }> = {
   airport: { x: 21, y: 56 },
   incheon: { x: 14, y: 72 },
   'sh-food': { x: 21, y: 87 },
-  busan: { x: 87, y: 14 },
+  invista: { x: 80, y: 14 },
   cheongju: { x: 80, y: 30 },
   gumi: { x: 86, y: 47 },
-  invista: { x: 80, y: 64 },
+  busan: { x: 80, y: 64 },
   vietnam: { x: 87, y: 81 },
 };
 
@@ -275,7 +291,9 @@ const MapStage = styled.div`
   }
 
   @media (max-width: 780px) {
-    display: none;
+    display: block;
+    min-height: auto;
+    margin-top: 26px;
   }
 `;
 
@@ -302,10 +320,11 @@ const MapPanel = styled.div`
     min-height: 720px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
     width: min(100%, 430px);
     aspect-ratio: auto;
     margin: 0 auto;
+    min-height: auto;
 
     &::before {
       display: none;
@@ -322,14 +341,8 @@ const KoreaMapCanvas = styled.div`
   aspect-ratio: 800 / 1200;
   transform: translate(-50%, -50%);
 
-  @media (max-width: 700px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: auto;
-    margin-bottom: 18px;
-    transform: none;
+  @media (max-width: 780px) {
+    display: none;
   }
 `;
 
@@ -355,7 +368,7 @@ const MapHalo = styled.span`
   transform: translate(-50%, -50%);
   opacity: 0.5;
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
     display: none;
   }
 `;
@@ -397,7 +410,7 @@ const MapPoint = styled.span<{ x: number; y: number; accent: string; $active: bo
     transform: rotate(45deg);
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
     display: none;
   }
 `;
@@ -407,7 +420,7 @@ const CountLine = styled.div`
   align-items: flex-end;
   gap: 16px;
   color: #2c2e33;
-  margin: clamp(42px, 6vw, 92px) 0 0 clamp(92px, 13vw, 220px);
+  margin: clamp(42px, 6vw, 92px) 0 0 clamp(20px, 4vw, 72px);
 
   @media (max-width: 700px) {
     flex-wrap: wrap;
@@ -502,12 +515,17 @@ const Tiles = styled.div`
   z-index: 3;
   pointer-events: auto;
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
     position: static;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 184px;
-    gap: 18px;
+    grid-auto-rows: 172px;
+    gap: 12px;
+  }
+
+  @media (max-width: 420px) {
+    grid-auto-rows: 154px;
+    gap: 10px;
   }
 `;
 
@@ -547,14 +565,14 @@ const OfficeTile = styled.a<{ x: number; y: number; $active: boolean }>`
     min-height: 104px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 780px) {
     position: relative;
     left: auto;
     top: auto;
     grid-column: auto;
     grid-row: auto;
     width: auto;
-    min-height: 178px;
+    min-height: 100%;
     transform: none;
 
     &:hover {
@@ -608,7 +626,11 @@ const OfficeName = styled.strong`
 
 export function OfficesSection() {
   const { t } = useI18n();
-  const visibleOffices = officeBranches;
+  const visibleOffices = [...officeBranches].sort(
+    (a, b) =>
+      (homeOfficeRank.get(a.id) ?? Number.MAX_SAFE_INTEGER) -
+      (homeOfficeRank.get(b.id) ?? Number.MAX_SAFE_INTEGER),
+  );
   const [activeOfficeId, setActiveOfficeId] = useState<string | null>(null);
   const { ref: countRef, value: officeCount, isCounting } = useCountUp(visibleOffices.length);
 
