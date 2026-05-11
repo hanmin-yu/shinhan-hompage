@@ -283,7 +283,7 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle $reverse>
             <MessageHeader>
-              <MessageTitle>100년의 Goal을 향해 계속 나아갑니다</MessageTitle>
+              <MessageTitle>100년의 역사를 향해 계속 나아갑니다</MessageTitle>
             </MessageHeader>
 
             <BodyStack>
@@ -291,7 +291,7 @@ export function MessagePage() {
                 1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.
               </LeadBody>
               <MessageBody>
-                또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고100년의 Goal을 향해서 계속 나아가겠습니다.
+                또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 역사를 향해서 계속 나아가겠습니다.
               </MessageBody>
               <MessageBody>
                 함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다. 고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.

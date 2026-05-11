@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import * as E from '../../components/site/EditorialBlocks';
@@ -10,7 +10,13 @@ import { palette } from '../../components/home/homeStyles';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
-import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
+import {
+  getGoogleMapEmbedUrl,
+  getGoogleMapEmbedUrlByCoordinates,
+  getGoogleMapUrl,
+  getGoogleMapUrlByCoordinates,
+  getNaverMapUrl,
+} from '../../utils/mapLinks';
 
 type OfficeViewData = {
   id: string;
@@ -23,6 +29,7 @@ type OfficeViewData = {
   address: string;
   addressEn: string;
   tel: string;
+  email?: string;
   fax?: string;
   websiteUrl?: string;
   websiteLabel?: string;
@@ -30,9 +37,23 @@ type OfficeViewData = {
   naverMapUrl?: string;
   googleMapUrl: string;
   googleMapEmbedUrl: string;
+  locations: OfficeLocationViewData[];
+};
+
+type OfficeLocationViewData = {
+  id: string;
+  label: string;
+  labelEn: string;
+  address: string;
+  addressEn: string;
+  showNaverMap: boolean;
+  naverMapUrl?: string;
+  googleMapUrl: string;
+  googleMapEmbedUrl: string;
 };
 
 const addressOnlyMapOfficeIds = new Set(['busan', 'cheongju', 'gumi']);
+const primaryOfficeIds = new Set(['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi']);
 const googleMapQueryOverrides: Record<string, string> = {
   vietnam: 'Star Tower, Duong Dinh Nghe, Yen Hoa, Cau Giay, Hanoi, Vietnam',
 };
@@ -43,10 +64,45 @@ function useOfficeViewData(): OfficeViewData[] {
   return officeBranches.map((office) => {
       const isVietnamOffice = office.id === 'vietnam';
       const useAddressOnly = addressOnlyMapOfficeIds.has(office.id);
-      const mapSearchQuery = useAddressOnly
-        ? t(office.address, office.addressEn)
-        : t(office.mapQuery ?? office.address, office.mapQueryEn ?? office.addressEn);
-      const googleMapQuery = googleMapQueryOverrides[office.id] ?? (isVietnamOffice ? office.addressEn : mapSearchQuery);
+      const baseLocations = office.locations?.length
+        ? office.locations
+        : [
+            {
+              id: office.id,
+              label: office.label,
+              labelEn: office.labelEn,
+              address: office.address,
+              addressEn: office.addressEn,
+              mapQuery: office.mapQuery,
+              mapQueryEn: office.mapQueryEn,
+              coordinates: undefined,
+            },
+          ];
+      const locations = baseLocations.map((location) => {
+        const mapSearchQuery = useAddressOnly
+          ? t(location.address, location.addressEn)
+          : t(location.mapQuery ?? location.address, location.mapQueryEn ?? location.addressEn);
+        const googleMapQuery =
+          googleMapQueryOverrides[location.id] ??
+          googleMapQueryOverrides[office.id] ??
+          (isVietnamOffice ? location.addressEn : mapSearchQuery);
+        const coordinates = location.coordinates;
+
+        return {
+          id: location.id,
+          label: location.label,
+          labelEn: location.labelEn,
+          address: location.address,
+          addressEn: location.addressEn,
+          showNaverMap: !isVietnamOffice,
+          naverMapUrl: isVietnamOffice ? undefined : getNaverMapUrl(mapSearchQuery),
+          googleMapUrl: coordinates ? getGoogleMapUrlByCoordinates(coordinates.lat, coordinates.lng) : getGoogleMapUrl(googleMapQuery),
+          googleMapEmbedUrl: coordinates
+            ? getGoogleMapEmbedUrlByCoordinates(coordinates.lat, coordinates.lng)
+            : getGoogleMapEmbedUrl(googleMapQuery),
+        };
+      });
+      const primaryLocation = locations[0];
 
       return {
         id: office.id,
@@ -59,13 +115,15 @@ function useOfficeViewData(): OfficeViewData[] {
         address: office.address,
         addressEn: office.addressEn,
         tel: office.tel,
+        email: office.email,
         fax: office.fax,
         websiteUrl: office.websiteUrl,
         websiteLabel: office.websiteLabel,
         showNaverMap: !isVietnamOffice,
-        naverMapUrl: isVietnamOffice ? undefined : getNaverMapUrl(mapSearchQuery),
-        googleMapUrl: getGoogleMapUrl(googleMapQuery),
-        googleMapEmbedUrl: getGoogleMapEmbedUrl(googleMapQuery),
+        naverMapUrl: primaryLocation?.naverMapUrl,
+        googleMapUrl: primaryLocation?.googleMapUrl ?? getGoogleMapUrl(t(office.address, office.addressEn)),
+        googleMapEmbedUrl: primaryLocation?.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
+        locations,
       };
   });
 }
@@ -73,12 +131,13 @@ function useOfficeViewData(): OfficeViewData[] {
 export function OfficesPage() {
   const { t } = useI18n();
   const [searchParams, setSearchParams] = useSearchParams();
-  const officeTabsRef = useRef<HTMLDivElement | null>(null);
   const offices = useOfficeViewData();
   const requestedOfficeId = searchParams.get('office');
   const initialOfficeId = offices.some((office) => office.id === requestedOfficeId) ? requestedOfficeId ?? '' : offices[0]?.id ?? '';
   const [selectedOfficeId, setSelectedOfficeId] = useState(initialOfficeId);
   const selectedOffice = offices.find((office) => office.id === selectedOfficeId) ?? offices[0];
+  const primaryOffices = offices.filter((office) => primaryOfficeIds.has(office.id));
+  const affiliateOffices = offices.filter((office) => !primaryOfficeIds.has(office.id));
 
   useEffect(() => {
     if (!requestedOfficeId) return;
@@ -90,12 +149,36 @@ export function OfficesPage() {
     setSelectedOfficeId(officeId);
     setSearchParams({ office: officeId }, { preventScrollReset: true });
   };
-  const scrollOfficeTabs = (direction: 'prev' | 'next') => {
-    const tabs = officeTabsRef.current;
-    if (!tabs) return;
+  const renderOfficeTab = (office: OfficeViewData) => {
+    const isActive = office.id === selectedOffice?.id;
 
-    const offset = tabs.clientWidth * 0.72 * (direction === 'prev' ? -1 : 1);
-    tabs.scrollBy({ left: offset, behavior: 'smooth' });
+    if (office.websiteUrl) {
+      return (
+        <OfficeTabLink
+          key={office.id}
+          href={office.websiteUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={t(`${office.label} 홈페이지 열기`, `Open ${office.labelEn} website`)}
+        >
+          <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
+          <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
+        </OfficeTabLink>
+      );
+    }
+
+    return (
+      <OfficeTab
+        key={office.id}
+        type="button"
+        aria-selected={isActive}
+        data-active={isActive}
+        onClick={() => selectOffice(office.id)}
+      >
+        <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
+        <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
+      </OfficeTab>
+    );
   };
 
   return (
@@ -113,7 +196,7 @@ export function OfficesPage() {
           <E.Statement data-reveal>
             <div>
               <E.Eyebrow>Office Network</E.Eyebrow>
-              <OfficePageTitle>{t('신한관세법인 사무소 안내', 'Shinhan Customs Service Office Network')}</OfficePageTitle>
+              <OfficePageTitle>{t('신한관세법인 및 관계사 안내', 'Shinhan Customs Service & Affiliates')}</OfficePageTitle>
             </div>
             <OfficeLeadGrid>
               <OfficePageLead>
@@ -141,54 +224,16 @@ export function OfficesPage() {
           {selectedOffice ? (
             <>
               <OfficeTabsShell>
-                <OfficeScrollControls aria-label={t('사무소 목록 스크롤', 'Scroll office list')}>
-                  <OfficeScrollButton
-                    type="button"
-                    aria-label={t('이전 사무소 보기', 'Show previous offices')}
-                    onClick={() => scrollOfficeTabs('prev')}
-                  >
-                    ‹
-                  </OfficeScrollButton>
-                  <OfficeScrollButton
-                    type="button"
-                    aria-label={t('다음 사무소 보기', 'Show next offices')}
-                    onClick={() => scrollOfficeTabs('next')}
-                  >
-                    ›
-                  </OfficeScrollButton>
-                </OfficeScrollControls>
-                <OfficeTabs ref={officeTabsRef} aria-label={t('사무소 선택', 'Select office')}>
-                  {offices.map((office) => {
-                    const isActive = office.id === selectedOffice.id;
-
-                    if (office.websiteUrl) {
-                      return (
-                        <OfficeTabLink
-                          key={office.id}
-                          href={office.websiteUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          aria-label={t(`${office.label} 홈페이지 열기`, `Open ${office.labelEn} website`)}
-                        >
-                          <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
-                          <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
-                        </OfficeTabLink>
-                      );
-                    }
-
-                    return (
-                      <OfficeTab
-                        key={office.id}
-                        type="button"
-                        aria-selected={isActive}
-                        data-active={isActive}
-                        onClick={() => selectOffice(office.id)}
-                      >
-                        <OfficeTabLabel>{t(office.label, office.labelEn)}</OfficeTabLabel>
-                        <OfficeTabRegion>{t(office.region, office.regionEn)}</OfficeTabRegion>
-                      </OfficeTab>
-                    );
-                  })}
+                <OfficeTabs aria-label={t('사무소 선택', 'Select office')}>
+                  <OfficeTabGroup>
+                    <OfficeTabGroupLabel>{t('신한 FAMILY', 'Shinhan Family')}</OfficeTabGroupLabel>
+                    <OfficeTabGroupItems $columns={primaryOffices.length}>{primaryOffices.map(renderOfficeTab)}</OfficeTabGroupItems>
+                  </OfficeTabGroup>
+                  <OfficeTabDivider aria-hidden="true" />
+                  <OfficeTabGroup>
+                    <OfficeTabGroupLabel>{t('관계사', 'Affiliates')}</OfficeTabGroupLabel>
+                    <OfficeTabGroupItems $columns={affiliateOffices.length}>{affiliateOffices.map(renderOfficeTab)}</OfficeTabGroupItems>
+                  </OfficeTabGroup>
                 </OfficeTabs>
               </OfficeTabsShell>
 
@@ -200,10 +245,24 @@ export function OfficesPage() {
                   <OfficeSummary>{t(selectedOffice.summary, selectedOffice.summaryEn)}</OfficeSummary>
 
                   <InfoRows>
-                    <InfoRow>
-                      <InfoLabel>{t('주소', 'Address')}</InfoLabel>
-                      <InfoValue>{t(selectedOffice.address, selectedOffice.addressEn)}</InfoValue>
-                    </InfoRow>
+                    {selectedOffice.locations.length > 1 ? (
+                      <InfoRow>
+                        <InfoLabel>{t('창고', 'Warehouses')}</InfoLabel>
+                        <WarehouseList>
+                          {selectedOffice.locations.map((location) => (
+                            <WarehouseItem key={location.id}>
+                              <WarehouseLabel>{t(location.label, location.labelEn)}</WarehouseLabel>
+                              <InfoValue>{t(location.address, location.addressEn)}</InfoValue>
+                            </WarehouseItem>
+                          ))}
+                        </WarehouseList>
+                      </InfoRow>
+                    ) : (
+                      <InfoRow>
+                        <InfoLabel>{t('주소', 'Address')}</InfoLabel>
+                        <InfoValue>{t(selectedOffice.address, selectedOffice.addressEn)}</InfoValue>
+                      </InfoRow>
+                    )}
                     <InfoRow>
                       <InfoLabel>{t('대표번호', 'Phone')}</InfoLabel>
                       <InfoValueLink href={`tel:${selectedOffice.tel.replace(/[^+\d]/g, '')}`}>{selectedOffice.tel}</InfoValueLink>
@@ -216,7 +275,9 @@ export function OfficesPage() {
                     ) : null}
                     <InfoRow>
                       <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
-                      <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
+                      <InfoValueLink href={`mailto:${selectedOffice.email ?? siteContact.email}`}>
+                        {selectedOffice.email ?? siteContact.email}
+                      </InfoValueLink>
                     </InfoRow>
                     {selectedOffice.websiteUrl ? (
                       <InfoRow>
@@ -229,7 +290,21 @@ export function OfficesPage() {
                   </InfoRows>
 
                   <ActionRow>
-                    {selectedOffice.showNaverMap && selectedOffice.naverMapUrl ? (
+                    {selectedOffice.locations.length > 1 ? (
+                      selectedOffice.locations.map((location) => (
+                        <MapActionGroup key={location.id}>
+                          <MapActionLabel>{t(location.label, location.labelEn)}</MapActionLabel>
+                          {location.showNaverMap && location.naverMapUrl ? (
+                            <PrimaryMapLink href={location.naverMapUrl} target="_blank" rel="noreferrer">
+                              {t('네이버 지도 열기', 'Open Naver Map')}
+                            </PrimaryMapLink>
+                          ) : null}
+                          <MapLink href={location.googleMapUrl} target="_blank" rel="noreferrer">
+                            {t('Google 지도 열기', 'Open Google Maps')}
+                          </MapLink>
+                        </MapActionGroup>
+                      ))
+                    ) : selectedOffice.showNaverMap && selectedOffice.naverMapUrl ? (
                       <>
                         <PrimaryMapLink href={selectedOffice.naverMapUrl} target="_blank" rel="noreferrer">
                           {t('네이버 지도 열기', 'Open Naver Map')}
@@ -255,20 +330,31 @@ export function OfficesPage() {
                   <E.Eyebrow>Map</E.Eyebrow>
                   <MapTitle>{t(`${selectedOffice.label} 지도 안내`, `${selectedOffice.labelEn} Map`)}</MapTitle>
                   <E.Body>
-                    {t(
-                      '지도를 통해 사무소 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
-                      'Use the map to review this office location. For precise route guidance, open Naver Map or Google Maps.',
-                    )}
+                    {selectedOffice.locations.length > 1
+                      ? t(
+                          '지도에서 각 창고 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
+                          'Use the maps to review each warehouse location. For precise route guidance, open Naver Map or Google Maps.',
+                        )
+                      : t(
+                          '지도를 통해 사무소 위치를 확인하실 수 있습니다. 정확한 길찾기는 네이버 지도 또는 Google 지도를 이용해 주세요.',
+                          'Use the map to review this office location. For precise route guidance, open Naver Map or Google Maps.',
+                        )}
                   </E.Body>
-                  <MapFrame>
-                    <iframe
-                      key={selectedOffice.id}
-                      src={selectedOffice.googleMapEmbedUrl}
-                      title={t(`${selectedOffice.label} 지도`, `${selectedOffice.labelEn} Map`)}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
-                  </MapFrame>
+                  <MapFrameGrid $multiple={selectedOffice.locations.length > 1}>
+                    {selectedOffice.locations.map((location) => (
+                      <MapFrame key={location.id} $multiple={selectedOffice.locations.length > 1}>
+                        {selectedOffice.locations.length > 1 ? (
+                          <MapFrameLabel>{t(location.label, location.labelEn)}</MapFrameLabel>
+                        ) : null}
+                        <iframe
+                          src={location.googleMapEmbedUrl}
+                          title={t(`${selectedOffice.label} ${location.label} 지도`, `${selectedOffice.labelEn} ${location.labelEn} Map`)}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                      </MapFrame>
+                    ))}
+                  </MapFrameGrid>
                 </OfficeMapPanel>
               </OfficeBlock>
             </>
@@ -352,88 +438,89 @@ const OfficeTabsShell = styled.div`
   }
 `;
 
-const OfficeScrollControls = styled.div`
-  display: none;
-`;
-
-const OfficeScrollButton = styled.button`
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(24, 86, 178, 0.18);
-  border-radius: 999px;
-  background: #ffffff;
-  color: #1f5cb2;
-  font-size: 1.8rem;
-  font-weight: 300;
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 12px 26px rgba(16, 54, 112, 0.08);
-  transition:
-    transform 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.18s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    border-color: rgba(24, 86, 178, 0.36);
-    color: ${palette.blue};
-    box-shadow: 0 16px 30px rgba(16, 54, 112, 0.12);
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba(24, 86, 178, 0.46);
-    outline-offset: 3px;
-  }
-`;
-
 const OfficeTabs = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 16px;
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
   overflow: visible;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  padding: clamp(14px, 2vw, 20px);
+  padding: clamp(18px, 2vw, 24px);
   border: 1px solid #d8dee8;
   background:
     linear-gradient(180deg, rgba(248, 251, 255, 0.96), rgba(255, 255, 255, 0.98)),
     #ffffff;
 
-  &::-webkit-scrollbar {
-    display: none;
+  @media (max-width: 1180px) {
+    gap: 14px;
+    padding: 16px;
   }
+`;
 
-  @media (max-width: 760px) {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 8px;
-    padding: 8px 0;
-    border: 0;
-    background: transparent;
-    overflow-x: auto;
+const OfficeTabGroup = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  min-width: 0;
+`;
+
+const OfficeTabGroupLabel = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 22px;
+  color: #243247;
+  font-size: clamp(0.72rem, 0.78vw, 0.86rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    margin-right: 8px;
+    border-radius: 999px;
+    background: #1f5cb2;
   }
+`;
+
+const OfficeTabGroupItems = styled.div<{ $columns: number }>`
+  display: grid;
+  grid-template-columns: repeat(${({ $columns }) => $columns}, minmax(0, 1fr));
+  gap: clamp(8px, 0.8vw, 12px);
+  min-width: 0;
+
+  @media (max-width: 920px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`;
+
+const OfficeTabDivider = styled.span`
+  align-self: stretch;
+  width: 100%;
+  height: 1px;
+  margin: 8px 0 2px;
+  background: linear-gradient(90deg, transparent 0%, #c9d4e3 18%, #c9d4e3 82%, transparent 100%);
 `;
 
 const officeTabBase = css`
   position: relative;
   display: inline-flex;
-  flex: 1 1 210px;
-  min-width: 190px;
+  width: 100%;
+  min-width: 0;
   min-height: 84px;
   padding: 14px 22px 15px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 7px;
+  gap: 5px;
   border: 1px solid rgba(31, 92, 178, 0.14);
-  border-radius: 8px;
+  border-radius: 6px;
   background: #ffffff;
   color: #496582;
   text-align: left;
@@ -458,7 +545,7 @@ const officeTabBase = css`
   &::before {
     content: '';
     position: absolute;
-    left: 10px;
+    left: 8px;
     top: 14px;
     bottom: 14px;
     width: 4px;
@@ -495,47 +582,8 @@ const officeTabBase = css`
   }
 
   @media (max-width: 760px) {
-    flex: 0 0 auto;
-    min-width: 0;
-    min-height: 34px;
-    padding: 0 14px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    border-color: #d9e0eb;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #526071;
-    box-shadow: none;
-
-    &[data-active='true'] {
-      border-color: #123f85;
-      background: #123f85;
-      color: #ffffff;
-      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
-    }
-
-    &::before {
-      content: none;
-    }
-
-    &:hover,
-    &:focus-visible {
-      transform: none;
-      border-color: #cbd6e6;
-      background: #ffffff;
-      color: #172337;
-      box-shadow: none;
-    }
-
-    &[data-active='true']:hover,
-    &[data-active='true']:focus-visible {
-      border-color: #123f85;
-      background: #123f85;
-      color: #ffffff;
-      box-shadow: 0 8px 16px rgba(18, 63, 133, 0.16);
-    }
+    min-height: 58px;
+    padding: 11px 14px 11px 18px;
   }
 `;
 
@@ -549,29 +597,35 @@ const OfficeTabLink = styled.a`
 `;
 
 const OfficeTabLabel = styled.span`
-  padding-left: 12px;
-  font-size: clamp(1rem, 1.22vw, 1.14rem);
+  padding-left: 20px;
+  min-width: 0;
+  max-width: 100%;
+  font-size: clamp(0.82rem, 0.82vw, 0.96rem);
   font-weight: 850;
   letter-spacing: 0;
-  white-space: nowrap;
+  line-height: 1.22;
+  white-space: normal;
+  word-break: keep-all;
 
   @media (max-width: 760px) {
-    padding-left: 0;
-    font-size: 0.82rem;
-    font-weight: 800;
+    font-size: 0.8rem;
   }
 `;
 
 const OfficeTabRegion = styled.span`
   color: currentColor;
   opacity: 0.72;
-  padding-left: 12px;
-  font-size: clamp(0.78rem, 0.94vw, 0.88rem);
+  padding-left: 20px;
+  min-width: 0;
+  max-width: 100%;
+  font-size: clamp(0.66rem, 0.68vw, 0.76rem);
   font-weight: 800;
-  white-space: nowrap;
+  line-height: 1.25;
+  white-space: normal;
+  word-break: keep-all;
 
   @media (max-width: 760px) {
-    display: none;
+    font-size: 0.68rem;
   }
 `;
 
@@ -662,6 +716,22 @@ const InfoValue = styled.span`
   overflow-wrap: normal;
 `;
 
+const WarehouseList = styled.div`
+  display: grid;
+  gap: 14px;
+`;
+
+const WarehouseItem = styled.div`
+  display: grid;
+  gap: 5px;
+`;
+
+const WarehouseLabel = styled.strong`
+  color: #172337;
+  font-size: 0.98rem;
+  font-weight: 850;
+`;
+
 const InfoValueLink = styled.a`
   color: ${palette.blue};
   font-size: 1rem;
@@ -681,6 +751,33 @@ const ActionRow = styled.div`
     display: grid;
     grid-template-columns: 1fr;
   }
+`;
+
+const MapActionGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 0;
+  border-top: 1px solid #d8dee8;
+
+  &:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  @media (max-width: 560px) {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+`;
+
+const MapActionLabel = styled.span`
+  min-width: 62px;
+  color: #172337;
+  font-size: 0.94rem;
+  font-weight: 850;
 `;
 
 const MapLink = styled.a`
@@ -711,9 +808,20 @@ const OfficeMapPanel = styled(E.LinePanel)`
   padding: clamp(22px, 2.5vw, 34px) 0;
 `;
 
-const MapFrame = styled.div`
+const MapFrameGrid = styled.div<{ $multiple: boolean }>`
+  display: grid;
+  grid-template-columns: ${({ $multiple }) => ($multiple ? 'repeat(2, minmax(0, 1fr))' : '1fr')};
+  gap: 14px;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const MapFrame = styled.div<{ $multiple: boolean }>`
+  position: relative;
   width: 100%;
-  min-height: 520px;
+  min-height: ${({ $multiple }) => ($multiple ? '390px' : '520px')};
   border-radius: 0;
   border: 1px solid rgba(19, 75, 154, 0.14);
   overflow: hidden;
@@ -722,15 +830,15 @@ const MapFrame = styled.div`
   iframe {
     display: block;
     width: 100%;
-    height: 520px;
+    height: ${({ $multiple }) => ($multiple ? '390px' : '520px')};
     border: 0;
   }
 
   @media (max-width: 1024px) {
-    min-height: 460px;
+    min-height: ${({ $multiple }) => ($multiple ? '360px' : '460px')};
 
     iframe {
-      height: 460px;
+      height: ${({ $multiple }) => ($multiple ? '360px' : '460px')};
     }
   }
 
@@ -741,4 +849,21 @@ const MapFrame = styled.div`
       height: 340px;
     }
   }
+`;
+
+const MapFrameLabel = styled.span`
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(18, 63, 133, 0.92);
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 850;
+  box-shadow: 0 10px 20px rgba(16, 54, 112, 0.18);
 `;

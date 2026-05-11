@@ -129,14 +129,14 @@ export const sectionSubnav = {
     kickerEn: 'News & Resources',
     title: '소식/자료',
     titleEn: 'News & Resources',
-    summary: '신한 NEWS, 세미나, 소식지를 채널별로 확인할 수 있습니다.',
-    summaryEn: 'Browse Shinhan NEWS, seminars, and newsletters by channel.',
+    summary: '신한 NEWS, 세미나/교육, 소식지를 채널별로 확인할 수 있습니다.',
+    summaryEn: 'Browse Shinhan NEWS, seminars/training, and newsletters by channel.',
     items: [
       { label: '신한 NEWS', labelEn: 'Shinhan NEWS', to: '/news/shinhan-news', heroImage: '/hero/menu-news-shinhan-ai.png', heroPosition: 'center 50%' },
       { label: '무역 동향', labelEn: 'Trade Insights', to: '/news/issue-report', heroImage: '/hero/menu-news-trade-insights-ai.png', heroPosition: 'center 50%' },
       {
-        label: '세미나',
-        labelEn: 'Seminar',
+        label: '세미나/교육',
+        labelEn: 'Seminar / Training',
         to: '/news/seminar',
         matchPrefixes: ['/news/seminar/'],
         heroImage: '/hero/menu-news-seminar-ai.png',

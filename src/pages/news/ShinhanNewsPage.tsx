@@ -64,7 +64,7 @@ export function ShinhanNewsPage() {
         id: item.id,
         anchorId: item.id,
         publishedAt: item.publishedAt,
-        sourceLabel: getShinhanNewsSourceLabel(item, t('세미나', 'Seminar')),
+        sourceLabel: getShinhanNewsSourceLabel(item, t('세미나/교육', 'Seminar / Training')),
         title: t(item.title, item.titleEn),
         to: `/news/shinhan-news/${item.id}`,
         actions: [

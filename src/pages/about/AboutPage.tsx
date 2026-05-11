@@ -62,10 +62,10 @@ const HeroVisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
-  font-weight: 900;
+  font-size: clamp(2.28rem, 4.95vw, 4.55rem);
+  font-weight: 800;
   line-height: 0.98;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   text-align: center;
   text-shadow:
     0 14px 30px rgba(4, 12, 24, 0.24),
@@ -545,6 +545,26 @@ const ValueBody = styled.p`
   line-height: 1.78;
 `;
 
+const NoWrap = styled.span`
+  white-space: nowrap;
+`;
+
+function renderNoWrapTerm(text: string, term: string) {
+  const index = text.indexOf(term);
+
+  if (index === -1) {
+    return text;
+  }
+
+  return (
+    <>
+      {text.slice(0, index)}
+      <NoWrap>{term}</NoWrap>
+      {text.slice(index + term.length)}
+    </>
+  );
+}
+
 const GalleryGrid = styled(P.PageContainer)`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -912,7 +932,7 @@ export function AboutPage() {
             {managementValues.map((item) => (
               <ValueRow key={item.title}>
                 <ValueTitle>{tx(item.title)}</ValueTitle>
-                <ValueBody>{tx(item.body)}</ValueBody>
+                <ValueBody>{item.title === 'INNOVATION' ? renderNoWrapTerm(tx(item.body), '역량') : tx(item.body)}</ValueBody>
               </ValueRow>
             ))}
           </ValueList>

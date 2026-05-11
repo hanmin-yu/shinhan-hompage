@@ -1,5 +1,6 @@
 export const koToEnTextMap: Record<string, string> = {
   '신한 소개': 'About',
+  '신한관세법인 소개': 'About Shinhan',
   신한소개: 'Overview',
   연혁: 'History',
   인사말: 'Message',
@@ -35,6 +36,7 @@ export const koToEnTextMap: Record<string, string> = {
   '신한 NEWS': 'Shinhan NEWS',
   소식지: 'Newsletter',
   세미나: 'Seminar',
+  '세미나/교육': 'Seminar / Training',
   공지: 'Notice',
   블로그: 'Blog',
   유튜브: 'YouTube',
@@ -181,6 +183,7 @@ export const koToEnTextMap: Record<string, string> = {
   제약: 'Pharmaceuticals',
   부산항: 'Busan Port',
   장승희: 'Seunghee Jang',
+  김연종: 'Yeonjong Kim',
   서영진: 'Youngjin Seo',
   최대규: 'Daegyu Choi',
   전무열: 'Muyeol Jeon',

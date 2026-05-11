@@ -167,8 +167,8 @@ const HeroTitle = styled.h1`
     'Pretendard',
     system-ui,
     sans-serif;
-  font-size: clamp(3.18rem, 6.8vw, 7.35rem);
-  font-weight: 900;
+  font-size: clamp(2.9rem, 6.18vw, 6.72rem);
+  font-weight: 800;
   line-height: 1.04;
   letter-spacing: 0;
   word-break: keep-all;
@@ -214,12 +214,12 @@ const HeroTitle = styled.h1`
   }
 
   @media (max-width: 920px) {
-    font-size: clamp(2.82rem, 10.6vw, 5.15rem);
+    font-size: clamp(2.58rem, 9.85vw, 4.72rem);
   }
 
   @media (max-width: 520px) {
     white-space: normal;
-    font-size: clamp(2.48rem, 12vw, 3.85rem);
+    font-size: clamp(2.24rem, 11.1vw, 3.48rem);
   }
 `;
 
@@ -466,7 +466,7 @@ export function HeroSection() {
           <SeminarQuickCard to="/news/seminar">
             <SeminarQuickCopy>
               <SeminarQuickTitle>Seminar</SeminarQuickTitle>
-              <SeminarQuickText>{t('세미나', 'Seminar')}</SeminarQuickText>
+              <SeminarQuickText>{t('세미나/교육', 'Seminar / Training')}</SeminarQuickText>
             </SeminarQuickCopy>
             <SeminarQuickArrow>›</SeminarQuickArrow>
           </SeminarQuickCard>

@@ -192,8 +192,8 @@ export const historyMilestones = [
 export const managementValues: PointItem[] = [
   { title: 'PASSION', body: '고객의 발전과 성공을 위해 끝까지 해결책을 실행하는 태도' },
   { title: 'INTEGRITY', body: '정확한 기준과 투명한 커뮤니케이션으로 신뢰를 지키는 원칙' },
-  { title: 'INNOVATION', body: '변화하는 통상 환경에 맞춰 업무 체계를 지속적으로 개선하는 역량' },
   { title: 'TEAMWORK', body: 'PI·CI·컨설팅·IT·지사 간 협업으로 최적의 해답을 만드는 문화' },
+  { title: 'INNOVATION', body: '변화하는 통상 환경에 맞춰 업무 체계를 지속적으로 개선하는 역량' },
 ];
 
 export const organizationUnits: PointItem[] = [
@@ -369,7 +369,7 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
 
 export const newsHubCards: LinkCard[] = [
   { title: '신한 NEWS', body: '공지와 FLASH를 중심으로 정리한 내부 활동·인사이트 아카이브', href: '/news/shinhan-news' },
-  { title: '세미나', body: '교육·세미나 일정을 카드형으로 확인하는 전용 아카이브', href: '/news/seminar' },
+  { title: '세미나/교육', body: '교육·세미나 일정을 카드형으로 확인하는 전용 아카이브', href: '/news/seminar' },
   { title: '소식지', body: '월별 주요 정책 변화와 실무 체크포인트 요약', href: '/news/newsletter' },
 ];
 
@@ -652,6 +652,33 @@ const importExportSections: ServiceDetailSection[] = [
       '고객사 시스템 연동 -> 반복 입력과 확인 업무를 자동화해 처리 속도를 높입니다.',
       '고객사 맞춤형 수출입 통관 분석 데이터 -> 사후 심사와 내부 관리에 필요한 근거 데이터를 제공합니다.',
       '이음 시스템 활용 -> 통관 현황과 데이터를 체계적으로 관리합니다.',
+    ],
+  },
+  {
+    heading: 'iOOM 플랫폼이란?',
+    headingEn: 'About iOOM Platform',
+    body: [
+      'iOOM 플랫폼은 파편화되어 있는 수출입 통관 데이터를 한곳에 모아 관리하는 웹 기반 통합 솔루션입니다.',
+      '별도의 시스템 설치 없이, 로그인만으로 선적 서류 등록부터 실시간 신고 현황, 비용 정산, 통계 분석까지 전 과정을 투명하게 관리할 수 있습니다.',
+    ],
+  },
+  {
+    heading: '주요 핵심 기능',
+    headingEn: 'Key Features',
+    list: [
+      '실시간 통관 대시보드: 수출입 신고 현황 및 이력을 B/L별, 사업부별, 자재별(PO)로 실시간 조회하고 신고 서류(필증 등)를 자동 보관해 즉시 다운로드할 수 있습니다.',
+      '업무 효율화 솔루션: Invoice, Packing List 등 선적 서류를 플랫폼에 업로드하여 간편하게 통관을 의뢰하고 반복적인 서류 작성 업무와 데이터 누락을 줄입니다.',
+      '비용 관리: 통관 수수료뿐만 아니라 포워딩, 창고료 등 파트너사별 비용 정산을 관리하고 다양한 양식의 정산 자료를 플랫폼 내에서 편집 및 엑셀 통합 관리할 수 있습니다.',
+      '지능형 데이터 통계: 품목별(HS Code), 국가별 통관 실적을 분석하고 관세 환급 및 FTA 원산지 관리 업무를 위한 데이터 추출을 지원합니다.',
+    ],
+  },
+  {
+    heading: '도입 기대 효과',
+    headingEn: 'Value Proposition',
+    list: [
+      '업무 효율성 증대: 메일과 엑셀로 주고받던 소통을 플랫폼으로 단일화하여 업무 시간을 단축합니다.',
+      '비용 및 리스크 관리: 실시간 비용 확인 및 정산 데이터 정합성 확보로 불필요한 지출을 방지합니다.',
+      '데이터 자산화: 수년치의 통관 데이터를 축적하여 경영 의사결정 및 관세 심사에 대비합니다.',
     ],
   },
 ];
@@ -1077,11 +1104,11 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitleEn: 'Import/Export Clearance & Refund',
     title: '수출입 통관',
     summary: '복잡한 수출입 통관, 분야별 통관 전문가가 빠르고 정확하게 해결합니다.',
-    subtitle: '복잡한 수출입 통관, 분야별 통관 전문가가 빠르고 정확하게 해결합니다.',
+    subtitle: '복잡한 수출입 통관 업무, 이제 iOOM(이음) 하나로 다 연결됩니다.',
     heroImage: '/hero/service-import-export-ai.png',
     heroImageAlt: '수출입 통관 서비스',
     overview:
-      '수출입 통관 전 과정에 대해 정확한 법령 해석과 실무 경험을 기반으로 신속하고 안정적인 서비스를 제공합니다. PI(Process Innovation)팀의 AI 기반 수출입 절차 간소화와 CI(Customs Innovation)팀의 통관 SOP 최적화를 결합해 효율성과 정확성을 동시에 확보하며, 자체 개발 iOOM 시스템으로 통관 현황과 데이터를 실시간 관리합니다.',
+      '수출입통관 통합관리의 새로운 기준, iOOM 플랫폼. 기업의 물류·재무 부서와 관세사, 세관을 실시간으로 잇는 클라우드 기반 수출입 통합 관리 시스템입니다.',
     scope: [
       'HS CODE 마스터 관리 시스템 운영',
       'RMS 기반 통관 리스크 관리',

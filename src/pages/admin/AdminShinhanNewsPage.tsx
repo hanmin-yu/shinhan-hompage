@@ -286,7 +286,7 @@ export function AdminShinhanNewsPage() {
                     >
                       <AdminListMeta>
                         <span>{item.publishedAt}</span>
-                        <span>{getShinhanNewsSourceLabel(item, t('세미나', 'Seminar'))}</span>
+                        <span>{getShinhanNewsSourceLabel(item, t('세미나/교육', 'Seminar / Training'))}</span>
                       </AdminListMeta>
                       <AdminListTitle>{t(item.title, item.titleEn)}</AdminListTitle>
                       <AdminListSummary>{t(item.summary, item.summaryEn)}</AdminListSummary>
@@ -309,7 +309,7 @@ export function AdminShinhanNewsPage() {
                       disabled={session.isReadOnly}
                     >
                       <option value="flash">FLASH</option>
-                      <option value="seminar">{t('세미나', 'Seminar')}</option>
+                      <option value="seminar">{t('세미나/교육', 'Seminar / Training')}</option>
                     </AdminSelect>
                   </AdminField>
                   <AdminField>

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import styled from '@emotion/styled';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
@@ -43,7 +44,7 @@ const expertAssignments = {
   조세불복: ['이하나', '김유진'],
   ACVA: ['조원희', '이하나'],
   '검역/요건': ['서정용', '이경심'],
-  물류: ['권민성', '이미경'],
+  물류: ['김유경', '권민성', '이미경'],
   베트남: ['신종호', '김선웅'],
   '미국 FDA': ['김다혜', '엄동규'],
   IT: ['최대규', '홍성훈'],
@@ -70,7 +71,7 @@ function getAssignedExperts(category: ExpertCategory) {
 }
 
 export function ExpertsPage() {
-  const { t } = useI18n();
+  const { t, tx } = useI18n();
   const membersSubnav = sectionSubnav.members;
   const [activeCategory, setActiveCategory] = useState<ExpertCategory>('수출입통관');
 
@@ -104,6 +105,15 @@ export function ExpertsPage() {
             ariaLabel={t('업무분야 필터', 'Practice filter')}
           />
 
+          <ActiveCategoryHeader>
+            <ActiveCategoryText>
+              <ActiveCategoryTitle>{tx(activeCategory)}</ActiveCategoryTitle>
+            </ActiveCategoryText>
+            <ActiveCategoryCount>
+              {t(`${filteredMembers.length}명의 전문가`, `${filteredMembers.length} Experts`)}
+            </ActiveCategoryCount>
+          </ActiveCategoryHeader>
+
           <ProfessionalCardGrid
             members={filteredMembers}
             emptyMessage={t('해당 업무분야의 전문가 정보가 없습니다.', 'No experts are listed for this specialty.')}
@@ -113,3 +123,52 @@ export function ExpertsPage() {
     </>
   );
 }
+
+const ActiveCategoryHeader = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px 24px;
+  width: min(100%, 1240px);
+  margin: 0 auto clamp(24px, 3vw, 34px);
+  padding: 0 0 clamp(20px, 2.6vw, 30px);
+  border-bottom: 1px solid rgba(18, 63, 133, 0.18);
+  text-align: left;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ActiveCategoryText = styled.div`
+  display: grid;
+  gap: 6px;
+`;
+
+const ActiveCategoryTitle = styled.h2`
+  margin: 0;
+  color: #172337;
+  font-size: clamp(1.58rem, 2.4vw, 2.36rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+`;
+
+const ActiveCategoryCount = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(18, 63, 133, 0.12);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #123f85;
+  font-size: 0.88rem;
+  font-weight: 900;
+  box-shadow: 0 10px 22px rgba(13, 35, 66, 0.06);
+
+  @media (max-width: 640px) {
+    justify-self: start;
+  }
+`;

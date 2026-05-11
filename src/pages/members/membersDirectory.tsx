@@ -31,60 +31,84 @@ export const MembersContentSection = styled.section`
 `;
 
 const CategoryMenuWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
+  display: grid;
+  gap: clamp(18px, 2.4vw, 26px);
   width: 100%;
-  max-width: 1480px;
+  max-width: 1240px;
   margin: 0 auto clamp(40px, 4.8vw, 58px);
-  padding: clamp(14px, 2vw, 20px);
-  border: 1px solid #d8dee8;
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid rgba(18, 63, 133, 0.13);
+  border-top: 3px solid #123f85;
+  border-radius: 8px;
   background:
-    linear-gradient(180deg, rgba(248, 251, 255, 0.96), rgba(255, 255, 255, 0.98)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 253, 0.98)),
     #ffffff;
-  box-shadow: none;
+  box-shadow:
+    0 18px 42px rgba(13, 35, 66, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 
   @media (max-width: 760px) {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 8px;
+    gap: 14px;
     margin-bottom: 28px;
-    padding: 8px 0;
-    border: 0;
-    background: transparent;
-    overflow-x: auto;
-    scrollbar-width: none;
+    padding: 18px;
+  }
+`;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+const CategoryMenuHead = styled.div`
+  display: grid;
+  gap: 7px;
+  text-align: left;
+`;
+
+const CategoryEyebrow = styled.span`
+  color: #6b7890;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`;
+
+const CategoryTitle = styled.strong`
+  color: #172337;
+  font-size: clamp(1.24rem, 1.8vw, 1.72rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+`;
+
+const CategoryButtonGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+  gap: 10px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 `;
 
 const CategoryButton = styled.button<{ $active: boolean }>`
   position: relative;
   display: inline-flex;
-  flex: 1 1 190px;
-  min-width: 178px;
-  min-height: 76px;
-  padding: 14px 20px 15px 30px;
+  min-width: 0;
+  min-height: 58px;
+  padding: 0 16px;
   align-items: center;
-  justify-content: flex-start;
-  border: 1px solid ${({ $active }) => ($active ? 'rgba(31, 92, 178, 0.34)' : 'rgba(31, 92, 178, 0.14)')};
-  border-radius: 8px;
+  justify-content: center;
+  border: 1px solid ${({ $active }) => ($active ? '#123f85' : 'rgba(18, 63, 133, 0.12)')};
+  border-radius: 6px;
   background: ${({ $active }) =>
     $active
-      ? 'linear-gradient(180deg, rgba(235, 244, 255, 0.98), rgba(255, 255, 255, 0.98)), #ffffff'
-      : '#ffffff'};
-  color: ${({ $active }) => ($active ? '#172337' : '#496582')};
-  font-size: clamp(0.98rem, 1.12vw, 1.1rem);
-  font-weight: 850;
+      ? 'linear-gradient(180deg, #143f7f 0%, #0d2f63 100%)'
+      : 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'};
+  color: ${({ $active }) => ($active ? '#ffffff' : '#496582')};
+  font-size: clamp(0.9rem, 0.98vw, 1.02rem);
+  font-weight: 900;
   letter-spacing: 0;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
-  box-shadow: ${({ $active }) => ($active ? 'none' : '0 8px 20px rgba(16, 54, 112, 0.04)')};
+  box-shadow: ${({ $active }) => ($active ? '0 16px 32px rgba(18, 63, 133, 0.22)' : '0 8px 18px rgba(16, 54, 112, 0.035)')};
   transition:
     border-color 0.18s ease,
     background-color 0.18s ease,
@@ -96,13 +120,13 @@ const CategoryButton = styled.button<{ $active: boolean }>`
     content: '';
     position: absolute;
     left: 12px;
-    top: 14px;
-    bottom: 14px;
-    width: 4px;
+    right: 12px;
+    bottom: 8px;
+    height: 2px;
     border-radius: 999px;
-    background: #1f5cb2;
-    opacity: ${({ $active }) => ($active ? 1 : 0)};
-    transform: scaleY(${({ $active }) => ($active ? 1 : 0.45)});
+    background: currentColor;
+    opacity: ${({ $active }) => ($active ? 0.72 : 0)};
+    transform: scaleX(${({ $active }) => ($active ? 1 : 0.45)});
     transform-origin: center;
     transition:
       opacity 0.18s ease,
@@ -112,10 +136,10 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   &:hover,
   &:focus-visible {
     transform: translateY(-1px);
-    border-color: rgba(31, 92, 178, 0.3);
-    background: #f7f9fc;
-    color: #172337;
-    box-shadow: 0 12px 24px rgba(16, 54, 112, 0.08);
+    border-color: ${({ $active }) => ($active ? '#123f85' : 'rgba(18, 63, 133, 0.28)')};
+    background: ${({ $active }) => ($active ? 'linear-gradient(180deg, #143f7f 0%, #0d2f63 100%)' : '#ffffff')};
+    color: ${({ $active }) => ($active ? '#ffffff' : '#172337')};
+    box-shadow: ${({ $active }) => ($active ? '0 16px 32px rgba(18, 63, 133, 0.22)' : '0 12px 26px rgba(16, 54, 112, 0.08)')};
     outline: none;
   }
 
@@ -126,22 +150,15 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   }
 
   @media (max-width: 760px) {
-    flex: 0 0 auto;
-    min-width: 0;
-    min-height: 34px;
-    padding: 0 14px;
-    justify-content: center;
+    min-height: 42px;
+    padding: 0 10px;
     border-color: ${({ $active }) => ($active ? '#123f85' : '#d9e0eb')};
-    border-radius: 999px;
+    border-radius: 6px;
     background: ${({ $active }) => ($active ? '#123f85' : '#ffffff')};
     color: ${({ $active }) => ($active ? '#ffffff' : '#526071')};
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 800;
     box-shadow: ${({ $active }) => ($active ? '0 8px 16px rgba(18, 63, 133, 0.16)' : 'none')};
-
-    &::before {
-      content: none;
-    }
 
     &:hover,
     &:focus-visible {
@@ -167,22 +184,28 @@ export function ProfessionalCategoryMenu<T extends string>({
   onSelect,
   ariaLabel,
 }: ProfessionalCategoryMenuProps<T>) {
-  const { tx } = useI18n();
+  const { t, tx } = useI18n();
 
   return (
-    <CategoryMenuWrap role="tablist" aria-label={ariaLabel}>
-      {categories.map((category) => (
-        <CategoryButton
-          key={category}
-          type="button"
-          role="tab"
-          aria-selected={activeCategory === category}
-          $active={activeCategory === category}
-          onClick={() => onSelect(category)}
-        >
-          {tx(category)}
-        </CategoryButton>
-      ))}
+    <CategoryMenuWrap>
+      <CategoryMenuHead>
+        <CategoryEyebrow>Practice Area</CategoryEyebrow>
+        <CategoryTitle>{t('업무 분야', 'Practice Areas')}</CategoryTitle>
+      </CategoryMenuHead>
+      <CategoryButtonGrid role="tablist" aria-label={ariaLabel}>
+        {categories.map((category) => (
+          <CategoryButton
+            key={category}
+            type="button"
+            role="tab"
+            aria-selected={activeCategory === category}
+            $active={activeCategory === category}
+            onClick={() => onSelect(category)}
+          >
+            {tx(category)}
+          </CategoryButton>
+        ))}
+      </CategoryButtonGrid>
     </CategoryMenuWrap>
   );
 }
@@ -200,10 +223,13 @@ const DirectoryGrid = styled.div`
   }
 `;
 
-const ProfileCard = styled.article`
+const ProfileCard = styled.article<{ $featured?: boolean }>`
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(158px, 13vw, 206px);
+  grid-column: ${({ $featured }) => ($featured ? '1 / -1' : 'auto')};
+  justify-self: ${({ $featured }) => ($featured ? 'center' : 'stretch')};
+  width: ${({ $featured }) => ($featured ? 'min(100%, 590px)' : '100%')};
   min-height: 268px;
   overflow: hidden;
   border-radius: 8px;
@@ -374,27 +400,51 @@ const PhotoPanel = styled.div`
   min-width: 0;
   overflow: hidden;
   border-left: 1px solid rgba(26, 55, 91, 0.14);
-  background: #ffffff;
+  background:
+    radial-gradient(circle at 74% 8%, rgba(28, 90, 167, 0.12), transparent 38%),
+    linear-gradient(145deg, #ffffff 0%, #f3f7fc 48%, #eaf1f8 100%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 14px 12px;
+    z-index: 1;
+    border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28)),
+      rgba(255, 255, 255, 0.38);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+  }
 `;
 
 const PortraitFrame = styled.div`
   position: absolute;
-  inset: 0;
+  inset: 18px 16px;
   z-index: 2;
   overflow: hidden;
-  border-radius: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 55, 91, 0.08);
+  background: #ffffff;
+  box-shadow:
+    0 18px 32px rgba(13, 35, 66, 0.09),
+    0 2px 8px rgba(13, 35, 66, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+
+  @media (max-width: 560px) {
+    inset: 10px 8px;
+    border-radius: 8px;
+  }
 `;
 
-const Portrait = styled.img<{ $fit?: 'contain' | 'cover' }>`
+const Portrait = styled.img<{ $fit?: 'contain' | 'cover'; $position?: string }>`
   width: 100%;
   height: 100%;
   display: block;
   background: #ffffff;
   object-fit: ${({ $fit }) => $fit ?? 'cover'};
-  object-position: 50% 18%;
+  object-position: ${({ $position }) => $position ?? '50% 18%'};
   filter: saturate(1.01) contrast(1.02);
 `;
 
@@ -419,48 +469,48 @@ const CareerOverlay = styled.div`
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: clamp(20px, 2.2vw, 28px);
+  gap: clamp(10px, 1.3vw, 14px);
+  padding: clamp(17px, 1.8vw, 22px);
   border-radius: 8px;
-  border: 1px solid rgba(18, 63, 133, 0.16);
+  border: 1px solid rgba(31, 92, 178, 0.32);
   background:
-    radial-gradient(circle at 88% 12%, rgba(18, 63, 133, 0.08), transparent 34%),
-    radial-gradient(circle at 12% 88%, rgba(52, 95, 151, 0.05), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.98)),
-    #ffffff;
+    radial-gradient(circle at 92% 10%, rgba(31, 92, 178, 0.18), transparent 32%),
+    radial-gradient(circle at 4% 92%, rgba(111, 143, 189, 0.13), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 249, 255, 0.98) 52%, rgba(235, 243, 254, 0.98) 100%);
   color: #172337;
   opacity: 0;
-  transform: translateY(18px) scale(0.98);
+  transform: translateY(12px) scale(0.985);
   pointer-events: none;
   transition:
     opacity 0.22s ease,
     transform 0.22s ease;
   overflow: auto;
   box-shadow:
-    0 28px 60px rgba(13, 35, 66, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 28px 64px rgba(13, 35, 66, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
     inset 0 0 0 1px rgba(255, 255, 255, 0.72);
   scrollbar-width: thin;
-  scrollbar-color: rgba(18, 63, 133, 0.28) transparent;
+  scrollbar-color: rgba(111, 143, 189, 0.46) transparent;
+  backdrop-filter: blur(6px);
 
   &::before {
     content: '';
     position: absolute;
-    inset: 0 0 auto;
-    height: 3px;
+    inset: 12px 18px auto;
+    height: 1px;
     pointer-events: none;
-    background: #123f85;
-    opacity: 0.96;
+    background: linear-gradient(90deg, rgba(111, 143, 189, 0.9), rgba(18, 63, 133, 0.24), transparent);
+    opacity: 0.9;
   }
 
   &::after {
     content: '';
     position: absolute;
-    inset: 3px 0 0;
+    inset: 0;
     pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(18, 63, 133, 0.035), transparent 36%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 22%);
+      linear-gradient(90deg, rgba(18, 63, 133, 0.04), transparent 30%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 36%);
   }
 
   > * {
@@ -474,92 +524,140 @@ const CareerOverlay = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: rgba(18, 63, 133, 0.28);
+    background: rgba(111, 143, 189, 0.46);
   }
 `;
 
 const CareerHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  min-height: 30px;
+`;
+
+const CareerNameTag = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 92, 178, 0.2);
+  background: linear-gradient(180deg, #ffffff, rgba(229, 240, 255, 0.96));
+  color: #123f85;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow:
+    0 10px 22px rgba(31, 92, 178, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+`;
+
+const CareerSection = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 18px;
-  padding: 0 0 12px;
+  grid-template-columns: 82px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(31, 92, 178, 0.1);
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
 `;
 
 const CareerTitle = styled.strong`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 92, 178, 0.14);
+  background: rgba(255, 255, 255, 0.78);
   color: #123f85;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
   font-weight: 900;
   line-height: 1.3;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
   word-break: keep-all;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
 
-  &::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: #123f85;
-    box-shadow: 0 0 0 5px rgba(18, 63, 133, 0.08);
+  @media (max-width: 560px) {
+    justify-self: start;
   }
 `;
 
-const CareerName = styled.span`
+const KeywordList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+`;
+
+const KeywordChip = styled.span`
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 58px;
-  min-height: 34px;
-  padding: 0 12px;
+  min-height: 25px;
+  padding: 0 10px;
   border-radius: 999px;
-  border: 1px solid rgba(18, 63, 133, 0.12);
-  background: #ffffff;
+  border: 1px solid rgba(31, 92, 178, 0.18);
+  background: linear-gradient(180deg, #ffffff, rgba(229, 240, 255, 0.98));
   color: #123f85;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 900;
-  line-height: 1.35;
-  white-space: nowrap;
+  line-height: 1.3;
+  word-break: keep-all;
   box-shadow:
-    0 10px 22px rgba(13, 35, 66, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 8px 18px rgba(31, 92, 178, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 `;
 
 const CareerList = styled.ul`
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  align-content: start;
+  gap: 6px 10px;
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const CareerItem = styled.li`
   position: relative;
-  padding: 9px 12px 9px 28px;
+  min-height: 32px;
+  padding: 7px 12px 7px 23px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.68);
-  color: #374a61;
-  font-size: clamp(0.73rem, 0.87vw, 0.84rem);
+  border: 1px solid rgba(31, 92, 178, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 242, 255, 0.88)),
+    rgba(255, 255, 255, 0.74);
+  color: #344760;
+  font-size: clamp(0.7rem, 0.78vw, 0.77rem);
   font-weight: 700;
-  line-height: 1.48;
+  line-height: 1.46;
   word-break: keep-all;
   overflow-wrap: break-word;
   box-shadow:
-    inset 0 0 0 1px rgba(18, 63, 133, 0.045),
-    0 6px 16px rgba(13, 35, 66, 0.035);
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 10px 22px rgba(31, 92, 178, 0.05);
 
   &::before {
     content: '';
     position: absolute;
-    left: 13px;
-    top: 1.25em;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #123f85;
+    left: 12px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    border-radius: 999px;
+    background: #1f5cb2;
     opacity: 0.62;
   }
 `;
@@ -576,9 +674,20 @@ type ProfessionalCardGridProps = {
   members: Member[];
   emptyMessage?: string;
   showPracticeOverlay?: boolean;
+  centerFirst?: boolean;
 };
 
-export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true }: ProfessionalCardGridProps) {
+function getPracticeKeywords(member: Member) {
+  const source = member.practice || member.careerHighlights?.join(',') || '';
+
+  return source
+    .split(',')
+    .map((keyword) => keyword.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+}
+
+export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false }: ProfessionalCardGridProps) {
   const { t, tx } = useI18n();
 
   if (!members.length) {
@@ -587,56 +696,74 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
 
   return (
     <DirectoryGrid>
-      {members.map((member) => (
-        <ProfileCard key={member.name} tabIndex={0}>
-          <CardBody>
-            <TitleRow>
-              <Name>{tx(member.name)}</Name>
-              <NameDivider aria-hidden="true" />
-              <RoleStack>
-                {member.title ? <Title>{tx(member.title)}</Title> : null}
-                {member.department ? <Division>{tx(member.department)}</Division> : null}
-              </RoleStack>
-            </TitleRow>
-            <ContactList>
-              {member.phone ? (
-                <ContactItem>
-                  <span>{t('전화', 'Tel')}</span>
-                  {member.phone}
-                </ContactItem>
-              ) : null}
-              {member.email ? (
-                <ContactItem>
-                  <span>{t('이메일', 'Mail')}</span>
-                  <ContactLink href={`mailto:${member.email}`}>{member.email}</ContactLink>
-                </ContactItem>
-              ) : null}
-            </ContactList>
-          </CardBody>
-          <PhotoPanel>
-            {member.image ? (
-              <PortraitFrame>
-                <Portrait src={member.image} alt={tx(member.name)} $fit={member.imageFit} loading="lazy" />
-              </PortraitFrame>
-            ) : (
-              <InitialMark aria-hidden="true">{tx(member.name).slice(0, 1)}</InitialMark>
-            )}
-          </PhotoPanel>
-          {showPracticeOverlay && member.careerHighlights?.length ? (
-            <CareerOverlay className="career-overlay" aria-label={`${tx(member.name)} 업무 분야`}>
-              <CareerHeader>
-                <CareerTitle>{t('업무 분야', 'Practice Areas')}</CareerTitle>
-                <CareerName>{tx(member.name)}</CareerName>
-              </CareerHeader>
-              <CareerList>
-                {member.careerHighlights.map((highlight) => (
-                  <CareerItem key={highlight}>{tx(highlight)}</CareerItem>
-                ))}
-              </CareerList>
-            </CareerOverlay>
-          ) : null}
-        </ProfileCard>
-      ))}
+      {members.map((member, index) => {
+        const practiceKeywords = getPracticeKeywords(member);
+
+        return (
+          <ProfileCard key={member.name} tabIndex={0} $featured={centerFirst && index === 0}>
+            <CardBody>
+              <TitleRow>
+                <Name>{tx(member.name)}</Name>
+                <NameDivider aria-hidden="true" />
+                <RoleStack>
+                  {member.title ? <Title>{tx(member.title)}</Title> : null}
+                  {member.department ? <Division>{tx(member.department)}</Division> : null}
+                </RoleStack>
+              </TitleRow>
+              <ContactList>
+                {member.phone ? (
+                  <ContactItem>
+                    <span>{t('전화', 'Tel')}</span>
+                    {member.phone}
+                  </ContactItem>
+                ) : null}
+                {member.email ? (
+                  <ContactItem>
+                    <span>{t('이메일', 'Mail')}</span>
+                    <ContactLink href={`mailto:${member.email}`}>{member.email}</ContactLink>
+                  </ContactItem>
+                ) : null}
+              </ContactList>
+            </CardBody>
+            <PhotoPanel>
+              {member.image ? (
+                <PortraitFrame>
+                  <Portrait src={member.image} alt={tx(member.name)} $fit={member.imageFit} $position={member.imagePosition} loading="lazy" />
+                </PortraitFrame>
+              ) : (
+                <InitialMark aria-hidden="true">{tx(member.name).slice(0, 1)}</InitialMark>
+              )}
+            </PhotoPanel>
+            {showPracticeOverlay && member.careerHighlights?.length ? (
+              <CareerOverlay className="career-overlay" aria-label={`${tx(member.name)} 업무 분야`}>
+                <CareerHeader>
+                  <CareerNameTag>{tx(member.name)}</CareerNameTag>
+                </CareerHeader>
+
+                {practiceKeywords.length ? (
+                  <CareerSection>
+                    <CareerTitle>{t('전문분야', 'Specialty')}</CareerTitle>
+                    <KeywordList>
+                      {practiceKeywords.map((keyword) => (
+                        <KeywordChip key={keyword}>{tx(keyword)}</KeywordChip>
+                      ))}
+                    </KeywordList>
+                  </CareerSection>
+                ) : null}
+
+                <CareerSection>
+                  <CareerTitle>{t('주요업무', 'Key Work')}</CareerTitle>
+                  <CareerList>
+                    {member.careerHighlights.slice(0, 4).map((highlight) => (
+                      <CareerItem key={highlight}>{tx(highlight)}</CareerItem>
+                    ))}
+                  </CareerList>
+                </CareerSection>
+              </CareerOverlay>
+            ) : null}
+          </ProfileCard>
+        );
+      })}
     </DirectoryGrid>
   );
 }

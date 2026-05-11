@@ -82,7 +82,7 @@ export function SeminarPage() {
           id: item.id,
           anchorId: item.id,
           publishedAt: item.publishedAt,
-          sourceLabel: t('세미나', 'Seminar'),
+          sourceLabel: t('세미나/교육', 'Seminar / Training'),
           title: t(item.title, item.titleEn),
           to: `/news/seminar/${item.id}`,
           actions: isRecruiting
@@ -107,7 +107,7 @@ export function SeminarPage() {
       }),
     [pagedItems, t],
   );
-  const emptyMessage = t('검색 조건에 맞는 세미나가 없습니다.', 'No seminars match the current filters.');
+  const emptyMessage = t('검색 조건에 맞는 세미나/교육이 없습니다.', 'No seminars or training sessions match the current filters.');
 
   return (
     <>
@@ -132,12 +132,12 @@ export function SeminarPage() {
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
-            searchPlaceholder={t('세미나 제목, 요약, 날짜로 검색', 'Search by seminar title, summary, or date')}
+            searchPlaceholder={t('세미나/교육 제목, 요약, 날짜로 검색', 'Search by seminar/training title, summary, or date')}
             onSearchChange={setSearchQuery}
             resultLabel={t(`총 ${filteredItems.length}건`, `${filteredItems.length} results`)}
           />
 
-          {loading ? <P.CardText>{t('세미나를 불러오는 중입니다.', 'Loading seminars.')}</P.CardText> : null}
+          {loading ? <P.CardText>{t('세미나/교육을 불러오는 중입니다.', 'Loading seminars/training.')}</P.CardText> : null}
           <NewsListTable
             rows={rows}
             dateLabel={t('일자', 'Date')}

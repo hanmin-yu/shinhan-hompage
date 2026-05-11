@@ -850,6 +850,182 @@ const MetricItemText = styled.span<{ $tone?: 'dark' | 'plain' }>`
   word-break: keep-all;
 `;
 
+const PlatformFeatureMatrix = styled.div`
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  background: #ffffff;
+
+  &::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, ${palette.blue} 0%, #1d5fb6 62%, #8fb7e8 100%);
+  }
+`;
+
+const FeatureMatrixHeader = styled.div`
+  display: grid;
+  grid-template-columns: 82px minmax(180px, 0.42fr) minmax(0, 1fr);
+  min-height: 52px;
+  border-bottom: 1px solid #dbe3ee;
+  background: linear-gradient(180deg, #fbfdff 0%, #f2f6fb 100%);
+  color: ${palette.blue};
+
+  @media (max-width: 760px) {
+    display: none;
+  }
+`;
+
+const FeatureHeaderCell = styled.span`
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 14px 20px;
+  border-right: 1px solid #dbe3ee;
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+`;
+
+const FeatureMatrixRow = styled.article`
+  display: grid;
+  grid-template-columns: 82px minmax(180px, 0.42fr) minmax(0, 1fr);
+  min-height: 102px;
+  border-bottom: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 58px minmax(0, 1fr);
+    min-height: auto;
+    padding: 18px;
+    gap: 8px 14px;
+  }
+`;
+
+const FeatureNumber = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #dbe0e8;
+  background: #f6f9fd;
+  color: ${palette.blue};
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 760px) {
+    grid-row: 1 / span 2;
+    width: 48px;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: 8px;
+  }
+`;
+
+const FeatureName = styled.strong`
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 20px 22px;
+  border-right: 1px solid #dbe0e8;
+  color: ${palette.blue};
+  font-size: clamp(1rem, 1.26vw, 1.14rem);
+  font-weight: 850;
+  line-height: 1.36;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+
+  @media (max-width: 760px) {
+    padding: 0;
+    border-right: 0;
+  }
+`;
+
+const FeatureDetail = styled.span`
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 20px 24px;
+  color: #596579;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  word-break: keep-all;
+
+  @media (max-width: 760px) {
+    padding: 0;
+  }
+`;
+
+const ImpactTable = styled.div`
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background: #ffffff;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ImpactColumn = styled.article`
+  display: grid;
+  grid-template-rows: auto minmax(136px, 1fr);
+  min-width: 0;
+  border-right: 1px solid #dbe0e8;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  @media (max-width: 760px) {
+    grid-template-rows: auto auto;
+    border-right: 0;
+    border-bottom: 1px solid #dbe0e8;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+`;
+
+const ImpactHeaderCell = styled.strong`
+  min-width: 0;
+  padding: 22px 24px;
+  border-bottom: 1px solid #dbe0e8;
+  background: #f6f9fd;
+  color: ${palette.blue};
+  font-size: clamp(1.04rem, 1.4vw, 1.24rem);
+  font-weight: 900;
+  line-height: 1.34;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+`;
+
+const ImpactBodyCell = styled.span`
+  min-width: 0;
+  padding: 24px;
+  color: #384456;
+  font-size: clamp(0.98rem, 1.26vw, 1.12rem);
+  line-height: 1.72;
+  word-break: keep-all;
+
+  @media (max-width: 760px) {
+    min-height: auto;
+  }
+`;
+
 const ContactPanel = styled.article`
   display: grid;
   gap: clamp(18px, 3vw, 28px);
@@ -1085,7 +1261,7 @@ const refundFlowAccents = [palette.blue];
 const ftaCircleAccents = [palette.blue];
 const vividAccents = ['#1d5fb6', '#1fc7c3', '#6b8ff2', '#f36f8f', '#d59c2a', '#6f74a8', '#2f8f7b'];
 
-type DiagramKind = 'circle' | 'process' | 'stage' | 'metric' | 'split';
+type DiagramKind = 'circle' | 'process' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable';
 
 type ReferenceDiagramSection = {
   heading: string;
@@ -1100,6 +1276,10 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     return 'stage';
   }
 
+  if (contentId === 'import-export') {
+    if (heading === '주요 핵심 기능') return 'featureMatrix';
+    if (heading === '도입 기대 효과') return 'impactTable';
+  }
   if (contentId === 'import-export') return 'process';
   if (contentId === 'refund') {
     if (heading === '환급 종류') return 'circle';
@@ -1343,7 +1523,9 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (isImportExportPage || isCustomsAuditFocus || isForeignExchangeService || isAcvaBenefits || isQuarantineService || isUsFdaCoreService) {
       const accents = importExportFlowAccents;
       const boardTitle = isImportExportPage
-        ? t('수출입 통관 운영 특장점', 'Import & Export Clearance Strengths')
+        ? sectionHeading === '주요 서비스 상세 설명'
+          ? t('수출입 통관 운영 특장점', 'Import & Export Clearance Strengths')
+          : t(sectionHeading, sectionHeading)
         : t(sectionHeading, sectionHeading);
 
       return (
@@ -1439,6 +1621,41 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     );
   };
 
+  const renderFeatureMatrix = (items: string[]) => (
+    <PlatformFeatureMatrix>
+      <FeatureMatrixHeader>
+        <FeatureHeaderCell>{t('번호', 'No.')}</FeatureHeaderCell>
+        <FeatureHeaderCell>{t('기능', 'Feature')}</FeatureHeaderCell>
+        <FeatureHeaderCell>{t('관리 범위', 'Management Scope')}</FeatureHeaderCell>
+      </FeatureMatrixHeader>
+      {items.map((item, index) => {
+        const { term, description } = splitDiagramItem(tx(item));
+        return (
+          <FeatureMatrixRow key={item}>
+            <FeatureNumber>{String(index + 1).padStart(2, '0')}</FeatureNumber>
+            <FeatureName>{term}</FeatureName>
+            {description ? <FeatureDetail>{description}</FeatureDetail> : null}
+          </FeatureMatrixRow>
+        );
+      })}
+    </PlatformFeatureMatrix>
+  );
+
+  const renderImpactTable = (items: string[]) => {
+    const parsedItems = items.map((item) => splitDiagramItem(tx(item)));
+
+    return (
+      <ImpactTable>
+        {parsedItems.map(({ term, description }) => (
+          <ImpactColumn key={term}>
+            <ImpactHeaderCell key={term}>{term}</ImpactHeaderCell>
+            <ImpactBodyCell key={`${term}-body`}>{description}</ImpactBodyCell>
+          </ImpactColumn>
+        ))}
+      </ImpactTable>
+    );
+  };
+
   const renderStageDiagram = (items: string[]) => (
     <StageCards>
       {items.map((item, index) => {
@@ -1495,6 +1712,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'stage') return renderStageDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
+    if (kind === 'featureMatrix') return renderFeatureMatrix(items);
+    if (kind === 'impactTable') return renderImpactTable(items);
     return renderProcessDiagram(items, sectionHeading);
   };
 
@@ -1503,6 +1722,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'stage') return renderStageDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
+    if (kind === 'featureMatrix') return renderFeatureMatrix(items);
+    if (kind === 'impactTable') return renderImpactTable(items);
     return renderProcessDiagram(items, sectionHeading);
   };
 

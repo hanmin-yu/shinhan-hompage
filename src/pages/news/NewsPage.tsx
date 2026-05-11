@@ -107,13 +107,13 @@ export function NewsPage() {
           <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
           <P.Lead>
             {t(
-              '신한 NEWS, 세미나, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
-              'Shinhan NEWS, seminars, and newsletters are organized in one quick editorial view.',
+              '신한 NEWS, 세미나/교육, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
+              'Shinhan NEWS, seminars/training, and newsletters are organized in one quick editorial view.',
             )}
           </P.Lead>
           <IntroList>
             <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
-            <li>{t('세미나: 최신 교육·세미나 3건', 'Seminar: 3 latest seminar updates')}</li>
+            <li>{t('세미나/교육: 최신 교육·세미나 3건', 'Seminar / Training: 3 latest seminar or training updates')}</li>
             <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
           </IntroList>
           <P.SectionDivider />
@@ -135,8 +135,8 @@ export function NewsPage() {
           </EditorialSection>
 
           <EditorialSection>
-            <P.Kicker>Seminar</P.Kicker>
-            <P.SectionTitle>{t('세미나', 'Seminar')}</P.SectionTitle>
+            <P.Kicker>Seminar / Training</P.Kicker>
+            <P.SectionTitle>{t('세미나/교육', 'Seminar / Training')}</P.SectionTitle>
             <EditorialList>
               {seminarPreview.map((item) => (
                 <EditorialItem key={item.id}>

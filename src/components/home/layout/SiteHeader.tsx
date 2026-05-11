@@ -54,6 +54,16 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
     closeMegaMenu();
   };
 
+  const renderMegaMenuTitle = (label: string) =>
+    label === '신한관세법인 소개' ? (
+      <>
+        <S.MegaMenuTitleLine>신한관세법인</S.MegaMenuTitleLine>
+        <S.MegaMenuTitleLine>소개</S.MegaMenuTitleLine>
+      </>
+    ) : (
+      label
+    );
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -111,7 +121,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
                     <S.MegaMenuInner>
                       <S.MegaMenuTitleBlock data-mega-title>
                         <S.MegaMenuKicker>SHINHAN</S.MegaMenuKicker>
-                        <S.MegaMenuTitle>{item.label}</S.MegaMenuTitle>
+                        <S.MegaMenuTitle>{renderMegaMenuTitle(item.label)}</S.MegaMenuTitle>
                       </S.MegaMenuTitleBlock>
                       <S.MegaMenuLinks>
                         {item.children.map((child) =>

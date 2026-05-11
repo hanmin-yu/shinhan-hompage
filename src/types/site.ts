@@ -78,6 +78,19 @@ export type OfficeBranch = {
   labelEn: string;
   mapQuery?: string;
   mapQueryEn?: string;
+  locations?: {
+    id: string;
+    label: string;
+    labelEn: string;
+    address: string;
+    addressEn: string;
+    mapQuery?: string;
+    mapQueryEn?: string;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
+  }[];
   shortLabel: string;
   shortLabelEn: string;
   region: string;
@@ -87,6 +100,7 @@ export type OfficeBranch = {
   address: string;
   addressEn: string;
   tel: string;
+  email?: string;
   fax?: string;
   websiteUrl?: string;
   websiteLabel?: string;

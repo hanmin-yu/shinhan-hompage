@@ -39,7 +39,8 @@ const homeOfficeRank = new Map(homeOfficeOrder.map((officeId, index) => [officeI
 
 const mapPinGroups = [
   { id: 'seoul-hq', officeIds: ['seoul', 'kord-systems', 'kord'], x: 33.4, y: 21.3, accent: '#1c4f96' },
-  { id: 'gimpo', officeIds: ['invista'], x: 29.2, y: 20.7, accent: '#2f689b' },
+  { id: 'gimpo-gochon', officeIds: ['invista'], x: 28.6, y: 19.6, accent: '#2f689b' },
+  { id: 'gimpo-airport', officeIds: ['invista'], x: 29.4, y: 21.0, accent: '#2f689b' },
   { id: 'incheon-airport', officeIds: ['airport'], x: 25.1, y: 21.9, accent: '#2f78bf' },
   { id: 'songdo', officeIds: ['incheon', 'sh-food'], x: 27.7, y: 23.5, accent: '#3c6ca8' },
   { id: 'cheongju', officeIds: ['cheongju'], x: 44.0, y: 36.4, accent: '#5a7fb2' },

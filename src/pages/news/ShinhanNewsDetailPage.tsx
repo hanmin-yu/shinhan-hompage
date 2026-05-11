@@ -148,7 +148,7 @@ export function ShinhanNewsDetailPage() {
         <NewsPageContainer data-reveal>
           <DetailCard>
             <MetaRow>
-              <CategoryBadge>{item ? getShinhanNewsSourceLabel(item, t('세미나', 'Seminar')) : 'FLASH'}</CategoryBadge>
+              <CategoryBadge>{item ? getShinhanNewsSourceLabel(item, t('세미나/교육', 'Seminar / Training')) : 'FLASH'}</CategoryBadge>
               <span>{item?.publishedAt}</span>
               {item?.author ? <span>{item.author}</span> : null}
             </MetaRow>

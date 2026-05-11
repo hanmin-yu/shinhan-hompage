@@ -4,7 +4,7 @@ import type { LinkItem, NavItem, SiteLanguage } from '../types/site';
 export const headerNavigation: NavItem[] = [
   {
     id: 'about',
-    label: '신한 소개',
+    label: '신한관세법인 소개',
     to: '/about',
     children: [
       { id: 'about-overview', label: '회사소개', to: '/about' },
@@ -54,7 +54,7 @@ export const headerNavigation: NavItem[] = [
     children: [
       { id: 'news-shinhan', label: '신한 NEWS', to: '/news/shinhan-news' },
       { id: 'news-issue-report', label: '무역 동향', to: '/news/issue-report' },
-      { id: 'news-seminar', label: '세미나', to: '/news/seminar' },
+      { id: 'news-seminar', label: '세미나/교육', to: '/news/seminar' },
       { id: 'news-newsletter', label: '소식지', to: '/news/newsletter' },
     ],
   },

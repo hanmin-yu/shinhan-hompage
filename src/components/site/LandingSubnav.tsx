@@ -108,17 +108,17 @@ const IntroTitle = styled.h1`
   max-width: min(100%, 920px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
-  font-weight: 900;
+  font-size: clamp(2.28rem, 4.95vw, 4.55rem);
+  font-weight: 800;
   line-height: 0.98;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   text-align: center;
   text-shadow:
     0 14px 30px rgba(4, 12, 24, 0.24),
     0 2px 8px rgba(4, 12, 24, 0.22);
 
   @media (max-width: 640px) {
-    font-size: clamp(2rem, 9vw, 3.2rem);
+    font-size: clamp(1.9rem, 8.6vw, 3.04rem);
   }
 `;
 

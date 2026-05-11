@@ -1388,9 +1388,13 @@ export const MegaMenuTitle = styled.strong`
   color: ${palette.textPrimary};
   font-size: clamp(2.22rem, 3.4vw, 3.2rem);
   font-weight: 900;
-  line-height: 0.96;
+  line-height: 1.12;
   letter-spacing: -0.055em;
   text-shadow: none;
+`;
+
+export const MegaMenuTitleLine = styled.span`
+  display: block;
 `;
 
 export const MegaMenuLinks = styled.div`
