@@ -571,9 +571,10 @@ const CareerSection = styled.div`
 const CareerTitle = styled.strong`
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 6px;
   min-height: 28px;
-  padding: 0 9px;
+  padding: 0 10px 0 8px;
   border-radius: 999px;
   border: 1px solid rgba(31, 92, 178, 0.14);
   background: rgba(255, 255, 255, 0.78);
@@ -587,6 +588,27 @@ const CareerTitle = styled.strong`
 
   @media (max-width: 560px) {
     justify-self: start;
+  }
+`;
+
+const CareerTitleIcon = styled.span`
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(31, 92, 178, 0.14), rgba(31, 92, 178, 0.06));
+  color: #1f5cb2;
+
+  svg {
+    display: block;
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 `;
 
@@ -633,7 +655,7 @@ const CareerList = styled.ul`
 const CareerItem = styled.li`
   position: relative;
   min-height: 32px;
-  padding: 7px 12px 7px 23px;
+  padding: 7px 12px 7px 32px;
   border-radius: 8px;
   border: 1px solid rgba(31, 92, 178, 0.12);
   background:
@@ -654,11 +676,26 @@ const CareerItem = styled.li`
     position: absolute;
     left: 12px;
     top: 10px;
-    bottom: 10px;
-    width: 2px;
+    width: 10px;
+    height: 12px;
+    border: 1.5px solid rgba(31, 92, 178, 0.7);
+    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(229, 240, 255, 0.82));
+    box-shadow:
+      inset 0 -3px 0 rgba(31, 92, 178, 0.08),
+      0 4px 9px rgba(31, 92, 178, 0.08);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    width: 5px;
+    height: 1.5px;
     border-radius: 999px;
-    background: #1f5cb2;
-    opacity: 0.62;
+    background: rgba(31, 92, 178, 0.68);
+    box-shadow: 0 3px 0 rgba(31, 92, 178, 0.4);
   }
 `;
 
@@ -685,6 +722,33 @@ function getPracticeKeywords(member: Member) {
     .map((keyword) => keyword.trim())
     .filter(Boolean)
     .slice(0, 3);
+}
+
+function SpecialtyIcon() {
+  return (
+    <CareerTitleIcon aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="7" />
+        <circle cx="12" cy="12" r="2" />
+        <path d="M12 3v3" />
+        <path d="M12 18v3" />
+        <path d="M3 12h3" />
+        <path d="M18 12h3" />
+      </svg>
+    </CareerTitleIcon>
+  );
+}
+
+function WorkIcon() {
+  return (
+    <CareerTitleIcon aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" />
+        <path d="M5 8h14v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8Z" />
+        <path d="M9 12h6" />
+      </svg>
+    </CareerTitleIcon>
+  );
 }
 
 export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false }: ProfessionalCardGridProps) {
@@ -742,7 +806,10 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
 
                 {practiceKeywords.length ? (
                   <CareerSection>
-                    <CareerTitle>{t('전문분야', 'Specialty')}</CareerTitle>
+                    <CareerTitle>
+                      <SpecialtyIcon />
+                      {t('전문분야', 'Specialty')}
+                    </CareerTitle>
                     <KeywordList>
                       {practiceKeywords.map((keyword) => (
                         <KeywordChip key={keyword}>{tx(keyword)}</KeywordChip>
@@ -752,7 +819,10 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
                 ) : null}
 
                 <CareerSection>
-                  <CareerTitle>{t('주요업무', 'Key Work')}</CareerTitle>
+                  <CareerTitle>
+                    <WorkIcon />
+                    {t('주요업무', 'Key Work')}
+                  </CareerTitle>
                   <CareerList>
                     {member.careerHighlights.slice(0, 4).map((highlight) => (
                       <CareerItem key={highlight}>{tx(highlight)}</CareerItem>
