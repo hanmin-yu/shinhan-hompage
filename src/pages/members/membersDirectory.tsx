@@ -575,9 +575,10 @@ const EmptyText = styled.p`
 type ProfessionalCardGridProps = {
   members: Member[];
   emptyMessage?: string;
+  showPracticeOverlay?: boolean;
 };
 
-export function ProfessionalCardGrid({ members, emptyMessage }: ProfessionalCardGridProps) {
+export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true }: ProfessionalCardGridProps) {
   const { t, tx } = useI18n();
 
   if (!members.length) {
@@ -621,7 +622,7 @@ export function ProfessionalCardGrid({ members, emptyMessage }: ProfessionalCard
               <InitialMark aria-hidden="true">{tx(member.name).slice(0, 1)}</InitialMark>
             )}
           </PhotoPanel>
-          {member.careerHighlights?.length ? (
+          {showPracticeOverlay && member.careerHighlights?.length ? (
             <CareerOverlay className="career-overlay" aria-label={`${tx(member.name)} 업무 분야`}>
               <CareerHeader>
                 <CareerTitle>{t('업무 분야', 'Practice Areas')}</CareerTitle>

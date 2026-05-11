@@ -26,7 +26,7 @@ export function MembersPage() {
 
       <MembersContentSection>
         <P.PageContainer data-reveal>
-          <ProfessionalCardGrid members={executives} />
+          <ProfessionalCardGrid members={executives} showPracticeOverlay={false} />
         </P.PageContainer>
       </MembersContentSection>
     </>

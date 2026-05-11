@@ -1128,10 +1128,6 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     if (heading === '업무범위') return 'stage';
     return 'process';
   }
-  if (contentId === 'trade-consulting') {
-    if (heading === '사전심사 제도의 종류') return 'circle';
-    if (heading === '업무범위') return 'stage';
-  }
   if (contentId === 'logistics') {
     if (heading.includes('Warehouse')) return 'stage';
     if (heading.includes('Forwarding')) return 'process';
@@ -1271,7 +1267,6 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const isAcvaPage = content.id === 'acva';
   const isPenaltyInvestigationPage = content.id === 'penalty-investigation';
   const isTaxAppealPage = content.id === 'tax-appeal';
-  const isTradeConsultingPage = content.id === 'trade-consulting';
   const isLogisticsPage = content.id === 'logistics';
   const isVietnamPage = content.id === 'vietnam';
   const isUsFdaPage = content.id === 'us-fda';
@@ -1290,7 +1285,6 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     const isCustomsAuditTypes = isCustomsAuditPage && sectionHeading === '관세조사의 종류';
     const isPenaltyInvestigationTypes = isPenaltyInvestigationPage && sectionHeading === '범칙조사 구분';
     const isFtaOriginTypes = isFtaPage && sectionHeading === '원산지 관리의 종류';
-    const isTradeConsultingTypes = isTradeConsultingPage && sectionHeading === '사전심사 제도의 종류';
     const isQuarantineTypes = isQuarantinePage && sectionHeading === '요건의 종류';
     const isLogisticsTrucking = isLogisticsPage && sectionHeading.includes('Trucking');
     const isVietnamSection = isVietnamPage;
@@ -1300,7 +1294,6 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       !isCustomsAuditTypes &&
       !isPenaltyInvestigationTypes &&
       !isFtaOriginTypes &&
-      !isTradeConsultingTypes &&
       !isQuarantineTypes &&
       !isLogisticsTrucking &&
       !isVietnamSection &&
@@ -1457,7 +1450,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
               ? palette.blue
             : isAcvaPage
               ? palette.blue
-            : isPenaltyInvestigationPage || isFtaPage || isTaxAppealPage || isTradeConsultingPage || isLogisticsPage || isVietnamPage || isUsFdaPage
+            : isPenaltyInvestigationPage || isFtaPage || isTaxAppealPage || isLogisticsPage || isVietnamPage || isUsFdaPage
               ? palette.blue
               : vividAccents[index % vividAccents.length];
         return (

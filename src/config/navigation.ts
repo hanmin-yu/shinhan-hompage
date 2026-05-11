@@ -36,7 +36,6 @@ export const headerNavigation: NavItem[] = [
       { id: 'service-acva', label: 'ACVA', to: '/services/consulting/acva' },
       { id: 'service-penalty', label: '범칙조사', to: '/services/consulting/penalty-investigation' },
       { id: 'service-tax', label: '조세불복', to: '/services/consulting/tax-appeal' },
-      { id: 'service-trade', label: '관세무역컨설팅', to: '/services/consulting/trade-consulting' },
       { id: 'service-quarantine', label: '검역·요건', to: '/services/quarantine' },
       { id: 'service-logistics', label: '물류', to: '/services/logistics' },
       { id: 'service-vietnam', label: '베트남', to: '/services/vietnam' },

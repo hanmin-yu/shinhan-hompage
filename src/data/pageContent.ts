@@ -60,7 +60,7 @@ export type ServiceLandingGroupItem = {
 };
 
 export type ServiceLandingGroup = {
-  id: 'clearance-refund' | 'quarantine-requirements' | 'consulting' | 'specialized';
+  id: 'clearance-refund' | 'quarantine-requirements' | 'consulting' | 'logistics' | 'vietnam' | 'us-fda';
   heading: string;
   headingEn: string;
   title: string;
@@ -235,11 +235,6 @@ export const consultingHubCards: LinkCard[] = [
   { title: '범칙조사', body: '세관·검찰 단계별 형사 리스크 대응', href: '/services/consulting/penalty-investigation' },
   { title: '조세불복', body: '과세전적부·이의·심판·소송 단계 지원', href: '/services/consulting/tax-appeal' },
   { title: '환급', body: '환급 항목 진단부터 신청·사후관리까지', href: '/services/consulting/refund' },
-  {
-    title: '기타 관세무역컨설팅',
-    body: '품목분류/과세가격/원산지 사전심사 등 사전 리스크 관리',
-    href: '/services/consulting/trade-consulting',
-  },
 ];
 
 export const serviceLandingGroups: ServiceLandingGroup[] = [
@@ -312,13 +307,6 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
         parentTitle: '컨설팅',
         parentTitleEn: 'Consulting',
       },
-      {
-        label: '관세무역컨설팅',
-        labelEn: 'Trade Consulting',
-        href: '/services/consulting/trade-consulting',
-        parentTitle: '컨설팅',
-        parentTitleEn: 'Consulting',
-      },
     ],
   },
   {
@@ -342,20 +330,40 @@ export const serviceLandingGroups: ServiceLandingGroup[] = [
     ],
   },
   {
-    id: 'specialized',
+    id: 'logistics',
     heading: '중분류',
     headingEn: 'Category',
-    title: '기타',
-    titleEn: 'Specialized',
+    title: '물류',
+    titleEn: 'Logistics',
     primaryHref: '/services/logistics',
-    description: '물류, 베트남 법인, 미국 FDA 대응 등 통관 이후 확장 업무를 지원합니다.',
-    descriptionEn: 'We cover extended operations including logistics, Vietnam entity support, and U.S. FDA response.',
-    image: '/hero/menu-services-specialized-ai.png',
-    items: [
-      { label: '물류', labelEn: 'Logistics', href: '/services/logistics', parentTitle: '기타', parentTitleEn: 'Specialized' },
-      { label: '베트남', labelEn: 'Vietnam', href: '/services/vietnam', parentTitle: '기타', parentTitleEn: 'Specialized' },
-      { label: '미국 FDA', labelEn: 'US FDA', href: '/services/us-fda', parentTitle: '기타', parentTitleEn: 'Specialized' },
-    ],
+    description: '국제 포워딩, 창고 보관, 3PL, 국내 운송까지 통관 이후 물류 실행을 연결합니다.',
+    descriptionEn: 'We connect post-clearance logistics execution across forwarding, warehousing, 3PL, and trucking.',
+    image: '/hero/service-logistics-ai.png',
+    items: [{ label: '물류', labelEn: 'Logistics', href: '/services/logistics', parentTitle: '물류', parentTitleEn: 'Logistics' }],
+  },
+  {
+    id: 'vietnam',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '베트남',
+    titleEn: 'Vietnam',
+    primaryHref: '/services/vietnam',
+    description: '베트남 현지 통관, 수책관리, FTA, 관세심사 대응을 국내 의사결정과 연결합니다.',
+    descriptionEn: 'We connect Vietnam customs, liquidation, FTA, and audit response with domestic decision-making.',
+    image: '/hero/service-vietnam-ai.png',
+    items: [{ label: '베트남', labelEn: 'Vietnam', href: '/services/vietnam', parentTitle: '베트남', parentTitleEn: 'Vietnam' }],
+  },
+  {
+    id: 'us-fda',
+    heading: '중분류',
+    headingEn: 'Category',
+    title: '미국 FDA',
+    titleEn: 'US FDA',
+    primaryHref: '/services/us-fda',
+    description: '미국 수출 전 FDA 등록, 라벨링, 수입경보 대응 등 상품인증 실무를 지원합니다.',
+    descriptionEn: 'We support FDA registration, labeling, import alert response, and product compliance before U.S. export.',
+    image: '/hero/service-us-fda-ai.png',
+    items: [{ label: '미국 FDA', labelEn: 'US FDA', href: '/services/us-fda', parentTitle: '미국 FDA', parentTitleEn: 'US FDA' }],
   },
 ];
 
@@ -1060,28 +1068,6 @@ const ftaContacts: ServiceContactPoint[] = [
   { name: '조석현', role: '주임' },
 ];
 
-const tradeConsultingSections: ServiceDetailSection[] = [
-  {
-    heading: '사전심사 제도의 종류',
-    headingEn: 'Types of Advance Rulings',
-    list: [
-      '과세가격 결정방법 사전심사: 가격신고를 하기 전에 과세가격 결정과 관련된 사항, 예를 들어 가산비용, 공제요소, 거래가격 배제요건 해당 여부, 특수관계가 있는 자들 간에 거래되는 물품의 과세가격 결정방법에 의문이 있는 경우 미리 심사를 신청할 수 있는 제도입니다.',
-      '품목분류 사전심사: 수출입신고를 하기 전에 수출입자가 스스로 품목을 분류하는 데 어려움이 있는 경우, 신청서, 견본, 설명자료 등을 갖추어 해당 물품에 적용될 품목번호를 미리 심사하여 줄 것을 신청할 수 있는 제도입니다.',
-      '원산지 사전심사: 수입신고를 하기 전에 협정관세 적용에 기초가 되는 원산지 결정기준 충족 여부 등에 대해 의문이 있는 자가 신청서, 원재료내역서, 공정명세서 등을 갖추어 의문사항을 미리 심사하여 줄 것을 신청할 수 있는 제도입니다.',
-    ],
-  },
-  {
-    heading: '업무범위',
-    headingEn: 'Scope of Work',
-    list: ['사전심사 제도 활용 권고 및 대리: 고객사의 특성 및 상황을 분석하여 적절한 사전심사 제도 활용을 권고하고 신청 절차를 대리합니다.'],
-  },
-];
-
-const tradeConsultingContacts: ServiceContactPoint[] = [
-  { name: '김정훈', role: '관세사' },
-  { name: '김유진', role: '관세사' },
-];
-
 export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'import-export',
@@ -1380,31 +1366,11 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     relatedResources: sharedResources,
   },
   {
-    id: 'trade-consulting',
-    path: '/services/consulting/trade-consulting',
-    groupKey: 'consulting',
-    groupTitle: '컨설팅',
-    groupTitleEn: 'Consulting',
-    title: '기타 관세무역컨설팅',
-    summary: '사전심사 제도를 활용해 수출입 전 불확실성을 줄이고 기업의 경영 안정성을 지원합니다.',
-    subtitle: '사전심사 제도를 활용해 수출입 전 불확실성을 줄이고 기업의 경영 안정성을 지원합니다.',
-    heroImage: '/hero/service-trade-consulting-ai.png',
-    heroImageAlt: '관세무역 컨설팅',
-    overview:
-      '사전심사 제도란 수출입신고를 하기 전 과세가격 결정과 관련한 사항, 품목번호, 원산지 결정기준의 충족 여부 등을 관세청장에게 미리 심사하여 줄 것을 신청하는 제도입니다. 사전심사 제도를 활용해 과세가격, 품목번호, 원산지 결정기준 충족 여부 등을 신고 전에 미리 검토함으로써 고객사의 불확실성을 제거하고 경영 안정성을 실현합니다.',
-    scope: ['과세가격 결정방법 사전심사', '품목분류 사전심사', '원산지 사전심사', '사전심사 결과 반영 및 운영 자문'],
-    checkpoints: ['사전 쟁점 정의', '신청서·견본·원재료내역 준비', '사전심사 신청 및 대응', '심사결과 운영 반영'],
-    contentSections: tradeConsultingSections,
-    contactPoints: tradeConsultingContacts,
-    relatedExpertNames: ['김정훈', '김유진'],
-    relatedResources: sharedResources,
-  },
-  {
     id: 'logistics',
     path: '/services/logistics',
-    groupKey: 'specialized',
-    groupTitle: '기타',
-    groupTitleEn: 'Specialized',
+    groupKey: 'logistics',
+    groupTitle: '물류',
+    groupTitleEn: 'Logistics',
     title: '물류',
     summary: '국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리, 3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다.',
     subtitle: '국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리,\n3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다.',
@@ -1463,9 +1429,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'vietnam',
     path: '/services/vietnam',
-    groupKey: 'specialized',
-    groupTitle: '기타',
-    groupTitleEn: 'Specialized',
+    groupKey: 'vietnam',
+    groupTitle: '베트남',
+    groupTitleEn: 'Vietnam',
     title: '베트남 법인',
     summary: '한국 60년 관세 전문성과 베트남 현지 네트워크를 결합해 베트남 진출 기업의 관세 리스크를 선제적으로 관리합니다.',
     subtitle: '한국 60년 관세 전문성과 베트남 현지 네트워크를 결합해 베트남 진출 기업의 관세 리스크를 선제적으로 관리합니다.',
@@ -1490,9 +1456,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
   {
     id: 'us-fda',
     path: '/services/us-fda',
-    groupKey: 'specialized',
-    groupTitle: '기타',
-    groupTitleEn: 'Specialized',
+    groupKey: 'us-fda',
+    groupTitle: '미국 FDA',
+    groupTitleEn: 'US FDA',
     title: '미국 FDA',
     summary: '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
     subtitle:
