@@ -212,25 +212,25 @@ export function ProfessionalCategoryMenu<T extends string>({
 
 const DirectoryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(400px, 590px));
+  grid-template-columns: repeat(2, minmax(360px, 530px));
   justify-content: center;
-  gap: clamp(24px, 3vw, 44px);
-  width: min(100%, 1240px);
+  gap: clamp(20px, 2.5vw, 34px);
+  width: min(100%, 1120px);
   margin: 0 auto;
 
   @media (max-width: 980px) {
-    grid-template-columns: minmax(0, 590px);
+    grid-template-columns: minmax(0, 530px);
   }
 `;
 
 const ProfileCard = styled.article<{ $featured?: boolean }>`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(158px, 13vw, 206px);
+  grid-template-columns: minmax(0, 1fr) clamp(142px, 11.5vw, 184px);
   grid-column: ${({ $featured }) => ($featured ? '1 / -1' : 'auto')};
   justify-self: ${({ $featured }) => ($featured ? 'center' : 'stretch')};
-  width: ${({ $featured }) => ($featured ? 'min(100%, 590px)' : '100%')};
-  min-height: 268px;
+  width: ${({ $featured }) => ($featured ? 'min(100%, 530px)' : '100%')};
+  min-height: 238px;
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid rgba(26, 55, 91, 0.14);
@@ -262,8 +262,8 @@ const ProfileCard = styled.article<{ $featured?: boolean }>`
   }
 
   @media (max-width: 560px) {
-    grid-template-columns: minmax(0, 1fr) 112px;
-    min-height: 198px;
+    grid-template-columns: minmax(0, 1fr) 100px;
+    min-height: 184px;
     border-radius: 8px;
   }
 `;
@@ -272,17 +272,17 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: clamp(24px, 3vw, 38px);
+  padding: clamp(20px, 2.4vw, 30px);
 
   @media (max-width: 560px) {
-    padding: 20px;
+    padding: 16px;
   }
 `;
 
 const TitleRow = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
   min-width: 0;
 `;
 
@@ -290,26 +290,26 @@ const Name = styled.h3`
   flex: 0 0 auto;
   margin: 0;
   color: #121c2b;
-  font-size: clamp(1.66rem, 2.35vw, 2.22rem);
+  font-size: clamp(1.48rem, 2.05vw, 1.95rem);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0;
 
   @media (max-width: 560px) {
-    font-size: 1.42rem;
+    font-size: 1.3rem;
   }
 `;
 
 const NameDivider = styled.span`
   flex: 0 0 auto;
   width: 2px;
-  height: 38px;
+  height: 34px;
   margin-top: 2px;
   background: linear-gradient(180deg, #102a55, #1d5fb6);
   opacity: 0.9;
 
   @media (max-width: 560px) {
-    height: 32px;
+    height: 28px;
   }
 `;
 
@@ -322,36 +322,36 @@ const RoleStack = styled.div`
 const Title = styled.p`
   margin: 0;
   color: #0c4e96;
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 850;
   line-height: 1.38;
 
   @media (max-width: 560px) {
-    font-size: 0.92rem;
+    font-size: 0.86rem;
   }
 `;
 
 const Division = styled.p`
   margin: 0;
   color: #6a7482;
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
 
   @media (max-width: 560px) {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
   }
 `;
 
 const ContactList = styled.div`
   display: grid;
-  gap: 9px;
+  gap: 7px;
   margin-top: auto;
-  padding-top: 22px;
+  padding-top: 18px;
 
   @media (max-width: 560px) {
-    gap: 7px;
-    padding-top: 18px;
+    gap: 6px;
+    padding-top: 14px;
   }
 `;
 
@@ -361,18 +361,18 @@ const ContactItem = styled.p`
   gap: 8px;
   margin: 0;
   color: #526174;
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
   word-break: keep-all;
   overflow-wrap: normal;
 
   @media (max-width: 560px) {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
   }
 
   span {
-    flex: 0 0 48px;
+    flex: 0 0 44px;
     margin-right: 0;
     color: #0c4e96;
     font-weight: 900;
@@ -407,7 +407,7 @@ const PhotoPanel = styled.div`
   &::before {
     content: '';
     position: absolute;
-    inset: 14px 12px;
+    inset: 12px 10px;
     z-index: 1;
     border-radius: 12px;
     background:
@@ -421,7 +421,7 @@ const PhotoPanel = styled.div`
 
 const PortraitFrame = styled.div`
   position: absolute;
-  inset: 18px 16px;
+  inset: 15px 13px;
   z-index: 2;
   overflow: hidden;
   border-radius: 10px;
@@ -453,13 +453,13 @@ const InitialMark = styled.div`
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 76px;
-  height: 76px;
-  margin-bottom: 34px;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 28px;
   border-radius: 50%;
   background: #0c4e96;
   color: #ffffff;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 900;
 `;
 
@@ -469,8 +469,8 @@ const CareerOverlay = styled.div`
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.3vw, 14px);
-  padding: clamp(17px, 1.8vw, 22px);
+  gap: clamp(8px, 1.1vw, 12px);
+  padding: clamp(14px, 1.5vw, 18px);
   border-radius: 8px;
   border: 1px solid rgba(31, 92, 178, 0.32);
   background:
@@ -531,21 +531,21 @@ const CareerOverlay = styled.div`
 const CareerHeader = styled.div`
   display: flex;
   justify-content: flex-end;
-  min-height: 30px;
+  min-height: 26px;
 `;
 
 const CareerNameTag = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 58px;
-  min-height: 28px;
-  padding: 0 12px;
+  min-width: 52px;
+  min-height: 25px;
+  padding: 0 10px;
   border-radius: 999px;
   border: 1px solid rgba(31, 92, 178, 0.2);
   background: linear-gradient(180deg, #ffffff, rgba(229, 240, 255, 0.96));
   color: #123f85;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 900;
   line-height: 1.35;
   white-space: nowrap;
@@ -556,10 +556,10 @@ const CareerNameTag = styled.span`
 
 const CareerSection = styled.div`
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-columns: 74px minmax(0, 1fr);
   align-items: start;
-  gap: 10px 14px;
-  padding-top: 10px;
+  gap: 8px 12px;
+  padding-top: 8px;
   border-top: 1px solid rgba(31, 92, 178, 0.1);
 
   @media (max-width: 560px) {
@@ -573,13 +573,13 @@ const CareerTitle = styled.strong`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
-  min-height: 28px;
-  padding: 0 10px 0 8px;
+  min-height: 25px;
+  padding: 0 9px 0 7px;
   border-radius: 999px;
   border: 1px solid rgba(31, 92, 178, 0.14);
   background: rgba(255, 255, 255, 0.78);
   color: #123f85;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
   line-height: 1.3;
   letter-spacing: 0;
@@ -594,16 +594,16 @@ const CareerTitle = styled.strong`
 const CareerTitleIcon = styled.span`
   display: inline-grid;
   place-items: center;
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(31, 92, 178, 0.14), rgba(31, 92, 178, 0.06));
   color: #1f5cb2;
 
   svg {
     display: block;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     stroke: currentColor;
     stroke-width: 2;
     fill: none;
@@ -616,20 +616,20 @@ const KeywordList = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 7px;
-  min-height: 28px;
+  gap: 6px;
+  min-height: 25px;
 `;
 
 const KeywordChip = styled.span`
   display: inline-flex;
   align-items: center;
-  min-height: 25px;
-  padding: 0 10px;
+  min-height: 23px;
+  padding: 0 9px;
   border-radius: 999px;
   border: 1px solid rgba(31, 92, 178, 0.18);
   background: linear-gradient(180deg, #ffffff, rgba(229, 240, 255, 0.98));
   color: #123f85;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
   line-height: 1.3;
   word-break: keep-all;
@@ -640,7 +640,7 @@ const KeywordChip = styled.span`
 
 const CareerList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   align-content: start;
   gap: 6px 10px;
   margin: 0;
@@ -654,15 +654,15 @@ const CareerList = styled.ul`
 
 const CareerItem = styled.li`
   position: relative;
-  min-height: 32px;
-  padding: 7px 12px 7px 32px;
+  min-height: 29px;
+  padding: 6px 10px 6px 29px;
   border-radius: 8px;
   border: 1px solid rgba(31, 92, 178, 0.12);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 242, 255, 0.88)),
     rgba(255, 255, 255, 0.74);
   color: #344760;
-  font-size: clamp(0.7rem, 0.78vw, 0.77rem);
+  font-size: clamp(0.66rem, 0.72vw, 0.72rem);
   font-weight: 700;
   line-height: 1.46;
   word-break: keep-all;
@@ -674,10 +674,10 @@ const CareerItem = styled.li`
   &::before {
     content: '';
     position: absolute;
-    left: 12px;
-    top: 10px;
-    width: 10px;
-    height: 12px;
+    left: 10px;
+    top: 9px;
+    width: 9px;
+    height: 11px;
     border: 1.5px solid rgba(31, 92, 178, 0.7);
     border-radius: 3px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(229, 240, 255, 0.82));
@@ -689,9 +689,9 @@ const CareerItem = styled.li`
   &::after {
     content: '';
     position: absolute;
-    left: 15px;
-    top: 14px;
-    width: 5px;
+    left: 13px;
+    top: 13px;
+    width: 4px;
     height: 1.5px;
     border-radius: 999px;
     background: rgba(31, 92, 178, 0.68);

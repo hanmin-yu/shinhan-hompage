@@ -78,6 +78,7 @@ export type OfficeBranch = {
   labelEn: string;
   mapQuery?: string;
   mapQueryEn?: string;
+  naverMapUrl?: string;
   locations?: {
     id: string;
     label: string;
@@ -86,6 +87,7 @@ export type OfficeBranch = {
     addressEn: string;
     mapQuery?: string;
     mapQueryEn?: string;
+    naverMapUrl?: string;
     coordinates?: {
       lat: number;
       lng: number;

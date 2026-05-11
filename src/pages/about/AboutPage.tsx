@@ -502,10 +502,10 @@ const ServiceItem = styled.li`
 
 const NavyInner = styled(P.PageContainer)`
   display: grid;
-  grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
-  gap: clamp(44px, 6vw, 96px);
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(32px, 4vw, 72px);
   align-items: start;
-  max-width: 1240px;
+  max-width: 1280px;
 
   @media (max-width: 980px) {
     grid-template-columns: 1fr;
@@ -519,8 +519,8 @@ const ValueList = styled.div`
 
 const ValueRow = styled.article`
   display: grid;
-  grid-template-columns: minmax(140px, 0.32fr) minmax(0, 1fr);
-  gap: 30px;
+  grid-template-columns: minmax(210px, 0.3fr) minmax(0, 1fr);
+  gap: 24px;
   padding: 32px 0;
   border-bottom: 1px solid rgba(226, 231, 238, 0.16);
 
@@ -932,7 +932,7 @@ export function AboutPage() {
             {managementValues.map((item) => (
               <ValueRow key={item.title}>
                 <ValueTitle>{tx(item.title)}</ValueTitle>
-                <ValueBody>{item.title === 'INNOVATION' ? renderNoWrapTerm(tx(item.body), '역량') : tx(item.body)}</ValueBody>
+                <ValueBody>{item.title === 'INNOVATION' ? renderNoWrapTerm(tx(item.body), '개선하는 역량') : tx(item.body)}</ValueBody>
               </ValueRow>
             ))}
           </ValueList>

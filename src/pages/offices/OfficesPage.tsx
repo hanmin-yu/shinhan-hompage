@@ -52,7 +52,6 @@ type OfficeLocationViewData = {
   googleMapEmbedUrl: string;
 };
 
-const addressOnlyMapOfficeIds = new Set(['busan', 'cheongju', 'gumi']);
 const primaryOfficeIds = new Set(['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi']);
 const googleMapQueryOverrides: Record<string, string> = {
   vietnam: 'Star Tower, Duong Dinh Nghe, Yen Hoa, Cau Giay, Hanoi, Vietnam',
@@ -63,7 +62,6 @@ function useOfficeViewData(): OfficeViewData[] {
 
   return officeBranches.map((office) => {
       const isVietnamOffice = office.id === 'vietnam';
-      const useAddressOnly = addressOnlyMapOfficeIds.has(office.id);
       const baseLocations = office.locations?.length
         ? office.locations
         : [
@@ -75,13 +73,12 @@ function useOfficeViewData(): OfficeViewData[] {
               addressEn: office.addressEn,
               mapQuery: office.mapQuery,
               mapQueryEn: office.mapQueryEn,
+              naverMapUrl: office.naverMapUrl,
               coordinates: undefined,
             },
           ];
       const locations = baseLocations.map((location) => {
-        const mapSearchQuery = useAddressOnly
-          ? t(location.address, location.addressEn)
-          : t(location.mapQuery ?? location.address, location.mapQueryEn ?? location.addressEn);
+        const mapSearchQuery = t(location.mapQuery ?? location.address, location.mapQueryEn ?? location.addressEn);
         const googleMapQuery =
           googleMapQueryOverrides[location.id] ??
           googleMapQueryOverrides[office.id] ??
@@ -95,7 +92,7 @@ function useOfficeViewData(): OfficeViewData[] {
           address: location.address,
           addressEn: location.addressEn,
           showNaverMap: !isVietnamOffice,
-          naverMapUrl: isVietnamOffice ? undefined : getNaverMapUrl(mapSearchQuery),
+          naverMapUrl: isVietnamOffice ? undefined : location.naverMapUrl ?? getNaverMapUrl(mapSearchQuery),
           googleMapUrl: coordinates ? getGoogleMapUrlByCoordinates(coordinates.lat, coordinates.lng) : getGoogleMapUrl(googleMapQuery),
           googleMapEmbedUrl: coordinates
             ? getGoogleMapEmbedUrlByCoordinates(coordinates.lat, coordinates.lng)
