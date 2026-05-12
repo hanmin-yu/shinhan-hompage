@@ -115,19 +115,21 @@ export function ServiceDetailSubnav({
 
   const activeGroup = groups.find((group) => group.id === activeGroupId) ?? groups[0];
 
+  if (!activeGroup || activeGroup.items.length <= 1) {
+    return null;
+  }
+
   return (
     <Wrap>
-      {activeGroup ? (
-        <SecondaryWrap>
-          <SecondaryTabs aria-label={t('업무분야 2차 메뉴', 'Practice area secondary navigation')}>
-            {activeGroup.items.map((item) => (
-              <SecondaryLink key={item.href} to={item.href} $active={item.href === activePath}>
-                {t(item.label, item.labelEn)}
-              </SecondaryLink>
-            ))}
-          </SecondaryTabs>
-        </SecondaryWrap>
-      ) : null}
+      <SecondaryWrap>
+        <SecondaryTabs aria-label={t('업무분야 2차 메뉴', 'Practice area secondary navigation')}>
+          {activeGroup.items.map((item) => (
+            <SecondaryLink key={item.href} to={item.href} $active={item.href === activePath}>
+              {t(item.label, item.labelEn)}
+            </SecondaryLink>
+          ))}
+        </SecondaryTabs>
+      </SecondaryWrap>
     </Wrap>
   );
 }

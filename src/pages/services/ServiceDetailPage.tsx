@@ -1420,6 +1420,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const hasDocumentSections = Boolean(content.contentSections?.length);
   const hasContactPoints = Boolean(content.contactPoints?.length);
   const contentDetailSections = content.contentSections?.filter((section) => section.heading !== '개요') ?? [];
+  const activeLandingGroup = serviceLandingGroups.find((group) => group.id === content.groupKey);
+  const showServiceSubnav = Boolean(activeLandingGroup && activeLandingGroup.items.length > 1);
   const detailSections = hasDocumentSections
     ? contentDetailSections
     : [
@@ -1737,21 +1739,23 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         heroPosition="center 50%"
       />
 
-      <ServiceNavSection>
-        <P.PageContainer>
-          <ServiceDetailSubnav
-            kicker={servicesSubnav.kicker}
-            kickerEn={servicesSubnav.kickerEn}
-            title={servicesSubnav.title}
-            titleEn={servicesSubnav.titleEn}
-            summary={servicesSubnav.summary}
-            summaryEn={servicesSubnav.summaryEn}
-            groups={serviceLandingGroups}
-            activeGroupId={content.groupKey}
-            activePath={content.path}
-          />
-        </P.PageContainer>
-      </ServiceNavSection>
+      {showServiceSubnav ? (
+        <ServiceNavSection>
+          <P.PageContainer>
+            <ServiceDetailSubnav
+              kicker={servicesSubnav.kicker}
+              kickerEn={servicesSubnav.kickerEn}
+              title={servicesSubnav.title}
+              titleEn={servicesSubnav.titleEn}
+              summary={servicesSubnav.summary}
+              summaryEn={servicesSubnav.summaryEn}
+              groups={serviceLandingGroups}
+              activeGroupId={content.groupKey}
+              activePath={content.path}
+            />
+          </P.PageContainer>
+        </ServiceNavSection>
+      ) : null}
 
       <EditorialSection>
         <HeroStatement data-reveal>

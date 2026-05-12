@@ -307,6 +307,30 @@ const ItemHint = styled.span`
   font-weight: 800;
 `;
 
+const SingleDetailLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 46px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: ${palette.blue};
+  font-size: 0.94rem;
+  font-weight: 800;
+
+  &::after {
+    content: '→';
+    margin-left: 8px;
+    font-size: 0.92rem;
+  }
+
+  &:hover {
+    color: #1d4f96;
+  }
+`;
+
 export function ServicesPage() {
   const { t } = useI18n();
   const servicesSubnav = sectionSubnav.services;
@@ -361,11 +385,13 @@ export function ServicesPage() {
               <ServiceMapCard key={`map-${group.id}`} href={`#${group.id}`}>
                 <ServiceMapMeta>{t(group.heading, group.headingEn)}</ServiceMapMeta>
                 <ServiceMapTitle>{t(group.title, group.titleEn)}</ServiceMapTitle>
-                <ServiceMapItems>
-                  {group.items.map((item) => (
-                    <ServiceMapTag key={`${group.id}-${item.label}`}>{t(item.label, item.labelEn)}</ServiceMapTag>
-                  ))}
-                </ServiceMapItems>
+                {group.items.length > 1 ? (
+                  <ServiceMapItems>
+                    {group.items.map((item) => (
+                      <ServiceMapTag key={`${group.id}-${item.label}`}>{t(item.label, item.labelEn)}</ServiceMapTag>
+                    ))}
+                  </ServiceMapItems>
+                ) : null}
               </ServiceMapCard>
             ))}
           </ServiceMap>
@@ -384,14 +410,18 @@ export function ServicesPage() {
                   <GroupMeta>{t(group.heading, group.headingEn)}</GroupMeta>
                   <GroupTitle>{t(group.title, group.titleEn)}</GroupTitle>
                   <GroupText>{t(group.description, group.descriptionEn)}</GroupText>
-                  <ItemList>
-                    {group.items.map((item) => (
-                      <ItemLink key={item.href + item.label} to={item.href}>
-                        <span>{t(item.label, item.labelEn)}</span>
-                        <ItemHint>{t('상세 보기', 'Details')}</ItemHint>
-                      </ItemLink>
-                    ))}
-                  </ItemList>
+                  {group.items.length > 1 ? (
+                    <ItemList>
+                      {group.items.map((item) => (
+                        <ItemLink key={item.href + item.label} to={item.href}>
+                          <span>{t(item.label, item.labelEn)}</span>
+                          <ItemHint>{t('상세 보기', 'Details')}</ItemHint>
+                        </ItemLink>
+                      ))}
+                    </ItemList>
+                  ) : (
+                    <SingleDetailLink to={group.primaryHref}>{t('상세 보기', 'Details')}</SingleDetailLink>
+                  )}
                 </GroupBody>
               </GroupPanel>
             ))}
