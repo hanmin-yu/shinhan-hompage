@@ -684,8 +684,8 @@ const importExportSections: ServiceDetailSection[] = [
 ];
 
 const importExportContacts: ServiceContactPoint[] = [
-  { name: '차미정', role: '이사' },
   { name: '조나현', role: '관세사' },
+  { name: '나지원', role: '관세사' },
   { name: '오규태', role: '지사장' },
   { name: '손성곤', role: '지사장' },
 ];
@@ -1091,8 +1091,6 @@ const ftaSections: ServiceDetailSection[] = [
 const ftaContacts: ServiceContactPoint[] = [
   { name: '박성현', role: '관세사' },
   { name: '오보람', role: '관세사' },
-  { name: '강민지', role: '수석' },
-  { name: '조석현', role: '주임' },
 ];
 
 export const serviceDetailPages: ServiceDetailContent[] = [
@@ -1127,7 +1125,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     ],
     contentSections: importExportSections,
     contactPoints: importExportContacts,
-    relatedExpertNames: ['차미정', '조나현', '오규태', '손성곤'],
+    relatedExpertNames: ['조나현', '나지원', '오규태', '손성곤'],
     relatedResources: sharedResources,
   },
   {
@@ -1217,7 +1215,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     checkpoints: ['협정·품목별 원산지 기준 분석', '입증자료 및 증빙 체계 정비', '인증수출자·증명서 운영 지원', '원산지 검증 대응 자료 작성', '시스템·DB 기반 상시 관리'],
     contentSections: ftaSections,
     contactPoints: ftaContacts,
-    relatedExpertNames: ['박성현', '오보람', '강민지', '조석현'],
+    relatedExpertNames: ['박성현', '오보람'],
     relatedResources: sharedResources,
   },
   {
@@ -1387,9 +1385,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     contentSections: refundSections,
     contactPoints: [
       { name: '김학현', role: '관세사' },
-      { name: '나지원', role: '관세사' },
+      { name: '김유진', role: '관세사' },
     ],
-    relatedExpertNames: ['김학현', '나지원'],
+    relatedExpertNames: ['김학현', '김유진'],
     relatedResources: sharedResources,
   },
   {

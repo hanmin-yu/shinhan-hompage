@@ -93,10 +93,15 @@ const HeroBackdropOverlay = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: transparent;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(7, 23, 52, 0.1), transparent 42%),
+    linear-gradient(180deg, rgba(7, 23, 52, 0.18) 0%, rgba(7, 23, 52, 0.08) 34%, rgba(7, 23, 52, 0.24) 100%),
+    linear-gradient(90deg, rgba(7, 23, 52, 0.22), rgba(7, 23, 52, 0.04) 48%, rgba(7, 23, 52, 0.16));
 
   @media (max-width: 768px) {
-    background: transparent;
+    background:
+      radial-gradient(circle at 50% 34%, rgba(7, 23, 52, 0.08), transparent 38%),
+      linear-gradient(180deg, rgba(7, 23, 52, 0.2) 0%, rgba(7, 23, 52, 0.1) 34%, rgba(7, 23, 52, 0.3) 100%);
   }
 `;
 

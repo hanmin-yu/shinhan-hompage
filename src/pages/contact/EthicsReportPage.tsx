@@ -9,6 +9,7 @@ import { useI18n } from '../../i18n/useI18n';
 
 const ethicsContactEmail = siteContact.email;
 const ethicsContactPhone = siteContact.phone;
+const ethicsCodeUrl = 'https://krcaa.or.kr/_Document/Member/M60709L.aspx?MenuCode=M60706';
 
 const reportSubjects = [
   { ko: '리베이트, 금품·향응 수수', en: 'Rebates, gifts, or entertainment' },
@@ -40,6 +41,15 @@ export function EthicsReportPage() {
                 'Shinhan Customs Service operates an ethics reporting channel to support a fair and transparent workplace.',
               )}
             </ReportLead>
+            <EthicsBasisText>
+              {t(
+                '본 접수창구는 관세사 윤리강령에 근거하여 운영됩니다.',
+                'This reporting channel is operated based on the Code of Ethics for Licensed Customs Brokers.',
+              )}{' '}
+              <EthicsBasisLink href={ethicsCodeUrl} target="_blank" rel="noreferrer">
+                {t('관세사 윤리강령 보기', 'View the Code of Ethics')}
+              </EthicsBasisLink>
+            </EthicsBasisText>
           </ReportIntro>
 
           <ReportGrid>
@@ -191,6 +201,28 @@ const ReportLead = styled.p`
   font-size: clamp(1.12rem, 1.38vw, 1.28rem);
   font-weight: 400;
   line-height: 1.82;
+`;
+
+const EthicsBasisText = styled.p`
+  margin: -4px 0 0;
+  color: #5a6780;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.7;
+  word-break: keep-all;
+`;
+
+const EthicsBasisLink = styled.a`
+  color: #1f5cb2;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover,
+  &:focus-visible {
+    color: #123f85;
+    outline: none;
+  }
 `;
 
 const NoticeText = styled.p`
