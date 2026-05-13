@@ -13,9 +13,14 @@ type ServiceDetailPageProps = {
   path: string;
 };
 
-const EditorialSection = styled.section<{ $tone?: 'soft' }>`
+const EditorialSection = styled.section<{ $tone?: 'soft'; $spacing?: 'default' | 'intro' | 'detail' }>`
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  padding: clamp(72px, 8vw, 118px) 0;
+  padding: ${({ $spacing = 'default' }) =>
+    $spacing === 'intro'
+      ? 'clamp(72px, 8vw, 118px) 0 clamp(24px, 3.6vw, 42px)'
+      : $spacing === 'detail'
+        ? 'clamp(18px, 3vw, 34px) 0 clamp(72px, 8vw, 118px)'
+        : 'clamp(72px, 8vw, 118px) 0'};
   background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
 `;
 
@@ -1757,7 +1762,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         </ServiceNavSection>
       ) : null}
 
-      <EditorialSection>
+      <EditorialSection $spacing="intro">
         <HeroStatement data-reveal>
           <IntroStack>
             <div>
@@ -1773,7 +1778,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         </HeroStatement>
       </EditorialSection>
 
-      <EditorialSection>
+      <EditorialSection $spacing="detail">
         <SectionInner data-reveal>
           <DocumentStack>
             {showReferenceDiagramsFirst

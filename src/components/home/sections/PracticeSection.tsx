@@ -517,8 +517,8 @@ export function PracticeSection() {
             {practiceItems.map((item) => (
               <PracticeLink key={item.id} id={item.id} to={item.href}>
                 <PracticeCopy>
-                  <PracticeTitle>{item.title}</PracticeTitle>
-                  <PracticeMeta>{item.titleEn}</PracticeMeta>
+                  <PracticeTitle>{t(item.title, item.titleEn)}</PracticeTitle>
+                  <PracticeMeta>{t(item.titleEn, item.label)}</PracticeMeta>
                 </PracticeCopy>
                 <PracticeArrow aria-hidden="true">&gt;</PracticeArrow>
               </PracticeLink>

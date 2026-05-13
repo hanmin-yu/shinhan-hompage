@@ -469,9 +469,10 @@ const CareerOverlay = styled.div`
   inset: 0;
   z-index: 5;
   display: grid;
-  align-content: start;
-  gap: clamp(8px, 1.1vw, 12px);
-  padding: clamp(14px, 1.5vw, 18px);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
+  gap: clamp(10px, 1.2vw, 14px);
+  padding: clamp(16px, 1.7vw, 22px);
   border-radius: 8px;
   border: 1px solid rgba(31, 92, 178, 0.32);
   background: rgba(247, 250, 255, 0.98);
@@ -547,15 +548,18 @@ const CareerNameTag = styled.span`
 
 const CareerSection = styled.div`
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-columns: 104px minmax(0, 1fr);
   align-items: start;
-  gap: 10px 14px;
-  padding-top: 11px;
-  border-top: 1px solid rgba(31, 92, 178, 0.14);
+  gap: 18px;
+  min-height: 0;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(31, 92, 178, 0.16);
 
   @media (max-width: 560px) {
     grid-template-columns: 1fr;
-    gap: 7px;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 0 0;
   }
 `;
 
@@ -563,30 +567,36 @@ const CareerTitle = styled.strong`
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 6px;
-  min-height: 27px;
-  padding: 0 10px 0 8px;
+  align-self: start;
+  gap: 7px;
+  min-height: 32px;
+  width: fit-content;
+  margin-top: 2px;
+  padding: 0 13px 0 10px;
   border-radius: 999px;
-  border: 1px solid rgba(31, 92, 178, 0.22);
-  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(31, 92, 178, 0.3);
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
   color: #123f85;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 900;
   line-height: 1.3;
   letter-spacing: 0;
   word-break: keep-all;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 6px 14px rgba(18, 63, 133, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   @media (max-width: 560px) {
     justify-self: start;
+    margin-top: 0;
   }
 `;
 
 const CareerTitleIcon = styled.span`
   display: inline-grid;
   place-items: center;
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(31, 92, 178, 0.14), rgba(31, 92, 178, 0.06));
   color: #1f5cb2;
@@ -603,44 +613,12 @@ const CareerTitleIcon = styled.span`
   }
 `;
 
-const KeywordList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px 16px;
-  min-height: 27px;
-`;
-
-const KeywordChip = styled.span`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 23px;
-  padding-left: 13px;
-  color: #172337;
-  font-size: 0.76rem;
-  font-weight: 850;
-  line-height: 1.3;
-  word-break: keep-all;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: #1f5cb2;
-    transform: translateY(-50%);
-  }
-`;
-
 const CareerList = styled.ul`
   display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   grid-template-columns: 1fr;
-  align-content: start;
-  gap: 0;
+  gap: 8px;
+  min-height: 0;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -648,25 +626,28 @@ const CareerList = styled.ul`
 
 const CareerItem = styled.li`
   position: relative;
-  min-height: 31px;
-  padding: 7px 4px 7px 24px;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  padding: 6px 4px 6px 28px;
   color: #172337;
-  font-size: clamp(0.72rem, 0.8vw, 0.8rem);
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: clamp(0.82rem, 0.9vw, 0.94rem);
+  font-weight: 850;
+  line-height: 1.46;
   word-break: keep-all;
   overflow-wrap: break-word;
 
   &::before {
     content: '';
     position: absolute;
-    left: 8px;
-    top: 16px;
-    width: 6px;
-    height: 6px;
+    left: 10px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
     background: #1f5cb2;
     box-shadow: 0 0 0 3px rgba(31, 92, 178, 0.08);
+    transform: translateY(-50%);
   }
 `;
 
@@ -684,31 +665,6 @@ type ProfessionalCardGridProps = {
   showPracticeOverlay?: boolean;
   centerFirst?: boolean;
 };
-
-function getPracticeKeywords(member: Member) {
-  const source = member.practice || member.careerHighlights?.join(',') || '';
-
-  return source
-    .split(',')
-    .map((keyword) => keyword.trim())
-    .filter(Boolean)
-    .slice(0, 3);
-}
-
-function SpecialtyIcon() {
-  return (
-    <CareerTitleIcon aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="7" />
-        <circle cx="12" cy="12" r="2" />
-        <path d="M12 3v3" />
-        <path d="M12 18v3" />
-        <path d="M3 12h3" />
-        <path d="M18 12h3" />
-      </svg>
-    </CareerTitleIcon>
-  );
-}
 
 function WorkIcon() {
   return (
@@ -732,8 +688,6 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
   return (
     <DirectoryGrid>
       {members.map((member, index) => {
-        const practiceKeywords = getPracticeKeywords(member);
-
         return (
           <ProfileCard key={member.name} tabIndex={0} $featured={centerFirst && index === 0}>
             <CardBody>
@@ -775,27 +729,13 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
                   <CareerNameTag>{tx(member.name)}</CareerNameTag>
                 </CareerHeader>
 
-                {practiceKeywords.length ? (
-                  <CareerSection>
-                    <CareerTitle>
-                      <SpecialtyIcon />
-                      {t('전문분야', 'Specialty')}
-                    </CareerTitle>
-                    <KeywordList>
-                      {practiceKeywords.map((keyword) => (
-                        <KeywordChip key={keyword}>{tx(keyword)}</KeywordChip>
-                      ))}
-                    </KeywordList>
-                  </CareerSection>
-                ) : null}
-
                 <CareerSection>
                   <CareerTitle>
                     <WorkIcon />
                     {t('주요업무', 'Key Work')}
                   </CareerTitle>
                   <CareerList>
-                    {member.careerHighlights.slice(0, 4).map((highlight) => (
+                    {member.careerHighlights.slice(0, 3).map((highlight) => (
                       <CareerItem key={highlight}>{tx(highlight)}</CareerItem>
                     ))}
                   </CareerList>
