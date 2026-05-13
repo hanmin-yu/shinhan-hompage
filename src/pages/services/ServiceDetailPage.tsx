@@ -521,11 +521,12 @@ const RefundStepDescription = styled.span`
   word-break: keep-all;
 `;
 
-const ProcessStrip = styled.div<{ $tone?: 'default' | 'navy' }>`
+const ProcessStrip = styled.div<{ $tone?: 'default' | 'navy'; $columns?: number }>`
   counter-reset: process-node;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  grid-template-columns: ${({ $columns }) =>
+    $columns ? `repeat(${$columns}, minmax(0, 1fr))` : 'repeat(auto-fit, minmax(148px, 1fr))'};
   gap: 18px 26px;
   padding: clamp(28px, 4vw, 44px);
   border: 1px solid #d8dee8;
@@ -535,6 +536,14 @@ const ProcessStrip = styled.div<{ $tone?: 'default' | 'navy' }>`
     $tone === 'navy'
       ? 'radial-gradient(circle at 16% 20%, rgba(18, 63, 133, 0.12), transparent 28%), radial-gradient(circle at 86% 18%, rgba(29, 95, 182, 0.1), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'
       : 'radial-gradient(circle at 16% 20%, rgba(31, 199, 195, 0.18), transparent 28%), radial-gradient(circle at 86% 18%, rgba(107, 143, 242, 0.16), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'};
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ProcessNode = styled.article<{ $accent: string; $showConnector?: boolean }>`
@@ -696,12 +705,21 @@ const PenaltyProcedureStepText = styled.span`
   word-break: keep-all;
 `;
 
-const StageCards = styled.div`
+const StageCards = styled.div<{ $columns?: number }>`
   counter-reset: stage-card;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: ${({ $columns }) =>
+    $columns ? `repeat(${$columns}, minmax(0, 1fr))` : 'repeat(auto-fit, minmax(150px, 1fr))'};
   gap: 20px;
   padding-top: 18px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>`
@@ -1275,6 +1293,13 @@ type ReferenceDiagramSection = {
   kind: DiagramKind;
 };
 
+function getBalancedDiagramColumns(itemCount: number): number | undefined {
+  if (itemCount === 6) return 3;
+  if (itemCount === 7 || itemCount === 8) return 4;
+  if (itemCount >= 2 && itemCount <= 5) return itemCount;
+  return undefined;
+}
+
 function getDiagramKind(contentId: string, heading: string, isSteps = false): DiagramKind {
   if (isSteps) {
     if (contentId === 'acva' && heading === 'ACVA 처리절차') return 'process';
@@ -1568,15 +1593,25 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       );
     }
 
+    const columns = getBalancedDiagramColumns(items.length);
+
     return (
-      <ProcessStrip $tone={isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage ? 'navy' : 'default'}>
+      <ProcessStrip
+        $tone={isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage ? 'navy' : 'default'}
+        $columns={columns}
+      >
         {items.map((item, index) => {
           const { term, description } = splitDiagramItem(tx(item));
           const accent =
             isAeoPage || isFtaPage || isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage
               ? palette.blue
               : vividAccents[index % vividAccents.length];
-          const showConnector = !(isLogisticsPage && sectionHeading.includes('Forwarding')) && !isVietnamPage && !isUsFdaPage;
+          const isRowEnd = columns ? (index + 1) % columns === 0 : false;
+          const showConnector =
+            !(isLogisticsPage && sectionHeading.includes('Forwarding')) &&
+            !isVietnamPage &&
+            !isUsFdaPage &&
+            !isRowEnd;
           return (
             <ProcessNode key={item} $accent={accent} $showConnector={showConnector}>
               <ProcessNodeTitle>{term}</ProcessNodeTitle>
@@ -1664,7 +1699,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   };
 
   const renderStageDiagram = (items: string[]) => (
-    <StageCards>
+    <StageCards $columns={getBalancedDiagramColumns(items.length)}>
       {items.map((item, index) => {
         const { term, description } = splitDiagramItem(tx(item));
         const accent =
