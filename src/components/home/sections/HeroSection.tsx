@@ -58,12 +58,12 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
   object-fit: cover;
   object-position: ${({ $position }) => $position ?? 'center'};
   opacity: ${({ $active }) => ($active ? 1 : 0)};
-  transform: scale(1) translate3d(0, 0, 0);
+  transform: scale(1.035) translate3d(-0.45%, -0.25%, 0);
   transform-origin: center;
   backface-visibility: hidden;
-  will-change: opacity;
-  animation: none;
-  filter: saturate(1.03) contrast(1.03) brightness(0.97);
+  will-change: opacity, transform;
+  animation: ${({ $active }) => ($active ? 'heroImageZoom 6.2s cubic-bezier(0.18, 0, 0.12, 1) forwards' : 'none')};
+  filter: saturate(1.06) contrast(1.08) brightness(0.96);
   transition: opacity 1.15s ease;
 
   @media (max-width: 768px) {
@@ -72,19 +72,19 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
-    transform: scale(1) translate3d(0, 0, 0);
+    transform: scale(1.04) translate3d(0, 0, 0);
     transition: opacity 0.2s ease;
   }
 
   @keyframes heroImageZoom {
     0% {
-      transform: scale(1) translate3d(0, 0, 0);
-      filter: saturate(1.03) contrast(1.03) brightness(0.97);
+      transform: scale(1.035) translate3d(-0.45%, -0.25%, 0);
+      filter: saturate(1.04) contrast(1.06) brightness(0.96);
     }
 
     100% {
-      transform: scale(1) translate3d(0, 0, 0);
-      filter: saturate(1.03) contrast(1.03) brightness(0.97);
+      transform: scale(1.105) translate3d(0.52%, -0.46%, 0);
+      filter: saturate(1.08) contrast(1.08) brightness(0.97);
     }
   }
 `;
