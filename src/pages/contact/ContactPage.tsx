@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import type { FormEvent } from 'react';
 
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
@@ -7,6 +8,12 @@ import { utilitySubnav } from '../../config/utilitySubnav';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
+const onlineInquiryEmail = 'shkim914@customsservice.co.kr';
+
+function getFormValue(formData: FormData, key: string) {
+  return String(formData.get(key) ?? '').trim();
+}
+
 export function ContactPage() {
   const { t } = useI18n();
   const hqOffice = officeBranches.find((office) => office.id === 'seoul') ?? officeBranches[0];
@@ -14,6 +21,29 @@ export function ContactPage() {
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
+
+  const handleInquirySubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const name = getFormValue(formData, 'name');
+    const phone = getFormValue(formData, 'phone');
+    const email = getFormValue(formData, 'email');
+    const message = getFormValue(formData, 'message');
+    const subject = `[신한관세법인 온라인 문의] ${name || '문의'}`;
+    const body = [
+      '온라인 문의 내용',
+      '',
+      `이름: ${name || '-'}`,
+      `연락처: ${phone || '-'}`,
+      `이메일: ${email || '-'}`,
+      '',
+      '문의내용:',
+      message || '-',
+    ].join('\n');
+
+    window.location.href = `mailto:${onlineInquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   return (
     <>
@@ -86,7 +116,12 @@ export function ContactPage() {
                 </InquiryText>
               </InquiryHeader>
 
-              <InquiryForm onSubmit={(event) => event.preventDefault()}>
+              <InquiryForm
+                action={`mailto:${onlineInquiryEmail}`}
+                method="post"
+                encType="text/plain"
+                onSubmit={handleInquirySubmit}
+              >
                 <FieldGroup>
                   <FieldLabel htmlFor="contact-name">{t('이름', 'Name')}</FieldLabel>
                   <TextInput id="contact-name" name="name" placeholder={t('입력해주세요', 'Enter your name')} />
