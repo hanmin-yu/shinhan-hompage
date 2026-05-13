@@ -660,7 +660,7 @@ export const expertMembers: Member[] = [
     name: '서인석',
     phone: '070-4343-7759',
     email: 'isseo@shcs.kr',
-    title: '책임',
+    title: '수석',
     department: 'Process Innovation 팀',
     practice: '웹 개발 및 전산관리',
     accent: '#5b7597',
@@ -810,7 +810,7 @@ export const expertMembers: Member[] = [
   {
     name: '오보람',
     phone: '070-4343-7790',
-    email: 'broh@customsservice.co.kr',
+    email: 'broh@shcs.kr',
     title: '관세사',
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅',

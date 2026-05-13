@@ -63,7 +63,7 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
   backface-visibility: hidden;
   will-change: opacity, transform;
   animation: ${({ $active }) => ($active ? 'heroImageZoom 6.2s cubic-bezier(0.18, 0, 0.12, 1) forwards' : 'none')};
-  filter: saturate(1.06) contrast(1.08) brightness(0.96);
+  filter: none;
   transition: opacity 1.15s ease;
 
   @media (max-width: 768px) {
@@ -79,12 +79,12 @@ const HeroBackdropImage = styled.img<{ $active: boolean; $position?: string; $mo
   @keyframes heroImageZoom {
     0% {
       transform: scale(1.035) translate3d(-0.45%, -0.25%, 0);
-      filter: saturate(1.04) contrast(1.06) brightness(0.96);
+      filter: none;
     }
 
     100% {
       transform: scale(1.105) translate3d(0.52%, -0.46%, 0);
-      filter: saturate(1.08) contrast(1.08) brightness(0.97);
+      filter: none;
     }
   }
 `;
@@ -93,15 +93,10 @@ const HeroBackdropOverlay = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(7, 23, 52, 0.1), transparent 42%),
-    linear-gradient(180deg, rgba(7, 23, 52, 0.18) 0%, rgba(7, 23, 52, 0.08) 34%, rgba(7, 23, 52, 0.24) 100%),
-    linear-gradient(90deg, rgba(7, 23, 52, 0.22), rgba(7, 23, 52, 0.04) 48%, rgba(7, 23, 52, 0.16));
+  background: transparent;
 
   @media (max-width: 768px) {
-    background:
-      radial-gradient(circle at 50% 34%, rgba(7, 23, 52, 0.08), transparent 38%),
-      linear-gradient(180deg, rgba(7, 23, 52, 0.2) 0%, rgba(7, 23, 52, 0.1) 34%, rgba(7, 23, 52, 0.3) 100%);
+    background: transparent;
   }
 `;
 
