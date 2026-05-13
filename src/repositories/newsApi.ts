@@ -1,6 +1,6 @@
 import { resolveNewsAdminMode } from '../config/newsAdminMode';
 import type { NewsletterRecord, ShinhanNewsRecord } from '../types/site';
-import { getNewsletterPdfFileName, getNewsletterPdfUrl, withNewsletterTitleBrandRecord } from '../utils/newsletter';
+import { getNewsletterDownloadFileName, getNewsletterPdfUrl, withNewsletterTitleBrandRecord } from '../utils/newsletter';
 import {
   getNewsletterRecord as getStaticNewsletterRecord,
   getNewsletterRecords as getStaticNewsletterRecords,
@@ -35,7 +35,10 @@ function normalizeNewsletterRecord(item: NewsletterRecord): NewsletterRecord {
   return {
     ...brandedItem,
     downloadUrl: getNewsletterPdfUrl(item.downloadUrl ?? item.downloadHref, item.previewManifestUrl) ?? undefined,
-    downloadFileName: getNewsletterPdfFileName(brandedItem.title),
+    downloadFileName: getNewsletterDownloadFileName(
+      getNewsletterPdfUrl(item.downloadUrl ?? item.downloadHref, item.previewManifestUrl),
+      brandedItem.title,
+    ),
   };
 }
 

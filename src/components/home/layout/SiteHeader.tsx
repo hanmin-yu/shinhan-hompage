@@ -57,8 +57,8 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
   const renderMegaMenuTitle = (label: string) =>
     label === '신한관세법인 소개' ? (
       <>
-        <S.MegaMenuTitleLine>신한관세법인</S.MegaMenuTitleLine>
-        <S.MegaMenuTitleLine>소개</S.MegaMenuTitleLine>
+        <S.MegaMenuTitleLine>{t('신한관세법인', 'Shinhan Customs Service')}</S.MegaMenuTitleLine>
+        <S.MegaMenuTitleLine>{t('소개', 'Overview')}</S.MegaMenuTitleLine>
       </>
     ) : (
       label

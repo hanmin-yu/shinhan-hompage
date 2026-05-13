@@ -51,33 +51,63 @@ export const siteContact: SiteContact = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    label: '도심 비즈니스',
-    labelEn: 'Business District',
+    label: '도심 고층 건물',
+    labelEn: 'City High-Rise',
     eyebrow: 'Shinhan Customs Service',
     eyebrowEn: 'Shinhan Customs Service',
-    headline: '기업의 관세 리스크를\n전문적으로 설계합니다',
-    headlineEn: 'Designing customs risk\nwith professional insight',
+    headline: '기업의 관세 리스크를\n차분하게 설계합니다',
+    headlineEn: 'Designing customs risk\nwith steady expertise',
     summary: '도심 비즈니스 현장 가까이에서 기업의 관세·무역 이슈를 실무 가능한 전략으로 정리합니다.',
     summaryEn: 'We turn customs and trade issues into practical strategy close to enterprise operations.',
-    image: '/hero/homepage/high-quality/hero-ai-01-seoul-highrise.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-01-seoul-highrise.jpg',
-    objectPosition: '58% 50%',
+    image: '/hero/homepage/office-tower-clear-sky.jpg',
+    mobileImage: '/hero/homepage/office-tower-clear-sky.jpg',
+    objectPosition: '50% 56%',
+    mobileObjectPosition: '50% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '해안 비즈니스',
+    labelEn: 'Coastal Business',
+    eyebrow: 'Global Trade Perspective',
+    eyebrowEn: 'Global Trade Perspective',
+    headline: '넓은 시야로 무역 흐름을\n끝까지 살핍니다',
+    headlineEn: 'Seeing trade flows\nwith a broader perspective',
+    summary: '복잡하게 이어지는 글로벌 무역 환경을 넓은 관점으로 보고 고객사의 다음 결정을 돕습니다.',
+    summaryEn: 'We help clients make the next decision by viewing global trade from a broader perspective.',
+    image: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    mobileImage: '/hero/homepage/seoul-skyline-blue-sky.jpg',
+    objectPosition: '62% 50%',
     mobileObjectPosition: '58% center',
     theme: 'deep-blue',
   },
   {
-    label: '항공 물류',
-    labelEn: 'Air Logistics',
-    eyebrow: 'Air Cargo Clearance',
-    eyebrowEn: 'Air Cargo Clearance',
-    headline: '하늘길의 물류 흐름까지\n정확하게 연결합니다',
-    headlineEn: 'Connecting air cargo\nwith precise clearance',
-    summary: '항공 화물의 속도에 맞춰 수출입 통관과 물류 흐름을 안정적으로 지원합니다.',
-    summaryEn: 'We support import and export clearance at the speed of global air cargo.',
-    image: '/hero/homepage/high-quality/hero-ai-02-cargo-plane-takeoff.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-02-cargo-plane-takeoff.jpg',
-    objectPosition: '62% 50%',
-    mobileObjectPosition: '58% center',
+    label: '글래스 파사드',
+    labelEn: 'Glass Facade',
+    eyebrow: 'Transparent Advisory',
+    eyebrowEn: 'Transparent Advisory',
+    headline: '투명한 기준으로\n통관의 방향을 제시합니다',
+    headlineEn: 'Guiding clearance\nwith transparent standards',
+    summary: '관세 전문성과 현장 경험을 바탕으로 거래 구조와 신고 기준을 분명하게 정리합니다.',
+    summaryEn: 'We clarify transaction structures and declaration standards with customs expertise.',
+    image: '/hero/homepage/shinhan-glass-facade.jpg',
+    mobileImage: '/hero/homepage/shinhan-glass-facade.jpg',
+    objectPosition: '50% 50%',
+    mobileObjectPosition: '50% center',
+    theme: 'deep-blue',
+  },
+  {
+    label: '푸른 바다',
+    labelEn: 'Open Sea',
+    eyebrow: 'Trade Outlook',
+    eyebrowEn: 'Trade Outlook',
+    headline: '변화하는 무역 환경을\n넓은 시야로 바라봅니다',
+    headlineEn: 'Looking at changing trade\nwith a wide perspective',
+    summary: '관세·무역 환경의 변화를 차분히 읽고 기업 운영에 필요한 방향을 제안합니다.',
+    summaryEn: 'We read changes in customs and trade conditions and suggest practical direction.',
+    image: '/hero/homepage/shinhan-history-sea-ai.png',
+    mobileImage: '/hero/homepage/shinhan-history-sea-ai.png',
+    objectPosition: '50% 50%',
+    mobileObjectPosition: '50% center',
     theme: 'deep-blue',
   },
   {
@@ -137,21 +167,6 @@ export const heroSlides: HeroSlide[] = [
     image: '/hero/homepage/high-quality/hero-ai-06-customs-it-dashboard.jpg',
     mobileImage: '/hero/homepage/high-quality/hero-ai-06-customs-it-dashboard.jpg',
     objectPosition: '52% 50%',
-    mobileObjectPosition: '50% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: '항만 터미널',
-    labelEn: 'Container Terminal',
-    eyebrow: 'Port Operations',
-    eyebrowEn: 'Port Operations',
-    headline: '항만 물류의 복잡함을\n통관 전략으로 정리합니다',
-    headlineEn: 'Structuring port complexity\nthrough customs strategy',
-    summary: '수입·수출 신고, 요건 확인, 물류 연계까지 항만 현장에 맞춘 서비스를 제공합니다.',
-    summaryEn: 'We provide port-ready services across declarations, requirements, and logistics coordination.',
-    image: '/hero/homepage/high-quality/hero-ai-07-container-terminal-aerial.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-07-container-terminal-aerial.jpg',
-    objectPosition: '50% 50%',
     mobileObjectPosition: '50% center',
     theme: 'deep-blue',
   },
@@ -246,81 +261,6 @@ export const heroSlides: HeroSlide[] = [
     theme: 'deep-blue',
   },
   {
-    label: '수출입 통관',
-    labelEn: 'Import Export Clearance',
-    eyebrow: 'Import & Export Clearance',
-    eyebrowEn: 'Import & Export Clearance',
-    headline: '수출입 현장의 변수를\n정확한 통관으로 풀어냅니다',
-    headlineEn: 'Solving trade variables\nthrough precise clearance',
-    summary: '품목, 요건, 신고 자료, 물류 일정을 함께 확인해 안정적인 통관 흐름을 만듭니다.',
-    summaryEn: 'We align products, requirements, declaration data, and logistics schedules for stable clearance.',
-    image: '/hero/homepage/high-quality/hero-ai-14-import-export-clearance.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-14-import-export-clearance.jpg',
-    objectPosition: '56% 50%',
-    mobileObjectPosition: '54% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: 'FTA 교육',
-    labelEn: 'FTA Training',
-    eyebrow: 'FTA Origin Strategy',
-    eyebrowEn: 'FTA Origin Strategy',
-    headline: 'FTA 원산지 관리를\n실무 중심으로 지원합니다',
-    headlineEn: 'Supporting FTA origin management\nwith practical expertise',
-    summary: '원산지 판정, 증빙 관리, 검증 대응, 교육까지 기업의 FTA 활용 체계를 돕습니다.',
-    summaryEn: 'We support origin determination, evidence management, verification response, and FTA training.',
-    image: '/hero/homepage/high-quality/hero-ai-15-fta-training-seminar.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-15-fta-training-seminar.jpg',
-    objectPosition: '54% 50%',
-    mobileObjectPosition: '52% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: 'AEO 공급망',
-    labelEn: 'AEO Supply Chain',
-    eyebrow: 'AEO & Supply Chain Security',
-    eyebrowEn: 'AEO & Supply Chain Security',
-    headline: '공급망의 신뢰를 높이는\nAEO 관리를 지원합니다',
-    headlineEn: 'Supporting AEO management\nfor trusted supply chains',
-    summary: 'AEO 공인, 종합심사, 내부통제 개선을 통해 기업의 무역 안전관리 체계를 강화합니다.',
-    summaryEn: 'We strengthen trade security through AEO certification, review support, and internal controls.',
-    image: '/hero/homepage/high-quality/hero-ai-16-aeo-secure-supply-chain.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-16-aeo-secure-supply-chain.jpg',
-    objectPosition: '56% 50%',
-    mobileObjectPosition: '54% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: '해외 관세 자문',
-    labelEn: 'Overseas Customs Consulting',
-    eyebrow: 'Overseas Customs Consulting',
-    eyebrowEn: 'Overseas Customs Consulting',
-    headline: '해외 진출 기업의 관세 이슈를\n현지 관점으로 검토합니다',
-    headlineEn: 'Reviewing overseas customs issues\nfrom a local perspective',
-    summary: '베트남 등 해외 현지 환경을 고려해 재고, 원산지, 세관 심사 대응을 지원합니다.',
-    summaryEn: 'We support overseas issues such as inventory, origin, and customs audit response.',
-    image: '/hero/homepage/high-quality/hero-ai-17-overseas-customs-consulting.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-17-overseas-customs-consulting.jpg',
-    objectPosition: '52% 50%',
-    mobileObjectPosition: '52% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: 'CustomsView',
-    labelEn: 'CustomsView',
-    eyebrow: 'Digital Customs Platform',
-    eyebrowEn: 'Digital Customs Platform',
-    headline: '디지털 통관 플랫폼으로\n업무 흐름을 투명하게 봅니다',
-    headlineEn: 'Making customs workflows visible\nthrough a digital platform',
-    summary: '통관 상태, 무역 데이터, 이슈 대응을 한눈에 확인할 수 있는 디지털 업무 경험을 제공합니다.',
-    summaryEn: 'We provide a digital experience for clearance status, trade data, and issue response.',
-    image: '/hero/homepage/high-quality/hero-ai-18-customsview-digital-platform.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-18-customsview-digital-platform.jpg',
-    objectPosition: '52% 50%',
-    mobileObjectPosition: '52% center',
-    theme: 'deep-blue',
-  },
-  {
     label: '무역 인사이트',
     labelEn: 'Trade Insights',
     eyebrow: 'Trade Insights',
@@ -346,36 +286,6 @@ export const heroSlides: HeroSlide[] = [
     summaryEn: 'We support HS classification, customs valuation, audits, and investigations with practical evidence.',
     image: '/hero/homepage/high-quality/hero-ai-20-tariff-audit-consulting.jpg',
     mobileImage: '/hero/homepage/high-quality/hero-ai-20-tariff-audit-consulting.jpg',
-    objectPosition: '52% 50%',
-    mobileObjectPosition: '52% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: '물류 올인원',
-    labelEn: 'Logistics All-in-One',
-    eyebrow: 'Logistics All-in-One',
-    eyebrowEn: 'Logistics All-in-One',
-    headline: '통관·컨설팅·물류를\n하나의 체계로 연결합니다',
-    headlineEn: 'Connecting clearance, consulting,\nand logistics in one system',
-    summary: '수출입 통관부터 운송, 창고, 컨설팅까지 기업의 무역 운영을 통합적으로 지원합니다.',
-    summaryEn: 'From clearance to transport, warehousing, and consulting, we support trade operations end to end.',
-    image: '/hero/homepage/high-quality/hero-ai-21-logistics-all-in-one.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-21-logistics-all-in-one.jpg',
-    objectPosition: '56% 50%',
-    mobileObjectPosition: '54% center',
-    theme: 'deep-blue',
-  },
-  {
-    label: '전문가 네트워크',
-    labelEn: 'Expert Network',
-    eyebrow: 'Nationwide Expert Network',
-    eyebrowEn: 'Nationwide Expert Network',
-    headline: '전국의 전문가 네트워크로\n현장 가까이 대응합니다',
-    headlineEn: 'Responding close to the field\nthrough an expert network',
-    summary: '본사와 주요 거점을 연결해 고객사의 업종과 현장에 맞춘 관세 서비스를 제공합니다.',
-    summaryEn: 'Our headquarters and regional offices provide customs services aligned with each client operation.',
-    image: '/hero/homepage/high-quality/hero-ai-22-nationwide-expert-network.jpg',
-    mobileImage: '/hero/homepage/high-quality/hero-ai-22-nationwide-expert-network.jpg',
     objectPosition: '52% 50%',
     mobileObjectPosition: '52% center',
     theme: 'deep-blue',
@@ -1340,15 +1250,15 @@ export const issueReports: IssueReport[] = issueReportsSnapshot.slice(0, 4).map(
 
 export const itOverview = {
   title: '관세 실무와 기술을 연결하는 IT팀',
-  titleEn: '관세 실무와 기술을 연결하는 IT팀',
+  titleEn: 'An IT Team Connecting Customs Practice and Technology',
   summary:
     '신한관세법인 IT팀은 관세 실무 지식과 최첨단 기술을 결합하여 데이터 중심의 스마트 통관 환경을 구축하고, 현장의 요구를 정교한 솔루션으로 해결하며 무역 업무의 디지털 전환을 선도합니다.',
   summaryEn:
-    '신한관세법인 IT팀은 관세 실무 지식과 최첨단 기술을 결합하여 데이터 중심의 스마트 통관 환경을 구축하고, 현장의 요구를 정교한 솔루션으로 해결하며 무역 업무의 디지털 전환을 선도합니다.',
+    'Shinhan Customs Service IT Team combines customs practice knowledge with advanced technology to build a data-driven smart clearance environment, solve field needs through precise solutions, and lead the digital transformation of trade operations.',
   body:
     '신한관세법인 IT팀은 단순한 시스템 운영의 차원을 넘어, 관세 및 무역 실무에 대한 깊은 통찰력과 최첨단 기술력을 결합하여 업무 자동화와 AI 전환(AX)을 선도하고 있습니다. 관세 전문가와의 밀착 협업을 통해 현장의 복잡하고 까다로운 요구사항을 정교한 기술적 솔루션으로 해결하며, 데이터 중심의 스마트한 통관 시스템을 구축하여 미래 지향적인 관세 서비스를 실현합니다.',
   bodyEn:
-    '신한관세법인 IT팀은 단순한 시스템 운영의 차원을 넘어, 관세 및 무역 실무에 대한 깊은 통찰력과 최첨단 기술력을 결합하여 업무 자동화와 AI 전환(AX)을 선도하고 있습니다. 관세 전문가와의 밀착 협업을 통해 현장의 복잡하고 까다로운 요구사항을 정교한 기술적 솔루션으로 해결하며, 데이터 중심의 스마트한 통관 시스템을 구축하여 미래 지향적인 관세 서비스를 실현합니다.',
+    'Beyond system operation, Shinhan Customs Service IT Team combines deep insight into customs and trade practice with advanced technical capabilities to lead workflow automation and AI transformation. By working closely with customs professionals, the team turns complex field requirements into refined technical solutions and builds data-driven smart clearance systems for future-ready customs service.',
 };
 
 export const itServices: ItService[] = [
@@ -1356,29 +1266,29 @@ export const itServices: ItService[] = [
     category: 'IT',
     categoryEn: 'IT',
     title: '통관·신고 시스템 개발 및 유지보수',
-    titleEn: '통관·신고 시스템 개발 및 유지보수',
+    titleEn: 'Clearance and Declaration System Development & Maintenance',
     summary:
       '수출입 신고부터 관세청 연계 인터페이스까지 전 과정을 아우르는 전용 시스템을 직접 운영하며, 정확하고 신속한 처리를 통해 고객사의 중단 없는 물류 흐름을 보장합니다.',
     summaryEn:
-      '수출입 신고부터 관세청 연계 인터페이스까지 전 과정을 아우르는 전용 시스템을 직접 운영하며, 정확하고 신속한 처리를 통해 고객사의 중단 없는 물류 흐름을 보장합니다.',
+      'We directly operate dedicated systems covering the full process from import/export declarations to customs authority interfaces, ensuring accurate, fast processing and uninterrupted logistics flow for clients.',
     body:
       '수출입 신고 자동화부터 신고필증 데이터 처리, 관세청 연계 인터페이스 구축에 이르기까지 관세 실무의 전 과정을 아우르는 전용 시스템을 직접 개발하고 운영합니다. 이를 통해 수출입 신고의 정확성과 신속성을 극대화하며, 안정적인 환경을 보장하여 고객사의 물류 흐름이 중단 없이 이어질 수 있도록 최상의 기술 지원을 제공합니다.',
     bodyEn:
-      '수출입 신고 자동화부터 신고필증 데이터 처리, 관세청 연계 인터페이스 구축에 이르기까지 관세 실무의 전 과정을 아우르는 전용 시스템을 직접 개발하고 운영합니다. 이를 통해 수출입 신고의 정확성과 신속성을 극대화하며, 안정적인 환경을 보장하여 고객사의 물류 흐름이 중단 없이 이어질 수 있도록 최상의 기술 지원을 제공합니다.',
+      'We develop and operate dedicated systems that cover the full customs workflow, from automated import/export declarations and declaration certificate data processing to customs authority interface integration. This maximizes declaration accuracy and speed while providing stable technical support so client logistics flows continue without interruption.',
   },
   {
     category: 'IT',
     categoryEn: 'IT',
     title: '업무 자동화',
-    titleEn: '업무 자동화',
+    titleEn: 'Workflow Automation',
     summary:
       '반복적인 서류 작업을 디지털로 전환하여 인적 오류를 방지하고 처리 속도를 높였으며, 전문가가 고부가가치 검토 업무에 집중할 수 있는 효율적인 환경을 조성합니다.',
     summaryEn:
-      '반복적인 서류 작업을 디지털로 전환하여 인적 오류를 방지하고 처리 속도를 높였으며, 전문가가 고부가가치 검토 업무에 집중할 수 있는 효율적인 환경을 조성합니다.',
+      'We digitize repetitive paperwork to prevent human error and increase processing speed, creating an efficient environment where professionals can focus on higher-value review work.',
     body:
       '반복적이고 소모적인 수출입 신고 및 데이터 처리 프로세스를 지능화된 시스템으로 자동화하여 업무 전반의 생산성을 획기적으로 향상시키고 있습니다. 단순 서류 작업의 디지털화를 통해 인적 오류를 원천적으로 방지하고 처리 속도를 높임으로써, 전문가들이 보다 고부가가치 서비스와 정밀한 검토에 집중할 수 있는 환경을 조성합니다.',
     bodyEn:
-      '반복적이고 소모적인 수출입 신고 및 데이터 처리 프로세스를 지능화된 시스템으로 자동화하여 업무 전반의 생산성을 획기적으로 향상시키고 있습니다. 단순 서류 작업의 디지털화를 통해 인적 오류를 원천적으로 방지하고 처리 속도를 높임으로써, 전문가들이 보다 고부가가치 서비스와 정밀한 검토에 집중할 수 있는 환경을 조성합니다.',
+      'We automate repetitive and time-consuming import/export declaration and data processing workflows through intelligent systems, dramatically improving productivity across operations. By digitizing simple document work, we prevent human error at the source, increase processing speed, and allow experts to focus on higher-value service and precise review.',
   },
   {
     category: 'IT',
@@ -1388,11 +1298,11 @@ export const itServices: ItService[] = [
     summary:
       '실시간 통관 모니터링과 HS Code 관리, 분석 리포트 기능을 제공하여 고객사가 데이터를 기반으로 최적의 전략적 의사결정을 내릴 수 있도록 돕는 비즈니스 파트너입니다.',
     summaryEn:
-      '실시간 통관 모니터링과 HS Code 관리, 분석 리포트 기능을 제공하여 고객사가 데이터를 기반으로 최적의 전략적 의사결정을 내릴 수 있도록 돕는 비즈니스 파트너입니다.',
+      'A business partner that provides real-time clearance monitoring, HS Code management, and analytics reports so clients can make data-driven strategic decisions.',
     body:
       '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
     bodyEn:
-      '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
+      'iOOM, our external client-facing system, goes beyond simple information lookup by supporting real-time clearance status monitoring and systematic document management. Through item-level unit price and HS Code management, logistics lead-time analysis, and detailed monthly reports, it helps clients make more objective and strategic decisions based on import/export data.',
     images: [
       {
         src: '/it-systems/ioom/ioom-import-status.png',
@@ -1414,11 +1324,11 @@ export const itServices: ItService[] = [
     summary:
       '수출입 의뢰부터 신고까지 전 과정을 통합 관리하며, 실시간 알림과 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 생산성을 극대화합니다.',
     summaryEn:
-      '수출입 의뢰부터 신고까지 전 과정을 통합 관리하며, 실시간 알림과 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 생산성을 극대화합니다.',
+      'It manages the entire process from import/export requests to declarations, preventing missed work and maximizing collaboration productivity through real-time notifications and checklists.',
     body:
       '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
     bodyEn:
-      '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
+      'iOOM Q, our internal workflow system, digitally integrates the full process from import/export requests and status management to automated declarations and post-submission work. Real-time task alerts and structured checklists prevent missed work and improve collaboration efficiency, forming the basis for faster and more accurate customs service.',
     images: [
       {
         src: '/it-systems/ioom-q/ioom-q-dashboard.png',
@@ -1440,11 +1350,11 @@ export const itServices: ItService[] = [
     summary:
       '베트남의 복잡한 15개 FTA 규정을 완벽히 반영하여 정밀한 원산지 판정 및 서류 보관을 지원하며, 글로벌 사후 검증 리스크에 선제적으로 대응합니다.',
     summaryEn:
-      '베트남의 복잡한 15개 FTA 규정을 완벽히 반영하여 정밀한 원산지 판정 및 서류 보관을 지원하며, 글로벌 사후 검증 리스크에 선제적으로 대응합니다.',
+      'It reflects Vietnam’s complex network of 15 FTA frameworks to support precise origin determination and document storage while proactively addressing global post-verification risk.',
     body:
       '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
     bodyEn:
-      '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
+      'For companies operating in Vietnam, KORD FTA provides an origin management system that reflects complex rules including 15 FTA agreements, GSP, and Form B. Through systematic data analysis, it supports accurate origin determinations as well as output and secure storage of supporting documents, providing a global-standard model for post-verification readiness.',
     images: [
       {
         src: '/it-systems/fta/fta-login.png',
@@ -1466,11 +1376,11 @@ export const itServices: ItService[] = [
     summary:
       '통관 및 회계 재고의 격차를 정밀 분석하여 관세 리스크 금액을 산출하고, 세관 제출용 결산 서류를 자동 생성함으로써 기업의 과세 위험을 안전하게 방어합니다.',
     summaryEn:
-      '통관 및 회계 재고의 격차를 정밀 분석하여 관세 리스크 금액을 산출하고, 세관 제출용 결산 서류를 자동 생성함으로써 기업의 과세 위험을 안전하게 방어합니다.',
+      'It precisely analyzes gaps between customs and accounting inventory, calculates potential customs risk amounts, and automatically generates settlement documents for customs submission.',
     body:
       '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
     bodyEn:
-      '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
+      'For inventory management, a core part of Vietnam customs operations, KORD LIQ compares and analyzes customs quantities and accounting inventory quantities in detail. It calculates expected customs risk amounts from quantity gaps in real time and automatically generates inventory liquidation documents for customs submission, helping companies proactively manage and defend against potential tax risk.',
     images: [
       {
         src: '/it-systems/liq/liq-login.png',
@@ -1488,29 +1398,29 @@ export const itServices: ItService[] = [
     category: 'IT',
     categoryEn: 'IT',
     title: '고객사 맞춤 솔루션 및 시스템 연동',
-    titleEn: '고객사 맞춤 솔루션 및 시스템 연동',
+    titleEn: 'Client-Tailored Solutions and System Integration',
     summary:
       '고객사 ERP와의 유연한 인터페이스 연동 및 맞춤형 로직 개발을 통해 데이터의 단절 없는 흐름을 구현하고 각 기업에 최적화된 디지털 업무 환경을 제공합니다.',
     summaryEn:
-      '고객사 ERP와의 유연한 인터페이스 연동 및 맞춤형 로직 개발을 통해 데이터의 단절 없는 흐름을 구현하고 각 기업에 최적화된 디지털 업무 환경을 제공합니다.',
+      'We create seamless data flows through flexible ERP interface integration and custom logic development, providing digital work environments optimized for each client.',
     body:
       '고객사가 사용 중인 ERP 시스템과의 유연한 인터페이스 연동을 통해 데이터의 단절 없는 흐름을 보장하며, 각 기업의 특수한 비즈니스 로직에 최적화된 맞춤형 솔루션을 개발합니다. 현장의 요구를 즉각적으로 반영하는 기술 유연성을 바탕으로 고객사별 최적화된 디지털 업무 환경을 구축하는 데 앞장서고 있습니다.',
     bodyEn:
-      '고객사가 사용 중인 ERP 시스템과의 유연한 인터페이스 연동을 통해 데이터의 단절 없는 흐름을 보장하며, 각 기업의 특수한 비즈니스 로직에 최적화된 맞춤형 솔루션을 개발합니다. 현장의 요구를 즉각적으로 반영하는 기술 유연성을 바탕으로 고객사별 최적화된 디지털 업무 환경을 구축하는 데 앞장서고 있습니다.',
+      'Through flexible interface integration with the ERP systems clients already use, we ensure uninterrupted data flow and develop tailored solutions optimized for each company’s business logic. With technical flexibility that responds quickly to field requirements, we build digital work environments optimized for each client.',
   },
   {
     category: 'IT',
     categoryEn: 'IT',
     title: 'IT 인프라 관리',
-    titleEn: 'IT 인프라 관리',
+    titleEn: 'IT Infrastructure Management',
     summary:
       '방대한 무역 데이터 수집·분석으로 비즈니스 인사이트를 제공하며, 강력한 보안 프로토콜과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 인프라를 운영합니다.',
     summaryEn:
-      '방대한 무역 데이터 수집·분석으로 비즈니스 인사이트를 제공하며, 강력한 보안 프로토콜과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 인프라를 운영합니다.',
+      'We collect and analyze large volumes of trade data for business insight while operating stable, always-on infrastructure through strong security protocols and rigorous network management.',
     body:
       '통관 과정에서 발생하는 방대한 데이터를 체계적으로 수집하고 정교하게 분석하여 비즈니스 통찰력을 제공하는 것은 물론, 강력한 보안 프로토콜을 기반으로 소중한 정보를 안전하게 보호합니다. 외부 협력사 및 유관 기관과의 유기적인 시스템 연동과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 IT 인프라를 유지하고 있습니다.',
     bodyEn:
-      '통관 과정에서 발생하는 방대한 데이터를 체계적으로 수집하고 정교하게 분석하여 비즈니스 통찰력을 제공하는 것은 물론, 강력한 보안 프로토콜을 기반으로 소중한 정보를 안전하게 보호합니다. 외부 협력사 및 유관 기관과의 유기적인 시스템 연동과 철저한 네트워크 관리를 통해 24시간 중단 없는 안정적인 IT 인프라를 유지하고 있습니다.',
+      'We systematically collect and analyze the large volume of data generated during customs clearance to provide business insight, while protecting valuable information through strong security protocols. Through organic system integration with external partners and related organizations and rigorous network management, we maintain stable IT infrastructure around the clock.',
   },
 ];
 

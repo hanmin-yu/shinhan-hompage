@@ -442,7 +442,7 @@ export function HeroSection() {
         <HeroBottomBlend />
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
-            <HeroTitle>신한관세법인</HeroTitle>
+            <HeroTitle>{t('신한관세법인', 'Shinhan Customs Service')}</HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>

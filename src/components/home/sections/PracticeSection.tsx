@@ -494,7 +494,7 @@ export function PracticeSection() {
           <CountPanel ref={ref}>
             <SectionTitleBlock>
               <SectionTitleGhost aria-hidden="true">PRACTICE AREAS</SectionTitleGhost>
-              <SectionTitle>업무 분야</SectionTitle>
+              <SectionTitle>{t('업무 분야', 'Practice Areas')}</SectionTitle>
             </SectionTitleBlock>
             <CountLine aria-label={t('100명 이상의 전문 인력', 'More than 100 professionals')}>
               <CountValue>

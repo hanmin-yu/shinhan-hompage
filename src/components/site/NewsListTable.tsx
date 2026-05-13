@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
+import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { palette } from '../home/homeStyles';
+import { downloadFileFromUrl } from '../../utils/downloadFile';
 
 export type NewsListTableAction = {
   label: string;
@@ -306,6 +308,14 @@ function renderAction(action: NewsListTableAction, key: string) {
       key={key}
       href={action.href}
       download={action.downloadFileName}
+      onClick={
+        action.downloadFileName && action.href
+          ? (event: MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              void downloadFileFromUrl(action.href!, action.downloadFileName!);
+            }
+          : undefined
+      }
       target={action.external ? '_blank' : undefined}
       rel={action.external ? 'noreferrer' : undefined}
       $variant={action.variant}

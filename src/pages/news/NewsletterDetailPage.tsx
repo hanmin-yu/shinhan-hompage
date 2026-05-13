@@ -7,7 +7,8 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecord, useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
-import { getNewsletterPdfFileName } from '../../utils/newsletter';
+import { getNewsletterDownloadFileName } from '../../utils/newsletter';
+import { downloadFileFromUrl } from '../../utils/downloadFile';
 import { NewsFlushPageSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
 
 type NewsletterManifest = {
@@ -266,7 +267,18 @@ export function NewsletterDetailPage() {
                     <DownloadLink
                       key={downloadItem.id}
                       href={downloadItem.downloadUrl}
-                      download={getNewsletterPdfFileName(t(downloadItem.title, downloadItem.titleEn))}
+                      download={
+                        downloadItem.downloadFileName ??
+                        getNewsletterDownloadFileName(downloadItem.downloadUrl, t(downloadItem.title, downloadItem.titleEn))
+                      }
+                      onClick={(event) => {
+                        const fileName =
+                          downloadItem.downloadFileName ??
+                          getNewsletterDownloadFileName(downloadItem.downloadUrl, t(downloadItem.title, downloadItem.titleEn));
+
+                        event.preventDefault();
+                        void downloadFileFromUrl(downloadItem.downloadUrl!, fileName);
+                      }}
                     >
                       {downloadItem.language === '영문' ? t('영문 PDF 다운로드', 'English PDF') : t('국문 PDF 다운로드', 'Korean PDF')}
                     </DownloadLink>

@@ -298,7 +298,7 @@ export function IssueReportSection() {
           <Head>
             <TitleBlock>
               <TitleGhost aria-hidden="true">TRADE INSIGHTS</TitleGhost>
-              <Title>무역 동향</Title>
+              <Title>{t('무역 동향', 'Trade Insights')}</Title>
             </TitleBlock>
             <ViewAll href="/news/issue-report">{t('무역 동향 전체보기', 'View all Trade Insights')}</ViewAll>
           </Head>

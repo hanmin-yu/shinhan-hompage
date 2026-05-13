@@ -646,7 +646,7 @@ export function OfficesSection() {
           <Copy>
             <SectionTitleBlock>
               <SectionTitleGhost aria-hidden="true">OFFICES</SectionTitleGhost>
-              <SectionTitle>사무소</SectionTitle>
+              <SectionTitle>{t('사무소', 'Offices')}</SectionTitle>
             </SectionTitleBlock>
             <CountLine ref={countRef} aria-label={t(`${visibleOffices.length}개 사무소`, `${visibleOffices.length} offices`)}>
               <Count key={officeCount} $counting={isCounting}>{officeCount}</Count>

@@ -22,7 +22,7 @@ export const fallbackIssueReports: IssueReport[] = [
     sourceEn: 'Korea Customs Brokers Association',
     publishedAt: '2026.04.24',
     title: '관세법인 설립 문턱 낮췄다…이인선 의원 ‘관세사법 개정안’ 본회의 통과',
-    titleEn: '관세법인 설립 문턱 낮췄다…이인선 의원 ‘관세사법 개정안’ 본회의 통과',
+    titleEn: 'Lower Barriers for Establishing Customs Corporations: Rep. Lee In-sun’s Customs Broker Act Amendment Passes Plenary Session',
     summary: '한국관세사회 언론 스크랩에서 수집한 외부 기사입니다.',
     summaryEn:
       'An external article collected from the Korea Customs Brokers Association news roundup.',
@@ -36,7 +36,7 @@ export const fallbackIssueReports: IssueReport[] = [
     sourceEn: 'Korea International Trade Association',
     publishedAt: '2026.04.27',
     title: '트럼프 "해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발"',
-    titleEn: '트럼프 "해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발"',
+    titleEn: 'Trump Says Maritime Blockade Is Effective: Iran Pipeline Could Face Internal Explosion in Three Days',
     summary: '한국무역협회 무역뉴스에서 수집한 기사입니다.',
     summaryEn:
       'An article collected from the KITA trade news feed.',

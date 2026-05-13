@@ -1,6 +1,6 @@
 import { newsletterItems, shinhanNewsItems } from '../data/newsStaticSeeds';
 import type { NewsletterRecord, ShinhanNewsDetail, ShinhanNewsRecord } from '../types/site';
-import { getNewsletterAssetSlug, getNewsletterPdfFileName, getNewsletterPdfUrl } from '../utils/newsletter';
+import { getNewsletterAssetSlug, getNewsletterDownloadFileName, getNewsletterPdfUrl } from '../utils/newsletter';
 import { sortShinhanNewsRecords } from '../utils/shinhanNews';
 
 function toShinhanNewsRecord(item: (typeof shinhanNewsItems)[number], detail?: ShinhanNewsDetail): ShinhanNewsRecord {
@@ -27,7 +27,7 @@ function buildNewsletterRecords(): NewsletterRecord[] {
     return {
       ...item,
       downloadUrl: getNewsletterPdfUrl(item.downloadHref, previewManifestUrl) ?? undefined,
-      downloadFileName: getNewsletterPdfFileName(item.title),
+      downloadFileName: getNewsletterDownloadFileName(getNewsletterPdfUrl(item.downloadHref, previewManifestUrl), item.title),
       status: 'published',
       previewManifestUrl,
       updatedAt: item.publishedAt,

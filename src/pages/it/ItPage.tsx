@@ -291,7 +291,7 @@ const ContactInitialMark = styled.div`
   letter-spacing: 0;
 `;
 
-const itContactNames = ['최대규', '홍성훈'];
+const itContactNames = ['홍성훈', '서인석'];
 
 export function ItPage() {
   const { t, tx } = useI18n();

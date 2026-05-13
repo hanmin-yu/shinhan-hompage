@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
+import { useI18n } from '../../i18n/useI18n';
 
 const MessageHero = styled(P.HeroSection)`
   margin-top: 0;
@@ -241,6 +242,7 @@ const LegacyName = styled.span`
 `;
 
 export function MessagePage() {
+  const { t } = useI18n();
   const aboutSubnav = sectionSubnav.about;
 
   return (
@@ -262,15 +264,21 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle>
             <MessageHeader>
-              <MessageTitle>세 명으로 시작한 신한의 약속</MessageTitle>
+              <MessageTitle>{t('세 명으로 시작한 신한의 약속', 'Shinhan’s Promise Began with Three People')}</MessageTitle>
             </MessageHeader>
 
             <BodyStack>
               <LeadBody>
-                1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.
+                {t(
+                  '1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.',
+                  'On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, was founded with three employees.',
+                )}
               </LeadBody>
               <MessageBody>
-                창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다. 현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.
+                {t(
+                  '창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다. 현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
+                  'Since its founding, Shinhan Customs Service has grown together with Korea’s economy and trade. Today, more than 100 professionals provide the services clients need through branches in seven major Korean cities including key ports of entry, a 3PL logistics company operating bonded warehouses, and customs logistics entities in Los Angeles and Hanoi.',
+                )}
               </MessageBody>
             </BodyStack>
           </MessageArticle>
@@ -283,23 +291,32 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle $reverse>
             <MessageHeader>
-              <MessageTitle>100년의 역사를 향해 계속 나아갑니다</MessageTitle>
+              <MessageTitle>{t('100년의 역사를 향해 계속 나아갑니다', 'Moving Forward Toward a 100-Year History')}</MessageTitle>
             </MessageHeader>
 
             <BodyStack>
               <LeadBody>
-                1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.
+                {t(
+                  '1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.',
+                  'Since our founding in 1965, we have worked every day and every year to provide fast and accurate import/export clearance services.',
+                )}
               </LeadBody>
               <MessageBody>
-                또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 역사를 향해서 계속 나아가겠습니다.
+                {t(
+                  '또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 역사를 향해서 계속 나아가겠습니다.',
+                  'To contribute to our clients’ growth, we have expanded into corporate audit advisory, administrative dispute representation, AEO, FTA, refund and requirements consulting, and 3PL logistics. Shinhan Customs Service will continue moving forward toward a 100-year history without slowing its steady progress.',
+                )}
               </MessageBody>
               <MessageBody>
-                함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다. 고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.
+                {t(
+                  '함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다. 고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.',
+                  'We sincerely thank all clients and partners who have walked with us. Remembering that our clients’ success and growth are our own, every member of Shinhan will continue striving today and tomorrow to provide sincere, refined, and outstanding service.',
+                )}
               </MessageBody>
             </BodyStack>
 
             <Closing>
-              <Thanks>감사합니다.</Thanks>
+              <Thanks>{t('감사합니다.', 'Thank you.')}</Thanks>
             </Closing>
           </MessageArticle>
 

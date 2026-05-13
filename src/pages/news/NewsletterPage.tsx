@@ -8,7 +8,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
-import { getNewsletterPdfFileName } from '../../utils/newsletter';
+import { getNewsletterDownloadFileName } from '../../utils/newsletter';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
@@ -74,7 +74,7 @@ export function NewsletterPage() {
                 {
                   label: t('다운로드', 'Download'),
                   href: item.downloadUrl,
-                  downloadFileName: getNewsletterPdfFileName(t(item.title, item.titleEn)),
+                  downloadFileName: item.downloadFileName ?? getNewsletterDownloadFileName(item.downloadUrl, t(item.title, item.titleEn)),
                 },
               ]
             : []),
