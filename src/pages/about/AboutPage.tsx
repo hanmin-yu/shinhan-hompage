@@ -612,7 +612,7 @@ const Slogan = styled.p`
   margin: 0 auto;
   padding-bottom: 30px;
   color: #0058a8;
-  font-size: clamp(2.42rem, 5vw, 5.5rem);
+  font-size: clamp(1.86rem, 3.8vw, 4.08rem);
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -0.055em;

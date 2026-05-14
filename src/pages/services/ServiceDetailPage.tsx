@@ -1562,7 +1562,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
   const renderProcessDiagram = (items: string[], sectionHeading = '') => {
     const isCustomsAuditFocus = isCustomsAuditPage && sectionHeading === '주요 조사 분야';
-    const isForeignExchangeService = isForeignExchangePage && sectionHeading === '주요 서비스 상세 설명';
+    const isForeignExchangeService = isForeignExchangePage && sectionHeading === '주요 서비스';
     const isAcvaBenefits = isAcvaPage && sectionHeading === 'ACVA 이점';
     const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스 상세 설명';
     const isUsFdaCoreService = isUsFdaPage && sectionHeading.includes('핵심 서비스');
@@ -1571,7 +1571,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       const accents = importExportFlowAccents;
       const boardTitle = isImportExportPage
         ? sectionHeading === '주요 서비스 상세 설명'
-          ? t('수출입 통관 운영 특장점', 'Import & Export Clearance Strengths')
+          ? t('주요 서비스', 'Key Services')
           : t(sectionHeading, sectionHeading)
         : t(sectionHeading, sectionHeading);
 

@@ -643,8 +643,8 @@ const sharedResources = [
 
 const importExportSections: ServiceDetailSection[] = [
   {
-    heading: '주요 서비스 상세 설명',
-    headingEn: 'Detailed Key Services',
+    heading: '주요 서비스',
+    headingEn: 'Key Services',
     list: [
       'HS CODE 마스터 관리 시스템 -> 품목 정보를 표준화하고 신고 오류를 사전에 차단합니다.',
       'RMS 기반 리스크 관리 -> 단계별 업무 체크로 휴먼에러를 최소화합니다.',
@@ -724,8 +724,8 @@ const customsAuditContacts: ServiceContactPoint[] = [
 
 const foreignExchangeSections: ServiceDetailSection[] = [
   {
-    heading: '주요 서비스 상세 설명',
-    headingEn: 'Detailed Key Services',
+    heading: '주요 서비스',
+    headingEn: 'Key Services',
     body: [
       '외환검사 관련 다양한 컨설팅 업무 수행 경험을 바탕으로 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.',
       '검사 기간 현장 대응부터 자료 검토까지 일체의 서비스를 지원하며, 단순한 업무 대리가 아닌 검사 결과에 따른 고객사의 법적 리스크를 최소화하기 위한 대응 방안을 전략적으로 설계합니다.',

@@ -43,7 +43,7 @@ const SecondaryTabs = styled.nav`
   flex: 1 1 auto;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   min-width: 0;
   width: 100%;
 
@@ -68,13 +68,13 @@ const SecondaryLink = styled(Link)<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 18px;
+  min-height: 52px;
+  padding: 0 28px;
   border: 1px solid ${({ $active }) => ($active ? '#121c2b' : '#d5dbe4')};
   background: ${({ $active }) => ($active ? '#121c2b' : '#ffffff')};
   color: ${({ $active }) => ($active ? '#ffffff' : '#4f5661')};
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.94rem;
+  font-weight: 800;
   letter-spacing: 0;
   white-space: nowrap;
   word-break: keep-all;
@@ -95,13 +95,13 @@ const SecondaryLink = styled(Link)<{ $active: boolean }>`
 
   @media (max-width: 760px) {
     flex: 0 0 auto;
-    min-height: 36px;
-    padding: 0 14px;
+    min-height: 42px;
+    padding: 0 18px;
     border-color: ${({ $active }) => ($active ? '#123f85' : '#d9e0eb')};
     border-radius: 999px;
     background: ${({ $active }) => ($active ? '#123f85' : '#ffffff')};
     color: ${({ $active }) => ($active ? '#ffffff' : '#526071')};
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     font-weight: 800;
   }
 `;

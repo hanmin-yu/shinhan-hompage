@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run dev:full",
+    "dev": "npm run dev:web",
     "dev:web": "vite --host --port 4173",
     "dev:api": "tsx watch server/news-admin-api.ts",
     "dev:full": "concurrently -k -n web,api \"npm run dev:web\" \"npm run dev:api\"",
