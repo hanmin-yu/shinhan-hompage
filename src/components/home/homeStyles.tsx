@@ -1382,7 +1382,7 @@ export const MegaMenuKicker = styled.span`
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 900;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
 `;
 
 export const MegaMenuTitle = styled.strong`
@@ -2360,7 +2360,7 @@ export const HeroKicker = styled.span`
   gap: 12px;
   color: rgba(209, 226, 252, 0.88);
   font-size: 0.98rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 
   &::before {
@@ -2757,7 +2757,7 @@ export const PracticeShowcaseEyebrow = styled.span`
   color: #8ea0bb;
   font-size: 0.92rem;
   font-weight: 800;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 
   &::before {
@@ -3056,7 +3056,7 @@ export const LandingLabel = styled.span`
   color: #b6b6b6;
   font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 0.36em;
+  letter-spacing: 0.08em;
 
   &::after {
     content: '';

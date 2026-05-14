@@ -97,7 +97,6 @@ export function EthicsReportPage() {
 
           <ReportGrid>
             <GuidePanel>
-              <E.Eyebrow>{t('운영 방침', 'Operating Policy')}</E.Eyebrow>
               <PanelTitle>{t('운영 방침', 'Operating Policy')}</PanelTitle>
 
               <NoticeText>
@@ -137,7 +136,6 @@ export function EthicsReportPage() {
 
             <OnlinePanel>
               <OnlineHeader>
-                <E.Eyebrow>{t('온라인 접수', 'Online Report')}</E.Eyebrow>
                 <PanelTitle>{t('온라인으로 접수하기', 'Submit Online')}</PanelTitle>
                 <OnlineText>
                   {t(
@@ -644,7 +642,7 @@ const ModalEyebrow = styled.span`
   color: #1f5cb2;
   font-size: 0.74rem;
   font-weight: 900;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 

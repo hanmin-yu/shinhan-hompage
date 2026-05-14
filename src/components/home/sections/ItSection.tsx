@@ -42,7 +42,7 @@ const ItemCategory = styled.span`
   color: #52647c;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 

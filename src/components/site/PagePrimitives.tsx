@@ -194,11 +194,11 @@ export const HeroVisual = styled.div`
 
 export const Kicker = styled.span`
   display: block;
-  margin-left: clamp(12px, 1.2vw, 22px);
+  margin-left: clamp(4px, 0.5vw, 8px);
   color: var(--page-kicker-color, ${palette.blue});
   font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   line-height: 1.35;
   text-transform: uppercase;
   text-shadow: var(--page-text-shadow, none);

@@ -80,7 +80,7 @@ const FeaturedYear = styled.span`
   color: rgba(230, 242, 255, 0.82);
   font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 
@@ -213,7 +213,7 @@ const HistoryKicker = styled.span`
   color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 

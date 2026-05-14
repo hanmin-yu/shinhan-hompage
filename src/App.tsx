@@ -8,7 +8,6 @@ import * as S from './components/home/homeStyles';
 import { useRevealOnScroll } from './hooks/useRevealOnScroll';
 import { SiteLanguageProvider } from './i18n/useI18n';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
-import { AdminNewsPage } from './pages/admin/AdminNewsPage';
 import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
 import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
 import { AboutPage } from './pages/about/AboutPage';
@@ -158,9 +157,9 @@ function AppShell() {
               <Route path="/news/seminar" element={<SeminarPage />} />
               <Route path="/news/blog" element={<BlogPage />} />
 
-              <Route path="/admin" element={<Navigate to="/admin/news" replace />} />
+              <Route path="/admin" element={<Navigate to="/admin/news/shinhan-news" replace />} />
               <Route path="/admin/login" element={<AdminLoginPage />} />
-              <Route path="/admin/news" element={<AdminNewsPage />} />
+              <Route path="/admin/news" element={<Navigate to="/admin/news/shinhan-news" replace />} />
               <Route path="/admin/news/shinhan-news" element={<AdminShinhanNewsPage />} />
               <Route path="/admin/news/newsletter" element={<AdminNewsletterPage />} />
 

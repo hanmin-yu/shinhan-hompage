@@ -213,31 +213,37 @@ const LegacyText = styled.p`
   }
 `;
 
+const LegacyMark = styled.img`
+  width: clamp(42px, 4.4vw, 62px);
+  height: auto;
+  align-self: center;
+`;
+
 const LegacyEstablished = styled.span`
   color: #0067bd;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.22rem;
+  font-size: 1.04rem;
   font-style: italic;
   font-weight: 700;
 
   @media (max-width: 640px) {
-    font-size: 1.02rem;
+    font-size: 0.92rem;
   }
 `;
 
 const LegacyName = styled.span`
   color: #123f85;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 3.34rem;
+  font-size: 2.72rem;
   font-weight: 700;
   letter-spacing: 0;
 
   @media (max-width: 980px) {
-    font-size: 2.62rem;
+    font-size: 2.12rem;
   }
 
   @media (max-width: 640px) {
-    font-size: 1.72rem;
+    font-size: 1.42rem;
   }
 `;
 
@@ -356,6 +362,7 @@ export function MessagePage() {
         <LegacyBand data-reveal>
           <LegacyStatement>
             <LegacyText>
+              <LegacyMark src="/brand-mark-shinhan.png" alt="" aria-hidden="true" />
               <LegacyEstablished>Established 1965</LegacyEstablished>
               <LegacyName>SHINHAN Customs Service Inc.</LegacyName>
             </LegacyText>

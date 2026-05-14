@@ -51,11 +51,11 @@ const HeroHeading = styled.div`
 
 const HeroEyebrow = styled.span`
   display: block;
-  margin-left: clamp(14px, 1.4vw, 24px);
+  margin-left: clamp(4px, 0.5vw, 8px);
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   line-height: 1.35;
   text-transform: uppercase;
 `;
@@ -155,7 +155,7 @@ const SectionLabel = styled.span`
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 
@@ -346,15 +346,17 @@ const FlowTerm = styled.strong`
   font-size: clamp(1.02rem, 1.35vw, 1.18rem);
   font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
   word-break: keep-all;
+  text-wrap: balance;
 `;
 
 const FlowDescription = styled.span`
   color: var(--flow-muted);
-  font-size: 0.84rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.58;
   word-break: keep-all;
+  text-wrap: pretty;
 `;
 
 const RefundFlow = styled.div<{ $showConnector?: boolean }>`
@@ -400,7 +402,7 @@ const RefundKicker = styled.span`
   color: ${palette.blue};
   font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 
@@ -738,9 +740,9 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
   position: relative;
   display: grid;
   align-content: start;
-  gap: 12px;
+  gap: 14px;
   min-height: 188px;
-  padding: 58px 22px 24px;
+  padding: 58px 20px 24px;
   border: ${({ $tone = 'solid' }) => ($tone === 'plain' ? '1px solid #cbdcf0' : '0')};
   border-radius: 22px 22px 10px 10px;
   background: ${({ $tone = 'solid', $accent }) =>
@@ -776,19 +778,21 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
 `;
 
 const StageCardTitle = styled.strong`
-  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  font-size: clamp(0.98rem, 1.08vw, 1.08rem);
   font-weight: 800;
   line-height: 1.34;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   word-break: keep-all;
+  text-wrap: balance;
 `;
 
 const StageCardText = styled.span`
   color: inherit;
   opacity: 0.72;
-  font-size: 0.82rem;
-  line-height: 1.56;
+  font-size: 0.8rem;
+  line-height: 1.62;
   word-break: keep-all;
+  text-wrap: pretty;
 `;
 
 const MetricBoard = styled.div<{ $tone?: 'dark' | 'plain' }>`

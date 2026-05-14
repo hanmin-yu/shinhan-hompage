@@ -12,6 +12,20 @@ type LoginPayload = {
   password?: string;
 };
 
+async function readJsonResponse<T>(response: Response) {
+  const rawBody = await response.text();
+
+  if (!rawBody.trim()) {
+    throw new Error('관리자 API 응답이 비어 있습니다. 로컬에서는 `npm run dev`로 웹과 관리자 API를 함께 실행해주세요.');
+  }
+
+  try {
+    return JSON.parse(rawBody) as T;
+  } catch {
+    throw new Error('관리자 API 응답 형식이 올바르지 않습니다. 관리자 API 서버 또는 프록시 설정을 확인해주세요.');
+  }
+}
+
 function createFallbackSession(): AdminSession {
   const mode = resolveNewsAdminMode();
 
@@ -40,7 +54,7 @@ export function useAdminSession() {
         throw new Error(`Failed to load admin session: ${response.status}`);
       }
 
-      const payload = (await response.json()) as SessionResponse;
+      const payload = await readJsonResponse<SessionResponse>(response);
       setSession({
         mode: payload.mode,
         isAuthenticated: payload.isAuthenticated,
@@ -72,7 +86,7 @@ export function useAdminSession() {
       }),
     });
 
-    const payload = (await response.json()) as SessionResponse;
+    const payload = await readJsonResponse<SessionResponse>(response);
 
     if (!response.ok) {
       throw new Error(payload.message ?? '관리자 로그인에 실패했습니다.');

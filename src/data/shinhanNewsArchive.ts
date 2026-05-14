@@ -5,7 +5,7 @@ export const shinhanNewsArchive: ShinhanNewsItem[] = [
   {
     id: "shinhan-news-flash-407",
     category: "flash",
-    categoryLabel: "공지",
+    categoryLabel: "FLASH",
     title: "신한 Family 소개",
     summary: "신한 Family 소개",
     publishedAt: "2021.11.16",
@@ -13,7 +13,7 @@ export const shinhanNewsArchive: ShinhanNewsItem[] = [
   {
     id: "shinhan-news-flash-406",
     category: "flash",
-    categoryLabel: "공지",
+    categoryLabel: "FLASH",
     title: "신한관세법인 소개",
     summary: "신한관세법인 소개",
     publishedAt: "2021.11.16",

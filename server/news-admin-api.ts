@@ -36,7 +36,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'admin1234';
 const SESSION_SECRET = process.env.SESSION_SECRET ?? 'local-news-admin-secret';
 const COOKIE_NAME = 'shinhan_news_admin_session';
 
-const STORAGE_ROOT = path.resolve(process.cwd(), 'storage/managed-content');
+const STORAGE_ROOT = resolveManagedContentRoot();
 const SHINHAN_NEWS_ROOT = path.join(STORAGE_ROOT, 'news/shinhan-news');
 const SHINHAN_NEWS_INDEX_PATH = path.join(SHINHAN_NEWS_ROOT, 'index.json');
 const SHINHAN_NEWS_ITEMS_ROOT = path.join(SHINHAN_NEWS_ROOT, 'items');
@@ -178,6 +178,25 @@ function clearSessionCookie(response: Response) {
   response.setHeader('Set-Cookie', `${COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`);
 }
 
+function resolveManagedContentRoot() {
+  const configuredRoot = process.env.MANAGED_CONTENT_ROOT?.trim();
+
+  if (configuredRoot) {
+    return path.resolve(configuredRoot);
+  }
+
+  return path.resolve(process.cwd(), 'storage/managed-content');
+}
+
+function createOpaqueId(prefix: string) {
+  return `${prefix}-${randomUUID()}`;
+}
+
+function createOpaqueFileName(originalName: string | undefined, fallbackExtension: string) {
+  const extension = originalName ? path.extname(path.basename(originalName)).toLowerCase() : '';
+  return `${randomUUID()}${extension || fallbackExtension}`;
+}
+
 function sanitizeId(value: string, prefix: string) {
   const normalized = value
     .trim()
@@ -188,8 +207,42 @@ function sanitizeId(value: string, prefix: string) {
   return normalized || `${prefix}-${randomUUID()}`;
 }
 
+function resolveRecordId(value: string | null | undefined, prefix: string) {
+  const trimmed = value?.trim();
+  return trimmed ? sanitizeId(trimmed, prefix) : createOpaqueId(prefix);
+}
+
 function sortByPublishedDate<T extends { publishedAt: string }>(items: T[]) {
   return [...items].sort((left, right) => right.publishedAt.localeCompare(left.publishedAt));
+}
+
+function padDatePart(value: number | string) {
+  return String(value).padStart(2, '0');
+}
+
+function getTodayDateLabel() {
+  const now = new Date();
+  return `${now.getFullYear()}.${padDatePart(now.getMonth() + 1)}.${padDatePart(now.getDate())}`;
+}
+
+function getCurrentIssueLabel() {
+  const now = new Date();
+  return `${now.getFullYear()}.${padDatePart(now.getMonth() + 1)}`;
+}
+
+function inferNewsletterMetadata(fileName?: string) {
+  const baseName = fileName ? path.basename(fileName).replace(/\.[^.]+$/i, '').trim() : '';
+  const issueMatch =
+    baseName.match(/(20\d{2})\s*[년._-]?\s*(1[0-2]|0?[1-9])\s*월?/i) ??
+    baseName.match(/(20\d{2})\s*[-._]\s*(1[0-2]|0?[1-9])/i);
+  const issue = issueMatch ? `${issueMatch[1]}.${padDatePart(issueMatch[2])}` : getCurrentIssueLabel();
+
+  return {
+    issue,
+    publishedAt: issue ? `${issue}.01` : getTodayDateLabel(),
+    title: baseName || '신한관세법인 소식지',
+    summary: `${issue} 신한관세법인 소식지`,
+  };
 }
 
 function toPublicUrl(...segments: string[]) {
@@ -309,13 +362,13 @@ async function unzipPreview(buffer: Buffer, destinationDir: string) {
 }
 
 async function saveShinhanNewsRecord(payload: Partial<ShinhanNewsRecord> & { title: string; summary: string; publishedAt: string; bodyHtml?: string }) {
-  const newsId = sanitizeId(payload.id ?? payload.title, 'news');
-  const bodyFile = `${newsId}.html`;
+  const newsId = resolveRecordId(payload.id, 'news');
   const existingIndex = (await readStoredShinhanNewsIndex()) ?? staticShinhanNewsRecords.map(({ bodyHtml, ...item }) => ({
     ...item,
     bodyFile: undefined,
   }));
   const existing = existingIndex.find((item) => item.id === newsId) ?? null;
+  const bodyFile = existing?.bodyFile ?? createOpaqueFileName(undefined, '.html');
   const nextRecord: StoredShinhanNewsIndexEntry = {
     id: newsId,
     category: payload.category === 'seminar' ? 'seminar' : 'flash',
@@ -362,14 +415,18 @@ async function saveNewsletterRecord(
   fields: Record<string, string | undefined>,
   files: Partial<Record<'originalFile' | 'previewZip', Express.Multer.File[]>>,
 ) {
-  const newsletterId = sanitizeId(fields.id ?? fields.title ?? fields.issue ?? randomUUID(), 'newsletter');
+  const newsletterId = resolveRecordId(fields.id, 'newsletter');
   const existingItems = (await readStoredNewsletterIndex()) ?? staticNewsletterRecords;
   const existing = existingItems.find((item) => item.id === newsletterId) ?? null;
   const originalFile = files.originalFile?.[0];
   const previewZip = files.previewZip?.[0];
 
-  if (!existing && (!originalFile || !previewZip)) {
-    throw new Error('새 소식지는 원본 파일과 preview ZIP이 모두 필요합니다.');
+  if (!existing && !originalFile) {
+    throw new Error('새 소식지는 PDF 파일이 필요합니다.');
+  }
+
+  if (originalFile && path.extname(originalFile.originalname).toLowerCase() !== '.pdf') {
+    throw new Error('소식지는 PDF 파일만 업로드할 수 있습니다.');
   }
 
   const itemRoot = path.join(NEWSLETTER_FILES_ROOT, newsletterId);
@@ -385,12 +442,18 @@ async function saveNewsletterRecord(
     await fs.rm(originalRoot, { recursive: true, force: true });
     await fs.mkdir(originalRoot, { recursive: true });
 
-    const safeName = path.basename(originalFile.originalname);
-    const outputPath = path.join(originalRoot, safeName);
+    const originalDownloadName = path.basename(originalFile.originalname);
+    const storedFileName = createOpaqueFileName(originalFile.originalname, '.pdf');
+    const outputPath = path.join(originalRoot, storedFileName);
     await fs.writeFile(outputPath, originalFile.buffer);
 
-    downloadFileName = safeName;
-    downloadUrl = toPublicUrl('managed-content', 'news', 'newsletter', 'files', newsletterId, 'original', safeName);
+    downloadFileName = originalDownloadName;
+    downloadUrl = toPublicUrl('managed-content', 'news', 'newsletter', 'files', newsletterId, 'original', storedFileName);
+
+    if (!previewZip) {
+      previewManifestUrl = null;
+      previewImages = undefined;
+    }
   }
 
   if (previewZip) {
@@ -406,17 +469,22 @@ async function saveNewsletterRecord(
     previewImages = manifest.images;
   }
 
+  const inferred = inferNewsletterMetadata(originalFile?.originalname ?? existing?.downloadFileName ?? existing?.title);
+  const nextIssue = (fields.issue ?? existing?.issue ?? inferred.issue).trim();
+  const nextTitle = (fields.title ?? existing?.title ?? inferred.title).trim();
+  const nextSummary = (fields.summary ?? existing?.summary ?? inferred.summary).trim();
+
   const nextRecord: StoredNewsletterIndexEntry = {
     id: newsletterId,
-    issue: (fields.issue ?? existing?.issue ?? '').trim(),
-    title: (fields.title ?? existing?.title ?? '').trim(),
-    titleEn: (fields.titleEn ?? fields.title ?? existing?.titleEn ?? existing?.title ?? '').trim(),
-    summary: (fields.summary ?? existing?.summary ?? '').trim(),
-    summaryEn: (fields.summaryEn ?? fields.summary ?? existing?.summaryEn ?? existing?.summary ?? '').trim(),
-    publishedAt: (fields.publishedAt ?? existing?.publishedAt ?? '').trim(),
-    href: existing?.href ?? `/news/newsletter/${newsletterId}`,
-    language: (fields.language ?? existing?.language ?? '').trim() || undefined,
-    languageEn: (fields.languageEn ?? existing?.languageEn ?? '').trim() || undefined,
+    issue: nextIssue,
+    title: nextTitle,
+    titleEn: (fields.titleEn ?? fields.title ?? existing?.titleEn ?? existing?.title ?? nextTitle).trim(),
+    summary: nextSummary,
+    summaryEn: (fields.summaryEn ?? fields.summary ?? existing?.summaryEn ?? existing?.summary ?? nextSummary).trim(),
+    publishedAt: (fields.publishedAt ?? existing?.publishedAt ?? inferred.publishedAt).trim(),
+    href: `/news/newsletter/${newsletterId}`,
+    language: (fields.language ?? existing?.language ?? '국문').trim() || undefined,
+    languageEn: (fields.languageEn ?? existing?.languageEn ?? 'Korean').trim() || undefined,
     downloadHref: downloadUrl,
     downloadUrl,
     previewManifestUrl,

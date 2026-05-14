@@ -25,6 +25,7 @@ import {
   AdminPanel,
   AdminReadonlyBanner,
   AdminSelect,
+  AdminSectionTitle,
   AdminSplitGrid,
   AdminSubnav,
   AdminSubnavLink,
@@ -249,7 +250,6 @@ export function AdminShinhanNewsPage() {
           </AdminTopRow>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin/news">{t('대시보드', 'Dashboard')}</AdminSubnavLink>
             <AdminSubnavLink to="/admin/news/shinhan-news" $active>
               {t('신한 NEWS', 'Shinhan NEWS')}
             </AdminSubnavLink>
@@ -268,7 +268,7 @@ export function AdminShinhanNewsPage() {
           <AdminSplitGrid>
             <AdminPanel>
               <P.Kicker>Archive</P.Kicker>
-              <P.SectionTitle>{t('현재 기사 목록', 'Current Articles')}</P.SectionTitle>
+              <AdminSectionTitle>{t('현재 기사 목록', 'Current Articles')}</AdminSectionTitle>
               <AdminMuted>{t('실제 저장소 또는 데모 fallback 데이터에서 불러온 기사 목록입니다.', 'This list is loaded from the actual storage or the demo fallback data.')}</AdminMuted>
               {dataLoading ? <P.CardText>{t('기사 목록을 불러오는 중입니다.', 'Loading articles.')}</P.CardText> : null}
               {!dataLoading ? (
@@ -298,7 +298,7 @@ export function AdminShinhanNewsPage() {
 
             <AdminPanel>
               <P.Kicker>Editor</P.Kicker>
-              <P.SectionTitle>{t('기사 작성 폼', 'Article Form')}</P.SectionTitle>
+              <AdminSectionTitle>{t('기사 작성 폼', 'Article Form')}</AdminSectionTitle>
               <AdminForm>
                 <AdminFieldGrid>
                   <AdminField>

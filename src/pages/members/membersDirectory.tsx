@@ -64,7 +64,7 @@ const CategoryEyebrow = styled.span`
   color: #6b7890;
   font-size: 0.72rem;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 

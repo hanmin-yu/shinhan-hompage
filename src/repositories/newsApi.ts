@@ -16,7 +16,7 @@ type NewsListResponse<T> = {
 const API_TIMEOUT_MS = 800;
 
 function isEnabledMode() {
-  return import.meta.env.VITE_NEWS_ADMIN_MODE === 'enabled' && resolveNewsAdminMode() === 'enabled';
+  return resolveNewsAdminMode() === 'enabled';
 }
 
 function mergeRecordsById<T extends { id: string }>(baseItems: T[], overrideItems: T[]) {

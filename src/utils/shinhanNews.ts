@@ -5,7 +5,7 @@ type ShinhanNewsSortable = Pick<ShinhanNewsItem, 'categoryLabel' | 'publishedAt'
 type ShinhanNewsLabeled = Pick<ShinhanNewsItem, 'category' | 'categoryLabel'>;
 type ShinhanNewsVisible = Pick<ShinhanNewsItem, 'id'>;
 
-const hiddenStaticShinhanNewsIds = new Set(['shinhan-news-flash-407', 'shinhan-news-flash-406']);
+const hiddenStaticShinhanNewsIds = new Set<string>();
 
 export function isShinhanNewsNotice(item: ShinhanNewsNoticeLike) {
   return item.categoryLabel === '공지';

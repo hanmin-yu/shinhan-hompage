@@ -26,11 +26,11 @@ const HeroHeading = styled.div`
 
 const HeroEyebrow = styled.span`
   display: block;
-  margin-left: clamp(14px, 1.4vw, 24px);
+  margin-left: clamp(4px, 0.5vw, 8px);
   color: #52647c;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   line-height: 1.35;
   text-transform: uppercase;
 `;
@@ -61,7 +61,7 @@ const SectionLabel = styled.span`
   color: #52647c;
   font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 `;
 

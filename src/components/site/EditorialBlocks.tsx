@@ -35,11 +35,11 @@ export const TwoColumn = styled(P.PageContainer)`
 
 export const Eyebrow = styled.span<{ $light?: boolean }>`
   display: block;
-  margin: 0 0 10px clamp(14px, 1.4vw, 24px);
+  margin: 0 0 10px clamp(4px, 0.5vw, 8px);
   color: ${({ $light }) => ($light ? 'rgba(221, 232, 247, 0.72)' : palette.blue)};
   font-size: 0.76rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   line-height: 1.35;
   text-transform: uppercase;
 `;
