@@ -37,17 +37,8 @@ const Item = styled.article`
   }
 `;
 
-const ItemCategory = styled.span`
-  display: block;
-  color: #52647c;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
 const ItemTitle = styled.h4`
-  margin: 10px 0 0;
+  margin: 0;
   color: ${S.palette.blue};
   font-size: clamp(1.1rem, 1.7vw, 1.36rem);
   font-weight: 900;
@@ -115,7 +106,6 @@ export function ItSection() {
           {itServices.map((item) => (
             <Item key={item.title}>
               <div>
-                <ItemCategory>{t(item.category, item.categoryEn)}</ItemCategory>
                 <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
               </div>
               <ItemContent>

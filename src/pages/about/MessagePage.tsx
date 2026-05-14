@@ -5,6 +5,8 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useI18n } from '../../i18n/useI18n';
 
+const shinhanNavy = '#123f85';
+
 const MessageHero = styled(P.HeroSection)`
   margin-top: 0;
   min-height: auto;
@@ -208,7 +210,7 @@ const LegacyText = styled.p`
     bottom: 0;
     width: clamp(92px, 11vw, 170px);
     height: 2px;
-    background: #0058a8;
+    background: ${shinhanNavy};
     transform: translateX(-50%);
   }
 `;
@@ -220,7 +222,7 @@ const LegacyMark = styled.img`
 `;
 
 const LegacyEstablished = styled.span`
-  color: #0067bd;
+  color: ${shinhanNavy};
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.04rem;
   font-style: italic;
@@ -232,7 +234,7 @@ const LegacyEstablished = styled.span`
 `;
 
 const LegacyName = styled.span`
-  color: #123f85;
+  color: ${shinhanNavy};
   font-family: 'Times New Roman', Times, serif;
   font-size: 2.72rem;
   font-weight: 700;
@@ -362,7 +364,7 @@ export function MessagePage() {
         <LegacyBand data-reveal>
           <LegacyStatement>
             <LegacyText>
-              <LegacyMark src="/brand-mark-shinhan.png" alt="" aria-hidden="true" />
+              <LegacyMark src="/brand-mark-shinhan-navy.png" alt="" aria-hidden="true" />
               <LegacyEstablished>Established 1965</LegacyEstablished>
               <LegacyName>SHINHAN Customs Service Inc.</LegacyName>
             </LegacyText>
