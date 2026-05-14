@@ -7,7 +7,7 @@ import * as S from '../homeStyles';
 
 const Section = styled.section`
   position: relative;
-  padding: clamp(72px, 8vw, 118px) 0;
+  padding: 0 0 clamp(72px, 8vw, 118px);
   background: #ffffff;
 `;
 

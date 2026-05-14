@@ -10,7 +10,7 @@ import { useI18n } from '../../i18n/useI18n';
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  padding: clamp(72px, 8vw, 118px) 0;
+  padding: clamp(72px, 8vw, 118px) 0 clamp(34px, 5vw, 64px);
   background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
 `;
 
@@ -21,10 +21,12 @@ const HeroStatement = styled(P.PageContainer)`
 `;
 
 const HeroEyebrow = styled.span`
+  display: block;
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.2em;
+  line-height: 1;
   text-transform: uppercase;
 `;
 
@@ -37,8 +39,10 @@ const HeroTitle = styled.h1`
   line-height: 1.08;
   letter-spacing: -0.045em;
   text-wrap: balance;
+  word-break: keep-all;
 
   @media (max-width: 640px) {
+    font-size: clamp(2.08rem, 12vw, 3.18rem);
     letter-spacing: -0.035em;
   }
 `;
@@ -46,6 +50,13 @@ const HeroTitle = styled.h1`
 const IntroStack = styled.div`
   display: grid;
   gap: clamp(24px, 3.6vw, 44px);
+`;
+
+const IntroHeading = styled.div`
+  display: grid;
+  gap: clamp(10px, 1.4vw, 16px);
+  justify-items: start;
+  min-width: 0;
 `;
 
 const OneLineSummary = styled.p`
@@ -305,10 +316,10 @@ export function ItPage() {
       <EditorialSection>
         <HeroStatement data-reveal>
           <IntroStack>
-            <div>
+            <IntroHeading>
               <HeroEyebrow>IT Service</HeroEyebrow>
               <HeroTitle>{t(itOverview.title, itOverview.titleEn)}</HeroTitle>
-            </div>
+            </IntroHeading>
             <OneLineSummary>{t(itOverview.summary, itOverview.summaryEn)}</OneLineSummary>
             <OverviewBlock>
               <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>
