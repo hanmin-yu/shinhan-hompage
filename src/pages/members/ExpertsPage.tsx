@@ -76,12 +76,12 @@ const expertCategoryHighlights: Partial<Record<ExpertCategory, Record<string, st
   환급: {
     김학현: [
       '수출용 원재료 등에 대한 관세환급',
-      '원산지 사후검증 대응 및 원산지 사후관리 시스템 컨설팅',
+      '원산지 사후 검증 대응 및 사후관리 시스템 컨설팅',
       '환급 및 FTA 교육',
     ],
     김유진: [
       '수출용 원재료 등에 대한 관세환급',
-      'FTA 원산지 판정 특혜 및 비특혜 원산지증명서 발급',
+      'FTA 원산지 판정, 특혜 및 비특혜 CO 발급',
       '품목분류 사전심사',
     ],
   },
@@ -143,9 +143,9 @@ const expertCategoryHighlights: Partial<Record<ExpertCategory, Record<string, st
   },
   물류: {
     김유경: [
-      '신한 인비스타 운영 프로세스 및 인적 자원 총괄',
+      '신한 인비스타 운영 및 인력 관리 총괄',
+      '보세 및 내국물류 통합관리와 법규준수 시스템 구축',
       '3PL 운영 효율화 및 서비스 품질 관리',
-      '보세·내국 물류 통합 거버넌스 및 컴플라이언스 구축',
     ],
     권민성: ['화물 운송 관리', '보세 및 내국 화물 분리 보관', '보수작업 및 폐기 대행'],
     이미경: ['화물 운송 관리', '고객사 물품 입출고 관리', '내국화물 3PL 대행업무'],
@@ -164,14 +164,12 @@ const expertCategoryHighlights: Partial<Record<ExpertCategory, Record<string, st
   },
   '미국 FDA': {
     김다혜: [
-      '미국 수출입 제품 통관 적합성 사전검토 및 FDA 규제 대응 컨설팅',
-      '미국 식품·건강기능식품·화장품·펫푸드 수출 규정 및 Prop 65 컨설팅',
-      'Amazon SPN 인증 분야 담당',
+      '미국 수출입 제품 통관 적합성 사전검토',
+      'FDA 규제 대응 및 Prop 65 컨설팅',
     ],
     엄동규: [
-      '미국 수출입 제품 통관 적합성 사전검토 및 FDA 규제 대응 컨설팅',
-      '미국 식품·건강기능식품·화장품·펫푸드 수출 규정 및 Prop 65 컨설팅',
-      'Amazon SPN 인증 분야 담당',
+      '미국 수출입 제품 통관 적합성 사전검토',
+      'FDA 규제 대응 및 Prop 65 컨설팅',
     ],
   },
   IT: {
@@ -248,9 +246,6 @@ export function ExpertsPage() {
             <ActiveCategoryText>
               <ActiveCategoryTitle>{tx(activeCategory)}</ActiveCategoryTitle>
             </ActiveCategoryText>
-            <ActiveCategoryCount>
-              {t(`${filteredMembers.length}명의 전문가`, `${filteredMembers.length} Experts`)}
-            </ActiveCategoryCount>
           </ActiveCategoryHeader>
 
           <ProfessionalCardGrid
@@ -265,7 +260,7 @@ export function ExpertsPage() {
 
 const ActiveCategoryHeader = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 14px 24px;
   width: min(100%, 1240px);
@@ -291,23 +286,4 @@ const ActiveCategoryTitle = styled.h2`
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.035em;
-`;
-
-const ActiveCategoryCount = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid rgba(18, 63, 133, 0.12);
-  border-radius: 999px;
-  background: #ffffff;
-  color: #123f85;
-  font-size: 0.88rem;
-  font-weight: 900;
-  box-shadow: 0 10px 22px rgba(13, 35, 66, 0.06);
-
-  @media (max-width: 640px) {
-    justify-self: start;
-  }
 `;

@@ -264,20 +264,31 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle>
             <MessageHeader>
-              <MessageTitle>{t('세 명으로 시작한 신한의 약속', 'Shinhan’s Promise Began with Three People')}</MessageTitle>
+              <MessageTitle>
+                {t(
+                  '60년의 신뢰를 넘어, 100년의 가치를 완성하는 파트너십',
+                  'Beyond 60 Years of Trust, a Partnership Completing 100 Years of Value',
+                )}
+              </MessageTitle>
             </MessageHeader>
 
             <BodyStack>
               <LeadBody>
                 {t(
-                  '1965년 3월 22일 신한관세법인의 전신인 서울통관사는 3명의 직원으로 창립하였습니다.',
-                  'On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, was founded with three employees.',
+                  '세 명의 신념으로 시작된 신한의 약속',
+                  'Shinhan’s Promise Began with the Conviction of Three People',
                 )}
               </LeadBody>
               <MessageBody>
                 {t(
-                  '창립 이후 신한관세법인은 대한민국의 경제 및 무역의 발전과 더불어 꾸준히 성장하여 왔습니다. 현재는 주요 입항지를 비롯한 전국 7개 도시의 지사와 보세창고를 운영하는 3PL 물류회사, 그리고 미국 Los Angeles와 베트남 Hanoi에 소재한 관세물류법인에서 100여명의 직원들이 고객 여러분께 필요한 모든 서비스를 제공하고 있습니다.',
-                  'Since its founding, Shinhan Customs Service has grown together with Korea’s economy and trade. Today, more than 100 professionals provide the services clients need through branches in seven major Korean cities including key ports of entry, a 3PL logistics company operating bonded warehouses, and customs logistics entities in Los Angeles and Hanoi.',
+                  "1965년 3월 22일, 단 세 명의 구성원으로 시작한 신한관세법인의 전신 '서울통관사'는 지난 60년간 대한민국 경제 및 무역 발전과 더불어 꾸준히 성장해 왔습니다.",
+                  "On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, began with just three members and has grown steadily alongside Korea's economic and trade development over the past 60 years.",
+                )}
+              </MessageBody>
+              <MessageBody>
+                {t(
+                  '척박했던 환경에서 시작된 고객을 향한 진심 어린 약속은 오늘날 전국 7개 주요 거점 지사와 보세창고 기반의 3PL 물류 시스템, 그리고 미국 로스앤젤레스와 베트남 하노이를 잇는 글로벌 네트워크까지 다양한 서비스를 제공하고 있습니다.',
+                  'A sincere promise to clients that began in challenging conditions has grown into a broad service network today, including seven key branch offices across Korea, a bonded-warehouse-based 3PL logistics system, and global connections spanning Los Angeles and Hanoi.',
                 )}
               </MessageBody>
             </BodyStack>
@@ -291,26 +302,43 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle $reverse>
             <MessageHeader>
-              <MessageTitle>{t('100년의 역사를 향해 계속 나아갑니다', 'Moving Forward Toward a 100-Year History')}</MessageTitle>
+              <MessageTitle>
+                {t(
+                  '고객의 성공과 함께하는 글로벌 무역의 동반자',
+                  'A Global Trade Partner Growing with Our Clients’ Success',
+                )}
+              </MessageTitle>
             </MessageHeader>
 
             <BodyStack>
-              <LeadBody>
-                {t(
-                  '1965년 창립 이래로 매일 매해 신속하고 정확한 수출입통관서비스를 제공하기 위하여 최선을 다하였습니다.',
-                  'Since our founding in 1965, we have worked every day and every year to provide fast and accurate import/export clearance services.',
-                )}
-              </LeadBody>
               <MessageBody>
                 {t(
-                  '또한 고객사의 발전에 기여하고자 기업심사자문 · 행정쟁송대리, AEO · FTA · 환급 · 요건 컨설팅 · PL 물류 등의 서비스도 추가해왔습니다. 신한관세법인은 이렇게 꾸준히 앞서가는 노력의 발걸음을 멈추지 않고 100년의 역사를 향해서 계속 나아가겠습니다.',
-                  'To contribute to our clients’ growth, we have expanded into corporate audit advisory, administrative dispute representation, AEO, FTA, refund and requirements consulting, and 3PL logistics. Shinhan Customs Service will continue moving forward toward a 100-year history without slowing its steady progress.',
+                  '신한관세법인은 신속하고 정확한 통관 서비스를 넘어, 급변하는 글로벌 통상 환경 속에서 고객이 직면한 복합적인 과제에 최적의 해법을 제시합니다.',
+                  'Beyond fast and accurate customs clearance, Shinhan Customs Service provides optimal solutions for the complex challenges clients face in a rapidly changing global trade environment.',
                 )}
               </MessageBody>
               <MessageBody>
                 {t(
-                  '함께하며 도움을 주신 모든 고객여러분과 협력사 여러분께 감사의 말씀을 드립니다. 고객의 성공과 발전이 우리의 성공임을 모든 임직원은 가슴에 새기며 진실하고 품격있는 최고의 서비스를 제공해 드리기 위해 오늘도 내일도 지속적으로 노력해 나가겠습니다.',
-                  'We sincerely thank all clients and partners who have walked with us. Remembering that our clients’ success and growth are our own, every member of Shinhan will continue striving today and tomorrow to provide sincere, refined, and outstanding service.',
+                  '우리는 관세 조사 및 외환 검사 대응, 조세 불복 대리와 같은 전략적 리스크 관리는 물론, AEO 인증, FTA 활용 전략, 관세 환급 및 수출입 요건 컨설팅에 이르기까지 비즈니스 전 과정의 전문성을 심화하고 있습니다.',
+                  'We continue to deepen our expertise across the entire business process, from strategic risk management such as customs audit and foreign exchange inspection response and tax appeal representation to AEO certification, FTA utilization strategy, customs refunds, and import/export requirements consulting.',
+                )}
+              </MessageBody>
+              <MessageBody>
+                {t(
+                  '이를 통해 고객사가 글로벌 시장에서 압도적인 경쟁력을 확보하고 비즈니스 가치를 극대화할 수 있도록 전력을 다합니다.',
+                  'Through this, we devote ourselves to helping our clients secure strong competitiveness in the global market and maximize business value.',
+                )}
+              </MessageBody>
+              <MessageBody>
+                {t(
+                  '우리는 과거의 성과에 안주하지 않습니다. 신한관세법인의 모든 임직원은 ‘고객의 성공이 곧 우리의 성공’이라는 철학을 공유하며, 60년의 신뢰를 바탕으로 100년의 역사를 완성하기 위해 멈추지 않고 정진하겠습니다.',
+                  'We do not rest on past achievements. Every member of Shinhan Customs Service shares the philosophy that our clients’ success is our success, and we will continue moving forward to complete a 100-year history built on 60 years of trust.',
+                )}
+              </MessageBody>
+              <MessageBody>
+                {t(
+                  '지금까지 신한과 함께해주신 고객사와 협력사 여러분께 깊은 감사를 표하며, 앞으로도 진실하고 품격 있는 최고의 서비스로 귀사의 든든한 무역 전진기지가 될 것을 약속드립니다.',
+                  'We express our deep gratitude to the clients and partners who have been with Shinhan, and we promise to remain your dependable trade base with sincere, refined, and outstanding service.',
                 )}
               </MessageBody>
             </BodyStack>

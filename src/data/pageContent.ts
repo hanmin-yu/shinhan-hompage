@@ -658,7 +658,7 @@ const importExportSections: ServiceDetailSection[] = [
     heading: 'iOOM 플랫폼이란?',
     headingEn: 'About iOOM Platform',
     body: [
-      'iOOM 플랫폼은 파편화되어 있는 수출입 통관 데이터를 한곳에 모아 관리하는 웹 기반 통합 솔루션입니다.',
+      'iOOM 플랫폼은 분산되어있는 수출입 통관 데이터를 한곳에 모아 관리하는 웹 기반 통합 솔루션입니다.',
       '별도의 시스템 설치 없이, 로그인만으로 선적 서류 등록부터 실시간 신고 현황, 비용 정산, 통계 분석까지 전 과정을 투명하게 관리할 수 있습니다.',
     ],
   },
@@ -703,15 +703,16 @@ const customsAuditSections: ServiceDetailSection[] = [
   {
     heading: '주요 조사 분야',
     headingEn: 'Primary Audit Focus Areas',
-    body: ['관세평가, 품목분류, 관세환급, 감면, 외국환거래, 통관요건, 보세화물 관리 등 주요 조사 분야를 포함한 전 분야 업무를 지원합니다.'],
+    body: ['과세가격, 품목분류, 관세환급, 감면, 외국환거래, 통관요건, 보세화물 관리 등 주요 조사 분야를 포함한 전 분야 업무를 지원합니다.'],
     list: [
-      '관세평가: 거래가격과 가산·공제 요소의 적정성을 점검합니다.',
+      '과세가격: 거래가격과 가산·공제 요소의 적정성을 점검합니다.',
       '품목분류: HS CODE 정합성과 세율 적용 리스크를 검토합니다.',
       '관세환급: 환급 산정과 증빙 적정성을 확인합니다.',
       '감면: 감면 요건 충족 여부와 사후관리 리스크를 점검합니다.',
       '외국환거래: 지급 구조와 신고 의무 위반 가능성을 검토합니다.',
       '통관요건: 인증·허가·표시 기준 등 수입 요건을 점검합니다.',
       '보세화물 관리: 보세구역 반출입과 재고 관리 적정성을 확인합니다.',
+      '기타: 기타 통관, 외환거래 및 수출입 물품과 관련한 관련 법령 위반 사항을 검토합니다.',
     ],
   },
 ];
@@ -726,7 +727,7 @@ const foreignExchangeSections: ServiceDetailSection[] = [
     heading: '주요 서비스 상세 설명',
     headingEn: 'Detailed Key Services',
     body: [
-      '외환조사 및 심사 관련 다양한 컨설팅 업무 수행 경험을 보유한 전담팀이 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.',
+      '외환검사 관련 다양한 컨설팅 업무 수행 경험을 바탕으로 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.',
       '검사 기간 현장 대응부터 자료 검토까지 일체의 서비스를 지원하며, 단순한 업무 대리가 아닌 검사 결과에 따른 고객사의 법적 리스크를 최소화하기 위한 대응 방안을 전략적으로 설계합니다.',
     ],
     list: [
@@ -735,6 +736,24 @@ const foreignExchangeSections: ServiceDetailSection[] = [
       '외환검사 결과에 따른 사후조치 컨설팅: 과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.',
       '외국환거래법 관련 법률 자문: 외국환거래법상 쟁점과 신고·보고 의무를 검토합니다.',
       '외국환거래법 실무 교육: 실무자가 주요 외환 규정과 내부 관리 포인트를 이해하도록 교육합니다.',
+    ],
+  },
+  {
+    heading: '정기 외환검사 대응',
+    headingEn: 'Periodic Foreign Exchange Inspection Response',
+    body: [
+      '2025년 1월부터 외국환거래에 대한 정기검사 제도가 본격 시행됨에 따라, 일정 규모 이상의 기업은 정기적인 외환검사 대상이 될 수 있습니다.',
+      '특히 수출입 거래와 연계된 외환거래에 대해 거래 구조, 지급 방식, 신고 적정성 등을 종합적으로 점검하는 방향으로 관리가 강화되고 있습니다.',
+      '당사는 기업의 외환거래 구조와 수출입 데이터를 종합적으로 분석하여 정기 외환검사에 대비한 사전 점검 및 대응 서비스를 제공합니다.',
+    ],
+    list: [
+      '수입대금 지급 및 영수 적정성',
+      '제3자 지급·상계·상호계산 등 특수거래 신고 여부',
+      '장기미결제 및 지급기간 준수 여부',
+      '수출입 신고자료와 외환송금 자료 간 정합성',
+      '해외법인 및 특수관계자 거래 구조',
+      '지급수단 및 결제조건 신고 적정성',
+      '무상거래·대체거래 처리 적정성',
     ],
   },
 ];
@@ -748,7 +767,7 @@ const customsAuditImages: ServiceDocumentImage[] = [
   {
     src: '/services/docs/customs-audit/image1.png',
     alt: '관세조사 주요 조사 분야',
-    caption: '관세평가, 품목분류, 관세환급, 감면, 외국환거래, 통관요건, 보세화물 관리 등 관세조사 주요 쟁점을 한눈에 보여주는 자료입니다.',
+    caption: '과세가격, 품목분류, 관세환급, 감면, 외국환거래, 통관요건, 보세화물 관리 등 관세조사 주요 쟁점을 한눈에 보여주는 자료입니다.',
   },
 ];
 
@@ -772,15 +791,6 @@ const penaltyInvestigationSections: ServiceDetailSection[] = [
       '통고처분 불이행(벌금이나 추징금 미납) 시 검찰로 송치됩니다.',
       '검찰은 수사 후 기소 여부를 결정합니다.',
       '처분 결과는 불기소처분, 공판기소, 약식기소로 이어질 수 있으며, 공판기소 시 정식 재판과 판결 확정, 약식기소 시 약식명령 송달과 벌금 납부 또는 정식 재판 청구로 연결됩니다.',
-    ],
-  },
-  {
-    heading: '업무범위',
-    headingEn: 'Scope of Work',
-    list: [
-      '관세법 / 대외무역법 / 외국환거래법 / 지식재산권 위반 조사 대응',
-      '입회 및 의견진술서 작성 대행',
-      '행정쟁송 대행',
     ],
   },
 ];
@@ -877,7 +887,7 @@ const usFdaSections: ServiceDetailSection[] = [
   {
     heading: '2. 지원 카테고리',
     headingEn: 'Supported Categories',
-    list: ['화장품', '식품/건강기능식품', '반려동물 식품', 'OTC Drug'],
+    list: ['화장품', '식품/건강기능식품', '반려동물 식품', '일반의약품'],
   },
   {
     heading: '3. 세부 검토 및 리스크 제어',
@@ -921,11 +931,11 @@ const acvaSections: ServiceDetailSection[] = [
     headingEn: 'ACVA Process',
     steps: [
       '사전상담: 필요 시 사전상담을 신청할 수 있습니다.',
-      '사전심사 신청: 특수관계자간 수입물품 가격결정 근거자료 등을 제출합니다.',
-      '사전심사: 심사기간은 1년입니다.',
+      '사전심사 신청접수: 특수관계자간 수입물품 가격결정 근거자료 등을 제출합니다.',
+      '사전심사: 심사기간은 약 1년입니다.',
       '심사결과 통보: 신청인은 심사결과 동의 여부를 의사표시합니다.',
       '사전 심사서 배부: 유효기간은 3년이며 2년 연장이 가능합니다.',
-      '연례보고서 제출',
+      '연례보고서 제출: 매년 연례보고서를 제출합니다.',
     ],
   },
   {
@@ -938,16 +948,6 @@ const acvaSections: ServiceDetailSection[] = [
       '기업 신뢰성 및 경영안정 제고: 수입물품 과세가격에 대한 과세관청의 신뢰를 확보하고 조세마찰을 최소화함으로써 경영 안정성을 높일 수 있습니다.',
     ],
   },
-  {
-    heading: '업무 범위',
-    headingEn: 'Scope of Work',
-    list: [
-      '특수관계가 거래가격에 영향을 미쳤는지 여부',
-      '신청 과세가격 결정방법의 타당성 여부',
-      '가산 또는 공제요소 해당 여부',
-      '과세가격 적정성 여부',
-    ],
-  },
 ];
 
 const taxAppealSections: ServiceDetailSection[] = [
@@ -956,7 +956,7 @@ const taxAppealSections: ServiceDetailSection[] = [
     headingEn: 'Scope of Work',
     list: [
       '과세전적부심사청구 대리: 과세 전 단계에서 처분의 위법·부당성을 검토하고 의견 제출을 지원합니다.',
-      '이의신청·심사청구·심판청구 대리: 단계별 불복 절차에 맞춰 주장 구조와 제출 자료를 정리합니다.',
+      '이의신청·심사청구·심판청구 대리: 단계별 청구서류와 제출 자료를 정리합니다.',
       '조세불복 자료 준비 지원: 법령, 유권해석, 판례 등을 철저하게 분석하고 정확한 사실관계 분석을 통해 고객사의 승소 가능성을 검토합니다.',
       '행정소송 수행 자문: 소송 단계의 쟁점 정리와 법무법인 협업을 통한 대응 전략 수립을 지원합니다.',
       '사후 대응방안 컨설팅: 조세불복 절차 이후 발생하는 사후 업무에 대해 대응방안을 제시합니다.',
@@ -1007,7 +1007,7 @@ const aeoSections: ServiceDetailSection[] = [
     heading: '개요',
     headingEn: 'Overview',
     body: [
-      '글로벌 관세 규제가 급변하는 환경 속에서, 전 세계 무역 안전을 위한 글로벌 약속인 AEO는 다변화된 통관 리스크를 선제적으로 차단하고 기업의 비즈니스 연속성을 보장하는 강력한 안전장치입니다.',
+      '수출입안전관리우수업체(AEO: Authorized Economic Operator)는 수출입화물의 이동과 관련된 업체 중 관세청에서 신뢰성과 안전성을 공인한 우수업체를 의미합니다.',
       '신한은 관세업계 최초로 AEO 공인을 획득한 이후 제도 도입 초기부터 현재까지 다양한 산업군의 고객사를 대상으로 수준 높은 컨설팅을 제공해 왔습니다.',
       '단순한 인증 획득에 그치지 않고 효율성 추구와 AEO 역량 내재화를 원칙으로 삼아, 실효성 있는 AEO 체계가 조직 내에 안정적으로 정착되도록 지원합니다.',
     ],
@@ -1060,7 +1060,7 @@ const ftaSections: ServiceDetailSection[] = [
     headingEn: 'Types of Origin Management',
     body: [
       '원산지는 물품의 "경제적 국적"을 규정하는 기준입니다. 이는 단순히 물품의 생산지를 확인하는 것을 넘어, 국제 무역에서 적용되는 세율과 각종 수입 규제의 향방을 결정하는 핵심 지표입니다.',
-      '기업은 일반 원산지 규정을 통해 무역 질서를 준수하고, FTA 원산지 규정을 활용하여 실질적인 관세 절감 및 가격 경쟁력을 확보해야 합니다.',
+      '기업은 일반 원산지 규정을 통해 무역 질서를 준수하고, FTA 원산지 규정을 활용하여 실질적인 관세 절감 및 가격 경쟁력을 확보합니다.',
     ],
     list: [
       '특혜 원산지 관리: 자유무역협정(FTA) 체결국 간의 특혜 관세 혜택을 향유하기 위한 종합 관리 절차로, 수출 물품의 원산지 판정과 수입 시 원산지 증빙 서류의 적정성 관리가 핵심입니다.',
@@ -1083,7 +1083,7 @@ const ftaSections: ServiceDetailSection[] = [
       '원산지 증명서 발급 및 인증 수출자 컨설팅: 원산지 증명서 발급 지원과 품목별·업체별 인증 수출자 취득·유지 컨설팅',
       '수입 물품 자율점검 및 원산지 조사 대응: 협정관세 정합성 의심 및 조사 시 원산지 충족 여부 소명과 방어',
       '수출 물품 원산지 검증 대응: 미국, 유럽, 아세안 등 주요 수입국 세관의 검증 요청에 대한 전략적 입증 자료 작성과 직접 대응',
-      '원산지 시스템 및 DB 구축: 기업 맞춤형 자체 FTA 시스템 설계·구축과 전 세계 98개 이상의 FTA 협정·관세율 정보 기반 Best Option 솔루션 제공',
+      '원산지 시스템 및 DB 구축: 기업 맞춤형 자체 FTA 시스템 설계·구축과 전 세계 98개 이상의 FTA 협정·관세율 정보 기반 최적의 솔루션 제공',
     ],
   },
 ];
@@ -1101,8 +1101,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '수출입 통관 및 환급',
     groupTitleEn: 'Import/Export Clearance & Refund',
     title: '수출입 통관',
-    summary: '복잡한 수출입 통관, 분야별 통관 전문가가 빠르고 정확하게 해결합니다.',
-    subtitle: '복잡한 수출입 통관 업무, 이제 iOOM(이음) 하나로 다 연결됩니다.',
+    summary: '수출입통관 업무 신한관세법인의 플랫폼(iOOM:이음)으로 모두 연결됩니다.',
+    subtitle: '수출입통관 업무 신한관세법인의 플랫폼(iOOM:이음)으로 모두 연결됩니다.',
     heroImage: '/hero/service-import-export-ai.png',
     heroImageAlt: '수출입 통관 서비스',
     overview:
@@ -1135,10 +1135,10 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '검역/요건',
     groupTitleEn: 'Quarantine / Requirements',
     title: '검역·요건',
-    summary: '정확한 법령 검토와 실무 중심의 대응으로 검역 및 수출입 요건에 대한 정확한 해결책을 제공합니다.',
+    summary: '풍부한 노하우를 바탕으로 한 법령 검토를 통해 검역 및 수출입요건에 대한 정확한 해결책을 제공합니다.',
     heroImage: '/hero/service-quarantine-requirements-ai.png',
     heroImageAlt: '검역 및 요건 서비스',
-    subtitle: '정확한 법령 검토와 실무 중심의 대응으로 검역 및 수출입 요건에 대한 정확한 해결책을 제공합니다.',
+    subtitle: '풍부한 노하우를 바탕으로 한 법령 검토를 통해 검역 및 수출입요건에 대한 정확한 해결책을 제공합니다.',
     overview:
       '국내 반입 및 유통에 앞서 관계 법령상 검역, 신고, 인증, 허가, 표시 기준 적합 여부를 검토하고 품목별 특성에 맞는 행정 절차를 지원하여 수입 단계에서 발생 가능한 지연과 보완·반송·폐기 리스크를 사전에 차단합니다.',
     scope: [
@@ -1225,12 +1225,12 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '컨설팅',
     groupTitleEn: 'Consulting',
     title: 'AEO 컨설팅',
-    summary: '관세업계 최초로 AEO 공인을 획득한 경험을 토대로 AEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.',
-    subtitle: '관세업계 최초로 AEO 공인을 획득한 경험을 토대로\nAEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.',
+    summary: '관세법인 최초로 AEO 공인을 획득, AEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.',
+    subtitle: '관세법인 최초로 AEO 공인을 획득, AEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.',
     heroImage: '/hero/service-aeo-ai.png',
     heroImageAlt: 'AEO 컨설팅',
     overview:
-      '글로벌 관세 규제가 급변하는 환경 속에서, 전 세계 무역 안전을 위한 글로벌 약속인 AEO는 다변화된 통관 리스크를 선제적으로 차단하고 기업의 비즈니스 연속성을 보장하는 강력한 안전장치입니다. 신한은 관세업계 최초로 AEO 공인을 획득한 이후 제도 도입 초기부터 현재까지 다양한 산업군의 고객사를 대상으로 수준 높은 컨설팅을 제공해 왔습니다. 단순한 인증 획득에 그치지 않고, 효율성 추구와 AEO 역량 내재화를 원칙으로 삼아 실효성 있는 AEO 체계가 조직 내에 안정적으로 정착되도록 지원합니다.',
+      '수출입안전관리우수업체(AEO: Authorized Economic Operator)는 수출입화물의 이동과 관련된 업체 중 관세청에서 신뢰성과 안전성을 공인한 우수업체를 의미합니다. 신한은 관세법인 최초로 AEO 공인을 획득한 이후 제도 도입 초기부터 현재까지 다양한 산업군의 고객사를 대상으로 수준 높은 컨설팅을 제공해 왔습니다. 단순한 인증 획득에 그치지 않고, 효율성 추구와 AEO 역량 내재화를 원칙으로 삼아 실효성 있는 AEO 체계가 조직 내에 안정적으로 정착되도록 지원합니다.',
     scope: [
       'AEO 신규 인증 및 갱신심사 컨설팅',
       'AEO 사후관리 및 세관 보고 의무 지원',
@@ -1251,8 +1251,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '컨설팅',
     groupTitleEn: 'Consulting',
     title: '관세조사',
-    summary: '치밀한 사전 리스크 분석과 입체적인 대응 전략으로 관세조사의 불확실성을 제거합니다.',
-    subtitle: '치밀한 사전 리스크 분석과 입체적인 대응 전략으로 관세조사의 불확실성을 제거합니다.',
+    summary: '고객사의 무역 거래에 맞춘 리스크 분석과 적법한 대응 전략으로 관세조사의 불확실성을 최소화합니다.',
+    subtitle: '고객사의 무역 거래에 맞춘 리스크 분석과 적법한 대응 전략으로 관세조사의 불확실성을 최소화합니다.',
     heroImage: '/hero/service-customs-audit-ai.png',
     heroImageAlt: '관세조사 대응',
     overview:
@@ -1292,8 +1292,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '컨설팅',
     groupTitleEn: 'Consulting',
     title: 'ACVA',
-    summary: 'ACVA 컨설팅은 특수관계자간 과세가격의 안정성을 제공하고 관세 리스크를 줄이는 데 초점을 둡니다.',
-    subtitle: 'ACVA 컨설팅은 특수관계자간 과세가격의 안정성을 제공하고\n관세 리스크를 줄이는 데 초점을 둡니다.',
+    summary: '특수관계자간 거래가격사전심사(ACVA, Advanced Customs Valuation Arrangement) 승인을 위한 컨설팅을 제공합니다.',
+    subtitle: '특수관계자간 거래가격사전심사(ACVA, Advanced Customs Valuation Arrangement) 승인을 위한 컨설팅을 제공합니다.',
     heroImage: '/hero/service-acva-ai.png',
     heroImageAlt: 'ACVA 컨설팅',
     overview:
@@ -1317,8 +1317,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '컨설팅',
     groupTitleEn: 'Consulting',
     title: '범칙조사',
-    summary: '법무법인과의 협업을 통해 조사 대응부터 형사 리스크 관리까지 전 과정을 아우르는 통합 솔루션을 제공합니다.',
-    subtitle: '법무법인과의 협업을 통해 조사 대응부터 형사 리스크 관리까지\n전 과정을 아우르는 통합 솔루션을 제공합니다.',
+    summary: '세관조사 대응부터 형사 리스크 관리까지 통합 솔루션을 제공합니다.',
+    subtitle: '세관조사 대응부터 형사 리스크 관리까지 통합 솔루션을 제공합니다.',
     heroImage: '/hero/service-penalty-investigation-ai.png',
     heroImageAlt: '범칙조사 대응',
     overview:
@@ -1363,8 +1363,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '수출입 통관 및 환급',
     groupTitleEn: 'Import/Export Clearance & Refund',
     title: '환급',
-    summary: '환급 전담팀의 컨설팅을 통해 과다·과소 환급 RISK를 제거합니다.',
-    subtitle: '환급 전담팀의 컨설팅을 통해 과다·과소 환급 RISK를 제거합니다.',
+    summary: '수출용 원재료 및 관세법에 따른 환급 대상을 정확히 판단하여 안정적인 환급업무를 지원합니다.',
+    subtitle: '수출용 원재료 및 관세법에 따른 환급 대상을 정확히 판단하여 안정적인 환급업무를 지원합니다.',
     heroImage: '/hero/service-refund-ai.png',
     heroImageAlt: '관세 환급 서비스',
     overview:
@@ -1397,8 +1397,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '물류',
     groupTitleEn: 'Logistics',
     title: '물류',
-    summary: '국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리, 3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다.',
-    subtitle: '국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리,\n3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다.',
+    summary: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 한 흐름으로 연결하여 물류서비스를 통합 지원합니다.',
+    subtitle: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 한 흐름으로 연결하여 물류서비스를 통합 지원합니다.',
     heroImage: '/hero/service-logistics-ai.png',
     heroImageAlt: '물류 서비스',
     overview:
@@ -1485,9 +1485,9 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '미국 FDA',
     groupTitleEn: 'US FDA',
     title: '미국 FDA',
-    summary: '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
+    summary: '건강기능식품, 각종 식품, 반려동물 식품, 화장품, 일반의약품까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
     subtitle:
-      '식품, 건강기능식품, 화장품, 반려동물 식품, OTC Drug까지\n품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
+      '건강기능식품, 각종 식품, 반려동물 식품, 화장품, 일반의약품까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.',
     heroImage: '/hero/service-us-fda-ai.png',
     heroImageAlt: '미국 FDA 대응 서비스',
     overview:

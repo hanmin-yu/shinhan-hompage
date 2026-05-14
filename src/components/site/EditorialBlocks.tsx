@@ -35,11 +35,12 @@ export const TwoColumn = styled(P.PageContainer)`
 
 export const Eyebrow = styled.span<{ $light?: boolean }>`
   display: block;
-  margin: 0 0 10px 6px;
+  margin: 0 0 10px clamp(14px, 1.4vw, 24px);
   color: ${({ $light }) => ($light ? 'rgba(221, 232, 247, 0.72)' : palette.blue)};
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.18em;
+  line-height: 1.35;
   text-transform: uppercase;
 `;
 
@@ -86,6 +87,9 @@ export const Lead = styled.p<{ $light?: boolean }>`
   color: ${({ $light }) => ($light ? 'rgba(230, 238, 250, 0.84)' : '#4d5a6c')};
   font-size: clamp(1.04rem, 1.25vw, 1.16rem);
   line-height: 1.78;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
 `;
 
 export const Body = styled.p<{ $light?: boolean }>`

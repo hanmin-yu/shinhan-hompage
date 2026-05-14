@@ -182,8 +182,8 @@ export function OfficesPage() {
     <>
       <EditorialPageHeader
         config={sectionSubnav.about}
-        title="사무소"
-        titleEn="Offices"
+        title="관계사 안내"
+        titleEn="Affiliates"
         heroImage="/hero/menu-about-offices-ai.png"
         heroPosition="center 50%"
       />
@@ -375,10 +375,10 @@ const OfficePageTitle = styled.h1`
   max-width: 1160px;
   margin: 0;
   color: #172337;
-  font-size: clamp(2.42rem, 4.9vw, 4.6rem);
+  font-size: clamp(2.08rem, 3.7vw, 3.72rem);
   font-weight: 800;
   line-height: 1.08;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.015em;
   text-wrap: balance;
 `;
 

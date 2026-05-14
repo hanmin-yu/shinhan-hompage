@@ -37,6 +37,7 @@ export const wordSafeWrap = css`
   word-break: keep-all;
   overflow-wrap: normal;
   line-break: auto;
+  text-wrap: pretty;
 `;
 
 export const longTokenWrap = css`
@@ -440,7 +441,7 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
       box-shadow: 0 6px 18px rgba(23, 159, 150, 0.22);
     }
 
-    a[href='/contact'] {
+    a[data-header-contact='true'] {
       border-color: transparent;
       background: transparent;
       color: #ffffff;
@@ -522,8 +523,8 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
       box-shadow: none;
     }
 
-    &:has(nav > div:hover) a[href='/contact'],
-    &:has(nav > div:focus-within) a[href='/contact'] {
+    &:has(nav > div:hover) a[data-header-contact='true'],
+    &:has(nav > div:focus-within) a[data-header-contact='true'] {
       border-color: transparent;
       background: transparent;
       color: ${palette.blue};
@@ -1507,6 +1508,97 @@ export const HeaderTools = styled.div`
   }
 `;
 
+export const HeaderContactGroup = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: 100%;
+    height: 14px;
+  }
+
+  &:hover > div,
+  &:focus-within > div {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  @media (max-width: 1180px) {
+    display: none;
+  }
+`;
+
+export const HeaderContactMenu = styled.div`
+  position: absolute;
+  top: calc(100% + 11px);
+  left: 50%;
+  z-index: 12030;
+  min-width: 188px;
+  padding: 8px;
+  border: 1px solid rgba(213, 222, 235, 0.96);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 22px 46px rgba(7, 26, 55, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease,
+    transform 0.18s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid rgba(213, 222, 235, 0.96);
+    border-top: 1px solid rgba(213, 222, 235, 0.96);
+    background: rgba(255, 255, 255, 0.98);
+    transform: translateX(-50%) rotate(45deg);
+  }
+`;
+
+export const HeaderContactMenuLink = styled(Link)`
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  color: #263d5a;
+  font-size: 0.9rem;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  word-break: keep-all;
+
+  && {
+    color: #263d5a;
+    background: transparent;
+    text-shadow: none;
+    box-shadow: none;
+  }
+
+  &&:hover,
+  &&:focus-visible {
+    color: ${palette.blue};
+    background: #f3f7fc;
+    outline: none;
+  }
+`;
+
 export const HeaderUtilityLinks = styled.div`
   display: flex;
   align-items: center;
@@ -1759,10 +1851,6 @@ export const ContactButton = styled(Link)`
 
   &:hover::after {
     transform: translateX(3px) rotate(-45deg);
-  }
-
-  @media (max-width: 1180px) {
-    display: none;
   }
 
   @media (max-width: 1320px) {

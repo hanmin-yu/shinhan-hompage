@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import type { FormEvent } from 'react';
+import { useState } from 'react';
 
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
@@ -7,9 +9,8 @@ import { utilitySubnav } from '../../config/utilitySubnav';
 import { siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
 
-const ethicsContactEmail = siteContact.email;
+const ethicsContactEmail = 'compliance@shcs.kr';
 const ethicsContactPhone = siteContact.phone;
-const ethicsCodeUrl = 'https://krcaa.or.kr/_Document/Member/M60709L.aspx?MenuCode=M60706';
 
 const reportSubjects = [
   { ko: '리베이트, 금품·향응 수수', en: 'Rebates, gifts, or entertainment' },
@@ -17,8 +18,48 @@ const reportSubjects = [
   { ko: '이해상충, 기타 윤리 위반 사항', en: 'Conflicts of interest or other ethics concerns' },
 ];
 
+const ethicsCodeItems = [
+  {
+    ko: '우리는 근면과 성실한 자세로써 봉사정신을 드높인다.',
+    en: 'We uphold a spirit of service with diligence and sincerity.',
+  },
+  {
+    ko: '우리는 건전한 통관질서를 확립함으로써 관세행정 발전에 기여한다.',
+    en: 'We contribute to the development of customs administration by establishing sound clearance order.',
+  },
+  {
+    ko: '우리는 회원 상호간의 인화단결과 품위를 향상함으로써 직업윤리를 함양하고 명랑한 사회풍토를 조성한다.',
+    en: 'We cultivate professional ethics and a sound social climate by promoting harmony, unity, and dignity among members.',
+  },
+];
+
 export function EthicsReportPage() {
   const { t } = useI18n();
+  const [isEthicsModalOpen, setIsEthicsModalOpen] = useState(false);
+
+  const handleReportSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const category = String(formData.get('category') ?? '').trim();
+    const name = String(formData.get('name') ?? '').trim();
+    const contact = String(formData.get('contact') ?? '').trim();
+    const title = String(formData.get('title') ?? '').trim();
+    const message = String(formData.get('message') ?? '').trim();
+    const subject = `[부정행위 접수] ${title || category || '제보'}`;
+    const body = [
+      '부정행위 접수 내용',
+      '',
+      `접수 유형: ${category || '-'}`,
+      `이름: ${name || '-'}`,
+      `연락처: ${contact || '-'}`,
+      '',
+      '접수 내용:',
+      message || '-',
+    ].join('\n');
+
+    window.location.href = `mailto:${ethicsContactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   return (
     <>
@@ -26,8 +67,10 @@ export function EthicsReportPage() {
         config={utilitySubnav}
         title="부정행위 접수창구"
         titleEn="Ethics Reporting"
-        heroImage="/hero/menu-utility-ethics-ai.png"
-        heroPosition="center 50%"
+        heroImage="/hero/menu-utility-ethics-compliance-ai.png"
+        heroPosition="right 66%"
+        heroSize="cover"
+        heroOverlay="dark"
       />
 
       <ReportSection>
@@ -46,21 +89,21 @@ export function EthicsReportPage() {
                 '본 접수창구는 관세사 윤리강령에 근거하여 운영됩니다.',
                 'This reporting channel is operated based on the Code of Ethics for Licensed Customs Brokers.',
               )}{' '}
-              <EthicsBasisLink href={ethicsCodeUrl} target="_blank" rel="noreferrer">
+              <EthicsBasisButton type="button" onClick={() => setIsEthicsModalOpen(true)}>
                 {t('관세사 윤리강령 보기', 'View the Code of Ethics')}
-              </EthicsBasisLink>
+              </EthicsBasisButton>
             </EthicsBasisText>
           </ReportIntro>
 
           <ReportGrid>
             <GuidePanel>
-              <E.Eyebrow>{t('접수 안내', 'Report Guide')}</E.Eyebrow>
-              <PanelTitle>{t('접수 안내', 'Reporting Guide')}</PanelTitle>
+              <E.Eyebrow>{t('운영 방침', 'Operating Policy')}</E.Eyebrow>
+              <PanelTitle>{t('운영 방침', 'Operating Policy')}</PanelTitle>
 
               <NoticeText>
                 {t(
-                  '접수된 내용과 신고자 정보는 관련 절차에 따라 비공개로 관리됩니다.',
-                  'Reports and reporter information are managed confidentially according to internal procedures.',
+                  '제보자는 어떠한 신분상의 불이익이나 차별을 받지 않으며 신원과 제보내용은 철저히 비밀로 유지됩니다.',
+                  'Reporters will not face any disadvantage or discrimination, and their identity and report details will be kept strictly confidential.',
                 )}
               </NoticeText>
 
@@ -104,7 +147,12 @@ export function EthicsReportPage() {
                 </OnlineText>
               </OnlineHeader>
 
-              <ReportForm onSubmit={(event) => event.preventDefault()}>
+              <ReportForm
+                action={`mailto:${ethicsContactEmail}`}
+                method="post"
+                encType="text/plain"
+                onSubmit={handleReportSubmit}
+              >
                 <FieldGroup>
                   <FieldLabel htmlFor="ethics-category">{t('접수 유형', 'Report Type')}</FieldLabel>
                   <SelectInput id="ethics-category" name="category" defaultValue="">
@@ -157,6 +205,54 @@ export function EthicsReportPage() {
           </ReportGrid>
         </ReportInner>
       </ReportSection>
+
+      {isEthicsModalOpen ? (
+        <ModalBackdrop role="presentation" onClick={() => setIsEthicsModalOpen(false)}>
+          <ModalDialog
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="ethics-code-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <ModalHeader>
+              <div>
+                <ModalEyebrow>{t('윤리 강령', 'Code of Ethics')}</ModalEyebrow>
+                <ModalTitle id="ethics-code-title">
+                  {t('관세사 윤리강령', 'Code of Ethics for Licensed Customs Brokers')}
+                </ModalTitle>
+              </div>
+              <ModalCloseButton type="button" onClick={() => setIsEthicsModalOpen(false)}>
+                {t('닫기', 'Close')}
+              </ModalCloseButton>
+            </ModalHeader>
+
+            <CodeDocument>
+              <CodeDocumentTitle>{t('제2조(윤리강령)', 'Article 2 (Code of Ethics)')}</CodeDocumentTitle>
+              <CodeIntro>
+                {t(
+                  '회원은 다음 각 호를 내용으로 한 관세사윤리강령을 사무소 내에 게시하고 관세사의 기본 윤리관으로 삼아야 한다.',
+                  'Members must post the following Code of Ethics in their office and uphold it as the basic ethical standard for licensed customs brokers.',
+                )}
+              </CodeIntro>
+              <CodeList>
+                {ethicsCodeItems.map((item, index) => (
+                  <CodeItem key={item.ko}>
+                    <CodeNumber>{index + 1}</CodeNumber>
+                    <span>{t(item.ko, item.en)}</span>
+                  </CodeItem>
+                ))}
+              </CodeList>
+            </CodeDocument>
+
+            <SourceNote>
+              {t(
+                '출처: 한국관세사회 제규정 ∙ 회칙위임 > 윤리위원회 운영규정 제2조(윤리강령)',
+                'Source: Korea Customs Brokers Association regulations, Ethics Committee Operating Regulation, Article 2 (Code of Ethics).',
+              )}
+            </SourceNote>
+          </ModalDialog>
+        </ModalBackdrop>
+      ) : null}
     </>
   );
 }
@@ -212,11 +308,17 @@ const EthicsBasisText = styled.p`
   word-break: keep-all;
 `;
 
-const EthicsBasisLink = styled.a`
+const EthicsBasisButton = styled.button`
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #1f5cb2;
+  font: inherit;
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 3px;
+  cursor: pointer;
 
   &:hover,
   &:focus-visible {
@@ -500,4 +602,145 @@ const SubmitButton = styled.button`
     transform: translateY(-1px);
     outline: none;
   }
+`;
+
+const ModalBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 48px);
+  background: rgba(7, 18, 33, 0.58);
+  backdrop-filter: blur(6px);
+`;
+
+const ModalDialog = styled.div`
+  width: min(100%, 760px);
+  max-height: min(86vh, 760px);
+  overflow: auto;
+  border: 1px solid rgba(216, 222, 232, 0.92);
+  background: #ffffff;
+  box-shadow:
+    0 34px 90px rgba(4, 16, 32, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  padding: clamp(24px, 3vw, 34px);
+  border-bottom: 1px solid #d8dee8;
+  background:
+    linear-gradient(180deg, rgba(248, 251, 255, 0.98), rgba(255, 255, 255, 0.98)),
+    #ffffff;
+`;
+
+const ModalEyebrow = styled.span`
+  display: block;
+  margin-bottom: 8px;
+  color: #1f5cb2;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+`;
+
+const ModalTitle = styled.h2`
+  margin: 0;
+  color: #10233f;
+  font-size: clamp(1.44rem, 2.4vw, 2rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  word-break: keep-all;
+`;
+
+const ModalCloseButton = styled.button`
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(18, 63, 133, 0.18);
+  background: #ffffff;
+  color: #123f85;
+  font-size: 0.86rem;
+  font-weight: 900;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: #123f85;
+    outline: none;
+  }
+`;
+
+const CodeDocument = styled.div`
+  margin: clamp(24px, 3vw, 34px);
+  padding: clamp(24px, 3.2vw, 38px);
+  border: 1px solid #d8dee8;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 251, 255, 0.96)),
+    #ffffff;
+`;
+
+const CodeDocumentTitle = styled.h3`
+  margin: 0 0 18px;
+  color: #0f3f84;
+  font-size: clamp(1.18rem, 1.75vw, 1.46rem);
+  font-weight: 900;
+  line-height: 1.28;
+  word-break: keep-all;
+`;
+
+const CodeIntro = styled.p`
+  margin: 0 0 20px;
+  color: #4d5a6c;
+  font-size: 1rem;
+  line-height: 1.76;
+  word-break: keep-all;
+`;
+
+const CodeList = styled.ol`
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+const CodeItem = styled.li`
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  color: #263d5a;
+  font-size: 1.02rem;
+  font-weight: 650;
+  line-height: 1.7;
+  word-break: keep-all;
+`;
+
+const CodeNumber = styled.span`
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #123f85;
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 900;
+`;
+
+const SourceNote = styled.p`
+  margin: 0;
+  padding: 18px clamp(24px, 3vw, 34px) clamp(24px, 3vw, 34px);
+  border-top: 1px solid #e4e8ef;
+  color: #687385;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.62;
+  word-break: keep-all;
 `;

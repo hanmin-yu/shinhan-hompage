@@ -62,10 +62,10 @@ const HeroVisualTitle = styled.h1`
   max-width: calc(100% - 48px);
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2.28rem, 4.95vw, 4.55rem);
+  font-size: clamp(2rem, 4.1vw, 3.72rem);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: 0;
+  line-height: 1.04;
+  letter-spacing: 0.018em;
   text-align: center;
   text-shadow:
     0 14px 30px rgba(4, 12, 24, 0.24),
@@ -225,13 +225,21 @@ const HeroStatement = styled(P.PageContainer)`
   max-width: 1320px;
 `;
 
+const HeroHeading = styled.div`
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  min-width: 0;
+`;
+
 const HeroEyebrow = styled.span`
   display: block;
-  margin: 0 0 10px 6px;
+  margin-left: clamp(14px, 1.4vw, 24px);
   color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.18em;
+  line-height: 1.35;
   text-transform: uppercase;
 `;
 
@@ -239,15 +247,16 @@ const HeroTitle = styled.h1`
   max-width: 1160px;
   margin: 0;
   color: #111111;
-  font-size: clamp(2.42rem, 4.9vw, 4.6rem);
+  font-size: clamp(2.04rem, 4vw, 3.72rem);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  line-height: 1.14;
+  letter-spacing: -0.012em;
   text-wrap: balance;
+  word-break: keep-all;
   text-shadow: none;
 
   @media (max-width: 640px) {
-    letter-spacing: -0.035em;
+    letter-spacing: -0.008em;
   }
 `;
 
@@ -267,6 +276,17 @@ const HeroLead = styled.p`
   color: #4d5a6c;
   font-size: clamp(1.12rem, 1.38vw, 1.28rem);
   line-height: 1.82;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+`;
+
+const HeroLeadSentence = styled.span`
+  display: block;
+
+  & + & {
+    margin-top: 4px;
+  }
 `;
 
 const HeroFacts = styled.div`
@@ -382,10 +402,10 @@ const EditorialTitle = styled.h2<{ $light?: boolean }>`
   max-width: 980px;
   margin: 0;
   color: ${({ $light }) => ($light ? '#ffffff' : '#172337')};
-  font-size: clamp(2.12rem, 3.65vw, 3.48rem);
+  font-size: clamp(1.82rem, 3.05vw, 2.94rem);
   font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 `;
 
@@ -399,6 +419,9 @@ const EditorialBody = styled.p<{ $light?: boolean }>`
   color: ${({ $light }) => ($light ? 'rgba(226, 231, 238, 0.8)' : '#4d5a6c')};
   font-size: clamp(1.04rem, 1.18vw, 1.14rem);
   line-height: 1.84;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
 `;
 
 const Rule = styled.div<{ $light?: boolean }>`
@@ -565,60 +588,6 @@ function renderNoWrapTerm(text: string, term: string) {
   );
 }
 
-const GalleryGrid = styled(P.PageContainer)`
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 24px;
-  max-width: 1320px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const GalleryCard = styled.article<{ src: string; $span: number; $height?: number }>`
-  grid-column: span ${({ $span }) => $span};
-  min-height: ${({ $height = 300 }) => `${$height}px`};
-  display: flex;
-  align-items: flex-end;
-  padding: clamp(26px, 3.6vw, 44px);
-  background:
-    linear-gradient(180deg, rgba(10, 18, 30, 0.04) 0%, rgba(10, 18, 30, 0.72) 100%),
-    ${({ src }) => `url(${src}) center / cover no-repeat`};
-
-  @media (max-width: 900px) {
-    grid-column: span 1;
-    min-height: 280px;
-  }
-`;
-
-const GalleryContent = styled.div`
-  max-width: 390px;
-`;
-
-const GalleryLabel = styled.span`
-  color: rgba(232, 235, 240, 0.76);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-`;
-
-const GalleryTitle = styled.h3`
-  margin: 10px 0 0;
-  color: #ffffff;
-  font-size: clamp(1.28rem, 1.8vw, 1.72rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-`;
-
-const GalleryText = styled.p`
-  margin: 14px 0 0;
-  color: rgba(235, 238, 243, 0.84);
-  font-size: 1.04rem;
-  line-height: 1.74;
-`;
-
 const SloganBand = styled.div`
   position: relative;
   margin-top: clamp(68px, 8vw, 118px);
@@ -666,25 +635,25 @@ const Slogan = styled.p`
 `;
 
 const consultingItemsKo = [
-  '관세심사(법인/기획/종합심사) 컨설팅',
+  '관세조사(정기/비정기/간이) 컨설팅',
   '해외 법률자문(중국,미국,통상이슈)',
   '이전가격(ACVA) 컨설팅',
   '관세 환급 컨설팅',
   '관세 불복 자문',
-  'FTA,AEO 컨설팅',
-  '무역 컨설팅',
-  '베트남 재고관리, FTA 업무 컨설팅',
+  'FTA, AEO 컨설팅',
+  '수출 통제 및 전략물자 컨설팅',
+  '베트남 수책 관리 시스템 구축, 베트남 특화 FTA 컨설팅',
 ];
 
 const consultingItemsEn = [
-  'Customs audit consulting (corporate/planned/comprehensive)',
+  'Customs investigation consulting (regular/non-regular/simplified)',
   'Overseas legal advisory (China,U.S.,trade issues)',
   'Transfer pricing (ACVA) consulting',
   'Customs refund consulting',
   'Customs appeal advisory',
-  'FTA,AEO consulting',
-  'Trade consulting',
-  'Vietnam inventory and FTA consulting',
+  'FTA, AEO consulting',
+  'Export controls and strategic goods consulting',
+  'Vietnam liquidation management system setup and Vietnam-specific FTA consulting',
 ];
 
 const clearanceItemsKo = [
@@ -694,7 +663,6 @@ const clearanceItemsKo = [
   '자체 사후심사 시스템 제공',
   '서류 보관 업무 대행',
   '환율 정보 제공 서비스',
-  'OJT지원,교육',
   '요건 확인 업무 컨설팅',
 ];
 
@@ -705,7 +673,6 @@ const clearanceItemsEn = [
   'Internal post-audit system support',
   'Document archive outsourcing',
   'Exchange rate information service',
-  'OJT support and education',
   'Requirement verification consulting',
 ];
 
@@ -728,16 +695,6 @@ const logisticsItemsEn = [
 const servicePillars = [
   {
     index: '01',
-    titleKo: '컨설팅서비스',
-    titleEn: 'Consulting Service',
-    bodyKo: '관세심사, 해외 법률자문, AEO, FTA, 환급, 무역 이슈까지 폭넓은 자문 항목을 제공합니다.',
-    bodyEn:
-      'We provide a broad advisory range covering customs audits, overseas legal support, AEO, FTA, refunds, and trade issues.',
-    itemsKo: consultingItemsKo,
-    itemsEn: consultingItemsEn,
-  },
-  {
-    index: '02',
     titleKo: '통관서비스',
     titleEn: 'Clearance Service',
     bodyKo: '분석 자료, 리포트, 사후심사 시스템, 교육과 요건 확인 컨설팅까지 통관 운영 전반을 지원합니다.',
@@ -745,6 +702,16 @@ const servicePillars = [
       'We support the full clearance operation through analytics, reporting, post-audit systems, education, and requirement verification consulting.',
     itemsKo: clearanceItemsKo,
     itemsEn: clearanceItemsEn,
+  },
+  {
+    index: '02',
+    titleKo: '컨설팅서비스',
+    titleEn: 'Consulting Service',
+    bodyKo: '관세조사, 해외 법률자문, AEO, FTA, 환급, 무역 이슈까지 폭넓은 자문 항목을 제공합니다.',
+    bodyEn:
+      'We provide a broad advisory range covering customs investigations, overseas legal support, AEO, FTA, refunds, and trade issues.',
+    itemsKo: consultingItemsKo,
+    itemsEn: consultingItemsEn,
   },
   {
     index: '03',
@@ -755,42 +722,6 @@ const servicePillars = [
       'We extend execution from bonded storage to domestic bonded transport, inland delivery, 3PL, and logistics consulting.',
     itemsKo: logisticsItemsKo,
     itemsEn: logisticsItemsEn,
-  },
-];
-
-const aboutGalleryItems = [
-  {
-    labelKo: 'Partnership',
-    labelEn: 'Partnership',
-    titleKo: '오랜 신뢰의 축적',
-    titleEn: 'Built on Long-Term Trust',
-    bodyKo: '고객사와 함께해 온 시간 속에서 신뢰와 KNOW-HOW를 쌓아왔습니다.',
-    bodyEn: 'We have built trust and know-how through long-term partnership with clients.',
-    src: '/subpages/about-coms1.jpg',
-    span: 4,
-    height: 330,
-  },
-  {
-    labelKo: 'Service',
-    labelEn: 'Service',
-    titleKo: '통관·컨설팅·물류의 연결',
-    titleEn: 'Connected Total Service',
-    bodyKo: '통관, 물류, 컨설팅까지 이어지는 Total Service 체계를 제공합니다.',
-    bodyEn: 'We provide a connected total service system spanning clearance, logistics, and consulting.',
-    src: '/subpages/about-coms2.jpg',
-    span: 4,
-    height: 390,
-  },
-  {
-    labelKo: 'Innovation',
-    labelEn: 'Innovation',
-    titleKo: '전통과 혁신의 융합',
-    titleEn: 'Tradition Meets Innovation',
-    bodyKo: '지속적인 IT 투자와 개발로 급변하는 무역환경에 앞서 대응합니다.',
-    bodyEn: 'With continuous IT investment and development, we stay ahead of fast-changing trade environments.',
-    src: '/subpages/about-coms3.jpg',
-    span: 4,
-    height: 330,
   },
 ];
 
@@ -825,7 +756,7 @@ export function AboutPage() {
 
       <EditorialSection>
         <HeroStatement data-reveal>
-          <div>
+          <HeroHeading>
             <HeroEyebrow>Shinhan Customs Service</HeroEyebrow>
             <HeroTitle>
               {t(
@@ -833,13 +764,21 @@ export function AboutPage() {
                 'We solve trade challenges and add lasting value.',
               )}
             </HeroTitle>
-          </div>
+          </HeroHeading>
           <HeroLeadGrid>
             <HeroLead>
-              {t(
-                '신한관세법인은 1965년 창립 이래 수출입 무역 업체의 든든한 동반자로서 고객과 함께 성장해왔습니다. 오랜 신뢰와 KNOW-HOW를 바탕으로 통관, 컨설팅, 물류를 연결한 전문 서비스를 제공합니다.',
-                'Since its founding in 1965, Shinhan Customs Service has grown with import and export companies as a trusted partner. Built on long-standing trust and know-how, we connect customs clearance, consulting, and logistics into one professional service.',
-              )}
+              <HeroLeadSentence>
+                {t(
+                  '신한관세법인은 1965년 창립 이래 수출입 무역 업체의 든든한 동반자로서 고객과 함께 성장해왔습니다.',
+                  'Since its founding in 1965, Shinhan Customs Service has grown with import and export companies as a trusted partner.',
+                )}
+              </HeroLeadSentence>
+              <HeroLeadSentence>
+                {t(
+                  '오랜 신뢰와 KNOW-HOW를 바탕으로 통관, 컨설팅, 물류를 연결한 전문 서비스를 제공합니다.',
+                  'Built on long-standing trust and know-how, we connect customs clearance, consulting, and logistics into one professional service.',
+                )}
+              </HeroLeadSentence>
             </HeroLead>
             <HeroFacts>
               <HeroFact>
@@ -918,7 +857,7 @@ export function AboutPage() {
       <EditorialSection $tone="navy">
         <NavyInner data-reveal>
           <div>
-            <SectionLabel $light>Core Value</SectionLabel>
+            <SectionLabel $light>{t('경영이념', 'Management Philosophy')}</SectionLabel>
             <EditorialTitle $light>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
             <Rule $light />
             <EditorialBody $light>
@@ -940,17 +879,6 @@ export function AboutPage() {
       </EditorialSection>
 
       <EditorialSection>
-        <GalleryGrid data-reveal>
-          {aboutGalleryItems.map((item) => (
-            <GalleryCard key={item.titleKo} src={item.src} $span={item.span} $height={item.height}>
-              <GalleryContent>
-                <GalleryLabel>{t(item.labelKo, item.labelEn)}</GalleryLabel>
-                <GalleryTitle>{t(item.titleKo, item.titleEn)}</GalleryTitle>
-                <GalleryText>{t(item.bodyKo, item.bodyEn)}</GalleryText>
-              </GalleryContent>
-            </GalleryCard>
-          ))}
-        </GalleryGrid>
         <AboutSectionContainer data-reveal>
           <SloganBand>
             <Slogan>We make the difference for your successful business!</Slogan>

@@ -42,11 +42,21 @@ const HeroStatement = styled(P.PageContainer)`
   max-width: 1280px;
 `;
 
+const HeroHeading = styled.div`
+  display: grid;
+  gap: clamp(8px, 1vw, 12px);
+  justify-items: start;
+  min-width: 0;
+`;
+
 const HeroEyebrow = styled.span`
+  display: block;
+  margin-left: clamp(14px, 1.4vw, 24px);
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.2em;
+  line-height: 1.35;
   text-transform: uppercase;
 `;
 
@@ -59,6 +69,7 @@ const HeroTitle = styled.h1`
   line-height: 1.08;
   letter-spacing: -0.045em;
   text-wrap: balance;
+  word-break: keep-all;
 
   @media (max-width: 640px) {
     letter-spacing: -0.035em;
@@ -1800,10 +1811,10 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       <EditorialSection $spacing="intro">
         <HeroStatement data-reveal>
           <IntroStack>
-            <div>
+            <HeroHeading>
               <HeroEyebrow>{t('업무 분야', 'Service Detail')}</HeroEyebrow>
               <HeroTitle>{tx(content.title)}</HeroTitle>
-            </div>
+            </HeroHeading>
             <OneLineSummary>{tx(content.subtitle ?? content.summary)}</OneLineSummary>
             <OverviewBlock>
               <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>

@@ -19,11 +19,21 @@ const HeroStatement = styled(P.PageContainer)`
   gap: clamp(30px, 4vw, 54px);
 `;
 
+const HeroHeading = styled.div`
+  display: grid;
+  gap: clamp(8px, 1vw, 12px);
+  justify-items: start;
+  min-width: 0;
+`;
+
 const HeroEyebrow = styled.span`
+  display: block;
+  margin-left: clamp(14px, 1.4vw, 24px);
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.18em;
+  line-height: 1.35;
   text-transform: uppercase;
 `;
 
@@ -36,6 +46,7 @@ const HeroTitle = styled.h1`
   line-height: 1.08;
   letter-spacing: -0.04em;
   text-wrap: balance;
+  word-break: keep-all;
 `;
 
 const HeroLeadGrid = styled.div`
@@ -158,11 +169,11 @@ const ServiceMap = styled.div`
   }
 `;
 
-const ServiceMapCard = styled.a`
+const ServiceMapCard = styled.div`
   display: grid;
   align-content: start;
-  gap: 14px;
-  min-height: 210px;
+  gap: 16px;
+  min-height: 238px;
   padding: clamp(20px, 2.6vw, 34px);
   border-right: 1px solid #dbe0e8;
   color: ${palette.blue};
@@ -191,6 +202,11 @@ const ServiceMapCard = styled.a`
   }
 `;
 
+const ServiceMapAnchor = styled.a`
+  display: grid;
+  gap: 14px;
+`;
+
 const ServiceMapMeta = styled.span`
   color: ${palette.blue};
   font-size: 0.76rem;
@@ -209,20 +225,28 @@ const ServiceMapTitle = styled.h3`
 `;
 
 const ServiceMapItems = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
 `;
 
-const ServiceMapTag = styled.span`
+const ServiceMapTag = styled(Link)`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 30px;
-  padding: 0 10px;
-  border: 1px solid #dbe0e8;
-  color: #4f5661;
-  font-size: 0.9rem;
+  padding: 12px 14px;
+  border: 1px solid rgba(18, 63, 133, 0.18);
+  color: ${palette.blue};
+  background: #ffffff;
+  font-size: 0.94rem;
   font-weight: 800;
+  text-align: center;
+
+  &:hover {
+    border-color: rgba(18, 63, 133, 0.42);
+    background: #f5f8fc;
+  }
 `;
 
 const GroupStack = styled.div`
@@ -233,6 +257,8 @@ const GroupStack = styled.div`
 const GroupPanel = styled.article`
   display: grid;
   grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
+  align-items: stretch;
+  min-height: clamp(360px, 32vw, 440px);
   border-top: 1px solid #d5dbe4;
   background: #ffffff;
 
@@ -242,7 +268,7 @@ const GroupPanel = styled.article`
 `;
 
 const GroupVisual = styled.div<{ image: string }>`
-  min-height: clamp(280px, 31vw, 420px);
+  min-height: 100%;
   background:
     linear-gradient(180deg, rgba(8, 17, 31, 0.08), rgba(8, 17, 31, 0.28)),
     ${({ image }) => `url(${image}) center / cover no-repeat`};
@@ -347,10 +373,10 @@ export function ServicesPage() {
 
       <EditorialSection>
         <HeroStatement data-reveal>
-          <div>
+          <HeroHeading>
             <HeroEyebrow>Practice Areas</HeroEyebrow>
             <HeroTitle>{t('무역 현장의 흐름을 하나의 서비스 체계로 연결합니다.', 'Connecting trade operations through one service system.')}</HeroTitle>
-          </div>
+          </HeroHeading>
           <HeroLeadGrid>
             <HeroLead>
               {t(
@@ -382,16 +408,16 @@ export function ServicesPage() {
           <EditorialTitle>{t('필요한 업무영역으로 바로 이동하세요.', 'Move directly to the practice area you need.')}</EditorialTitle>
           <ServiceMap>
             {serviceLandingGroups.map((group) => (
-              <ServiceMapCard key={`map-${group.id}`} href={`#${group.id}`}>
-                <ServiceMapMeta>{t(group.heading, group.headingEn)}</ServiceMapMeta>
-                <ServiceMapTitle>{t(group.title, group.titleEn)}</ServiceMapTitle>
-                {group.items.length > 1 ? (
-                  <ServiceMapItems>
-                    {group.items.map((item) => (
-                      <ServiceMapTag key={`${group.id}-${item.label}`}>{t(item.label, item.labelEn)}</ServiceMapTag>
-                    ))}
-                  </ServiceMapItems>
-                ) : null}
+              <ServiceMapCard key={`map-${group.id}`}>
+                <ServiceMapAnchor href={`#${group.id}`}>
+                  <ServiceMapMeta>{t(group.heading, group.headingEn)}</ServiceMapMeta>
+                  <ServiceMapTitle>{t(group.title, group.titleEn)}</ServiceMapTitle>
+                </ServiceMapAnchor>
+                <ServiceMapItems>
+                  {group.items.map((item) => (
+                    <ServiceMapTag key={`${group.id}-${item.label}`} to={item.href}>{t(item.label, item.labelEn)}</ServiceMapTag>
+                  ))}
+                </ServiceMapItems>
               </ServiceMapCard>
             ))}
           </ServiceMap>

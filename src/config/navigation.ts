@@ -62,6 +62,7 @@ export const headerNavigation: NavItem[] = [
 
 export const mobileQuickLinks: LinkItem[] = [
   { id: 'consult', label: 'Contact US', to: '/contact' },
+  { id: 'ethics', label: '부정행위 접수창구', to: '/contact/ethics' },
   { id: 'recruit', label: '채용', to: '/recruit' },
   { id: 'offices', label: '사무소', to: '/offices' },
   { id: 'directions', label: '오시는 길', to: '/location' },

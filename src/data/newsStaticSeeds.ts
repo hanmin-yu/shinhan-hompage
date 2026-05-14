@@ -1,8 +1,9 @@
 import type { NewsletterItem, ShinhanNewsItem } from '../types/site';
 import { withNewsletterTitleBrand } from '../utils/newsletter';
+import { filterVisibleShinhanNewsRecords } from '../utils/shinhanNews';
 import { shinhanNewsArchive } from './shinhanNewsArchive';
 
-export const shinhanNewsItems: ShinhanNewsItem[] = shinhanNewsArchive;
+export const shinhanNewsItems: ShinhanNewsItem[] = filterVisibleShinhanNewsRecords(shinhanNewsArchive);
 
 function getNewsletterTitleEn(title: string) {
   switch (title) {

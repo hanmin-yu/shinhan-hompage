@@ -14,6 +14,7 @@ import { issueReportsSnapshot } from './issueReportsSnapshot';
 import { newsletterItems as legacyNewsletterItems } from './pageContent';
 import { shinhanNewsArchive } from './shinhanNewsArchive';
 import { withNewsletterTitleBrand } from '../utils/newsletter';
+import { filterVisibleShinhanNewsRecords, sortShinhanNewsRecords } from '../utils/shinhanNews';
 
 export const brandMarkPath = '/brand-mark-shinhan.png';
 
@@ -49,7 +50,7 @@ export const siteContact: SiteContact = {
   businessNumber: '211-86-05953',
 };
 
-export const heroSlides: HeroSlide[] = [
+const heroSlideLibrary: HeroSlide[] = [
   {
     label: '도심 고층 건물',
     labelEn: 'City High-Rise',
@@ -427,6 +428,36 @@ export const heroSlides: HeroSlide[] = [
   },
 ];
 
+const homeHeroSlideOrder = [4, 8, 20, 6, 13, 0, 2, 5, 10, 11, 12, 18, 19, 21, 23] as const;
+
+const homeHeroSlideOverrides: Partial<HeroSlide>[] = [
+  {
+    headline: '공항만에서 시작되는 무역을\n현장 가까이에서 지원합니다',
+    headlineEn: 'Supporting trade from ports and airports\nclose to the field',
+  },
+  {
+    headline: '급변하는 무역환경에 따른\n관세 전략을 제시합니다',
+    headlineEn: 'Presenting customs strategy\nfor a rapidly changing trade environment',
+  },
+  {
+    headline: '전국 거점의 전문성을 모아\n기업 가까이에서 대응합니다',
+    headlineEn: 'Bringing nationwide expertise\ncloser to each client',
+  },
+  {
+    headline: '관세 전문성과 IT를 연결해\n무역 데이터를 관리합니다',
+    headlineEn: 'Connecting customs expertise\nwith trade data technology',
+  },
+  {
+    headline: '60년간 축적된 경험을 바탕으로\n수출입 리스크를 최소화합니다',
+    headlineEn: 'Minimizing import and export risk\nwith 60 years of accumulated experience',
+  },
+];
+
+export const heroSlides: HeroSlide[] = homeHeroSlideOrder.map((slideIndex, orderIndex) => ({
+  ...heroSlideLibrary[slideIndex],
+  ...(homeHeroSlideOverrides[orderIndex] ?? {}),
+}));
+
 export const members: Member[] = [
   {
     name: '장승희',
@@ -506,7 +537,7 @@ const expertPracticeAreas: Record<string, string[]> = {
   ],
   김학현: [
     '수출용 원재료 등에 대한 관세환급',
-    '원산지 사후검증 대응 및 원산지 사후관리 시스템 컨설팅',
+    '원산지 사후 검증 대응 및 사후관리 시스템 컨설팅',
     '환급 및 FTA 교육',
   ],
   김유진: ['범칙조사', '조세불복', '납세도움정보'],
@@ -550,9 +581,9 @@ const expertPracticeAreas: Record<string, string[]> = {
     '화장품 표준통관예정보고',
   ],
   김유경: [
-    '신한 인비스타 운영 프로세스 및 인적 자원 총괄',
+    '신한 인비스타 운영 및 인력 관리 총괄',
+    '보세 및 내국물류 통합관리와 법규준수 시스템 구축',
     '3PL 운영 효율화 및 서비스 품질 관리',
-    '보세·내국 물류 통합 거버넌스 및 컴플라이언스 구축',
   ],
   권민성: ['화물 운송 관리', '보세 및 내국 화물 분리 보관', '보수작업 및 폐기 대행'],
   이미경: ['화물 운송 관리', '고객사 물품 입출고 관리', '내국화물 3PL 대행업무'],
@@ -567,14 +598,12 @@ const expertPracticeAreas: Record<string, string[]> = {
     '베트남 Liquidation 및 수책제도 관련 자문',
   ],
   김다혜: [
-    '미국 수출입 제품 통관 적합성 사전검토 및 FDA 규제 대응 컨설팅',
-    '미국 식품·건강기능식품·화장품·펫푸드 수출 규정 및 Prop 65 컨설팅',
-    'Amazon SPN 인증 분야 담당',
+    '미국 수출입 제품 통관 적합성 사전검토',
+    'FDA 규제 대응 및 Prop 65 컨설팅',
   ],
   엄동규: [
-    '미국 수출입 제품 통관 적합성 사전검토 및 FDA 규제 대응 컨설팅',
-    '미국 식품·건강기능식품·화장품·펫푸드 수출 규정 및 Prop 65 컨설팅',
-    'Amazon SPN 인증 분야 담당',
+    '미국 수출입 제품 통관 적합성 사전검토',
+    'FDA 규제 대응 및 Prop 65 컨설팅',
   ],
   홍성훈: ['통관 시스템 개발 및 운영 총괄', '고객사 맞춤 솔루션 제공', '네트워크 및 보안 관리'],
   서인석: ['통관 시스템 구축 및 관리', '고객사 맞춤 솔루션 제공', '네트워크 및 보안 관리'],
@@ -673,7 +702,7 @@ export const expertMembers: Member[] = [
   },
   {
     name: '조원희',
-    phone: '070-4343-7763',
+    phone: '070-4343-7777',
     email: 'whcho@shcs.kr',
     title: '관세사',
     department: '서울본사 컨설팅본부',
@@ -793,7 +822,7 @@ export const expertMembers: Member[] = [
   },
   {
     name: '김정훈',
-    phone: '070-4343-7752',
+    phone: '070-4343-7748',
     email: 'jhkim@shcs.kr',
     title: '관세사',
     department: '서울본사 컨설팅본부',
@@ -1005,7 +1034,7 @@ const officeBranchItems: OfficeBranch[] = [
     shortLabelEn: 'HQ',
     region: '서울 강남',
     regionEn: 'Gangnam, Seoul',
-    summary: '통관전략부터 관세조사 대응, FTA 최적화까지 전국을 아우르는 네트워크로 수출입 무역의 메인 허브 역할을 수행합니다.',
+    summary: '통관전략부터 관세조사 대응, FTA 최적화까지 전국 네트워크로 수출입 무역의 메인 허브 역할을 수행합니다.',
     summaryEn:
       'Our main hub supports import and export trade through a nationwide network spanning customs strategy, customs audit response, and FTA optimization.',
     address: '서울시 강남구 논현로 704, 6·7층',
@@ -1136,7 +1165,7 @@ const officeBranchItems: OfficeBranch[] = [
     region: '인천경기지사',
     regionEn: 'Incheon-Gyeonggi Branch',
     summary:
-      '식품·축산물·식물검역부터 전파 및 어린이제품 안전인증 등 다양한 수출입 요건을 전문적으로 지원하며, 복잡한 규제와 인허가 절차에 대한 효율적인 통관 솔루션을 제공합니다.',
+      '식품·축산물·식물검역부터 전파 및 어린이제품 안전인증 등 다양한 수출입 요건을 전문적으로 지원합니다.',
     summaryEn:
       'A consulting team specializing in food, livestock, plant quarantine, radio wave, children product safety certification, and other import/export requirements, providing efficient clearance solutions for complex regulations and permits.',
     address: '인천광역시 연수구 인천타워대로 301, A동 906호',
@@ -1559,7 +1588,7 @@ export const itServices: ItService[] = [
   },
 ];
 
-export const shinhanNewsItems: ShinhanNewsItem[] = shinhanNewsArchive;
+export const shinhanNewsItems: ShinhanNewsItem[] = sortShinhanNewsRecords(filterVisibleShinhanNewsRecords(shinhanNewsArchive));
 
 function getNewsletterTitleEn(title: string) {
   switch (title) {

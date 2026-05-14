@@ -17,11 +17,21 @@ const HeroStatement = styled(P.PageContainer)`
   gap: clamp(30px, 4vw, 54px);
 `;
 
+const HeroHeading = styled.div`
+  display: grid;
+  gap: clamp(8px, 1vw, 12px);
+  justify-items: start;
+  min-width: 0;
+`;
+
 const HeroEyebrow = styled.span`
+  display: block;
+  margin-left: clamp(14px, 1.4vw, 24px);
   color: #52647c;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.18em;
+  line-height: 1.35;
   text-transform: uppercase;
 `;
 
@@ -34,6 +44,7 @@ const HeroTitle = styled.h1`
   line-height: 1.08;
   letter-spacing: -0.04em;
   text-wrap: balance;
+  word-break: keep-all;
 `;
 
 const HeroLead = styled.p`
@@ -106,10 +117,10 @@ export function ConsultingPage() {
 
       <EditorialSection>
         <HeroStatement data-reveal>
-          <div>
+          <HeroHeading>
             <HeroEyebrow>Consulting Hub</HeroEyebrow>
             <HeroTitle>{t('복잡한 관세 이슈를 실무 가능한 전략으로 정리합니다.', 'Turning complex customs issues into executable strategy.')}</HeroTitle>
-          </div>
+          </HeroHeading>
           <HeroLead>
             {t(
               'FTA, AEO, ACVA, 관세조사, 외환검사, 조세불복 등 기업이 마주하는 주요 리스크를 사전에 진단하고 단계별 대응을 지원합니다.',

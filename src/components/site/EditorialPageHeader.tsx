@@ -11,9 +11,11 @@ type EditorialPageHeaderProps = {
   titleEn?: string;
   heroImage?: string;
   heroPosition?: string;
+  heroSize?: string;
+  heroOverlay?: 'default' | 'dark';
 };
 
-const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
+const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string; $size: string; $overlay: 'default' | 'dark' }>`
   position: relative;
   isolation: isolate;
   margin-top: 0;
@@ -31,8 +33,9 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
     inset: 0;
     z-index: -2;
     pointer-events: none;
-    background: ${({ $image, $position }) => `url(${$image}) ${$position} / cover no-repeat`};
-    filter: brightness(1.34) contrast(0.94) saturate(1.06);
+    background: ${({ $image, $position, $size }) => `url(${$image}) ${$position} / ${$size} no-repeat`};
+    filter: ${({ $overlay }) =>
+      $overlay === 'dark' ? 'brightness(0.9) contrast(1.02) saturate(1.02)' : 'brightness(1.34) contrast(0.94) saturate(1.06)'};
     opacity: 1;
     transform: none;
     animation: none;
@@ -47,9 +50,16 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string }>`
     aspect-ratio: auto;
     border-radius: 0;
     pointer-events: none;
-    background:
+    background: ${({ $overlay }) =>
+      $overlay === 'dark'
+        ? `
+      linear-gradient(180deg, rgba(5, 16, 34, 0.74) 0%, rgba(5, 16, 34, 0.42) 30%, rgba(5, 16, 34, 0.2) 100%),
+      linear-gradient(90deg, rgba(5, 16, 34, 0.62) 0%, rgba(5, 16, 34, 0.28) 42%, rgba(5, 16, 34, 0.16) 100%)
+    `
+        : `
       linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(232, 242, 255, 0.08) 48%, rgba(18, 64, 128, 0.16) 100%),
-      linear-gradient(90deg, rgba(8, 32, 72, 0.16) 0%, rgba(8, 32, 72, 0.02) 48%, rgba(8, 32, 72, 0.06) 100%);
+      linear-gradient(90deg, rgba(8, 32, 72, 0.16) 0%, rgba(8, 32, 72, 0.02) 48%, rgba(8, 32, 72, 0.06) 100%)
+    `};
     opacity: 1;
     transform: none;
     animation: none;
@@ -239,6 +249,8 @@ export function EditorialPageHeader({
   titleEn,
   heroImage = '/hero/homepage/office-tower-clear-sky.jpg',
   heroPosition = 'center 42%',
+  heroSize = 'cover',
+  heroOverlay = 'default',
 }: EditorialPageHeaderProps) {
   const { t } = useI18n();
   const { pathname } = useLocation();
@@ -246,7 +258,7 @@ export function EditorialPageHeader({
 
   return (
     <>
-      <VisualHero $image={heroImage} $position={heroPosition}>
+      <VisualHero $image={heroImage} $position={heroPosition} $size={heroSize} $overlay={heroOverlay}>
         <VisualTitle data-reveal>{t(title ?? config.title, titleEn ?? config.titleEn)}</VisualTitle>
       </VisualHero>
 

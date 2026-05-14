@@ -146,7 +146,15 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
 
         <S.HeaderRight>
           <S.HeaderTools>
-            <S.ContactButton to="/contact">{t('Contact Us', 'Contact Us')}</S.ContactButton>
+            <S.HeaderContactGroup>
+              <S.ContactButton to="/contact" data-header-contact="true">{t('Contact Us', 'Contact Us')}</S.ContactButton>
+              <S.HeaderContactMenu>
+                <S.HeaderContactMenuLink to="/contact">{t('문의', 'Contact')}</S.HeaderContactMenuLink>
+                <S.HeaderContactMenuLink to="/contact/ethics">
+                  {t('부정행위 접수창구', 'Ethics Reporting')}
+                </S.HeaderContactMenuLink>
+              </S.HeaderContactMenu>
+            </S.HeaderContactGroup>
             <S.HeaderUtilityLinks>
               <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
               <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
