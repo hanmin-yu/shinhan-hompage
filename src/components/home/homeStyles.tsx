@@ -1366,7 +1366,7 @@ export const MegaMenuTitleBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 14px;
+  gap: 8px;
   text-align: left;
   padding: 14px 26px 20px;
   color: ${palette.blueInk};
@@ -1379,6 +1379,8 @@ export const MegaMenuTitleBlock = styled.div`
 `;
 
 export const MegaMenuKicker = styled.span`
+  align-self: flex-start;
+  margin-left: clamp(24px, 2.4vw, 38px);
   color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 900;

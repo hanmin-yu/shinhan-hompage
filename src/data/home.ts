@@ -718,7 +718,7 @@ export const expertMembers: Member[] = [
     department: '부산지사',
     practice: '통관, 검역/요건, FTA컨설팅',
     accent: '#345f97',
-    image: '/members/experts/손성곤_정면.jpg',
+    image: '/members/experts/손성곤_정면_formal.png',
   },
   {
     name: '김유경',

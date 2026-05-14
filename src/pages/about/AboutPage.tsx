@@ -785,6 +785,30 @@ export function AboutPage() {
         </HeroStatement>
       </EditorialSection>
 
+      <EditorialSection>
+        <NavyInner data-reveal>
+          <div>
+            <PhilosophyLabel>VISION</PhilosophyLabel>
+            <EditorialTitle>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
+            <Rule />
+            <EditorialBody>
+              {t(
+                '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
+                'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
+              )}
+            </EditorialBody>
+          </div>
+          <ValueList>
+            {managementValues.map((item) => (
+              <ValueRow key={item.title}>
+                <ValueTitle>{tx(item.title)}</ValueTitle>
+                <ValueBody>{item.title === 'INNOVATION' ? renderNoWrapTerm(tx(item.body), '개선하는 역량') : tx(item.body)}</ValueBody>
+              </ValueRow>
+            ))}
+          </ValueList>
+        </NavyInner>
+      </EditorialSection>
+
       <EditorialSection $tone="soft">
         <AboutSectionContainer data-reveal>
           <SectionLabel>All-in-One Service</SectionLabel>
@@ -809,30 +833,6 @@ export function AboutPage() {
             ))}
           </ServiceGrid>
         </AboutSectionContainer>
-      </EditorialSection>
-
-      <EditorialSection>
-        <NavyInner data-reveal>
-          <div>
-            <PhilosophyLabel>{t('경영이념', 'Management Philosophy')}</PhilosophyLabel>
-            <EditorialTitle>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
-            <Rule />
-            <EditorialBody>
-              {t(
-                '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
-                'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
-              )}
-            </EditorialBody>
-          </div>
-          <ValueList>
-            {managementValues.map((item) => (
-              <ValueRow key={item.title}>
-                <ValueTitle>{tx(item.title)}</ValueTitle>
-                <ValueBody>{item.title === 'INNOVATION' ? renderNoWrapTerm(tx(item.body), '개선하는 역량') : tx(item.body)}</ValueBody>
-              </ValueRow>
-            ))}
-          </ValueList>
-        </NavyInner>
       </EditorialSection>
 
       <EditorialSection>

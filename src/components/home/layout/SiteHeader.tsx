@@ -109,7 +109,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
       <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/" aria-label={t('신한관세법인 홈', 'Shinhan Customs Service home')}>
           <S.HeaderLogoFrame>
-            <S.HeaderLogoImage src="/brand-header-logo-blue-transparent.png" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} data-logo-blue="true" />
+            <S.HeaderLogoImage src="/brand-header-logo-navy-transparent.png" alt={t('신한관세법인 로고', 'Shinhan Customs Service logo')} data-logo-blue="true" />
             <S.HeaderLogoImage src="/brand-header-logo-transparent.png" alt="" aria-hidden="true" data-logo-light="true" />
           </S.HeaderLogoFrame>
         </S.Brand>
