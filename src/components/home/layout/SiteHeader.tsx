@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useEffect, useState, type FocusEvent, type MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { getHeaderNavigation } from '../../../config/navigation';
@@ -18,6 +18,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
   const [activeMegaMenuId, setActiveMegaMenuId] = useState<string | null>(null);
+  const [contactMenuOpen, setContactMenuOpen] = useState(false);
 
   const isActive = (path?: string) => {
     if (!path) return false;
@@ -31,6 +32,19 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
+  };
+
+  const closeContactMenu = () => {
+    setContactMenuOpen(false);
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const handleContactBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
+    setContactMenuOpen(false);
   };
 
   const openMegaMenu = (itemId: string, hasChildren: boolean) => {
@@ -146,11 +160,17 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
 
         <S.HeaderRight>
           <S.HeaderTools>
-            <S.HeaderContactGroup>
-              <S.ContactButton to="/contact" data-header-contact="true">{t('Contact Us', 'Contact Us')}</S.ContactButton>
+            <S.HeaderContactGroup
+              data-open={contactMenuOpen ? 'true' : undefined}
+              onMouseEnter={() => setContactMenuOpen(true)}
+              onMouseLeave={() => setContactMenuOpen(false)}
+              onFocus={() => setContactMenuOpen(true)}
+              onBlur={handleContactBlur}
+            >
+              <S.ContactButton to="/contact" data-header-contact="true" onClick={closeContactMenu}>{t('Contact Us', 'Contact Us')}</S.ContactButton>
               <S.HeaderContactMenu>
-                <S.HeaderContactMenuLink to="/contact">{t('문의', 'Contact')}</S.HeaderContactMenuLink>
-                <S.HeaderContactMenuLink to="/contact/ethics">
+                <S.HeaderContactMenuLink to="/contact" onClick={closeContactMenu}>{t('문의', 'Contact')}</S.HeaderContactMenuLink>
+                <S.HeaderContactMenuLink to="/contact/ethics" onClick={closeContactMenu}>
                   {t('부정행위 접수창구', 'Ethics Reporting')}
                 </S.HeaderContactMenuLink>
               </S.HeaderContactMenu>

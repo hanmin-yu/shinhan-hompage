@@ -1564,7 +1564,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     const isCustomsAuditFocus = isCustomsAuditPage && sectionHeading === '주요 조사 분야';
     const isForeignExchangeService = isForeignExchangePage && sectionHeading === '주요 서비스';
     const isAcvaBenefits = isAcvaPage && sectionHeading === 'ACVA 이점';
-    const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스 상세 설명';
+    const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스';
     const isUsFdaCoreService = isUsFdaPage && sectionHeading.includes('핵심 서비스');
 
     if (isImportExportPage || isCustomsAuditFocus || isForeignExchangeService || isAcvaBenefits || isQuarantineService || isUsFdaCoreService) {

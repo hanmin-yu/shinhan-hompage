@@ -1163,7 +1163,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
         ],
       },
       {
-        heading: '주요 서비스 상세 설명',
+        heading: '주요 서비스',
         list: [
           '사전 검토: 품목별 검역 및 요건 해당 여부를 사전에 검토',
           '수입 가능성 확인: 수입 가능 여부 및 법령상 제한 사항을 확인',

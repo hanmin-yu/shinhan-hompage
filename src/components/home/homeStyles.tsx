@@ -1523,8 +1523,7 @@ export const HeaderContactGroup = styled.div`
     height: 14px;
   }
 
-  &:hover > div,
-  &:focus-within > div {
+  &[data-open='true'] > div {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);

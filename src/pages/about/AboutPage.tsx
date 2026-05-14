@@ -376,18 +376,6 @@ const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`
   }};
 `;
 
-const IntroLayout = styled(P.PageContainer)`
-  display: grid;
-  grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
-  gap: clamp(44px, 6vw, 96px);
-  align-items: start;
-  max-width: 1240px;
-
-  @media (max-width: 980px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
 const SectionLabel = styled.span<{ $light?: boolean }>`
   display: block;
   margin: 0 0 14px 6px;
@@ -407,11 +395,6 @@ const EditorialTitle = styled.h2<{ $light?: boolean }>`
   line-height: 1.18;
   letter-spacing: -0.012em;
   text-wrap: balance;
-`;
-
-const BodyStack = styled.div`
-  display: grid;
-  gap: 26px;
 `;
 
 const EditorialBody = styled.p<{ $light?: boolean }>`
@@ -535,9 +518,13 @@ const NavyInner = styled(P.PageContainer)`
   }
 `;
 
+const PhilosophyLabel = styled(SectionLabel)`
+  color: #5f6f84;
+`;
+
 const ValueList = styled.div`
   display: grid;
-  border-top: 1px solid rgba(226, 231, 238, 0.16);
+  border-top: 1px solid #d8dee8;
 `;
 
 const ValueRow = styled.article`
@@ -545,7 +532,7 @@ const ValueRow = styled.article`
   grid-template-columns: minmax(210px, 0.3fr) minmax(0, 1fr);
   gap: 24px;
   padding: 32px 0;
-  border-bottom: 1px solid rgba(226, 231, 238, 0.16);
+  border-bottom: 1px solid #d8dee8;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -555,7 +542,7 @@ const ValueRow = styled.article`
 
 const ValueTitle = styled.h3`
   margin: 0;
-  color: #ffffff;
+  color: ${palette.blue};
   font-size: clamp(1.24rem, 1.75vw, 1.58rem);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -563,7 +550,7 @@ const ValueTitle = styled.h3`
 
 const ValueBody = styled.p`
   margin: 0;
-  color: rgba(226, 231, 238, 0.72);
+  color: #4d5a6c;
   font-size: 1.06rem;
   line-height: 1.78;
 `;
@@ -799,36 +786,6 @@ export function AboutPage() {
       </EditorialSection>
 
       <EditorialSection $tone="soft">
-        <IntroLayout data-reveal>
-          <div>
-            <SectionLabel>About Shinhan</SectionLabel>
-            <EditorialTitle>{t('신뢰와 실무 전문성으로 고객의 다음을 준비합니다.', 'Preparing what comes next with trust and practical expertise.')}</EditorialTitle>
-          </div>
-          <BodyStack>
-            <EditorialBody>
-              {t(
-                '오랜 기간 동안 쌓아온 신뢰와 KNOW-HOW를 바탕으로 신한의 관세전문가들이 깊이 있는 관세 서비스를 여러분께 제공하고 있습니다.',
-                'Built on trust and KNOW-HOW accumulated over many years, Shinhan’s customs professionals provide clients with deep and reliable customs services.',
-              )}
-            </EditorialBody>
-            <EditorialBody>
-              {t(
-                '정기적인 고객사 교육을 통하여 신한관세법인만의 관세 및 무역에 관한 KNOW-HOW를 고객사와 공유하고자 노력하고 있습니다.',
-                'Through regular client education, we share Shinhan Customs Service’s customs and trade KNOW-HOW with our clients.',
-              )}
-            </EditorialBody>
-            <EditorialBody>
-              {t(
-                '급변하는 세계의 무역환경에서 앞서 나갈 수 있도록 IT분야의 지속적인 투자 및 개발을 하여, 전통과 혁신이 융합된 최선의 서비스를 제공합니다.',
-                'We continue investing in and developing IT capabilities so clients can stay ahead in a rapidly changing global trade environment, delivering the best service through a combination of tradition and innovation.',
-              )}
-            </EditorialBody>
-            <Rule />
-          </BodyStack>
-        </IntroLayout>
-      </EditorialSection>
-
-      <EditorialSection $tone="soft">
         <AboutSectionContainer data-reveal>
           <SectionLabel>All-in-One Service</SectionLabel>
           <EditorialTitle>
@@ -854,13 +811,13 @@ export function AboutPage() {
         </AboutSectionContainer>
       </EditorialSection>
 
-      <EditorialSection $tone="navy">
+      <EditorialSection>
         <NavyInner data-reveal>
           <div>
-            <SectionLabel $light>{t('경영이념', 'Management Philosophy')}</SectionLabel>
-            <EditorialTitle $light>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
-            <Rule $light />
-            <EditorialBody $light>
+            <PhilosophyLabel>{t('경영이념', 'Management Philosophy')}</PhilosophyLabel>
+            <EditorialTitle>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
+            <Rule />
+            <EditorialBody>
               {t(
                 '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
                 'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
