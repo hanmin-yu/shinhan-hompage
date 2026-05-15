@@ -123,6 +123,10 @@ const MessageTitle = styled.h2`
   }
 `;
 
+const TitleBreak = styled.span`
+  display: block;
+`;
+
 const BodyStack = styled.div`
   display: grid;
   gap: clamp(18px, 2.2vw, 26px);
@@ -273,10 +277,10 @@ export function MessagePage() {
           <MessageArticle>
             <MessageHeader>
               <MessageTitle>
-                {t(
-                  '60년의 신뢰를 넘어, 100년의 가치를 완성하는 파트너십',
-                  'Beyond 60 Years of Trust, a Partnership Completing 100 Years of Value',
-                )}
+                {t('60년의 신뢰를 넘어,', 'Beyond 60 Years of Trust,')}
+                <TitleBreak>
+                  {t('100년의 가치를 완성하는 파트너십', 'a Partnership Completing 100 Years of Value')}
+                </TitleBreak>
               </MessageTitle>
             </MessageHeader>
 

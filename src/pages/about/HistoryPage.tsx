@@ -409,11 +409,14 @@ const periodOrder = ['2011-current', '2001-2010', '1965-2000'] as const;
 export function HistoryPage() {
   const { t } = useI18n();
   const aboutSubnav = sectionSubnav.about;
-  const featuredMilestone = historyMilestones[historyMilestones.length - 1];
-  const supportingMilestones = historyMilestones.slice(0, historyMilestones.length - 1);
+  const sortedMilestones = [...historyMilestones].sort((a, b) => Number(b.year) - Number(a.year));
+  const featuredMilestone = sortedMilestones[0];
+  const supportingMilestones = sortedMilestones.slice(1);
 
   const groupedByPeriod = periodOrder.map((period) => {
-    const items = aboutTimeline.filter((item) => item.period === period);
+    const items = aboutTimeline
+      .filter((item) => item.period === period)
+      .sort((a, b) => Number(b.year) - Number(a.year));
     const byYear = Array.from(new Set(items.map((item) => item.year))).map((year) => ({
       year,
       events: items.filter((item) => item.year === year).map((item) => item.event),

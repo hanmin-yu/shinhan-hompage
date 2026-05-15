@@ -1,7 +1,10 @@
 import { useEffect, useState, type FocusEvent, type MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { IssueReportDetailModal, useIssueReportDetailModal } from '../../site/IssueReportDetailModal';
 import { getHeaderNavigation } from '../../../config/navigation';
+import { issueReports as fallbackIssueReports } from '../../../data/home';
+import { useIssueReports } from '../../../hooks/useIssueReports';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -14,6 +17,8 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
   const headerNavigation = getHeaderNavigation(language);
+  const { reports: liveIssueReports } = useIssueReports();
+  const issueReportDetail = useIssueReportDetailModal();
   const overHero = !pathname.startsWith('/admin');
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);
@@ -68,6 +73,19 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
     closeMegaMenu();
   };
 
+  const openLatestIssueReportFromMenu = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    closeMegaMenu();
+
+    const latestIssueReport =
+      liveIssueReports.find((report) => report.status !== 'placeholder') ??
+      fallbackIssueReports.find((report) => report.status !== 'placeholder');
+
+    if (latestIssueReport) {
+      void issueReportDetail.openReportDetail(latestIssueReport);
+    }
+  };
+
   const renderMegaMenuTitle = (label: string) =>
     label === '신한관세법인 소개' ? (
       <>
@@ -105,6 +123,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
   }, [megaMenuSuppressed, pathname]);
 
   return (
+    <>
     <S.Header $overHero={overHero} $scrolled={isScrolled} $megaMenuOpen={Boolean(activeMegaMenuId)} onMouseLeave={() => setActiveMegaMenuId(null)}>
       <S.HeaderInner data-mega-suppressed={megaMenuSuppressed ? 'true' : undefined}>
         <S.Brand to="/" aria-label={t('신한관세법인 홈', 'Shinhan Customs Service home')}>
@@ -143,6 +162,16 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
                             <S.MegaMenuAnchor key={child.id} href={child.href} target="_blank" rel="noreferrer" data-mega-link onClick={closeMegaMenu}>
                               {child.label}
                             </S.MegaMenuAnchor>
+                          ) : child.id === 'news-issue-report' ? (
+                            <S.MegaMenuLink
+                              key={child.id}
+                              to={child.to ?? '/news/issue-report'}
+                              data-mega-link
+                              aria-haspopup="dialog"
+                              onClick={openLatestIssueReportFromMenu}
+                            >
+                              {child.label}
+                            </S.MegaMenuLink>
                           ) : (
                             <S.MegaMenuLink key={child.id} to={child.to ?? '/'} data-mega-link onClick={closeMegaMenu}>
                               {child.label}
@@ -200,5 +229,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
         </S.HeaderRight>
       </S.HeaderInner>
     </S.Header>
+    <IssueReportDetailModal {...issueReportDetail} />
+    </>
   );
 }

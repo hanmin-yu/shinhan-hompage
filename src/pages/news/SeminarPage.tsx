@@ -8,7 +8,7 @@ import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
-import { sortShinhanNewsRecords } from '../../utils/shinhanNews';
+import type { ShinhanNewsItem } from '../../types/site';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
@@ -41,6 +41,16 @@ function isSeminarRecruiting(title: string) {
   return eventDate >= today;
 }
 
+function compareSeminarItems(left: ShinhanNewsItem, right: ShinhanNewsItem) {
+  const recruitingDelta = Number(isSeminarRecruiting(left.title)) - Number(isSeminarRecruiting(right.title));
+
+  if (recruitingDelta !== 0) {
+    return -recruitingDelta;
+  }
+
+  return right.publishedAt.localeCompare(left.publishedAt);
+}
+
 export function SeminarPage() {
   const { t } = useI18n();
   const newsSubnav = sectionSubnav.news;
@@ -48,7 +58,10 @@ export function SeminarPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const seminarItems = useMemo(() => sortShinhanNewsRecords(items).filter((item) => item.category === 'seminar'), [items]);
+  const seminarItems = useMemo(
+    () => items.filter((item) => item.category === 'seminar').sort(compareSeminarItems),
+    [items],
+  );
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);

@@ -182,11 +182,11 @@ export const aboutTimeline = [
 ];
 
 export const historyMilestones = [
-  { year: '2019', ko: '신한 베트남 관세법인(SCV) 설립', en: 'Established Shinhan Customs Vietnam (SCV)' },
-  { year: '1965', ko: '서울통관사 창립', en: 'Founded as Seoul Customs Service' },
-  { year: '1993', ko: '신한관세법인 법인 등록', en: 'Registered as Shinhan Customs Service Inc.' },
-  { year: '2015', ko: '신한관세법인 창립 50주년', en: '50th Anniversary of Shinhan Customs Service' },
   { year: '2025', ko: '신한관세법인 창립 60주년', en: '60th Anniversary of Shinhan Customs Service' },
+  { year: '2019', ko: '신한 베트남 관세법인(SCV) 설립', en: 'Established Shinhan Customs Vietnam (SCV)' },
+  { year: '2015', ko: '신한관세법인 창립 50주년', en: '50th Anniversary of Shinhan Customs Service' },
+  { year: '1993', ko: '신한관세법인 법인 등록', en: 'Registered as Shinhan Customs Service Inc.' },
+  { year: '1965', ko: '서울통관사 창립', en: 'Founded as Seoul Customs Service' },
 ];
 
 export const managementValues: PointItem[] = [
@@ -1013,30 +1013,12 @@ const aeoSections: ServiceDetailSection[] = [
     ],
   },
   {
-    heading: 'AEO인증 & 갱신심사 컨설팅',
-    headingEn: 'Certification and Renewal Consulting',
-    body: [
-      'AEO 신규 인증을 준비하는 대부분의 기업이 전사적인 참여 유도, 공인기준 이해, 신규 프로세스의 적용과정에서 어려움을 겪습니다. 당사는 부서별 집중 교육과 기업 맞춤형 프로세스 구축을 통해 기존 업무 흐름에 신규 프로세스가 자연스럽게 정착되도록 지원합니다.',
-      '갱신심사 과정에서는 개정된 기준이나 수시로 변하는 심사 트렌드를 적시에 반영하지 못해 요건을 충족하지 못하는 사례가 발생할 수 있습니다. 당사는 최신 공인 기준과 심사 동향을 신속하고 정확하게 반영하여 갱신심사가 원활하게 진행되도록 적극 지원합니다.',
-      '또한 신규 공인 취득 및 갱신심사 시 요구되는 약 220여 개 이상의 공인기준에 대해, 제도 도입 초기부터 현재까지 경험이 축적된 전문 컨설턴트를 배정하여 신속하고 정확한 (재)공인을 지원합니다.',
-    ],
-  },
-  {
-    heading: '사후관리',
-    headingEn: 'Post-Certification Management',
-    body: [
-      'AEO (재)공인 후 연간 정기 자율평가 및 심사자 확인서 제출 등 필수적인 세관 보고 의무를 컨설팅 일정에 따라 체계적으로 대행하며, 인적·사업장 변동 사항을 모니터링하여 세관 신고와 현장 실사 대응까지 빈틈없이 지원합니다.',
-      '업무 절차 변경 시 누락이 발생하지 않도록 관련 규정의 현행화를 상시 모니터링하고 개정 전 과정을 밀착 지원합니다.',
-      '특히 사후관리 수행에 가장 어려움을 겪는 3대 평가(위험평가, 내부통제활동평가, 거래업체 평가) 과정에서는 분야별 전문 컨설턴트가 세세하게 개입하여 단기간 내 평가가 종료될 수 있도록 지원하고, 실질적인 리스크를 도출해 형식적 평가를 넘어 기업 운영에 도움이 되도록 지원합니다.',
-    ],
-  },
-  {
-    heading: '등급조정 및 관세 협력 활동 지원',
-    headingEn: 'Grade Adjustment and Cooperation Support',
-    body: [
-      '등급조정은 서류 제출 이후 현장심사를 통해 진행되며, 신규 공인이나 갱신심사와 달리 현장 보완 없이 성패가 결정됩니다. 당사는 AAA 승급 성공 컨설팅 경험을 바탕으로 신청 전 면밀한 서류 사전 검토와 철저한 현장심사 대응을 지원합니다.',
-      'AEO 활용사례 나눔대회 수상 이력이 있는 기업은 공인등급 상향을 위한 자격 요건을 충족할 수 있습니다. 당사는 사례 소재 발굴부터 본선 진출, 대상 포함 다수의 수상 실적을 기반으로 발표 구성과 발표 역량 강화까지 전 과정을 체계적으로 지원합니다.',
-      '또한 국내 AEO 인증을 넘어 미국 관세국경보호청의 C-TPAT 검증 대응과 국가 간 MRA 체결을 위한 합동심사 지원 등 다양한 국내외 대관 업무 경험을 바탕으로 각국 세관 및 유관기관 대응을 지원합니다.',
+    heading: '주요 서비스',
+    headingEn: 'Key Services',
+    list: [
+      'AEO인증 & 갱신심사 컨설팅: 전사 교육과 맞춤형 프로세스 구축을 통해 공인기준의 안정적인 정착을 지원하며, 최신 심사 기준과 동향을 반영하여 약 220여 개 이상의 공인기준에 대한 신속하고 정확한 (재)공인을 지원합니다.',
+      '사후관리: 인적·사업장 변동 및 규정 개정을 상시 모니터링하며, 위험평가·내부통제활동평가·거래업체 평가 등 주요 사후관리 업무를 전문 컨설턴트가 지원하여 효율적인 운영과 실질적인 리스크 관리를 지원합니다.',
+      '등급조정 및 관세 협력 활동 지원: 다수의 등급상향 컨설팅 경험으로 활용사례 나눔대회 수상 지원부터 발표 역량 강화까지 체계적으로 지원하며, C-TPAT 검증 대응과 MRA 합동심사 등 국내외 세관 및 유관기관 대응 업무도 함께 지원합니다.',
     ],
   },
 ];
@@ -1106,7 +1088,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     heroImage: '/hero/service-import-export-ai.png',
     heroImageAlt: '수출입 통관 서비스',
     overview:
-      '수출입통관 통합관리의 새로운 기준, iOOM 플랫폼. 기업의 물류·재무 부서와 관세사, 세관을 실시간으로 잇는 클라우드 기반 수출입 통합 관리 시스템입니다.',
+      '수출입 통관 전 과정에 대해 정확한 법령 해석과 실무 경험을 기반으로 신속하고 안정적인 서비스를 제공합니다.',
     scope: [
       'HS CODE 마스터 관리 시스템 운영',
       'RMS 기반 통관 리스크 관리',

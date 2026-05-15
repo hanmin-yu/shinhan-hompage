@@ -251,10 +251,7 @@ const FlowKicker = styled.span`
   width: 24px;
   aspect-ratio: 1;
   border-radius: 6px;
-  background:
-    linear-gradient(#ffffff, #ffffff) 50% 31% / 12px 2px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 50% 50% / 12px 2px no-repeat,
-    linear-gradient(#ffffff, #ffffff) 50% 69% / 12px 2px no-repeat;
+  background: rgba(255, 255, 255, 0.96);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.38);
   color: transparent;
   font-size: 0;
@@ -366,9 +363,7 @@ const RefundFlow = styled.div<{ $showConnector?: boolean }>`
   border: 1px solid #d8dee8;
   border-top: 2px solid ${palette.blue};
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 50% 22%, rgba(18, 63, 133, 0.06), transparent 34%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  background: #ffffff;
 
   &::before {
     content: '';
@@ -377,7 +372,7 @@ const RefundFlow = styled.div<{ $showConnector?: boolean }>`
     right: clamp(68px, 9vw, 110px);
     top: clamp(118px, 11vw, 146px);
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(29, 95, 182, 0.2), transparent);
+    background: rgba(29, 95, 182, 0.18);
     display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
 
@@ -456,8 +451,7 @@ const RefundStep = styled.article<{ $accent: string; $showConnector?: boolean }>
     border: 1px solid #d8dee8;
     border-top: 3px solid ${({ $accent }) => $accent};
     border-radius: 999px;
-    background:
-      linear-gradient(180deg, #ffffff 0%, #f6f9fd 100%);
+    background: #ffffff;
     color: ${palette.blue};
     font-size: clamp(1rem, 1.35vw, 1.24rem);
     font-weight: 800;
@@ -545,10 +539,7 @@ const ProcessStrip = styled.div<{ $tone?: 'default' | 'navy'; $columns?: number 
   border: 1px solid #d8dee8;
   border-top: 2px solid ${palette.blue};
   border-radius: 8px;
-  background: ${({ $tone = 'default' }) =>
-    $tone === 'navy'
-      ? 'radial-gradient(circle at 16% 20%, rgba(18, 63, 133, 0.12), transparent 28%), radial-gradient(circle at 86% 18%, rgba(29, 95, 182, 0.1), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'
-      : 'radial-gradient(circle at 16% 20%, rgba(31, 199, 195, 0.18), transparent 28%), radial-gradient(circle at 86% 18%, rgba(107, 143, 242, 0.16), transparent 30%), linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'};
+  background: #ffffff;
 
   @media (max-width: 960px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -575,13 +566,13 @@ const ProcessNode = styled.article<{ $accent: string; $showConnector?: boolean }
     width: clamp(72px, 7vw, 92px);
     aspect-ratio: 1;
     border-radius: 999px;
-    background:
-      radial-gradient(circle at 50% 50%, #ffffff 0 44%, transparent 45%),
-      conic-gradient(${({ $accent }) => $accent} 0 82%, rgba(216, 222, 232, 0.9) 82% 100%);
+    background: #ffffff;
     color: ${palette.blue};
     font-size: clamp(0.94rem, 1.2vw, 1.08rem);
     font-weight: 900;
-    box-shadow: 0 18px 34px color-mix(in srgb, ${({ $accent }) => $accent} 22%, transparent);
+    box-shadow:
+      inset 0 0 0 13px ${({ $accent }) => $accent},
+      0 18px 34px color-mix(in srgb, ${({ $accent }) => $accent} 22%, transparent);
   }
 
   &::after {
@@ -591,10 +582,8 @@ const ProcessNode = styled.article<{ $accent: string; $showConnector?: boolean }
     right: -20px;
     width: 28px;
     height: 12px;
-    background:
-      linear-gradient(90deg, ${({ $accent }) => $accent}, ${({ $accent }) => $accent}) 0 50% / 18px 3px no-repeat,
-      linear-gradient(45deg, transparent 50%, ${({ $accent }) => $accent} 51%) 16px 2px / 8px 8px no-repeat,
-      linear-gradient(-45deg, transparent 50%, ${({ $accent }) => $accent} 51%) 16px 2px / 8px 8px no-repeat;
+    background: ${({ $accent }) => $accent};
+    clip-path: polygon(0 40%, 64% 40%, 64% 12%, 100% 50%, 64% 88%, 64% 60%, 0 60%);
     display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
 
@@ -636,10 +625,7 @@ const SequenceFlow = styled.ol<{ $columns?: number }>`
   border: 1px solid #d8dee8;
   border-top: 2px solid ${palette.blue};
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 16% 20%, rgba(18, 63, 133, 0.1), transparent 28%),
-    radial-gradient(circle at 86% 18%, rgba(29, 95, 182, 0.08), transparent 30%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  background: #ffffff;
   list-style: none;
 
   @media (max-width: 960px) {
@@ -688,10 +674,8 @@ const SequenceStep = styled.li<{ $showConnector?: boolean }>`
     right: -24px;
     width: 20px;
     height: 10px;
-    background:
-      linear-gradient(90deg, ${palette.blue}, ${palette.blue}) 0 50% / 13px 2px no-repeat,
-      linear-gradient(45deg, transparent 50%, ${palette.blue} 51%) 12px 1px / 8px 8px no-repeat,
-      linear-gradient(-45deg, transparent 50%, ${palette.blue} 51%) 12px 1px / 8px 8px no-repeat;
+    background: ${palette.blue};
+    clip-path: polygon(0 40%, 64% 40%, 64% 12%, 100% 50%, 64% 88%, 64% 60%, 0 60%);
     transform: translateY(-50%);
     display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
   }
@@ -731,9 +715,7 @@ const PenaltyProcedureBoard = styled.div`
   border: 1px solid #d8dee8;
   border-top: 2px solid ${palette.blue};
   border-radius: 8px;
-  background:
-    radial-gradient(circle at 16% 16%, rgba(18, 63, 133, 0.08), transparent 28%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  background: #ffffff;
 
   @media (max-width: 820px) {
     grid-template-columns: 1fr;
@@ -847,8 +829,8 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
   border-radius: 22px 22px 10px 10px;
   background: ${({ $tone = 'solid', $accent }) =>
     $tone === 'plain'
-      ? 'linear-gradient(180deg, #f6f9ff 0%, #eaf2fb 100%)'
-      : `linear-gradient(180deg, color-mix(in srgb, ${$accent} 74%, #ffffff), ${$accent})`};
+      ? '#f6f9ff'
+      : $accent};
   color: ${({ $tone = 'solid' }) => ($tone === 'plain' ? '#143b6f' : '#ffffff')};
   box-shadow: ${({ $tone = 'solid', $accent }) =>
     $tone === 'plain'
@@ -868,7 +850,7 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
     border: 7px solid ${({ $tone = 'solid' }) => ($tone === 'plain' ? '#f6f9ff' : '#ffffff')};
     border-radius: 999px;
     background: ${({ $tone = 'solid', $accent }) =>
-      $tone === 'plain' ? 'linear-gradient(180deg, #1d5fb6 0%, #123f85 100%)' : `color-mix(in srgb, ${$accent} 78%, #172337)`};
+      $tone === 'plain' ? '#123f85' : `color-mix(in srgb, ${$accent} 78%, #172337)`};
     color: #ffffff;
     font-size: 0.82rem;
     font-weight: 900;
@@ -909,8 +891,8 @@ const MetricBoard = styled.div<{ $tone?: 'dark' | 'plain' }>`
   border-radius: 8px;
   background: ${({ $tone = 'dark' }) =>
     $tone === 'plain'
-      ? 'linear-gradient(180deg, #ffffff 0%, #f8fbff 100%)'
-      : 'radial-gradient(circle at 78% 44%, rgba(31, 199, 195, 0.2), transparent 30%), linear-gradient(135deg, #172337 0%, #233247 100%)'};
+      ? '#ffffff'
+      : '#172337'};
   color: ${({ $tone = 'dark' }) => ($tone === 'plain' ? palette.blue : '#ffffff')};
   box-shadow: ${({ $tone = 'dark' }) =>
     $tone === 'plain' ? '0 18px 34px rgba(15, 38, 76, 0.07)' : '0 24px 48px rgba(15, 38, 76, 0.18)'};
@@ -956,10 +938,10 @@ const MetricItem = styled.article<{ $accent: string; $tone?: 'dark' | 'plain' }>
   padding: 22px;
   border: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.12)')};
   border-radius: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '8px' : '999px 999px 18px 18px')};
-  background: ${({ $tone = 'dark', $accent }) =>
+  background: ${({ $tone = 'dark' }) =>
     $tone === 'plain'
       ? '#ffffff'
-      : `radial-gradient(circle at 50% 0%, color-mix(in srgb, ${$accent} 28%, transparent), transparent 48%), rgba(255, 255, 255, 0.045)`};
+      : 'rgba(255, 255, 255, 0.045)'};
   box-shadow: ${({ $tone = 'dark' }) => ($tone === 'plain' ? '0 12px 24px rgba(15, 38, 76, 0.05)' : 'none')};
 
   &::before {
@@ -1003,7 +985,7 @@ const PlatformFeatureMatrix = styled.div`
     content: '';
     display: block;
     height: 4px;
-    background: linear-gradient(90deg, ${palette.blue} 0%, #1d5fb6 62%, #8fb7e8 100%);
+    background: ${palette.blue};
   }
 `;
 
@@ -1012,7 +994,7 @@ const FeatureMatrixHeader = styled.div`
   grid-template-columns: 82px minmax(180px, 0.42fr) minmax(0, 1fr);
   min-height: 52px;
   border-bottom: 1px solid #dbe3ee;
-  background: linear-gradient(180deg, #fbfdff 0%, #f2f6fb 100%);
+  background: #f6f9fd;
   color: ${palette.blue};
 
   @media (max-width: 760px) {
@@ -1197,7 +1179,7 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid rgba(26, 55, 91, 0.14);
-  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  background: #ffffff;
   box-shadow:
     0 16px 38px rgba(13, 35, 66, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.92) inset;
@@ -1259,7 +1241,7 @@ const ContactNameDivider = styled.span`
   width: 2px;
   height: 34px;
   margin-top: 2px;
-  background: linear-gradient(180deg, #102a55, #1d5fb6);
+  background: #123f85;
   opacity: 0.9;
 
   @media (max-width: 560px) {
@@ -1354,9 +1336,7 @@ const ContactPhotoPanel = styled.div<{ $accent: string }>`
   min-width: 0;
   overflow: hidden;
   border-left: 1px solid rgba(26, 55, 91, 0.14);
-  background:
-    radial-gradient(circle at 74% 8%, rgba(28, 90, 167, 0.12), transparent 38%),
-    linear-gradient(145deg, #ffffff 0%, #f3f7fc 48%, #eaf1f8 100%);
+  background: #f3f7fc;
 
   &::before {
     content: '';
@@ -1364,9 +1344,7 @@ const ContactPhotoPanel = styled.div<{ $accent: string }>`
     inset: 12px 10px;
     z-index: 1;
     border-radius: 12px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28)),
-      rgba(255, 255, 255, 0.38);
+    background: rgba(255, 255, 255, 0.58);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.92),
       inset 0 0 0 1px rgba(255, 255, 255, 0.58);
@@ -1486,7 +1464,7 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     return 'metric';
   }
   if (contentId === 'foreign-exchange') {
-    if (heading === '정기 외환검사 대응') return 'sequence';
+    if (heading === '정기 외환검사 대응') return 'stage';
   }
   if (contentId === 'penalty-investigation') {
     if (heading === '범칙조사 구분') return 'circle';
@@ -1872,6 +1850,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           isRefundPage
             ? palette.blue
             : isForeignExchangePage
+              ? palette.blue
+            : isAeoPage
               ? palette.blue
             : isAcvaPage
               ? palette.blue
