@@ -403,7 +403,7 @@ const ContactInitialMark = styled.div`
   font-weight: 900;
 `;
 
-const itContactNames = ['홍성훈', '서인석'];
+const itContactNames = ['최대규', '홍성훈'];
 
 export function ItPage() {
   const { t, tx } = useI18n();

@@ -798,7 +798,7 @@ const PenaltyProcedureStepText = styled.span`
   word-break: keep-all;
 `;
 
-const StageCards = styled.div<{ $columns?: number; $titleRows?: number }>`
+const StageCards = styled.div<{ $columns?: number; $titleRows?: number; $layout?: 'grid' | 'vertical' }>`
   --stage-title-lines: ${({ $titleRows = 3 }) => $titleRows};
 
   counter-reset: stage-card;
@@ -808,8 +808,17 @@ const StageCards = styled.div<{ $columns?: number; $titleRows?: number }>`
   gap: 20px;
   padding-top: 18px;
 
+  ${({ $layout }) =>
+    $layout === 'vertical'
+      ? `
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding-top: 0;
+      `
+      : ''}
+
   @media (max-width: 960px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: ${({ $layout }) => ($layout === 'vertical' ? '1fr' : 'repeat(2, minmax(0, 1fr))')};
   }
 
   @media (max-width: 560px) {
@@ -817,7 +826,7 @@ const StageCards = styled.div<{ $columns?: number; $titleRows?: number }>`
   }
 `;
 
-const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>`
+const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain'; $layout?: 'grid' | 'vertical' }>`
   counter-increment: stage-card;
   position: relative;
   display: grid;
@@ -838,6 +847,19 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
       : `0 22px 40px color-mix(in srgb, ${$accent} 24%, transparent)`};
   text-align: center;
 
+  ${({ $layout }) =>
+    $layout === 'vertical'
+      ? `
+        grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
+        align-items: center;
+        gap: clamp(18px, 3vw, 32px);
+        min-height: auto;
+        padding: 24px 28px 24px 86px;
+        border-radius: 8px;
+        text-align: left;
+      `
+      : ''}
+
   &::before {
     content: counter(stage-card, decimal-leading-zero);
     position: absolute;
@@ -856,15 +878,44 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
     font-weight: 900;
     transform: translateX(-50%);
     box-shadow: 0 14px 28px rgba(15, 38, 76, 0.16);
+
+    ${({ $layout }) =>
+      $layout === 'vertical'
+        ? `
+          top: 50%;
+          left: 28px;
+          width: 42px;
+          border-width: 0;
+          transform: translateY(-50%);
+        `
+        : ''}
+  }
+
+  @media (max-width: 720px) {
+    ${({ $layout }) =>
+      $layout === 'vertical'
+        ? `
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 70px 20px 22px;
+          text-align: center;
+
+          &::before {
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        `
+        : ''}
   }
 `;
 
-const StageCardTitle = styled.strong`
+const StageCardTitle = styled.strong<{ $layout?: 'grid' | 'vertical' }>`
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: calc(1em * 1.34 * var(--stage-title-lines));
-  font-size: clamp(0.98rem, 1.08vw, 1.08rem);
+  justify-content: ${({ $layout }) => ($layout === 'vertical' ? 'flex-start' : 'center')};
+  min-height: ${({ $layout }) => ($layout === 'vertical' ? '0' : 'calc(1em * 1.34 * var(--stage-title-lines))')};
+  font-size: ${({ $layout }) => ($layout === 'vertical' ? 'clamp(1.06rem, 1.45vw, 1.28rem)' : 'clamp(0.98rem, 1.08vw, 1.08rem)')};
   font-weight: 800;
   line-height: 1.34;
   letter-spacing: 0;
@@ -872,11 +923,11 @@ const StageCardTitle = styled.strong`
   text-wrap: balance;
 `;
 
-const StageCardText = styled.span`
+const StageCardText = styled.span<{ $layout?: 'grid' | 'vertical' }>`
   color: inherit;
-  opacity: 0.72;
-  font-size: 0.8rem;
-  line-height: 1.62;
+  opacity: ${({ $layout }) => ($layout === 'vertical' ? 0.82 : 0.72)};
+  font-size: ${({ $layout }) => ($layout === 'vertical' ? 'clamp(0.9rem, 1.05vw, 0.98rem)' : '0.8rem')};
+  line-height: ${({ $layout }) => ($layout === 'vertical' ? 1.72 : 1.62)};
   word-break: keep-all;
   text-wrap: pretty;
 `;
@@ -1842,8 +1893,15 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     );
   };
 
-  const renderStageDiagram = (items: string[]) => (
-    <StageCards $columns={getBalancedDiagramColumns(items.length)} $titleRows={isTaxAppealPage || items.length > 5 ? 3 : 2}>
+  const renderStageDiagram = (items: string[], sectionHeading = '') => {
+    const stageLayout = isAeoPage && sectionHeading === '주요 서비스' ? 'vertical' : 'grid';
+
+    return (
+    <StageCards
+      $columns={stageLayout === 'vertical' ? undefined : getBalancedDiagramColumns(items.length)}
+      $titleRows={isTaxAppealPage || items.length > 5 ? 3 : 2}
+      $layout={stageLayout}
+    >
       {items.map((item, index) => {
         const { term, description } = splitDiagramItem(tx(item));
         const accent =
@@ -1859,14 +1917,15 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
               ? palette.blue
               : vividAccents[index % vividAccents.length];
         return (
-          <StageCard key={item} $accent={accent} $tone="plain">
-            <StageCardTitle>{term}</StageCardTitle>
-            {description ? <StageCardText>{description}</StageCardText> : null}
+          <StageCard key={item} $accent={accent} $tone="plain" $layout={stageLayout}>
+            <StageCardTitle $layout={stageLayout}>{term}</StageCardTitle>
+            {description ? <StageCardText $layout={stageLayout}>{description}</StageCardText> : null}
           </StageCard>
         );
       })}
     </StageCards>
-  );
+    );
+  };
 
   const renderSequenceDiagram = (items: string[]) => {
     const columns = getBalancedDiagramColumns(items.length);
@@ -1919,7 +1978,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     const kind = getDiagramKind(content.id, sectionHeading, isSteps);
 
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
-    if (kind === 'stage') return renderStageDiagram(items);
+    if (kind === 'stage') return renderStageDiagram(items, sectionHeading);
     if (kind === 'sequence') return renderSequenceDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
@@ -1930,7 +1989,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
   const renderDiagramByKind = (items: string[], sectionHeading: string, kind: DiagramKind) => {
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
-    if (kind === 'stage') return renderStageDiagram(items);
+    if (kind === 'stage') return renderStageDiagram(items, sectionHeading);
     if (kind === 'sequence') return renderSequenceDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);

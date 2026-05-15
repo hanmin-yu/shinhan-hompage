@@ -62,6 +62,10 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
     setActiveMegaMenuId(itemId);
   };
 
+  const collapseMegaMenu = () => {
+    setActiveMegaMenuId(null);
+  };
+
   const handlePrimaryNavClick = (event: MouseEvent<HTMLAnchorElement>, itemId: string, hasChildren: boolean) => {
     if (hasChildren) {
       event.preventDefault();
@@ -133,7 +137,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
           </S.HeaderLogoFrame>
         </S.Brand>
 
-        <S.MenuArea>
+        <S.MenuArea onMouseLeave={collapseMegaMenu}>
           <S.Nav>
             {headerNavigation.map((item) => (
               <S.NavItem
@@ -187,7 +191,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
           </S.Nav>
         </S.MenuArea>
 
-        <S.HeaderRight>
+        <S.HeaderRight onMouseEnter={collapseMegaMenu} onFocusCapture={collapseMegaMenu}>
           <S.HeaderTools>
             <S.HeaderContactGroup
               data-open={contactMenuOpen ? 'true' : undefined}
