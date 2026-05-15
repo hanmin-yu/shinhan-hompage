@@ -223,7 +223,7 @@ export function OfficesPage() {
               <OfficeTabsShell>
                 <OfficeTabs aria-label={t('사무소 선택', 'Select office')}>
                   <OfficeTabGroup>
-                    <OfficeTabGroupLabel>{t('신한 FAMILY', 'Shinhan Family')}</OfficeTabGroupLabel>
+                    <OfficeTabGroupLabel>{t('신한관세법인', 'Shinhan Customs Service')}</OfficeTabGroupLabel>
                     <OfficeTabGroupItems $columns={primaryOffices.length}>{primaryOffices.map(renderOfficeTab)}</OfficeTabGroupItems>
                   </OfficeTabGroup>
                   <OfficeTabDivider aria-hidden="true" />
@@ -469,7 +469,7 @@ const OfficeTabGroupLabel = styled.span`
   align-items: center;
   justify-self: start;
   min-height: 22px;
-  color: #243247;
+  color: ${palette.blue};
   font-size: clamp(0.72rem, 0.78vw, 0.86rem);
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -699,7 +699,7 @@ const InfoRow = styled.div`
 `;
 
 const InfoLabel = styled.span`
-  color: #1f5cb2;
+  color: ${palette.blue};
   font-size: 0.84rem;
   font-weight: 800;
 `;
@@ -772,7 +772,7 @@ const MapActionGroup = styled.div`
 
 const MapActionLabel = styled.span`
   min-width: 62px;
-  color: #172337;
+  color: ${palette.blue};
   font-size: 0.94rem;
   font-weight: 850;
 `;

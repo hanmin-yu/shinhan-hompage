@@ -8,8 +8,9 @@ import unzipper from 'unzipper';
 
 import { newsletterItems, shinhanNewsItems } from '../src/data/newsStaticSeeds';
 import { shinhanNewsDetails } from '../src/data/shinhanNewsDetails';
+import { handleIssueReportsRequest } from '../src/server/issueReportsHttp';
 import type { AdminSession, NewsletterRecord, ShinhanNewsRecord } from '../src/types/site';
-import { isShinhanNewsNotice, sortShinhanNewsRecords } from '../src/utils/shinhanNews';
+import { sortShinhanNewsRecords } from '../src/utils/shinhanNews';
 
 type StoredShinhanNewsIndexEntry = Omit<ShinhanNewsRecord, 'bodyHtml'> & {
   bodyFile?: string;
@@ -40,6 +41,7 @@ const STORAGE_ROOT = resolveManagedContentRoot();
 const SHINHAN_NEWS_ROOT = path.join(STORAGE_ROOT, 'news/shinhan-news');
 const SHINHAN_NEWS_INDEX_PATH = path.join(SHINHAN_NEWS_ROOT, 'index.json');
 const SHINHAN_NEWS_ITEMS_ROOT = path.join(SHINHAN_NEWS_ROOT, 'items');
+const SHINHAN_NEWS_ASSETS_ROOT = path.join(SHINHAN_NEWS_ROOT, 'assets');
 const NEWSLETTER_ROOT = path.join(STORAGE_ROOT, 'news/newsletter');
 const NEWSLETTER_INDEX_PATH = path.join(NEWSLETTER_ROOT, 'index.json');
 const NEWSLETTER_FILES_ROOT = path.join(NEWSLETTER_ROOT, 'files');
@@ -249,8 +251,70 @@ function toPublicUrl(...segments: string[]) {
   return `/${segments.map((segment) => segment.split('/').map(encodeURIComponent).join('/')).join('/')}`;
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function plainTextToHtml(value: string) {
+  return value
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`)
+    .join('\n');
+}
+
+function isImageUpload(file: Express.Multer.File) {
+  return /^image\/(png|jpe?g|webp|gif)$/i.test(file.mimetype);
+}
+
+async function writeShinhanNewsImage(newsId: string, file: Express.Multer.File) {
+  if (!isImageUpload(file)) {
+    throw new Error('이미지 파일은 PNG, JPG, WEBP, GIF 형식만 업로드할 수 있습니다.');
+  }
+
+  const assetRoot = path.join(SHINHAN_NEWS_ASSETS_ROOT, newsId);
+  await fs.mkdir(assetRoot, { recursive: true });
+
+  const storedFileName = createOpaqueFileName(file.originalname, '.png');
+  await fs.writeFile(path.join(assetRoot, storedFileName), file.buffer);
+
+  return toPublicUrl('managed-content', 'news', 'shinhan-news', 'assets', newsId, storedFileName);
+}
+
+function replaceImageMarkers(bodyHtml: string, uploadIds: string[], urls: string[]) {
+  return uploadIds.reduce((nextHtml, uploadId, index) => {
+    const url = urls[index];
+
+    if (!url) {
+      return nextHtml;
+    }
+
+    return nextHtml.split(`__NEWS_IMAGE_ID__${uploadId}__`).join(url);
+  }, bodyHtml);
+}
+
+function parseJsonStringArray(value?: string) {
+  if (!value) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
 async function ensureStorageRoots() {
   await fs.mkdir(SHINHAN_NEWS_ITEMS_ROOT, { recursive: true });
+  await fs.mkdir(SHINHAN_NEWS_ASSETS_ROOT, { recursive: true });
   await fs.mkdir(NEWSLETTER_FILES_ROOT, { recursive: true });
 }
 
@@ -361,7 +425,18 @@ async function unzipPreview(buffer: Buffer, destinationDir: string) {
   );
 }
 
-async function saveShinhanNewsRecord(payload: Partial<ShinhanNewsRecord> & { title: string; summary: string; publishedAt: string; bodyHtml?: string }) {
+async function saveShinhanNewsRecord(
+  payload: Partial<ShinhanNewsRecord> & {
+    title: string;
+    summary: string;
+    publishedAt: string;
+    bodyHtml?: string;
+    bodyText?: string;
+    entryType?: 'notice' | 'flash' | 'seminar';
+    bodyImageIds?: string;
+  },
+  files: Partial<Record<'bodyImages' | 'flashImage', Express.Multer.File[]>> = {},
+) {
   const newsId = resolveRecordId(payload.id, 'news');
   const existingIndex = (await readStoredShinhanNewsIndex()) ?? staticShinhanNewsRecords.map(({ bodyHtml, ...item }) => ({
     ...item,
@@ -369,10 +444,24 @@ async function saveShinhanNewsRecord(payload: Partial<ShinhanNewsRecord> & { tit
   }));
   const existing = existingIndex.find((item) => item.id === newsId) ?? null;
   const bodyFile = existing?.bodyFile ?? createOpaqueFileName(undefined, '.html');
+  const entryType = payload.entryType ?? (payload.category === 'seminar' ? 'seminar' : 'flash');
+  const category = entryType === 'seminar' ? 'seminar' : 'flash';
+  const categoryLabel = entryType === 'notice' ? '공지' : entryType === 'seminar' ? '세미나' : 'FLASH';
+  const bodyImages = files.bodyImages ?? [];
+  const bodyImageIds = parseJsonStringArray(payload.bodyImageIds);
+  const bodyImageUrls = await Promise.all(bodyImages.map((file) => writeShinhanNewsImage(newsId, file)));
+  const flashImage = files.flashImage?.[0];
+  const flashImageUrl = flashImage ? await writeShinhanNewsImage(newsId, flashImage) : null;
+  const rawBodyHtml = payload.bodyHtml?.trim() || (payload.bodyText ? plainTextToHtml(payload.bodyText) : '');
+  const bodyHtmlWithInlineImages = replaceImageMarkers(rawBodyHtml, bodyImageIds, bodyImageUrls);
+  const nextBodyHtml =
+    flashImageUrl && entryType === 'flash'
+      ? `<figure class="shinhan-news-flash-image"><img src="${flashImageUrl}" alt="${escapeHtml(payload.title.trim())}"></figure>${bodyHtmlWithInlineImages}`
+      : bodyHtmlWithInlineImages;
   const nextRecord: StoredShinhanNewsIndexEntry = {
     id: newsId,
-    category: payload.category === 'seminar' ? 'seminar' : 'flash',
-    categoryLabel: payload.category === 'seminar' ? '세미나' : existing && isShinhanNewsNotice(existing) ? '공지' : 'FLASH',
+    category,
+    categoryLabel,
     title: payload.title.trim(),
     titleEn: (payload.titleEn ?? payload.title).trim(),
     summary: payload.summary.trim(),
@@ -390,7 +479,7 @@ async function saveShinhanNewsRecord(payload: Partial<ShinhanNewsRecord> & { tit
     : [nextRecord, ...existingIndex];
 
   await fs.mkdir(SHINHAN_NEWS_ITEMS_ROOT, { recursive: true });
-  await fs.writeFile(path.join(SHINHAN_NEWS_ITEMS_ROOT, bodyFile), payload.bodyHtml ?? '', 'utf-8');
+  await fs.writeFile(path.join(SHINHAN_NEWS_ITEMS_ROOT, bodyFile), nextBodyHtml, 'utf-8');
   await writeJsonFile(SHINHAN_NEWS_INDEX_PATH, sortShinhanNewsRecords(nextIndex));
 
   return loadShinhanNewsRecord(newsId);
@@ -528,6 +617,18 @@ async function readNewsletterPreviewManifest(newsletterId: string) {
 
 app.use(attachSession);
 
+app.use(async (request, response, next) => {
+  try {
+    const handled = await handleIssueReportsRequest(request, response);
+
+    if (!handled) {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/admin/session', (request: RequestWithSession, response) => {
   sendJson(response, 200, request.adminSession ?? buildSession(request));
 });
@@ -570,7 +671,7 @@ app.get('/api/news/shinhan-news/:newsId', async (request, response) => {
   const item = await loadShinhanNewsRecord(request.params.newsId);
 
   if (!item) {
-    sendJson(response, 404, { message: '기사를 찾을 수 없습니다.' });
+    sendJson(response, 404, { message: '글을 찾을 수 없습니다.' });
     return;
   }
 
@@ -610,38 +711,60 @@ app.get('/api/admin/news/shinhan-news', requireAdmin, async (_request, response)
   });
 });
 
-app.post('/api/admin/news/shinhan-news', requireAdmin, async (request, response) => {
-  if (!ensureEnabled(response)) {
-    return;
-  }
+app.post(
+  '/api/admin/news/shinhan-news',
+  requireAdmin,
+  upload.fields([
+    { name: 'bodyImages', maxCount: 20 },
+    { name: 'flashImage', maxCount: 1 },
+  ]),
+  async (request, response) => {
+    if (!ensureEnabled(response)) {
+      return;
+    }
 
-  try {
-    const item = await saveShinhanNewsRecord(request.body ?? {});
-    sendJson(response, 200, item);
-  } catch (error) {
-    sendJson(response, 400, {
-      message: error instanceof Error ? error.message : '기사 저장에 실패했습니다.',
-    });
-  }
-});
+    try {
+      const item = await saveShinhanNewsRecord(
+        request.body ?? {},
+        request.files as Partial<Record<'bodyImages' | 'flashImage', Express.Multer.File[]>>,
+      );
+      sendJson(response, 200, item);
+    } catch (error) {
+      sendJson(response, 400, {
+        message: error instanceof Error ? error.message : '글 저장에 실패했습니다.',
+      });
+    }
+  },
+);
 
-app.put('/api/admin/news/shinhan-news/:newsId', requireAdmin, async (request, response) => {
-  if (!ensureEnabled(response)) {
-    return;
-  }
+app.put(
+  '/api/admin/news/shinhan-news/:newsId',
+  requireAdmin,
+  upload.fields([
+    { name: 'bodyImages', maxCount: 20 },
+    { name: 'flashImage', maxCount: 1 },
+  ]),
+  async (request, response) => {
+    if (!ensureEnabled(response)) {
+      return;
+    }
 
-  try {
-    const item = await saveShinhanNewsRecord({
-      ...(request.body ?? {}),
-      id: request.params.newsId,
-    });
-    sendJson(response, 200, item);
-  } catch (error) {
-    sendJson(response, 400, {
-      message: error instanceof Error ? error.message : '기사 수정에 실패했습니다.',
-    });
-  }
-});
+    try {
+      const item = await saveShinhanNewsRecord(
+        {
+          ...(request.body ?? {}),
+          id: request.params.newsId,
+        },
+        request.files as Partial<Record<'bodyImages' | 'flashImage', Express.Multer.File[]>>,
+      );
+      sendJson(response, 200, item);
+    } catch (error) {
+      sendJson(response, 400, {
+        message: error instanceof Error ? error.message : '글 수정에 실패했습니다.',
+      });
+    }
+  },
+);
 
 app.delete('/api/admin/news/shinhan-news/:newsId', requireAdmin, async (request, response) => {
   if (!ensureEnabled(response)) {

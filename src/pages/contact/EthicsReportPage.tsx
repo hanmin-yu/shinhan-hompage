@@ -5,6 +5,7 @@ import { useState } from 'react';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
+import { palette } from '../../components/home/homeStyles';
 import { utilitySubnav } from '../../config/utilitySubnav';
 import { siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
@@ -372,7 +373,7 @@ const GuideBlock = styled.div`
 `;
 
 const GuideLabel = styled.strong`
-  color: #1f5cb2;
+  color: ${palette.blue};
   font-size: 0.84rem;
   font-weight: 900;
 `;
@@ -415,7 +416,7 @@ const ContactItem = styled.div`
 `;
 
 const ContactLabel = styled.span`
-  color: #1f5cb2;
+  color: ${palette.blue};
   font-size: 0.84rem;
   font-weight: 900;
 `;
@@ -639,7 +640,7 @@ const ModalHeader = styled.div`
 const ModalEyebrow = styled.span`
   display: block;
   margin-bottom: 8px;
-  color: #1f5cb2;
+  color: ${palette.blue};
   font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 0.08em;

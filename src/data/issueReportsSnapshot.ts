@@ -187,6 +187,7 @@ export const issueReportsSnapshot: IssueReport[] = rows.map(([id, source, source
   summary: buildSummary(source),
   summaryEn: buildSummaryEn(sourceEn),
   url,
+  detailPath: `/trade-insights/details/${id}.json`,
   tags: [source],
   status: 'live',
 }));

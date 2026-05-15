@@ -112,20 +112,6 @@ export function AdminLoginPage() {
                   {submitting ? t('로그인 중...', 'Signing in...') : t('관리자 로그인', 'Admin Sign In')}
                 </AdminButton>
               </AdminActionRow>
-              <AdminHint>
-                {t(
-                  '운영 모드에서는 내부 서버의 환경변수 계정으로 로그인합니다.',
-                  'Enabled mode signs in with the environment-based internal server credentials.',
-                )}
-              </AdminHint>
-              {session.mode === 'enabled' ? (
-                <AdminHint>
-                  {t(
-                    'localhost 기본 계정은 환경변수가 없으면 admin / admin1234 를 사용합니다.',
-                    'On localhost, the default credentials are admin / admin1234 when env vars are not set.',
-                  )}
-                </AdminHint>
-              ) : null}
             </AdminForm>
           )}
 

@@ -131,9 +131,27 @@ export type IssueReport = {
   summary: string;
   summaryEn: string;
   url: string;
+  detailPath?: string;
+  detail?: IssueReportDetail;
   status?: 'live' | 'placeholder';
   image?: string;
   tags?: string[];
+};
+
+export type IssueReportAttachment = {
+  name: string;
+  url: string;
+};
+
+export type IssueReportDetail = {
+  id?: string;
+  title?: string;
+  source?: string;
+  registeredAt?: string;
+  updatedAt?: string;
+  body?: string[];
+  attachments?: IssueReportAttachment[];
+  originalUrl?: string;
 };
 
 export type ItService = {

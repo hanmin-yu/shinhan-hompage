@@ -4,6 +4,7 @@ import type { FormEvent } from 'react';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
+import { palette } from '../../components/home/homeStyles';
 import { utilitySubnav } from '../../config/utilitySubnav';
 import { officeBranches, siteContact } from '../../data/home';
 import { useI18n } from '../../i18n/useI18n';
@@ -62,8 +63,8 @@ export function ContactPage() {
             <ContactTitle>{t('문의', 'Contact')}</ContactTitle>
             <ContactLead>
               {t(
-                '신한관세법인에 문의가 필요하신 경우 대표 연락처로 연락주시거나 온라인 문의를 남겨주세요. 담당자가 확인 후 안내드립니다.',
-                'For inquiries, contact Shinhan Customs Service through the main contact details or leave an online inquiry below.',
+                '신한관세법인에 문의가 필요하신 경우 대표 연락처 또는 온라인 문의를 이용해주세요. 확인 후 안내드립니다.',
+                'If you have an inquiry, please use our main contact details or the online inquiry form below. We will review it and get back to you.',
               )}
             </ContactLead>
           </ContactIntro>
@@ -110,8 +111,8 @@ export function ContactPage() {
                 <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
                 <InquiryText>
                   {t(
-                    '문의 내용을 남겨주시면 담당자가 확인 후 안내드립니다.',
-                    'Leave your inquiry and our team will review it.',
+                    '문의 내용을 남겨주시면 확인 후 안내드립니다.',
+                    'Leave your inquiry and we will review it.',
                   )}
                 </InquiryText>
               </InquiryHeader>
@@ -205,6 +206,8 @@ const ContactLead = styled.p`
   font-size: clamp(1.12rem, 1.38vw, 1.28rem);
   font-weight: 400;
   line-height: 1.82;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const ContactGrid = styled.div`
@@ -277,7 +280,7 @@ const InfoItem = styled.div`
 `;
 
 const InfoLabel = styled.span`
-  color: #1f5cb2;
+  color: ${palette.blue};
   font-size: 0.84rem;
   font-weight: 800;
 `;
@@ -335,6 +338,8 @@ const InquiryText = styled.p`
   font-size: clamp(1.04rem, 1.18vw, 1.14rem);
   font-weight: 400;
   line-height: 1.84;
+  word-break: keep-all;
+  overflow-wrap: normal;
 `;
 
 const InquiryForm = styled.form`

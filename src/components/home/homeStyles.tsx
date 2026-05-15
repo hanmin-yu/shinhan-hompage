@@ -302,7 +302,7 @@ export const UtilityLink = styled.a`
 `;
 
 export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; $megaMenuOpen?: boolean }>`
-  --site-header-height: 98px;
+  --site-header-height: 108px;
   position: fixed;
   top: 0;
   left: 0;
@@ -636,6 +636,7 @@ export const HeaderInner = styled(Container)`
   gap: 24px;
   min-height: 88px;
   padding-top: 10px;
+  padding-bottom: 10px;
 
   @media (max-width: 1200px) {
     gap: 12px;
@@ -648,6 +649,7 @@ export const HeaderInner = styled(Container)`
   @media (max-width: 768px) {
     width: calc(100% - 28px);
     padding-top: 6px;
+    padding-bottom: 6px;
   }
 
   @media (max-width: 1320px) {
@@ -2755,7 +2757,7 @@ export const PracticeShowcaseEyebrow = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #8ea0bb;
+  color: ${palette.blue};
   font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -2793,7 +2795,7 @@ export const PracticeShowcaseMetaValue = styled.strong`
 `;
 
 export const PracticeShowcaseMetaLabel = styled.span`
-  color: rgba(20, 60, 121, 0.68);
+  color: ${palette.blue};
   font-size: 0.9rem;
   line-height: 1.45;
 `;

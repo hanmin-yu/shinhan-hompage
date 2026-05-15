@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { palette } from '../../components/home/homeStyles';
 import * as P from '../../components/site/PagePrimitives';
 import { useI18n } from '../../i18n/useI18n';
 import type { Member } from '../../types/site';
@@ -61,7 +62,7 @@ const CategoryMenuHead = styled.div`
 `;
 
 const CategoryEyebrow = styled.span`
-  color: #6b7890;
+  color: ${palette.blue};
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.08em;

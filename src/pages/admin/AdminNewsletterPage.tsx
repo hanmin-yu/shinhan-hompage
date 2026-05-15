@@ -12,8 +12,6 @@ import {
   AdminFieldGrid,
   AdminForm,
   AdminHint,
-  AdminInfoGrid,
-  AdminInfoItem,
   AdminInput,
   AdminLabel,
   AdminList,
@@ -22,7 +20,6 @@ import {
   AdminListSummary,
   AdminListTitle,
   AdminModeBadge,
-  AdminMuted,
   AdminPanel,
   AdminReadonlyBanner,
   AdminSectionTitle,
@@ -34,7 +31,6 @@ import {
   AdminTextarea,
   AdminTopRow,
   AdminUploadBox,
-  AdminUploadMeta,
   AdminUploadTitle,
 } from './AdminShared';
 
@@ -201,7 +197,7 @@ export function AdminNewsletterPage() {
       title: metadata.title,
       summary: metadata.summary,
     });
-    setMessage(t('PDF 정보가 자동 입력되었습니다. 내용 확인 후 업로드를 눌러주세요.', 'PDF details were auto-filled. Review them and upload.'));
+    setMessage(null);
   }
 
   function handleUploadDrop(event: DragEvent<HTMLLabelElement>) {
@@ -368,7 +364,6 @@ export function AdminNewsletterPage() {
             <AdminPanel>
               <P.Kicker>Archive</P.Kicker>
               <AdminSectionTitle>{t('현재 소식지 목록', 'Current Issues')}</AdminSectionTitle>
-              <AdminMuted>{t('실제 저장소 또는 데모 fallback 데이터에서 불러온 소식지 목록입니다.', 'This list is loaded from the actual storage or the demo fallback data.')}</AdminMuted>
               {dataLoading ? <P.CardText>{t('소식지 목록을 불러오는 중입니다.', 'Loading newsletters.')}</P.CardText> : null}
               {!dataLoading ? (
                 <AdminList>
@@ -401,11 +396,6 @@ export function AdminNewsletterPage() {
               <AdminForm>
                 <AdminStatusBar>
                   <AdminStatusPill $accent={!form.id}>{formModeLabel}</AdminStatusPill>
-                  <AdminHint>
-                    {form.id
-                      ? t('목록에서 선택한 소식지의 정보만 수정합니다. PDF를 선택하면 새 등록으로 전환됩니다.', 'This edits the selected issue metadata. Choosing a PDF switches to new upload mode.')
-                      : t('PDF 선택 후 자동 입력된 내용을 확인하고 저장합니다.', 'Select a PDF, review the auto-filled fields, then save.')}
-                  </AdminHint>
                 </AdminStatusBar>
 
                 <AdminUploadBox
@@ -434,24 +424,7 @@ export function AdminNewsletterPage() {
                     onChange={(event) => applyPdfFile(event.target.files?.[0] ?? null)}
                   />
                   <AdminUploadTitle>{selectedFileLabel}</AdminUploadTitle>
-                  <AdminUploadMeta>
-                    {t(
-                      '파일명에 2026.05 또는 2026년 5월처럼 발행월이 있으면 자동으로 인식합니다.',
-                      'If the filename includes a month like 2026.05 or May 2026, it will be detected automatically.',
-                    )}
-                  </AdminUploadMeta>
                 </AdminUploadBox>
-
-                <AdminInfoGrid>
-                  <AdminInfoItem>
-                    <strong>{t('저장 방식', 'Save Mode')}</strong>
-                    <span>{form.id ? t('선택 항목 수정', 'Update selected item') : t('새 항목 생성', 'Create new item')}</span>
-                  </AdminInfoItem>
-                  <AdminInfoItem>
-                    <strong>{t('공개 방식', 'Public View')}</strong>
-                    <span>{t('상세 페이지 + PDF 다운로드', 'Detail page + PDF download')}</span>
-                  </AdminInfoItem>
-                </AdminInfoGrid>
 
                 <AdminFieldGrid>
                   <AdminField>
@@ -502,17 +475,6 @@ export function AdminNewsletterPage() {
                     {t('새 등록으로 초기화', 'Reset for New Upload')}
                   </AdminButton>
                 </AdminActionRow>
-                <AdminHint>
-                  {session.isReadOnly
-                    ? t(
-                        '현재는 화면 구조만 제공하며, 실제 저장은 내부 서버 실행 시 활성화됩니다.',
-                        'The current demo provides the screen structure only. Real storage is enabled when the internal server is running.',
-                      )
-                    : t(
-                        'localhost에서는 PDF 파일이 실제 저장소에 저장됩니다. 저장 후 공개 소식지 페이지에서 다운로드로 바로 확인할 수 있습니다.',
-                        'On localhost, the PDF file is saved into real storage. You can verify it immediately as a download on the public newsletter page.',
-                      )}
-                </AdminHint>
                 {selectedItem?.downloadUrl ? <AdminHint>{selectedItem.downloadUrl}</AdminHint> : null}
                 {message ? <AdminHint>{message}</AdminHint> : null}
               </AdminForm>

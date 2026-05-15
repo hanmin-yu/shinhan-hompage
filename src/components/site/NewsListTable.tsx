@@ -9,6 +9,7 @@ export type NewsListTableAction = {
   label: string;
   href?: string;
   to?: string;
+  onClick?: () => void;
   external?: boolean;
   disabled?: boolean;
   downloadFileName?: string;
@@ -23,6 +24,7 @@ export type NewsListTableRow = {
   title: string;
   href?: string;
   to?: string;
+  onClick?: () => void;
   external?: boolean;
   disabled?: boolean;
   actions?: NewsListTableAction[];
@@ -234,6 +236,35 @@ const ActionRouterLink = styled(Link)<{ $variant?: 'default' | 'primary' }>`
   }
 `;
 
+const ActionButton = styled.button<{ $variant?: 'default' | 'primary' }>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid ${({ $variant = 'default' }) => ($variant === 'primary' ? 'rgba(18, 63, 133, 0.26)' : 'rgba(18, 63, 133, 0.18)')};
+  color: ${({ $variant = 'default' }) => ($variant === 'primary' ? '#ffffff' : palette.blueInk)};
+  font-size: 0.82rem;
+  font-weight: 800;
+  background: ${({ $variant = 'default' }) => ($variant === 'primary' ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'rgba(255, 255, 255, 0.92)')};
+  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  &:hover {
+    border-color: ${palette.blueInk};
+    background: ${palette.blueInk};
+    color: #ffffff;
+    box-shadow: 0 10px 18px rgba(18, 63, 133, 0.18);
+  }
+`;
+
 const TitleAnchor = styled.a`
   text-decoration: none;
 
@@ -266,8 +297,24 @@ const TitleRouterLink = styled(Link)`
   }
 `;
 
+const TitleButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover ${TitleText} {
+    color: ${palette.blue};
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+`;
+
 function renderTitle(row: NewsListTableRow) {
-  if (row.disabled || (!row.href && !row.to)) {
+  if (row.disabled || (!row.href && !row.to && !row.onClick)) {
     return <TitleText $disabled={row.disabled}>{row.title}</TitleText>;
   }
 
@@ -279,6 +326,14 @@ function renderTitle(row: NewsListTableRow) {
     );
   }
 
+  if (row.onClick) {
+    return (
+      <TitleButton type="button" onClick={row.onClick}>
+        <TitleText>{row.title}</TitleText>
+      </TitleButton>
+    );
+  }
+
   return (
     <TitleAnchor href={row.href} target={row.external ? '_blank' : undefined} rel={row.external ? 'noreferrer' : undefined}>
       <TitleText>{row.title}</TitleText>
@@ -287,7 +342,7 @@ function renderTitle(row: NewsListTableRow) {
 }
 
 function renderAction(action: NewsListTableAction, key: string) {
-  if (action.disabled || (!action.href && !action.to)) {
+  if (action.disabled || (!action.href && !action.to && !action.onClick)) {
     return (
       <ActionAnchor key={key} as="span" $disabled $variant={action.variant}>
         {action.label}
@@ -300,6 +355,14 @@ function renderAction(action: NewsListTableAction, key: string) {
       <ActionRouterLink key={key} to={action.to} $variant={action.variant}>
         {action.label}
       </ActionRouterLink>
+    );
+  }
+
+  if (action.onClick) {
+    return (
+      <ActionButton key={key} type="button" onClick={action.onClick} $variant={action.variant}>
+        {action.label}
+      </ActionButton>
     );
   }
 

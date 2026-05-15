@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
+import { palette } from '../../components/home/homeStyles';
 import { sectionSubnav } from '../../config/sectionSubnav';
 import { useNewsletterRecord, useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
@@ -149,7 +150,7 @@ const ThumbnailImage = styled.img`
 `;
 
 const ThumbnailLabel = styled.span`
-  color: #325682;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;

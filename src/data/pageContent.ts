@@ -182,10 +182,10 @@ export const aboutTimeline = [
 ];
 
 export const historyMilestones = [
+  { year: '2019', ko: '신한 베트남 관세법인(SCV) 설립', en: 'Established Shinhan Customs Vietnam (SCV)' },
   { year: '1965', ko: '서울통관사 창립', en: 'Founded as Seoul Customs Service' },
   { year: '1993', ko: '신한관세법인 법인 등록', en: 'Registered as Shinhan Customs Service Inc.' },
   { year: '2015', ko: '신한관세법인 창립 50주년', en: '50th Anniversary of Shinhan Customs Service' },
-  { year: '2019', ko: '신한 베트남 관세법인(SCV) 설립', en: 'Established Shinhan Customs Vietnam (SCV)' },
   { year: '2025', ko: '신한관세법인 창립 60주년', en: '60th Anniversary of Shinhan Customs Service' },
 ];
 
@@ -733,7 +733,7 @@ const foreignExchangeSections: ServiceDetailSection[] = [
     list: [
       '외환 리스크 사전진단: 상계, 제3자 지급을 포함하여 무역·용역·자금 관련 전 외국환 행위를 점검합니다.',
       '외환검사 대리: 대관 업무를 포함한 현장 대응과 자료 검토를 지원합니다.',
-      '외환검사 결과에 따른 사후조치 컨설팅: 과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.',
+      '외환검사 결과에 따른 사후조치: 과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.',
       '외국환거래법 관련 법률 자문: 외국환거래법상 쟁점과 신고·보고 의무를 검토합니다.',
       '외국환거래법 실무 교육: 실무자가 주요 외환 규정과 내부 관리 포인트를 이해하도록 교육합니다.',
     ],
@@ -1343,8 +1343,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '컨설팅',
     groupTitleEn: 'Consulting',
     title: '조세불복',
-    summary: '법무법인과의 협업을 통해 불합리한 과세 처분에 대해 치밀한 법리 검토와 풍부한 실무 경험으로 권리구제 절차를 지원합니다.',
-    subtitle: '법무법인과의 협업을 통해 불합리한 과세 처분에 대해\n치밀한 법리 검토와 풍부한 실무 경험으로 권리구제 절차를 지원합니다.',
+    summary: '불합리한 과세 처분에 대해 법리 검토와 실무 경험으로 권리구제 절차를 지원합니다.',
+    subtitle: '불합리한 과세 처분에 대해 법리 검토와 실무 경험으로 권리구제 절차를 지원합니다.',
     heroImage: '/hero/service-tax-appeal-ai.png',
     heroImageAlt: '조세불복 자문',
     overview:
@@ -1397,8 +1397,8 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     groupTitle: '물류',
     groupTitleEn: 'Logistics',
     title: '물류',
-    summary: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 한 흐름으로 연결하여 물류서비스를 통합 지원합니다.',
-    subtitle: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 한 흐름으로 연결하여 물류서비스를 통합 지원합니다.',
+    summary: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 물류서비스를 통합 지원합니다.',
+    subtitle: '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 물류서비스를 통합 지원합니다.',
     heroImage: '/hero/service-logistics-ai.png',
     heroImageAlt: '물류 서비스',
     overview:

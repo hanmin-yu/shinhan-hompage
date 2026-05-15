@@ -9,12 +9,8 @@ type IssueReportResponse = {
   refreshedAt?: string;
 };
 
-const LIVE_ISSUE_REPORT_SOURCES = ['한국관세사회', '한국무역협회'] as const;
 type IssueReportDataMode = 'api' | 'static-json';
-
-function isVercelPreviewHost(hostname: string) {
-  return hostname === 'shinhan-homepage.vercel.app' || hostname.endsWith('.vercel.app');
-}
+const LIVE_ISSUE_REPORT_SOURCES = ['한국관세사회', '한국무역협회'] as const;
 
 function resolveIssueReportDataMode(): IssueReportDataMode {
   const configuredMode = import.meta.env.VITE_ISSUE_REPORT_MODE;
@@ -23,11 +19,7 @@ function resolveIssueReportDataMode(): IssueReportDataMode {
     return configuredMode;
   }
 
-  if (typeof window !== 'undefined' && isVercelPreviewHost(window.location.hostname)) {
-    return 'static-json';
-  }
-
-  return 'api';
+  return 'static-json';
 }
 
 function resolveIssueReportUrl(refresh: boolean) {

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { palette } from '../../components/home/homeStyles';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
@@ -27,7 +28,7 @@ const HeroHeading = styled.div`
 const HeroEyebrow = styled.span`
   display: block;
   margin-left: clamp(4px, 0.5vw, 8px);
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -58,7 +59,7 @@ const HeroLead = styled.p`
 const SectionLabel = styled.span`
   display: inline-flex;
   margin-bottom: 16px;
-  color: #52647c;
+  color: ${palette.blue};
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.08em;

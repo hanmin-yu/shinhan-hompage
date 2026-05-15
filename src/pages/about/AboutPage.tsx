@@ -519,7 +519,7 @@ const NavyInner = styled(P.PageContainer)`
 `;
 
 const PhilosophyLabel = styled(SectionLabel)`
-  color: #5f6f84;
+  color: ${palette.blue};
 `;
 
 const ValueList = styled.div`
@@ -626,10 +626,10 @@ const consultingItemsKo = [
   '해외 법률자문(중국,미국,통상이슈)',
   '이전가격(ACVA) 컨설팅',
   '관세 환급 컨설팅',
-  '관세 불복 자문',
+  '외환검사 • 조사',
   'FTA, AEO 컨설팅',
   '수출 통제 및 전략물자 컨설팅',
-  '베트남 수책 관리 시스템 구축, 베트남 특화 FTA 컨설팅',
+  '베트남 수책 관리 시스템 구축',
 ];
 
 const consultingItemsEn = [
@@ -637,15 +637,15 @@ const consultingItemsEn = [
   'Overseas legal advisory (China,U.S.,trade issues)',
   'Transfer pricing (ACVA) consulting',
   'Customs refund consulting',
-  'Customs appeal advisory',
+  'Foreign exchange inspection and investigation',
   'FTA, AEO consulting',
   'Export controls and strategic goods consulting',
-  'Vietnam liquidation management system setup and Vietnam-specific FTA consulting',
+  'Vietnam liquidation management system setup',
 ];
 
 const clearanceItemsKo = [
-  '통관 관련 분석 자료 제공',
-  '(Monthly Report, KPI Report)',
+  '통관 관련 분석자료 제공 (Monthly Report, KPI Report)',
+  '수출입 통관데이터 관리 서비스 (Ioom 플랫폼) 제공',
   '개정법령 등 무역관련 소식지 제공',
   '자체 사후심사 시스템 제공',
   '서류 보관 업무 대행',
@@ -654,8 +654,8 @@ const clearanceItemsKo = [
 ];
 
 const clearanceItemsEn = [
-  'Customs analytics materials',
-  '(Monthly Report, KPI Report)',
+  'Customs analytics materials (Monthly Report, KPI Report)',
+  'Import/export customs data management service via the Ioom platform',
   'Trade newsletters with revised regulations',
   'Internal post-audit system support',
   'Document archive outsourcing',
@@ -789,7 +789,7 @@ export function AboutPage() {
         <NavyInner data-reveal>
           <div>
             <PhilosophyLabel>VISION</PhilosophyLabel>
-            <EditorialTitle>{t('경영 가치를 실행의 기준으로 삼습니다.', 'Our values guide the way we execute.')}</EditorialTitle>
+            <EditorialTitle>{t('경영이념', 'Management Philosophy')}</EditorialTitle>
             <Rule />
             <EditorialBody>
               {t(

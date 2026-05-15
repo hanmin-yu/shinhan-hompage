@@ -3,6 +3,14 @@ import type { ShinhanNewsItem } from '../types/site';
 // Generated from the legacy Shinhan NEWS archive for local-first management.
 export const shinhanNewsArchive: ShinhanNewsItem[] = [
   {
+    id: "shinhan-news-seminar-39",
+    category: "seminar",
+    categoryLabel: "세미나",
+    title: "[2026년 5월 14일(목)] 한국∙미국 관세사가 함께 살펴보는 미국 관세 최신 동향과 IEEPA 환급 전략",
+    summary: "[2026년 5월 14일(목)] 한국∙미국 관세사가 함께 살펴보는 미국 관세 최신 동향과 IEEPA 환급 전략",
+    publishedAt: "2026.05.06",
+  },
+  {
     id: "shinhan-news-flash-407",
     category: "flash",
     categoryLabel: "FLASH",

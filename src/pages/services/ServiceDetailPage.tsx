@@ -186,8 +186,8 @@ const DocumentStack = styled.div`
 
 const DocumentSectionCard = styled.article`
   display: grid;
-  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 1fr);
-  gap: clamp(22px, 4vw, 58px);
+  grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
   padding: clamp(28px, 3.4vw, 46px) 0;
   border-bottom: 1px solid #dbe0e8;
 
@@ -718,7 +718,9 @@ const PenaltyProcedureStepText = styled.span`
   word-break: keep-all;
 `;
 
-const StageCards = styled.div<{ $columns?: number }>`
+const StageCards = styled.div<{ $columns?: number; $titleRows?: number }>`
+  --stage-title-lines: ${({ $titleRows = 3 }) => $titleRows};
+
   counter-reset: stage-card;
   display: grid;
   grid-template-columns: ${({ $columns }) =>
@@ -778,6 +780,10 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain' }>
 `;
 
 const StageCardTitle = styled.strong`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(1em * 1.34 * var(--stage-title-lines));
   font-size: clamp(0.98rem, 1.08vw, 1.08rem);
   font-weight: 800;
   line-height: 1.34;
@@ -1074,19 +1080,22 @@ const ContactPanel = styled.article`
 
 const ContactProfileGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2.4vw, 24px);
+  grid-template-columns: repeat(2, minmax(360px, 530px));
+  justify-content: center;
+  gap: clamp(20px, 2.5vw, 34px);
+  width: min(100%, 1120px);
+  margin: 0 auto;
 
-  @media (max-width: 920px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 980px) {
+    grid-template-columns: minmax(0, 530px);
   }
 `;
 
 const ContactProfileCard = styled.article<{ $accent: string }>`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(158px, 13vw, 206px);
-  min-height: 268px;
+  grid-template-columns: minmax(0, 1fr) clamp(142px, 11.5vw, 184px);
+  min-height: 238px;
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid rgba(26, 55, 91, 0.14);
@@ -1099,17 +1108,19 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
     border-color 0.22s ease,
     box-shadow 0.22s ease;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     transform: translateY(-3px);
     border-color: #123f85;
     box-shadow:
       0 24px 56px rgba(13, 35, 66, 0.12),
       0 1px 0 rgba(255, 255, 255, 0.96) inset;
+    outline: none;
   }
 
-  @media (max-width: 540px) {
-    grid-template-columns: minmax(0, 1fr) 112px;
-    min-height: 198px;
+  @media (max-width: 560px) {
+    grid-template-columns: minmax(0, 1fr) 100px;
+    min-height: 184px;
   }
 `;
 
@@ -1117,17 +1128,17 @@ const ContactProfileBody = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: clamp(24px, 3vw, 38px);
+  padding: clamp(20px, 2.4vw, 30px);
 
-  @media (max-width: 540px) {
-    padding: 20px;
+  @media (max-width: 560px) {
+    padding: 16px;
   }
 `;
 
 const ContactTitleRow = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
   min-width: 0;
 `;
 
@@ -1135,26 +1146,26 @@ const ContactName = styled.h3`
   flex: 0 0 auto;
   margin: 0;
   color: #121c2b;
-  font-size: clamp(1.66rem, 2.35vw, 2.22rem);
+  font-size: clamp(1.48rem, 2.05vw, 1.95rem);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0;
 
-  @media (max-width: 540px) {
-    font-size: 1.42rem;
+  @media (max-width: 560px) {
+    font-size: 1.3rem;
   }
 `;
 
 const ContactNameDivider = styled.span`
   flex: 0 0 auto;
   width: 2px;
-  height: 38px;
+  height: 34px;
   margin-top: 2px;
   background: linear-gradient(180deg, #102a55, #1d5fb6);
   opacity: 0.9;
 
-  @media (max-width: 540px) {
-    height: 32px;
+  @media (max-width: 560px) {
+    height: 28px;
   }
 `;
 
@@ -1167,36 +1178,36 @@ const ContactRoleStack = styled.div`
 const ContactRole = styled.p`
   margin: 0;
   color: #0c4e96;
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 850;
   line-height: 1.38;
 
-  @media (max-width: 540px) {
-    font-size: 0.92rem;
+  @media (max-width: 560px) {
+    font-size: 0.86rem;
   }
 `;
 
 const ContactDepartment = styled.p`
   margin: 0;
   color: #6a7482;
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
 
-  @media (max-width: 540px) {
-    font-size: 0.88rem;
+  @media (max-width: 560px) {
+    font-size: 0.82rem;
   }
 `;
 
 const ContactMeta = styled.div`
   display: grid;
-  gap: 9px;
+  gap: 7px;
   margin-top: auto;
-  padding-top: 22px;
+  padding-top: 18px;
 
-  @media (max-width: 540px) {
-    gap: 7px;
-    padding-top: 18px;
+  @media (max-width: 560px) {
+    gap: 6px;
+    padding-top: 14px;
   }
 `;
 
@@ -1206,26 +1217,21 @@ const ContactMetaItem = styled.p`
   gap: 8px;
   margin: 0;
   color: #526174;
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
   word-break: keep-all;
   overflow-wrap: normal;
 
-  @media (max-width: 540px) {
-    font-size: 0.88rem;
+  @media (max-width: 560px) {
+    font-size: 0.82rem;
   }
 `;
 
 const ContactLabel = styled.span`
-  flex: 0 0 48px;
+  flex: 0 0 44px;
   color: #0c4e96;
-  font-size: 0.96rem;
   font-weight: 900;
-
-  @media (max-width: 540px) {
-    font-size: 0.88rem;
-  }
 `;
 
 const ContactValue = styled.a`
@@ -1244,36 +1250,73 @@ const ContactValue = styled.a`
 
 const ContactPhotoPanel = styled.div<{ $accent: string }>`
   position: relative;
-  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
   overflow: hidden;
   border-left: 1px solid rgba(26, 55, 91, 0.14);
-  background: #ffffff;
+  background:
+    radial-gradient(circle at 74% 8%, rgba(28, 90, 167, 0.12), transparent 38%),
+    linear-gradient(145deg, #ffffff 0%, #f3f7fc 48%, #eaf1f8 100%);
 
-  @media (max-width: 540px) {
-    min-height: 100%;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12px 10px;
+    z-index: 1;
+    border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28)),
+      rgba(255, 255, 255, 0.38);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+  }
+`;
+
+const ContactPortraitFrame = styled.div`
+  position: absolute;
+  inset: 15px 13px;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 55, 91, 0.08);
+  background: #ffffff;
+  box-shadow:
+    0 18px 32px rgba(13, 35, 66, 0.09),
+    0 2px 8px rgba(13, 35, 66, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+
+  @media (max-width: 560px) {
+    inset: 10px 8px;
+    border-radius: 8px;
   }
 `;
 
 const ContactPortrait = styled.img<{ $fit?: 'contain' | 'cover'; $position?: string }>`
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
+  background: #ffffff;
   object-fit: ${({ $fit }) => $fit ?? 'cover'};
   object-position: ${({ $position }) => $position ?? '50% 18%'};
+  filter: saturate(1.01) contrast(1.02);
 `;
 
 const ContactInitialMark = styled.div`
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 28px;
+  border-radius: 50%;
   background: #0c4e96;
   color: #ffffff;
-  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-size: 1.5rem;
   font-weight: 900;
-  letter-spacing: -0.04em;
 `;
 
 function splitDiagramItem(item: string) {
@@ -1714,7 +1757,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   };
 
   const renderStageDiagram = (items: string[]) => (
-    <StageCards $columns={getBalancedDiagramColumns(items.length)}>
+    <StageCards $columns={getBalancedDiagramColumns(items.length)} $titleRows={isTaxAppealPage || items.length > 5 ? 3 : 2}>
       {items.map((item, index) => {
         const { term, description } = splitDiagramItem(tx(item));
         const accent =
@@ -1952,13 +1995,15 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                       </ContactProfileBody>
                       <ContactPhotoPanel $accent={accent}>
                         {member?.image ? (
-                          <ContactPortrait
-                            src={member.image}
-                            alt={tx(contact.name)}
-                            loading="lazy"
-                            $fit={member.imageFit}
-                            $position={member.imagePosition}
-                          />
+                          <ContactPortraitFrame>
+                            <ContactPortrait
+                              src={member.image}
+                              alt={tx(contact.name)}
+                              loading="lazy"
+                              $fit={member.imageFit}
+                              $position={member.imagePosition}
+                            />
+                          </ContactPortraitFrame>
                         ) : (
                           <ContactInitialMark>{tx(contact.name).slice(0, 1)}</ContactInitialMark>
                         )}
