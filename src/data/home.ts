@@ -624,11 +624,12 @@ export const expertMembers: Member[] = [
     name: '최대규',
     phone: '070-4343-7751',
     email: 'dkchoi@shcs.kr',
-    title: '상무 / 관세사 자격',
+    title: '본부장 / 관세사 자격 / 미국공인회계사 자격',
     department: '서울본사 가치성장본부',
     practice: 'FTA 컨설팅, 베트남 관세 및 재고정산(Liquidation) 컨설팅',
     accent: '#406182',
     image: '/members/executives/최대규.png',
+    imagePosition: '50% 17%',
   },
   {
     name: '오규태',
