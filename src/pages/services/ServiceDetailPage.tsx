@@ -625,6 +625,104 @@ const ProcessNodeText = styled.span`
   word-break: keep-all;
 `;
 
+const SequenceFlow = styled.ol<{ $columns?: number }>`
+  counter-reset: sequence-step;
+  display: grid;
+  grid-template-columns: ${({ $columns }) =>
+    $columns ? `repeat(${$columns}, minmax(0, 1fr))` : 'repeat(auto-fit, minmax(170px, 1fr))'};
+  gap: 18px 30px;
+  margin: 0;
+  padding: clamp(24px, 3.6vw, 40px);
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 16% 20%, rgba(18, 63, 133, 0.1), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(29, 95, 182, 0.08), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  list-style: none;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const SequenceStep = styled.li<{ $showConnector?: boolean }>`
+  counter-increment: sequence-step;
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+  min-height: 112px;
+  padding: 18px;
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 38, 76, 0.055);
+
+  &::before {
+    content: counter(sequence-step, decimal-leading-zero);
+    display: grid;
+    place-items: center;
+    width: 44px;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: ${palette.blue};
+    color: #ffffff;
+    font-size: 0.84rem;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: 0 10px 20px rgba(18, 63, 133, 0.18);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -24px;
+    width: 20px;
+    height: 10px;
+    background:
+      linear-gradient(90deg, ${palette.blue}, ${palette.blue}) 0 50% / 13px 2px no-repeat,
+      linear-gradient(45deg, transparent 50%, ${palette.blue} 51%) 12px 1px / 8px 8px no-repeat,
+      linear-gradient(-45deg, transparent 50%, ${palette.blue} 51%) 12px 1px / 8px 8px no-repeat;
+    transform: translateY(-50%);
+    display: ${({ $showConnector = true }) => ($showConnector ? 'block' : 'none')};
+  }
+
+  &:last-of-type::after {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    &::after {
+      display: none;
+    }
+  }
+`;
+
+const SequenceStepTitle = styled.strong`
+  color: ${palette.blue};
+  font-size: clamp(0.92rem, 1.06vw, 1rem);
+  font-weight: 800;
+  line-height: 1.42;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+`;
+
+const SequenceStepText = styled.span`
+  color: #687385;
+  font-size: 0.78rem;
+  line-height: 1.52;
+  word-break: keep-all;
+`;
+
 const PenaltyProcedureBoard = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1342,7 +1440,7 @@ const refundFlowAccents = [palette.blue];
 const ftaCircleAccents = [palette.blue];
 const vividAccents = ['#1d5fb6', '#1fc7c3', '#6b8ff2', '#f36f8f', '#d59c2a', '#6f74a8', '#2f8f7b'];
 
-type DiagramKind = 'circle' | 'process' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable';
+type DiagramKind = 'circle' | 'process' | 'sequence' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable';
 
 type ReferenceDiagramSection = {
   heading: string;
@@ -1386,6 +1484,9 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     if (heading === '관세조사의 종류') return 'circle';
     if (heading === '주요 조사 분야') return 'process';
     return 'metric';
+  }
+  if (contentId === 'foreign-exchange') {
+    if (heading === '정기 외환검사 대응') return 'sequence';
   }
   if (contentId === 'penalty-investigation') {
     if (heading === '범칙조사 구분') return 'circle';
@@ -1655,13 +1756,20 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
     return (
       <ProcessStrip
-        $tone={isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage ? 'navy' : 'default'}
+        $tone={isForeignExchangePage || isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage ? 'navy' : 'default'}
         $columns={columns}
       >
         {items.map((item, index) => {
           const { term, description } = splitDiagramItem(tx(item));
           const accent =
-            isAeoPage || isFtaPage || isAcvaPage || isPenaltyInvestigationPage || isLogisticsPage || isVietnamPage || isUsFdaPage
+            isAeoPage ||
+            isFtaPage ||
+            isForeignExchangePage ||
+            isAcvaPage ||
+            isPenaltyInvestigationPage ||
+            isLogisticsPage ||
+            isVietnamPage ||
+            isUsFdaPage
               ? palette.blue
               : vividAccents[index % vividAccents.length];
           const isRowEnd = columns ? (index + 1) % columns === 0 : false;
@@ -1780,6 +1888,28 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     </StageCards>
   );
 
+  const renderSequenceDiagram = (items: string[]) => {
+    const columns = getBalancedDiagramColumns(items.length);
+
+    return (
+      <SequenceFlow $columns={columns}>
+        {items.map((item, index) => {
+          const { term, description } = splitDiagramItem(tx(item));
+          const isRowEnd = columns ? (index + 1) % columns === 0 : false;
+
+          return (
+            <SequenceStep key={item} $showConnector={!isRowEnd}>
+              <div>
+                <SequenceStepTitle>{term}</SequenceStepTitle>
+                {description ? <SequenceStepText>{description}</SequenceStepText> : null}
+              </div>
+            </SequenceStep>
+          );
+        })}
+      </SequenceFlow>
+    );
+  };
+
   const renderMetricDiagram = (items: string[], sectionHeading: string) => {
     const tone = isCustomsAuditPage || isVietnamPage ? 'plain' : 'dark';
     const accents = isCustomsAuditPage || isAcvaPage || isVietnamPage ? [palette.blue] : vividAccents;
@@ -1810,6 +1940,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
     if (kind === 'stage') return renderStageDiagram(items);
+    if (kind === 'sequence') return renderSequenceDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);
@@ -1820,6 +1951,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const renderDiagramByKind = (items: string[], sectionHeading: string, kind: DiagramKind) => {
     if (kind === 'circle') return renderCircleDiagram(items, sectionHeading);
     if (kind === 'stage') return renderStageDiagram(items);
+    if (kind === 'sequence') return renderSequenceDiagram(items);
     if (kind === 'metric') return renderMetricDiagram(items, sectionHeading);
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);

@@ -63,8 +63,8 @@ export function ContactPage() {
             <ContactTitle>{t('문의', 'Contact')}</ContactTitle>
             <ContactLead>
               {t(
-                '신한관세법인에 문의가 필요하신 경우 대표 연락처 또는 온라인 문의를 이용해주세요. 확인 후 안내드립니다.',
-                'If you have an inquiry, please use our main contact details or the online inquiry form below. We will review it and get back to you.',
+                '신한관세법인에 문의가 필요하신 경우 대표 연락처 또는 온라인 문의를 이용해주세요.',
+                'If you have an inquiry, please use our main contact details or the online inquiry form below.',
               )}
             </ContactLead>
           </ContactIntro>

@@ -41,6 +41,7 @@ const practiceItems = [
     id: 'practice-fta',
     title: 'FTA',
     titleEn: 'FTA',
+    subtitle: 'Free Trade Agreement',
     label: 'ORIGIN',
     href: '/services/consulting/fta',
   },
@@ -48,6 +49,7 @@ const practiceItems = [
     id: 'practice-aeo',
     title: 'AEO',
     titleEn: 'AEO',
+    subtitle: 'Authorized Economic Operator',
     label: 'COMPLIANCE',
     href: '/services/consulting/aeo',
   },
@@ -518,7 +520,7 @@ export function PracticeSection() {
               <PracticeLink key={item.id} id={item.id} to={item.href}>
                 <PracticeCopy>
                   <PracticeTitle>{t(item.title, item.titleEn)}</PracticeTitle>
-                  <PracticeMeta>{t(item.titleEn, item.label)}</PracticeMeta>
+                  <PracticeMeta>{t(item.subtitle ?? item.titleEn, item.label)}</PracticeMeta>
                 </PracticeCopy>
                 <PracticeArrow aria-hidden="true">&gt;</PracticeArrow>
               </PracticeLink>
