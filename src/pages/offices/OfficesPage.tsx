@@ -182,8 +182,8 @@ export function OfficesPage() {
     <>
       <EditorialPageHeader
         config={sectionSubnav.about}
-        title="관계사 안내"
-        titleEn="Affiliates"
+        title="본지사 안내"
+        titleEn="Headquarters & Branches"
         heroImage="/hero/menu-about-offices-ai.png"
         heroPosition="center 50%"
       />
@@ -193,7 +193,7 @@ export function OfficesPage() {
           <E.Statement data-reveal>
             <div>
               <E.Eyebrow>Office Network</E.Eyebrow>
-              <OfficePageTitle>{t('신한관세법인 및 관계사 안내', 'Shinhan Customs Service & Affiliates')}</OfficePageTitle>
+              <OfficePageTitle>{t('신한관세법인 및 본지사 안내', 'Shinhan Customs Service Headquarters & Branches')}</OfficePageTitle>
             </div>
             <OfficeLeadGrid>
               <OfficePageLead>
