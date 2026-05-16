@@ -82,6 +82,10 @@ const CategoryButtonGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
   gap: 10px;
 
+  [data-language='en'] & {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
   @media (max-width: 760px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
@@ -106,7 +110,9 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   font-size: clamp(0.9rem, 0.98vw, 1.02rem);
   font-weight: 900;
   letter-spacing: 0;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
   text-align: center;
   cursor: pointer;
   box-shadow: ${({ $active }) => ($active ? '0 16px 32px rgba(18, 63, 133, 0.22)' : '0 8px 18px rgba(16, 54, 112, 0.035)')};
@@ -150,6 +156,12 @@ const CategoryButton = styled.button<{ $active: boolean }>`
     transform: scaleY(1);
   }
 
+  [data-language='en'] & {
+    min-height: 66px;
+    padding: 8px 14px;
+    font-size: clamp(0.86rem, 0.9vw, 0.98rem);
+  }
+
   @media (max-width: 760px) {
     min-height: 42px;
     padding: 0 10px;
@@ -185,10 +197,10 @@ export function ProfessionalCategoryMenu<T extends string>({
   onSelect,
   ariaLabel,
 }: ProfessionalCategoryMenuProps<T>) {
-  const { t, tx } = useI18n();
+  const { language, t, tx } = useI18n();
 
   return (
-    <CategoryMenuWrap>
+    <CategoryMenuWrap data-language={language}>
       <CategoryMenuHead>
         <CategoryEyebrow>Practice Area</CategoryEyebrow>
         <CategoryTitle>{t('업무 분야', 'Practice Areas')}</CategoryTitle>
@@ -263,6 +275,11 @@ const ProfileCard = styled.article<{ $featured?: boolean }>`
     pointer-events: auto;
   }
 
+  [data-language='en'] & {
+    grid-template-columns: minmax(0, 1fr) clamp(128px, 10.5vw, 168px);
+    min-height: 258px;
+  }
+
   @media (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 100px;
     min-height: 184px;
@@ -286,10 +303,17 @@ const TitleRow = styled.div`
   align-items: flex-start;
   gap: 12px;
   min-width: 0;
+
+  [data-language='en'] & {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 `;
 
 const Name = styled.h3`
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
   margin: 0;
   color: #121c2b;
   font-size: clamp(1.48rem, 2.05vw, 1.95rem);
@@ -299,6 +323,12 @@ const Name = styled.h3`
 
   @media (max-width: 560px) {
     font-size: 1.3rem;
+  }
+
+  [data-language='en'] & {
+    font-size: clamp(1.34rem, 1.7vw, 1.72rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -313,12 +343,21 @@ const NameDivider = styled.span`
   @media (max-width: 560px) {
     height: 28px;
   }
+
+  [data-language='en'] & {
+    display: none;
+  }
 `;
 
 const RoleStack = styled.div`
   display: grid;
   gap: 3px;
   min-width: 0;
+
+  [data-language='en'] & {
+    gap: 5px;
+    max-width: 100%;
+  }
 `;
 
 const Title = styled.p`
@@ -331,6 +370,12 @@ const Title = styled.p`
   @media (max-width: 560px) {
     font-size: 0.86rem;
   }
+
+  [data-language='en'] & {
+    font-size: clamp(0.86rem, 0.9vw, 0.94rem);
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+  }
 `;
 
 const Division = styled.p`
@@ -342,6 +387,12 @@ const Division = styled.p`
 
   @media (max-width: 560px) {
     font-size: 0.82rem;
+  }
+
+  [data-language='en'] & {
+    font-size: clamp(0.82rem, 0.86vw, 0.9rem);
+    line-height: 1.34;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -680,14 +731,14 @@ function WorkIcon() {
 }
 
 export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false }: ProfessionalCardGridProps) {
-  const { t, tx } = useI18n();
+  const { language, t, tx } = useI18n();
 
   if (!members.length) {
     return <EmptyText>{emptyMessage}</EmptyText>;
   }
 
   return (
-    <DirectoryGrid>
+    <DirectoryGrid data-language={language}>
       {members.map((member, index) => {
         return (
           <ProfileCard key={member.name} tabIndex={0} $featured={centerFirst && index === 0}>

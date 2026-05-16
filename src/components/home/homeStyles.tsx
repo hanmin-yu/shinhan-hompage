@@ -638,6 +638,11 @@ export const HeaderInner = styled(Container)`
   padding-top: 10px;
   padding-bottom: 10px;
 
+  &[data-language='en'] {
+    grid-template-columns: minmax(220px, 0.74fr) minmax(0, auto) minmax(320px, 0.82fr);
+    gap: clamp(10px, 1vw, 20px);
+  }
+
   @media (max-width: 1200px) {
     gap: 12px;
   }
@@ -988,6 +993,10 @@ export const Nav = styled.nav`
     gap: 10px;
     font-size: 1.12rem;
   }
+
+  [data-language='en'] & {
+    gap: clamp(8px, 0.9vw, 18px);
+  }
 `;
 
 export const NavItem = styled.div`
@@ -1080,6 +1089,18 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
     min-height: 82px;
     padding: 0 9px;
     font-size: 1.05rem;
+  }
+
+  [data-language='en'] & {
+    gap: 8px;
+    padding: 0 clamp(9px, 0.82vw, 16px);
+    font-size: clamp(1.08rem, 1.16vw, 1.36rem);
+    letter-spacing: 0;
+  }
+
+  [data-language='en'] &[href='/it'] {
+    padding-left: clamp(7px, 0.66vw, 12px);
+    padding-right: clamp(7px, 0.66vw, 12px);
   }
 
   &::before {
@@ -1498,6 +1519,11 @@ export const HeaderTools = styled.div`
   flex: 0 0 auto;
   margin-right: 22px;
 
+  [data-language='en'] & {
+    gap: 6px;
+    margin-right: 8px;
+  }
+
   @media (max-width: 1320px) {
     gap: 10px;
     margin-right: 0;
@@ -1610,8 +1636,34 @@ export const HeaderUtilityLinks = styled.div`
   padding-left: 18px;
   border-left: 1px solid rgba(70, 102, 144, 0.22);
 
+  [data-language='en'] & {
+    gap: 2px;
+    margin-left: 10px;
+    padding-left: 14px;
+  }
+
   @media (max-width: 1400px) {
     display: none;
+  }
+
+  @media (max-width: 1560px) {
+    [data-language='en'] & {
+      display: none;
+    }
+  }
+`;
+
+const headerUtilityInteractiveStyles = `
+  color: ${palette.textBody};
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+
+  &&:hover,
+  &&:focus-visible {
+    color: ${palette.blue};
+    transform: translateY(-1px);
+    outline: none;
   }
 `;
 
@@ -1621,16 +1673,17 @@ export const HeaderUtilityLink = styled(Link)`
   align-items: center;
   min-height: 38px;
   padding: 0 12px;
-  color: ${palette.textBody};
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
   word-break: keep-all;
-  transition: color 0.18s ease;
+  ${headerUtilityInteractiveStyles}
 
-  &:hover {
-    color: ${palette.blue};
+  [data-language='en'] & {
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 0.94rem;
   }
 
   &:not(:last-of-type)::after {
@@ -1651,14 +1704,11 @@ export const HeaderUtilityIconLink = styled(Link)`
   justify-content: center;
   width: 42px;
   height: 42px;
-  color: ${palette.textBody};
-  transition:
-    color 0.18s ease,
-    transform 0.18s ease;
+  ${headerUtilityInteractiveStyles}
 
-  &:hover {
-    color: ${palette.blue};
-    transform: translateY(-1px);
+  [data-language='en'] & {
+    width: 38px;
+    height: 38px;
   }
 
   svg {
@@ -1681,17 +1731,18 @@ export const HeaderUtilityButton = styled.button`
   padding: 0 12px;
   border: 0;
   background: transparent;
-  color: ${palette.textBody};
   font-size: 0.96rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
   word-break: keep-all;
   cursor: pointer;
-  transition: color 0.18s ease;
+  ${headerUtilityInteractiveStyles}
 
-  &:hover {
-    color: ${palette.blue};
+  [data-language='en'] & {
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 0.92rem;
   }
 
   &::after {
@@ -1858,6 +1909,13 @@ export const ContactButton = styled(Link)`
 
   @media (max-width: 1320px) {
     font-size: 0.88rem;
+  }
+
+  [data-language='en'] & {
+    gap: 7px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: clamp(0.84rem, 0.78vw, 0.95rem);
   }
 `;
 

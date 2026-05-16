@@ -197,6 +197,7 @@ export const koToEnTextMap: Record<string, string> = {
   '부대표 / 관세사': 'Vice President / Licensed Customs Broker',
   '상무 / 관세사 자격 / 미국공인회계사': 'Executive Director / Customs Specialist / US CPA',
   '상무 / 관세사 자격 / 미국공인회계사 자격': 'Executive Director / Customs Specialist / US CPA',
+  '본부장 / 관세사 자격 / 미국공인회계사 자격': 'Division Head / Customs Specialist / US CPA',
   '본부장 / 지사장 / 관세사': 'Division Head / Branch Director / Licensed Customs Broker',
   '본부장 / 관세사': 'Division Head / Licensed Customs Broker',
   이사: 'Director',
@@ -221,6 +222,7 @@ export const koToEnTextMap: Record<string, string> = {
     'Clearance, classification, requirements review, provisional/final declarations, and customs/logistics consulting',
   '서울본사 법률컨설팅팀': 'Seoul HQ Legal Consulting Team',
   '서울본사 CI팀': 'Seoul HQ CI Team',
+  '서울본사 통관본부 / 인천경기지사': 'Seoul HQ Clearance Division / Incheon-Gyeonggi Branch',
   서울본사: 'Seoul HQ',
   인천공항지사: 'Incheon Airport Branch',
   인천경기지사: 'Incheon-Gyeonggi Branch',
@@ -588,10 +590,420 @@ export const koToEnTextMap: Record<string, string> = {
   'HS CODE 및 세율 검토': 'HS CODE and tariff review',
   '요건확인 및 인증 대응': 'Requirements confirmation and certification response',
   '수입신고 및 세관 심사 대응': 'Import declaration and customs examination response',
+  '수입 신고 및 세관 심사 대응': 'Import declaration and customs examination response',
   '신고수리 및 물품 반출': 'Declaration acceptance and cargo release',
   '사후관리(리스크 및 사후 심사 대응)': 'Post-management (risk and post-audit response)',
+  '주요 서비스': 'Key Services',
+  '주요 핵심 기능': 'Key Features',
+  '도입 기대 효과': 'Expected Benefits',
+  '수출입 통관 및 환급': 'Import/Export Clearance & Refund',
+  '수출입통관 업무 신한관세법인의 플랫폼(iOOM:이음)으로 모두 연결됩니다.':
+    'Shinhan Customs Service connects all import/export clearance work through the iOOM platform.',
+  '수출입 통관 서비스': 'Import/Export Clearance Service',
+  '수출입 통관 전 과정에 대해 정확한 법령 해석과 실무 경험을 기반으로 신속하고 안정적인 서비스를 제공합니다.':
+    'We provide fast and reliable service across the full import/export clearance process based on accurate legal interpretation and practical experience.',
+  'HS CODE 마스터 관리 시스템': 'HS CODE master management system',
+  '고객사 시스템 연동 및 반복 업무 자동화': 'Client system integration and repetitive task automation',
+  '고객사 맞춤형 수출입 통관 분석 데이터 제공': 'Client-tailored import/export clearance analytics',
+  '사전 검토(거래조건·과세요소 분석)': 'Pre-review (transaction terms and dutiable elements)',
+  '품목 정보를 표준화하고 신고 오류를 사전에 차단합니다.':
+    'Standardizes item information and prevents declaration errors in advance.',
+  'RMS 기반 리스크 관리': 'RMS-based risk management',
+  '단계별 업무 체크로 휴먼에러를 최소화합니다.':
+    'Minimizes human error through step-by-step work checks.',
+  '고객사 시스템 연동': 'Client system integration',
+  '반복 입력과 확인 업무를 자동화해 처리 속도를 높입니다.':
+    'Improves processing speed by automating repetitive entry and verification tasks.',
+  '고객사 맞춤형 수출입 통관 분석 데이터': 'Client-tailored import/export clearance analytics',
+  '사후 심사와 내부 관리에 필요한 근거 데이터를 제공합니다.':
+    'Provides supporting data needed for post-clearance audits and internal management.',
+  '이음 시스템 활용': 'iOOM system utilization',
+  '통관 현황 데이터를 체계적으로 관리합니다.': 'Systematically manages clearance status data.',
+  'iOOM 플랫폼이란?': 'What is the iOOM Platform?',
+  'iOOM 플랫폼은 분산되어있는 수출입 통관 데이터를 한곳에 모아 관리하는 웹 기반 통합 솔루션입니다.':
+    'The iOOM platform is a web-based integrated solution that gathers and manages distributed import/export clearance data in one place.',
+  '별도의 시스템 설치 없이, 로그인만으로 선적 서류 등록부터 실시간 신고 현황, 비용 정산, 통계 분석까지 전 과정을 투명하게 관리할 수 있습니다.':
+    'Without installing a separate system, users can manage the full process transparently after login, from shipping document registration to real-time declaration status, cost settlement, and statistical analysis.',
+  '실시간 통관 대시보드': 'Real-time customs dashboard',
+  '수출입 신고 현황 및 이력을 B/L별, 사업부별, 자재별(PO)로 실시간 조회하고 신고 서류(필증 등)를 자동 보관해 즉시 다운로드할 수 있습니다.':
+    'View import/export declaration status and history in real time by B/L, business unit, and material (PO), and automatically store declaration documents for immediate download.',
+  '업무 효율화 솔루션': 'Work efficiency solution',
+  'Invoice, Packing List 등 선적 서류를 플랫폼에 업로드하여 간편하게 통관을 의뢰하고 반복적인 서류 작성 업무와 데이터 누락을 줄입니다.':
+    'Upload shipping documents such as invoices and packing lists to request clearance easily and reduce repetitive paperwork and missing data.',
+  '비용 관리': 'Cost management',
+  '통관 수수료뿐만 아니라 포워딩, 창고료 등 파트너사별 비용 정산을 관리하고 다양한 양식의 정산 자료를 플랫폼 내에서 편집 및 엑셀 통합 관리할 수 있습니다.':
+    'Manage settlement by partner, including forwarding and warehousing fees as well as customs service fees, and edit settlement data in various formats with Excel integration.',
+  '지능형 데이터 통계': 'Intelligent data statistics',
+  '품목별(HS Code), 국가별 통관 실적을 분석하고 관세 환급 및 FTA 원산지 관리 업무를 위한 데이터 추출을 지원합니다.':
+    'Analyze customs performance by item (HS Code) and country, and support data extraction for duty refunds and FTA origin management.',
+  '업무 효율성 증대': 'Improved work efficiency',
+  '메일과 엑셀로 주고받던 소통을 플랫폼으로 단일화하여 업무 시간을 단축합니다.':
+    'Shortens work time by consolidating email and Excel-based communication into one platform.',
+  '비용 및 리스크 관리': 'Cost and risk management',
+  '실시간 비용 확인 및 정산 데이터 정합성 확보로 불필요한 지출을 방지합니다.':
+    'Prevents unnecessary spending through real-time cost visibility and consistent settlement data.',
+  '데이터 자산화': 'Data assetization',
+  '수년치의 통관 데이터를 축적하여 경영 의사결정 및 관세 심사에 대비합니다.':
+    'Accumulates years of customs data to support management decisions and prepare for customs reviews.',
   이선희: 'Lee Sunhee',
   정미화: 'Jung Mihwa',
+  '검역·요건': 'Quarantine / Requirements',
+  '풍부한 노하우를 바탕으로 한 법령 검토를 통해 검역 및 수출입요건에 대한 정확한 해결책을 제공합니다.':
+    'We provide accurate solutions for quarantine and import/export requirements through legal reviews based on extensive know-how.',
+  '국내 반입 및 유통에 앞서 관계 법령상 검역, 신고, 인증, 허가, 표시 기준 적합 여부를 검토하고 품목별 특성에 맞는 행정 절차를 지원하여 수입 단계에서 발생 가능한 지연과 보완·반송·폐기 리스크를 사전에 차단합니다.':
+    'Before domestic entry and distribution, we review compliance with quarantine, declaration, certification, permit, and labeling standards and support item-specific administrative procedures to prevent delays, corrections, returns, and disposal risks at the import stage.',
+  '식품·식물·축산물·공산품별 검역 및 요건 검토':
+    'Quarantine and requirement review for food, plants, livestock products, and industrial goods',
+  '수입 가능 여부와 법령상 제한 사항 사전 확인':
+    'Advance confirmation of import eligibility and legal restrictions',
+  '표시사항, 성분, 규격, 제조공정 검토': 'Review of labeling, ingredients, specifications, and manufacturing process',
+  '신고, 승인, 인증, 확인 등 관계기관 절차 지원':
+    'Support for agency procedures including declarations, approvals, certifications, and confirmations',
+  '사전 검토': 'Pre-review',
+  '수입 가능성 확인': 'Import eligibility check',
+  '구비서류 점검': 'Required document check',
+  '이슈 대응': 'Issue response',
+  '요건의 종류': 'Types of Requirements',
+  '“검역 및 요건 업무”란 수입 물품이 국내 반입 및 유통에 앞서 관계 법령에서 정한 검역, 신고, 인증, 허가 및 표시 기준 적합 여부를 검토하고, 품목별 특성에 따라 필요한 행정 절차를 이행하도록 지원하는 업무입니다.':
+    'Quarantine and requirements work reviews whether imported goods meet quarantine, declaration, certification, permit, and labeling standards before domestic entry and distribution, and supports the administrative procedures required by item characteristics.',
+  '품목에 따라 식품, 식물, 축산물, 공산품 등 적용 법령과 요구 자료가 상이하므로, 사전 검토를 통해 통관 지연과 보완, 반송, 폐기 등의 리스크를 최소화하는 것이 핵심입니다.':
+    'Because applicable laws and required materials vary by item, including food, plants, livestock products, and industrial goods, advance review is essential to minimize customs delays, corrections, returns, and disposal risks.',
+  '식품검역': 'Food quarantine',
+  '가공식품, 식품첨가물, 건강기능식품, 기구·용기·포장 등 식품 관련 물품에 대하여 수입 신고, 한글 표시사항, 원재료 및 배합비, 제조공정, 성분 규격, 검사 대상 여부 등을 검토하고 관련 절차를 수행합니다.':
+    'Reviews import declarations, Korean labeling, raw materials and formulas, manufacturing processes, ingredient standards, and inspection eligibility for food-related goods such as processed foods, additives, health functional foods, utensils, containers, and packaging.',
+  '식물검역': 'Plant quarantine',
+  '곡류, 과실류, 채소류, 종자류, 목재류 및 기타 식물성 물품에 대하여 병해충 유입 방지를 위한 검역 요건을 확인하고, 수입 금지·제한 여부, 검역증명서 필요 여부, 소독·검사 대상 여부 등을 검토합니다.':
+    'Checks quarantine requirements to prevent pests for grains, fruits, vegetables, seeds, wood, and other plant products, including import bans or restrictions, phytosanitary certificates, and disinfection or inspection requirements.',
+  '축산물검역': 'Livestock product quarantine',
+  '육류, 유가공품, 알가공품 등 축산물 및 축산물 원료가 포함된 물품에 대하여 검역 조건, 수출국 및 제조 시설 적합 여부, 위생증명서 구비 여부, 수입 허용 조건 등을 검토하고 관련 신고 및 검역 절차를 지원합니다.':
+    'Reviews quarantine conditions, exporting-country and facility eligibility, health certificates, and import approval conditions for livestock products and goods containing livestock ingredients, and supports related declarations and quarantine procedures.',
+  '기타(KC, 화장품)': 'Other (KC, cosmetics)',
+  '전기용품, 생활용품, 어린이제품 등에 대한 KC 인증·확인 대상 여부와 화장품 수입 시 요구되는 표시 기준, 책임 판매업 관련 사항, 기능성 여부 등 개별 법령에 따른 요건을 검토하여 통관 전 필요한 조치를 지원합니다.':
+    'Reviews requirements under individual laws, including KC certification or confirmation for electrical, household, and children’s products, and labeling, responsible seller matters, and functionality for cosmetics imports, then supports required actions before clearance.',
+  '품목별 검역 및 요건 해당 여부를 사전에 검토': 'Pre-review quarantine and requirement applicability by item',
+  '수입 가능 여부 및 법령상 제한 사항을 확인': 'Confirm import eligibility and legal restrictions',
+  '표시사항 검토': 'Labeling review',
+  '한글 표시사항 및 제품 라벨 적정성을 검토': 'Review Korean labeling and product label suitability',
+  '성분·규격 검토': 'Ingredient and specification review',
+  '원재료, 배합비율, 제조공정, 성분 규격을 검토': 'Review raw materials, formula ratios, manufacturing process, and ingredient specifications',
+  '구비서류 확인': 'Required document confirmation',
+  '검역증명서, 위생증명서, 성분서 등 구비 서류를 확인': 'Confirm required documents such as quarantine certificates, health certificates, and ingredient statements',
+  '행정절차 지원': 'Administrative procedure support',
+  '관계 기관 신고, 승인, 인증 및 확인 절차를 지원': 'Support agency declaration, approval, certification, and confirmation procedures',
+  '통관 보완, 반려, 검사 지연 등 발생 이슈에 대응': 'Respond to issues such as customs corrections, rejections, and inspection delays',
+  '3PL 운영, 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리 및 국내 운송까지 물류서비스를 통합 지원합니다.':
+    'We provide integrated logistics support covering 3PL operations, international forwarding, post-arrival warehousing, bonded and general cargo inbound/outbound management, and domestic transport.',
+  '물류 서비스': 'Logistics Service',
+  '신한인비스타는 국제 포워딩과 입항 이후 창고 보관, 보세 및 일반화물 입출고 관리, 3PL 운영, 국내 운송까지 한 흐름으로 연결해 물류 실행력을 제공합니다. 수출입 기업, 다국적 기업, 외국계 기업의 운영 특성에 맞춰 항공·해상·복합운송과 창고, 트럭킹 서비스를 통합 지원합니다.':
+    'Shinhan Invista connects international forwarding, post-arrival warehousing, bonded and general cargo inbound/outbound management, 3PL operations, and domestic transport into one operational flow. We provide integrated air, ocean, multimodal, warehouse, and trucking services tailored to import/export companies, multinationals, and foreign-invested companies.',
+  '입항 이후 보관·반출 계획 수립': 'Post-arrival storage and release planning',
+  '국제 운송 및 내륙운송 연계': 'International and inland transport coordination',
+  '보세·일반 화물 운영 관리': 'Bonded and general cargo operations management',
+  '현장 이슈 대응': 'On-site issue response',
+  '보세화물 입출고 관리': 'Bonded cargo inbound/outbound management',
+  '일반화물 입출고 관리': 'General cargo inbound/outbound management',
+  '3PL 관리업무': '3PL management operations',
+  '화물 장-단기 보관': 'Short- and long-term cargo storage',
+  'AEO 절차관리': 'AEO procedure management',
+  '항공 해상 수출입 CARGO HANDLING': 'Air and ocean import/export cargo handling',
+  'LCL 화물 정기 CONSOLIDATION': 'Regular LCL cargo consolidation',
+  'SEA & AIR 복합운송': 'Sea & air multimodal transport',
+  '벌크, 특수화물, 위험물 운송': 'Bulk, special cargo, and dangerous goods transport',
+  '창고보관 및 내륙운송': 'Warehousing and inland transport',
+  '수출입 연계 수배송 서비스': 'Import/export-linked pickup and delivery service',
+  '보세운송 서비스': 'Bonded transport service',
+  '일반 수배송': 'General pickup and delivery',
+  반품회수: 'Return pickup',
+  '관세조사의 종류': 'Types of Customs Audit',
+  '주요 조사 분야': 'Primary Audit Focus Areas',
+  '정기 관세조사': 'Regular customs audit',
+  '일정 수입규모 이상 업체(최근 2년간 연평균 수입액 3천만불 이상 및 매출액 1억원 이상인 업체)에 대해 4~5년 주기로 실시합니다.':
+    'Conducted every four to five years for companies above a certain import scale, including those with average annual imports of USD 30 million or more over the past two years and sales of KRW 100 million or more.',
+  '비정기 관세조사': 'Non-regular customs audit',
+  '통관적법성 위반 고위험 업체를 수시로 선정하여 정기 관세조사와 동일한 방법으로 실시합니다.':
+    'Conducted as needed for companies selected as high-risk for customs compliance violations, using the same methods as regular customs audits.',
+  '간이 관세조사': 'Simplified customs audit',
+  '관세행정 협력도와 성실도를 고려해 위험도가 낮다고 판단되는 업체에 대해 전체 조사 기간을 축소하여 실시합니다.':
+    'Conducted with a shortened review period for companies assessed as low risk based on customs cooperation and compliance.',
+  '과세가격, 품목분류, 통관요건, 환급, 감면, 원산지, 보세화물관리, 외국환거래 등 주요 조사 분야를 포함한 전 분야 업무를 지원합니다.':
+    'We support all audit areas, including customs valuation, classification, customs requirements, refunds, exemptions, origin, bonded cargo management, and foreign exchange transactions.',
+  과세가격: 'Customs valuation',
+  '거래가격과 가산·공제 요소의 적정성을 점검합니다.': 'Checks the appropriateness of transaction value and addition/deduction elements.',
+  'HS CODE 정합성과 세율 적용 리스크를 검토합니다.': 'Reviews HS Code consistency and tariff-rate application risks.',
+  통관요건: 'Customs requirements',
+  '인증·허가·표시 기준 등 수입 요건을 점검합니다.': 'Checks import requirements such as certification, permits, and labeling standards.',
+  '환급 산정과 증빙 적정성을 확인합니다.': 'Confirms refund calculation and supporting evidence suitability.',
+  감면: 'Exemption',
+  '감면 요건 충족 여부와 사후관리 리스크를 점검합니다.': 'Checks exemption eligibility and post-management risk.',
+  '원산지 또는 협정관세 적용 및 증명서류에 관한 사항의 적법성을 검토합니다.':
+    'Reviews the legality of origin, preferential tariff application, and supporting documents.',
+  보세화물관리: 'Bonded cargo management',
+  '보세구역 반출입과 재고 관리 적정성을 확인합니다.': 'Confirms bonded-area inbound/outbound and inventory management suitability.',
+  외국환거래: 'Foreign exchange transactions',
+  '지급 구조와 신고 의무 위반 가능성을 검토합니다.': 'Reviews payment structures and potential reporting-duty violations.',
+  'FTA 전담팀의 고객사 맞춤 진단 및 사후검증 대응을 통해 차별화된 서비스를 제공합니다.':
+    'Our dedicated FTA team provides differentiated service through client-tailored diagnosis and post-verification response.',
+  '20년 이상의 FTA 컨설팅 경험을 보유한 전담팀이 고객사의 공급망 전 과정에서의 리스크를 선제적으로 진단하고, FTA 원산지 규정 활용을 통한 실질적 관세 절감을 지원하여 글로벌 통상 환경에서 고객사의 경영 안정성과 이익 극대화를 지원합니다.':
+    'A dedicated team with more than 20 years of FTA consulting experience proactively diagnoses risk across the client supply chain and supports practical tariff savings through FTA origin rules, helping clients improve management stability and profitability in the global trade environment.',
+  '원산지는 물품의 "경제적 국적"을 규정하는 기준입니다. 이는 단순히 물품의 생산지를 확인하는 것을 넘어, 국제 무역에서 적용되는 세율과 각종 수입 규제의 향방을 결정하는 핵심 지표입니다.':
+    'Origin is the standard that defines the economic nationality of goods. It is a key indicator that determines tariff treatment and import regulations in international trade, beyond simply identifying where goods were produced.',
+  '기업은 일반 원산지 규정을 통해 무역 질서를 준수하고, FTA 원산지 규정을 활용하여 실질적인 관세 절감 및 가격 경쟁력을 확보합니다.':
+    'Companies comply with trade order through general origin rules and secure practical tariff savings and price competitiveness by using FTA origin rules.',
+  '원산지 관리의 종류': 'Types of Origin Management',
+  '특혜 원산지 관리': 'Preferential origin management',
+  '자유무역협정(FTA) 체결국 간의 특혜 관세 혜택을 향유하기 위한 종합 관리 절차로, 수출 물품의 원산지 판정과 수입 시 원산지 증빙 서류의 적정성 관리가 핵심입니다.':
+    'A comprehensive management process for enjoying preferential tariff benefits between FTA partner countries, centered on origin determination for exports and proper management of origin evidence for imports.',
+  '비특혜 원산지 관리': 'Non-preferential origin management',
+  '특혜 관세 혜택과 관계없이 대외무역법 및 수입국 규정에 따라 차등적인 관세·비관세 조치를 적용하기 위한 절차로, 덤핑방지관세 적용 여부 판단, 수입 쿼터 관리, 원산지 표시 준수를 통해 통상 환경의 불확실성을 줄입니다.':
+    'A process for applying differentiated tariff and non-tariff measures under the Foreign Trade Act and importing-country rules, regardless of preferential tariff benefits, reducing trade uncertainty through anti-dumping review, import quota management, and origin marking compliance.',
+  '일반 원산지 컨설팅': 'Non-Preferential Origin Consulting',
+  '원산지 표시 자문': 'Origin marking advisory',
+  '대외무역법 검토를 통한 수입 물품의 원산지 판정, 표시 방법 가이드, 위반 리스크 점검':
+    'Origin determination, marking guidance, and violation-risk review for imported goods through Foreign Trade Act analysis',
+  '미국, 중국 등 주요국의 비특혜 원산지 규정과 국가별 특수 규정에 대한 전문 자문':
+    'Specialized advisory on non-preferential origin rules and country-specific rules in major markets such as the United States and China',
+  'FTA 원산지 컨설팅': 'FTA Origin Consulting',
+  '원산지 판정 및 증명': 'Origin determination and certification',
+  '협정별 원산지 결정 기준 분석을 통한 정확한 원산지 판정과 입증 자료 구비':
+    'Accurate origin determination and evidence preparation through agreement-specific origin criteria analysis',
+  '원산지 증명서 발급 및 인증 수출자 컨설팅': 'Certificate of origin issuance and approved exporter consulting',
+  '원산지 증명서 발급 지원과 품목별·업체별 인증 수출자 취득·유지 컨설팅':
+    'Certificate of origin issuance support and consulting for obtaining and maintaining item- and company-specific approved exporter status',
+  '수입 물품 자율점검 및 원산지 조사 대응': 'Self-review of imported goods and origin investigation response',
+  '협정관세 정합성 의심 및 조사 시 원산지 충족 여부 소명과 방어':
+    'Explanation and defense of origin compliance during reviews or investigations of preferential tariff eligibility',
+  '수출 물품 원산지 검증 대응': 'Export origin verification response',
+  '미국, 유럽, 아세안 등 주요 수입국 세관의 검증 요청에 대한 전략적 입증 자료 작성과 직접 대응':
+    'Strategic evidence preparation and direct response to verification requests from customs authorities in major importing regions such as the United States, Europe, and ASEAN',
+  '원산지 시스템 및 DB 구축': 'Origin system and database implementation',
+  '기업 맞춤형 자체 FTA 시스템 설계·구축과 전 세계 98개 이상의 FTA 협정·관세율 정보 기반 최적의 솔루션 제공':
+    'Design and implementation of company-tailored FTA systems and optimal solutions based on more than 98 global FTA agreements and tariff-rate data',
+  '관세법인 최초로 AEO 공인을 획득, AEO 신규 공인부터 사후관리와 갱신까지 전 과정을 지원합니다.':
+    'As the first customs firm to obtain AEO authorization, we support the full process from new certification to post-management and renewal.',
+  '수출입안전관리우수업체(AEO: Authorized Economic Operator)는 수출입화물의 이동과 관련된 업체 중 관세청에서 신뢰성과 안전성을 공인한 우수업체를 의미합니다. 신한은 관세법인 최초로 AEO 공인을 획득한 이후 제도 도입 초기부터 현재까지 다양한 산업군의 고객사를 대상으로 수준 높은 컨설팅을 제공해 왔습니다. 단순한 인증 획득에 그치지 않고, 효율성 추구와 AEO 역량 내재화를 원칙으로 삼아 실효성 있는 AEO 체계가 조직 내에 안정적으로 정착되도록 지원합니다.':
+    'AEO (Authorized Economic Operator) refers to trusted and secure companies authorized by Korea Customs among businesses involved in the movement of import/export cargo. Since becoming the first customs firm to obtain AEO authorization, Shinhan has provided high-level consulting to clients across diverse industries from the early days of the system. Beyond obtaining certification, we help practical AEO systems take root in organizations by pursuing efficiency and internalizing AEO capabilities.',
+  'AEO인증 & 갱신심사 컨설팅': 'AEO certification and renewal audit consulting',
+  '전사 교육과 맞춤형 프로세스 구축을 통해 공인기준의 안정적인 정착을 지원하며, 최신 심사 기준과 동향을 반영하여 약 220여 개 이상의 공인기준에 대한 신속하고 정확한 (재)공인을 지원합니다.':
+    'Supports stable adoption of authorization criteria through company-wide training and tailored process setup, and supports fast, accurate certification and recertification across more than 220 criteria based on the latest audit standards and trends.',
+  사후관리: 'Post-management',
+  '인적·사업장 변동 및 규정 개정을 상시 모니터링하며, 위험평가·내부통제활동평가·거래업체 평가 등 주요 사후관리 업무를 전문 컨설턴트가 지원하여 효율적인 운영과 실질적인 리스크 관리를 지원합니다.':
+    'Specialized consultants support key post-management tasks such as risk assessment, internal control activity assessment, and trading-partner evaluation while continuously monitoring personnel, workplace, and regulatory changes.',
+  '등급조정 및 관세 협력 활동 지원': 'Grade adjustment and customs cooperation support',
+  '다수의 등급상향 컨설팅 경험으로 활용사례 나눔대회 수상 지원부터 발표 역량 강화까지 체계적으로 지원하며, C-TPAT 검증 대응과 MRA 합동심사 등 국내외 세관 및 유관기관 대응 업무도 함께 지원합니다.':
+    'Based on extensive grade-up consulting experience, we systematically support everything from case competition awards to presentation capability building, as well as C-TPAT verification and MRA joint reviews with domestic and overseas customs authorities.',
+  '신규인증·갱신심사 전략': 'New Certification and Renewal Audit Strategy',
+  현황진단: 'Current-state diagnosis',
+  '공인기준 충족 여부와 조직별 준비 수준을 점검합니다.':
+    'Checks whether authorization criteria are met and how prepared each organization is.',
+  '기준 설계': 'Criteria design',
+  '약 220여 개 공인기준에 맞춰 업무 프로세스와 증빙 체계를 설계합니다.':
+    'Designs work processes and evidence systems aligned with about 220 authorization criteria.',
+  '문서·교육 정비': 'Document and training preparation',
+  '부서별 실행 문서와 교육 체계를 정비합니다.':
+    'Prepares execution documents and training systems by department.',
+  '현장심사 대응': 'On-site audit response',
+  '심사 동향에 맞춰 현장 보완과 질의 대응을 준비합니다.':
+    'Prepares on-site corrections and Q&A responses based on audit trends.',
+  '심의·사후관리': 'Review and post-management',
+  '심의위원회 대응 이후 자율평가와 변경 신고까지 관리합니다.':
+    'Manages self-assessment and change reporting after review committee response.',
+  '고객사의 무역 거래에 맞춘 리스크 분석과 적법한 대응 전략으로 관세조사의 불확실성을 최소화합니다.':
+    'We minimize customs audit uncertainty through risk analysis and compliant response strategies tailored to each client’s trade transactions.',
+  '숙련된 전문팀이 외환 규정과 거래 구조를 통합적으로 점검하여 최적의 솔루션을 제공합니다.':
+    'An experienced specialist team provides optimal solutions by comprehensively reviewing foreign exchange rules and transaction structures.',
+  '외환 검사 및 조사는 세관에서 기업의 외국환거래 분야에 대한 적정성을 조사하는 제도입니다. 외환 규정 위반 시 과태료, 벌금 등으로 바로 이어질 수 있으므로 전문가의 컨설팅이 필요합니다. 외환검사 전문팀을 배정하여 신한관세법인만의 차별화된 전문 분석기법을 활용하고 위험요소를 사전에 차단합니다.':
+    'Foreign exchange inspections and investigations are customs procedures that review the appropriateness of a company’s foreign exchange transactions. Because violations may lead directly to administrative fines or penalties, expert consulting is needed. Shinhan assigns a specialist foreign exchange team, applies differentiated analytical methods, and blocks risk factors in advance.',
+  '외환검사 관련 다양한 컨설팅 업무 수행 경험을 바탕으로 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.':
+    'Based on extensive consulting experience related to foreign exchange inspections, we analyze each client’s characteristics and transaction structure to provide specialized service.',
+  '검사 기간 현장 대응부터 자료 검토까지 일체의 서비스를 지원하며, 단순한 업무 대리가 아닌 검사 결과에 따른 고객사의 법적 리스크를 최소화하기 위한 대응 방안을 전략적으로 설계합니다.':
+    'We support the full process from on-site response during inspection to document review, and strategically design responses that minimize legal risk for clients based on inspection results.',
+  '외환 리스크 사전진단': 'Foreign exchange risk pre-diagnosis',
+  '상계, 제3자 지급을 포함하여 무역·용역·자금 관련 전 외국환 행위를 점검합니다.':
+    'Reviews all foreign exchange activities related to trade, services, and funds, including offsetting and third-party payments.',
+  외환검사: 'Foreign exchange inspection',
+  '외환검사 대리': 'Foreign exchange inspection representation',
+  '대관 업무를 포함한 현장 대응과 자료 검토를 지원합니다.': 'Supports on-site response and document review, including government-facing work.',
+  '외환검사 결과에 따른 사후조치': 'Follow-up measures after foreign exchange inspection',
+  '과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.':
+    'Provides consulting to minimize administrative fines and designs recurrence-prevention systems.',
+  '외국환거래법 관련 법률 자문': 'Legal advisory on the Foreign Exchange Transactions Act',
+  '외국환거래법상 쟁점과 신고·보고 의무를 검토합니다.':
+    'Reviews issues under the Foreign Exchange Transactions Act and declaration/reporting obligations.',
+  '외국환거래법 실무 교육': 'Practical training on the Foreign Exchange Transactions Act',
+  '실무자가 주요 외환 규정과 내부 관리 포인트를 이해하도록 교육합니다.':
+    'Trains practitioners to understand key foreign exchange rules and internal management points.',
+  '정기 외환검사 대응': 'Periodic Foreign Exchange Inspection Response',
+  '2025년 1월부터 외국환거래에 대한 정기검사 제도가 본격 시행됨에 따라, 일정 규모 이상의 기업은 정기적인 외환검사 대상이 될 수 있습니다.':
+    'As the periodic inspection system for foreign exchange transactions took full effect in January 2025, companies above a certain scale may become subject to regular foreign exchange inspections.',
+  '특히 수출입 거래와 연계된 외환거래에 대해 거래 구조, 지급 방식, 신고 적정성 등을 종합적으로 점검하는 방향으로 관리가 강화되고 있습니다.':
+    'Controls are being strengthened toward comprehensive review of transaction structure, payment method, and declaration suitability for foreign exchange transactions linked to import/export transactions.',
+  '당사는 기업의 외환거래 구조와 수출입 데이터를 종합적으로 분석하여 정기 외환검사에 대비한 사전 점검 및 대응 서비스를 제공합니다.':
+    'We comprehensively analyze corporate foreign exchange transaction structures and import/export data to provide pre-check and response services for periodic foreign exchange inspections.',
+  '수입대금 지급 및 영수 적정성': 'Suitability of import payment and receipt',
+  '제3자 지급·상계·상호계산 등 특수거래 신고 여부':
+    'Whether special transactions such as third-party payment, offsetting, and reciprocal calculation are reported',
+  '장기미결제 및 지급기간 준수 여부': 'Long-term unsettled items and payment-period compliance',
+  '수출입 신고자료와 외환송금 자료 간 정합성':
+    'Consistency between import/export declaration data and foreign exchange remittance data',
+  '해외법인 및 특수관계자 거래 구조': 'Overseas entity and related-party transaction structures',
+  '지급수단 및 결제조건 신고 적정성': 'Suitability of payment method and settlement-term declarations',
+  '무상거래·대체거래 처리 적정성': 'Suitability of no-charge and substitute transaction handling',
+  '특수관계자간 거래가격사전심사(ACVA, Advanced Customs Valuation Arrangement) 승인을 위한 컨설팅을 제공합니다.':
+    'We provide consulting for approval of ACVA (Advanced Customs Valuation Arrangement) for related-party transaction pricing.',
+  'ACVA는 특수관계자간 과세가격 결정방법 사전심사 제도로, 특수관계자간에 거래되는 수입물품의 과세가격 결정방법을 납세자의 신청에 따라 과세당국과 상호 합의해 사전에 결정하는 제도입니다. 관세조사 유예, 가산세 면제, 과세가격 결정자료 제출 생략 등 실질적 이점을 통해 기업의 신뢰성과 경영 안정성을 높입니다.':
+    'ACVA is an advance review system for customs valuation methods in related-party transactions. At the taxpayer’s request, the valuation method for imported goods traded between related parties is agreed in advance with the tax authority. Practical benefits such as customs audit deferral, penalty exemption, and exemption from valuation-data submission improve corporate reliability and management stability.',
+  '필요 시 사전상담을 신청할 수 있습니다.': 'Pre-consultation may be requested when needed.',
+  '특수관계자간 수입물품 가격결정 근거자료 등을 제출합니다.':
+    'Submit supporting materials for pricing of imported goods between related parties.',
+  '심사기간은 약 1년입니다.': 'The review period is approximately one year.',
+  '신청인은 심사결과 동의 여부를 의사표시합니다.': 'The applicant indicates whether they agree with the review result.',
+  '유효기간은 3년이며 2년 연장이 가능합니다.': 'The validity period is three years and may be extended by two years.',
+  '매년 연례보고서를 제출합니다.': 'Submit an annual report every year.',
+  '사전심사 신청접수': 'Advance review application receipt',
+  사전상담: 'Pre-consultation',
+  '심사결과 통보': 'Review result notification',
+  '사전 심사서 배부': 'Advance review letter issuance',
+  '연례보고서 제출': 'Annual report submission',
+  'ACVA 이점': 'Benefits of ACVA',
+  '관세조사 유예': 'Customs audit deferral',
+  'ACVA 신청물품의 과세가격에 대하여 신청 시점부터 승인 시점까지 관세조사가 유예되며, 승인 시점부터 3년 동안 신고가격을 과세가격으로 인정받을 수 있습니다.':
+    'For the customs value of goods under ACVA application, customs audits are deferred from application to approval, and the declared value may be accepted as the customs value for three years from approval.',
+  '가산세 면제': 'Penalty exemption',
+  'ACVA 신청 시점부터 잠정가격신고 제도 이용이 가능하고, ACVA 결과 통보일로부터 2개월 이내에 통보된 과세가격 결정방법에 따라 수정신고하는 경우 신고불성실 가산세가 면제됩니다.':
+    'The provisional value declaration system may be used from the time of ACVA application, and under-reporting penalties are exempted when amended declarations are filed according to the notified valuation method within two months of ACVA result notification.',
+  '과세가격 결정자료 제출 생략': 'Exemption from valuation-data submission',
+  'ACVA 결정을 받은 물품은 과세가격 결정자료 제출을 생략할 수 있습니다.':
+    'Goods covered by an ACVA decision may be exempt from submitting customs valuation data.',
+  '기업 신뢰성 및 경영안정 제고': 'Improved corporate reliability and management stability',
+  '수입물품 과세가격에 대한 과세관청의 신뢰를 확보하고 조세마찰을 최소화함으로써 경영 안정성을 높일 수 있습니다.':
+    'Management stability can be improved by securing tax-authority confidence in the customs value of imported goods and minimizing tax disputes.',
+  '세관조사 대응부터 형사 리스크 관리까지 통합 솔루션을 제공합니다.':
+    'We provide integrated solutions from customs investigation response to criminal risk management.',
+  '범칙조사 구분': 'Types of Penalty Investigation',
+  임의조사: 'Voluntary investigation',
+  '당사자의 동의 또는 승낙을 받고 행하는 조사로서 관세범의 조사는 임의조사가 원칙입니다.':
+    'An investigation conducted with the party’s consent or approval; customs offense investigations are generally voluntary investigations.',
+  강제조사: 'Compulsory investigation',
+  '물리력을 동원하는 강제처분으로서 체포, 구속, 압수수색 등이 이에 해당합니다.':
+    'A compulsory measure involving physical force, including arrest, detention, search, and seizure.',
+  '통고처분 및 검찰송치': 'Notice Disposition and Prosecutorial Referral',
+  '관세청장이나 세관장은 고발 전까지 부족세액을 자진 납부한 자, 수출입 안전관리 우수업체, 세관 출석 요구 전에 자수하거나 조사에 적극 협조한 자, 관세범죄 검거 및 예방에 협조한 자, 수출유공 또는 납세유공으로 표창을 수상한 자 등에 대해 관세청장 사전승인을 받아 통고처분 할 수 있습니다.':
+    'The Commissioner of Korea Customs Service or a customs director may issue a notice disposition with prior approval for parties who voluntarily pay deficient duties before accusation, AEO companies, those who voluntarily appear or actively cooperate before a summons, those who help detect or prevent customs offenses, or those commended for export or tax-payment merit.',
+  '통고처분 이행(벌금이나 추징금 납부) 시 사건이 종결됩니다.':
+    'The case closes when the notice disposition is fulfilled through payment of fines or additional charges.',
+  '통고처분 불이행(벌금이나 추징금 미납) 시 검찰로 송치됩니다.':
+    'If the notice disposition is not fulfilled, the case is referred to prosecutors.',
+  '검찰은 수사 후 기소 여부를 결정합니다.': 'Prosecutors decide whether to indict after investigation.',
+  '처분 결과는 불기소처분, 공판기소, 약식기소로 이어질 수 있으며, 공판기소 시 정식 재판과 판결 확정, 약식기소 시 약식명령 송달과 벌금 납부 또는 정식 재판 청구로 연결됩니다.':
+    'Disposition may result in non-indictment, formal indictment, or summary indictment; formal indictment leads to trial and final judgment, while summary indictment leads to a summary order and fine payment or a request for formal trial.',
+  '범칙조사 절차': 'Penalty Investigation Process',
+  '세관조사 및 통고처분': 'Customs investigation and notice disposition',
+  '세관조사 착수': 'Start of customs investigation',
+  '조사 범위와 혐의 사실을 확인합니다.': 'Confirm the investigation scope and alleged facts.',
+  '자료 제출·입회': 'Document submission and attendance',
+  '요구 자료를 정리하고 조사 과정에 입회합니다.': 'Organize requested documents and attend the investigation process.',
+  의견진술: 'Opinion statement',
+  '사실관계와 법리 쟁점을 정리해 의견을 제출합니다.': 'Organize facts and legal issues and submit opinions.',
+  '통고처분 검토': 'Notice disposition review',
+  '벌금·추징금 납부 여부와 사건 종결 가능성을 검토합니다.':
+    'Review whether fines or additional charges should be paid and whether the case may be closed.',
+  '종결 또는 송치': 'Closure or referral',
+  '통고처분 이행 시 종결, 불이행 시 검찰 송치로 이어집니다.':
+    'The case closes if the notice disposition is fulfilled and is referred to prosecutors if not.',
+  '검찰조사 및 형사처분': 'Prosecutorial investigation and criminal disposition',
+  '검찰 송치': 'Referral to prosecutors',
+  '세관조사 결과가 검찰 단계로 이관됩니다.': 'Customs investigation results are transferred to the prosecutorial stage.',
+  '검찰 수사': 'Prosecutorial investigation',
+  '사실관계와 위법성, 고의성 여부를 검토합니다.': 'Reviews facts, illegality, and intent.',
+  '불기소 처분': 'Non-indictment disposition',
+  '혐의 없음 또는 기소유예 등으로 사건이 종결될 수 있습니다.':
+    'The case may close through no-suspicion disposition, suspended indictment, or similar outcome.',
+  약식기소: 'Summary indictment',
+  '약식명령 송달 후 벌금 납부 또는 정식재판 청구로 이어집니다.':
+    'After a summary order is served, the case proceeds to fine payment or a request for formal trial.',
+  공판기소: 'Formal indictment',
+  '정식 재판을 통해 판결 확정 단계로 진행됩니다.': 'Proceeds through formal trial to final judgment.',
+  '불합리한 과세 처분에 대해 법리 검토와 실무 경험으로 권리구제 절차를 지원합니다.':
+    'We support taxpayer relief procedures against unreasonable tax dispositions through legal review and practical experience.',
+  '과세 전 단계에서 처분의 위법·부당성을 검토하고 의견 제출을 지원합니다.':
+    'Reviews illegality or unfairness before assessment and supports opinion submission.',
+  '단계별 청구서류와 제출 자료를 정리합니다.': 'Organizes petition documents and submissions by stage.',
+  '조세불복 자료 준비 지원': 'Tax appeal material preparation support',
+  '법령, 유권해석, 판례 등을 철저하게 분석하고 정확한 사실관계 분석을 통해 고객사의 승소 가능성을 검토합니다.':
+    'Thoroughly analyzes laws, authoritative interpretations, and precedents, and reviews the client’s chance of success through accurate fact analysis.',
+  '행정소송 수행 자문': 'Administrative litigation advisory',
+  '소송 단계의 쟁점 정리와 법무법인 협업을 통한 대응 전략 수립을 지원합니다.':
+    'Supports issue organization at the litigation stage and response strategy development with law firms.',
+  '사후 대응방안 컨설팅': 'Post-procedure response consulting',
+  '조세불복 절차 이후 발생하는 사후 업무에 대해 대응방안을 제시합니다.':
+    'Provides response measures for follow-up work after tax appeal procedures.',
+  '수출용 원재료 및 관세법에 따른 환급 대상을 정확히 판단하여 안정적인 환급업무를 지원합니다.':
+    'We accurately determine refund eligibility for raw materials used in exports and items under customs law, supporting stable refund work.',
+  '원가·거래 구조 및 신고 데이터를 분석하여 고객사 특성에 따른 환급 가능성과 위험성을 진단하고, 환급 대상 원재료의 소요량과 잔량을 정확히 계산해 최대 환급액을 산출합니다. 과다 환급에 따른 추징 리스크를 사전에 차단하고 잠재된 과소 환급 금액을 발굴하여 기업의 이윤을 극대화합니다.':
+    'We analyze cost, transaction structure, and declaration data to diagnose refund opportunities and risks by client, accurately calculate usage and remaining quantities for refundable raw materials, and determine the maximum refund amount. We prevent additional collection risk from over-refunds and identify potential under-refunded amounts to maximize corporate profit.',
+  '사전 검토 및 환급 전략 수립': 'Pre-review and refund strategy development',
+  '소요량 사전심사 신청 및 소요량 산정 적정성 검토를 통해 환급 신청 전 오류를 점검하고 과다 환급에 따른 추징 리스크를 예방합니다.':
+    'Checks errors before refund application and prevents additional collection risk from over-refunds through usage pre-review applications and suitability review of usage calculations.',
+  '환급 계좌 개설 지원': 'Refund account opening support',
+  '환급 전용 계좌 개설과 통보서 작성, 인감증명서 등 관련 서류 준비 및 신청 절차를 지원합니다.':
+    'Supports refund-only account opening, notice preparation, related documents such as seal certificates, and application procedures.',
+  '기초원재료 납세증명서 및 분할증명서 발급 신청': 'Basic raw material tax certificate and split certificate issuance application',
+  '제조·가공 여부와 양도 형태에 따른 발급 요건을 검토하고, 수입 신고 내역과 국내 거래 인정 서류 등 관련 자료를 구비해 증명서 발급 신청을 수행합니다.':
+    'Reviews issuance requirements by manufacturing/processing status and transfer type, prepares materials such as import declaration records and domestic transaction evidence, and performs certificate issuance applications.',
+  '개별 환급 및 간이 정액 환급 신청': 'Individual refund and simplified fixed-rate refund application',
+  '기업 규모와 간이 정액 환급률표 적용 대상 여부를 검토하여 적정 환급 방식을 선정하고, 환급 신청서 작성 및 세관 신고 절차를 수행합니다.':
+    'Reviews company size and eligibility for the simplified fixed-rate refund table, selects the appropriate refund method, and performs refund application and customs filing procedures.',
+  '관세 환급 심사 대응': 'Duty refund audit response',
+  '세관 심사 이슈에 적극 대응하여 추징 리스크를 최소화합니다.': 'Actively responds to customs review issues to minimize additional collection risk.',
+  '베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 수책관리, FTA, 관세심사, 상시자문까지 종합적인 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.':
+    'As a customs corporation officially licensed by Vietnam Customs, 14 Korean customs brokers and Vietnamese customs brokers/consultants provide comprehensive local services from import/export clearance to liquidation management, FTA, customs audit response, and ongoing advisory, supporting real cost savings and stronger compliance.',
+  '주요 서비스 상세 설명': 'Key Service Details',
+  '수책(Liquidation) 관리': 'Liquidation Management',
+  '수책보고서 작성 대리와 월별 수책 관리 컨설팅을 지원합니다.':
+    'Supports liquidation report preparation and monthly liquidation management consulting.',
+  '다자·양자 FTA 활용 전략과 원산지 관리 시스템 기반 대응을 제공합니다.':
+    'Provides multilateral and bilateral FTA utilization strategies and origin management system-based response.',
+  '현지 세관 및 파트너 기관과 연계해 HS Code 자문과 인허가 대행까지 수행합니다.':
+    'Coordinates with local customs and partner agencies to provide HS Code advisory and permit agency services.',
+  관세심사: 'Customs audit response',
+  '세관 조사 주요항목을 사전 점검하고 제기 이슈에 대한 대응 논리를 수립합니다.':
+    'Pre-checks major customs audit items and develops response logic for raised issues.',
+  '내국수출입, 반덤핑관세, 정책 변동 영향 분석과 실무 교육을 제공합니다.':
+    'Provides domestic import/export, anti-dumping duty, policy-change impact analysis, and practical training.',
+  '베트남 관세·무역 법령 개정 동향과 최신 공문을 모니터링해 실무 적용 방안을 제공합니다.':
+    'Monitors amendments to Vietnam customs and trade laws and latest official notices, and provides practical application guidance.',
+  '신한관세법인 베트남(Shinhan Customs Vietnam)은 2019년 하노이에 설립된 베트남 관세총국 인가 관세법인으로, 한국 관세사와 베트남 관세사·컨설턴트가 함께 현지 한국 기업의 세관 리스크를 관리합니다. 베트남 관세총국으로부터 정식 인가를 받은 관세법인으로서, 한국 관세사와 베트남 관세사/컨설턴트 총 14인이 현지에서 수출입 통관부터 수책관리, FTA, 관세심사, 상시자문까지 종합적인 서비스를 제공하며 실질적인 비용 절감과 컴플라이언스 강화를 지원합니다.':
+    'Shinhan Customs Vietnam, established in Hanoi in 2019 and licensed by Vietnam Customs, manages customs risk for local Korean companies together with Korean customs brokers and Vietnamese customs brokers/consultants. As an officially licensed customs corporation, 14 Korean customs brokers and Vietnamese customs brokers/consultants provide comprehensive local services from import/export clearance to liquidation management, FTA, customs audit response, and ongoing advisory, supporting real cost savings and stronger compliance.',
+  '수출제조 면세(EPE·SXXK·GC) 적용 기업은 연간 수책보고서를 세관에 제출해야 합니다. 신한관세법인 베트남은 수책보고서 작성 대리부터 월별 수책 관리 컨설팅까지, 고객사가 세관 리스크에 노출되지 않도록 체계적으로 지원합니다. 자체 개발 시스템 KORD LIQ를 통해 재고 정산 데이터의 정확성과 추적 가능성을 높였습니다.':
+    'Companies applying export manufacturing duty exemption (EPE, SXXK, GC) must submit annual liquidation reports to customs. Shinhan Customs Vietnam systematically supports clients from liquidation report preparation to monthly liquidation management consulting so they are not exposed to customs risk. Our in-house KORD LIQ system improves the accuracy and traceability of inventory reconciliation data.',
+  'VKFTA·AKFTA 등 한·베트남 양자 FTA와 ATIGA·RCEP·EVFTA·CPTPP 등 베트남이 참여한 주요 다자간 FTA를 망라하는 종합 활용 전략을 제공합니다. 원산지증명서 발급 대행은 물론, 원산지 관리 시스템 KORD FTA를 통해 고객사의 적법한 원산지관리, FTA 활용률 제고와 사후 검증 대응을 지원합니다.':
+    'We provide comprehensive utilization strategies covering Korea-Vietnam bilateral FTAs such as VKFTA and AKFTA, as well as major multilateral FTAs involving Vietnam such as ATIGA, RCEP, EVFTA, and CPTPP. In addition to certificate of origin issuance agency service, the KORD FTA origin management system supports compliant origin management, higher FTA utilization, and post-verification response.',
+  '동물·기계류 등 다양한 품목에 걸친 실무 통관 이력과, 현지 세관 및 파트너 기관과의 긴밀한 협력 관계를 기반으로 신속하고 정확한 통관 서비스를 제공합니다. 베트남 HS Code 자문, 수출입 요건 분석 및 인허가 대행 업무도 함께 수행합니다.':
+    'Based on practical clearance experience across diverse goods such as animals and machinery and close cooperation with local customs and partner agencies, we provide fast and accurate customs clearance services. We also perform Vietnam HS Code advisory, import/export requirement analysis, and permit agency work.',
+  '수입신고일로부터 5년 이내에 수입신고내역의 적정성에 대해 관세 사후조사를 할 수 있습니다. 사전에 세관 조사 주요항목에 대해 점검을 하며, 기업의 관세 업무 현황에 대한 면밀한 분석으로 세관의 제기 이슈에 대응 논리를 수립합니다.':
+    'Customs may conduct post-clearance audits on the suitability of import declarations within five years from the declaration date. We pre-check major customs audit items and develop response logic for customs-raised issues through detailed analysis of a company’s customs operations.',
+  '베트남 내국수출입(domestic export/import) 거래 가능 여부 분석, 반덤핑관세 대응 전략, 대외 관세 정책 변동에 따른 영향 분석 등 복잡한 무역 환경 변화에 능동적으로 대응할 수 있도록 전략적 자문을 제공합니다. 베트남 실무자들을 대상으로 한 수책관리 실무 교육도 제공합니다.':
+    'We provide strategic advisory to help clients respond proactively to complex trade-environment changes, including analysis of domestic export/import transaction eligibility in Vietnam, anti-dumping duty response strategies, and impact analysis of external tariff policy changes. We also provide practical liquidation management training for Vietnam practitioners.',
+  '베트남 관세·무역 법령의 개정 동향 및 최신 공문을 모니터링하고, 고객사에 맞춤형 해석과 실무 적용 방안을 제공합니다. 급변하는 베트남 규제 환경 속에서 고객사가 선제적으로 대응할 수 있도록 지속적으로 지원합니다.':
+    'We monitor amendments to Vietnam customs and trade laws and the latest official notices, then provide client-tailored interpretation and practical application plans. We continuously support clients so they can respond proactively in Vietnam’s rapidly changing regulatory environment.',
+  '건강기능식품, 각종 식품, 반려동물 식품, 화장품, 일반의약품까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.':
+    'We reduce U.S. export risk by reviewing item-specific requirements in advance for health functional foods, food products, pet food, cosmetics, and OTC drugs.',
+  '건강기능식품, 각종 식품, Pet Food, Cosmetics, 일반의약품까지 품목별 요구사항을 사전 검토해 미국 수출 리스크를 줄입니다.':
+    'We reduce U.S. export risk by reviewing item-specific requirements in advance for health functional foods, food products, pet food, cosmetics, and OTC drugs.',
+  '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다. 코드 파트너스 US와 연계해 제품 통관 사전검토부터 원료 검토, 미국 규제 준수, 라벨링·영양성분표, FDA 공장 등록, FCE/SID, FSVP, NDI, HACCP 및 각종 Permit 검토까지 미국 상품인증 실무를 종합 지원합니다.':
+    'Before U.S. export, we support product-certification work from product suitability and FDA registration/labeling to import alert response. In collaboration with KORD Partners US, we provide comprehensive practical support for product pre-clearance review, ingredient review, U.S. regulatory compliance, labeling and nutrition facts, FDA facility registration, FCE/SID, FSVP, NDI, HACCP, and permit reviews.',
+  '1. 핵심 서비스 소개': '1. Core Services',
+  '2. 지원 카테고리': '2. Supported Categories',
+  일반의약품: 'OTC Drugs',
+  '제품 통관사전검토': 'Product pre-clearance review',
+  '해당 제품의 수출 적합성 검토 서비스 제공': 'Provides export suitability review for the product',
+  '원료 검토': 'Ingredient review',
+  '미국 수입 적합성 검토': 'U.S. import suitability review',
+  '원료 검토 및 라벨링·문안 검토, 영양성분표 시안 제작':
+    'Ingredient review, labeling and copy review, and nutrition facts draft preparation',
+  'FDA 공장 등록': 'FDA facility registration',
+  'FFR/DUNS, FCE/SID Filing, FSVP를 지원합니다.': 'Supports FFR/DUNS, FCE/SID filing, and FSVP.',
+  'NDI·HACCP·Permit 검토': 'NDI, HACCP, and permit review',
   '검역 대상 여부와 제출 절차를 선제 점검해 통관 지연과 보완 리스크를 줄입니다.':
     'We proactively review quarantine eligibility and submission procedures to reduce customs delays and correction risks.',
   '수입요건과 인허가 기준을 사전에 정리해 신고 보완과 반출 지연 가능성을 낮춥니다.':
@@ -812,6 +1224,7 @@ export const koToEnTextMap: Record<string, string> = {
   이경심: 'Lee Kyungsim',
   엄동규: 'Eom Donggyu',
   조나현: 'Cho Nahyun',
+  나지원: 'Na Jiwon',
   조원희: 'Cho Wonhee',
   조석현: 'Cho Seokhyun',
   박성현: 'Park Sunghyun',
@@ -855,6 +1268,7 @@ export const koToEnTextMap: Record<string, string> = {
   '통관, 검역': 'Clearance and Quarantine',
   '통관, 검역/요건': 'Clearance and Quarantine / Requirements',
   '통관, 검역/요건, FTA 지원': 'Clearance, quarantine/requirements, and FTA support',
+  '신한관세법인 경영 총괄': 'Overall management of Shinhan Customs Service',
   '통관 시스템 개발 및 운영 총괄': 'Overall management of customs system development and operations',
   '통관 시스템 구축 및 관리': 'Customs system implementation and management',
   '웹 개발 및 전산관리': 'Web development and IT administration',
@@ -862,13 +1276,34 @@ export const koToEnTextMap: Record<string, string> = {
   '네트워크 및 보안 관리': 'Network and security management',
   'FTA 컨설팅': 'FTA Consulting',
   'FTA 컨설팅, 통관': 'FTA consulting and clearance',
+  'FTA 지원': 'FTA support',
+  'FTA 원산지 관리 프로세스 및 시스템 구축': 'FTA origin management process and system implementation',
   'FTA 원산지 판정': 'FTA origin determination',
+  'FTA 원산지 판정, 특혜 및 비특혜 C/O 발급':
+    'FTA origin determination and preferential/non-preferential C/O issuance',
+  'FTA 원산지 판정, 특혜 및 비특혜 CO 발급':
+    'FTA origin determination and preferential/non-preferential CO issuance',
   'FTA 원산지 검증 대응': 'FTA origin verification response',
+  '베트남 FTA 원산지 시스템 구축 및 BPO/ASP':
+    'Vietnam FTA origin system implementation and BPO/ASP services',
+  '베트남 관세 재고정산(Liquidation) 컨설팅 및 시스템 구축':
+    'Vietnam customs liquidation consulting and system implementation',
   'FTA 원산지 판정 특혜 및 비특혜 원산지증명서 발급':
     'FTA origin determination and preferential/non-preferential certificate issuance',
   'FTA 시스템 구축 컨설팅': 'FTA system implementation consulting',
   'FTA 교육': 'FTA Training',
   '환급 및 FTA 교육': 'Refund and FTA training',
+  '수출입 통관 업무 셋팅 및 법률 자문': 'Import/export clearance setup and legal advisory',
+  '수출입 통관 업무 셋팅 및 법률 컨설팅': 'Import/export clearance setup and legal consulting',
+  '과세가격, 품목분류, 감면, 요건 등 검토':
+    'Review of customs value, classification, exemptions, and requirements',
+  '고객사 맞춤형 분석 리포트 제공': 'Client-tailored analysis reporting',
+  '각종 요건 업무 대행 컨설팅': 'Agency consulting for regulatory requirements',
+  '수출용 원재료 등에 대한 관세환급': 'Duty refunds for raw materials used in exports',
+  '원산지 사후 검증 대응 및 사후관리 시스템 컨설팅':
+    'Origin post-verification response and post-management system consulting',
+  '원산지 사후검증 대응 및 원산지 관리 시스템 컨설팅':
+    'Origin post-verification response and origin management system consulting',
   '납세도움정보': 'Taxpayer support information',
   '통관적법성 사전점검': 'Pre-clearance compliance review',
   '인증수출자 인증': 'Approved exporter certification',
@@ -893,11 +1328,23 @@ export const koToEnTextMap: Record<string, string> = {
     'Certification agency service for household chemical products subject to safety confirmation',
   '국제물류, 창고, 3PL, 내륙운송': 'International logistics, warehousing, 3PL, and inland transport',
   '인사, 회계, 물류': 'HR, accounting, and logistics',
+  '신한 인비스타 운영 및 인력 관리 총괄': 'Overall Shinhan Invista operations and workforce management',
+  '보세 및 내국물류 통합관리와 법규준수 시스템 구축':
+    'Integrated bonded/domestic logistics management and compliance system setup',
+  '3PL 운영 효율화 및 서비스 품질 관리': '3PL efficiency improvement and service quality management',
   '화물 운송 관리': 'Cargo transportation management',
   '보세 및 내국 화물 분리 보관': 'Separate storage of bonded and domestic cargo',
   '보수작업 및 폐기 대행': 'Repair work and disposal agency service',
   '고객사 물품 입출고 관리': 'Client goods inbound/outbound management',
   '내국화물 3PL 대행업무': 'Domestic cargo 3PL agency operations',
+  '베트남 통관 및 수출입 무역거래 자문': 'Vietnam customs clearance and import/export trade advisory',
+  'FTA 원산지 관리 시스템 서비스 제공': 'FTA origin management system services',
+  '베트남 Liquidation 및 수책제도 관련 자문': 'Advisory on Vietnam liquidation and customs ledger systems',
+  '미국 수출입 제품 통관 적합성 사전검토': 'Pre-review of US import/export customs compliance',
+  'FDA 규제 대응 및 Prop 65 컨설팅': 'FDA regulatory response and Prop 65 consulting',
+  '수출입 통관 및 관련 법률 자문': 'Import/export clearance and related legal advisory',
+  '품목분류, 감면, 수출입요건, 잠정/확정신고':
+    'Classification, exemptions, import/export requirements, and provisional/final declarations',
 
   // Home hero labels
   '도심 비즈니스': 'Business District',
@@ -1005,6 +1452,19 @@ export function translateKoToEn(text: string): string {
   const practiceAreaMatch = text.match(/^(.+) 업무 분야$/);
   if (practiceAreaMatch) {
     return `${translateKoToEn(practiceAreaMatch[1])} Practice Areas`;
+  }
+
+  const connectorSeparators = [' -> ', ': '];
+  for (const separator of connectorSeparators) {
+    if (text.includes(separator)) {
+      const [head, ...restParts] = text.split(separator);
+      const rest = restParts.join(separator);
+      const translatedHead = translateKoToEn(head.trim());
+      const translatedRest = translateKoToEn(rest.trim());
+      if (translatedHead !== head.trim() || translatedRest !== rest.trim()) {
+        return `${translatedHead}${separator}${translatedRest}`;
+      }
+    }
   }
 
   const separators = [', ', ' · ', ' / ', '/', '·'];

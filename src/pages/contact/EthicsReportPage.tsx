@@ -131,8 +131,6 @@ export function EthicsReportPage() {
                   </ContactItem>
                 </ContactList>
               </GuideBlock>
-
-              <ActionLink href={`mailto:${ethicsContactEmail}`}>{t('이메일로 접수하기', 'Report by Email')}</ActionLink>
             </GuidePanel>
 
             <OnlinePanel>
@@ -428,25 +426,6 @@ const ContactLink = styled.a`
   line-height: 1.56;
   word-break: normal;
   overflow-wrap: anywhere;
-`;
-
-const ActionLink = styled.a`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  min-height: 46px;
-  margin-top: 4px;
-  padding: 0 20px;
-  border: 1px solid rgba(18, 78, 160, 0.2);
-  background: #2e65ae;
-  color: #ffffff;
-  font-size: 0.94rem;
-  font-weight: 900;
-
-  @media (max-width: 520px) {
-    width: 100%;
-  }
 `;
 
 const OnlinePanel = styled(E.LinePanel)`

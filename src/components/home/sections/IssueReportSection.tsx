@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useMemo, type CSSProperties } from 'react';
 
+import { IssueReportDetailModal, useIssueReportDetailModal } from '../../site/IssueReportDetailModal';
 import { issueReports } from '../../../data/home';
 import { useIssueReports } from '../../../hooks/useIssueReports';
 import { useI18n } from '../../../i18n/useI18n';
@@ -147,11 +148,15 @@ const Content = styled.div`
   }
 `;
 
-const Featured = styled.a`
+const Featured = styled.button`
   display: grid;
   height: var(--insight-panel-height);
   min-height: 0;
+  width: 100%;
+  padding: 0;
   color: #ffffff;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   background:
     linear-gradient(180deg, rgba(3, 20, 42, 0.06), rgba(3, 20, 42, 0.72)),
@@ -159,6 +164,7 @@ const Featured = styled.a`
   background-position: center;
   background-size: cover;
   border: 1px solid rgba(12, 46, 93, 0.12);
+  cursor: pointer;
   overflow: hidden;
 
   @media (max-width: 700px) {
@@ -223,15 +229,22 @@ const List = styled.div`
   }
 `;
 
-const ReportLink = styled.a`
+const ReportLink = styled.button`
   display: grid;
   grid-template-columns: minmax(92px, 0.18fr) minmax(0, 1fr);
   gap: 22px;
   align-items: center;
+  width: 100%;
   min-height: 0;
   padding: 18px 0;
+  border: 0;
   border-bottom: 1px solid rgba(15, 43, 89, 0.14);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
   transition:
     padding-left 0.24s ease,
     border-color 0.24s ease;
@@ -277,6 +290,7 @@ const ReportTitle = styled.strong`
 export function IssueReportSection() {
   const { t } = useI18n();
   const { reports } = useIssueReports();
+  const issueReportDetail = useIssueReportDetailModal();
   const featuredImage = useMemo(() => {
     const index = Math.floor(Math.random() * tradeInsightVisuals.length);
     return tradeInsightVisuals[index];
@@ -305,9 +319,8 @@ export function IssueReportSection() {
 
           <Content>
             <Featured
-              href={featured.url}
-              target="_blank"
-              rel="noreferrer"
+              type="button"
+              onClick={() => void issueReportDetail.openReportDetail(featured)}
               style={{ '--report-image': `url(${featuredImage})` } as CSSProperties & Record<'--report-image', string>}
             >
               <FeaturedBody>
@@ -323,7 +336,7 @@ export function IssueReportSection() {
 
             <List>
               {sideReports.map((item) => (
-                <ReportLink key={item.id} href={item.url} target="_blank" rel="noreferrer">
+                <ReportLink key={item.id} type="button" onClick={() => void issueReportDetail.openReportDetail(item)}>
                   <ReportDate>{item.publishedAt}</ReportDate>
                   <ReportCopy>
                     <ReportSource>{t(item.source, item.sourceEn)}</ReportSource>
@@ -335,6 +348,7 @@ export function IssueReportSection() {
           </Content>
         </Inner>
       </Section>
+      <IssueReportDetailModal {...issueReportDetail} />
     </>
   );
 }

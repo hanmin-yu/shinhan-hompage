@@ -209,6 +209,111 @@ Node API 서버는 다음 경로를 처리합니다.
 
 외부 사이트 접근 실패, 외부망 차단, HTML 구조 변경이 있으면 기존 캐시 또는 snapshot 데이터로 fallback됩니다.
 
+무역동향은 목록 JSON과 상세 요약 JSON을 분리해서 사용합니다.
+
+| JSON | 용도 | 위치/경로 |
+| --- | --- | --- |
+| 목록 JSON | 무역동향 카드 목록 표시 | `/api/issue-reports` 또는 `/issue-reports.json` |
+| 상세 요약 JSON | 카드 클릭 시 뜨는 요약 모달 내용 표시 | 각 항목의 `detailPath`, 기본값 `/trade-insights/details/{id}.json` |
+
+목록 JSON 응답 타입:
+
+```ts
+type IssueReportApiResponse = {
+  reports: IssueReport[];
+  failedSources: string[];
+  succeededSources: string[];
+  refreshedAt?: string;
+};
+
+type IssueReport = {
+  id: string;
+  source: string;
+  sourceEn: string;
+  publishedAt: string;
+  title: string;
+  titleEn: string;
+  summary: string;
+  summaryEn: string;
+  url: string;
+  detailPath?: string;
+  detail?: IssueReportDetail;
+  status?: 'live' | 'placeholder';
+  image?: string;
+  tags?: string[];
+};
+```
+
+목록 JSON 예시:
+
+```json
+{
+  "reports": [
+    {
+      "id": "issue-kita-101130",
+      "source": "한국무역협회",
+      "sourceEn": "Korea International Trade Association",
+      "publishedAt": "2026.04.27",
+      "title": "트럼프 \"해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발\"",
+      "titleEn": "트럼프 \"해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발\"",
+      "summary": "한국무역협회 무역뉴스에서 수집한 기사입니다.",
+      "summaryEn": "An article collected from the KITA trade news feed.",
+      "url": "https://www.kita.net/board/totalTradeNews/totalTradeNewsDetail.do?no=101130&siteId=2",
+      "detailPath": "/trade-insights/details/issue-kita-101130.json",
+      "tags": ["한국무역협회"],
+      "status": "live"
+    }
+  ],
+  "failedSources": [],
+  "succeededSources": ["한국관세사회", "한국무역협회"],
+  "refreshedAt": "2026-04-27T09:00:00+09:00"
+}
+```
+
+상세 요약 JSON 타입:
+
+```ts
+type IssueReportDetail = {
+  id?: string;
+  title?: string;
+  source?: string;
+  registeredAt?: string;
+  updatedAt?: string;
+  body?: string[];
+  attachments?: {
+    name: string;
+    url: string;
+  }[];
+  originalUrl?: string;
+};
+```
+
+상세 요약 JSON 예시:
+
+```json
+{
+  "id": "issue-kita-101130",
+  "source": "한국무역협회",
+  "registeredAt": "2026.04.27",
+  "updatedAt": "2026.04.27",
+  "title": "트럼프 \"해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발\"",
+  "body": [
+    "미국의 해상봉쇄 발언과 이란 송유관 관련 긴장이 맞물리며 중동 지역의 에너지 공급과 해상 물류 리스크가 다시 부각된 사안입니다.",
+    "원유와 석유화학 원료를 수입하거나 중동 항로를 이용하는 기업은 운임, 보험료, 납기 지연, 환율 변동 가능성을 함께 점검할 필요가 있습니다.",
+    "수출입 계약을 진행 중인 경우 선적 일정, 대체 공급선, 결제 조건, 비상 재고 수준을 사전에 확인해 공급망 차질에 대비하는 것이 좋습니다."
+  ],
+  "attachments": [],
+  "originalUrl": "https://www.kita.net/board/totalTradeNews/totalTradeNewsDetail.do?no=101130&siteId=2"
+}
+```
+
+상세 요약 표시 방식:
+
+- 카드 클릭 시 `IssueReport.detail`이 있으면 해당 값을 먼저 사용합니다.
+- `detail`이 없으면 `detailPath`를 fetch합니다.
+- `detailPath`가 없으면 `/trade-insights/details/{id}.json`을 기본 경로로 사용합니다.
+- 상세 JSON을 불러오지 못하면 목록의 `summary` 또는 제목 기반 fallback 요약을 모달에 표시합니다.
+
 ## 5. 관리자 페이지
 
 관리자 페이지는 신한 NEWS와 소식지를 운영자가 직접 등록/수정/삭제하기 위한 화면입니다.

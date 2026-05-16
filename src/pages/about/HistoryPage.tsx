@@ -419,7 +419,7 @@ export function HistoryPage() {
       .sort((a, b) => Number(b.year) - Number(a.year));
     const byYear = Array.from(new Set(items.map((item) => item.year))).map((year) => ({
       year,
-      events: items.filter((item) => item.year === year).map((item) => item.event),
+      events: items.filter((item) => item.year === year).map((item) => ({ ko: item.event, en: item.eventEn })),
     }));
     return { period, byYear };
   });
@@ -459,10 +459,10 @@ export function HistoryPage() {
 
             <HistoryBodyStack>
               <HistoryLead>
-              {t(
-                '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
-                'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
-              )}
+                {t(
+                  '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
+                  'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
+                )}
               </HistoryLead>
               <HistoryBody>
                 {t(
@@ -549,7 +549,7 @@ export function HistoryPage() {
                       <Event>
                         <EventList>
                           {item.events.map((event) => (
-                            <li key={`${item.year}-${event}`}>{event}</li>
+                            <li key={`${item.year}-${event.ko}`}>{t(event.ko, event.en)}</li>
                           ))}
                         </EventList>
                       </Event>

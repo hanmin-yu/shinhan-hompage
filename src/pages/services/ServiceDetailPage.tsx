@@ -1249,6 +1249,11 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
     outline: none;
   }
 
+  [data-language='en'] & {
+    grid-template-columns: minmax(0, 1fr) clamp(128px, 10.5vw, 168px);
+    min-height: 258px;
+  }
+
   @media (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 100px;
     min-height: 184px;
@@ -1271,10 +1276,17 @@ const ContactTitleRow = styled.div`
   align-items: flex-start;
   gap: 12px;
   min-width: 0;
+
+  [data-language='en'] & {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 `;
 
 const ContactName = styled.h3`
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
   margin: 0;
   color: #121c2b;
   font-size: clamp(1.48rem, 2.05vw, 1.95rem);
@@ -1284,6 +1296,12 @@ const ContactName = styled.h3`
 
   @media (max-width: 560px) {
     font-size: 1.3rem;
+  }
+
+  [data-language='en'] & {
+    font-size: clamp(1.34rem, 1.7vw, 1.72rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -1298,12 +1316,21 @@ const ContactNameDivider = styled.span`
   @media (max-width: 560px) {
     height: 28px;
   }
+
+  [data-language='en'] & {
+    display: none;
+  }
 `;
 
 const ContactRoleStack = styled.div`
   display: grid;
   gap: 3px;
   min-width: 0;
+
+  [data-language='en'] & {
+    gap: 5px;
+    max-width: 100%;
+  }
 `;
 
 const ContactRole = styled.p`
@@ -1316,6 +1343,12 @@ const ContactRole = styled.p`
   @media (max-width: 560px) {
     font-size: 0.86rem;
   }
+
+  [data-language='en'] & {
+    font-size: clamp(0.86rem, 0.9vw, 0.94rem);
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+  }
 `;
 
 const ContactDepartment = styled.p`
@@ -1327,6 +1360,12 @@ const ContactDepartment = styled.p`
 
   @media (max-width: 560px) {
     font-size: 0.82rem;
+  }
+
+  [data-language='en'] & {
+    font-size: clamp(0.82rem, 0.86vw, 0.9rem);
+    line-height: 1.34;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -1619,7 +1658,7 @@ function getReferenceDiagramSections(contentId: string): ReferenceDiagramSection
 }
 
 export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
-  const { t, tx } = useI18n();
+  const { language, t, tx } = useI18n();
   const servicesSubnav = sectionSubnav.services;
   const content = serviceDetailPages.find((item) => item.path === path);
 
@@ -1714,8 +1753,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                     : 'Quarantine & Requirement Service Flow',
                 )
               : isRefundPage
-                ? t(sectionHeading, sectionHeading)
-                : t(sectionHeading, sectionHeading)}
+                ? tx(sectionHeading)
+                : tx(sectionHeading)}
           </RefundTitle>
         </RefundHeader>
         <RefundGrid $columns={items.length}>
@@ -1745,8 +1784,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
       const boardTitle = isImportExportPage
         ? sectionHeading === '주요 서비스 상세 설명'
           ? t('주요 서비스', 'Key Services')
-          : t(sectionHeading, sectionHeading)
-        : t(sectionHeading, sectionHeading);
+          : tx(sectionHeading)
+        : tx(sectionHeading);
 
       return (
         <ImportExportFlow>
@@ -1956,7 +1995,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     return (
       <MetricBoard $tone={tone}>
       <MetricBoardTitle $tone={tone}>
-        <strong>{t(sectionHeading, sectionHeading)}</strong>
+        <strong>{tx(sectionHeading)}</strong>
         <span>{t('핵심 효과를 리스크 완화와 운영 안정성 관점에서 정리했습니다.', 'Key effects organized by risk reduction and operational stability.')}</span>
       </MetricBoardTitle>
       <MetricGrid>
@@ -2048,7 +2087,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
             {showReferenceDiagramsFirst
               ? referenceDiagramSections.map((section) => (
                   <DocumentSectionCard key={section.heading}>
-                    <DocumentSectionTitle>{t(section.heading, section.heading)}</DocumentSectionTitle>
+                    <DocumentSectionTitle>{tx(section.heading)}</DocumentSectionTitle>
                     <ItemBodyStack>
                       {section.body?.length ? (
                         <ParagraphStack>
@@ -2085,7 +2124,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
             {!showReferenceDiagramsFirst
               ? referenceDiagramSections.map((section) => (
                   <DocumentSectionCard key={section.heading}>
-                    <DocumentSectionTitle>{t(section.heading, section.heading)}</DocumentSectionTitle>
+                    <DocumentSectionTitle>{tx(section.heading)}</DocumentSectionTitle>
                     <ItemBodyStack>
                       {section.body?.length ? (
                         <ParagraphStack>
@@ -2131,7 +2170,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           </SectionHead>
           <ContactPanel>
             {hasContactPoints ? (
-              <ContactProfileGrid>
+              <ContactProfileGrid data-language={language}>
                 {contactProfiles.map(({ contact, member }) => {
                   const phone = contact.phone ?? member?.phone;
                   const email = contact.email ?? member?.email;
