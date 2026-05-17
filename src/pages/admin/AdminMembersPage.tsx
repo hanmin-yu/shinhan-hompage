@@ -308,9 +308,6 @@ export function AdminMembersPage() {
           </AdminTopRow>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin" $active={false}>
-              대시보드
-            </AdminSubnavLink>
             {adminNavigationItems.map((item) => (
               <AdminSubnavLink
                 key={item.id}

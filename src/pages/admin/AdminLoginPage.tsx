@@ -26,7 +26,7 @@ export function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   if (!loading && session.isAuthenticated) {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/admin/content/home" replace />;
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -36,7 +36,7 @@ export function AdminLoginPage() {
 
     try {
       await login({ username, password });
-      navigate('/admin', { replace: true });
+      navigate('/admin/content/home', { replace: true });
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : '관리자 로그인에 실패했습니다.');
     } finally {
@@ -50,7 +50,7 @@ export function AdminLoginPage() {
 
     try {
       await login();
-      navigate('/admin', { replace: true });
+      navigate('/admin/content/home', { replace: true });
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : '관리자 화면에 접근하지 못했습니다.');
     } finally {

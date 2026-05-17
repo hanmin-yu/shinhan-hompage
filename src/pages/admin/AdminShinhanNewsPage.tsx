@@ -489,9 +489,6 @@ export function AdminShinhanNewsPage() {
           </AdminTopRow>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin" $active={false}>
-              대시보드
-            </AdminSubnavLink>
             {adminNavigationItems.map((item) => (
               <AdminSubnavLink key={item.id} to={item.to} $active={item.id === 'news'}>
                 {item.label}

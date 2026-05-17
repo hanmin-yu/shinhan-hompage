@@ -47,47 +47,42 @@ const PreviewShell = styled.div`
 
 const CmsLayout = styled.div`
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr) minmax(360px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
   gap: 18px;
 
   @media (max-width: 1120px) {
-    grid-template-columns: 240px minmax(0, 1fr);
-  }
-
-  @media (max-width: 980px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const SectionRail = styled.div`
-  display: grid;
-  align-content: start;
-  gap: 10px;
+const AdminSectionSubnav = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid ${palette.line};
 `;
 
-const SectionRailButton = styled.button<{ $active?: boolean }>`
-  display: grid;
-  gap: 4px;
-  padding: 14px 16px;
-  border: 1px solid ${({ $active }) => ($active ? palette.blue : palette.line)};
-  background: ${({ $active }) =>
-    $active ? 'linear-gradient(180deg, rgba(234, 243, 255, 0.98), rgba(246, 250, 255, 0.98))' : '#ffffff'};
-  text-align: left;
-  cursor: pointer;
-  box-shadow: ${({ $active }) => ($active ? '0 14px 30px rgba(16, 53, 114, 0.08)' : 'none')};
-`;
-
-const SectionRailTitle = styled.strong`
-  color: ${palette.blueDeep};
-  font-size: 0.94rem;
+const AdminSectionTab = styled.button<{ $active?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-bottom: 3px solid ${({ $active }) => ($active ? palette.blue : 'transparent')};
+  background: transparent;
+  color: ${({ $active }) => ($active ? palette.blueDeep : palette.textMuted)};
+  font-size: 0.9rem;
   font-weight: 800;
-  line-height: 1.4;
-`;
+  cursor: pointer;
+  transition:
+    color 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease;
 
-const SectionRailMeta = styled.span`
-  color: ${palette.textMuted};
-  font-size: 0.82rem;
-  line-height: 1.5;
+  &:hover {
+    color: ${palette.blueDeep};
+    background: rgba(244, 248, 255, 0.72);
+  }
 `;
 
 const NestedGroup = styled.div<{ $depth: number }>`
@@ -2878,7 +2873,7 @@ export function AdminContentPage() {
   }
 
   if (!group) {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/admin/content/home" replace />;
   }
 
   const setValueAtPath = (path: JsonPath, nextValue: unknown) => {
@@ -3078,9 +3073,6 @@ export function AdminContentPage() {
           </AdminTopRow>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin" $active={false}>
-              대시보드
-            </AdminSubnavLink>
             {adminNavigationItems.map((item) => (
               <AdminSubnavLink
                 key={item.id}
@@ -3092,6 +3084,21 @@ export function AdminContentPage() {
             ))}
           </AdminSubnav>
 
+          {topLevelEntries.length > 1 ? (
+            <AdminSectionSubnav aria-label={`${group.label} 하부 메뉴`}>
+              {topLevelEntries.map(([key, , label]) => (
+                <AdminSectionTab
+                  key={key}
+                  type="button"
+                  $active={(activeSectionEntry?.[0] ?? '') === key}
+                  onClick={() => setSelectedSectionKey(key)}
+                >
+                  {label ?? getAdminSectionLabel(key, sectionLabels)}
+                </AdminSectionTab>
+              ))}
+            </AdminSectionSubnav>
+          ) : null}
+
           {session.isReadOnly ? (
             <AdminReadonlyBanner>
               {t(
@@ -3102,30 +3109,6 @@ export function AdminContentPage() {
           ) : null}
 
           <CmsLayout>
-            <AdminPanel>
-              <P.Kicker>문구 선택</P.Kicker>
-              <AdminHint>수정할 문구 영역만 선택합니다.</AdminHint>
-              <SectionRail>
-                {topLevelEntries.map(([key, value, label]) => (
-                  <SectionRailButton
-                    key={key}
-                    type="button"
-                    $active={(activeSectionEntry?.[0] ?? '') === key}
-                    onClick={() => setSelectedSectionKey(key)}
-                  >
-                    <SectionRailTitle>{label ?? getAdminSectionLabel(key, sectionLabels)}</SectionRailTitle>
-                    <SectionRailMeta>
-                      {Array.isArray(value)
-                        ? `${value.length}개 항목`
-                        : isPlainObject(value)
-                          ? `${Object.keys(value).length}개 필드`
-                          : '단일 값'}
-                    </SectionRailMeta>
-                  </SectionRailButton>
-                ))}
-              </SectionRail>
-            </AdminPanel>
-
             <AdminPanel>
               <P.Kicker>{t('문구 편집', 'Copy Editor')}</P.Kicker>
               <AdminHint>{t(group.summary, group.summaryEn)}</AdminHint>

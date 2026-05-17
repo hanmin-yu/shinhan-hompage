@@ -9,7 +9,6 @@ import { SiteContentProvider } from './hooks/useSiteContent';
 import { useRevealOnScroll } from './hooks/useRevealOnScroll';
 import { SiteLanguageProvider } from './i18n/useI18n';
 import { AdminContentPage } from './pages/admin/AdminContentPage';
-import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminMembersPage } from './pages/admin/AdminMembersPage';
 import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
@@ -172,7 +171,7 @@ function AppShell() {
               <Route path="/news/seminar" element={<SeminarPage />} />
               <Route path="/news/blog" element={<BlogPage />} />
 
-              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin" element={<Navigate to="/admin/content/home" replace />} />
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/content/:groupId" element={<AdminContentPage />} />
               <Route path="/admin/members" element={<AdminMembersPage />} />
