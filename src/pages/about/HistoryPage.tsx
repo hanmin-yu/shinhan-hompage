@@ -4,8 +4,7 @@ import { palette } from '../../components/home/homeStyles';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { aboutTimeline, historyMilestones } from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const HistorySection = styled(E.Section)`
@@ -408,7 +407,11 @@ const periodOrder = ['2011-current', '2001-2010', '1965-2000'] as const;
 
 export function HistoryPage() {
   const { t } = useI18n();
-  const aboutSubnav = sectionSubnav.about;
+  const { content } = useSiteContent();
+  const aboutSubnav = content.global.sectionSubnav.about;
+  const historyCopy = content.about.copy.history;
+  const aboutTimeline = content.about.aboutTimeline;
+  const historyMilestones = content.about.historyMilestones;
   const sortedMilestones = [...historyMilestones].sort((a, b) => Number(b.year) - Number(a.year));
   const featuredMilestone = sortedMilestones[0];
   const supportingMilestones = sortedMilestones.slice(1);
@@ -449,41 +452,26 @@ export function HistoryPage() {
           <HistoryArticle>
             <div>
               <HistoryKicker>History</HistoryKicker>
-              <HistoryTitle>
-                {t(
-                  '1965년부터 이어온 신한의 성장 기록',
-                  'A record of Shinhan’s growth since 1965.',
-                )}
-              </HistoryTitle>
+              <HistoryTitle>{t(historyCopy.heroTitle, historyCopy.heroTitleEn)}</HistoryTitle>
             </div>
 
             <HistoryBodyStack>
-              <HistoryLead>
-                {t(
-                  '창립 이후 축적해온 신한관세법인의 주요 이력을 연대별로 정리했습니다. 신한은 고객의 무역 현장과 함께 성장하며 전국 지사와 해외 거점을 넓혀왔습니다.',
-                  'This page presents Shinhan Customs Service milestones by period. Shinhan has grown alongside clients’ trade operations while expanding domestic branches and overseas hubs.',
-                )}
-              </HistoryLead>
-              <HistoryBody>
-                {t(
-                  '서울통관사로 출발한 신한관세법인은 관세 실무의 기준을 현장에서 쌓아왔고, 변화하는 무역 환경에 맞춰 통관·컨설팅·물류·해외 네트워크로 서비스 영역을 확장해 왔습니다.',
-                  'Starting as Seoul Customs Service, Shinhan has built its customs practice in the field and expanded into clearance, consulting, logistics, and overseas networks as trade environments changed.',
-                )}
-              </HistoryBody>
+              <HistoryLead>{t(historyCopy.lead, historyCopy.leadEn)}</HistoryLead>
+              <HistoryBody>{t(historyCopy.body, historyCopy.bodyEn)}</HistoryBody>
             </HistoryBodyStack>
 
             <E.FactGrid>
               <E.Fact>
                 <E.FactValue>1965</E.FactValue>
-                <E.FactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</E.FactLabel>
+                <E.FactLabel>{t(historyCopy.factLabels[0], historyCopy.factLabelsEn[0])}</E.FactLabel>
               </E.Fact>
               <E.Fact>
                 <E.FactValue>60 Years+</E.FactValue>
-                <E.FactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</E.FactLabel>
+                <E.FactLabel>{t(historyCopy.factLabels[1], historyCopy.factLabelsEn[1])}</E.FactLabel>
               </E.Fact>
               <E.Fact>
                 <E.FactValue>Global</E.FactValue>
-                <E.FactLabel>{t('국내외 네트워크 확장', 'Domestic and overseas network')}</E.FactLabel>
+                <E.FactLabel>{t(historyCopy.factLabels[2], historyCopy.factLabelsEn[2])}</E.FactLabel>
               </E.Fact>
             </E.FactGrid>
           </HistoryArticle>
@@ -505,12 +493,7 @@ export function HistoryPage() {
                 <div>
                   <FeaturedYear>{featuredMilestone.year}</FeaturedYear>
                   <FeaturedTitle>{t(featuredMilestone.ko, featuredMilestone.en)}</FeaturedTitle>
-                  <FeaturedBody>
-                    {t(
-                      '1965년 서울통관사로 시작한 신한은 60년의 경험을 기반으로 국내외 관세·무역 서비스를 확장해 왔습니다.',
-                      'Since beginning as Seoul Customs Service in 1965, Shinhan has expanded customs and trade services at home and abroad on 60 years of experience.',
-                    )}
-                  </FeaturedBody>
+                  <FeaturedBody>{t(historyCopy.featuredBody, historyCopy.featuredBodyEn)}</FeaturedBody>
                 </div>
               </FeaturedMilestone>
             ) : null}

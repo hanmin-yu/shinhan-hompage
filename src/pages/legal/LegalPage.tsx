@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import * as P from '../../components/site/PagePrimitives';
-import { legalPages } from '../../data/legal';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import type { LegalPageContent } from '../../types/site';
 
@@ -73,7 +73,8 @@ type LegalPageProps = {
 
 export function LegalPage({ pageKey }: LegalPageProps) {
   const { language, t } = useI18n();
-  const page = legalPages[pageKey];
+  const { content } = useSiteContent();
+  const page = content.legal.legalPages[pageKey];
 
   const title = language === 'en' ? page.titleEn : page.title;
   const summary = language === 'en' ? page.summaryEn : page.summary;

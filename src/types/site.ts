@@ -1,3 +1,12 @@
+import type {
+  RecruitBenefitGroup,
+  RecruitBenefitSummaryCard,
+  RecruitPostingLink,
+  RecruitRole,
+  ServiceDetailContent,
+  ServiceLandingGroup,
+} from '../data/pageContent';
+
 export type SiteLanguage = 'ko' | 'en';
 export type NewsAdminMode = 'readonly' | 'enabled';
 
@@ -276,6 +285,141 @@ export type GlobalNavigationContent = {
   utilitySubnav: ManagedSectionSubnavConfig;
 };
 
+export type ServicesLandingCopy = {
+  heroTitle: string;
+  heroTitleEn: string;
+  heroLead: string;
+  heroLeadEn: string;
+  factLabels: [string, string, string];
+  factLabelsEn: [string, string, string];
+  serviceMapTitle: string;
+  serviceMapTitleEn: string;
+  detailTitle: string;
+  detailTitleEn: string;
+};
+
+export type ConsultingLandingCopy = {
+  heroTitle: string;
+  heroTitleEn: string;
+  heroLead: string;
+  heroLeadEn: string;
+  sectionTitle: string;
+  sectionTitleEn: string;
+};
+
+export type AboutOverviewCopy = {
+  visualTitle: string;
+  visualTitleEn: string;
+  heroTitle: string;
+  heroTitleEn: string;
+  leadParagraphs: [string, string];
+  leadParagraphsEn: [string, string];
+  factLabels: [string, string, string];
+  factLabelsEn: [string, string, string];
+  philosophyTitle: string;
+  philosophyTitleEn: string;
+  philosophyBody: string;
+  philosophyBodyEn: string;
+  serviceTitle: string;
+  serviceTitleEn: string;
+};
+
+export type AboutHistoryCopy = {
+  heroTitle: string;
+  heroTitleEn: string;
+  lead: string;
+  leadEn: string;
+  body: string;
+  bodyEn: string;
+  factLabels: [string, string, string];
+  factLabelsEn: [string, string, string];
+  featuredBody: string;
+  featuredBodyEn: string;
+};
+
+export type AboutMessageCopy = {
+  leadTitleTop: string;
+  leadTitleTopEn: string;
+  leadTitleBottom: string;
+  leadTitleBottomEn: string;
+  leadHeading: string;
+  leadHeadingEn: string;
+  introParagraphs: string[];
+  introParagraphsEn: string[];
+  secondTitle: string;
+  secondTitleEn: string;
+  secondParagraphs: string[];
+  secondParagraphsEn: string[];
+  thanks: string;
+  thanksEn: string;
+};
+
+export type AboutLocationCopy = {
+  aboutTitle: string;
+  aboutTitleEn: string;
+  standaloneTitle: string;
+  standaloneTitleEn: string;
+};
+
+export type ContactPageCopy = {
+  title: string;
+  titleEn: string;
+  lead: string;
+  leadEn: string;
+  mainContactTitle: string;
+  mainContactTitleEn: string;
+  inquiryTitle: string;
+  inquiryTitleEn: string;
+  inquiryText: string;
+  inquiryTextEn: string;
+};
+
+export type EthicsPageCopy = {
+  title: string;
+  titleEn: string;
+  lead: string;
+  leadEn: string;
+  basisText: string;
+  basisTextEn: string;
+  policyTitle: string;
+  policyTitleEn: string;
+  policyNotice: string;
+  policyNoticeEn: string;
+  onlineTitle: string;
+  onlineTitleEn: string;
+  onlineText: string;
+  onlineTextEn: string;
+};
+
+export type OfficesPageCopy = {
+  title: string;
+  titleEn: string;
+  leadLines: [string, string];
+  leadLinesEn: [string, string];
+  factLabels: [string, string, string];
+  factLabelsEn: [string, string, string];
+  primaryGroupTitle: string;
+  primaryGroupTitleEn: string;
+  affiliateGroupTitle: string;
+  affiliateGroupTitleEn: string;
+};
+
+export type ItPageCopy = {
+  overviewTitle: string;
+  overviewTitleEn: string;
+  contactTitle: string;
+  contactTitleEn: string;
+};
+
+export type MembersPageCopy = {
+  executivesTitle: string;
+  executivesTitleEn: string;
+  expertsEmptyMessage: string;
+  expertsEmptyMessageEn: string;
+  orgTitle: string;
+  orgTitleEn: string;
+};
+
 export type SiteContentPayload = {
   global: GlobalNavigationContent;
   home: {
@@ -290,7 +434,12 @@ export type SiteContentPayload = {
     historyMilestones: { year: string; ko: string; en: string }[];
     managementValues: { title: string; body: string }[];
     organizationUnits: { title: string; body: string }[];
-    copy: Record<string, unknown>;
+    copy: {
+      overview: AboutOverviewCopy;
+      history: AboutHistoryCopy;
+      message: AboutMessageCopy;
+      location: AboutLocationCopy;
+    };
   };
   services: {
     serviceHubCards: {
@@ -303,24 +452,30 @@ export type SiteContentPayload = {
       body: string;
       href: string;
     }[];
-    serviceLandingGroups: unknown[];
-    serviceDetailPages: unknown[];
-    copy: Record<string, unknown>;
+    serviceLandingGroups: ServiceLandingGroup[];
+    serviceDetailPages: ServiceDetailContent[];
+    copy: {
+      servicesLanding: ServicesLandingCopy;
+      consultingLanding: ConsultingLandingCopy;
+    };
   };
   recruit: {
-    recruitRoles: unknown[];
-    recruitPostingLinks: unknown[];
-    recruitBenefitGroups: unknown[];
-    recruitBenefitDisplayGroups: unknown[];
-    recruitBenefitSummaryCards: unknown[];
+    recruitRoles: RecruitRole[];
+    recruitPostingLinks: RecruitPostingLink[];
+    recruitBenefitGroups: RecruitBenefitGroup[];
+    recruitBenefitDisplayGroups: RecruitBenefitGroup[];
+    recruitBenefitSummaryCards: RecruitBenefitSummaryCard[];
     copy: Record<string, unknown>;
   };
   contact: {
-    copy: Record<string, unknown>;
+    copy: {
+      contact: ContactPageCopy;
+      ethics: EthicsPageCopy;
+    };
   };
   offices: {
     officeBranches: OfficeBranch[];
-    copy: Record<string, unknown>;
+    copy: OfficesPageCopy;
   };
   it: {
     itOverview: {
@@ -333,12 +488,12 @@ export type SiteContentPayload = {
     };
     itServices: ItService[];
     contactMemberIds: string[];
-    copy: Record<string, unknown>;
+    copy: ItPageCopy;
   };
   members: {
     managedMembers: ManagedMember[];
     expertCategoryConfig: ExpertCategoryConfig;
-    copy: Record<string, unknown>;
+    copy: MembersPageCopy;
   };
   legal: {
     legalPages: Record<LegalPageContent['id'], LegalPageContent>;

@@ -1,4 +1,4 @@
-import { siteContact } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import * as P from './PagePrimitives';
 
@@ -12,6 +12,8 @@ export function ContactCtaSection({
   body = '전화 또는 온라인 문의로 필요한 상담 채널을 안내해드립니다.',
 }: ContactCtaSectionProps) {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const siteContact = content.global.siteContact;
 
   return (
     <P.PageSection tone="blue">

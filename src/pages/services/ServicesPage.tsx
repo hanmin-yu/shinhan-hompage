@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { palette } from '../../components/home/homeStyles';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { serviceLandingGroups } from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
@@ -359,7 +358,10 @@ const SingleDetailLink = styled(Link)`
 
 export function ServicesPage() {
   const { t } = useI18n();
-  const servicesSubnav = sectionSubnav.services;
+  const { content } = useSiteContent();
+  const servicesSubnav = content.global.sectionSubnav.services;
+  const serviceLandingGroups = content.services.serviceLandingGroups;
+  const servicesCopy = content.services.copy.servicesLanding;
 
   return (
     <>
@@ -375,27 +377,22 @@ export function ServicesPage() {
         <HeroStatement data-reveal>
           <HeroHeading>
             <HeroEyebrow>Practice Areas</HeroEyebrow>
-            <HeroTitle>{t('무역 현장의 흐름을 하나의 서비스 체계로 연결합니다.', 'Connecting trade operations through one service system.')}</HeroTitle>
+            <HeroTitle>{t(servicesCopy.heroTitle, servicesCopy.heroTitleEn)}</HeroTitle>
           </HeroHeading>
           <HeroLeadGrid>
-            <HeroLead>
-              {t(
-                '신한관세법인은 수출입통관 및 환급, 검역/요건, 컨설팅, 물류와 해외 지원까지 기업의 무역 실무에 필요한 업무를 체계적으로 제공합니다.',
-                'Shinhan Customs Service provides a structured practice system covering clearance and refunds, quarantine and requirements, consulting, logistics, and overseas support.',
-              )}
-            </HeroLead>
+            <HeroLead>{t(servicesCopy.heroLead, servicesCopy.heroLeadEn)}</HeroLead>
             <HeroFacts>
               <HeroFact>
                 <HeroFactValue>4</HeroFactValue>
-                <HeroFactLabel>{t('중분류 업무 체계', 'Main practice categories')}</HeroFactLabel>
+                <HeroFactLabel>{t(servicesCopy.factLabels[0], servicesCopy.factLabelsEn[0])}</HeroFactLabel>
               </HeroFact>
               <HeroFact>
                 <HeroFactValue>14+</HeroFactValue>
-                <HeroFactLabel>{t('세부 서비스 페이지', 'Detailed service pages')}</HeroFactLabel>
+                <HeroFactLabel>{t(servicesCopy.factLabels[1], servicesCopy.factLabelsEn[1])}</HeroFactLabel>
               </HeroFact>
               <HeroFact>
                 <HeroFactValue>All-in-One</HeroFactValue>
-                <HeroFactLabel>{t('통관·컨설팅·물류 연계', 'Clearance, consulting, and logistics')}</HeroFactLabel>
+                <HeroFactLabel>{t(servicesCopy.factLabels[2], servicesCopy.factLabelsEn[2])}</HeroFactLabel>
               </HeroFact>
             </HeroFacts>
           </HeroLeadGrid>
@@ -405,7 +402,7 @@ export function ServicesPage() {
       <EditorialSection $tone="soft">
         <P.PageContainer data-reveal>
           <SectionLabel>Service Map</SectionLabel>
-          <EditorialTitle>{t('필요한 업무영역으로 바로 이동하세요.', 'Move directly to the practice area you need.')}</EditorialTitle>
+          <EditorialTitle>{t(servicesCopy.serviceMapTitle, servicesCopy.serviceMapTitleEn)}</EditorialTitle>
           <ServiceMap>
             {serviceLandingGroups.map((group) => (
               <ServiceMapCard key={`map-${group.id}`}>
@@ -427,7 +424,7 @@ export function ServicesPage() {
       <EditorialSection>
         <P.PageContainer data-reveal>
           <SectionLabel>Practice Detail</SectionLabel>
-          <EditorialTitle>{t('업무별 범위와 상세 서비스를 확인할 수 있습니다.', 'Review scope and detailed services by practice area.')}</EditorialTitle>
+          <EditorialTitle>{t(servicesCopy.detailTitle, servicesCopy.detailTitleEn)}</EditorialTitle>
           <GroupStack>
             {serviceLandingGroups.map((group) => (
               <GroupPanel key={group.id} id={group.id}>

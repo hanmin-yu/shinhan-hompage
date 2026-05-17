@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 import { palette } from '../../components/home/homeStyles';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { consultingHubCards } from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
@@ -104,7 +103,10 @@ const ConsultingCard = styled(P.Card)`
 
 export function ConsultingPage() {
   const { t, tx } = useI18n();
-  const servicesSubnav = sectionSubnav.services;
+  const { content } = useSiteContent();
+  const servicesSubnav = content.global.sectionSubnav.services;
+  const consultingHubCards = content.services.consultingHubCards;
+  const consultingCopy = content.services.copy.consultingLanding;
 
   return (
     <>
@@ -120,21 +122,16 @@ export function ConsultingPage() {
         <HeroStatement data-reveal>
           <HeroHeading>
             <HeroEyebrow>Consulting Hub</HeroEyebrow>
-            <HeroTitle>{t('복잡한 관세 이슈를 실무 가능한 전략으로 정리합니다.', 'Turning complex customs issues into executable strategy.')}</HeroTitle>
+            <HeroTitle>{t(consultingCopy.heroTitle, consultingCopy.heroTitleEn)}</HeroTitle>
           </HeroHeading>
-          <HeroLead>
-            {t(
-              'FTA, AEO, ACVA, 관세조사, 외환검사, 조세불복 등 기업이 마주하는 주요 리스크를 사전에 진단하고 단계별 대응을 지원합니다.',
-              'We diagnose and respond to key enterprise risks across FTA, AEO, ACVA, customs audits, foreign exchange reviews, tax appeals, and more.',
-            )}
-          </HeroLead>
+          <HeroLead>{t(consultingCopy.heroLead, consultingCopy.heroLeadEn)}</HeroLead>
         </HeroStatement>
       </EditorialSection>
 
       <EditorialSection $tone="soft">
         <P.PageContainer data-reveal>
           <SectionLabel>Consulting Services</SectionLabel>
-          <EditorialTitle>{t('항목별 주요 대응 범위와 상세 페이지를 확인하세요.', 'Review key response scope and detail pages by consulting area.')}</EditorialTitle>
+          <EditorialTitle>{t(consultingCopy.sectionTitle, consultingCopy.sectionTitleEn)}</EditorialTitle>
           <CardGrid>
             {consultingHubCards.map((card) => (
               <ConsultingCard key={card.title}>

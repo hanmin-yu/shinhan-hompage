@@ -268,7 +268,7 @@ export function EditorialPageHeader({
           <SectionNav aria-label={t(`${config.title} 하위 메뉴`, `${config.titleEn} sub navigation`)}>
             {config.items.map((item) => (
               <SectionNavLink key={item.to} to={item.to} data-active={item === activeItem}>
-                {t(item.label, item.labelEn)}
+                {t(item.label, item.labelEn ?? item.label)}
               </SectionNavLink>
             ))}
           </SectionNav>

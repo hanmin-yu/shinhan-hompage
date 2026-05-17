@@ -3,8 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { palette } from '../../components/home/homeStyles';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { managementValues } from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialHero = styled(P.HeroSection)`
@@ -733,14 +732,17 @@ const servicePillars = [
 
 export function AboutPage() {
   const { t, tx } = useI18n();
-  const aboutSubnav = sectionSubnav.about;
+  const { content } = useSiteContent();
+  const aboutSubnav = content.global.sectionSubnav.about;
+  const aboutCopy = content.about.copy.overview;
+  const managementValues = content.about.managementValues;
   const { pathname } = useLocation();
   const isActivePath = (to: string) => pathname === to;
 
   return (
     <>
       <EditorialHero>
-        <HeroVisualTitle data-reveal>{t('회사소개', 'Overview')}</HeroVisualTitle>
+        <HeroVisualTitle data-reveal>{t(aboutCopy.visualTitle, aboutCopy.visualTitleEn)}</HeroVisualTitle>
       </EditorialHero>
 
       <SubnavBand>
@@ -764,40 +766,25 @@ export function AboutPage() {
         <HeroStatement data-reveal>
           <HeroHeading>
             <HeroEyebrow>Shinhan Customs Service</HeroEyebrow>
-            <HeroTitle>
-              {t(
-                '고객의 무역 문제를 해결하고 가치를 더합니다.',
-                'We solve trade challenges and add lasting value.',
-              )}
-            </HeroTitle>
+            <HeroTitle>{t(aboutCopy.heroTitle, aboutCopy.heroTitleEn)}</HeroTitle>
           </HeroHeading>
           <HeroLeadGrid>
             <HeroLead>
-              <HeroLeadSentence>
-                {t(
-                  '신한관세법인은 1965년 창립 이래 수출입 무역 업체의 든든한 동반자로서 고객과 함께 성장해왔습니다.',
-                  'Since its founding in 1965, Shinhan Customs Service has grown with import and export companies as a trusted partner.',
-                )}
-              </HeroLeadSentence>
-              <HeroLeadSentence>
-                {t(
-                  '오랜 신뢰와 KNOW-HOW를 바탕으로 통관, 컨설팅, 물류를 연결한 전문 서비스를 제공합니다.',
-                  'Built on long-standing trust and know-how, we connect customs clearance, consulting, and logistics into one professional service.',
-                )}
-              </HeroLeadSentence>
+              <HeroLeadSentence>{t(aboutCopy.leadParagraphs[0], aboutCopy.leadParagraphsEn[0])}</HeroLeadSentence>
+              <HeroLeadSentence>{t(aboutCopy.leadParagraphs[1], aboutCopy.leadParagraphsEn[1])}</HeroLeadSentence>
             </HeroLead>
             <HeroFacts>
               <HeroFact>
                 <HeroFactValue>1965</HeroFactValue>
-                <HeroFactLabel>{t('서울통관사 창립', 'Founded as Seoul Customs Service')}</HeroFactLabel>
+                <HeroFactLabel>{t(aboutCopy.factLabels[0], aboutCopy.factLabelsEn[0])}</HeroFactLabel>
               </HeroFact>
               <HeroFact>
                 <HeroFactValue>60 Years+</HeroFactValue>
-                <HeroFactLabel>{t('관세·무역 서비스 경험', 'Years of customs and trade experience')}</HeroFactLabel>
+                <HeroFactLabel>{t(aboutCopy.factLabels[1], aboutCopy.factLabelsEn[1])}</HeroFactLabel>
               </HeroFact>
               <HeroFact>
                 <HeroFactValue>All-in-One</HeroFactValue>
-                <HeroFactLabel>{t('통관·컨설팅·물류 통합 지원', 'Clearance, consulting, and logistics')}</HeroFactLabel>
+                <HeroFactLabel>{t(aboutCopy.factLabels[2], aboutCopy.factLabelsEn[2])}</HeroFactLabel>
               </HeroFact>
             </HeroFacts>
           </HeroLeadGrid>
@@ -808,14 +795,9 @@ export function AboutPage() {
         <NavyInner data-reveal>
           <div>
             <PhilosophyLabel>VISION</PhilosophyLabel>
-            <EditorialTitle>{t('경영이념', 'Management Philosophy')}</EditorialTitle>
+            <EditorialTitle>{t(aboutCopy.philosophyTitle, aboutCopy.philosophyTitleEn)}</EditorialTitle>
             <Rule />
-            <EditorialBody>
-              {t(
-                '고객의 발전과 성공을 위해 열정과 정직, 혁신과 팀워크를 하나의 실행 원칙으로 연결합니다.',
-                'For client growth and success, we connect passion, integrity, innovation, and teamwork into one execution principle.',
-              )}
-            </EditorialBody>
+            <EditorialBody>{t(aboutCopy.philosophyBody, aboutCopy.philosophyBodyEn)}</EditorialBody>
           </div>
           <ValueList>
             {managementValues.map((item) => (
@@ -831,12 +813,7 @@ export function AboutPage() {
       <EditorialSection $tone="soft">
         <AboutSectionContainer data-reveal>
           <SectionLabel>All-in-One Service</SectionLabel>
-          <EditorialTitle>
-            {t(
-              '통관부터 물류, 자문까지 하나의 흐름으로 연결합니다.',
-              'From clearance to logistics and advisory, every step works as one flow.',
-            )}
-          </EditorialTitle>
+          <EditorialTitle>{t(aboutCopy.serviceTitle, aboutCopy.serviceTitleEn)}</EditorialTitle>
           <ServiceGrid>
             {servicePillars.map((pillar) => (
               <ServiceColumn key={pillar.index}>

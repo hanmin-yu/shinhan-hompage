@@ -4,9 +4,7 @@ import { palette } from '../../components/home/homeStyles';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { utilitySubnav } from '../../config/utilitySubnav';
-import { officeBranches, siteContact } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getGoogleMapEmbedUrl, getGoogleMapUrl, getNaverMapUrl } from '../../utils/mapLinks';
 
@@ -43,6 +41,9 @@ type LocationViewData = {
 
 function useLocationViewData(): LocationViewData {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const officeBranches = content.offices.officeBranches;
+  const siteContact = content.global.siteContact;
   const hqOffice = officeBranches.find((office) => office.id === 'seoul') ?? officeBranches[0];
   const address = hqOffice?.address ?? siteContact.address;
   const addressEn = hqOffice?.addressEn ?? siteContact.addressEn;
@@ -64,7 +65,10 @@ function useLocationViewData(): LocationViewData {
 
 export function LocationPage() {
   const { t } = useI18n();
-  const aboutSubnav = sectionSubnav.about;
+  const { content } = useSiteContent();
+  const aboutSubnav = content.global.sectionSubnav.about;
+  const siteContact = content.global.siteContact;
+  const locationCopy = content.about.copy.location;
   const location = useLocationViewData();
 
   return (
@@ -81,7 +85,7 @@ export function LocationPage() {
         <P.PageContainer data-reveal>
           <LocationHead>
             <E.Eyebrow>Directions</E.Eyebrow>
-            <LocationTitle>{t('신한관세법인 서울본사 안내', 'Shinhan Customs Service Seoul HQ')}</LocationTitle>
+            <LocationTitle>{t(locationCopy.aboutTitle, locationCopy.aboutTitleEn)}</LocationTitle>
           </LocationHead>
           <DirectionsGrid>
             <LocationInfoPanel>
@@ -136,6 +140,10 @@ export function LocationPage() {
 
 export function DirectionsPage() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const utilitySubnav = content.global.utilitySubnav;
+  const siteContact = content.global.siteContact;
+  const locationCopy = content.about.copy.location;
   const location = useLocationViewData();
 
   return (
@@ -152,7 +160,7 @@ export function DirectionsPage() {
         <StandaloneContainer data-reveal>
           <StandaloneHead>
             <E.Eyebrow>Directions</E.Eyebrow>
-            <LocationTitle>{t('오시는 길', 'Directions')}</LocationTitle>
+            <LocationTitle>{t(locationCopy.standaloneTitle, locationCopy.standaloneTitleEn)}</LocationTitle>
           </StandaloneHead>
 
           <StandaloneGrid>

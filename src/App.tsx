@@ -32,6 +32,8 @@ import { NewsPage } from './pages/news/NewsPage';
 import { NewsletterDetailPage } from './pages/news/NewsletterDetailPage';
 import { NewsletterPage } from './pages/news/NewsletterPage';
 import { SeminarPage } from './pages/news/SeminarPage';
+import { ShinhanInsightDetailPage } from './pages/news/ShinhanInsightDetailPage';
+import { ShinhanInsightsPage } from './pages/news/ShinhanInsightsPage';
 import { ShinhanNewsDetailPage } from './pages/news/ShinhanNewsDetailPage';
 import { ShinhanNewsPage } from './pages/news/ShinhanNewsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -154,6 +156,8 @@ function AppShell() {
 
               <Route path="/news" element={<NewsPage />} />
               <Route path="/news/issue-report" element={<IssueReportPage />} />
+              <Route path="/news/shinhan-insights" element={<ShinhanInsightsPage />} />
+              <Route path="/news/shinhan-insights/:insightId" element={<ShinhanInsightDetailPage />} />
               <Route path="/news/shinhan-news" element={<ShinhanNewsPage />} />
               <Route path="/news/shinhan-news/:newsId" element={<ShinhanNewsDetailPage />} />
               <Route path="/news/seminar/:newsId" element={<ShinhanNewsDetailPage />} />

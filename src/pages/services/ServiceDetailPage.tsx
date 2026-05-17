@@ -4,9 +4,7 @@ import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { ServiceDetailSubnav } from '../../components/site/ServiceDetailSubnav';
 import { palette } from '../../components/home/homeStyles';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { expertMembers } from '../../data/home';
-import { serviceDetailPages, serviceLandingGroups } from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 type ServiceDetailPageProps = {
@@ -1913,7 +1911,10 @@ function getReferenceDiagramSections(contentId: string): ReferenceDiagramSection
 
 export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const { language, t, tx } = useI18n();
-  const servicesSubnav = sectionSubnav.services;
+  const { content: siteContent, findMemberByName } = useSiteContent();
+  const servicesSubnav = siteContent.global.sectionSubnav.services;
+  const serviceDetailPages = siteContent.services.serviceDetailPages;
+  const serviceLandingGroups = siteContent.services.serviceLandingGroups;
   const content = serviceDetailPages.find((item) => item.path === path);
 
   if (!content) {
@@ -1948,7 +1949,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   const contactPoints = content.contactPoints ?? [];
   const contactProfiles = contactPoints.map((contact) => ({
     contact,
-    member: expertMembers.find((member) => member.name === contact.name),
+    member: findMemberByName(contact.name),
   }));
   const isImportExportPage = content.id === 'import-export';
   const isRefundPage = content.id === 'refund';

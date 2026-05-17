@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import koreaMapAsset from '../../../assets/map-korea.svg';
-import { officeBranches } from '../../../data/home';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -627,6 +627,8 @@ const OfficeName = styled.strong`
 
 export function OfficesSection() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const officeBranches = content.offices.officeBranches;
   const visibleOffices = [...officeBranches].sort(
     (a, b) =>
       (homeOfficeRank.get(a.id) ?? Number.MAX_SAFE_INTEGER) -

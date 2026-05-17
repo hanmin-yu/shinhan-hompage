@@ -7,8 +7,7 @@ import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { palette } from '../../components/home/homeStyles';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { officeBranches, siteContact } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import {
   getGoogleMapEmbedUrl,
@@ -59,6 +58,8 @@ const googleMapQueryOverrides: Record<string, string> = {
 
 function useOfficeViewData(): OfficeViewData[] {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const officeBranches = content.offices.officeBranches;
 
   return officeBranches.map((office) => {
       const isVietnamOffice = office.id === 'vietnam';
@@ -127,6 +128,10 @@ function useOfficeViewData(): OfficeViewData[] {
 
 export function OfficesPage() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const aboutSubnav = content.global.sectionSubnav.about;
+  const siteContact = content.global.siteContact;
+  const officesCopy = content.offices.copy;
   const [searchParams, setSearchParams] = useSearchParams();
   const offices = useOfficeViewData();
   const requestedOfficeId = searchParams.get('office');
@@ -181,7 +186,7 @@ export function OfficesPage() {
   return (
     <>
       <EditorialPageHeader
-        config={sectionSubnav.about}
+        config={aboutSubnav}
         title="본지사 안내"
         titleEn="Headquarters & Branches"
         heroImage="/hero/menu-about-offices-ai.png"
@@ -193,26 +198,26 @@ export function OfficesPage() {
           <E.Statement data-reveal>
             <div>
               <E.Eyebrow>Office Network</E.Eyebrow>
-              <OfficePageTitle>{t('신한관세법인 및 관계사 안내', 'Shinhan Customs Service and Affiliates')}</OfficePageTitle>
+              <OfficePageTitle>{t(officesCopy.title, officesCopy.titleEn)}</OfficePageTitle>
             </div>
             <OfficeLeadGrid>
               <OfficePageLead>
-                {t('전국 주요 거점과 베트남 법인의 연락처와 위치를 확인하실 수 있습니다.', 'Find contact details and map locations for Shinhan offices across Korea and Vietnam.')}
+                {t(officesCopy.leadLines[0], officesCopy.leadLinesEn[0])}
                 <br />
-                {t('방문 전 담당 사무소와 일정을 조율해 주세요.', 'Please coordinate with the relevant office before visiting.')}
+                {t(officesCopy.leadLines[1], officesCopy.leadLinesEn[1])}
               </OfficePageLead>
               <OfficeFactGrid>
                 <E.Fact>
                   <E.FactValue>7</E.FactValue>
-                  <E.FactLabel>{t('국내외 주요 거점', 'Domestic and overseas offices')}</E.FactLabel>
+                  <E.FactLabel>{t(officesCopy.factLabels[0], officesCopy.factLabelsEn[0])}</E.FactLabel>
                 </E.Fact>
                 <E.Fact>
                   <E.FactValue>Seoul</E.FactValue>
-                  <E.FactLabel>{t('서울본사 중심 운영', 'HQ-centered operations')}</E.FactLabel>
+                  <E.FactLabel>{t(officesCopy.factLabels[1], officesCopy.factLabelsEn[1])}</E.FactLabel>
                 </E.Fact>
                 <E.Fact>
                   <E.FactValue>Vietnam</E.FactValue>
-                  <E.FactLabel>{t('해외 법인 연계', 'Overseas entity connection')}</E.FactLabel>
+                  <E.FactLabel>{t(officesCopy.factLabels[2], officesCopy.factLabelsEn[2])}</E.FactLabel>
                 </E.Fact>
               </OfficeFactGrid>
             </OfficeLeadGrid>
@@ -223,12 +228,12 @@ export function OfficesPage() {
               <OfficeTabsShell>
                 <OfficeTabs aria-label={t('사무소 선택', 'Select office')}>
                   <OfficeTabGroup>
-                    <OfficeTabGroupLabel>{t('신한관세법인', 'Shinhan Customs Service')}</OfficeTabGroupLabel>
+                    <OfficeTabGroupLabel>{t(officesCopy.primaryGroupTitle, officesCopy.primaryGroupTitleEn)}</OfficeTabGroupLabel>
                     <OfficeTabGroupItems $columns={primaryOffices.length}>{primaryOffices.map(renderOfficeTab)}</OfficeTabGroupItems>
                   </OfficeTabGroup>
                   <OfficeTabDivider aria-hidden="true" />
                   <OfficeTabGroup>
-                    <OfficeTabGroupLabel>{t('관계사', 'Affiliates')}</OfficeTabGroupLabel>
+                    <OfficeTabGroupLabel>{t(officesCopy.affiliateGroupTitle, officesCopy.affiliateGroupTitleEn)}</OfficeTabGroupLabel>
                     <OfficeTabGroupItems $columns={affiliateOffices.length}>{affiliateOffices.map(renderOfficeTab)}</OfficeTabGroupItems>
                   </OfficeTabGroup>
                 </OfficeTabs>

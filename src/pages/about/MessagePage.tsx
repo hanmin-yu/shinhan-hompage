@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const shinhanNavy = '#123f85';
@@ -255,7 +255,9 @@ const LegacyName = styled.span`
 
 export function MessagePage() {
   const { t } = useI18n();
-  const aboutSubnav = sectionSubnav.about;
+  const { content } = useSiteContent();
+  const aboutSubnav = content.global.sectionSubnav.about;
+  const messageCopy = content.about.copy.message;
 
   return (
     <>
@@ -277,32 +279,16 @@ export function MessagePage() {
           <MessageArticle>
             <MessageHeader>
               <MessageTitle>
-                {t('60년의 신뢰를 넘어,', 'Beyond 60 Years of Trust,')}
-                <TitleBreak>
-                  {t('100년의 가치를 완성하는 파트너십', 'a Partnership Completing 100 Years of Value')}
-                </TitleBreak>
+                {t(messageCopy.leadTitleTop, messageCopy.leadTitleTopEn)}
+                <TitleBreak>{t(messageCopy.leadTitleBottom, messageCopy.leadTitleBottomEn)}</TitleBreak>
               </MessageTitle>
             </MessageHeader>
 
             <BodyStack>
-              <LeadBody>
-                {t(
-                  '세 명의 신념으로 시작된 신한의 약속',
-                  'Shinhan’s Promise Began with the Conviction of Three People',
-                )}
-              </LeadBody>
-              <MessageBody>
-                {t(
-                  "1965년 3월 22일, 단 세 명의 구성원으로 시작한 신한관세법인의 전신 '서울통관사'는 지난 60년간 대한민국 경제 및 무역 발전과 더불어 꾸준히 성장해 왔습니다.",
-                  "On March 22, 1965, Seoul Customs Service, the predecessor of Shinhan Customs Service, began with just three members and has grown steadily alongside Korea's economic and trade development over the past 60 years.",
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '척박했던 환경에서 시작된 고객을 향한 진심 어린 약속은 오늘날 전국 7개 주요 거점 지사와 보세창고 기반의 3PL 물류 시스템, 그리고 미국 로스앤젤레스와 베트남 하노이를 잇는 글로벌 네트워크까지 다양한 서비스를 제공하고 있습니다.',
-                  'A sincere promise to clients that began in challenging conditions has grown into a broad service network today, including seven key branch offices across Korea, a bonded-warehouse-based 3PL logistics system, and global connections spanning Los Angeles and Hanoi.',
-                )}
-              </MessageBody>
+              <LeadBody>{t(messageCopy.leadHeading, messageCopy.leadHeadingEn)}</LeadBody>
+              {messageCopy.introParagraphs.map((paragraph, index) => (
+                <MessageBody key={paragraph}>{t(paragraph, messageCopy.introParagraphsEn[index] ?? paragraph)}</MessageBody>
+              ))}
             </BodyStack>
           </MessageArticle>
 
@@ -314,49 +300,17 @@ export function MessagePage() {
         <MessageLayout data-reveal>
           <MessageArticle $reverse>
             <MessageHeader>
-              <MessageTitle>
-                {t(
-                  '고객의 성공과 함께하는 글로벌 무역의 동반자',
-                  'A Global Trade Partner Growing with Our Clients’ Success',
-                )}
-              </MessageTitle>
+              <MessageTitle>{t(messageCopy.secondTitle, messageCopy.secondTitleEn)}</MessageTitle>
             </MessageHeader>
 
             <BodyStack>
-              <MessageBody>
-                {t(
-                  '신한관세법인은 신속하고 정확한 통관 서비스를 넘어, 급변하는 글로벌 통상 환경 속에서 고객이 직면한 복합적인 과제에 최적의 해법을 제시합니다.',
-                  'Beyond fast and accurate customs clearance, Shinhan Customs Service provides optimal solutions for the complex challenges clients face in a rapidly changing global trade environment.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '우리는 관세 조사 및 외환 검사 대응, 조세 불복 대리와 같은 전략적 리스크 관리는 물론, AEO 인증, FTA 활용 전략, 관세 환급 및 수출입 요건 컨설팅에 이르기까지 비즈니스 전 과정의 전문성을 심화하고 있습니다.',
-                  'We continue to deepen our expertise across the entire business process, from strategic risk management such as customs audit and foreign exchange inspection response and tax appeal representation to AEO certification, FTA utilization strategy, customs refunds, and import/export requirements consulting.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '이를 통해 고객사가 글로벌 시장에서 압도적인 경쟁력을 확보하고 비즈니스 가치를 극대화할 수 있도록 전력을 다합니다.',
-                  'Through this, we devote ourselves to helping our clients secure strong competitiveness in the global market and maximize business value.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '우리는 과거의 성과에 안주하지 않습니다. 신한관세법인의 모든 임직원은 ‘고객의 성공이 곧 우리의 성공’이라는 철학을 공유하며, 60년의 신뢰를 바탕으로 100년의 역사를 완성하기 위해 멈추지 않고 정진하겠습니다.',
-                  'We do not rest on past achievements. Every member of Shinhan Customs Service shares the philosophy that our clients’ success is our success, and we will continue moving forward to complete a 100-year history built on 60 years of trust.',
-                )}
-              </MessageBody>
-              <MessageBody>
-                {t(
-                  '지금까지 신한과 함께해주신 고객사와 협력사 여러분께 깊은 감사를 표하며, 앞으로도 진실하고 품격 있는 최고의 서비스로 귀사의 든든한 무역 전진기지가 될 것을 약속드립니다.',
-                  'We express our deep gratitude to the clients and partners who have been with Shinhan, and we promise to remain your dependable trade base with sincere, refined, and outstanding service.',
-                )}
-              </MessageBody>
+              {messageCopy.secondParagraphs.map((paragraph, index) => (
+                <MessageBody key={paragraph}>{t(paragraph, messageCopy.secondParagraphsEn[index] ?? paragraph)}</MessageBody>
+              ))}
             </BodyStack>
 
             <Closing>
-              <Thanks>{t('감사합니다.', 'Thank you.')}</Thanks>
+              <Thanks>{t(messageCopy.thanks, messageCopy.thanksEn)}</Thanks>
             </Closing>
           </MessageArticle>
 

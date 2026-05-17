@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { sectionSubnav } from '../../config/sectionSubnav';
+import { shinhanInsights } from '../../data/shinhanInsights';
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { NewsContentSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
@@ -81,6 +82,7 @@ export function NewsPage() {
   const { items: newsletters } = useNewsletterRecords();
 
   const shinhanNewsPreview = shinhanNewsItems.filter((item) => item.category !== 'seminar').slice(0, 3);
+  const shinhanInsightsPreview = shinhanInsights.slice(0, 3);
   const seminarPreview = shinhanNewsItems.filter((item) => item.category === 'seminar').slice(0, 3);
   const newsletterPreview = newsletters.slice(0, 3);
 
@@ -107,12 +109,13 @@ export function NewsPage() {
           <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
           <P.Lead>
             {t(
-              '신한 NEWS, 세미나/교육, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
-              'Shinhan NEWS, seminars/training, and newsletters are organized in one quick editorial view.',
+              '신한 NEWS, 신한 Insights, 세미나/교육, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
+              'Shinhan NEWS, Shinhan Insights, seminars/training, and newsletters are organized in one quick editorial view.',
             )}
           </P.Lead>
           <IntroList>
             <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
+            <li>{t('신한 Insights: 전문가 칼럼과 실무 해설', 'Shinhan Insights: expert columns and practical commentary')}</li>
             <li>{t('세미나/교육: 최신 교육·세미나 3건', 'Seminar / Training: 3 latest seminar or training updates')}</li>
             <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
           </IntroList>
@@ -129,6 +132,23 @@ export function NewsPage() {
                     <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
                   </ItemMeta>
                   <ItemLink to="/news/shinhan-news">{t('목록 보기', 'View')}</ItemLink>
+                </EditorialItem>
+              ))}
+            </EditorialList>
+          </EditorialSection>
+
+          <EditorialSection>
+            <P.Kicker>Shinhan Insights</P.Kicker>
+            <P.SectionTitle>{t('신한 Insights', 'Shinhan Insights')}</P.SectionTitle>
+            <EditorialList>
+              {shinhanInsightsPreview.map((item) => (
+                <EditorialItem key={item.id}>
+                  <ItemDate>{item.publishedAt}</ItemDate>
+                  <ItemMeta>
+                    <ItemTitle>{t(item.title, item.titleEn)}</ItemTitle>
+                    <ItemSummary>{t(item.summary, item.summaryEn)}</ItemSummary>
+                  </ItemMeta>
+                  <ItemLink to="/news/shinhan-insights">{t('목록 보기', 'View')}</ItemLink>
                 </EditorialItem>
               ))}
             </EditorialList>

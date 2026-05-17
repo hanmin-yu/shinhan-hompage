@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { brandMarkPath } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import * as S from './homeStyles';
 
 type BrandMarkGraphicProps = {
@@ -9,6 +9,8 @@ type BrandMarkGraphicProps = {
 
 export function BrandMarkGraphic({ alt }: BrandMarkGraphicProps) {
   const [missing, setMissing] = useState(false);
+  const { content } = useSiteContent();
+  const brandMarkPath = content.global.brandMarkPath;
 
   if (!missing) {
     return <S.BrandMarkImage src={brandMarkPath} alt={alt} onError={() => setMissing(true)} />;
@@ -23,4 +25,3 @@ export function BrandMarkGraphic({ alt }: BrandMarkGraphicProps) {
     </S.BrandLogo>
   );
 }
-
