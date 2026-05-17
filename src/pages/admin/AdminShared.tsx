@@ -189,13 +189,14 @@ export const AdminList = styled.div`
   gap: 10px;
 `;
 
-export const AdminListItem = styled.article`
+export const AdminListItem = styled.article<{ $active?: boolean }>`
   display: grid;
   gap: 8px;
   padding: 16px 18px;
   border-radius: 8px;
-  border: 1px solid rgba(20, 75, 157, 0.12);
+  border: 1px solid ${({ $active }) => ($active ? 'rgba(20, 75, 157, 0.32)' : 'rgba(20, 75, 157, 0.12)')};
   background: rgba(255, 255, 255, 0.92);
+  box-shadow: ${({ $active }) => ($active ? '0 0 0 2px rgba(24, 86, 170, 0.15)' : 'none')};
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease,

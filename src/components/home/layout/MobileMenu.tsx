@@ -1,4 +1,5 @@
-import { getHeaderNavigation, getMobileQuickLinks } from '../../../config/navigation';
+import { localizeLinkItems, localizeNavItems } from '../../../config/navigation';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -9,8 +10,9 @@ type MobileMenuProps = {
 
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
   const { language, setLanguage, t } = useI18n();
-  const headerNavigation = getHeaderNavigation(language);
-  const mobileQuickLinks = getMobileQuickLinks(language);
+  const { content } = useSiteContent();
+  const headerNavigation = localizeNavItems(content.global.headerNavigation, language);
+  const mobileQuickLinks = localizeLinkItems(content.global.mobileQuickLinks, language);
 
   return (
     <>

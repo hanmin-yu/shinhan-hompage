@@ -1,7 +1,11 @@
-import { utilityLinks } from '../../../data/home';
+import { useSiteContent } from '../../../hooks/useSiteContent';
+import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 export function UtilityBar() {
+  const { t } = useI18n();
+  const { content } = useSiteContent();
+
   return (
     <S.UtilityBar>
       <S.UtilityBarInner>
@@ -11,9 +15,9 @@ export function UtilityBar() {
         </S.UtilityBrandBadge>
         <S.UtilityInner>
           <S.UtilityLinks>
-            {utilityLinks.map((link) => (
+            {content.global.utilityLinks.map((link) => (
               <S.UtilityLink key={link.id} href={link.href ?? '/'}>
-                {link.label}
+                {t(link.label, link.labelEn ?? link.label)}
               </S.UtilityLink>
             ))}
           </S.UtilityLinks>

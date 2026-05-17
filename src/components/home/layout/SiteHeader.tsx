@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type FocusEvent, type MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { getHeaderNavigation } from '../../../config/navigation';
+import { localizeNavItems } from '../../../config/navigation';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -13,7 +14,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderProps) {
   const { language, setLanguage, t } = useI18n();
   const { pathname } = useLocation();
-  const headerNavigation = getHeaderNavigation(language);
+  const { content } = useSiteContent();
+  const headerNavigation = localizeNavItems(content.global.headerNavigation, language);
   const overHero = !pathname.startsWith('/admin');
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaMenuSuppressed, setMegaMenuSuppressed] = useState(false);

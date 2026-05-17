@@ -6,12 +6,10 @@ import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { palette } from '../../components/home/homeStyles';
-import { utilitySubnav } from '../../config/utilitySubnav';
-import { siteContact } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const ethicsContactEmail = 'compliance@shcs.kr';
-const ethicsContactPhone = siteContact.phone;
 
 const reportSubjects = [
   { ko: '리베이트, 금품·향응 수수', en: 'Rebates, gifts, or entertainment' },
@@ -36,6 +34,10 @@ const ethicsCodeItems = [
 
 export function EthicsReportPage() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const utilitySubnav = content.global.utilitySubnav;
+  const ethicsContactPhone = content.global.siteContact.phone;
+  const ethicsCopy = content.contact.copy.ethics;
   const [isEthicsModalOpen, setIsEthicsModalOpen] = useState(false);
 
   const handleReportSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -78,18 +80,10 @@ export function EthicsReportPage() {
         <ReportInner>
           <ReportIntro data-reveal>
             <E.Eyebrow>Ethics Reporting</E.Eyebrow>
-            <ReportTitle>{t('부정행위 접수창구', 'Ethics Reporting')}</ReportTitle>
-            <ReportLead>
-              {t(
-                '신한관세법인은 공정하고 투명한 업무 환경을 위해 부정행위 접수창구를 운영하고 있습니다.',
-                'Shinhan Customs Service operates an ethics reporting channel to support a fair and transparent workplace.',
-              )}
-            </ReportLead>
+            <ReportTitle>{t(ethicsCopy.title, ethicsCopy.titleEn)}</ReportTitle>
+            <ReportLead>{t(ethicsCopy.lead, ethicsCopy.leadEn)}</ReportLead>
             <EthicsBasisText>
-              {t(
-                '본 접수창구는 관세사 윤리강령에 근거하여 운영됩니다.',
-                'This reporting channel is operated based on the Code of Ethics for Licensed Customs Brokers.',
-              )}{' '}
+              {t(ethicsCopy.basisText, ethicsCopy.basisTextEn)}{' '}
               <EthicsBasisButton type="button" onClick={() => setIsEthicsModalOpen(true)}>
                 {t('관세사 윤리강령 보기', 'View the Code of Ethics')}
               </EthicsBasisButton>
@@ -98,14 +92,9 @@ export function EthicsReportPage() {
 
           <ReportGrid>
             <GuidePanel>
-              <PanelTitle>{t('운영 방침', 'Operating Policy')}</PanelTitle>
+              <PanelTitle>{t(ethicsCopy.policyTitle, ethicsCopy.policyTitleEn)}</PanelTitle>
 
-              <NoticeText>
-                {t(
-                  '제보자는 어떠한 신분상의 불이익이나 차별을 받지 않으며 신원과 제보내용은 철저히 비밀로 유지됩니다.',
-                  'Reporters will not face any disadvantage or discrimination, and their identity and report details will be kept strictly confidential.',
-                )}
-              </NoticeText>
+              <NoticeText>{t(ethicsCopy.policyNotice, ethicsCopy.policyNoticeEn)}</NoticeText>
 
               <GuideBlock>
                 <GuideLabel>{t('접수 대상', 'Report Topics')}</GuideLabel>
@@ -135,13 +124,8 @@ export function EthicsReportPage() {
 
             <OnlinePanel>
               <OnlineHeader>
-                <PanelTitle>{t('온라인으로 접수하기', 'Submit Online')}</PanelTitle>
-                <OnlineText>
-                  {t(
-                    '아래 항목을 작성해주시면 담당자가 내용을 확인합니다.',
-                    'Complete the fields below and the responsible team will review your report.',
-                  )}
-                </OnlineText>
+                <PanelTitle>{t(ethicsCopy.onlineTitle, ethicsCopy.onlineTitleEn)}</PanelTitle>
+                <OnlineText>{t(ethicsCopy.onlineText, ethicsCopy.onlineTextEn)}</OnlineText>
               </OnlineHeader>
 
               <ReportForm

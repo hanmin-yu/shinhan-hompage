@@ -5,8 +5,7 @@ import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
 import { palette } from '../../components/home/homeStyles';
-import { utilitySubnav } from '../../config/utilitySubnav';
-import { officeBranches, siteContact } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const onlineInquiryEmail = 'shkim914@customsservice.co.kr';
@@ -17,6 +16,11 @@ function getFormValue(formData: FormData, key: string) {
 
 export function ContactPage() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const utilitySubnav = content.global.utilitySubnav;
+  const officeBranches = content.offices.officeBranches;
+  const siteContact = content.global.siteContact;
+  const contactCopy = content.contact.copy.contact;
   const hqOffice = officeBranches.find((office) => office.id === 'seoul') ?? officeBranches[0];
   const officeAddress = hqOffice?.address ?? siteContact.address;
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
@@ -60,19 +64,14 @@ export function ContactPage() {
         <SectionInner>
           <ContactIntro data-reveal>
             <E.Eyebrow>Contact Us</E.Eyebrow>
-            <ContactTitle>{t('문의', 'Contact')}</ContactTitle>
-            <ContactLead>
-              {t(
-                '신한관세법인에 문의가 필요하신 경우 대표 연락처 또는 온라인 문의를 이용해주세요.',
-                'If you have an inquiry, please use our main contact details or the online inquiry form below.',
-              )}
-            </ContactLead>
+            <ContactTitle>{t(contactCopy.title, contactCopy.titleEn)}</ContactTitle>
+            <ContactLead>{t(contactCopy.lead, contactCopy.leadEn)}</ContactLead>
           </ContactIntro>
 
           <ContactGrid>
             <InfoPanel>
               <E.Eyebrow>Contact Information</E.Eyebrow>
-              <PanelTitle>{t('대표 연락처', 'Main Contact')}</PanelTitle>
+              <PanelTitle>{t(contactCopy.mainContactTitle, contactCopy.mainContactTitleEn)}</PanelTitle>
 
               <InfoActions>
                 <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
@@ -108,13 +107,8 @@ export function ContactPage() {
             <InquiryPanel>
               <InquiryHeader>
                 <E.Eyebrow>Online Inquiry</E.Eyebrow>
-                <InquiryTitle>{t('온라인 문의', 'Online Inquiry')}</InquiryTitle>
-                <InquiryText>
-                  {t(
-                    '문의 내용을 남겨주시면 확인 후 안내드립니다.',
-                    'Leave your inquiry and we will review it.',
-                  )}
-                </InquiryText>
+                <InquiryTitle>{t(contactCopy.inquiryTitle, contactCopy.inquiryTitleEn)}</InquiryTitle>
+                <InquiryText>{t(contactCopy.inquiryText, contactCopy.inquiryTextEn)}</InquiryText>
               </InquiryHeader>
 
               <InquiryForm

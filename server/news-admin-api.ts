@@ -7,9 +7,10 @@ import multer from 'multer';
 import unzipper from 'unzipper';
 
 import { newsletterItems, shinhanNewsItems } from '../src/data/newsStaticSeeds';
+import { staticSiteContent } from '../src/data/siteContentStatic';
 import { shinhanNewsDetails } from '../src/data/shinhanNewsDetails';
 import { handleIssueReportsRequest } from '../src/server/issueReportsHttp';
-import type { AdminSession, NewsletterRecord, ShinhanNewsRecord } from '../src/types/site';
+import type { AdminSession, ManagedMember, SiteContentGroupKey, SiteContentPayload, NewsletterRecord, ShinhanNewsRecord } from '../src/types/site';
 import { sortShinhanNewsRecords } from '../src/utils/shinhanNews';
 
 type StoredShinhanNewsIndexEntry = Omit<ShinhanNewsRecord, 'bodyHtml'> & {
@@ -45,7 +46,12 @@ const SHINHAN_NEWS_ASSETS_ROOT = path.join(SHINHAN_NEWS_ROOT, 'assets');
 const NEWSLETTER_ROOT = path.join(STORAGE_ROOT, 'news/newsletter');
 const NEWSLETTER_INDEX_PATH = path.join(NEWSLETTER_ROOT, 'index.json');
 const NEWSLETTER_FILES_ROOT = path.join(NEWSLETTER_ROOT, 'files');
+const SITE_ROOT = path.join(STORAGE_ROOT, 'site');
+const SITE_CONTENT_PATH = path.join(SITE_ROOT, 'content.json');
+const SITE_ASSETS_ROOT = path.join(SITE_ROOT, 'assets');
 const PUBLIC_ROOT = path.resolve(process.cwd(), 'public');
+
+const SITE_CONTENT_GROUPS: SiteContentGroupKey[] = ['global', 'home', 'about', 'services', 'recruit', 'contact', 'offices', 'it', 'members', 'legal'];
 
 const staticShinhanNewsRecords: ShinhanNewsRecord[] = sortShinhanNewsRecords(
   shinhanNewsItems.map((item) => {
@@ -316,6 +322,7 @@ async function ensureStorageRoots() {
   await fs.mkdir(SHINHAN_NEWS_ITEMS_ROOT, { recursive: true });
   await fs.mkdir(SHINHAN_NEWS_ASSETS_ROOT, { recursive: true });
   await fs.mkdir(NEWSLETTER_FILES_ROOT, { recursive: true });
+  await fs.mkdir(SITE_ASSETS_ROOT, { recursive: true });
 }
 
 async function readJsonFile<T>(filePath: string) {
@@ -352,6 +359,75 @@ async function readStoredShinhanNewsIndex() {
 
 async function readStoredNewsletterIndex() {
   return readJsonFile<StoredNewsletterIndexEntry[]>(NEWSLETTER_INDEX_PATH);
+}
+
+function cloneStaticSiteContent() {
+  return JSON.parse(JSON.stringify(staticSiteContent)) as SiteContentPayload;
+}
+
+function isSiteContentGroupKey(value: string): value is SiteContentGroupKey {
+  return SITE_CONTENT_GROUPS.includes(value as SiteContentGroupKey);
+}
+
+async function readStoredSiteContent() {
+  return readJsonFile<SiteContentPayload>(SITE_CONTENT_PATH);
+}
+
+async function loadSiteContentPayload() {
+  const stored = await readStoredSiteContent();
+  return stored ?? cloneStaticSiteContent();
+}
+
+async function saveSiteContentPayload(payload: SiteContentPayload) {
+  await writeJsonFile(SITE_CONTENT_PATH, payload);
+  return payload;
+}
+
+function createManagedMemberId(name: string) {
+  const normalized = name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return `member-${normalized || randomUUID()}`;
+}
+
+function removeMemberReferences(content: SiteContentPayload, memberId: string) {
+  const nextContent = cloneStaticSiteContent();
+  Object.assign(nextContent, content);
+  nextContent.members = JSON.parse(JSON.stringify(content.members));
+  nextContent.members.managedMembers = content.members.managedMembers.filter((member) => member.id !== memberId);
+  nextContent.members.expertCategoryConfig.assignments = Object.fromEntries(
+    Object.entries(content.members.expertCategoryConfig.assignments).map(([category, memberIds]) => [
+      category,
+      memberIds.filter((id) => id !== memberId),
+    ]),
+  );
+  nextContent.members.expertCategoryConfig.highlights = Object.fromEntries(
+    Object.entries(content.members.expertCategoryConfig.highlights).map(([category, highlights]) => {
+      const nextHighlights = { ...highlights };
+      delete nextHighlights[memberId];
+      return [category, nextHighlights];
+    }),
+  );
+  nextContent.it.contactMemberIds = content.it.contactMemberIds.filter((id) => id !== memberId);
+  return nextContent;
+}
+
+async function writeManagedAsset(group: string, file: Express.Multer.File) {
+  if (!isImageUpload(file)) {
+    throw new Error('이미지 파일은 PNG, JPG, WEBP, GIF 형식만 업로드할 수 있습니다.');
+  }
+
+  const assetGroup = group.trim() || 'general';
+  const outputRoot = path.join(SITE_ASSETS_ROOT, assetGroup);
+  await fs.mkdir(outputRoot, { recursive: true });
+
+  const storedFileName = createOpaqueFileName(file.originalname, '.png');
+  await fs.writeFile(path.join(outputRoot, storedFileName), file.buffer);
+
+  return toPublicUrl('managed-content', 'site', 'assets', assetGroup, storedFileName);
 }
 
 async function loadShinhanNewsRecords(includeBodyHtml: boolean) {
@@ -702,6 +778,245 @@ app.get('/api/news/newsletters/:newsletterId/preview/manifest', async (request, 
   }
 
   sendJson(response, 200, manifest);
+});
+
+app.get('/api/content/site', async (_request, response) => {
+  sendJson(response, 200, await loadSiteContentPayload());
+});
+
+app.get('/api/admin/content/site', requireAdmin, async (_request, response) => {
+  sendJson(response, 200, {
+    mode: RUNTIME_MODE,
+    content: await loadSiteContentPayload(),
+  });
+});
+
+app.get('/api/admin/content/:groupId', requireAdmin, async (request, response) => {
+  if (!isSiteContentGroupKey(request.params.groupId)) {
+    sendJson(response, 404, { message: '콘텐츠 그룹을 찾을 수 없습니다.' });
+    return;
+  }
+
+  const content = await loadSiteContentPayload();
+  sendJson(response, 200, {
+    mode: RUNTIME_MODE,
+    groupId: request.params.groupId,
+    content: content[request.params.groupId],
+  });
+});
+
+app.put('/api/admin/content/:groupId', requireAdmin, async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  if (!isSiteContentGroupKey(request.params.groupId)) {
+    sendJson(response, 404, { message: '콘텐츠 그룹을 찾을 수 없습니다.' });
+    return;
+  }
+
+  const payload = request.body?.content;
+
+  if (!payload || typeof payload !== 'object') {
+    sendJson(response, 400, { message: '저장할 콘텐츠가 비어 있습니다.' });
+    return;
+  }
+
+  const content = await loadSiteContentPayload();
+  const nextContent = {
+    ...content,
+    [request.params.groupId]: payload,
+  } as SiteContentPayload;
+
+  await saveSiteContentPayload(nextContent);
+
+  sendJson(response, 200, {
+    mode: RUNTIME_MODE,
+    groupId: request.params.groupId,
+    content: nextContent[request.params.groupId],
+  });
+});
+
+app.get('/api/admin/members', requireAdmin, async (_request, response) => {
+  const content = await loadSiteContentPayload();
+  sendJson(response, 200, {
+    mode: RUNTIME_MODE,
+    members: content.members.managedMembers,
+    expertCategoryConfig: content.members.expertCategoryConfig,
+    contactMemberIds: content.it.contactMemberIds,
+  });
+});
+
+app.post('/api/admin/members', requireAdmin, async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const payload = request.body?.member as Partial<ManagedMember> | undefined;
+
+  if (!payload?.name?.trim()) {
+    sendJson(response, 400, { message: '이름은 필수입니다.' });
+    return;
+  }
+
+  const content = await loadSiteContentPayload();
+  const member: ManagedMember = {
+    id: payload.id?.trim() || createManagedMemberId(payload.name),
+    name: payload.name.trim(),
+    phone: payload.phone?.trim() ?? '',
+    email: payload.email?.trim() ?? '',
+    title: payload.title?.trim() ?? '',
+    department: payload.department?.trim() ?? '',
+    practice: payload.practice?.trim() ?? '',
+    accent: payload.accent?.trim() ?? '#526f9e',
+    image: payload.image?.trim() || undefined,
+    imageFit: payload.imageFit,
+    imagePosition: payload.imagePosition?.trim() || undefined,
+    careerHighlights: Array.isArray(payload.careerHighlights)
+      ? payload.careerHighlights.map((item) => item.trim()).filter(Boolean)
+      : [],
+    groups: Array.isArray(payload.groups) && payload.groups.length ? payload.groups : ['expert'],
+  };
+
+  const existingIndex = content.members.managedMembers.findIndex((item) => item.id === member.id);
+  const managedMembers = [...content.members.managedMembers];
+
+  if (existingIndex >= 0) {
+    managedMembers[existingIndex] = member;
+  } else {
+    managedMembers.unshift(member);
+  }
+
+  const nextContent: SiteContentPayload = {
+    ...content,
+    members: {
+      ...content.members,
+      managedMembers,
+    },
+  };
+
+  await saveSiteContentPayload(nextContent);
+  sendJson(response, 200, { member });
+});
+
+app.put('/api/admin/members/:memberId', requireAdmin, async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const payload = request.body?.member as Partial<ManagedMember> | undefined;
+  const memberId = request.params.memberId;
+  const content = await loadSiteContentPayload();
+  const existingIndex = content.members.managedMembers.findIndex((item) => item.id === memberId);
+
+  if (existingIndex < 0) {
+    sendJson(response, 404, { message: '구성원을 찾을 수 없습니다.' });
+    return;
+  }
+
+  const current = content.members.managedMembers[existingIndex];
+  const member: ManagedMember = {
+    ...current,
+    ...payload,
+    id: memberId,
+    name: payload?.name?.trim() || current.name,
+    phone: payload?.phone?.trim() ?? current.phone,
+    email: payload?.email?.trim() ?? current.email,
+    title: payload?.title?.trim() ?? current.title,
+    department: payload?.department?.trim() ?? current.department,
+    practice: payload?.practice?.trim() ?? current.practice,
+    accent: payload?.accent?.trim() ?? current.accent,
+    image: payload?.image?.trim() || current.image,
+    imagePosition: payload?.imagePosition?.trim() || current.imagePosition,
+    careerHighlights: Array.isArray(payload?.careerHighlights)
+      ? payload!.careerHighlights!.map((item) => item.trim()).filter(Boolean)
+      : current.careerHighlights,
+    groups: Array.isArray(payload?.groups) && payload.groups.length ? payload.groups : current.groups,
+  };
+
+  const managedMembers = [...content.members.managedMembers];
+  managedMembers[existingIndex] = member;
+
+  const nextContent: SiteContentPayload = {
+    ...content,
+    members: {
+      ...content.members,
+      managedMembers,
+    },
+  };
+
+  await saveSiteContentPayload(nextContent);
+  sendJson(response, 200, { member });
+});
+
+app.delete('/api/admin/members/:memberId', requireAdmin, async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const content = await loadSiteContentPayload();
+  const target = content.members.managedMembers.find((member) => member.id === request.params.memberId);
+
+  if (!target) {
+    sendJson(response, 404, { message: '구성원을 찾을 수 없습니다.' });
+    return;
+  }
+
+  const nextContent = removeMemberReferences(content, request.params.memberId);
+  await saveSiteContentPayload(nextContent);
+
+  sendJson(response, 200, { ok: true });
+});
+
+app.put('/api/admin/members/config', requireAdmin, async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const expertCategoryConfig = request.body?.expertCategoryConfig;
+  const contactMemberIds = request.body?.contactMemberIds;
+
+  if (!expertCategoryConfig || typeof expertCategoryConfig !== 'object' || !Array.isArray(contactMemberIds)) {
+    sendJson(response, 400, { message: '구성원 설정 값이 올바르지 않습니다.' });
+    return;
+  }
+
+  const content = await loadSiteContentPayload();
+  const nextContent: SiteContentPayload = {
+    ...content,
+    members: {
+      ...content.members,
+      expertCategoryConfig,
+    },
+    it: {
+      ...content.it,
+      contactMemberIds,
+    },
+  };
+
+  await saveSiteContentPayload(nextContent);
+  sendJson(response, 200, { ok: true });
+});
+
+app.post('/api/admin/assets/upload', requireAdmin, upload.single('file'), async (request, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const file = request.file;
+  if (!file) {
+    sendJson(response, 400, { message: '업로드할 파일이 필요합니다.' });
+    return;
+  }
+
+  try {
+    const url = await writeManagedAsset(String(request.body?.group ?? 'general'), file);
+    sendJson(response, 200, { url });
+  } catch (error) {
+    sendJson(response, 400, {
+      message: error instanceof Error ? error.message : '자산 업로드에 실패했습니다.',
+    });
+  }
 });
 
 app.get('/api/admin/news/shinhan-news', requireAdmin, async (_request, response) => {

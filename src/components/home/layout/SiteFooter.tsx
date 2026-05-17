@@ -1,9 +1,11 @@
-import { footerLinks, footerSocialLinks, siteContact } from '../../../data/home';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
 export function SiteFooter() {
   const { t, tx } = useI18n();
+  const { content } = useSiteContent();
+  const { footerLinks, footerSocialLinks, siteContact, footerCopyright } = content.global;
 
   return (
     <S.Footer>
@@ -37,7 +39,7 @@ export function SiteFooter() {
               </S.FooterInfoItem>
             </S.FooterInfoGrid>
             <S.FooterCopyright>
-              {t('COPYRIGHT © 신한관세법인 ALL RIGHTS RESERVED.', 'COPYRIGHT © SHINHAN CUSTOMS SERVICE INC. ALL RIGHTS RESERVED.')}
+              {t(footerCopyright.ko, footerCopyright.en)}
             </S.FooterCopyright>
           </S.FooterInfo>
 

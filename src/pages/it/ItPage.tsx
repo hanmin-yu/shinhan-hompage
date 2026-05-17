@@ -4,8 +4,7 @@ import { ItSection } from '../../components/home/sections/ItSection';
 import { palette } from '../../components/home/homeStyles';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { expertMembers, itOverview } from '../../data/home';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const EditorialSection = styled.section<{ $tone?: 'soft' }>`
@@ -403,12 +402,13 @@ const ContactInitialMark = styled.div`
   font-weight: 900;
 `;
 
-const itContactNames = ['최대규', '홍성훈'];
-
 export function ItPage() {
   const { t, tx } = useI18n();
-  const itSubnav = sectionSubnav.it;
-  const contactProfiles = itContactNames.map((name) => expertMembers.find((member) => member.name === name)).filter(Boolean);
+  const { content, findMemberById } = useSiteContent();
+  const itSubnav = content.global.sectionSubnav.it;
+  const itOverview = content.it.itOverview;
+  const itCopy = content.it.copy;
+  const contactProfiles = content.it.contactMemberIds.map((memberId) => findMemberById(memberId)).filter(Boolean);
 
   return (
     <>
@@ -423,7 +423,7 @@ export function ItPage() {
             </IntroHeading>
             <OneLineSummary>{t(itOverview.summary, itOverview.summaryEn)}</OneLineSummary>
             <OverviewBlock>
-              <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>
+              <OverviewTitle>{t(itCopy.overviewTitle, itCopy.overviewTitleEn)}</OverviewTitle>
               <OverviewText>{t(itOverview.body, itOverview.bodyEn)}</OverviewText>
             </OverviewBlock>
           </IntroStack>
@@ -436,7 +436,7 @@ export function ItPage() {
         <SectionInner data-reveal>
           <SectionHead>
             <SectionLabel>Contact Point</SectionLabel>
-            <EditorialTitle>{t('담당자', 'Contact Point')}</EditorialTitle>
+            <EditorialTitle>{t(itCopy.contactTitle, itCopy.contactTitleEn)}</EditorialTitle>
           </SectionHead>
           <ContactPanel>
             <ContactProfileGrid>

@@ -5,9 +5,13 @@ import { MobileMenu } from './components/home/layout/MobileMenu';
 import { SiteFooter } from './components/home/layout/SiteFooter';
 import { SiteHeader } from './components/home/layout/SiteHeader';
 import * as S from './components/home/homeStyles';
+import { SiteContentProvider } from './hooks/useSiteContent';
 import { useRevealOnScroll } from './hooks/useRevealOnScroll';
 import { SiteLanguageProvider } from './i18n/useI18n';
+import { AdminContentPage } from './pages/admin/AdminContentPage';
+import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
+import { AdminMembersPage } from './pages/admin/AdminMembersPage';
 import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
 import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
 import { AboutPage } from './pages/about/AboutPage';
@@ -118,12 +122,13 @@ function AppShell() {
     <>
       <S.GlobalStyle />
       <SiteLanguageProvider>
-        <S.Page>
-          <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
-          <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+        <SiteContentProvider>
+          <S.Page>
+            <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
+            <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
-          <S.Main id="top">
-            <Routes>
+            <S.Main id="top">
+              <Routes>
               <Route path="/" element={<HomePage />} />
 
               <Route path="/about" element={<AboutPage />} />
@@ -157,8 +162,10 @@ function AppShell() {
               <Route path="/news/seminar" element={<SeminarPage />} />
               <Route path="/news/blog" element={<BlogPage />} />
 
-              <Route path="/admin" element={<Navigate to="/admin/news/shinhan-news" replace />} />
+              <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin/content/:groupId" element={<AdminContentPage />} />
+              <Route path="/admin/members" element={<AdminMembersPage />} />
               <Route path="/admin/news" element={<Navigate to="/admin/news/shinhan-news" replace />} />
               <Route path="/admin/news/shinhan-news" element={<AdminShinhanNewsPage />} />
               <Route path="/admin/news/newsletter" element={<AdminNewsletterPage />} />
@@ -179,11 +186,12 @@ function AppShell() {
               <Route path="/services/*" element={<Navigate to="/services/import-export" replace />} />
               <Route path="/news/*" element={<Navigate to="/news" replace />} />
               <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </S.Main>
+              </Routes>
+            </S.Main>
 
-          <SiteFooter />
-        </S.Page>
+            <SiteFooter />
+          </S.Page>
+        </SiteContentProvider>
       </SiteLanguageProvider>
     </>
   );

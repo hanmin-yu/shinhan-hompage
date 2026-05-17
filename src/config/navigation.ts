@@ -72,11 +72,22 @@ function localizeLabel(label: string, language: SiteLanguage) {
   return language === 'en' ? translateKoToEn(label) : label;
 }
 
-function localizeNavItems(items: NavItem[], language: SiteLanguage): NavItem[] {
+function localizeManagedLabel(label: string, labelEn: string | undefined, language: SiteLanguage) {
+  return language === 'en' ? labelEn ?? translateKoToEn(label) : label;
+}
+
+export function localizeNavItems(items: NavItem[], language: SiteLanguage): NavItem[] {
   return items.map((item) => ({
     ...item,
-    label: localizeLabel(item.label, language),
+    label: localizeManagedLabel(item.label, item.labelEn, language),
     children: item.children ? localizeNavItems(item.children, language) : undefined,
+  }));
+}
+
+export function localizeLinkItems(items: LinkItem[], language: SiteLanguage): LinkItem[] {
+  return items.map((item) => ({
+    ...item,
+    label: localizeManagedLabel(item.label, item.labelEn, language),
   }));
 }
 

@@ -2,7 +2,7 @@ import { serviceLandingGroups } from '../data/pageContent';
 
 export type SectionSubnavItem = {
   label: string;
-  labelEn: string;
+  labelEn?: string;
   to: string;
   matchPrefixes?: string[];
   heroImage?: string;

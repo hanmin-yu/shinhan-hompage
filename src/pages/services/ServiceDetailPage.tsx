@@ -752,7 +752,8 @@ const LogisticsServiceTitle = styled.h4`
   word-break: keep-all;
 `;
 
-const LogisticsServiceList = styled.ul`
+const LogisticsServiceList = styled.ul<{ $numbered?: boolean }>`
+  counter-reset: logistics-item;
   display: grid;
   gap: 11px;
   margin: 0;
@@ -760,9 +761,10 @@ const LogisticsServiceList = styled.ul`
   list-style: none;
 `;
 
-const LogisticsServiceItem = styled.li`
+const LogisticsServiceItem = styled.li<{ $numbered?: boolean }>`
+  counter-increment: logistics-item;
   position: relative;
-  padding-left: 16px;
+  padding-left: ${({ $numbered }) => ($numbered ? '28px' : '16px')};
   color: #475569;
   font-size: 0.94rem;
   font-weight: 600;
@@ -771,16 +773,83 @@ const LogisticsServiceItem = styled.li`
   word-break: keep-all;
 
   &::before {
-    content: '';
+    content: ${({ $numbered }) => ($numbered ? 'counter(logistics-item) ")"' : "''")};
     position: absolute;
     left: 0;
-    top: 0.72em;
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: ${palette.blue};
+    top: ${({ $numbered }) => ($numbered ? '0' : '0.72em')};
+    width: ${({ $numbered }) => ($numbered ? 'auto' : '5px')};
+    height: ${({ $numbered }) => ($numbered ? 'auto' : '5px')};
+    border-radius: ${({ $numbered }) => ($numbered ? '0' : '999px')};
+    background: ${({ $numbered }) => ($numbered ? 'transparent' : palette.blue)};
+    color: ${palette.blue};
+    font-weight: 800;
     transform: translateY(-50%);
+    transform: ${({ $numbered }) => ($numbered ? 'none' : 'translateY(-50%)')};
   }
+`;
+
+const UsFdaKeyServiceBoard = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 28px);
+  padding: clamp(24px, 3.8vw, 44px);
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background: #ffffff;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const UsFdaKeyServiceCard = styled.article`
+  display: grid;
+  grid-template-rows: 46px minmax(calc(1em * 1.34 * 2), auto) auto;
+  align-content: start;
+  justify-items: center;
+  gap: 16px;
+  min-height: 224px;
+  padding: clamp(34px, 4vw, 46px) clamp(24px, 3vw, 34px) clamp(26px, 3vw, 34px);
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(15, 38, 76, 0.07);
+  text-align: center;
+`;
+
+const UsFdaKeyServiceIcon = styled.span`
+  display: grid;
+  place-items: center;
+  width: 46px;
+  aspect-ratio: 1;
+  border: 2px solid ${palette.blue};
+  border-radius: 8px;
+  color: ${palette.blue};
+  font-size: 1.1rem;
+  font-weight: 900;
+`;
+
+const UsFdaKeyServiceTitle = styled.strong`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${palette.blue};
+  font-size: clamp(1.02rem, 1.32vw, 1.18rem);
+  font-weight: 800;
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+`;
+
+const UsFdaKeyServiceText = styled.span`
+  max-width: 320px;
+  color: #475569;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.62;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
 `;
 
 const SequenceFlow = styled.ol<{ $columns?: number }>`
@@ -968,7 +1037,7 @@ const PenaltyProcedureStepText = styled.span`
 `;
 
 const StageCards = styled.div<{ $columns?: number; $titleRows?: number; $layout?: 'grid' | 'vertical' }>`
-  --stage-title-lines: ${({ $titleRows = 3 }) => $titleRows};
+  --stage-title-lines: ${({ $titleRows = 4 }) => $titleRows};
 
   counter-reset: stage-card;
   display: grid;
@@ -1081,7 +1150,7 @@ const StageCard = styled.article<{ $accent: string; $tone?: 'solid' | 'plain'; $
 
 const StageCardTitle = styled.strong<{ $layout?: 'grid' | 'vertical' }>`
   display: flex;
-  align-items: center;
+  align-items: ${({ $layout }) => ($layout === 'vertical' ? 'center' : 'flex-start')};
   justify-content: ${({ $layout }) => ($layout === 'vertical' ? 'flex-start' : 'center')};
   min-height: ${({ $layout }) => ($layout === 'vertical' ? '0' : 'calc(1em * 1.34 * var(--stage-title-lines))')};
   font-size: ${({ $layout }) => ($layout === 'vertical' ? 'clamp(1.06rem, 1.45vw, 1.28rem)' : 'clamp(0.98rem, 1.08vw, 1.08rem)')};
@@ -1760,6 +1829,8 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
   }
   if (contentId === 'us-fda') {
     if (heading === '주요 서비스') return 'process';
+    if (heading === '주요 서비스 상세') return 'logisticsServices';
+    if (heading === '특장점') return 'stage';
     if (heading.includes('지원 카테고리')) return 'circle';
     if (heading.includes('리스크')) return 'stage';
   }
@@ -1962,6 +2033,23 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스';
     const isUsFdaCoreService = isUsFdaPage && sectionHeading === '주요 서비스';
 
+    if (isUsFdaCoreService) {
+      return (
+        <UsFdaKeyServiceBoard>
+          {items.map((item, index) => {
+            const { term, description } = splitDiagramItem(tx(item));
+            return (
+              <UsFdaKeyServiceCard key={item}>
+                <UsFdaKeyServiceIcon>{index + 1}</UsFdaKeyServiceIcon>
+                <UsFdaKeyServiceTitle>{term}</UsFdaKeyServiceTitle>
+                {description ? <UsFdaKeyServiceText>{description}</UsFdaKeyServiceText> : null}
+              </UsFdaKeyServiceCard>
+            );
+          })}
+        </UsFdaKeyServiceBoard>
+      );
+    }
+
     if (isImportExportPage || isCustomsAuditFocus || isForeignExchangeService || isAcvaBenefits || isQuarantineService || isUsFdaCoreService) {
       const accents = importExportFlowAccents;
       const boardTitle = isImportExportPage
@@ -2125,6 +2213,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   };
 
   const renderLogisticsServicesDiagram = (items: string[]) => {
+    const numberedItems = isUsFdaPage;
     const groups = items.reduce<Array<{ title: string; items: string[] }>>((acc, item) => {
       const [rawTitle, detail] = item.split('|');
       const title = rawTitle?.trim();
@@ -2145,9 +2234,9 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         {groups.map((group) => (
           <LogisticsServiceGroup key={group.title}>
             <LogisticsServiceTitle>{tx(group.title)}</LogisticsServiceTitle>
-            <LogisticsServiceList>
+            <LogisticsServiceList $numbered={numberedItems}>
               {group.items.map((item) => (
-                <LogisticsServiceItem key={`${group.title}-${item}`}>{tx(item)}</LogisticsServiceItem>
+                <LogisticsServiceItem key={`${group.title}-${item}`} $numbered={numberedItems}>{tx(item)}</LogisticsServiceItem>
               ))}
             </LogisticsServiceList>
           </LogisticsServiceGroup>
@@ -2199,7 +2288,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
         : isUsFdaPage && sectionHeading === '리스크 제어/경쟁력'
           ? 3
           : getBalancedDiagramColumns(items.length);
-    const titleRows = isUsFdaPage && sectionHeading === '리스크 제어/경쟁력' ? 4 : isTaxAppealPage || items.length > 5 ? 3 : 2;
+    const titleRows = stageLayout === 'vertical' ? 2 : 4;
 
     return (
     <StageCards

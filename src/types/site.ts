@@ -4,6 +4,7 @@ export type NewsAdminMode = 'readonly' | 'enabled';
 export type LinkItem = {
   id: string;
   label: string;
+  labelEn?: string;
   href?: string;
   to?: string;
 };
@@ -40,6 +41,7 @@ export type NavItem = LinkItem & {
 };
 
 export type Member = {
+  id?: string;
   name: string;
   phone: string;
   email: string;
@@ -51,6 +53,13 @@ export type Member = {
   imageFit?: 'contain' | 'cover';
   imagePosition?: string;
   careerHighlights?: string[];
+};
+
+export type ManagedMemberGroup = 'featured' | 'executive' | 'expert' | 'advisor';
+
+export type ManagedMember = Member & {
+  id: string;
+  groups: ManagedMemberGroup[];
 };
 
 export type HeroSlide = {
@@ -225,3 +234,125 @@ export type AdminSession = {
   isReadOnly: boolean;
   username?: string;
 };
+
+export type ManagedSectionSubnavItem = {
+  label: string;
+  labelEn: string;
+  to: string;
+  matchPrefixes?: string[];
+  heroImage?: string;
+  heroPosition?: string;
+};
+
+export type ManagedSectionSubnavConfig = {
+  kicker: string;
+  kickerEn: string;
+  title: string;
+  titleEn: string;
+  summary?: string;
+  summaryEn?: string;
+  items: ManagedSectionSubnavItem[];
+};
+
+export type ExpertCategoryConfig = {
+  categories: string[];
+  assignments: Record<string, string[]>;
+  highlights: Record<string, Record<string, string[]>>;
+};
+
+export type GlobalNavigationContent = {
+  brandMarkPath: string;
+  utilityLinks: LinkItem[];
+  footerLinks: LinkItem[];
+  footerSocialLinks: LinkItem[];
+  siteContact: SiteContact;
+  footerCopyright: {
+    ko: string;
+    en: string;
+  };
+  headerNavigation: NavItem[];
+  mobileQuickLinks: LinkItem[];
+  sectionSubnav: Record<string, ManagedSectionSubnavConfig>;
+  utilitySubnav: ManagedSectionSubnavConfig;
+};
+
+export type SiteContentPayload = {
+  global: GlobalNavigationContent;
+  home: {
+    heroSlides: HeroSlide[];
+    issueReports: IssueReport[];
+    practiceAreaDetails: PracticeAreaDetail[];
+    copy: Record<string, unknown>;
+  };
+  about: {
+    aboutStrengths: { title: string; body: string }[];
+    aboutTimeline: { period: string; year: string; event: string; eventEn: string }[];
+    historyMilestones: { year: string; ko: string; en: string }[];
+    managementValues: { title: string; body: string }[];
+    organizationUnits: { title: string; body: string }[];
+    copy: Record<string, unknown>;
+  };
+  services: {
+    serviceHubCards: {
+      title: string;
+      body: string;
+      href: string;
+    }[];
+    consultingHubCards: {
+      title: string;
+      body: string;
+      href: string;
+    }[];
+    serviceLandingGroups: unknown[];
+    serviceDetailPages: unknown[];
+    copy: Record<string, unknown>;
+  };
+  recruit: {
+    recruitRoles: unknown[];
+    recruitPostingLinks: unknown[];
+    recruitBenefitGroups: unknown[];
+    recruitBenefitDisplayGroups: unknown[];
+    recruitBenefitSummaryCards: unknown[];
+    copy: Record<string, unknown>;
+  };
+  contact: {
+    copy: Record<string, unknown>;
+  };
+  offices: {
+    officeBranches: OfficeBranch[];
+    copy: Record<string, unknown>;
+  };
+  it: {
+    itOverview: {
+      title: string;
+      titleEn: string;
+      summary: string;
+      summaryEn: string;
+      body: string;
+      bodyEn: string;
+    };
+    itServices: ItService[];
+    contactMemberIds: string[];
+    copy: Record<string, unknown>;
+  };
+  members: {
+    managedMembers: ManagedMember[];
+    expertCategoryConfig: ExpertCategoryConfig;
+    copy: Record<string, unknown>;
+  };
+  legal: {
+    legalPages: Record<LegalPageContent['id'], LegalPageContent>;
+  };
+};
+
+export type SiteContentGroupKey =
+  | 'global'
+  | 'home'
+  | 'about'
+  | 'services'
+  | 'recruit'
+  | 'contact'
+  | 'offices'
+  | 'it'
+  | 'members'
+  | 'legal';
