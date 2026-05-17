@@ -197,13 +197,18 @@ const DocumentSectionCard = styled.article`
   }
 `;
 
-const DocumentSectionTitle = styled.h3`
+const DocumentSectionTitle = styled.h3<{ $alignWithStageCards?: boolean }>`
   margin: 0;
+  padding-top: ${({ $alignWithStageCards }) => ($alignWithStageCards ? '18px' : '0')};
   color: ${palette.blue};
   font-size: clamp(1.02rem, 1.48vw, 1.22rem);
   font-weight: 700;
   line-height: 1.34;
   letter-spacing: -0.025em;
+
+  @media (max-width: 760px) {
+    padding-top: 0;
+  }
 `;
 
 const DocumentSectionMenuTitle = styled.div`
@@ -707,6 +712,77 @@ const AppealFlowMeta = styled.span`
   word-break: keep-all;
 `;
 
+const LogisticsServiceBoard = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.8vw, 28px);
+  padding: clamp(24px, 3.8vw, 44px);
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background: #ffffff;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const LogisticsServiceGroup = styled.article`
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  min-height: 100%;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 38, 76, 0.055);
+`;
+
+const LogisticsServiceTitle = styled.h4`
+  margin: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5eaf2;
+  color: ${palette.blue};
+  font-size: clamp(1.08rem, 1.45vw, 1.28rem);
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: 0;
+  word-break: keep-all;
+`;
+
+const LogisticsServiceList = styled.ul`
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+const LogisticsServiceItem = styled.li`
+  position: relative;
+  padding-left: 16px;
+  color: #475569;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.54;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: ${palette.blue};
+    transform: translateY(-50%);
+  }
+`;
+
 const SequenceFlow = styled.ol<{ $columns?: number }>`
   counter-reset: sequence-step;
   display: grid;
@@ -1012,6 +1088,7 @@ const StageCardTitle = styled.strong<{ $layout?: 'grid' | 'vertical' }>`
   font-weight: 800;
   line-height: 1.34;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
   word-break: keep-all;
   text-wrap: balance;
 `;
@@ -1021,6 +1098,7 @@ const StageCardText = styled.span<{ $layout?: 'grid' | 'vertical' }>`
   opacity: ${({ $layout }) => ($layout === 'vertical' ? 0.82 : 0.72)};
   font-size: ${({ $layout }) => ($layout === 'vertical' ? 'clamp(0.9rem, 1.05vw, 0.98rem)' : '0.8rem')};
   line-height: ${({ $layout }) => ($layout === 'vertical' ? 1.72 : 1.62)};
+  overflow-wrap: anywhere;
   word-break: keep-all;
   text-wrap: pretty;
 `;
@@ -1601,7 +1679,17 @@ const refundFlowAccents = [palette.blue];
 const ftaCircleAccents = [palette.blue];
 const vividAccents = ['#1d5fb6', '#1fc7c3', '#6b8ff2', '#f36f8f', '#d59c2a', '#6f74a8', '#2f8f7b'];
 
-type DiagramKind = 'circle' | 'process' | 'sequence' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable' | 'appealProcedure';
+type DiagramKind =
+  | 'circle'
+  | 'process'
+  | 'sequence'
+  | 'stage'
+  | 'metric'
+  | 'split'
+  | 'featureMatrix'
+  | 'impactTable'
+  | 'appealProcedure'
+  | 'logisticsServices';
 
 type ReferenceDiagramSection = {
   heading: string;
@@ -1660,6 +1748,7 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     return 'process';
   }
   if (contentId === 'logistics') {
+    if (heading === '주요 서비스') return 'logisticsServices';
     if (heading.includes('Warehouse')) return 'stage';
     if (heading.includes('Forwarding')) return 'process';
     if (heading.includes('Trucking')) return 'circle';
@@ -2035,6 +2124,38 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     );
   };
 
+  const renderLogisticsServicesDiagram = (items: string[]) => {
+    const groups = items.reduce<Array<{ title: string; items: string[] }>>((acc, item) => {
+      const [rawTitle, detail] = item.split('|');
+      const title = rawTitle?.trim();
+      const body = detail?.trim();
+      if (!title || !body) return acc;
+
+      const existing = acc.find((group) => group.title === title);
+      if (existing) {
+        existing.items.push(body);
+      } else {
+        acc.push({ title, items: [body] });
+      }
+      return acc;
+    }, []);
+
+    return (
+      <LogisticsServiceBoard>
+        {groups.map((group) => (
+          <LogisticsServiceGroup key={group.title}>
+            <LogisticsServiceTitle>{tx(group.title)}</LogisticsServiceTitle>
+            <LogisticsServiceList>
+              {group.items.map((item) => (
+                <LogisticsServiceItem key={`${group.title}-${item}`}>{tx(item)}</LogisticsServiceItem>
+              ))}
+            </LogisticsServiceList>
+          </LogisticsServiceGroup>
+        ))}
+      </LogisticsServiceBoard>
+    );
+  };
+
   const renderFeatureMatrix = (items: string[]) => (
     <PlatformFeatureMatrix>
       <FeatureMatrixHeader>
@@ -2072,11 +2193,18 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
 
   const renderStageDiagram = (items: string[], sectionHeading = '') => {
     const stageLayout = isAeoPage && sectionHeading === '주요 서비스' ? 'vertical' : 'grid';
+    const stageColumns =
+      stageLayout === 'vertical'
+        ? undefined
+        : isUsFdaPage && sectionHeading === '리스크 제어/경쟁력'
+          ? 3
+          : getBalancedDiagramColumns(items.length);
+    const titleRows = isUsFdaPage && sectionHeading === '리스크 제어/경쟁력' ? 4 : isTaxAppealPage || items.length > 5 ? 3 : 2;
 
     return (
     <StageCards
-      $columns={stageLayout === 'vertical' ? undefined : getBalancedDiagramColumns(items.length)}
-      $titleRows={isTaxAppealPage || items.length > 5 ? 3 : 2}
+      $columns={stageColumns}
+      $titleRows={titleRows}
       $layout={stageLayout}
     >
       {items.map((item, index) => {
@@ -2162,6 +2290,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);
     if (kind === 'impactTable') return renderImpactTable(items);
     if (kind === 'appealProcedure') return renderAppealProcedureDiagram(items, sectionHeading);
+    if (kind === 'logisticsServices') return renderLogisticsServicesDiagram(items);
     return renderProcessDiagram(items, sectionHeading);
   };
 
@@ -2174,6 +2303,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);
     if (kind === 'impactTable') return renderImpactTable(items);
     if (kind === 'appealProcedure') return renderAppealProcedureDiagram(items, sectionHeading);
+    if (kind === 'logisticsServices') return renderLogisticsServicesDiagram(items);
     return renderProcessDiagram(items, sectionHeading);
   };
 
@@ -2246,26 +2376,33 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                 <DocumentSectionTitle>{t('주요 서비스 상세설명', 'Key Service Details')}</DocumentSectionTitle>
               </DocumentSectionMenuTitle>
             ) : null}
-            {primaryDetailSections?.map((section) => (
-              <DocumentSectionCard key={section.heading}>
-                <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>
-                <ItemBodyStack>
-                  {section.body?.length ? (
-                    <ParagraphStack>
-                      {section.body.map((paragraph) => (
-                        <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
-                      ))}
-                    </ParagraphStack>
-                  ) : null}
-                  {section.list?.length ? (
-                    renderItemsDiagram(section.list, section.heading)
-                  ) : null}
-                  {section.steps?.length ? (
-                    renderItemsDiagram(section.steps, section.heading, true)
-                  ) : null}
-                </ItemBodyStack>
-              </DocumentSectionCard>
-            ))}
+            {primaryDetailSections?.map((section) => {
+              const alignTitleWithStageCards =
+                isFtaPage && (section.heading === '일반 원산지 컨설팅' || section.heading === 'FTA 원산지 컨설팅');
+
+              return (
+                <DocumentSectionCard key={section.heading}>
+                  <DocumentSectionTitle $alignWithStageCards={alignTitleWithStageCards}>
+                    {t(section.heading, section.headingEn ?? tx(section.heading))}
+                  </DocumentSectionTitle>
+                  <ItemBodyStack>
+                    {section.body?.length ? (
+                      <ParagraphStack>
+                        {section.body.map((paragraph) => (
+                          <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
+                        ))}
+                      </ParagraphStack>
+                    ) : null}
+                    {section.list?.length ? (
+                      renderItemsDiagram(section.list, section.heading)
+                    ) : null}
+                    {section.steps?.length ? (
+                      renderItemsDiagram(section.steps, section.heading, true)
+                    ) : null}
+                  </ItemBodyStack>
+                </DocumentSectionCard>
+              );
+            })}
             {!showReferenceDiagramsFirst
               ? referenceDiagramSections.map((section) => (
                   <DocumentSectionCard key={section.heading}>
