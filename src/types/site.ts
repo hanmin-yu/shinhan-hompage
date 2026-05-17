@@ -6,6 +6,7 @@ import type {
   ServiceDetailContent,
   ServiceLandingGroup,
 } from '../data/pageContent';
+import type { ShinhanInsight } from '../data/shinhanInsights';
 
 export type SiteLanguage = 'ko' | 'en';
 export type NewsAdminMode = 'readonly' | 'enabled';
@@ -237,6 +238,22 @@ export type NewsletterRecord = NewsletterItem & {
   updatedAt?: string;
 };
 
+export type NewsLandingCopy = {
+  lead: string;
+  leadEn: string;
+  introItems: [string, string, string, string];
+  introItemsEn: [string, string, string, string];
+};
+
+export type ShinhanInsightsPageCopy = {
+  searchPlaceholder: string;
+  searchPlaceholderEn: string;
+  emptyMessage: string;
+  emptyMessageEn: string;
+  backToListLabel: string;
+  backToListLabelEn: string;
+};
+
 export type AdminSession = {
   mode: NewsAdminMode;
   isAuthenticated: boolean;
@@ -404,6 +421,19 @@ export type OfficesPageCopy = {
   affiliateGroupTitleEn: string;
 };
 
+export type RecruitPageCopy = {
+  title: string;
+  titleEn: string;
+  rolesTitle: string;
+  rolesTitleEn: string;
+  benefitsTitle: string;
+  benefitsTitleEn: string;
+  detailedBenefitsTitle: string;
+  detailedBenefitsTitleEn: string;
+  applyTitle: string;
+  applyTitleEn: string;
+};
+
 export type ItPageCopy = {
   overviewTitle: string;
   overviewTitleEn: string;
@@ -427,6 +457,13 @@ export type SiteContentPayload = {
     issueReports: IssueReport[];
     practiceAreaDetails: PracticeAreaDetail[];
     copy: Record<string, unknown>;
+  };
+  news: {
+    shinhanInsights: ShinhanInsight[];
+    copy: {
+      landing: NewsLandingCopy;
+      insights: ShinhanInsightsPageCopy;
+    };
   };
   about: {
     aboutStrengths: { title: string; body: string }[];
@@ -465,7 +502,7 @@ export type SiteContentPayload = {
     recruitBenefitGroups: RecruitBenefitGroup[];
     recruitBenefitDisplayGroups: RecruitBenefitGroup[];
     recruitBenefitSummaryCards: RecruitBenefitSummaryCard[];
-    copy: Record<string, unknown>;
+    copy: RecruitPageCopy;
   };
   contact: {
     copy: {
@@ -503,6 +540,7 @@ export type SiteContentPayload = {
 export type SiteContentGroupKey =
   | 'global'
   | 'home'
+  | 'news'
   | 'about'
   | 'services'
   | 'recruit'

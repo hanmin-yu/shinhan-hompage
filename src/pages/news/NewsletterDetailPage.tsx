@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { palette } from '../../components/home/homeStyles';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useNewsletterRecord, useNewsletterRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getNewsletterDownloadFileName } from '../../utils/newsletter';
@@ -158,7 +158,8 @@ const ThumbnailLabel = styled.span`
 
 export function NewsletterDetailPage() {
   const { t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const { newsletterId } = useParams<{ newsletterId: string }>();
 
   const { item, loading: loadingItem } = useNewsletterRecord(newsletterId);

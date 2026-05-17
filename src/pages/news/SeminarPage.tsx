@@ -5,7 +5,7 @@ import { NewsListPagination } from '../../components/site/NewsListPagination';
 import { NewsListTable, type NewsListTableRow } from '../../components/site/NewsListTable';
 import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import type { ShinhanNewsItem } from '../../types/site';
@@ -53,7 +53,8 @@ function compareSeminarItems(left: ShinhanNewsItem, right: ShinhanNewsItem) {
 
 export function SeminarPage() {
   const { t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const { items, loading } = useShinhanNewsRecords();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

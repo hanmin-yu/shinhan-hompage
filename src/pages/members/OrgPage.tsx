@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 type OrgLeaf = {
@@ -148,7 +148,8 @@ function renderDivisionIcon(icon: OrgGroup['icon']) {
 
 export function OrgPage() {
   const { t } = useI18n();
-  const membersSubnav = sectionSubnav.members;
+  const { content } = useSiteContent();
+  const membersSubnav = content.global.sectionSubnav.members;
 
   return (
     <P.HeroSection>

@@ -3,13 +3,7 @@ import styled from '@emotion/styled';
 import * as E from '../../components/site/EditorialBlocks';
 import { EditorialPageHeader } from '../../components/site/EditorialPageHeader';
 import * as P from '../../components/site/PagePrimitives';
-import { utilitySubnav } from '../../config/utilitySubnav';
-import {
-  recruitBenefitDisplayGroups,
-  recruitBenefitSummaryCards,
-  recruitPostingLinks,
-  recruitRoles,
-} from '../../data/pageContent';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
 const RecruitIntroSection = styled(E.Section)`
@@ -527,11 +521,13 @@ const CtaSecondaryAction = styled(SecondaryAction)`
 
 export function RecruitPage() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const recruitCopy = content.recruit.copy;
 
   return (
     <>
       <EditorialPageHeader
-        config={utilitySubnav}
+        config={content.global.utilitySubnav}
         title="채용"
         titleEn="Recruit"
         heroImage="/hero/menu-utility-recruit-ai.png"
@@ -542,18 +538,18 @@ export function RecruitPage() {
         <RecruitStatement data-reveal>
           <RecruitHead>
             <E.Eyebrow>Recruit</E.Eyebrow>
-            <RecruitTitle>{t('신한과 함께 성장할 인재를 기다립니다.', 'Grow your career with Shinhan.')}</RecruitTitle>
+            <RecruitTitle>{t(recruitCopy.title, recruitCopy.titleEn)}</RecruitTitle>
           </RecruitHead>
           <IntroLayout>
             <RolePanel>
               <RoleHead>
                 <div>
                   <E.Eyebrow>{t('모집 직무', 'Open Roles')}</E.Eyebrow>
-                  <RolePanelTitle>{t('모집 중인 직무', 'Open roles')}</RolePanelTitle>
+                  <RolePanelTitle>{t(recruitCopy.rolesTitle, recruitCopy.rolesTitleEn)}</RolePanelTitle>
                 </div>
               </RoleHead>
               <RoleCloud>
-                {recruitRoles.map((role) => (
+                {content.recruit.recruitRoles.map((role) => (
                   <RoleChip key={role.title}>{t(role.title, role.titleEn)}</RoleChip>
                 ))}
               </RoleCloud>
@@ -567,12 +563,12 @@ export function RecruitPage() {
           <RecruitSectionHead>
             <div>
               <E.Eyebrow>{t('복리후생', 'Benefits')}</E.Eyebrow>
-              <PanelTitle>{t('근무 및 지원 제도', 'Benefits & Support')}</PanelTitle>
+              <PanelTitle>{t(recruitCopy.benefitsTitle, recruitCopy.benefitsTitleEn)}</PanelTitle>
             </div>
           </RecruitSectionHead>
 
           <BenefitSummaryGrid columns={3}>
-            {recruitBenefitSummaryCards.map((card) => (
+            {content.recruit.recruitBenefitSummaryCards.map((card) => (
               <BenefitSummaryCard key={card.title}>
                 <BenefitSummaryVisualRing>
                   <img src={card.image} alt={t(card.imageAlt, card.imageAltEn)} />
@@ -592,12 +588,10 @@ export function RecruitPage() {
           <MatrixPanel style={{ marginTop: 18 }}>
             <MatrixHead>
               <E.Eyebrow>{t('세부 복리후생', 'Detailed Benefits')}</E.Eyebrow>
-              <PanelTitle>
-                {t('카테고리별 전체 혜택', 'Full Benefits by Category')}
-              </PanelTitle>
+              <PanelTitle>{t(recruitCopy.detailedBenefitsTitle, recruitCopy.detailedBenefitsTitleEn)}</PanelTitle>
             </MatrixHead>
             <MatrixGrid>
-              {recruitBenefitDisplayGroups.map((group) => (
+              {content.recruit.recruitBenefitDisplayGroups.map((group) => (
                 <MatrixCategoryBlock key={group.category}>
                   <MatrixCardHead>
                     <MatrixCategory>{t(group.category, group.categoryEn)}</MatrixCategory>
@@ -622,14 +616,14 @@ export function RecruitPage() {
           <BottomCta style={{ marginTop: 18 }}>
             <BottomCtaCopy>
               <E.Eyebrow>{t('지원 안내', 'Apply')}</E.Eyebrow>
-              <BottomCtaTitle>{t('채용 채널 바로가기', 'Recruiting channels')}</BottomCtaTitle>
+              <BottomCtaTitle>{t(recruitCopy.applyTitle, recruitCopy.applyTitleEn)}</BottomCtaTitle>
             </BottomCtaCopy>
             <BottomActionRow>
-              <CtaAction href={recruitPostingLinks[0].href} target="_blank" rel="noreferrer">
-                {t(recruitPostingLinks[0].label, recruitPostingLinks[0].labelEn)}
+              <CtaAction href={content.recruit.recruitPostingLinks[0].href} target="_blank" rel="noreferrer">
+                {t(content.recruit.recruitPostingLinks[0].label, content.recruit.recruitPostingLinks[0].labelEn)}
               </CtaAction>
-              <CtaSecondaryAction href={recruitPostingLinks[1].href} target="_blank" rel="noreferrer">
-                {t(recruitPostingLinks[1].label, recruitPostingLinks[1].labelEn)}
+              <CtaSecondaryAction href={content.recruit.recruitPostingLinks[1].href} target="_blank" rel="noreferrer">
+                {t(content.recruit.recruitPostingLinks[1].label, content.recruit.recruitPostingLinks[1].labelEn)}
               </CtaSecondaryAction>
             </BottomActionRow>
             </BottomCta>

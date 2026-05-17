@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { shinhanInsights } from '../../data/shinhanInsights';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useNewsletterRecords, useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { NewsContentSection, NewsHeroSection, NewsPageContainer } from './newsLayout';
@@ -77,12 +76,14 @@ const ItemLink = styled(P.CardLink)`
 
 export function NewsPage() {
   const { t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const { items: shinhanNewsItems } = useShinhanNewsRecords();
   const { items: newsletters } = useNewsletterRecords();
+  const newsCopy = content.news.copy.landing;
 
   const shinhanNewsPreview = shinhanNewsItems.filter((item) => item.category !== 'seminar').slice(0, 3);
-  const shinhanInsightsPreview = shinhanInsights.slice(0, 3);
+  const shinhanInsightsPreview = content.news.shinhanInsights.slice(0, 3);
   const seminarPreview = shinhanNewsItems.filter((item) => item.category === 'seminar').slice(0, 3);
   const newsletterPreview = newsletters.slice(0, 3);
 
@@ -107,17 +108,11 @@ export function NewsPage() {
         <NewsPageContainer data-reveal>
           <P.Kicker>Insights & Archive</P.Kicker>
           <P.Title>{t('소식/자료', 'News & Resources')}</P.Title>
-          <P.Lead>
-            {t(
-              '신한 NEWS, 신한 Insights, 세미나/교육, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
-              'Shinhan NEWS, Shinhan Insights, seminars/training, and newsletters are organized in one quick editorial view.',
-            )}
-          </P.Lead>
+          <P.Lead>{t(newsCopy.lead, newsCopy.leadEn)}</P.Lead>
           <IntroList>
-            <li>{t('신한 NEWS: 최신 공지와 FLASH 3건', 'Shinhan NEWS: 3 latest notices and FLASH updates')}</li>
-            <li>{t('신한 Insights: 전문가 칼럼과 실무 해설', 'Shinhan Insights: expert columns and practical commentary')}</li>
-            <li>{t('세미나/교육: 최신 교육·세미나 3건', 'Seminar / Training: 3 latest seminar or training updates')}</li>
-            <li>{t('소식지: 최신 발행물 3건', 'Newsletter: 3 latest publications')}</li>
+            {newsCopy.introItems.map((item, index) => (
+              <li key={item}>{t(item, newsCopy.introItemsEn[index])}</li>
+            ))}
           </IntroList>
           <P.SectionDivider />
           <EditorialSection>

@@ -13,9 +13,7 @@ import {
   AdminInput,
   AdminLabel,
   AdminModeBadge,
-  AdminMuted,
   AdminPanel,
-  AdminReadonlyBanner,
 } from './AdminShared';
 
 export function AdminLoginPage() {
@@ -28,7 +26,7 @@ export function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   if (!loading && session.isAuthenticated) {
-    return <Navigate to="/admin/news/shinhan-news" replace />;
+    return <Navigate to="/admin" replace />;
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -38,7 +36,7 @@ export function AdminLoginPage() {
 
     try {
       await login({ username, password });
-      navigate('/admin/news/shinhan-news', { replace: true });
+      navigate('/admin', { replace: true });
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : '관리자 로그인에 실패했습니다.');
     } finally {
@@ -52,7 +50,7 @@ export function AdminLoginPage() {
 
     try {
       await login();
-      navigate('/admin/news/shinhan-news', { replace: true });
+      navigate('/admin', { replace: true });
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : '관리자 화면에 접근하지 못했습니다.');
     } finally {
@@ -66,12 +64,6 @@ export function AdminLoginPage() {
         <AdminPanel>
           <P.Kicker>Admin</P.Kicker>
           <P.SectionTitle>{t('콘텐츠 관리자', 'Content Admin')}</P.SectionTitle>
-          <AdminMuted>
-            {t(
-              '신한 NEWS와 소식지 관리 화면입니다. 데모에서는 읽기 전용으로만 제공되며, 내부 서버 운영 시 저장 기능을 활성화합니다.',
-              'This is the admin surface for Shinhan NEWS and newsletters. In the demo it stays read-only, and save features are enabled later on the internal server.',
-            )}
-          </AdminMuted>
           <AdminActionRow>
             <AdminModeBadge $readonly={session.mode === 'readonly'}>
               {session.mode === 'readonly' ? t('데모 읽기 전용', 'Demo Read-only') : t('운영 모드', 'Runtime Enabled')}
@@ -80,12 +72,6 @@ export function AdminLoginPage() {
 
           {session.mode === 'readonly' ? (
             <>
-              <AdminReadonlyBanner>
-                {t(
-                  '데모 환경에서는 업로드와 저장이 비활성화되어 있습니다. 관리자 화면 구성과 흐름만 확인할 수 있습니다.',
-                  'Uploads and saves are disabled in the demo environment. You can review the admin structure and workflow only.',
-                )}
-              </AdminReadonlyBanner>
               <AdminActionRow>
                 <AdminButton type="button" onClick={handleReadonlyEnter} disabled={submitting}>
                   {submitting ? t('이동 중...', 'Opening...') : t('읽기 전용 관리자 화면 보기', 'Open Read-only Admin')}

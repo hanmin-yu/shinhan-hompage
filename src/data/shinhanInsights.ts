@@ -16,6 +16,8 @@ export type ShinhanInsight = {
   bodyEn: string[];
 };
 
+export const SHINHAN_INSIGHTS_STORAGE_KEY = 'shinhan-insights-user-items';
+
 export const shinhanInsightCategories: Array<{
   value: 'all' | ShinhanInsightCategory;
   label: string;
@@ -86,4 +88,54 @@ export const shinhanInsights: ShinhanInsight[] = [
 export function getShinhanInsightById(id: string | undefined) {
   if (!id) return undefined;
   return shinhanInsights.find((item) => item.id === id);
+}
+
+export function isShinhanInsightCategory(value: unknown): value is ShinhanInsightCategory {
+  return value === 'customs' || value === 'trade';
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === 'string');
+}
+
+export function normalizeStoredShinhanInsights(value: unknown): ShinhanInsight[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter((item): item is ShinhanInsight => {
+    if (!item || typeof item !== 'object') {
+      return false;
+    }
+
+    const candidate = item as Partial<ShinhanInsight>;
+
+    return (
+      typeof candidate.id === 'string' &&
+      isShinhanInsightCategory(candidate.category) &&
+      typeof candidate.categoryLabel === 'string' &&
+      typeof candidate.categoryLabelEn === 'string' &&
+      typeof candidate.publishedAt === 'string' &&
+      typeof candidate.author === 'string' &&
+      typeof candidate.authorEn === 'string' &&
+      typeof candidate.title === 'string' &&
+      typeof candidate.titleEn === 'string' &&
+      typeof candidate.summary === 'string' &&
+      typeof candidate.summaryEn === 'string' &&
+      isStringArray(candidate.body) &&
+      isStringArray(candidate.bodyEn)
+    );
+  });
+}
+
+export function parseStoredShinhanInsights(rawValue: string | null): ShinhanInsight[] {
+  if (!rawValue) {
+    return [];
+  }
+
+  try {
+    return normalizeStoredShinhanInsights(JSON.parse(rawValue));
+  } catch {
+    return [];
+  }
 }

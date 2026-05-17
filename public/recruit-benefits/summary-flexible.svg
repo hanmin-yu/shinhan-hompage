@@ -1,0 +1,20 @@
+<svg width="240" height="220" viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flex-a" x1="54" y1="40" x2="164" y2="174" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8F3FF"/>
+      <stop offset="1" stop-color="#C6DBFD"/>
+    </linearGradient>
+    <linearGradient id="flex-b" x1="116" y1="54" x2="188" y2="138" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#427FE0"/>
+      <stop offset="1" stop-color="#245EBA"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="110" r="76" fill="url(#flex-a)"/>
+  <rect x="95" y="54" width="76" height="84" rx="10" fill="url(#flex-b)"/>
+  <rect x="69" y="76" width="74" height="84" rx="10" fill="#F8FBFF"/>
+  <path d="M84 102H128" stroke="#BCD4F7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M84 120H121" stroke="#BCD4F7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M84 138H114" stroke="#BCD4F7" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="164" cy="154" r="20" fill="#DCEBFF"/>
+  <path d="M164 144V154L171 160" stroke="#245EBA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

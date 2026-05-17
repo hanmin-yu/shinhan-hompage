@@ -699,6 +699,7 @@ const AppealFlowTitle = styled.strong`
   font-weight: 800;
   line-height: 1.32;
   letter-spacing: -0.02em;
+  white-space: pre-line;
   word-break: keep-all;
 `;
 

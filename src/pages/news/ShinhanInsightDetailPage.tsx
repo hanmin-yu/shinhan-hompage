@@ -4,8 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { getShinhanInsightById } from '../../data/shinhanInsights';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
@@ -92,9 +91,11 @@ const Paragraph = styled.p`
 
 export function ShinhanInsightDetailPage() {
   const { language, t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
+  const insightsCopy = content.news.copy.insights;
   const { insightId } = useParams<{ insightId: string }>();
-  const item = getShinhanInsightById(insightId);
+  const item = content.news.shinhanInsights.find((insight) => insight.id === insightId);
 
   if (!item) {
     return <Navigate to="/news/shinhan-insights" replace />;
@@ -131,7 +132,7 @@ export function ShinhanInsightDetailPage() {
             <DetailTitle>{t(item.title, item.titleEn)}</DetailTitle>
             <Summary>{t(item.summary, item.summaryEn)}</Summary>
             <ActionRow>
-              <P.CardLink to="/news/shinhan-insights">{t('목록으로', 'Back to List')}</P.CardLink>
+              <P.CardLink to="/news/shinhan-insights">{t(insightsCopy.backToListLabel, insightsCopy.backToListLabelEn)}</P.CardLink>
             </ActionRow>
             <Body>
               {body.map((paragraph) => (

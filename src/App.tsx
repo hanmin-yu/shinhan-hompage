@@ -72,6 +72,7 @@ function AppShell() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const previousPathname = useRef(location.pathname);
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   useRevealOnScroll(`${location.pathname}:${location.key}`);
 
@@ -126,8 +127,12 @@ function AppShell() {
       <SiteLanguageProvider>
         <SiteContentProvider>
           <S.Page>
-            <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
-            <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+            {isAdminRoute ? null : (
+              <>
+                <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
+                <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+              </>
+            )}
 
             <S.Main id="top">
               <Routes>
@@ -193,7 +198,7 @@ function AppShell() {
               </Routes>
             </S.Main>
 
-            <SiteFooter />
+            {isAdminRoute ? null : <SiteFooter />}
           </S.Page>
         </SiteContentProvider>
       </SiteLanguageProvider>

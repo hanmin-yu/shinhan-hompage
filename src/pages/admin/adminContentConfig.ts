@@ -16,6 +16,13 @@ export const adminContentGroups: { id: SiteContentGroupKey; label: string; label
     summaryEn: 'Manage the main visuals, updates, and featured people.',
   },
   {
+    id: 'news',
+    label: '뉴스 페이지',
+    labelEn: 'News Pages',
+    summary: '뉴스 랜딩 소개 문구와 신한 Insights 기본 콘텐츠를 관리합니다.',
+    summaryEn: 'Manage news landing copy and Shinhan Insights base content.',
+  },
+  {
     id: 'about',
     label: '회사소개',
     labelEn: 'About',

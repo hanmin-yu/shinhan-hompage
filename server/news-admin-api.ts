@@ -51,7 +51,7 @@ const SITE_CONTENT_PATH = path.join(SITE_ROOT, 'content.json');
 const SITE_ASSETS_ROOT = path.join(SITE_ROOT, 'assets');
 const PUBLIC_ROOT = path.resolve(process.cwd(), 'public');
 
-const SITE_CONTENT_GROUPS: SiteContentGroupKey[] = ['global', 'home', 'about', 'services', 'recruit', 'contact', 'offices', 'it', 'members', 'legal'];
+const SITE_CONTENT_GROUPS: SiteContentGroupKey[] = ['global', 'home', 'news', 'about', 'services', 'recruit', 'contact', 'offices', 'it', 'members', 'legal'];
 
 const staticShinhanNewsRecords: ShinhanNewsRecord[] = sortShinhanNewsRecords(
   shinhanNewsItems.map((item) => {

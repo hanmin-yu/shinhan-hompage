@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
 import { useSiteContent } from '../../hooks/useSiteContent';
-import { useI18n } from '../../i18n/useI18n';
 import { MembersContentSection, MembersHero, ProfessionalCardGrid } from './membersDirectory';
 
 const AdvisoryDivider = styled.div`
@@ -26,9 +25,7 @@ const AdvisoryTitle = styled.h2`
 
 export function MembersPage() {
   const { content, advisors, executives } = useSiteContent();
-  const { t } = useI18n();
   const membersSubnav = content.global.sectionSubnav.members;
-  const membersCopy = content.members.copy;
 
   return (
     <>
@@ -43,14 +40,13 @@ export function MembersPage() {
             summaryEn={membersSubnav.summaryEn}
             items={membersSubnav.items}
             matchAboutHero
+            hideVisualTitle
           />
         </P.PageContainer>
       </MembersHero>
 
       <MembersContentSection>
         <P.PageContainer data-reveal>
-          <P.Kicker>{t('임원진', 'Executives')}</P.Kicker>
-          <P.SectionTitle>{t(membersCopy.executivesTitle, membersCopy.executivesTitleEn)}</P.SectionTitle>
           <ProfessionalCardGrid members={executives} showPracticeOverlay={false} />
           <AdvisoryDivider>
             <AdvisoryTitle>고문단</AdvisoryTitle>

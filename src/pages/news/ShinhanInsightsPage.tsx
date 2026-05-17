@@ -4,14 +4,12 @@ import { NewsListPagination } from '../../components/site/NewsListPagination';
 import { NewsListTable, type NewsListTableRow } from '../../components/site/NewsListTable';
 import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
-import { sectionSubnav } from '../../config/sectionSubnav';
-import { shinhanInsightCategories, shinhanInsights, type ShinhanInsightCategory } from '../../data/shinhanInsights';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
-
-type ActiveCategory = 'all' | ShinhanInsightCategory;
+type ActiveCategory = 'all' | 'customs' | 'trade';
 
 function normalizeSearch(value: string) {
   return value.toLowerCase().replace(/\s+/g, '');
@@ -19,7 +17,9 @@ function normalizeSearch(value: string) {
 
 export function ShinhanInsightsPage() {
   const { language, t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
+  const insightsCopy = content.news.copy.insights;
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<ActiveCategory>('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,18 +29,18 @@ export function ShinhanInsightsPage() {
   }, [activeCategory, searchQuery]);
 
   const categoryOptions = useMemo(
-    () =>
-      shinhanInsightCategories.map((category) => ({
-        value: category.value,
-        label: t(category.label, category.labelEn),
-      })),
+    () => [
+      { value: 'all', label: t('전체', 'All') },
+      { value: 'customs', label: t('관세', 'Customs') },
+      { value: 'trade', label: t('국제 통상', 'International Trade') },
+    ],
     [t],
   );
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
 
-    return shinhanInsights.filter((item) => {
+    return content.news.shinhanInsights.filter((item) => {
       if (activeCategory !== 'all' && item.category !== activeCategory) {
         return false;
       }
@@ -61,7 +61,7 @@ export function ShinhanInsightsPage() {
 
       return target.includes(normalizedQuery);
     });
-  }, [activeCategory, language, searchQuery]);
+  }, [activeCategory, content.news.shinhanInsights, language, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -89,8 +89,6 @@ export function ShinhanInsightsPage() {
     [pagedItems, t],
   );
 
-  const emptyMessage = t('검색 조건에 맞는 신한 Insights가 없습니다.', 'No Shinhan Insights match the current filters.');
-
   return (
     <>
       <NewsCompactHeroSection>
@@ -114,7 +112,7 @@ export function ShinhanInsightsPage() {
           <NewsListToolbar
             searchLabel={t('검색', 'Search')}
             searchValue={searchQuery}
-            searchPlaceholder={t('제목, 분야, 작성팀, 날짜로 검색', 'Search by title, field, author, or date')}
+            searchPlaceholder={t(insightsCopy.searchPlaceholder, insightsCopy.searchPlaceholderEn)}
             onSearchChange={setSearchQuery}
             chipLabel={t('분야 필터', 'Field filter')}
             chipOptions={categoryOptions}
@@ -128,7 +126,7 @@ export function ShinhanInsightsPage() {
             sourceLabel={t('분야', 'Field')}
             titleLabel={t('제목', 'Title')}
             actionLabel={t('바로가기', 'Open')}
-            emptyMessage={emptyMessage}
+            emptyMessage={t(insightsCopy.emptyMessage, insightsCopy.emptyMessageEn)}
           />
           <NewsListPagination
             currentPage={activePage}

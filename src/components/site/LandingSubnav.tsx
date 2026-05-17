@@ -22,6 +22,7 @@ type LandingSubnavProps = {
   items: LandingSubnavItem[];
   compactBottom?: boolean;
   matchAboutHero?: boolean;
+  hideVisualTitle?: boolean;
 };
 
 const heroImagesByTitle: Record<string, { image: string; position: string }> = {
@@ -309,6 +310,7 @@ export function LandingSubnav({
   items,
   compactBottom = false,
   matchAboutHero = false,
+  hideVisualTitle = false,
 }: LandingSubnavProps) {
   const { t } = useI18n();
   const { pathname } = useLocation();
@@ -331,7 +333,7 @@ export function LandingSubnav({
     <Wrap data-reveal $compactBottom={compactBottom} $matchAboutHero={matchAboutHero}>
       <VisualHero $image={hero.image} $position={hero.position} data-title={title}>
         {kicker ? <Eyebrow>{t(kicker, kickerEn ?? kicker)}</Eyebrow> : null}
-        <IntroTitle>{visualTitle}</IntroTitle>
+        {hideVisualTitle ? null : <IntroTitle>{visualTitle}</IntroTitle>}
         {summary ? <IntroSummary>{t(summary, summaryEn ?? summary)}</IntroSummary> : null}
       </VisualHero>
       <SubnavBand>

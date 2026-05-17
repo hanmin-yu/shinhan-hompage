@@ -32,6 +32,7 @@ import {
   serviceHubCards,
   serviceLandingGroups,
 } from './pageContent';
+import { shinhanInsights } from './shinhanInsights';
 import { headerNavigation, mobileQuickLinks } from '../config/navigation';
 import { sectionSubnav } from '../config/sectionSubnav';
 import { utilitySubnav } from '../config/utilitySubnav';
@@ -226,6 +227,37 @@ export const staticSiteContent: SiteContentPayload = {
     copy: {
       membersTitle: '대표 구성원',
       membersTitleEn: 'Key Professionals',
+    },
+  },
+  news: {
+    shinhanInsights,
+    copy: {
+      landing: {
+        lead:
+          '신한 NEWS, 신한 Insights, 세미나/교육, 소식지의 최신 소식을 한 화면에서 빠르게 확인할 수 있도록 구성했습니다.',
+        leadEn:
+          'Shinhan NEWS, Shinhan Insights, seminars/training, and newsletters are organized in one quick editorial view.',
+        introItems: [
+          '신한 NEWS: 최신 공지와 FLASH 3건',
+          '신한 Insights: 전문가 칼럼과 실무 해설',
+          '세미나/교육: 최신 교육·세미나 3건',
+          '소식지: 최신 발행물 3건',
+        ],
+        introItemsEn: [
+          'Shinhan NEWS: 3 latest notices and FLASH updates',
+          'Shinhan Insights: expert columns and practical commentary',
+          'Seminar / Training: 3 latest seminar or training updates',
+          'Newsletter: 3 latest publications',
+        ],
+      },
+      insights: {
+        searchPlaceholder: '제목, 분야, 작성팀, 날짜로 검색',
+        searchPlaceholderEn: 'Search by title, field, author, or date',
+        emptyMessage: '검색 조건에 맞는 신한 Insights가 없습니다.',
+        emptyMessageEn: 'No Shinhan Insights match the current filters.',
+        backToListLabel: '목록으로',
+        backToListLabelEn: 'Back to List',
+      },
     },
   },
   about: {

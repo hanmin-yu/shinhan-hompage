@@ -4,7 +4,7 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { palette } from '../../components/home/homeStyles';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useShinhanNewsRecord } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel } from '../../utils/shinhanNews';
@@ -114,7 +114,8 @@ const StatusText = styled.p`
 
 export function ShinhanNewsDetailPage() {
   const { t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const location = useLocation();
   const { newsId } = useParams<{ newsId: string }>();
 

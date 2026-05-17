@@ -334,7 +334,7 @@ const TitleRow = styled.div`
 `;
 
 const Name = styled.h3`
-  flex: 0 1 auto;
+  flex: 0 0 clamp(108px, 7.6vw, 138px);
   min-width: 0;
   margin: 0;
   color: #121c2b;
@@ -344,6 +344,7 @@ const Name = styled.h3`
   letter-spacing: 0;
 
   @media (max-width: 560px) {
+    flex-basis: 74px;
     font-size: 1.3rem;
   }
 
@@ -363,13 +364,13 @@ const Name = styled.h3`
 const NameDivider = styled.span`
   flex: 0 0 auto;
   width: 2px;
-  height: 34px;
-  margin-top: 2px;
+  height: 48px;
+  margin-top: 0;
   background: linear-gradient(180deg, #102a55, #1d5fb6);
   opacity: 0.9;
 
   @media (max-width: 560px) {
-    height: 28px;
+    height: 36px;
   }
 
   [data-language='en'] & {

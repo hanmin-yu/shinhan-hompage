@@ -6,7 +6,7 @@ import { NewsListTable, type NewsListTableRow } from '../../components/site/News
 import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import { IssueReportDetailModal, useIssueReportDetailModal } from '../../components/site/IssueReportDetailModal';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useIssueReports } from '../../hooks/useIssueReports';
 import { useI18n } from '../../i18n/useI18n';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
@@ -82,7 +82,8 @@ function normalizeSearch(value: string) {
 
 export function IssueReportPage() {
   const { language, t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const { reports, loading, failedSources, refreshing, refreshStatus, refreshedAt, refreshReports } = useIssueReports();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

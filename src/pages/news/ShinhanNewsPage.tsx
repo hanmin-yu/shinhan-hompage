@@ -6,7 +6,7 @@ import { NewsListTable, type NewsListTableRow } from '../../components/site/News
 import { NewsListToolbar } from '../../components/site/NewsListToolbar';
 import { LandingSubnav } from '../../components/site/LandingSubnav';
 import * as P from '../../components/site/PagePrimitives';
-import { sectionSubnav } from '../../config/sectionSubnav';
+import { useSiteContent } from '../../hooks/useSiteContent';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import { getShinhanNewsSourceLabel, sortShinhanNewsRecords } from '../../utils/shinhanNews';
@@ -24,7 +24,8 @@ function normalizeSearch(value: string) {
 
 export function ShinhanNewsPage() {
   const { t } = useI18n();
-  const newsSubnav = sectionSubnav.news;
+  const { content } = useSiteContent();
+  const newsSubnav = content.global.sectionSubnav.news;
   const { items, loading } = useShinhanNewsRecords();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

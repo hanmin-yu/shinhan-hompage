@@ -1,6 +1,6 @@
-import benefitSummaryCompensation from '../assets/recruit-benefits/summary-compensation.svg';
-import benefitSummaryFlexible from '../assets/recruit-benefits/summary-flexible.svg';
-import benefitSummaryGrowth from '../assets/recruit-benefits/summary-growth.svg';
+const benefitSummaryCompensation = '/recruit-benefits/summary-compensation.svg';
+const benefitSummaryFlexible = '/recruit-benefits/summary-flexible.svg';
+const benefitSummaryGrowth = '/recruit-benefits/summary-growth.svg';
 
 export type PointItem = {
   title: string;
@@ -988,10 +988,10 @@ const taxAppealSections: ServiceDetailSection[] = [
     ],
     list: [
       '세관처분: 세관장',
-      '이의신청 30일내 결정: 세관장',
-      '심사|관세청 심사청구 90일내 결정: 관세청장',
-      '심사|심판청구 90일내 결정: 조세심판원장',
-      '심사|감사원 심사청구 3개월내 결정: 감사원장',
+      '이의신청\n30일내 결정: 세관장',
+      '심사|관세청 심사청구\n90일내 결정: 관세청장',
+      '심사|심판청구\n90일내 결정: 조세심판원장',
+      '심사|감사원 심사청구\n3개월내 결정: 감사원장',
       '소송|행정소송 1심: 행정(지방)법원',
       '소송|행정소송 2심: 고등법원',
       '소송|행정소송 3심: 대법원',

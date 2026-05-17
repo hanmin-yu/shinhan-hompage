@@ -467,7 +467,8 @@ export const members: Member[] = [
     department: '신한관세법인',
     practice: '기업심사, 조사 대응, 수출입 통관 총괄',
     accent: '#526f9e',
-    image: '/members/jang.png',
+    image: '/members/executives/장승희.png',
+    imagePosition: '50% 16%',
   },
   {
     name: '서영진',
@@ -477,7 +478,8 @@ export const members: Member[] = [
     department: '신한관세법인',
     practice: '기업심사 및 조사, 외환, FTA 자문',
     accent: '#7486a0',
-    image: '/members/seo.png',
+    image: '/members/executives/서영진.png',
+    imagePosition: '50% 17%',
   },
   {
     name: '최대규',
@@ -487,7 +489,8 @@ export const members: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: 'FTA 컨설팅, 베트남 관세 및 재고관리',
     accent: '#4e6987',
-    image: '/members/choi.png',
+    image: '/members/executives/최대규.png',
+    imagePosition: '50% 17%',
   },
   {
     name: '전무열',
@@ -497,7 +500,8 @@ export const members: Member[] = [
     department: '서울본사 통관본부 / 인천경기지사',
     practice: '기업심사 및 외환, FTA 지원',
     accent: '#637ca1',
-    image: '/members/jeon.png',
+    image: '/members/executives/전무열.png',
+    imagePosition: '50% 22%',
   },
 ];
 
