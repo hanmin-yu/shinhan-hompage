@@ -33,6 +33,7 @@ import {
   AdminUploadBox,
   AdminUploadTitle,
 } from './AdminShared';
+import { adminNavigationItems } from './adminContentConfig';
 
 type AdminNewsletterListResponse = {
   items: NewsletterRecord[];
@@ -345,10 +346,22 @@ export function AdminNewsletterPage() {
           </AdminTopRow>
 
           <AdminSubnav>
+            <AdminSubnavLink to="/admin" $active={false}>
+              대시보드
+            </AdminSubnavLink>
+            {adminNavigationItems.map((item) => (
+              <AdminSubnavLink key={item.id} to={item.to} $active={item.id === 'news'}>
+                {item.label}
+              </AdminSubnavLink>
+            ))}
+          </AdminSubnav>
+
+          <AdminSubnav>
             <AdminSubnavLink to="/admin/news/shinhan-news">신한 NEWS</AdminSubnavLink>
             <AdminSubnavLink to="/admin/news/newsletter" $active>
               소식지
             </AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/shinhan-insights">신한 Insights</AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (

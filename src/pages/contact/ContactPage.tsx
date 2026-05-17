@@ -8,7 +8,7 @@ import { palette } from '../../components/home/homeStyles';
 import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const onlineInquiryEmail = 'shkim914@customsservice.co.kr';
+const fallbackOnlineInquiryEmail = 'shkim914@customsservice.co.kr';
 
 function getFormValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
@@ -26,6 +26,13 @@ export function ContactPage() {
   const officeAddressEn = hqOffice?.addressEn ?? siteContact.addressEn;
   const officePhone = hqOffice?.tel ?? siteContact.phone;
   const officeFax = hqOffice?.fax ?? '02-540-2323';
+  const mainPhone = contactCopy.mainPhone || officePhone;
+  const mainFax = contactCopy.fax || officeFax;
+  const mainEmail = contactCopy.email || siteContact.email;
+  const mainAddress = contactCopy.address || officeAddress;
+  const mainAddressEn = contactCopy.addressEn || officeAddressEn;
+  const businessNumber = contactCopy.businessNumber || siteContact.businessNumber;
+  const inquiryEmail = contactCopy.inquiryEmail || fallbackOnlineInquiryEmail;
 
   const handleInquirySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,7 +54,7 @@ export function ContactPage() {
       message || '-',
     ].join('\n');
 
-    window.location.href = `mailto:${onlineInquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${inquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -74,32 +81,32 @@ export function ContactPage() {
               <PanelTitle>{t(contactCopy.mainContactTitle, contactCopy.mainContactTitleEn)}</PanelTitle>
 
               <InfoActions>
-                <InfoActionLink href={`tel:${siteContact.phone.replace(/[^+\d]/g, '')}`}>
+                <InfoActionLink href={`tel:${mainPhone.replace(/[^+\d]/g, '')}`}>
                   {t('대표번호 연결', 'Call Main Line')}
                 </InfoActionLink>
-                <InfoActionLink href={`mailto:${siteContact.email}`}>{t('이메일 보내기', 'Send Email')}</InfoActionLink>
+                <InfoActionLink href={`mailto:${mainEmail}`}>{t('이메일 보내기', 'Send Email')}</InfoActionLink>
               </InfoActions>
 
               <InfoList>
                 <InfoItem>
                   <InfoLabel>{t('대표번호', 'Phone')}</InfoLabel>
-                  <InfoValueLink href={`tel:${officePhone.replace(/[^+\d]/g, '')}`}>{officePhone}</InfoValueLink>
+                  <InfoValueLink href={`tel:${mainPhone.replace(/[^+\d]/g, '')}`}>{mainPhone}</InfoValueLink>
                 </InfoItem>
                 <InfoItem>
                   <InfoLabel>{t('팩스번호', 'Fax')}</InfoLabel>
-                  <InfoValue>{officeFax}</InfoValue>
+                  <InfoValue>{mainFax}</InfoValue>
                 </InfoItem>
                 <InfoItem>
                   <InfoLabel>{t('이메일', 'Email')}</InfoLabel>
-                  <InfoValueLink href={`mailto:${siteContact.email}`}>{siteContact.email}</InfoValueLink>
+                  <InfoValueLink href={`mailto:${mainEmail}`}>{mainEmail}</InfoValueLink>
                 </InfoItem>
                 <InfoItem>
                   <InfoLabel>{t('본사 주소', 'HQ Address')}</InfoLabel>
-                  <InfoValue>{t(officeAddress, officeAddressEn)}</InfoValue>
+                  <InfoValue>{t(mainAddress, mainAddressEn)}</InfoValue>
                 </InfoItem>
                 <InfoItem>
                   <InfoLabel>{t('사업자등록번호', 'Business Registration No.')}</InfoLabel>
-                  <InfoValue>{siteContact.businessNumber}</InfoValue>
+                  <InfoValue>{businessNumber}</InfoValue>
                 </InfoItem>
               </InfoList>
             </InfoPanel>
@@ -112,7 +119,7 @@ export function ContactPage() {
               </InquiryHeader>
 
               <InquiryForm
-                action={`mailto:${onlineInquiryEmail}`}
+                action={`mailto:${inquiryEmail}`}
                 method="post"
                 encType="text/plain"
                 onSubmit={handleInquirySubmit}

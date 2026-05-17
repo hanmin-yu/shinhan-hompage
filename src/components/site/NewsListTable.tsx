@@ -268,7 +268,7 @@ const ActionButton = styled.button<{ $variant?: 'default' | 'primary' }>`
 const TitleAnchor = styled.a`
   text-decoration: none;
 
-  &:hover ${TitleText} {
+  &:hover [data-title-text] {
     color: ${palette.blue};
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -290,7 +290,7 @@ const SrOnly = styled.span`
 const TitleRouterLink = styled(Link)`
   text-decoration: none;
 
-  &:hover ${TitleText} {
+  &:hover [data-title-text] {
     color: ${palette.blue};
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -306,7 +306,7 @@ const TitleButton = styled.button`
   text-align: left;
   cursor: pointer;
 
-  &:hover ${TitleText} {
+  &:hover [data-title-text] {
     color: ${palette.blue};
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -315,13 +315,13 @@ const TitleButton = styled.button`
 
 function renderTitle(row: NewsListTableRow) {
   if (row.disabled || (!row.href && !row.to && !row.onClick)) {
-    return <TitleText $disabled={row.disabled}>{row.title}</TitleText>;
+    return <TitleText data-title-text $disabled={row.disabled}>{row.title}</TitleText>;
   }
 
   if (row.to) {
     return (
       <TitleRouterLink to={row.to}>
-        <TitleText>{row.title}</TitleText>
+        <TitleText data-title-text>{row.title}</TitleText>
       </TitleRouterLink>
     );
   }
@@ -329,14 +329,14 @@ function renderTitle(row: NewsListTableRow) {
   if (row.onClick) {
     return (
       <TitleButton type="button" onClick={row.onClick}>
-        <TitleText>{row.title}</TitleText>
+        <TitleText data-title-text>{row.title}</TitleText>
       </TitleButton>
     );
   }
 
   return (
     <TitleAnchor href={row.href} target={row.external ? '_blank' : undefined} rel={row.external ? 'noreferrer' : undefined}>
-      <TitleText>{row.title}</TitleText>
+      <TitleText data-title-text>{row.title}</TitleText>
     </TitleAnchor>
   );
 }

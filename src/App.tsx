@@ -13,6 +13,7 @@ import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminMembersPage } from './pages/admin/AdminMembersPage';
 import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
+import { AdminShinhanInsightsPage } from './pages/admin/AdminShinhanInsightsPage';
 import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
 import { AboutPage } from './pages/about/AboutPage';
 import { HistoryPage } from './pages/about/HistoryPage';
@@ -178,6 +179,7 @@ function AppShell() {
               <Route path="/admin/news" element={<Navigate to="/admin/news/shinhan-news" replace />} />
               <Route path="/admin/news/shinhan-news" element={<AdminShinhanNewsPage />} />
               <Route path="/admin/news/newsletter" element={<AdminNewsletterPage />} />
+              <Route path="/admin/news/shinhan-insights" element={<AdminShinhanInsightsPage />} />
 
               <Route path="/offices" element={<OfficesPage />} />
               <Route path="/contact" element={<ContactPage />} />

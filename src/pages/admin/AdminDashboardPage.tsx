@@ -16,7 +16,7 @@ import {
   AdminReadonlyBanner,
   AdminTopRow,
 } from './AdminShared';
-import { adminContentGroups } from './adminContentConfig';
+import { adminContentGroups, adminNavigationItems } from './adminContentConfig';
 
 export function AdminDashboardPage() {
   const { t } = useI18n();
@@ -72,33 +72,32 @@ export function AdminDashboardPage() {
           ) : null}
 
           <AdminCardGrid>
-            {adminContentGroups.map((group) => (
-              <AdminMiniCard key={group.id}>
-                <P.Kicker>{t(group.label, group.labelEn)}</P.Kicker>
-                <AdminCardTitle>{t(group.label, group.labelEn)}</AdminCardTitle>
-                <AdminMuted>{t(group.summary, group.summaryEn)}</AdminMuted>
-                <AdminLinkButton to={group.id === 'members' ? '/admin/members' : `/admin/content/${group.id}`}>
-                  {t('관리 화면 보기', 'Open Admin View')}
-                </AdminLinkButton>
-              </AdminMiniCard>
-            ))}
+            {adminNavigationItems.map((item) => {
+              const group = item.groupId ? adminContentGroups.find((candidate) => candidate.id === item.groupId) : null;
+              const summary = group?.summary ?? item.summary ?? '';
+              const summaryEn = group?.summaryEn ?? item.summaryEn ?? summary;
 
-            <AdminMiniCard>
-              <P.Kicker>{t('뉴스/소식지', 'News / Newsletter')}</P.Kicker>
-              <AdminCardTitle>{t('뉴스/소식지', 'News / Newsletter')}</AdminCardTitle>
-              <AdminMuted>
-                {t(
-                  '신한 NEWS와 소식지 관리자 화면으로 이동합니다.',
-                  'Open the dedicated admin screens for Shinhan NEWS and newsletters.',
-                )}
-              </AdminMuted>
-              <AdminActionRow>
-                <AdminLinkButton to="/admin/news/shinhan-news">{t('신한 NEWS', 'Shinhan NEWS')}</AdminLinkButton>
-                <AdminLinkButton to="/admin/news/newsletter" $secondary>
-                  {t('소식지', 'Newsletter')}
-                </AdminLinkButton>
-              </AdminActionRow>
-            </AdminMiniCard>
+              return (
+                <AdminMiniCard key={item.id}>
+                  <P.Kicker>{t(item.label, item.labelEn)}</P.Kicker>
+                  <AdminCardTitle>{t(item.label, item.labelEn)}</AdminCardTitle>
+                  <AdminMuted>{t(summary, summaryEn)}</AdminMuted>
+                  {item.id === 'news' ? (
+                    <AdminActionRow>
+                      <AdminLinkButton to="/admin/news/shinhan-news">{t('신한 NEWS', 'Shinhan NEWS')}</AdminLinkButton>
+                      <AdminLinkButton to="/admin/news/newsletter" $secondary>
+                        {t('소식지', 'Newsletter')}
+                      </AdminLinkButton>
+                      <AdminLinkButton to="/admin/news/shinhan-insights" $secondary>
+                        {t('신한 Insights', 'Shinhan Insights')}
+                      </AdminLinkButton>
+                    </AdminActionRow>
+                  ) : (
+                    <AdminLinkButton to={item.to}>{t('관리 화면 보기', 'Open Admin View')}</AdminLinkButton>
+                  )}
+                </AdminMiniCard>
+              );
+            })}
           </AdminCardGrid>
         </AdminPanel>
       </P.PageContainer>

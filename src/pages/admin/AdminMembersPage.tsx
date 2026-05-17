@@ -32,7 +32,7 @@ import {
   AdminUploadTitle,
   AdminUploadMeta,
 } from './AdminShared';
-import { adminContentGroups } from './adminContentConfig';
+import { adminNavigationItems } from './adminContentConfig';
 
 type MemberResponse = {
   mode: string;
@@ -311,18 +311,15 @@ export function AdminMembersPage() {
             <AdminSubnavLink to="/admin" $active={false}>
               대시보드
             </AdminSubnavLink>
-            {adminContentGroups.map((group) => (
+            {adminNavigationItems.map((item) => (
               <AdminSubnavLink
-                key={group.id}
-                to={group.id === 'members' ? '/admin/members' : `/admin/content/${group.id}`}
-                $active={group.id === 'members'}
+                key={item.id}
+                to={item.to}
+                $active={item.id === 'members'}
               >
-                {group.label}
+                {item.label}
               </AdminSubnavLink>
             ))}
-            <AdminSubnavLink to="/admin/news/shinhan-news" $active={false}>
-              뉴스/소식지
-            </AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (

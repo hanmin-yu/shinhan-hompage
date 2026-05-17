@@ -18,6 +18,7 @@ import {
   AdminSubnavLink,
   AdminTopRow,
 } from './AdminShared';
+import { adminNavigationItems } from './adminContentConfig';
 
 export function AdminNewsPage() {
   const { t } = useI18n();
@@ -64,11 +65,20 @@ export function AdminNewsPage() {
           </AdminMuted>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin/news" $active>
+            <AdminSubnavLink to="/admin" $active={false}>
               대시보드
             </AdminSubnavLink>
+            {adminNavigationItems.map((item) => (
+              <AdminSubnavLink key={item.id} to={item.to} $active={item.id === 'news'}>
+                {item.label}
+              </AdminSubnavLink>
+            ))}
+          </AdminSubnav>
+
+          <AdminSubnav>
             <AdminSubnavLink to="/admin/news/shinhan-news">신한 NEWS</AdminSubnavLink>
             <AdminSubnavLink to="/admin/news/newsletter">소식지</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/shinhan-insights">신한 Insights</AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (
@@ -103,6 +113,18 @@ export function AdminNewsPage() {
                 )}
               </AdminMuted>
               <AdminLinkButton to="/admin/news/newsletter">{t('관리 화면 보기', 'Open Admin View')}</AdminLinkButton>
+            </AdminMiniCard>
+
+            <AdminMiniCard>
+              <P.Kicker>Insights</P.Kicker>
+              <AdminCardTitle>{t('신한 Insights 관리', 'Shinhan Insights Admin')}</AdminCardTitle>
+              <AdminMuted>
+                {t(
+                  '신한 Insights 글의 제목, 요약, 본문, 카테고리를 관리합니다.',
+                  'Manage titles, summaries, body copy, and categories for Shinhan Insights.',
+                )}
+              </AdminMuted>
+              <AdminLinkButton to="/admin/news/shinhan-insights">{t('관리 화면 보기', 'Open Admin View')}</AdminLinkButton>
             </AdminMiniCard>
           </AdminCardGrid>
         </AdminPanel>

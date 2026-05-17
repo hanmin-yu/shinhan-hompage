@@ -207,18 +207,18 @@ export function OfficesPage() {
                 {t(officesCopy.leadLines[1], officesCopy.leadLinesEn[1])}
               </OfficePageLead>
               <OfficeFactGrid>
-                <E.Fact>
+                <OfficeFact>
                   <E.FactValue>7</E.FactValue>
-                  <E.FactLabel>{t(officesCopy.factLabels[0], officesCopy.factLabelsEn[0])}</E.FactLabel>
-                </E.Fact>
-                <E.Fact>
+                  <OfficeFactLabel>{t(officesCopy.factLabels[0], officesCopy.factLabelsEn[0])}</OfficeFactLabel>
+                </OfficeFact>
+                <OfficeFact>
                   <E.FactValue>Seoul</E.FactValue>
-                  <E.FactLabel>{t(officesCopy.factLabels[1], officesCopy.factLabelsEn[1])}</E.FactLabel>
-                </E.Fact>
-                <E.Fact>
+                  <OfficeFactLabel>{t(officesCopy.factLabels[1], officesCopy.factLabelsEn[1])}</OfficeFactLabel>
+                </OfficeFact>
+                <OfficeFact>
                   <E.FactValue>Vietnam</E.FactValue>
-                  <E.FactLabel>{t(officesCopy.factLabels[2], officesCopy.factLabelsEn[2])}</E.FactLabel>
-                </E.Fact>
+                  <OfficeFactLabel>{t(officesCopy.factLabels[2], officesCopy.factLabelsEn[2])}</OfficeFactLabel>
+                </OfficeFact>
               </OfficeFactGrid>
             </OfficeLeadGrid>
           </E.Statement>
@@ -409,23 +409,21 @@ const OfficeFactGrid = styled(E.FactGrid)`
   width: 100%;
   min-width: 0;
 
-  ${E.Fact} {
-    min-height: 152px;
-    padding: 28px 26px 24px;
-  }
-
-  ${E.FactLabel} {
-    max-width: 180px;
-  }
-
   @media (max-width: 1180px) {
     max-width: 780px;
   }
+`;
+
+const OfficeFact = styled(E.Fact)`
+  min-height: 152px;
+  padding: 28px 26px 24px;
+`;
+
+const OfficeFactLabel = styled(E.FactLabel)`
+  max-width: 180px;
 
   @media (max-width: 640px) {
-    ${E.FactLabel} {
-      max-width: none;
-    }
+    max-width: none;
   }
 `;
 

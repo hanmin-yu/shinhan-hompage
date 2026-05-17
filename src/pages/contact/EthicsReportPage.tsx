@@ -9,7 +9,7 @@ import { palette } from '../../components/home/homeStyles';
 import { useSiteContent } from '../../hooks/useSiteContent';
 import { useI18n } from '../../i18n/useI18n';
 
-const ethicsContactEmail = 'compliance@shcs.kr';
+const fallbackEthicsContactEmail = 'compliance@shcs.kr';
 
 const reportSubjects = [
   { ko: '리베이트, 금품·향응 수수', en: 'Rebates, gifts, or entertainment' },
@@ -36,8 +36,9 @@ export function EthicsReportPage() {
   const { t } = useI18n();
   const { content } = useSiteContent();
   const utilitySubnav = content.global.utilitySubnav;
-  const ethicsContactPhone = content.global.siteContact.phone;
   const ethicsCopy = content.contact.copy.ethics;
+  const ethicsContactEmail = ethicsCopy.reportEmail || fallbackEthicsContactEmail;
+  const ethicsContactPhone = ethicsCopy.reportPhone || content.global.siteContact.phone;
   const [isEthicsModalOpen, setIsEthicsModalOpen] = useState(false);
 
   const handleReportSubmit = (event: FormEvent<HTMLFormElement>) => {

@@ -399,6 +399,7 @@ const Title = styled.p`
   font-size: 0.94rem;
   font-weight: 850;
   line-height: 1.38;
+  white-space: pre-line;
 
   @media (max-width: 560px) {
     font-size: 0.86rem;
@@ -790,6 +791,12 @@ function WorkIcon() {
   );
 }
 
+function formatMemberTitle(title: string) {
+  return title
+    .replace(/본부장 \/ 관세사 자격/g, '본부장\u00a0/\u00a0관세사\u00a0자격')
+    .replace(/관세사 자격/g, '관세사\u00a0자격');
+}
+
 export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false, columns = 2 }: ProfessionalCardGridProps) {
   const { language, t, tx } = useI18n();
 
@@ -807,7 +814,7 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
                 <Name>{tx(member.name)}</Name>
                 <NameDivider aria-hidden="true" />
                 <RoleStack>
-                  {member.title ? <Title>{tx(member.title)}</Title> : null}
+                  {member.title ? <Title>{formatMemberTitle(tx(member.title))}</Title> : null}
                   {member.department ? <Division>{tx(member.department)}</Division> : null}
                 </RoleStack>
               </TitleRow>

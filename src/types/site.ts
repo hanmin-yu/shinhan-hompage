@@ -389,6 +389,13 @@ export type ContactPageCopy = {
   inquiryTitleEn: string;
   inquiryText: string;
   inquiryTextEn: string;
+  mainPhone?: string;
+  fax?: string;
+  email?: string;
+  address?: string;
+  addressEn?: string;
+  businessNumber?: string;
+  inquiryEmail?: string;
 };
 
 export type EthicsPageCopy = {
@@ -406,6 +413,8 @@ export type EthicsPageCopy = {
   onlineTitleEn: string;
   onlineText: string;
   onlineTextEn: string;
+  reportEmail?: string;
+  reportPhone?: string;
 };
 
 export type OfficesPageCopy = {

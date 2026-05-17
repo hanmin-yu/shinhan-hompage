@@ -593,7 +593,7 @@ const OfficeImage = styled.img<{ position?: string }>`
     transform 0.32s ease,
     filter 0.32s ease;
 
-  ${OfficeTile}:hover & {
+  a:hover & {
     transform: scale(1.04);
     filter: saturate(1.05);
   }

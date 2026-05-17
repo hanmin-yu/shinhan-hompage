@@ -375,7 +375,26 @@ async function readStoredSiteContent() {
 
 async function loadSiteContentPayload() {
   const stored = await readStoredSiteContent();
-  return stored ?? cloneStaticSiteContent();
+  if (!stored) {
+    return cloneStaticSiteContent();
+  }
+
+  const defaults = cloneStaticSiteContent();
+  return {
+    ...defaults,
+    ...stored,
+    global: { ...defaults.global, ...stored.global },
+    home: { ...defaults.home, ...stored.home },
+    news: { ...defaults.news, ...stored.news },
+    about: { ...defaults.about, ...stored.about },
+    services: { ...defaults.services, ...stored.services },
+    recruit: { ...defaults.recruit, ...stored.recruit },
+    contact: { ...defaults.contact, ...stored.contact },
+    offices: { ...defaults.offices, ...stored.offices },
+    it: { ...defaults.it, ...stored.it },
+    members: { ...defaults.members, ...stored.members },
+    legal: { ...defaults.legal, ...stored.legal },
+  };
 }
 
 async function saveSiteContentPayload(payload: SiteContentPayload) {

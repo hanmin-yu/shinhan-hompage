@@ -33,6 +33,7 @@ import {
   AdminUploadMeta,
   AdminUploadTitle,
 } from './AdminShared';
+import { adminNavigationItems } from './adminContentConfig';
 
 type AdminNewsListResponse = {
   items: ShinhanNewsRecord[];
@@ -488,10 +489,22 @@ export function AdminShinhanNewsPage() {
           </AdminTopRow>
 
           <AdminSubnav>
+            <AdminSubnavLink to="/admin" $active={false}>
+              대시보드
+            </AdminSubnavLink>
+            {adminNavigationItems.map((item) => (
+              <AdminSubnavLink key={item.id} to={item.to} $active={item.id === 'news'}>
+                {item.label}
+              </AdminSubnavLink>
+            ))}
+          </AdminSubnav>
+
+          <AdminSubnav>
             <AdminSubnavLink to="/admin/news/shinhan-news" $active>
               신한 NEWS
             </AdminSubnavLink>
             <AdminSubnavLink to="/admin/news/newsletter">소식지</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/shinhan-insights">신한 Insights</AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (

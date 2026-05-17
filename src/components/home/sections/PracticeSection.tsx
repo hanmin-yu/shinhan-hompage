@@ -471,7 +471,7 @@ const PracticeArrow = styled.span`
     border-color 0.24s ease,
     background 0.24s ease;
 
-  ${PracticeLink}:hover & {
+  a:hover & {
     transform: translateX(5px);
     border-color: rgba(28, 90, 169, 0.34);
     background: rgba(255, 255, 255, 0.74);
