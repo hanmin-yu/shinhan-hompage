@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -483,6 +484,8 @@ const PracticeArrow = styled.span`
 
 export function PracticeSection() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const homeCopy = content.home.copy as Record<string, string | undefined>;
   const { ref, value, isCounting } = useCountUp(100);
 
   return (
@@ -495,8 +498,8 @@ export function PracticeSection() {
         <Inner data-reveal>
           <CountPanel ref={ref}>
             <SectionTitleBlock>
-              <SectionTitleGhost aria-hidden="true">PRACTICE AREAS</SectionTitleGhost>
-              <SectionTitle>{t('업무 분야', 'Practice Areas')}</SectionTitle>
+              <SectionTitleGhost aria-hidden="true">{homeCopy.practiceGhost ?? 'PRACTICE AREAS'}</SectionTitleGhost>
+              <SectionTitle>{t(homeCopy.practiceTitle ?? '업무 분야', homeCopy.practiceTitleEn ?? 'Practice Areas')}</SectionTitle>
             </SectionTitleBlock>
             <CountLine aria-label={t('100명 이상의 전문 인력', 'More than 100 professionals')}>
               <CountValue>
@@ -509,8 +512,10 @@ export function PracticeSection() {
             </CountLine>
             <Summary>
               {t(
-                '전문 인력의 실무 경험을 바탕으로 수출입통관, 검역·요건, FTA, AEO, 조사 대응과 외환 이슈까지 연결해 대응합니다.',
-                'Our professionals connect practical experience across clearance, requirements, FTA, AEO, audit response, and foreign exchange issues.',
+                homeCopy.practiceSummary ??
+                  '전문 인력의 실무 경험을 바탕으로 수출입통관, 검역·요건, FTA, AEO, 조사 대응과 외환 이슈까지 연결해 대응합니다.',
+                homeCopy.practiceSummaryEn ??
+                  'Our professionals connect practical experience across clearance, requirements, FTA, AEO, audit response, and foreign exchange issues.',
               )}
             </Summary>
           </CountPanel>

@@ -43,7 +43,7 @@ export function AdminDashboardPage() {
           <AdminTopRow>
             <div>
               <P.Kicker>Admin</P.Kicker>
-              <P.SectionTitle>{t('전체 홈페이지 관리자', 'Website Content Admin')}</P.SectionTitle>
+              <P.SectionTitle>{t('홈페이지 문구 관리자', 'Website Copy Admin')}</P.SectionTitle>
             </div>
             <AdminActionRow>
               <AdminModeBadge $readonly={session.isReadOnly}>
@@ -57,16 +57,16 @@ export function AdminDashboardPage() {
 
           <AdminMuted>
             {t(
-              '홈페이지 전역 문구와 구성원, 뉴스/소식지까지 그룹별로 관리하는 화면입니다.',
-              'Manage site-wide copy, members, and news/newsletters by content group.',
+              '페이지별 제목과 안내 문구를 수정하는 화면입니다. 신한 NEWS와 소식지는 별도 관리 화면에서 수정합니다.',
+              'Edit page headings and guide copy. Shinhan NEWS and newsletters are managed separately.',
             )}
           </AdminMuted>
 
           {session.isReadOnly ? (
             <AdminReadonlyBanner>
               {t(
-                '데모 환경에서는 저장이 비활성화되어 있습니다. 내부 서버 enabled 모드에서만 저장과 업로드가 동작합니다.',
-                'Saves are disabled in the demo environment. Storage and uploads work only in enabled runtime mode.',
+                  '읽기 전용 모드에서는 저장이 비활성화됩니다.',
+                  'Saves are disabled in read-only mode.',
               )}
             </AdminReadonlyBanner>
           ) : null}

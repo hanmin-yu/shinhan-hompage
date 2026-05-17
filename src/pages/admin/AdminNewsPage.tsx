@@ -65,10 +65,10 @@ export function AdminNewsPage() {
 
           <AdminSubnav>
             <AdminSubnavLink to="/admin/news" $active>
-              {t('대시보드', 'Dashboard')}
+              대시보드
             </AdminSubnavLink>
-            <AdminSubnavLink to="/admin/news/shinhan-news">{t('신한 NEWS', 'Shinhan NEWS')}</AdminSubnavLink>
-            <AdminSubnavLink to="/admin/news/newsletter">{t('소식지', 'Newsletter')}</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/shinhan-news">신한 NEWS</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/newsletter">소식지</AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (

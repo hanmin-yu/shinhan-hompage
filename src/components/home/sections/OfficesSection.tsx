@@ -628,6 +628,7 @@ const OfficeName = styled.strong`
 export function OfficesSection() {
   const { t } = useI18n();
   const { content } = useSiteContent();
+  const homeCopy = content.home.copy as Record<string, string | undefined>;
   const officeBranches = content.offices.officeBranches;
   const visibleOffices = [...officeBranches].sort(
     (a, b) =>
@@ -647,8 +648,8 @@ export function OfficesSection() {
         <Inner data-reveal>
           <Copy>
             <SectionTitleBlock>
-              <SectionTitleGhost aria-hidden="true">OFFICES</SectionTitleGhost>
-              <SectionTitle>{t('사무소', 'Offices')}</SectionTitle>
+              <SectionTitleGhost aria-hidden="true">{homeCopy.officesGhost ?? 'OFFICES'}</SectionTitleGhost>
+              <SectionTitle>{t(homeCopy.officesTitle ?? '사무소', homeCopy.officesTitleEn ?? 'Offices')}</SectionTitle>
             </SectionTitleBlock>
             <CountLine ref={countRef} aria-label={t(`${visibleOffices.length}개 사무소`, `${visibleOffices.length} offices`)}>
               <Count key={officeCount} $counting={isCounting}>{officeCount}</Count>
@@ -658,11 +659,13 @@ export function OfficesSection() {
             </CountLine>
             <Summary>
               {t(
-                '국내 주요 지사와 베트남 현지 법인을 연결해 고객사의 통관과 물류 현장 가까이에서 대응합니다.',
-                'Our domestic branches and Vietnam office support customs and logistics operations close to client sites.',
+                homeCopy.officesSummary ??
+                  '국내 주요 지사와 베트남 현지 법인을 연결해 고객사의 통관과 물류 현장 가까이에서 대응합니다.',
+                homeCopy.officesSummaryEn ??
+                  'Our domestic branches and Vietnam office support customs and logistics operations close to client sites.',
               )}
             </Summary>
-            <ViewAll to="/offices">{t('사무소 전체보기', 'View all offices')}</ViewAll>
+            <ViewAll to="/offices">{t(homeCopy.officesViewLabel ?? '사무소 전체보기', homeCopy.officesViewLabelEn ?? 'View all offices')}</ViewAll>
           </Copy>
 
           <MapStage aria-label={t('국내 사무소 위치 지도', 'Domestic office location map')}>

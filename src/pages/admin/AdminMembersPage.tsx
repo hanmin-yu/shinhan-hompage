@@ -309,7 +309,7 @@ export function AdminMembersPage() {
 
           <AdminSubnav>
             <AdminSubnavLink to="/admin" $active={false}>
-              {t('대시보드', 'Dashboard')}
+              대시보드
             </AdminSubnavLink>
             {adminContentGroups.map((group) => (
               <AdminSubnavLink
@@ -317,11 +317,11 @@ export function AdminMembersPage() {
                 to={group.id === 'members' ? '/admin/members' : `/admin/content/${group.id}`}
                 $active={group.id === 'members'}
               >
-                {t(group.label, group.labelEn)}
+                {group.label}
               </AdminSubnavLink>
             ))}
             <AdminSubnavLink to="/admin/news/shinhan-news" $active={false}>
-              {t('뉴스/소식지', 'News / Newsletter')}
+              뉴스/소식지
             </AdminSubnavLink>
           </AdminSubnav>
 

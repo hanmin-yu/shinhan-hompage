@@ -5,8 +5,26 @@ import type { ManagedMember, ManagedMemberGroup, SiteContentPayload } from '../t
 
 const SiteContentContext = createContext<SiteContentPayload>(getStaticSiteContent());
 
+const memberOrderByGroup: Partial<Record<ManagedMemberGroup, string[]>> = {
+  executive: ['장승희', '서영진', '최대규', '김희정', '전무열', '강인성', '최병한', '차미정'],
+};
+
 function filterManagedMembers(content: SiteContentPayload, group: ManagedMemberGroup) {
-  return content.members.managedMembers.filter((member) => member.groups.includes(group));
+  const filteredMembers = content.members.managedMembers.filter((member) => member.groups.includes(group));
+  const orderedNames = memberOrderByGroup[group];
+
+  if (!orderedNames) {
+    return filteredMembers;
+  }
+
+  const orderIndexByName = new Map(orderedNames.map((name, index) => [name, index]));
+
+  return [...filteredMembers].sort((a, b) => {
+    const aIndex = orderIndexByName.get(a.name) ?? Number.MAX_SAFE_INTEGER;
+    const bIndex = orderIndexByName.get(b.name) ?? Number.MAX_SAFE_INTEGER;
+
+    return aIndex - bIndex;
+  });
 }
 
 export function SiteContentProvider({ children }: { children: ReactNode }) {

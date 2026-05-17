@@ -4,6 +4,7 @@ import { useMemo, type CSSProperties } from 'react';
 import { IssueReportDetailModal, useIssueReportDetailModal } from '../../site/IssueReportDetailModal';
 import { issueReports } from '../../../data/home';
 import { useIssueReports } from '../../../hooks/useIssueReports';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import * as S from '../homeStyles';
 
@@ -289,6 +290,8 @@ const ReportTitle = styled.strong`
 
 export function IssueReportSection() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const homeCopy = content.home.copy as Record<string, string | undefined>;
   const { reports } = useIssueReports();
   const issueReportDetail = useIssueReportDetailModal();
   const featuredImage = useMemo(() => {
@@ -311,10 +314,10 @@ export function IssueReportSection() {
         <Inner>
           <Head>
             <TitleBlock>
-              <TitleGhost aria-hidden="true">TRADE INSIGHTS</TitleGhost>
-              <Title>{t('무역 동향', 'Trade Insights')}</Title>
+              <TitleGhost aria-hidden="true">{homeCopy.issueGhost ?? 'TRADE INSIGHTS'}</TitleGhost>
+              <Title>{t(homeCopy.issueTitle ?? '무역 동향', homeCopy.issueTitleEn ?? 'Trade Insights')}</Title>
             </TitleBlock>
-            <ViewAll href="/news/issue-report">{t('무역 동향 전체보기', 'View all Trade Insights')}</ViewAll>
+            <ViewAll href="/news/issue-report">{t(homeCopy.issueViewLabel ?? '무역 동향 전체보기', homeCopy.issueViewLabelEn ?? 'View all Trade Insights')}</ViewAll>
           </Head>
 
           <Content>

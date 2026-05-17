@@ -331,9 +331,14 @@ const HeroFact = styled.div`
     min-height: auto;
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 22px 20px;
+    padding: 44px 20px 24px;
     border-right: 0;
     border-bottom: 1px solid #dbe0e8;
+
+    &::before {
+      left: 20px;
+      top: 22px;
+    }
 
     &:last-of-type {
       border-bottom: 0;

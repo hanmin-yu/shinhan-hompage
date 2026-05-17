@@ -22,9 +22,6 @@ import {
   AdminSubnavLink,
   AdminTextarea,
   AdminTopRow,
-  AdminUploadBox,
-  AdminUploadMeta,
-  AdminUploadTitle,
 } from './AdminShared';
 import { adminContentGroups } from './adminContentConfig';
 
@@ -36,6 +33,8 @@ type GroupResponse = {
 
 type JsonPath = Array<string | number>;
 type RecruitContent = SiteContentPayload['recruit'];
+type HomeContent = SiteContentPayload['home'];
+type ServicesContent = SiteContentPayload['services'];
 
 const PreviewShell = styled.div`
   display: grid;
@@ -245,6 +244,16 @@ const PreviewPlaceholder = styled.div`
   text-align: center;
 `;
 
+const PagePreviewFrame = styled.iframe`
+  display: block;
+  width: 100%;
+  height: clamp(620px, 74vh, 860px);
+  min-height: 620px;
+  border: 1px solid ${palette.line};
+  border-radius: 10px;
+  background: #ffffff;
+`;
+
 const OperatorEditor = styled.div`
   display: grid;
   gap: 22px;
@@ -412,6 +421,14 @@ const recruitOperatorSectionOrder: Array<keyof RecruitContent> = [
   'recruitPostingLinks',
 ];
 
+const homeOperatorSectionEntries: Array<[string, string, string]> = [
+  ['heroSlides', '메인 비주얼', 'Main Visuals'],
+  ['practice', '업무분야', 'Practice Areas'],
+  ['issue', '무역동향', 'Trade Insights'],
+  ['newsletter', '소식지', 'Newsletter'],
+  ['offices', '사무소', 'Offices'],
+];
+
 const fieldLabelMap: Record<string, string> = {
   brandMarkPath: '브랜드 로고 경로',
   utilityLinks: '상단 우측 링크',
@@ -477,6 +494,16 @@ const fieldLabelMap: Record<string, string> = {
   issueReports: '무역 동향',
   practiceAreaDetails: '업무 요약',
   heroSlides: '메인 비주얼',
+  headline: '메인 문구',
+  headlineEn: '영문 메인 문구',
+  eyebrow: '상단 문구',
+  eyebrowEn: '영문 상단 문구',
+  mobileImage: '모바일 이미지 경로',
+  objectPosition: '이미지 위치',
+  mobileObjectPosition: '모바일 이미지 위치',
+  theme: '화면 톤',
+  membersTitle: '대표 구성원 제목',
+  membersTitleEn: '영문 대표 구성원 제목',
   categories: '카테고리',
   assignments: '전문가 배치',
   highlights: '강조 문구',
@@ -588,6 +615,23 @@ const previewLabelMap: Partial<Record<SiteContentGroupKey, Record<string, string
     legalPages: '법적고지 문서',
   },
 };
+
+const adminSectionLabelMap: Record<string, string> = {
+  overview: '개요',
+  history: '연혁',
+  message: '인사말',
+  location: '오시는 길',
+  contact: '문의',
+  ethics: '부정행위 접수창구',
+  servicesLanding: '업무분야 메인',
+  consultingLanding: '컨설팅',
+  landing: '소식/자료 메인',
+  insights: '신한 Insights',
+};
+
+function getAdminSectionLabel(key: string, fallbackLabels: Record<string, string>) {
+  return adminSectionLabelMap[key] ?? fallbackLabels[key] ?? formatLabel(key);
+}
 
 function cloneValue<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
@@ -721,8 +765,8 @@ function getArrayItemDisplayName(item: unknown, index: number) {
 }
 
 function insertArrayItemAtPath(root: unknown, path: JsonPath, item: unknown): unknown {
-  if (path.length === 0 && Array.isArray(root)) {
-    return [...root, item];
+  if (path.length === 0) {
+    return Array.isArray(root) ? [...root, item] : [item];
   }
 
   const [head, ...tail] = path;
@@ -749,6 +793,19 @@ function isRecruitContent(value: unknown): value is RecruitContent {
     Array.isArray(value.recruitPostingLinks) &&
     Array.isArray(value.recruitBenefitSummaryCards) &&
     Array.isArray(value.recruitBenefitDisplayGroups)
+  );
+}
+
+function isHomeContent(value: unknown): value is HomeContent {
+  return isPlainObject(value) && Array.isArray(value.heroSlides) && isPlainObject(value.copy);
+}
+
+function isServicesContent(value: unknown): value is ServicesContent {
+  return (
+    isPlainObject(value) &&
+    Array.isArray(value.serviceDetailPages) &&
+    Array.isArray(value.serviceLandingGroups) &&
+    isPlainObject(value.copy)
   );
 }
 
@@ -1183,6 +1240,953 @@ function RecruitLivePreview({ content, t }: { content: RecruitContent; t: (ko: s
   );
 }
 
+function HomeContentEditor({
+  content,
+  activeSectionKey,
+  readOnly,
+  setValueAtPath,
+  addArrayItem,
+  moveArrayItem,
+  removeArrayItem,
+  t,
+}: {
+  content: HomeContent;
+  activeSectionKey: string;
+  readOnly: boolean;
+  setValueAtPath: (path: JsonPath, nextValue: unknown) => void;
+  addArrayItem: (path: JsonPath, arrayValue: unknown[]) => void;
+  moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
+  removeArrayItem: (path: JsonPath) => void;
+  t: (ko: string, en: string) => string;
+}) {
+  const copySectionFields: Record<string, Array<[keyof HomeContent['copy'] & string, string]>> = {
+    practice: [
+      ['practiceGhost', '배경 영문'],
+      ['practiceTitle', '제목'],
+      ['practiceTitleEn', '영문 제목'],
+      ['practiceSummary', '요약 문구'],
+      ['practiceSummaryEn', '영문 요약 문구'],
+    ],
+    issue: [
+      ['issueGhost', '배경 영문'],
+      ['issueTitle', '제목'],
+      ['issueTitleEn', '영문 제목'],
+      ['issueViewLabel', '버튼 문구'],
+      ['issueViewLabelEn', '영문 버튼 문구'],
+    ],
+    newsletter: [
+      ['newsletterGhost', '배경 영문'],
+      ['newsletterTitle', '제목'],
+      ['newsletterTitleEn', '영문 제목'],
+      ['newsletterViewLabel', '버튼 문구'],
+      ['newsletterViewLabelEn', '영문 버튼 문구'],
+    ],
+    offices: [
+      ['officesGhost', '배경 영문'],
+      ['officesTitle', '제목'],
+      ['officesTitleEn', '영문 제목'],
+      ['officesSummary', '요약 문구'],
+      ['officesSummaryEn', '영문 요약 문구'],
+      ['officesViewLabel', '버튼 문구'],
+      ['officesViewLabelEn', '영문 버튼 문구'],
+    ],
+  };
+  const copyDefaults: Record<string, string> = {
+    practiceGhost: 'PRACTICE AREAS',
+    practiceTitle: '업무 분야',
+    practiceTitleEn: 'Practice Areas',
+    practiceSummary: '전문 인력의 실무 경험을 바탕으로 수출입통관, 검역·요건, FTA, AEO, 조사 대응과 외환 이슈까지 연결해 대응합니다.',
+    practiceSummaryEn:
+      'Our professionals connect practical experience across clearance, requirements, FTA, AEO, audit response, and foreign exchange issues.',
+    issueGhost: 'TRADE INSIGHTS',
+    issueTitle: '무역 동향',
+    issueTitleEn: 'Trade Insights',
+    issueViewLabel: '무역 동향 전체보기',
+    issueViewLabelEn: 'View all Trade Insights',
+    newsletterGhost: 'NEWSLETTER',
+    newsletterTitle: '소식지',
+    newsletterTitleEn: 'Shinhan Newsletter',
+    newsletterViewLabel: '소식지 전체보기',
+    newsletterViewLabelEn: 'View all Shinhan Newsletters',
+    officesGhost: 'OFFICES',
+    officesTitle: '사무소',
+    officesTitleEn: 'Offices',
+    officesSummary: '국내 주요 지사와 베트남 현지 법인을 연결해 고객사의 통관과 물류 현장 가까이에서 대응합니다.',
+    officesSummaryEn: 'Our domestic branches and Vietnam office support customs and logistics operations close to client sites.',
+    officesViewLabel: '사무소 전체보기',
+    officesViewLabelEn: 'View all offices',
+  };
+
+  const sectionFields = copySectionFields[activeSectionKey];
+
+  if (sectionFields) {
+    return (
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>{homeOperatorSectionEntries.find(([key]) => key === activeSectionKey)?.[1] ?? '홈 섹션'}</OperatorTitle>
+            <OperatorHelp>홈 화면 해당 섹션의 제목, 요약, 버튼 문구를 수정합니다.</OperatorHelp>
+          </div>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          {sectionFields.map(([key, label]) => (
+            <AdminField key={key}>
+              <AdminLabel>{label}</AdminLabel>
+              {shouldUseTextarea(['copy', key], String(content.copy[key] ?? copyDefaults[key] ?? '')) ? (
+                <AdminTextarea
+                  value={String(content.copy[key] ?? copyDefaults[key] ?? '')}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['copy', key], event.target.value)}
+                />
+              ) : (
+                <AdminInput
+                  value={String(content.copy[key] ?? copyDefaults[key] ?? '')}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['copy', key], event.target.value)}
+                />
+              )}
+            </AdminField>
+          ))}
+        </OperatorGrid>
+      </OperatorSection>
+    );
+  }
+
+  return (
+    <OperatorSection>
+      <OperatorSectionHead>
+        <div>
+          <OperatorTitle>{t('메인 비주얼 문구', 'Main Visual Copy')}</OperatorTitle>
+          <OperatorHelp>
+            {t('홈 첫 화면 슬라이드의 문구와 이미지 경로를 수정합니다.', 'Edit the copy and image paths for the home hero slides.')}
+          </OperatorHelp>
+        </div>
+        <AdminButton type="button" $secondary onClick={() => addArrayItem(['heroSlides'], content.heroSlides)} disabled={readOnly}>
+          슬라이드 추가
+        </AdminButton>
+      </OperatorSectionHead>
+      <OperatorEditor>
+        {content.heroSlides.map((slide, index) => (
+          <OperatorItemWide key={`home-slide-${index}`}>
+            <OperatorItemHead>
+              <div>
+                <OperatorBadge>{t(`슬라이드 ${index + 1}`, `Slide ${index + 1}`)}</OperatorBadge>
+                <OperatorTitle>{slide.label}</OperatorTitle>
+              </div>
+              <InlineActions>
+                <MiniButton type="button" onClick={() => moveArrayItem(['heroSlides'], index, index - 1)} disabled={readOnly || index === 0}>
+                  위로
+                </MiniButton>
+                <MiniButton type="button" onClick={() => moveArrayItem(['heroSlides'], index, index + 1)} disabled={readOnly || index === content.heroSlides.length - 1}>
+                  아래로
+                </MiniButton>
+                <MiniButton type="button" onClick={() => removeArrayItem(['heroSlides', index])} disabled={readOnly || content.heroSlides.length <= 1}>
+                  삭제
+                </MiniButton>
+              </InlineActions>
+            </OperatorItemHead>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('관리용 이름', 'Admin Label')}</AdminLabel>
+                <AdminInput value={slide.label} disabled={readOnly} onChange={(event) => setValueAtPath(['heroSlides', index, 'label'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('영문 관리용 이름', 'English Label')}</AdminLabel>
+                <AdminInput
+                  value={slide.labelEn ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'labelEn'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('상단 문구', 'Eyebrow')}</AdminLabel>
+                <AdminInput value={slide.eyebrow} disabled={readOnly} onChange={(event) => setValueAtPath(['heroSlides', index, 'eyebrow'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('영문 상단 문구', 'English Eyebrow')}</AdminLabel>
+                <AdminInput
+                  value={slide.eyebrowEn ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'eyebrowEn'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('메인 문구', 'Headline')}</AdminLabel>
+                <AdminTextarea
+                  value={slide.headline}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'headline'], event.target.value)}
+                />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('영문 메인 문구', 'English Headline')}</AdminLabel>
+                <AdminTextarea
+                  value={slide.headlineEn ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'headlineEn'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('요약 문구', 'Summary')}</AdminLabel>
+                <AdminTextarea value={slide.summary} disabled={readOnly} onChange={(event) => setValueAtPath(['heroSlides', index, 'summary'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('영문 요약 문구', 'English Summary')}</AdminLabel>
+                <AdminTextarea
+                  value={slide.summaryEn ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'summaryEn'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('이미지 경로', 'Image Path')}</AdminLabel>
+                <AdminInput value={slide.image} disabled={readOnly} onChange={(event) => setValueAtPath(['heroSlides', index, 'image'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('모바일 이미지 경로', 'Mobile Image Path')}</AdminLabel>
+                <AdminInput
+                  value={slide.mobileImage ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'mobileImage'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+            <OperatorInline>
+              <AdminField>
+                <AdminLabel>{t('이미지 위치', 'Image Position')}</AdminLabel>
+                <AdminInput
+                  value={slide.objectPosition ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'objectPosition'], event.target.value)}
+                />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>{t('모바일 이미지 위치', 'Mobile Image Position')}</AdminLabel>
+                <AdminInput
+                  value={slide.mobileObjectPosition ?? ''}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['heroSlides', index, 'mobileObjectPosition'], event.target.value)}
+                />
+              </AdminField>
+            </OperatorInline>
+          </OperatorItemWide>
+        ))}
+      </OperatorEditor>
+    </OperatorSection>
+  );
+}
+
+function TextArrayEditor({
+  title,
+  items,
+  path,
+  readOnly,
+  setValueAtPath,
+  insertItemAtPath,
+  moveArrayItem,
+  removeArrayItem,
+}: {
+  title: string;
+  items: string[];
+  path: JsonPath;
+  readOnly: boolean;
+  setValueAtPath: (path: JsonPath, nextValue: unknown) => void;
+  insertItemAtPath: (path: JsonPath, item: unknown) => void;
+  moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
+  removeArrayItem: (path: JsonPath) => void;
+}) {
+  return (
+    <OperatorItemWide>
+      <OperatorItemHead>
+        <OperatorTitle>{title}</OperatorTitle>
+        <AdminButton type="button" $secondary onClick={() => insertItemAtPath(path, '')} disabled={readOnly}>
+          항목 추가
+        </AdminButton>
+      </OperatorItemHead>
+      <OperatorEditor>
+        {items.map((item, index) => (
+          <OperatorItem key={`${path.join('.')}-${index}`}>
+            <OperatorItemHead>
+              <OperatorBadge>{String(index + 1).padStart(2, '0')}</OperatorBadge>
+              <InlineActions>
+                <MiniButton type="button" onClick={() => moveArrayItem(path, index, index - 1)} disabled={readOnly || index === 0}>
+                  위로
+                </MiniButton>
+                <MiniButton type="button" onClick={() => moveArrayItem(path, index, index + 1)} disabled={readOnly || index === items.length - 1}>
+                  아래로
+                </MiniButton>
+                <MiniButton type="button" onClick={() => removeArrayItem([...path, index])} disabled={readOnly}>
+                  삭제
+                </MiniButton>
+              </InlineActions>
+            </OperatorItemHead>
+            <AdminTextarea value={item} disabled={readOnly} onChange={(event) => setValueAtPath([...path, index], event.target.value)} />
+          </OperatorItem>
+        ))}
+      </OperatorEditor>
+    </OperatorItemWide>
+  );
+}
+
+function ServicesContentEditor({
+  content,
+  activeSectionKey,
+  readOnly,
+  setValueAtPath,
+  insertItemAtPath,
+  moveArrayItem,
+  removeArrayItem,
+}: {
+  content: ServicesContent;
+  activeSectionKey: string;
+  readOnly: boolean;
+  setValueAtPath: (path: JsonPath, nextValue: unknown) => void;
+  insertItemAtPath: (path: JsonPath, item: unknown) => void;
+  moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
+  removeArrayItem: (path: JsonPath) => void;
+}) {
+  if (activeSectionKey === 'serviceHubCards' || activeSectionKey === 'consultingHubCards') {
+    const cards = content[activeSectionKey];
+
+    return (
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>{activeSectionKey === 'serviceHubCards' ? '업무분야 카드' : '컨설팅 카드'}</OperatorTitle>
+            <OperatorHelp>업무분야 상위 화면에 노출되는 카드 문구와 링크를 수정합니다.</OperatorHelp>
+          </div>
+          <AdminButton type="button" $secondary onClick={() => insertItemAtPath([activeSectionKey], { title: '', body: '', href: '' })} disabled={readOnly}>
+            카드 추가
+          </AdminButton>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          {cards.map((card, index) => (
+            <OperatorItem key={`${activeSectionKey}-${index}`}>
+              <OperatorItemHead>
+                <OperatorBadge>{String(index + 1).padStart(2, '0')}</OperatorBadge>
+                <InlineActions>
+                  <MiniButton type="button" onClick={() => moveArrayItem([activeSectionKey], index, index - 1)} disabled={readOnly || index === 0}>
+                    위로
+                  </MiniButton>
+                  <MiniButton type="button" onClick={() => moveArrayItem([activeSectionKey], index, index + 1)} disabled={readOnly || index === cards.length - 1}>
+                    아래로
+                  </MiniButton>
+                  <MiniButton type="button" onClick={() => removeArrayItem([activeSectionKey, index])} disabled={readOnly}>
+                    삭제
+                  </MiniButton>
+                </InlineActions>
+              </OperatorItemHead>
+              <AdminField>
+                <AdminLabel>제목</AdminLabel>
+                <AdminInput value={card.title} disabled={readOnly} onChange={(event) => setValueAtPath([activeSectionKey, index, 'title'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>설명</AdminLabel>
+                <AdminTextarea value={card.body} disabled={readOnly} onChange={(event) => setValueAtPath([activeSectionKey, index, 'body'], event.target.value)} />
+              </AdminField>
+              <AdminField>
+                <AdminLabel>연결 주소</AdminLabel>
+                <AdminInput value={card.href} disabled={readOnly} onChange={(event) => setValueAtPath([activeSectionKey, index, 'href'], event.target.value)} />
+              </AdminField>
+            </OperatorItem>
+          ))}
+        </OperatorGrid>
+      </OperatorSection>
+    );
+  }
+
+  if (activeSectionKey === 'serviceLandingGroups') {
+    return (
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>하부 메뉴 구성</OperatorTitle>
+            <OperatorHelp>업무분야의 그룹과 세부 메뉴명을 수정합니다.</OperatorHelp>
+          </div>
+          <AdminButton
+            type="button"
+            $secondary
+            onClick={() =>
+              insertItemAtPath(['serviceLandingGroups'], {
+                id: 'consulting',
+                heading: '',
+                headingEn: '',
+                title: '',
+                titleEn: '',
+                primaryHref: '',
+                description: '',
+                descriptionEn: '',
+                image: '',
+                items: [],
+              })
+            }
+            disabled={readOnly}
+          >
+            그룹 추가
+          </AdminButton>
+        </OperatorSectionHead>
+        <OperatorEditor>
+          {content.serviceLandingGroups.map((group, groupIndex) => (
+            <OperatorItemWide key={`service-menu-group-${groupIndex}`}>
+              <OperatorItemHead>
+                <div>
+                  <OperatorBadge>{group.id}</OperatorBadge>
+                  <OperatorTitle>{group.title}</OperatorTitle>
+                </div>
+                <InlineActions>
+                  <MiniButton type="button" onClick={() => moveArrayItem(['serviceLandingGroups'], groupIndex, groupIndex - 1)} disabled={readOnly || groupIndex === 0}>
+                    위로
+                  </MiniButton>
+                  <MiniButton
+                    type="button"
+                    onClick={() => moveArrayItem(['serviceLandingGroups'], groupIndex, groupIndex + 1)}
+                    disabled={readOnly || groupIndex === content.serviceLandingGroups.length - 1}
+                  >
+                    아래로
+                  </MiniButton>
+                  <MiniButton type="button" onClick={() => removeArrayItem(['serviceLandingGroups', groupIndex])} disabled={readOnly}>
+                    삭제
+                  </MiniButton>
+                </InlineActions>
+              </OperatorItemHead>
+              <OperatorGrid>
+                <AdminField>
+                  <AdminLabel>그룹 ID</AdminLabel>
+                  <AdminInput value={group.id} disabled={readOnly} onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'id'], event.target.value)} />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>상단 라벨</AdminLabel>
+                  <AdminInput
+                    value={group.heading}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'heading'], event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>영문 상단 라벨</AdminLabel>
+                  <AdminInput
+                    value={group.headingEn}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'headingEn'], event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>제목</AdminLabel>
+                  <AdminInput value={group.title} disabled={readOnly} onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'title'], event.target.value)} />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>영문 제목</AdminLabel>
+                  <AdminInput
+                    value={group.titleEn}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'titleEn'], event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>대표 링크</AdminLabel>
+                  <AdminInput
+                    value={group.primaryHref}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'primaryHref'], event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>이미지 경로</AdminLabel>
+                  <AdminInput value={group.image} disabled={readOnly} onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'image'], event.target.value)} />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>설명</AdminLabel>
+                  <AdminTextarea
+                    value={group.description}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'description'], event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>영문 설명</AdminLabel>
+                  <AdminTextarea
+                    value={group.descriptionEn}
+                    disabled={readOnly}
+                    onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'descriptionEn'], event.target.value)}
+                  />
+                </AdminField>
+              </OperatorGrid>
+              <OperatorItemWide>
+                <OperatorItemHead>
+                  <OperatorTitle>세부 메뉴</OperatorTitle>
+                  <AdminButton
+                    type="button"
+                    $secondary
+                    onClick={() => insertItemAtPath(['serviceLandingGroups', groupIndex, 'items'], { label: '', labelEn: '', href: '' })}
+                    disabled={readOnly}
+                  >
+                    메뉴 추가
+                  </AdminButton>
+                </OperatorItemHead>
+                <OperatorGrid>
+                  {group.items.map((item, itemIndex) => (
+                    <OperatorItem key={`service-menu-${groupIndex}-${itemIndex}`}>
+                      <OperatorItemHead>
+                        <OperatorBadge>{String(itemIndex + 1).padStart(2, '0')}</OperatorBadge>
+                        <InlineActions>
+                          <MiniButton
+                            type="button"
+                            onClick={() => moveArrayItem(['serviceLandingGroups', groupIndex, 'items'], itemIndex, itemIndex - 1)}
+                            disabled={readOnly || itemIndex === 0}
+                          >
+                            위로
+                          </MiniButton>
+                          <MiniButton
+                            type="button"
+                            onClick={() => moveArrayItem(['serviceLandingGroups', groupIndex, 'items'], itemIndex, itemIndex + 1)}
+                            disabled={readOnly || itemIndex === group.items.length - 1}
+                          >
+                            아래로
+                          </MiniButton>
+                          <MiniButton type="button" onClick={() => removeArrayItem(['serviceLandingGroups', groupIndex, 'items', itemIndex])} disabled={readOnly}>
+                            삭제
+                          </MiniButton>
+                        </InlineActions>
+                      </OperatorItemHead>
+                      <OperatorInline>
+                        <AdminField>
+                          <AdminLabel>메뉴명</AdminLabel>
+                          <AdminInput
+                            value={item.label}
+                            disabled={readOnly}
+                            onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'items', itemIndex, 'label'], event.target.value)}
+                          />
+                        </AdminField>
+                        <AdminField>
+                          <AdminLabel>영문 메뉴명</AdminLabel>
+                          <AdminInput
+                            value={item.labelEn}
+                            disabled={readOnly}
+                            onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'items', itemIndex, 'labelEn'], event.target.value)}
+                          />
+                        </AdminField>
+                        <AdminField>
+                          <AdminLabel>연결 주소</AdminLabel>
+                          <AdminInput
+                            value={item.href}
+                            disabled={readOnly}
+                            onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'items', itemIndex, 'href'], event.target.value)}
+                          />
+                        </AdminField>
+                      </OperatorInline>
+                    </OperatorItem>
+                  ))}
+                </OperatorGrid>
+              </OperatorItemWide>
+            </OperatorItemWide>
+          ))}
+        </OperatorEditor>
+      </OperatorSection>
+    );
+  }
+
+  if (activeSectionKey === 'servicesLanding' || activeSectionKey === 'consultingLanding') {
+    const copy = content.copy[activeSectionKey];
+
+    return (
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>{activeSectionKey === 'servicesLanding' ? '업무분야 메인' : '컨설팅 메인'}</OperatorTitle>
+            <OperatorHelp>업무분야 상위 화면의 제목과 소개 문구를 수정합니다.</OperatorHelp>
+          </div>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          {Object.entries(copy).map(([key, value]) => (
+            <AdminField key={key}>
+              <AdminLabel>{formatLabel(key)}</AdminLabel>
+              {Array.isArray(value) ? (
+                <AdminTextarea
+                  value={value.join('\n')}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['copy', activeSectionKey, key], event.target.value.split('\n'))}
+                />
+              ) : shouldUseTextarea(['copy', activeSectionKey, key], String(value ?? '')) ? (
+                <AdminTextarea
+                  value={String(value ?? '')}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['copy', activeSectionKey, key], event.target.value)}
+                />
+              ) : (
+                <AdminInput
+                  value={String(value ?? '')}
+                  disabled={readOnly}
+                  onChange={(event) => setValueAtPath(['copy', activeSectionKey, key], event.target.value)}
+                />
+              )}
+            </AdminField>
+          ))}
+        </OperatorGrid>
+      </OperatorSection>
+    );
+  }
+
+  const detailIndex = content.serviceDetailPages.findIndex((page) => `detail:${page.id}` === activeSectionKey);
+  const detail = content.serviceDetailPages[detailIndex];
+
+  if (!detail) {
+    return <AdminHint>수정할 업무분야 페이지를 선택해주세요.</AdminHint>;
+  }
+
+  const basePath: JsonPath = ['serviceDetailPages', detailIndex];
+
+  return (
+    <OperatorEditor>
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>{detail.title}</OperatorTitle>
+            <OperatorHelp>상세 업무 페이지의 모든 주요 콘텐츠를 수정합니다.</OperatorHelp>
+          </div>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          <AdminField>
+            <AdminLabel>페이지 제목</AdminLabel>
+            <AdminInput value={detail.title} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'title'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>분류명</AdminLabel>
+            <AdminInput value={detail.groupTitle} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'groupTitle'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>영문 분류명</AdminLabel>
+            <AdminInput value={detail.groupTitleEn} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'groupTitleEn'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>히어로 이미지 경로</AdminLabel>
+            <AdminInput value={detail.heroImage ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'heroImage'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>요약</AdminLabel>
+            <AdminTextarea value={detail.summary} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'summary'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>부제목</AdminLabel>
+            <AdminTextarea value={detail.subtitle ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'subtitle'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>개요</AdminLabel>
+            <AdminTextarea value={detail.overview} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'overview'], event.target.value)} />
+          </AdminField>
+        </OperatorGrid>
+      </OperatorSection>
+
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>핵심 리스트</OperatorTitle>
+            <OperatorHelp>상세 페이지의 범위와 체크포인트를 수정합니다.</OperatorHelp>
+          </div>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          <TextArrayEditor
+            title="주요 범위"
+            items={detail.scope}
+            path={[...basePath, 'scope']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+          <TextArrayEditor
+            title="체크포인트"
+            items={detail.checkpoints}
+            path={[...basePath, 'checkpoints']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+        </OperatorGrid>
+      </OperatorSection>
+
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>세부 콘텐츠 섹션</OperatorTitle>
+            <OperatorHelp>페이지 본문에 나오는 제목, 문단, 리스트, 단계형 내용을 수정합니다.</OperatorHelp>
+          </div>
+          <AdminButton
+            type="button"
+            $secondary
+            onClick={() => insertItemAtPath([...basePath, 'contentSections'], { heading: '새 섹션', headingEn: '', body: [''], list: [], steps: [] })}
+            disabled={readOnly}
+          >
+            섹션 추가
+          </AdminButton>
+        </OperatorSectionHead>
+        <OperatorEditor>
+          {(detail.contentSections ?? []).map((section, sectionIndex) => {
+            const sectionPath: JsonPath = [...basePath, 'contentSections', sectionIndex];
+
+            return (
+              <OperatorItemWide key={`${detail.id}-section-${sectionIndex}`}>
+                <OperatorItemHead>
+                  <OperatorTitle>{section.heading}</OperatorTitle>
+                  <InlineActions>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem([...basePath, 'contentSections'], sectionIndex, sectionIndex - 1)}
+                      disabled={readOnly || sectionIndex === 0}
+                    >
+                      위로
+                    </MiniButton>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem([...basePath, 'contentSections'], sectionIndex, sectionIndex + 1)}
+                      disabled={readOnly || sectionIndex === (detail.contentSections?.length ?? 0) - 1}
+                    >
+                      아래로
+                    </MiniButton>
+                    <MiniButton type="button" onClick={() => removeArrayItem(sectionPath)} disabled={readOnly}>
+                      삭제
+                    </MiniButton>
+                  </InlineActions>
+                </OperatorItemHead>
+                <OperatorInline>
+                  <AdminField>
+                    <AdminLabel>섹션 제목</AdminLabel>
+                    <AdminInput value={section.heading} disabled={readOnly} onChange={(event) => setValueAtPath([...sectionPath, 'heading'], event.target.value)} />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 섹션 제목</AdminLabel>
+                    <AdminInput value={section.headingEn ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...sectionPath, 'headingEn'], event.target.value)} />
+                  </AdminField>
+                </OperatorInline>
+                <TextArrayEditor
+                  title="본문 문단"
+                  items={section.body ?? []}
+                  path={[...sectionPath, 'body']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+                <TextArrayEditor
+                  title="리스트"
+                  items={section.list ?? []}
+                  path={[...sectionPath, 'list']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+                <TextArrayEditor
+                  title="단계"
+                  items={section.steps ?? []}
+                  path={[...sectionPath, 'steps']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+              </OperatorItemWide>
+            );
+          })}
+        </OperatorEditor>
+      </OperatorSection>
+
+      <OperatorSection>
+        <OperatorSectionHead>
+          <div>
+            <OperatorTitle>연결 정보</OperatorTitle>
+            <OperatorHelp>담당자, 관련 전문가, 관련 링크를 수정합니다.</OperatorHelp>
+          </div>
+        </OperatorSectionHead>
+        <OperatorGrid>
+          <TextArrayEditor
+            title="관련 전문가"
+            items={detail.relatedExpertNames}
+            path={[...basePath, 'relatedExpertNames']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+          <OperatorItemWide>
+            <OperatorItemHead>
+              <OperatorTitle>담당자</OperatorTitle>
+              <AdminButton type="button" $secondary onClick={() => insertItemAtPath([...basePath, 'contactPoints'], { name: '', role: '', phone: '', email: '' })} disabled={readOnly}>
+                담당자 추가
+              </AdminButton>
+            </OperatorItemHead>
+            <OperatorEditor>
+              {(detail.contactPoints ?? []).map((contact, contactIndex) => (
+                <OperatorItem key={`${detail.id}-contact-${contactIndex}`}>
+                  <OperatorItemHead>
+                    <OperatorBadge>{String(contactIndex + 1).padStart(2, '0')}</OperatorBadge>
+                    <InlineActions>
+                      <MiniButton type="button" onClick={() => moveArrayItem([...basePath, 'contactPoints'], contactIndex, contactIndex - 1)} disabled={readOnly || contactIndex === 0}>
+                        위로
+                      </MiniButton>
+                      <MiniButton
+                        type="button"
+                        onClick={() => moveArrayItem([...basePath, 'contactPoints'], contactIndex, contactIndex + 1)}
+                        disabled={readOnly || contactIndex === (detail.contactPoints?.length ?? 0) - 1}
+                      >
+                        아래로
+                      </MiniButton>
+                      <MiniButton type="button" onClick={() => removeArrayItem([...basePath, 'contactPoints', contactIndex])} disabled={readOnly}>
+                        삭제
+                      </MiniButton>
+                    </InlineActions>
+                  </OperatorItemHead>
+                  <OperatorInline>
+                    <AdminField>
+                      <AdminLabel>이름</AdminLabel>
+                      <AdminInput
+                        value={contact.name}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'name'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>직함/역할</AdminLabel>
+                      <AdminInput
+                        value={contact.role ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'role'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>전화번호</AdminLabel>
+                      <AdminInput
+                        value={contact.phone ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'phone'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>이메일</AdminLabel>
+                      <AdminInput
+                        value={contact.email ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'email'], event.target.value)}
+                      />
+                    </AdminField>
+                  </OperatorInline>
+                </OperatorItem>
+              ))}
+            </OperatorEditor>
+          </OperatorItemWide>
+          <OperatorItemWide>
+            <OperatorItemHead>
+              <OperatorTitle>관련 링크</OperatorTitle>
+              <AdminButton type="button" $secondary onClick={() => insertItemAtPath([...basePath, 'relatedResources'], { label: '', href: '' })} disabled={readOnly}>
+                링크 추가
+              </AdminButton>
+            </OperatorItemHead>
+            <OperatorEditor>
+              {detail.relatedResources.map((resource, resourceIndex) => (
+                <OperatorItem key={`${detail.id}-resource-${resourceIndex}`}>
+                  <OperatorItemHead>
+                    <OperatorBadge>{String(resourceIndex + 1).padStart(2, '0')}</OperatorBadge>
+                    <MiniButton type="button" onClick={() => removeArrayItem([...basePath, 'relatedResources', resourceIndex])} disabled={readOnly}>
+                      삭제
+                    </MiniButton>
+                  </OperatorItemHead>
+                  <OperatorInline>
+                    <AdminField>
+                      <AdminLabel>링크명</AdminLabel>
+                      <AdminInput
+                        value={resource.label}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'relatedResources', resourceIndex, 'label'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>주소</AdminLabel>
+                      <AdminInput
+                        value={resource.href}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'relatedResources', resourceIndex, 'href'], event.target.value)}
+                      />
+                    </AdminField>
+                  </OperatorInline>
+                </OperatorItem>
+              ))}
+            </OperatorEditor>
+          </OperatorItemWide>
+          <OperatorItemWide>
+            <OperatorItemHead>
+              <OperatorTitle>문서 이미지</OperatorTitle>
+              <AdminButton type="button" $secondary onClick={() => insertItemAtPath([...basePath, 'documentImages'], { src: '', alt: '', caption: '' })} disabled={readOnly}>
+                이미지 추가
+              </AdminButton>
+            </OperatorItemHead>
+            <OperatorEditor>
+              {(detail.documentImages ?? []).map((image, imageIndex) => (
+                <OperatorItem key={`${detail.id}-document-image-${imageIndex}`}>
+                  <OperatorItemHead>
+                    <OperatorBadge>{String(imageIndex + 1).padStart(2, '0')}</OperatorBadge>
+                    <MiniButton type="button" onClick={() => removeArrayItem([...basePath, 'documentImages', imageIndex])} disabled={readOnly}>
+                      삭제
+                    </MiniButton>
+                  </OperatorItemHead>
+                  <OperatorInline>
+                    <AdminField>
+                      <AdminLabel>이미지 경로</AdminLabel>
+                      <AdminInput
+                        value={image.src}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'src'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>이미지 설명</AdminLabel>
+                      <AdminInput
+                        value={image.alt}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'alt'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>캡션</AdminLabel>
+                      <AdminInput
+                        value={image.caption ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'caption'], event.target.value)}
+                      />
+                    </AdminField>
+                  </OperatorInline>
+                </OperatorItem>
+              ))}
+            </OperatorEditor>
+          </OperatorItemWide>
+        </OperatorGrid>
+      </OperatorSection>
+    </OperatorEditor>
+  );
+}
+
+void PreviewBox;
+void PreviewPlaceholder;
+void PreviewBlock;
+void PreviewList;
+void recruitOperatorSectionOrder;
+void isRecruitContent;
+void RecruitContentEditor;
+void RecruitLivePreview;
+
 export function AdminContentPage() {
   const { t } = useI18n();
   const { session, loading, logout } = useAdminSession();
@@ -1192,14 +2196,8 @@ export function AdminContentPage() {
   const [draftContent, setDraftContent] = useState<unknown>(null);
   const [savedContent, setSavedContent] = useState<unknown>(null);
   const [message, setMessage] = useState('');
-  const [assetGroup, setAssetGroup] = useState<string>(groupId);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedSectionKey, setSelectedSectionKey] = useState<string>('');
   const [previewVersion, setPreviewVersion] = useState(0);
-
-  useEffect(() => {
-    setAssetGroup(groupId);
-  }, [groupId]);
 
   useEffect(() => {
     setSelectedSectionKey('');
@@ -1220,7 +2218,14 @@ export function AdminContentPage() {
       setDraftContent(nextContent);
       setSavedContent(nextContent);
       if (isPlainObject(nextContent)) {
-        const firstKey = group.id === 'recruit' && isRecruitContent(nextContent) ? recruitOperatorSectionOrder[0] : (Object.keys(nextContent)[0] ?? '');
+        const firstKey =
+          group.id === 'home' && isHomeContent(nextContent)
+            ? 'heroSlides'
+            : group.id === 'services' && isServicesContent(nextContent)
+              ? 'servicesLanding'
+              : isPlainObject(nextContent.copy)
+                ? (Object.keys(nextContent.copy)[0] ?? '')
+                : '';
         setSelectedSectionKey(firstKey);
       }
       setMessage('');
@@ -1232,20 +2237,39 @@ export function AdminContentPage() {
     [draftContent, savedContent],
   );
 
-  const previewPath = group ? previewPaths[group.id] : undefined;
   const sectionLabels = group ? previewLabelMap[group.id] ?? {} : {};
+  const isHomeEditor = group?.id === 'home' && isHomeContent(draftContent);
+  const isServicesEditor = group?.id === 'services' && isServicesContent(draftContent);
+  const copyRoot = useMemo(() => (isPlainObject(draftContent) && isPlainObject(draftContent.copy) ? draftContent.copy : null), [draftContent]);
   const topLevelEntries = useMemo(
     () => {
-      if (group?.id === 'recruit' && isRecruitContent(draftContent)) {
-        return recruitOperatorSectionOrder.map((key) => [key, draftContent[key]] as [string, unknown]);
+      if (isHomeEditor) {
+        return homeOperatorSectionEntries.map(([key, label]) => [key, key === 'heroSlides' ? draftContent.heroSlides : draftContent.copy, label] as [string, unknown, string]);
       }
 
-      return isPlainObject(draftContent) ? Object.entries(draftContent) : [];
+      if (isServicesEditor) {
+        return [
+          ['servicesLanding', draftContent.copy.servicesLanding, '업무분야 메인'],
+          ['consultingLanding', draftContent.copy.consultingLanding, '컨설팅 메인'],
+          ['serviceHubCards', draftContent.serviceHubCards, '업무분야 카드'],
+          ['consultingHubCards', draftContent.consultingHubCards, '컨설팅 카드'],
+          ['serviceLandingGroups', draftContent.serviceLandingGroups, '하부 메뉴 구성'],
+          ...draftContent.serviceDetailPages.map((page) => [`detail:${page.id}`, page, page.title] as [string, unknown, string]),
+        ] satisfies Array<[string, unknown, string]>;
+      }
+
+      return copyRoot ? Object.entries(copyRoot) : [];
     },
-    [draftContent, group?.id],
+    [copyRoot, draftContent, isHomeEditor, isServicesEditor],
   );
-  const isRecruitEditor = group?.id === 'recruit' && isRecruitContent(draftContent);
   const activeSectionEntry = topLevelEntries.find(([key]) => key === selectedSectionKey) ?? topLevelEntries[0] ?? null;
+  const previewPath =
+    isServicesEditor && activeSectionEntry?.[0].startsWith('detail:') && isPlainObject(activeSectionEntry[1]) && typeof activeSectionEntry[1].path === 'string'
+      ? activeSectionEntry[1].path
+      : group
+        ? previewPaths[group.id]
+        : undefined;
+  const previewUrl = previewPath ? `${window.location.origin}${previewPath}?adminPreview=${previewVersion}` : undefined;
 
   if (loading) {
     return (
@@ -1272,6 +2296,10 @@ export function AdminContentPage() {
   const addArrayItem = (path: JsonPath, arrayValue: unknown[]) => {
     const template = arrayValue[0];
     setDraftContent((current: unknown) => insertArrayItemAtPath(current, path, createEmptyValue(template)));
+  };
+
+  const insertItemAtPath = (path: JsonPath, item: unknown) => {
+    setDraftContent((current: unknown) => insertArrayItemAtPath(current, path, item));
   };
 
   const moveArrayItem = (path: JsonPath, fromIndex: number, toIndex: number) => {
@@ -1307,33 +2335,6 @@ export function AdminContentPage() {
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t('저장에 실패했습니다.', 'Save failed.'));
     }
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      setMessage(t('업로드할 이미지를 선택해주세요.', 'Select an image to upload.'));
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('group', assetGroup);
-    formData.append('file', selectedFile);
-
-    const response = await fetch('/api/admin/assets/upload', {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: formData,
-    });
-
-    const payload = (await response.json()) as { url?: string; message?: string };
-
-    if (!response.ok || !payload.url) {
-      setMessage(payload.message ?? t('이미지 업로드에 실패했습니다.', 'Image upload failed.'));
-      return;
-    }
-
-    setMessage(`${t('업로드 완료', 'Uploaded')}: ${payload.url}`);
-    setSelectedFile(null);
   };
 
   const renderEditor = (value: unknown, path: JsonPath, label: string, depth = 0): ReactNode => {
@@ -1463,14 +2464,7 @@ export function AdminContentPage() {
       </PreviewBlock>
     );
   };
-
-  const previewHeadline = activeSectionEntry ? (sectionLabels[activeSectionEntry[0]] ?? formatLabel(activeSectionEntry[0])) : t(group.label, group.labelEn);
-  const previewSummary = activeSectionEntry
-    ? t(
-        '현재 선택한 섹션의 구조와 문구를 카드 형태로 확인할 수 있습니다.',
-        'Review the selected section as cards and structured copy.',
-      )
-    : t('수정할 섹션을 선택하면 미리보기가 표시됩니다.', 'Choose a section to display its preview.');
+  void renderPreview;
 
   return (
     <P.PageSection tone="soft">
@@ -1493,7 +2487,7 @@ export function AdminContentPage() {
 
           <AdminSubnav>
             <AdminSubnavLink to="/admin" $active={false}>
-              {t('대시보드', 'Dashboard')}
+              대시보드
             </AdminSubnavLink>
             {adminContentGroups.map((item) => (
               <AdminSubnavLink
@@ -1501,11 +2495,11 @@ export function AdminContentPage() {
                 to={item.id === 'members' ? '/admin/members' : `/admin/content/${item.id}`}
                 $active={item.id === group.id}
               >
-                {t(item.label, item.labelEn)}
+                {item.label}
               </AdminSubnavLink>
             ))}
             <AdminSubnavLink to="/admin/news/shinhan-news" $active={false}>
-              {t('뉴스/소식지', 'News / Newsletter')}
+              뉴스/소식지
             </AdminSubnavLink>
           </AdminSubnav>
 
@@ -1520,23 +2514,23 @@ export function AdminContentPage() {
 
           <CmsLayout>
             <AdminPanel>
-              <P.Kicker>{t('섹션 선택', 'Sections')}</P.Kicker>
-              <AdminHint>{t('페이지를 구성하는 주요 블록을 선택해 수정합니다.', 'Select the content block you want to edit.')}</AdminHint>
+              <P.Kicker>문구 선택</P.Kicker>
+              <AdminHint>수정할 문구 영역만 선택합니다.</AdminHint>
               <SectionRail>
-                {topLevelEntries.map(([key, value]) => (
+                {topLevelEntries.map(([key, value, label]) => (
                   <SectionRailButton
                     key={key}
                     type="button"
                     $active={(activeSectionEntry?.[0] ?? '') === key}
                     onClick={() => setSelectedSectionKey(key)}
                   >
-                    <SectionRailTitle>{sectionLabels[key] ?? formatLabel(key)}</SectionRailTitle>
+                    <SectionRailTitle>{label ?? getAdminSectionLabel(key, sectionLabels)}</SectionRailTitle>
                     <SectionRailMeta>
                       {Array.isArray(value)
-                        ? t(`${value.length}개 항목`, `${value.length} items`)
+                        ? `${value.length}개 항목`
                         : isPlainObject(value)
-                          ? t(`${Object.keys(value).length}개 필드`, `${Object.keys(value).length} fields`)
-                          : t('단일 값', 'Single value')}
+                          ? `${Object.keys(value).length}개 필드`
+                          : '단일 값'}
                     </SectionRailMeta>
                   </SectionRailButton>
                 ))}
@@ -1544,16 +2538,13 @@ export function AdminContentPage() {
             </AdminPanel>
 
             <AdminPanel>
-              <P.Kicker>{t('콘텐츠 편집', 'Content Editor')}</P.Kicker>
-              <AdminHint>
-                {isRecruitEditor
-                  ? t('운영자가 바로 수정할 수 있도록 채용 페이지 항목을 폼으로 나눴습니다.', 'Recruit content is split into operator-friendly forms.')
-                  : t(group.summary, group.summaryEn)}
-              </AdminHint>
+              <P.Kicker>{t('문구 편집', 'Copy Editor')}</P.Kicker>
+              <AdminHint>{t(group.summary, group.summaryEn)}</AdminHint>
               <AdminForm>
-                {isRecruitEditor ? (
-                  <RecruitContentEditor
+                {isHomeEditor ? (
+                  <HomeContentEditor
                     content={draftContent}
+                    activeSectionKey={activeSectionEntry?.[0] ?? 'heroSlides'}
                     readOnly={session.isReadOnly}
                     setValueAtPath={setValueAtPath}
                     addArrayItem={addArrayItem}
@@ -1561,9 +2552,26 @@ export function AdminContentPage() {
                     removeArrayItem={removeArrayItem}
                     t={t}
                   />
+                ) : isServicesEditor ? (
+                  <ServicesContentEditor
+                    content={draftContent}
+                    activeSectionKey={activeSectionEntry?.[0] ?? 'servicesLanding'}
+                    readOnly={session.isReadOnly}
+                    setValueAtPath={setValueAtPath}
+                    insertItemAtPath={insertItemAtPath}
+                    moveArrayItem={moveArrayItem}
+                    removeArrayItem={removeArrayItem}
+                  />
                 ) : activeSectionEntry ? (
-                  renderEditor(activeSectionEntry[1], [activeSectionEntry[0]], sectionLabels[activeSectionEntry[0]] ?? formatLabel(activeSectionEntry[0]), 0)
-                ) : null}
+                  renderEditor(
+                    activeSectionEntry[1],
+                    ['copy', activeSectionEntry[0]],
+                    getAdminSectionLabel(activeSectionEntry[0], sectionLabels),
+                    0,
+                  )
+                ) : (
+                  <AdminHint>{t('이 페이지에는 관리자에서 수정할 문구 필드가 없습니다.', 'This page has no editable copy fields.')}</AdminHint>
+                )}
                 <AdminActionRow>
                   <AdminButton type="button" onClick={() => void handleSave()} disabled={session.isReadOnly || !hasChanges}>
                     {t('저장', 'Save')}
@@ -1578,75 +2586,23 @@ export function AdminContentPage() {
 
             <PreviewShell>
               <AdminPanel>
-                <P.Kicker>{t('실시간 미리보기', 'Live Preview')}</P.Kicker>
-                {isRecruitEditor ? (
-                  <RecruitLivePreview content={draftContent} t={t} />
-                ) : (
-                  <>
-                    <PreviewHero>
-                      <PreviewEyebrow>{t(group.label, group.labelEn)}</PreviewEyebrow>
-                      <PreviewHeadline>{previewHeadline}</PreviewHeadline>
-                      <PreviewValue>{previewSummary}</PreviewValue>
-                    </PreviewHero>
-                    <PreviewBox>
-                      {activeSectionEntry ? renderPreview(activeSectionEntry[1], sectionLabels[activeSectionEntry[0]] ?? formatLabel(activeSectionEntry[0]), 0) : null}
-                    </PreviewBox>
-                  </>
-                )}
-              </AdminPanel>
-
-              <AdminPanel>
-                <P.Kicker>{t('페이지 미리보기', 'Page Preview')}</P.Kicker>
-                {previewPath ? (
+                <P.Kicker>{t('실제 페이지 미리보기', 'Live Page Preview')}</P.Kicker>
+                {previewUrl ? (
                   <>
                     <AdminActionRow>
-                      <PreviewLink href={`${previewPath}?adminPreview=${previewVersion}`} target="_blank" rel="noreferrer">
-                        {t('새 탭에서 보기', 'Open in New Tab')}
+                      <PreviewLink href={previewUrl} target="_blank" rel="noreferrer">
+                        {t('새 탭에서 크게 보기', 'Open Larger Preview')}
                       </PreviewLink>
                     </AdminActionRow>
-                    <PreviewPlaceholder>
-                      <PreviewValue>
-                        {t(
-                          '실제 페이지는 새 탭에서 바로 확인할 수 있습니다. 저장 후 새 탭 미리보기로 확인해 주세요.',
-                          'Open the real page in a new tab. Save first, then verify the visual result there.',
-                        )}
-                      </PreviewValue>
-                    </PreviewPlaceholder>
+                    <PagePreviewFrame
+                      key={previewUrl}
+                      title={t(`${group.label} 실제 페이지 미리보기`, `${group.labelEn} live page preview`)}
+                      src={previewUrl}
+                    />
                   </>
                 ) : (
                   <AdminHint>{t('이 그룹은 별도 페이지 미리보기를 제공하지 않습니다.', 'This group does not expose a dedicated page preview.')}</AdminHint>
                 )}
-              </AdminPanel>
-
-              <AdminPanel>
-                <P.Kicker>{t('이미지 업로드', 'Asset Upload')}</P.Kicker>
-                <AdminHint>
-                  {t(
-                    '주요 페이지 이미지와 구성원 사진은 업로드 후 반환된 경로를 관련 이미지 필드에 넣어 연결합니다.',
-                    'Upload hero/member images here, then paste the returned path into the related image field.',
-                  )}
-                </AdminHint>
-                <AdminForm>
-                  <AdminField>
-                    <AdminLabel>{t('저장 폴더 그룹', 'Asset Group')}</AdminLabel>
-                    <AdminInput value={assetGroup} onChange={(event) => setAssetGroup(event.target.value)} />
-                  </AdminField>
-                  <AdminUploadBox $active={Boolean(selectedFile)} $disabled={session.isReadOnly}>
-                    <input
-                      type="file"
-                      accept="image/png,image/jpeg,image/webp,image/gif"
-                      disabled={session.isReadOnly}
-                      onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
-                    />
-                    <AdminUploadTitle>{selectedFile ? selectedFile.name : t('이미지 선택', 'Select Image')}</AdminUploadTitle>
-                    <AdminUploadMeta>{t('PNG, JPG, WEBP, GIF 업로드 가능', 'PNG, JPG, WEBP, GIF supported')}</AdminUploadMeta>
-                  </AdminUploadBox>
-                  <AdminActionRow>
-                    <AdminButton type="button" onClick={() => void handleUpload()} disabled={session.isReadOnly || !selectedFile}>
-                      {t('업로드', 'Upload')}
-                    </AdminButton>
-                  </AdminActionRow>
-                </AdminForm>
               </AdminPanel>
             </PreviewShell>
           </CmsLayout>

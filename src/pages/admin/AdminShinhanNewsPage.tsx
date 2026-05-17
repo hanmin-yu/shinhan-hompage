@@ -489,9 +489,9 @@ export function AdminShinhanNewsPage() {
 
           <AdminSubnav>
             <AdminSubnavLink to="/admin/news/shinhan-news" $active>
-              {t('신한 NEWS', 'Shinhan NEWS')}
+              신한 NEWS
             </AdminSubnavLink>
-            <AdminSubnavLink to="/admin/news/newsletter">{t('소식지', 'Newsletter')}</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/newsletter">소식지</AdminSubnavLink>
           </AdminSubnav>
 
           {session.isReadOnly ? (

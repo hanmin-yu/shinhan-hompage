@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { heroSlides } from '../../../data/home';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import { useRotatingIndex } from '../../../hooks/useRotatingIndex';
 import * as S from '../homeStyles';
@@ -407,6 +407,9 @@ const SeminarQuickArrow = styled.span`
 
 export function HeroSection() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const heroSlides = content.home.heroSlides;
+  const homeCopy = content.home.copy as Record<string, string | undefined>;
   const [activeSlide, setActiveSlide] = useRotatingIndex(heroSlides.length, 6200);
   const slide = heroSlides[activeSlide] ?? heroSlides[0];
   const progress = heroSlides.length > 0 ? ((activeSlide + 1) / heroSlides.length) * 100 : 0;
@@ -442,7 +445,7 @@ export function HeroSection() {
         <HeroBottomBlend />
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
-            <HeroTitle>{t('신한관세법인', 'Shinhan Customs Service')}</HeroTitle>
+            <HeroTitle>{t(homeCopy.heroBrandTitle ?? '신한관세법인', homeCopy.heroBrandTitleEn ?? 'Shinhan Customs Service')}</HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>

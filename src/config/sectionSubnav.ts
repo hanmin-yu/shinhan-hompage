@@ -138,7 +138,7 @@ export const sectionSubnav = {
         labelEn: 'Shinhan Insights',
         to: '/news/shinhan-insights',
         matchPrefixes: ['/news/shinhan-insights/'],
-        heroImage: '/hero/menu-news-trade-insights-ai.png',
+        heroImage: '/hero/menu-news-shinhan-insights-ai.png',
         heroPosition: 'center 50%',
       },
       { label: '무역 동향', labelEn: 'Trade Insights', to: '/news/issue-report', heroImage: '/hero/menu-news-trade-insights-ai.png', heroPosition: 'center 50%' },

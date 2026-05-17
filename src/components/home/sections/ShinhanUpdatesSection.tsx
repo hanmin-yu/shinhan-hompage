@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import { useNewsletterRecords } from '../../../hooks/useNewsContent';
+import { useSiteContent } from '../../../hooks/useSiteContent';
 import { getNewsletterRecords } from '../../../repositories/newsRepository';
 import { useI18n } from '../../../i18n/useI18n';
 import type { NewsletterRecord } from '../../../types/site';
@@ -423,6 +424,8 @@ function buildNewsletterItems(items: NewsletterRecord[]): NewsListItem[] {
 
 export function ShinhanUpdatesSection() {
   const { t } = useI18n();
+  const { content } = useSiteContent();
+  const homeCopy = content.home.copy as Record<string, string | undefined>;
   const { items: dynamicNewsletterItems } = useNewsletterRecords();
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -451,15 +454,17 @@ export function ShinhanUpdatesSection() {
       <Inner>
         <Head>
           <TitleBlock>
-            <TitleGhost aria-hidden="true">NEWSLETTER</TitleGhost>
-            <Title>{t('소식지', 'Shinhan Newsletter')}</Title>
+            <TitleGhost aria-hidden="true">{homeCopy.newsletterGhost ?? 'NEWSLETTER'}</TitleGhost>
+            <Title>{t(homeCopy.newsletterTitle ?? '소식지', homeCopy.newsletterTitleEn ?? 'Shinhan Newsletter')}</Title>
           </TitleBlock>
           <HeadActions>
             <Controls aria-label={t('신한 소식 슬라이드 이동', 'Move Shinhan updates slider')}>
               <ControlButton type="button" $direction="prev" aria-label={t('이전 소식', 'Previous update')} onClick={() => moveSlide('prev')} />
               <ControlButton type="button" $direction="next" aria-label={t('다음 소식', 'Next update')} onClick={() => moveSlide('next')} />
             </Controls>
-            <ViewAll to="/news/newsletter">{t('소식지 전체보기', 'View all Shinhan Newsletters')}</ViewAll>
+            <ViewAll to="/news/newsletter">
+              {t(homeCopy.newsletterViewLabel ?? '소식지 전체보기', homeCopy.newsletterViewLabelEn ?? 'View all Shinhan Newsletters')}
+            </ViewAll>
           </HeadActions>
         </Head>
 

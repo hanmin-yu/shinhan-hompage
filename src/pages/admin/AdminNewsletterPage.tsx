@@ -345,9 +345,9 @@ export function AdminNewsletterPage() {
           </AdminTopRow>
 
           <AdminSubnav>
-            <AdminSubnavLink to="/admin/news/shinhan-news">{t('신한 NEWS', 'Shinhan NEWS')}</AdminSubnavLink>
+            <AdminSubnavLink to="/admin/news/shinhan-news">신한 NEWS</AdminSubnavLink>
             <AdminSubnavLink to="/admin/news/newsletter" $active>
-              {t('소식지', 'Newsletter')}
+              소식지
             </AdminSubnavLink>
           </AdminSubnav>
 
