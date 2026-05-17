@@ -206,6 +206,18 @@ const DocumentSectionTitle = styled.h3`
   letter-spacing: -0.025em;
 `;
 
+const DocumentSectionMenuTitle = styled.div`
+  display: grid;
+  grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  padding: clamp(28px, 3.2vw, 42px) 0 0;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+`;
+
 const ParagraphStack = styled.div`
   display: grid;
   gap: 12px;
@@ -611,6 +623,87 @@ const ProcessNodeText = styled.span`
   color: #687385;
   font-size: 0.78rem;
   line-height: 1.52;
+  word-break: keep-all;
+`;
+
+const AppealProcedureBoard = styled.div`
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  padding: clamp(24px, 3.8vw, 44px);
+  border: 1px solid #d8dee8;
+  border-top: 2px solid ${palette.blue};
+  border-radius: 8px;
+  background: #ffffff;
+`;
+
+const AppealProcedureGrid = styled.div<{ $variant: 'preNotice' | 'rightsRelief' }>`
+  display: grid;
+  grid-template-columns: ${({ $variant }) =>
+    $variant === 'preNotice'
+      ? 'repeat(3, minmax(0, 1fr)) minmax(150px, 0.9fr)'
+      : 'minmax(130px, 0.85fr) minmax(150px, 1fr) minmax(210px, 1.25fr) minmax(190px, 1.05fr)'};
+  gap: clamp(18px, 3vw, 30px);
+  align-items: center;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+`;
+
+const AppealProcedureColumn = styled.div<{ $connector?: boolean }>`
+  position: relative;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(-1 * clamp(22px, 3vw, 30px));
+    width: 26px;
+    height: 12px;
+    background: ${palette.blue};
+    clip-path: polygon(0 40%, 64% 40%, 64% 12%, 100% 50%, 64% 88%, 64% 60%, 0 60%);
+    transform: translateY(-50%);
+    display: ${({ $connector }) => ($connector ? 'block' : 'none')};
+  }
+
+  @media (max-width: 980px) {
+    &::after {
+      display: none;
+    }
+  }
+`;
+
+const AppealFlowCard = styled.article<{ $tone?: 'step' | 'review' | 'result' }>`
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  min-height: ${({ $tone }) => ($tone === 'review' ? '104px' : '88px')};
+  padding: 18px 16px;
+  border: 1px solid ${({ $tone }) => ($tone === 'result' ? 'rgba(18, 63, 133, 0.24)' : '#dbe4f0')};
+  border-radius: 8px;
+  background: ${({ $tone }) => ($tone === 'result' ? 'rgba(18, 63, 133, 0.04)' : '#ffffff')};
+  box-shadow: 0 12px 24px rgba(15, 38, 76, 0.055);
+  text-align: center;
+`;
+
+const AppealFlowTitle = styled.strong`
+  color: ${palette.blue};
+  font-size: clamp(0.96rem, 1.2vw, 1.08rem);
+  font-weight: 800;
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+`;
+
+const AppealFlowMeta = styled.span`
+  color: #4b5563;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.42;
   word-break: keep-all;
 `;
 
@@ -1508,7 +1601,7 @@ const refundFlowAccents = [palette.blue];
 const ftaCircleAccents = [palette.blue];
 const vividAccents = ['#1d5fb6', '#1fc7c3', '#6b8ff2', '#f36f8f', '#d59c2a', '#6f74a8', '#2f8f7b'];
 
-type DiagramKind = 'circle' | 'process' | 'sequence' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable';
+type DiagramKind = 'circle' | 'process' | 'sequence' | 'stage' | 'metric' | 'split' | 'featureMatrix' | 'impactTable' | 'appealProcedure';
 
 type ReferenceDiagramSection = {
   heading: string;
@@ -1562,6 +1655,7 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     if (heading === '업무범위') return 'stage';
   }
   if (contentId === 'tax-appeal') {
+    if (heading === '과세전적부심사' || heading === '납세자권리구제절차') return 'appealProcedure';
     if (heading === '업무범위') return 'stage';
     return 'process';
   }
@@ -1576,7 +1670,7 @@ function getDiagramKind(contentId: string, heading: string, isSteps = false): Di
     if (heading.includes('관세심사') || heading.includes('상시 자문')) return 'metric';
   }
   if (contentId === 'us-fda') {
-    if (heading.includes('핵심 서비스')) return 'process';
+    if (heading === '주요 서비스') return 'process';
     if (heading.includes('지원 카테고리')) return 'circle';
     if (heading.includes('리스크')) return 'stage';
   }
@@ -1640,7 +1734,7 @@ function getReferenceDiagramSections(contentId: string): ReferenceDiagramSection
   if (contentId === 'vietnam') {
     return [
       {
-        heading: '주요 서비스 상세 설명',
+        heading: '주요 서비스',
         kind: 'process',
         list: [
           '수책(Liquidation) 관리: 수책보고서 작성 대리와 월별 수책 관리 컨설팅을 지원합니다.',
@@ -1777,7 +1871,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     const isForeignExchangeService = isForeignExchangePage && sectionHeading === '주요 서비스';
     const isAcvaBenefits = isAcvaPage && sectionHeading === 'ACVA 이점';
     const isQuarantineService = isQuarantinePage && sectionHeading === '주요 서비스';
-    const isUsFdaCoreService = isUsFdaPage && sectionHeading.includes('핵심 서비스');
+    const isUsFdaCoreService = isUsFdaPage && sectionHeading === '주요 서비스';
 
     if (isImportExportPage || isCustomsAuditFocus || isForeignExchangeService || isAcvaBenefits || isQuarantineService || isUsFdaCoreService) {
       const accents = importExportFlowAccents;
@@ -1894,6 +1988,50 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           </PenaltyProcedureLane>
         ))}
       </PenaltyProcedureBoard>
+    );
+  };
+
+  const renderAppealProcedureDiagram = (items: string[], sectionHeading: string) => {
+    const nodes = items.map((item) => {
+      const separatorIndex = item.indexOf('|');
+      const group = separatorIndex >= 0 ? item.slice(0, separatorIndex).trim() : 'step';
+      const detail = separatorIndex >= 0 ? item.slice(separatorIndex + 1).trim() : item;
+      const { term, description } = splitDiagramItem(tx(detail));
+      return { raw: item, group, term, description };
+    });
+    const steps = nodes.filter((node) => node.group === 'step');
+    const reviews = nodes.filter((node) => node.group === '심사');
+    const results = nodes.filter((node) => node.group === '결과' || node.group === '소송');
+    const variant = sectionHeading === '과세전적부심사' ? 'preNotice' : 'rightsRelief';
+
+    const renderCard = (
+      node: { raw: string; term: string; description: string },
+      tone: 'step' | 'review' | 'result' = 'step',
+    ) => (
+      <AppealFlowCard key={node.raw} $tone={tone}>
+        <AppealFlowTitle>{node.term}</AppealFlowTitle>
+        {node.description ? <AppealFlowMeta>({node.description})</AppealFlowMeta> : null}
+      </AppealFlowCard>
+    );
+
+    return (
+      <AppealProcedureBoard>
+        <AppealProcedureGrid $variant={variant}>
+          {steps.map((node) => (
+            <AppealProcedureColumn key={node.raw} $connector>
+              {renderCard(node)}
+            </AppealProcedureColumn>
+          ))}
+          {reviews.length ? (
+            <AppealProcedureColumn $connector>
+              {reviews.map((node) => renderCard(node, 'review'))}
+            </AppealProcedureColumn>
+          ) : null}
+          <AppealProcedureColumn>
+            {results.map((node) => renderCard(node, 'result'))}
+          </AppealProcedureColumn>
+        </AppealProcedureGrid>
+      </AppealProcedureBoard>
     );
   };
 
@@ -2023,6 +2161,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);
     if (kind === 'impactTable') return renderImpactTable(items);
+    if (kind === 'appealProcedure') return renderAppealProcedureDiagram(items, sectionHeading);
     return renderProcessDiagram(items, sectionHeading);
   };
 
@@ -2034,6 +2173,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     if (kind === 'split') return renderPenaltyProcedureBoard(items);
     if (kind === 'featureMatrix') return renderFeatureMatrix(items);
     if (kind === 'impactTable') return renderImpactTable(items);
+    if (kind === 'appealProcedure') return renderAppealProcedureDiagram(items, sectionHeading);
     return renderProcessDiagram(items, sectionHeading);
   };
 
@@ -2101,6 +2241,11 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                   </DocumentSectionCard>
                 ))
               : null}
+            {isVietnamPage ? (
+              <DocumentSectionMenuTitle>
+                <DocumentSectionTitle>{t('주요 서비스 상세설명', 'Key Service Details')}</DocumentSectionTitle>
+              </DocumentSectionMenuTitle>
+            ) : null}
             {primaryDetailSections?.map((section) => (
               <DocumentSectionCard key={section.heading}>
                 <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>

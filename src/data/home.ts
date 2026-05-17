@@ -917,17 +917,6 @@ export const executives: Member[] = [
     imagePosition: '50% 16%',
   },
   {
-    name: '김연종',
-    phone: '070-4343-7704',
-    email: 'yj007@shcs.kr',
-    title: '고문 / 관세사',
-    department: '서울본사',
-    practice: '관세조사, 외환, 불복',
-    accent: '#526f9e',
-    image: '/members/executives/김연종.png',
-    imagePosition: '50% 18%',
-  },
-  {
     name: '서영진',
     phone: '070-4343-7714',
     email: 'wedin8@shcs.kr',
@@ -1003,6 +992,38 @@ export const executives: Member[] = [
     accent: '#5b7597',
     image: '/members/executives/차미정.png',
     imagePosition: '50% 20%',
+  },
+].map(withCareerHighlights);
+
+export const advisors: Member[] = [
+  {
+    name: '김연종',
+    phone: '070-4343-7704',
+    email: 'yj007@shcs.kr',
+    title: '고문 / 관세사',
+    department: '서울본사',
+    practice: '관세조사, 외환, 불복',
+    accent: '#526f9e',
+    image: '/members/executives/김연종.png',
+    imagePosition: '50% 18%',
+  },
+  {
+    name: '김재홍',
+    phone: '',
+    email: '',
+    title: '고문',
+    department: '',
+    practice: '',
+    accent: '#526f9e',
+  },
+  {
+    name: '신형수',
+    phone: '',
+    email: '',
+    title: '고문',
+    department: '',
+    practice: '',
+    accent: '#526f9e',
   },
 ].map(withCareerHighlights);
 

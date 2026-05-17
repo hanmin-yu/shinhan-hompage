@@ -36,7 +36,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         {headerNavigation.map((item) => (
           <S.MobileMenuSection key={item.id}>
-            <S.MobileMenuMainLink to={item.to ?? item.href ?? '/'} onClick={onClose}>
+            <S.MobileMenuMainLink to={item.id === 'news' ? '/news/shinhan-news' : item.to ?? item.href ?? '/'} onClick={onClose}>
               {item.label}
             </S.MobileMenuMainLink>
           </S.MobileMenuSection>

@@ -223,13 +223,18 @@ export function ProfessionalCategoryMenu<T extends string>({
   );
 }
 
-const DirectoryGrid = styled.div`
+const DirectoryGrid = styled.div<{ $columns?: 2 | 4 }>`
   display: grid;
-  grid-template-columns: repeat(2, minmax(360px, 530px));
+  grid-template-columns: ${({ $columns }) => ($columns === 4 ? 'repeat(4, minmax(0, 1fr))' : 'repeat(2, minmax(360px, 530px))')};
   justify-content: center;
   gap: clamp(20px, 2.5vw, 34px);
-  width: min(100%, 1120px);
+  width: ${({ $columns }) => ($columns === 4 ? 'min(100%, 1320px)' : 'min(100%, 1120px)')};
   margin: 0 auto;
+
+  @media (max-width: 1180px) {
+    grid-template-columns: repeat(2, minmax(360px, 530px));
+    width: min(100%, 1120px);
+  }
 
   @media (max-width: 980px) {
     grid-template-columns: minmax(0, 530px);
@@ -280,6 +285,12 @@ const ProfileCard = styled.article<{ $featured?: boolean }>`
     min-height: 258px;
   }
 
+  [data-columns='4'] & {
+    grid-template-columns: 1fr;
+    grid-template-rows: 190px minmax(220px, auto);
+    min-height: 0;
+  }
+
   @media (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr) 100px;
     min-height: 184px;
@@ -296,6 +307,11 @@ const CardBody = styled.div`
   @media (max-width: 560px) {
     padding: 16px;
   }
+
+  [data-columns='4'] & {
+    grid-row: 2;
+    padding: 18px 18px 20px;
+  }
 `;
 
 const TitleRow = styled.div`
@@ -305,6 +321,12 @@ const TitleRow = styled.div`
   min-width: 0;
 
   [data-language='en'] & {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  [data-columns='4'] & {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
@@ -330,6 +352,12 @@ const Name = styled.h3`
     line-height: 1.12;
     overflow-wrap: anywhere;
   }
+
+  [data-columns='4'] & {
+    font-size: clamp(1.34rem, 1.65vw, 1.62rem);
+    line-height: 1.12;
+    overflow-wrap: normal;
+  }
 `;
 
 const NameDivider = styled.span`
@@ -345,6 +373,10 @@ const NameDivider = styled.span`
   }
 
   [data-language='en'] & {
+    display: none;
+  }
+
+  [data-columns='4'] & {
     display: none;
   }
 `;
@@ -406,6 +438,11 @@ const ContactList = styled.div`
     gap: 6px;
     padding-top: 14px;
   }
+
+  [data-columns='4'] & {
+    gap: 6px;
+    padding-top: 14px;
+  }
 `;
 
 const ContactItem = styled.p`
@@ -430,11 +467,21 @@ const ContactItem = styled.p`
     color: #0c4e96;
     font-weight: 900;
   }
+
+  [data-columns='4'] & {
+    gap: 7px;
+    font-size: 0.82rem;
+
+    span {
+      flex-basis: 38px;
+    }
+  }
 `;
 
 const ContactLink = styled.a`
   color: inherit;
   text-decoration: none;
+  overflow-wrap: anywhere;
 
   &:hover,
   &:focus-visible {
@@ -470,6 +517,13 @@ const PhotoPanel = styled.div`
       inset 0 1px 0 rgba(255, 255, 255, 0.92),
       inset 0 0 0 1px rgba(255, 255, 255, 0.58);
   }
+
+  [data-columns='4'] & {
+    grid-row: 1;
+    min-height: 190px;
+    border-left: 0;
+    border-bottom: 1px solid rgba(26, 55, 91, 0.14);
+  }
 `;
 
 const PortraitFrame = styled.div`
@@ -488,6 +542,10 @@ const PortraitFrame = styled.div`
   @media (max-width: 560px) {
     inset: 10px 8px;
     border-radius: 8px;
+  }
+
+  [data-columns='4'] & {
+    inset: 14px 14px 12px;
   }
 `;
 
@@ -716,6 +774,7 @@ type ProfessionalCardGridProps = {
   emptyMessage?: string;
   showPracticeOverlay?: boolean;
   centerFirst?: boolean;
+  columns?: 2 | 4;
 };
 
 function WorkIcon() {
@@ -730,7 +789,7 @@ function WorkIcon() {
   );
 }
 
-export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false }: ProfessionalCardGridProps) {
+export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverlay = true, centerFirst = false, columns = 2 }: ProfessionalCardGridProps) {
   const { language, t, tx } = useI18n();
 
   if (!members.length) {
@@ -738,7 +797,7 @@ export function ProfessionalCardGrid({ members, emptyMessage, showPracticeOverla
   }
 
   return (
-    <DirectoryGrid data-language={language}>
+    <DirectoryGrid data-language={language} data-columns={columns} $columns={columns}>
       {members.map((member, index) => {
         return (
           <ProfileCard key={member.name} tabIndex={0} $featured={centerFirst && index === 0}>

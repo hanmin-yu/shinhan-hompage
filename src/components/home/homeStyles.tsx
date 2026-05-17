@@ -450,6 +450,11 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
       backdrop-filter: none;
     }
 
+    a[data-header-contact='true']:hover,
+    a[data-header-contact='true']:focus-visible {
+      color: ${palette.blue};
+    }
+
     a[href='/recruit'],
     button,
     a[aria-label] {
@@ -527,8 +532,15 @@ export const Header = styled.header<{ $overHero?: boolean; $scrolled?: boolean; 
     &:has(nav > div:focus-within) a[data-header-contact='true'] {
       border-color: transparent;
       background: transparent;
-      color: ${palette.blue};
+      color: ${palette.textBody};
       box-shadow: none;
+    }
+
+    &:has(nav > div:hover) a[data-header-contact='true']:hover,
+    &:has(nav > div:hover) a[data-header-contact='true']:focus-visible,
+    &:has(nav > div:focus-within) a[data-header-contact='true']:hover,
+    &:has(nav > div:focus-within) a[data-header-contact='true']:focus-visible {
+      color: ${palette.blue};
     }
 
     &:has(nav > div:hover) a[href='/recruit'],
@@ -649,12 +661,24 @@ export const HeaderInner = styled(Container)`
 
   @media (max-width: 1400px) {
     grid-template-columns: minmax(0, 1fr) auto;
+
+    &[data-language='en'] {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
   }
 
   @media (max-width: 768px) {
+    grid-template-columns: minmax(0, 1fr) auto;
     width: calc(100% - 28px);
+    gap: 12px;
     padding-top: 6px;
     padding-bottom: 6px;
+
+    &[data-language='en'] {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
   }
 
   @media (max-width: 1320px) {
@@ -1527,6 +1551,11 @@ export const HeaderTools = styled.div`
   @media (max-width: 1320px) {
     gap: 10px;
     margin-right: 0;
+
+    [data-language='en'] & {
+      gap: 10px;
+      margin-right: 0;
+    }
   }
 
   @media (max-width: 1400px) {
@@ -1535,6 +1564,11 @@ export const HeaderTools = styled.div`
 
   @media (max-width: 560px) {
     gap: 8px;
+
+    [data-language='en'] & {
+      gap: 8px;
+      margin-right: 0;
+    }
   }
 `;
 
@@ -1853,7 +1887,7 @@ export const ContactButton = styled(Link)`
   padding: 0 6px;
   border: 0;
   border-radius: 0;
-  color: ${palette.blue};
+  color: ${palette.textBody};
   background: transparent;
   box-shadow: none;
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -1894,8 +1928,10 @@ export const ContactButton = styled(Link)`
     transition: transform 0.18s ease;
   }
 
-  &:hover {
-    color: #0b53a6;
+  &:hover,
+  &:focus-visible {
+    color: ${palette.blue};
+    outline: none;
   }
 
   &:hover::before {

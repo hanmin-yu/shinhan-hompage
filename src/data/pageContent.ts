@@ -724,21 +724,6 @@ const customsAuditContacts: ServiceContactPoint[] = [
 
 const foreignExchangeSections: ServiceDetailSection[] = [
   {
-    heading: '주요 서비스',
-    headingEn: 'Key Services',
-    body: [
-      '외환검사 관련 다양한 컨설팅 업무 수행 경험을 바탕으로 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.',
-      '검사 기간 현장 대응부터 자료 검토까지 일체의 서비스를 지원하며, 단순한 업무 대리가 아닌 검사 결과에 따른 고객사의 법적 리스크를 최소화하기 위한 대응 방안을 전략적으로 설계합니다.',
-    ],
-    list: [
-      '외환 리스크 사전진단: 상계, 제3자 지급을 포함하여 무역·용역·자금 관련 전 외국환 행위를 점검합니다.',
-      '외환검사 대리: 대관 업무를 포함한 현장 대응과 자료 검토를 지원합니다.',
-      '외환검사 결과에 따른 사후조치: 과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.',
-      '외국환거래법 관련 법률 자문: 외국환거래법상 쟁점과 신고·보고 의무를 검토합니다.',
-      '외국환거래법 실무 교육: 실무자가 주요 외환 규정과 내부 관리 포인트를 이해하도록 교육합니다.',
-    ],
-  },
-  {
     heading: '정기 외환검사 대응',
     headingEn: 'Periodic Foreign Exchange Inspection Response',
     body: [
@@ -754,6 +739,21 @@ const foreignExchangeSections: ServiceDetailSection[] = [
       '해외법인 및 특수관계자 거래 구조',
       '지급수단 및 결제조건 신고 적정성',
       '무상거래·대체거래 처리 적정성',
+    ],
+  },
+  {
+    heading: '주요 서비스',
+    headingEn: 'Key Services',
+    body: [
+      '외환검사 관련 다양한 컨설팅 업무 수행 경험을 바탕으로 고객사별 특징 및 거래 구조를 분석하여 전문적인 서비스를 지원합니다.',
+      '검사 기간 현장 대응부터 자료 검토까지 일체의 서비스를 지원하며, 단순한 업무 대리가 아닌 검사 결과에 따른 고객사의 법적 리스크를 최소화하기 위한 대응 방안을 전략적으로 설계합니다.',
+    ],
+    list: [
+      '외환 리스크 사전진단: 상계, 제3자 지급을 포함하여 무역·용역·자금 관련 전 외국환 행위를 점검합니다.',
+      '외환검사 대리: 대관 업무를 포함한 현장 대응과 자료 검토를 지원합니다.',
+      '외환검사 결과에 따른 사후조치: 과태료 최소화 방안 컨설팅 및 재발 방지 체계를 설계합니다.',
+      '외국환거래법 관련 법률 자문: 외국환거래법상 쟁점과 신고·보고 의무를 검토합니다.',
+      '외국환거래법 실무 교육: 실무자가 주요 외환 규정과 내부 관리 포인트를 이해하도록 교육합니다.',
     ],
   },
 ];
@@ -873,38 +873,58 @@ const vietnamContacts: ServiceContactPoint[] = [
 
 const usFdaSections: ServiceDetailSection[] = [
   {
-    heading: '1. 핵심 서비스 소개',
-    headingEn: 'Core Services',
-    list: [
-      '제품 통관사전검토: 해당 제품의 수출 적합성 검토 서비스 제공',
-      '원료 검토: 원료 검토를 통한 수출 적합성 검토',
-      '제품 미국 규제 준수 컨설팅: 해당 제품의 미국 규제 준수 검토 및 대행 서비스 제공',
-      '미국 수입 적합성 검토: 원료 검토 및 라벨링·문안 검토, 영양성분표 시안 제작',
-      'FDA 공장 등록: FFR/DUNS, FCE/SID Filing, FSVP를 지원합니다.',
-      'NDI·HACCP·Permit 검토: NDI(New Dietary Ingredient), Food Safety Plan / HACCP 검토, 각종 Permit 검토 및 대행',
-    ],
-  },
-  {
-    heading: '2. 지원 카테고리',
-    headingEn: 'Supported Categories',
-    list: ['화장품', '식품/건강기능식품', '반려동물 식품', '일반의약품'],
-  },
-  {
-    heading: '3. 세부 검토 및 리스크 제어',
-    headingEn: 'Risk Control and Review',
-    list: [
-      '제품 리스크 제어 및 경쟁력 제고',
-      '세부 검토를 통한 리스크 제어 서비스 제공',
-      '제품 상세페이지 검수',
-      'FDA 수입경보 해제',
-      'FDA / USDA 제조공장 인허가 검토 서비스',
-    ],
-  },
-  {
-    heading: '4. 미국 유통채널별 규정 준수',
-    headingEn: 'U.S. Channel Compliance',
+    heading: 'KORD Partners 소개',
+    headingEn: 'About KORD Partners',
     body: [
-      '미국 수출에 필요한 통관 전 검토사항과 미국 수출 관련 규제 준수 항목을 연결해 검역·통관 및 관련 컨설팅을 진행합니다.',
+      'KORD Partners는 2016년 변화하는 세계 무역환경에 대응하기 위해 설립된 미국 수출입·무역·해외 마케팅 컨설팅 파트너입니다. 미국에 진출하려는 한국 수출기업의 우수한 제품이 현지 시장과 연결될 수 있도록, 비관세 장벽과 규제 리스크를 줄이는 실무형 서비스를 제공합니다.',
+    ],
+    list: [
+      '미국 현지 업무 대행: 미국 캘리포니아 본사를 기반으로 최신 현지 정보를 반영한 맞춤형 조언을 제공합니다.',
+      '시차 없는 컨설팅: 국내 FDA 전문가와 연계해 문의사항에 빠르고 정확하게 대응합니다.',
+      '국내외 기업 컨설팅 경험: 식품·화장품 등 다양한 기업의 미국 시장 진출 실무를 지원합니다.',
+      '리스크 제어 경쟁력 확보: 미국 비즈니스 성공을 위해 규제 리스크를 사전에 진단하고 대응 방향을 제시합니다.',
+    ],
+  },
+  {
+    heading: '통관사전검토',
+    headingEn: 'Pre-Clearance Review',
+    body: [
+      '미국 수출에 필요한 통관 전 검토사항과 수출 관련 규제 준수 여부를 사전에 점검하고, 검역·통관 및 관련 컨설팅으로 연결합니다.',
+    ],
+    list: [
+      '수출 적합성 검토: 제품 및 원료 구성을 기준으로 미국 수출 가능성과 유의사항을 확인합니다.',
+      'HTS Code 분류: 제품 특성에 맞는 미국 관세분류 방향을 검토합니다.',
+      '수출입 통관 관세사 연결: 현지 통관 단계에서 필요한 전문가 협업 체계를 지원합니다.',
+    ],
+  },
+  {
+    heading: '미국 규제 준수 컨설팅',
+    headingEn: 'U.S. Regulatory Compliance Consulting',
+    list: [
+      '미국 수입 적합성 검토: 원료 검토를 통해 FDA·USDA 등 관련 규제 적용 가능성을 확인합니다.',
+      '라벨링·문안 검토 및 영양성분표 시안 제작: 제품 표시사항과 상세 문구가 미국 규정에 맞는지 점검합니다.',
+      'FDA 공장등록(FFR/DUNS): 시설 등록과 식별번호 관련 준비사항을 지원합니다.',
+      'FCE/SID Filing: 저산성·산성화 식품 등 대상 품목의 Filing 필요 여부와 제출 절차를 검토합니다.',
+      'FSVP: 미국 수입자의 해외공급자 검증 프로그램 대응에 필요한 자료와 관리 요건을 점검합니다.',
+      'Structure/function claim: 기능성 표현과 표시 문구의 규제 리스크를 검토합니다.',
+      'NDI(New Dietary Ingredient): 건강기능식품 원료의 신규식이성분 해당 여부와 사전 준비사항을 검토합니다.',
+      'Food safety plan/HACCP 검토: 식품안전계획 및 HACCP 기반 관리체계의 적정성을 확인합니다.',
+      'Permit: 품목별 인허가 필요 여부와 신청 준비사항을 검토합니다.',
+    ],
+  },
+  {
+    heading: '리스크 제어/경쟁력',
+    headingEn: 'Risk Control and Market Competitiveness',
+    list: [
+      '상세페이지 검수: 온라인 판매 페이지와 제품 설명이 미국 규정 및 채널 기준에 부합하는지 확인합니다.',
+      'FDA 수입경보 해제: Import Alert 이슈의 원인 분석과 해제 대응 절차를 지원합니다.',
+      'FDA/USDA 제조공장 인허가: 제조시설 관련 인허가와 심사 대응 필요사항을 검토합니다.',
+      '미국 유통채널별 규정준수: 유통 채널별 요구사항에 맞춰 제품 정보와 운영 기준을 점검합니다.',
+      'California Prop 65: 캘리포니아 Proposition 65 표시·경고 의무 적용 가능성을 검토합니다.',
+      '위생 설계 검토(Sanitary design Review): 제조·설비 환경의 위생 설계 관점 리스크를 점검합니다.',
+      'GFSI/Organic/Non GMO/Kosher 인증: 시장 진입과 거래처 요구에 필요한 인증 검토를 지원합니다.',
+      'Co-packer/Supplier assessment: 위탁생산처와 공급업체의 규정 준수 역량을 평가합니다.',
+      '현지 마켓 플레이스별 규정 준수: 미국 현지 플랫폼별 판매 기준과 필수 제출자료를 확인합니다.',
     ],
   },
 ];
@@ -951,6 +971,37 @@ const acvaSections: ServiceDetailSection[] = [
 ];
 
 const taxAppealSections: ServiceDetailSection[] = [
+  {
+    heading: '과세전적부심사',
+    headingEn: 'Pre-Assessment Review',
+    body: [
+      '관세법 제118조에 따라 납세의무자는 과세전 통지를 받았을 때에는 그 통지를 받은 날부터 30일 이내에 세관장에게 통지 내용이 적법한지에 대한 심사(과세전적부심사)를 청구할 수 있습니다. 다만, 법령에 대한 관세청장의 유권해석을 변경하여야 하거나 새로운 해석이 필요한 경우 등 대통령령으로 정하는 경우에는 관세청장에게 이를 청구할 수 있습니다.',
+    ],
+    list: [
+      '과세전 통지: 세관장',
+      '30일 이내 적부심 청구',
+      '30일 결정',
+      '결과|과세처분',
+      '결과|불과세',
+    ],
+  },
+  {
+    heading: '납세자권리구제절차',
+    headingEn: 'Taxpayer Rights Relief Procedure',
+    body: [
+      '관세법 제119조에 따라 관세법이나 그 밖의 관세에 관한 법률 또는 조약에 따른 처분으로서 위법한 처분 또는 부당한 처분을 받거나 필요한 처분을 받지 못하여 권리나 이익을 침해당한 자는 그 처분의 취소 또는 변경을 청구하거나 필요한 처분을 청구할 수 있습니다.',
+    ],
+    list: [
+      '세관처분: 세관장',
+      '이의신청 30일내 결정: 세관장',
+      '심사|관세청 심사청구 90일내 결정: 관세청장',
+      '심사|심판청구 90일내 결정: 조세심판원장',
+      '심사|감사원 심사청구 3개월내 결정: 감사원장',
+      '소송|행정소송 1심: 행정(지방)법원',
+      '소송|행정소송 2심: 고등법원',
+      '소송|행정소송 3심: 대법원',
+    ],
+  },
   {
     heading: '업무범위',
     headingEn: 'Scope of Work',
@@ -1389,7 +1440,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
     checkpoints: ['입항 이후 보관·반출 계획 수립', '국제 운송 및 내륙운송 연계', '보세·일반 화물 운영 관리', '현장 이슈 대응'],
     contentSections: [
       {
-        heading: '01 Warehouse Task',
+        heading: 'Warehouse Task',
         list: [
           '보세화물 입출고 관리',
           '일반화물 입출고 관리',
@@ -1399,7 +1450,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
         ],
       },
       {
-        heading: '02 Forwarding',
+        heading: 'Forwarding',
         list: [
           '항공 해상 수출입 CARGO HANDLING',
           'LCL 화물 정기 CONSOLIDATION',
@@ -1410,7 +1461,7 @@ export const serviceDetailPages: ServiceDetailContent[] = [
         ],
       },
       {
-        heading: '03 Trucking',
+        heading: 'Trucking',
         list: [
           '수출입 연계 수배송 서비스',
           '보세운송 서비스',

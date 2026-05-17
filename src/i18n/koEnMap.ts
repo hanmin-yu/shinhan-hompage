@@ -41,6 +41,7 @@ export const koToEnTextMap: Record<string, string> = {
   블로그: 'Blog',
   유튜브: 'YouTube',
   사무소: 'Offices',
+  '본지사 안내': 'Headquarters & Branches',
   '사무소 전체보기': 'All Offices',
   '본사 오시는 길': 'HQ Directions',
   '구성원 전체보기': 'All Members',
@@ -992,6 +993,86 @@ export const koToEnTextMap: Record<string, string> = {
     'We reduce U.S. export risk by reviewing item-specific requirements in advance for health functional foods, food products, pet food, cosmetics, and OTC drugs.',
   '미국 수출 전 제품 적합성, FDA 등록·라벨링, 수입경보 대응까지 상품인증 중심의 실무를 지원합니다. 코드 파트너스 US와 연계해 제품 통관 사전검토부터 원료 검토, 미국 규제 준수, 라벨링·영양성분표, FDA 공장 등록, FCE/SID, FSVP, NDI, HACCP 및 각종 Permit 검토까지 미국 상품인증 실무를 종합 지원합니다.':
     'Before U.S. export, we support product-certification work from product suitability and FDA registration/labeling to import alert response. In collaboration with KORD Partners US, we provide comprehensive practical support for product pre-clearance review, ingredient review, U.S. regulatory compliance, labeling and nutrition facts, FDA facility registration, FCE/SID, FSVP, NDI, HACCP, and permit reviews.',
+  'KORD Partners 소개': 'About KORD Partners',
+  'KORD Partners는 2016년 변화하는 세계 무역환경에 대응하기 위해 설립된 미국 수출입·무역·해외 마케팅 컨설팅 파트너입니다. 미국에 진출하려는 한국 수출기업의 우수한 제품이 현지 시장과 연결될 수 있도록, 비관세 장벽과 규제 리스크를 줄이는 실무형 서비스를 제공합니다.':
+    'KORD Partners is a U.S. import/export, trade, and overseas marketing consulting partner established in 2016 to respond to the changing global trade environment. It provides practical services that reduce non-tariff barriers and regulatory risks so Korean exporters can connect strong products with the U.S. market.',
+  '미국 현지 업무 대행': 'U.S. local operations support',
+  '미국 캘리포니아 본사를 기반으로 최신 현지 정보를 반영한 맞춤형 조언을 제공합니다.':
+    'Provides tailored advice based on the latest local information through its California headquarters.',
+  '시차 없는 컨설팅': 'Timely consulting across time zones',
+  '국내 FDA 전문가와 연계해 문의사항에 빠르고 정확하게 대응합니다.':
+    'Responds quickly and accurately to inquiries in coordination with domestic FDA specialists.',
+  '국내외 기업 컨설팅 경험': 'Consulting experience with Korean and global companies',
+  '식품·화장품 등 다양한 기업의 미국 시장 진출 실무를 지원합니다.':
+    'Supports U.S. market-entry work for companies in categories such as food and cosmetics.',
+  '리스크 제어 경쟁력 확보': 'Risk-control competitiveness',
+  '미국 비즈니스 성공을 위해 규제 리스크를 사전에 진단하고 대응 방향을 제시합니다.':
+    'Diagnoses regulatory risks in advance and provides response direction for U.S. business success.',
+  통관사전검토: 'Pre-Clearance Review',
+  '미국 수출에 필요한 통관 전 검토사항과 수출 관련 규제 준수 여부를 사전에 점검하고, 검역·통관 및 관련 컨설팅으로 연결합니다.':
+    'We review pre-clearance checkpoints and export-related compliance before U.S. shipment, then connect the work to quarantine, customs clearance, and related consulting.',
+  '수출 적합성 검토': 'Export suitability review',
+  '제품 및 원료 구성을 기준으로 미국 수출 가능성과 유의사항을 확인합니다.':
+    'Checks U.S. export feasibility and cautions based on the product and ingredient composition.',
+  'HTS Code 분류': 'HTS Code classification',
+  '제품 특성에 맞는 미국 관세분류 방향을 검토합니다.':
+    'Reviews U.S. tariff classification direction based on product characteristics.',
+  '수출입 통관 관세사 연결': 'Connection with import/export customs brokers',
+  '현지 통관 단계에서 필요한 전문가 협업 체계를 지원합니다.':
+    'Supports expert collaboration required at the local customs-clearance stage.',
+  '미국 규제 준수 컨설팅': 'U.S. Regulatory Compliance Consulting',
+  '원료 검토를 통해 FDA·USDA 등 관련 규제 적용 가능성을 확인합니다.':
+    'Reviews ingredients to confirm whether FDA, USDA, or other related regulations may apply.',
+  '라벨링·문안 검토 및 영양성분표 시안 제작': 'Labeling, copy review, and nutrition facts draft preparation',
+  '제품 표시사항과 상세 문구가 미국 규정에 맞는지 점검합니다.':
+    'Checks whether product labeling and detailed copy comply with U.S. requirements.',
+  'FDA 공장등록(FFR/DUNS)': 'FDA facility registration (FFR/DUNS)',
+  '시설 등록과 식별번호 관련 준비사항을 지원합니다.':
+    'Supports facility registration and identification-number preparation.',
+  '저산성·산성화 식품 등 대상 품목의 Filing 필요 여부와 제출 절차를 검토합니다.':
+    'Reviews filing requirements and submission procedures for covered products such as low-acid and acidified foods.',
+  FSVP: 'FSVP',
+  '미국 수입자의 해외공급자 검증 프로그램 대응에 필요한 자료와 관리 요건을 점검합니다.':
+    'Checks required materials and management requirements for the U.S. importer’s Foreign Supplier Verification Program.',
+  'Structure/function claim': 'Structure/function claim',
+  '기능성 표현과 표시 문구의 규제 리스크를 검토합니다.':
+    'Reviews regulatory risk in structure/function claims and labeling language.',
+  'NDI(New Dietary Ingredient)': 'NDI (New Dietary Ingredient)',
+  '건강기능식품 원료의 신규식이성분 해당 여부와 사전 준비사항을 검토합니다.':
+    'Reviews whether a dietary-supplement ingredient may qualify as a new dietary ingredient and what preparation is required.',
+  'Food safety plan/HACCP 검토': 'Food safety plan/HACCP review',
+  '식품안전계획 및 HACCP 기반 관리체계의 적정성을 확인합니다.':
+    'Checks the adequacy of food safety plans and HACCP-based management systems.',
+  Permit: 'Permit',
+  '품목별 인허가 필요 여부와 신청 준비사항을 검토합니다.':
+    'Reviews item-specific permit requirements and application preparation.',
+  '리스크 제어/경쟁력': 'Risk Control and Market Competitiveness',
+  '상세페이지 검수': 'Product detail page review',
+  '온라인 판매 페이지와 제품 설명이 미국 규정 및 채널 기준에 부합하는지 확인합니다.':
+    'Checks whether online sales pages and product descriptions align with U.S. requirements and channel standards.',
+  'Import Alert 이슈의 원인 분석과 해제 대응 절차를 지원합니다.':
+    'Supports root-cause analysis and response procedures for Import Alert removal.',
+  'FDA/USDA 제조공장 인허가': 'FDA/USDA manufacturing facility permits',
+  '제조시설 관련 인허가와 심사 대응 필요사항을 검토합니다.':
+    'Reviews facility permit and audit-response requirements.',
+  '미국 유통채널별 규정준수': 'Compliance by U.S. distribution channel',
+  '유통 채널별 요구사항에 맞춰 제품 정보와 운영 기준을 점검합니다.':
+    'Checks product information and operating standards against distribution-channel requirements.',
+  'California Prop 65': 'California Prop 65',
+  '캘리포니아 Proposition 65 표시·경고 의무 적용 가능성을 검토합니다.':
+    'Reviews whether California Proposition 65 labeling and warning obligations may apply.',
+  '위생 설계 검토(Sanitary design Review)': 'Sanitary design review',
+  '제조·설비 환경의 위생 설계 관점 리스크를 점검합니다.':
+    'Checks manufacturing and equipment environments from a sanitary-design risk perspective.',
+  'GFSI/Organic/Non GMO/Kosher 인증': 'GFSI/Organic/Non-GMO/Kosher certifications',
+  '시장 진입과 거래처 요구에 필요한 인증 검토를 지원합니다.':
+    'Supports certification review needed for market entry and buyer requirements.',
+  'Co-packer/Supplier assessment': 'Co-packer/Supplier assessment',
+  '위탁생산처와 공급업체의 규정 준수 역량을 평가합니다.':
+    'Assesses compliance capabilities of co-packers and suppliers.',
+  '현지 마켓 플레이스별 규정 준수': 'Local marketplace compliance',
+  '미국 현지 플랫폼별 판매 기준과 필수 제출자료를 확인합니다.':
+    'Checks sales standards and required submissions for each U.S. marketplace platform.',
   '1. 핵심 서비스 소개': '1. Core Services',
   '2. 지원 카테고리': '2. Supported Categories',
   일반의약품: 'OTC Drugs',

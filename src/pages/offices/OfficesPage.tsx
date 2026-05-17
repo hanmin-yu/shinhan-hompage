@@ -193,7 +193,7 @@ export function OfficesPage() {
           <E.Statement data-reveal>
             <div>
               <E.Eyebrow>Office Network</E.Eyebrow>
-              <OfficePageTitle>{t('신한관세법인 및 본지사 안내', 'Shinhan Customs Service Headquarters & Branches')}</OfficePageTitle>
+              <OfficePageTitle>{t('신한관세법인 및 관계사 안내', 'Shinhan Customs Service and Affiliates')}</OfficePageTitle>
             </div>
             <OfficeLeadGrid>
               <OfficePageLead>

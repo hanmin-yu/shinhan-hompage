@@ -351,6 +351,11 @@ const HeroFactValue = styled.strong`
   word-break: keep-all;
   overflow-wrap: normal;
   white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: clamp(1.22rem, 6.8vw, 1.94rem);
+    letter-spacing: -0.03em;
+  }
 `;
 
 const HeroFactLabel = styled.span`
@@ -360,6 +365,12 @@ const HeroFactLabel = styled.span`
   word-break: keep-all;
   overflow-wrap: normal;
   max-width: 220px;
+
+  @media (max-width: 640px) {
+    max-width: none;
+    font-size: 0.96rem;
+    line-height: 1.54;
+  }
 `;
 
 const EditorialSection = styled.section<{ $tone?: 'navy' | 'soft' }>`

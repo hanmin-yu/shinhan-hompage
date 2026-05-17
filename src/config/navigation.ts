@@ -10,7 +10,7 @@ export const headerNavigation: NavItem[] = [
       { id: 'about-overview', label: '회사소개', to: '/about' },
       { id: 'about-message', label: '인사말', to: '/about/message' },
       { id: 'about-history', label: '연혁', to: '/about/history' },
-      { id: 'about-offices', label: '사무소', to: '/offices' },
+      { id: 'about-offices', label: '본지사 안내', to: '/offices' },
     ],
   },
   {
@@ -64,7 +64,7 @@ export const mobileQuickLinks: LinkItem[] = [
   { id: 'consult', label: 'Contact US', to: '/contact' },
   { id: 'ethics', label: '부정행위 접수창구', to: '/contact/ethics' },
   { id: 'recruit', label: '채용', to: '/recruit' },
-  { id: 'offices', label: '사무소', to: '/offices' },
+  { id: 'offices', label: '본지사 안내', to: '/offices' },
   { id: 'directions', label: '오시는 길', to: '/location' },
 ];
 

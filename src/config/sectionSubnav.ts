@@ -34,7 +34,7 @@ export const sectionSubnav = {
       { label: '회사소개', labelEn: 'Overview', to: '/about', heroImage: '/hero/menu-about-shinhan-ai.png', heroPosition: 'center 50%' },
       { label: '인사말', labelEn: 'Message', to: '/about/message', heroImage: '/hero/menu-about-message-ai.png', heroPosition: 'center 50%' },
       { label: '연혁', labelEn: 'History', to: '/about/history', heroImage: '/hero/menu-about-history-ai.png', heroPosition: 'center 50%' },
-      { label: '사무소', labelEn: 'Offices', to: '/offices', heroImage: '/hero/menu-about-offices-ai.png', heroPosition: 'center 50%' },
+      { label: '본지사 안내', labelEn: 'Headquarters & Branches', to: '/offices', heroImage: '/hero/menu-about-offices-ai.png', heroPosition: 'center 50%' },
     ],
   },
   members: {

@@ -85,34 +85,17 @@ export function IssueReportPage() {
   const newsSubnav = sectionSubnav.news;
   const { reports, loading, failedSources, refreshing, refreshStatus, refreshedAt, refreshReports } = useIssueReports();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSource, setSelectedSource] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const issueReportDetail = useIssueReportDetailModal();
 
-  const sourceOptions = useMemo(() => {
-    const options = Array.from(new Map(reports.map((item) => [item.source, item.sourceEn])).entries());
-
-    return [
-      { value: 'all', label: t('전체', 'All') },
-      ...options.map(([source, sourceEn]) => ({
-        value: source,
-        label: t(source, sourceEn),
-      })),
-    ];
-  }, [reports, t]);
-
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedSource]);
+  }, [searchQuery]);
 
   const filteredReports = useMemo(() => {
     const normalizedQuery = normalizeSearch(searchQuery);
 
     return reports.filter((item) => {
-      if (selectedSource !== 'all' && item.source !== selectedSource) {
-        return false;
-      }
-
       if (!normalizedQuery) {
         return true;
       }
@@ -122,7 +105,7 @@ export function IssueReportPage() {
       );
       return target.includes(normalizedQuery);
     });
-  }, [language, reports, searchQuery, selectedSource]);
+  }, [language, reports, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredReports.length / PAGE_SIZE));
   const activePage = Math.min(currentPage, totalPages);
@@ -201,10 +184,6 @@ export function IssueReportPage() {
             searchValue={searchQuery}
             searchPlaceholder={t('제목, 출처, 날짜로 검색', 'Search by title, source, or date')}
             onSearchChange={setSearchQuery}
-            chipLabel={t('출처 필터', 'Source Filter')}
-            chipOptions={sourceOptions}
-            selectedChip={selectedSource}
-            onChipChange={setSelectedSource}
             resultLabel={t(`총 ${filteredReports.length}건`, `${filteredReports.length} results`)}
           />
           {loading ? <StatusNote>{t('기관 목록을 불러오는 중입니다.', 'Loading source feeds.')}</StatusNote> : null}
