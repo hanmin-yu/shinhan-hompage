@@ -68,32 +68,6 @@ const ItemContent = styled.div`
   gap: 18px;
 `;
 
-const ImageGrid = styled.div<{ $count: number }>`
-  display: grid;
-  grid-template-columns: repeat(${({ $count }) => ($count > 1 ? 2 : 1)}, minmax(0, 1fr));
-  gap: 14px;
-
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ImageFrame = styled.figure`
-  margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid #d5dbe4;
-`;
-
-const ServiceImage = styled.img`
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: contain;
-  object-position: top left;
-  border: 1px solid rgba(20, 76, 158, 0.12);
-  background: #ffffff;
-`;
-
 export function ItSection() {
   const { t } = useI18n();
 
@@ -113,15 +87,6 @@ export function ItSection() {
                   {item.summary ? <ItemSummary>{t(item.summary, item.summaryEn ?? item.summary)}</ItemSummary> : null}
                   <ItemBody>{t(item.body, item.bodyEn)}</ItemBody>
                 </ItemBodyStack>
-                {item.images?.length ? (
-                  <ImageGrid $count={item.images.length}>
-                    {item.images.map((image) => (
-                      <ImageFrame key={image.src}>
-                        <ServiceImage src={image.src} alt={t(image.alt, image.altEn ?? image.alt)} loading="lazy" />
-                      </ImageFrame>
-                    ))}
-                  </ImageGrid>
-                ) : null}
               </ItemContent>
             </Item>
           ))}

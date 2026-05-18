@@ -44,6 +44,10 @@ export function SiteFooter() {
           </S.FooterInfo>
 
           <S.FooterTopAside>
+            <S.FooterCertification>
+              <S.FooterCertificationImage src="/aeo-certification-mark.svg" alt={t('AEO 인증기업', 'AEO Certified Company')} />
+              <S.FooterCertificationText>{t('AEO 인증기업', 'AEO Certified Company')}</S.FooterCertificationText>
+            </S.FooterCertification>
             <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
             <S.FooterSocialRow>
               {footerSocialLinks.map((item) => (

@@ -104,7 +104,7 @@ export function SeminarPage() {
                 {
                   label: t('모집중', 'Open'),
                   disabled: true,
-                  variant: 'primary' as const,
+                  variant: 'recruiting' as const,
                 },
                 {
                   label: t('상세 보기', 'View Detail'),

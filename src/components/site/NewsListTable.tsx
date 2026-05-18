@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { palette } from '../home/homeStyles';
 import { downloadFileFromUrl } from '../../utils/downloadFile';
 
+type NewsListTableActionVariant = 'default' | 'primary' | 'recruiting';
+
 export type NewsListTableAction = {
   label: string;
   href?: string;
@@ -13,7 +15,7 @@ export type NewsListTableAction = {
   external?: boolean;
   disabled?: boolean;
   downloadFileName?: string;
-  variant?: 'default' | 'primary';
+  variant?: NewsListTableActionVariant;
 };
 
 export type NewsListTableRow = {
@@ -161,43 +163,67 @@ const ActionGroup = styled.div`
   }
 `;
 
-const ActionAnchor = styled.a<{ $disabled?: boolean; $variant?: 'default' | 'primary' }>`
+function getActionBorder($disabled?: boolean, $variant: NewsListTableActionVariant = 'default') {
+  if ($variant === 'recruiting') return 'rgba(217, 119, 6, 0.62)';
+  if ($disabled && $variant === 'primary') return 'rgba(18, 63, 133, 0.26)';
+  if ($disabled) return 'rgba(127, 147, 173, 0.24)';
+  if ($variant === 'primary') return 'rgba(18, 63, 133, 0.26)';
+  return 'rgba(18, 63, 133, 0.18)';
+}
+
+function getActionColor($disabled?: boolean, $variant: NewsListTableActionVariant = 'default') {
+  if ($variant === 'recruiting') return '#ffffff';
+  if ($disabled && $variant === 'primary') return '#ffffff';
+  if ($disabled) return '#7f93ad';
+  if ($variant === 'primary') return '#ffffff';
+  return palette.blueInk;
+}
+
+function getActionBackground($disabled?: boolean, $variant: NewsListTableActionVariant = 'default') {
+  if ($variant === 'recruiting') return 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)';
+  if ($disabled && $variant === 'primary') return 'linear-gradient(135deg, #123f85, #2567c2)';
+  if ($disabled) return 'rgba(127, 147, 173, 0.08)';
+  if ($variant === 'primary') return 'linear-gradient(135deg, #123f85, #2567c2)';
+  return 'rgba(255, 255, 255, 0.92)';
+}
+
+function getActionShadow($variant: NewsListTableActionVariant = 'default') {
+  if ($variant === 'recruiting') return '0 14px 24px rgba(249, 115, 22, 0.28), 0 0 0 3px rgba(245, 158, 11, 0.12)';
+  if ($variant === 'primary') return '0 12px 20px rgba(18, 63, 133, 0.18)';
+  return 'none';
+}
+
+const ActionAnchor = styled.a<{ $disabled?: boolean; $variant?: NewsListTableActionVariant }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  min-height: 38px;
-  padding: 0 14px;
+  gap: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '8px' : '0')};
+  min-width: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '96px' : '86px')};
+  min-height: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '40px' : '38px')};
+  padding: 0 ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '16px' : '14px')};
   border-radius: 8px;
-  border: 1px solid
-    ${({ $disabled, $variant = 'default' }) =>
-      $disabled && $variant === 'primary'
-        ? 'rgba(18, 63, 133, 0.26)'
-        : $disabled
-          ? 'rgba(127, 147, 173, 0.24)'
-          : $variant === 'primary'
-            ? 'rgba(18, 63, 133, 0.26)'
-            : 'rgba(18, 63, 133, 0.18)'};
-  color: ${({ $disabled, $variant = 'default' }) =>
-    $disabled && $variant === 'primary' ? '#ffffff' : $disabled ? '#7f93ad' : $variant === 'primary' ? '#ffffff' : palette.blueInk};
+  border: 1px solid ${({ $disabled, $variant = 'default' }) => getActionBorder($disabled, $variant)};
+  color: ${({ $disabled, $variant = 'default' }) => getActionColor($disabled, $variant)};
   font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? 900 : 800)};
   pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
-  background: ${({ $disabled, $variant = 'default' }) =>
-    $disabled && $variant === 'primary'
-      ? 'linear-gradient(135deg, #123f85, #2567c2)'
-      : $disabled
-        ? 'rgba(127, 147, 173, 0.08)'
-        : $variant === 'primary'
-          ? 'linear-gradient(135deg, #123f85, #2567c2)'
-          : 'rgba(255, 255, 255, 0.92)'};
+  background: ${({ $disabled, $variant = 'default' }) => getActionBackground($disabled, $variant)};
   text-decoration: none;
-  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
+  box-shadow: ${({ $variant = 'default' }) => getActionShadow($variant)};
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
     color 0.18s ease,
     box-shadow 0.18s ease;
+
+  &::before {
+    content: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? "''" : 'none')};
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.24);
+  }
 
   &:hover {
     border-color: ${palette.blueInk};
@@ -207,26 +233,36 @@ const ActionAnchor = styled.a<{ $disabled?: boolean; $variant?: 'default' | 'pri
   }
 `;
 
-const ActionRouterLink = styled(Link)<{ $variant?: 'default' | 'primary' }>`
+const ActionRouterLink = styled(Link)<{ $variant?: NewsListTableActionVariant }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  min-height: 38px;
-  padding: 0 14px;
+  gap: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '8px' : '0')};
+  min-width: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '96px' : '86px')};
+  min-height: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '40px' : '38px')};
+  padding: 0 ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '16px' : '14px')};
   border-radius: 8px;
-  border: 1px solid ${({ $variant = 'default' }) => ($variant === 'primary' ? 'rgba(18, 63, 133, 0.26)' : 'rgba(18, 63, 133, 0.18)')};
-  color: ${({ $variant = 'default' }) => ($variant === 'primary' ? '#ffffff' : palette.blueInk)};
+  border: 1px solid ${({ $variant = 'default' }) => getActionBorder(false, $variant)};
+  color: ${({ $variant = 'default' }) => getActionColor(false, $variant)};
   font-size: 0.82rem;
-  font-weight: 800;
-  background: ${({ $variant = 'default' }) => ($variant === 'primary' ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'rgba(255, 255, 255, 0.92)')};
-  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
+  font-weight: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? 900 : 800)};
+  background: ${({ $variant = 'default' }) => getActionBackground(false, $variant)};
+  box-shadow: ${({ $variant = 'default' }) => getActionShadow($variant)};
   text-decoration: none;
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
     color 0.18s ease,
     box-shadow 0.18s ease;
+
+  &::before {
+    content: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? "''" : 'none')};
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.24);
+  }
 
   &:hover {
     border-color: ${palette.blueInk};
@@ -236,26 +272,36 @@ const ActionRouterLink = styled(Link)<{ $variant?: 'default' | 'primary' }>`
   }
 `;
 
-const ActionButton = styled.button<{ $variant?: 'default' | 'primary' }>`
+const ActionButton = styled.button<{ $variant?: NewsListTableActionVariant }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  min-height: 38px;
-  padding: 0 14px;
+  gap: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '8px' : '0')};
+  min-width: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '96px' : '86px')};
+  min-height: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '40px' : '38px')};
+  padding: 0 ${({ $variant = 'default' }) => ($variant === 'recruiting' ? '16px' : '14px')};
   border-radius: 8px;
-  border: 1px solid ${({ $variant = 'default' }) => ($variant === 'primary' ? 'rgba(18, 63, 133, 0.26)' : 'rgba(18, 63, 133, 0.18)')};
-  color: ${({ $variant = 'default' }) => ($variant === 'primary' ? '#ffffff' : palette.blueInk)};
+  border: 1px solid ${({ $variant = 'default' }) => getActionBorder(false, $variant)};
+  color: ${({ $variant = 'default' }) => getActionColor(false, $variant)};
   font-size: 0.82rem;
-  font-weight: 800;
-  background: ${({ $variant = 'default' }) => ($variant === 'primary' ? 'linear-gradient(135deg, #123f85, #2567c2)' : 'rgba(255, 255, 255, 0.92)')};
-  box-shadow: ${({ $variant = 'default' }) => ($variant === 'primary' ? '0 12px 20px rgba(18, 63, 133, 0.18)' : 'none')};
+  font-weight: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? 900 : 800)};
+  background: ${({ $variant = 'default' }) => getActionBackground(false, $variant)};
+  box-shadow: ${({ $variant = 'default' }) => getActionShadow($variant)};
   cursor: pointer;
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
     color 0.18s ease,
     box-shadow 0.18s ease;
+
+  &::before {
+    content: ${({ $variant = 'default' }) => ($variant === 'recruiting' ? "''" : 'none')};
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.24);
+  }
 
   &:hover {
     border-color: ${palette.blueInk};

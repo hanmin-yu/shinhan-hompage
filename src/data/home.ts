@@ -428,12 +428,12 @@ const heroSlideLibrary: HeroSlide[] = [
   },
 ];
 
-const homeHeroSlideOrder = [4, 8, 20, 6, 13, 0, 2, 5, 10, 11, 12, 18, 19, 21, 23] as const;
+const homeHeroSlideOrder = [0, 8, 20, 19, 13] as const;
 
 const homeHeroSlideOverrides: Partial<HeroSlide>[] = [
   {
-    headline: '공항만에서 시작되는 무역을\n현장 가까이에서 지원합니다',
-    headlineEn: 'Supporting trade from ports and airports\nclose to the field',
+    headline: '가장 안전한 무역의 시작, 기업의\n성장을 돕는 든든한 관세 파트너',
+    headlineEn: 'A safer start to trade,\na trusted customs partner for business growth',
   },
   {
     headline: '급변하는 무역환경에 따른\n관세 전략을 제시합니다',
@@ -1051,13 +1051,13 @@ const officeGoogleMapUrls = {
   seoul:
     'https://www.google.com/maps/place/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/data=!3m1!4b1!4m6!3m5!1s0x357ca3f4b48fa767:0xe3d657007b43400f!8m2!3d37.5146533!4d127.0307242!16s%2Fg%2F1tglkvnt?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   airport:
-    'https://www.google.com/maps/place/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/data=!3m1!4b1!4m6!3m5!1s0x357b788e9678a691:0xf4bff51a3f20f7a7!8m2!3d37.4688054!4d126.6245183!16s%2Fg%2F1w344k4t?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+    'https://www.google.com/maps/search/%EC%9D%B8%EC%B2%9C+%EC%A4%91%EA%B5%AC+%EC%9A%B4%EC%84%9C%EB%8F%99+2165-6/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   incheon:
     'https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%97%B0%EC%88%98%EA%B5%AC+%EC%9D%B8%EC%B2%9C%ED%83%80%EC%9B%8C%EB%8C%80%EB%A1%9C/data=!3m1!4b1!4m6!3m5!1s0x357b77b15dce8fbb:0x7577a0cf1a862fb2!8m2!3d37.398339!4d126.6318444!16s%2Fg%2F119v8_c08?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   shFood:
     'https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%97%B0%EC%88%98%EA%B5%AC+%EC%9D%B8%EC%B2%9C%ED%83%80%EC%9B%8C%EB%8C%80%EB%A1%9C/data=!4m6!3m5!1s0x357b77b15dce8fbb:0x7577a0cf1a862fb2!8m2!3d37.398339!4d126.6318444!16s%2Fg%2F119v8_c08?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   busan:
-    'https://www.google.com/maps/search/+%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%A4%91%EA%B5%AC+%EC%B6%A9%EC%9E%A5%EB%8C%80%EB%A1%9C+9%EB%B2%88%EA%B8%B8+11+%EB%AF%B8%EA%B4%91%EB%B9%8C%EB%94%A9+501%ED%98%B8/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+    'https://www.google.com/maps/place/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%A4%91%EA%B5%AC+%EC%B6%A9%EC%9E%A5%EB%8C%80%EB%A1%9C9%EB%B2%88%EA%B8%B8+11/data=!3m1!4b1!4m6!3m5!1s0x3568e97061af116d:0x67f41aa28a4808d9!8m2!3d35.1063076!4d129.0373277!16s%2Fg%2F11bzd0r98c?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   cheongju:
     'https://www.google.com/maps/place/%EC%B2%AD%EC%A3%BC%ED%85%8C%ED%81%AC%EB%85%B8S%ED%83%80%EC%9B%8C+%EC%A7%80%EC%8B%9D%EC%82%B0%EC%97%85%EC%84%BC%ED%84%B0/data=!3m1!4b1!4m6!3m5!1s0x3565294a9331a413:0xd40cecc93b911d28!8m2!3d36.6432086!4d127.4516157!16s%2Fg%2F11fppc58nn?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
   gumi:
@@ -1156,8 +1156,11 @@ const officeBranchItems: OfficeBranch[] = [
     id: 'airport',
     label: '인천공항지사',
     labelEn: 'Incheon Airport Branch',
-    mapQuery: '인천광역시 중구 햇내로27번길 14 304호',
-    mapQueryEn: 'Suite 304, 14 Haennae-ro 27beon-gil, Jung-gu, Incheon, Korea',
+    mapQuery: '인천 중구 운서동 2165-6',
+    mapQueryEn: '2165-6 Unseo-dong, Jung-gu, Incheon, Korea',
+    googleMapUrl: officeGoogleMapUrls.airport,
+    naverMapUrl:
+      'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%9D%B8%EC%B2%9C%EA%B3%B5%ED%95%AD%EC%A7%80%EC%82%AC/place/34490563?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605182222&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%9D%B8%EC%B2%9C%EA%B3%B5%ED%95%AD%EC%A7%80%EC%82%AC',
     shortLabel: '공항',
     shortLabelEn: 'Airport',
     region: '인천공항 물류권역',
@@ -1188,6 +1191,8 @@ const officeBranchItems: OfficeBranch[] = [
       lat: 37.398339,
       lng: 126.6318444,
     },
+    naverMapUrl:
+      'https://map.naver.com/p/entry/place/34490564?c=15.00,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605182222&locale=ko&svcName=map_pcv5',
     shortLabel: '경기',
     shortLabelEn: 'Gyeonggi',
     region: '인천항 · 수도권',
@@ -1246,6 +1251,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '부산광역시 중구 충장대로 9번길 11 미광빌딩 501호',
     mapQueryEn: 'Suite 501, Migwang Building, 11 Chungjang-daero 9beon-gil, Jung-gu, Busan, Korea',
     googleMapUrl: officeGoogleMapUrls.busan,
+    coordinates: {
+      lat: 35.1063076,
+      lng: 129.0373277,
+    },
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC/place/34565304?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120005&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC',
     shortLabel: '부산',
@@ -1538,18 +1547,6 @@ export const itServices: ItService[] = [
       '외부 고객사용 시스템인 iOOM은 단순한 정보 조회를 넘어 실시간 통관 현황 모니터링과 체계적인 보관 서류 관리를 지원합니다. 아이템별 단가 및 HS Code 관리, 물류 리드타임 분석, 상세 월별 리포트 기능을 통해 고객사가 수출입 데이터를 기반으로 보다 객관적이고 전략적인 의사결정을 내릴 수 있도록 돕는 든든한 파트너 역할을 수행합니다.',
     bodyEn:
       'iOOM, our external client-facing system, goes beyond simple information lookup by supporting real-time clearance status monitoring and systematic document management. Through item-level unit price and HS Code management, logistics lead-time analysis, and detailed monthly reports, it helps clients make more objective and strategic decisions based on import/export data.',
-    images: [
-      {
-        src: '/it-systems/ioom/ioom-import-status.png',
-        alt: 'iOOM 수입 신고 현황 화면',
-        altEn: 'iOOM import status screen',
-      },
-      {
-        src: '/it-systems/ioom/ioom-dashboard.png',
-        alt: 'iOOM 대시보드 화면',
-        altEn: 'iOOM dashboard screen',
-      },
-    ],
   },
   {
     category: 'IT',
@@ -1564,18 +1561,6 @@ export const itServices: ItService[] = [
       '내부 직원용 업무 시스템인 iOOM Q는 수출입 의뢰부터 현황 관리, 자동 신고 및 사후 제출에 이르는 전 과정을 디지털로 통합 관리합니다. 실시간 업무 알림과 체계적인 체크리스트 기능을 통해 업무 누락을 방지하고 협업의 효율성을 극대화하여, 고객에게 보다 빠르고 정확한 관세 서비스를 제공하는 기반이 됩니다.',
     bodyEn:
       'iOOM Q, our internal workflow system, digitally integrates the full process from import/export requests and status management to automated declarations and post-submission work. Real-time task alerts and structured checklists prevent missed work and improve collaboration efficiency, forming the basis for faster and more accurate customs service.',
-    images: [
-      {
-        src: '/it-systems/ioom-q/ioom-q-dashboard.png',
-        alt: 'iOOM Q 대시보드 화면',
-        altEn: 'iOOM Q dashboard screen',
-      },
-      {
-        src: '/it-systems/ioom-q/ioom-q-export-auto.png',
-        alt: 'iOOM Q 수출 자동화 화면',
-        altEn: 'iOOM Q export automation screen',
-      },
-    ],
   },
   {
     category: 'IT',
@@ -1590,18 +1575,6 @@ export const itServices: ItService[] = [
       '베트남에 진출한 기업들을 위해 15개의 FTA 협정과 GSP, Form B 등 복잡한 규정을 완벽히 반영한 원산지 관리 시스템을 제공합니다. 체계적인 데이터 분석을 통해 정확한 원산지 판정을 내릴 뿐만 아니라, 증빙 서류의 출력과 안전한 보관 기능을 지원하여 사후 검증 리스크에 완벽하게 대비할 수 있는 글로벌 표준 모델을 제시합니다.',
     bodyEn:
       'For companies operating in Vietnam, KORD FTA provides an origin management system that reflects complex rules including 15 FTA agreements, GSP, and Form B. Through systematic data analysis, it supports accurate origin determinations as well as output and secure storage of supporting documents, providing a global-standard model for post-verification readiness.',
-    images: [
-      {
-        src: '/it-systems/fta/fta-login.png',
-        alt: 'KORD FTA 로그인 화면',
-        altEn: 'KORD FTA login screen',
-      },
-      {
-        src: '/it-systems/fta/fta-dashboard.png',
-        alt: 'KORD FTA 대시보드 화면',
-        altEn: 'KORD FTA dashboard screen',
-      },
-    ],
   },
   {
     category: 'IT',
@@ -1616,18 +1589,6 @@ export const itServices: ItService[] = [
       '베트남 세관 업무의 핵심인 재고 관리를 위해 통관 수량과 회계상의 재고 수량을 정밀하게 비교 분석하는 기능을 제공합니다. 수량 격차(GAP)에 따른 예상 관세 리스크 금액을 실시간으로 산출하고, 세관 제출용 재고 결산(Liquidation) 서류를 자동 생성함으로써 기업의 잠재적인 과세 위험을 선제적으로 관리하고 방어합니다.',
     bodyEn:
       'For inventory management, a core part of Vietnam customs operations, KORD LIQ compares and analyzes customs quantities and accounting inventory quantities in detail. It calculates expected customs risk amounts from quantity gaps in real time and automatically generates inventory liquidation documents for customs submission, helping companies proactively manage and defend against potential tax risk.',
-    images: [
-      {
-        src: '/it-systems/liq/liq-login.png',
-        alt: 'KORD LIQ 로그인 화면',
-        altEn: 'KORD LIQ login screen',
-      },
-      {
-        src: '/it-systems/liq/liq-dashboard.png',
-        alt: 'KORD LIQ 대시보드 화면',
-        altEn: 'KORD LIQ dashboard screen',
-      },
-    ],
   },
   {
     category: 'IT',

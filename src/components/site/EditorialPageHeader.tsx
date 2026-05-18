@@ -9,13 +9,13 @@ type EditorialPageHeaderProps = {
   config: SectionSubnavConfig;
   title?: string;
   titleEn?: string;
-  heroImage?: string;
+  heroImage?: string | null;
   heroPosition?: string;
   heroSize?: string;
   heroOverlay?: 'default' | 'dark';
 };
 
-const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string; $size: string; $overlay: 'default' | 'dark' }>`
+const VisualHero = styled(P.HeroSection)<{ $image: string | null; $position: string; $size: string; $overlay: 'default' | 'dark' }>`
   position: relative;
   isolation: isolate;
   margin-top: 0;
@@ -33,7 +33,8 @@ const VisualHero = styled(P.HeroSection)<{ $image: string; $position: string; $s
     inset: 0;
     z-index: -2;
     pointer-events: none;
-    background: ${({ $image, $position, $size }) => `url(${$image}) ${$position} / ${$size} no-repeat`};
+    background: ${({ $image, $position, $size }) =>
+      $image ? `url(${$image}) ${$position} / ${$size} no-repeat` : 'linear-gradient(135deg, #f4f7fb 0%, #d8e3f1 100%)'};
     filter: ${({ $overlay }) =>
       $overlay === 'dark' ? 'brightness(0.9) contrast(1.02) saturate(1.02)' : 'brightness(1.34) contrast(0.94) saturate(1.06)'};
     opacity: 1;

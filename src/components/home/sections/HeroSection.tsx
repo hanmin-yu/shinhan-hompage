@@ -151,7 +151,7 @@ const HeroCopy = styled.div`
   }
 `;
 
-const HeroTitle = styled.h1`
+const HeroTitle = styled.h1<{ $language: 'ko' | 'en' }>`
   position: relative;
   isolation: isolate;
   display: inline-flex;
@@ -167,7 +167,7 @@ const HeroTitle = styled.h1`
     'Pretendard',
     system-ui,
     sans-serif;
-  font-size: clamp(2.9rem, 6.18vw, 6.72rem);
+  font-size: ${({ $language }) => ($language === 'en' ? 'clamp(2.3rem, 4.75vw, 4.9rem)' : 'clamp(2.9rem, 6.18vw, 6.72rem)')};
   font-weight: 800;
   line-height: 1.04;
   letter-spacing: 0;
@@ -214,12 +214,12 @@ const HeroTitle = styled.h1`
   }
 
   @media (max-width: 920px) {
-    font-size: clamp(2.58rem, 9.85vw, 4.72rem);
+    font-size: ${({ $language }) => ($language === 'en' ? 'clamp(2.12rem, 7.2vw, 3.9rem)' : 'clamp(2.58rem, 9.85vw, 4.72rem)')};
   }
 
   @media (max-width: 520px) {
     white-space: normal;
-    font-size: clamp(2.24rem, 11.1vw, 3.48rem);
+    font-size: ${({ $language }) => ($language === 'en' ? 'clamp(1.86rem, 9vw, 2.72rem)' : 'clamp(2.24rem, 11.1vw, 3.48rem)')};
   }
 `;
 
@@ -406,7 +406,7 @@ const SeminarQuickArrow = styled.span`
 `;
 
 export function HeroSection() {
-  const { t } = useI18n();
+  const { language, t } = useI18n();
   const { content } = useSiteContent();
   const heroSlides = content.home.heroSlides;
   const homeCopy = content.home.copy as Record<string, string | undefined>;
@@ -445,7 +445,9 @@ export function HeroSection() {
         <HeroBottomBlend />
         <HeroInner data-reveal="zoom">
           <HeroCopy data-reveal="slide-left">
-            <HeroTitle>{t(homeCopy.heroBrandTitle ?? '신한관세법인', homeCopy.heroBrandTitleEn ?? 'Shinhan Customs Service')}</HeroTitle>
+            <HeroTitle $language={language}>
+              {t(homeCopy.heroBrandTitle ?? '신한관세법인', homeCopy.heroBrandTitleEn ?? 'Shinhan Customs Service')}
+            </HeroTitle>
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>

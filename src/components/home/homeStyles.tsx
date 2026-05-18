@@ -1761,13 +1761,14 @@ export const HeaderUtilityButton = styled.button`
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 7px;
   min-height: 38px;
-  padding: 0 12px;
+  padding: 0 13px 0 10px;
   border: 0;
   background: transparent;
-  font-size: 0.96rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 0;
   white-space: nowrap;
   word-break: keep-all;
   cursor: pointer;
@@ -1789,6 +1790,37 @@ export const HeaderUtilityButton = styled.button`
     transform: translateY(-50%);
     background: rgba(70, 102, 144, 0.26);
   }
+`;
+
+export const LanguageToggleIcon = styled.svg`
+  display: block;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+`;
+
+export const LanguageToggleText = styled.span`
+  color: currentColor;
+  font-size: 1.03rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.58;
+
+  &[data-active='true'] {
+    opacity: 1;
+  }
+`;
+
+export const LanguageToggleDivider = styled.span`
+  width: 1px;
+  height: 18px;
+  background: currentColor;
+  opacity: 0.42;
 `;
 
 export const HeaderIconButton = styled.button<{ kind: 'pin' | 'menu' }>`
@@ -4171,6 +4203,38 @@ export const FooterTopAside = styled.div`
   @media (max-width: 768px) {
     margin-left: 0;
   }
+`;
+
+export const FooterCertification = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding-right: 16px;
+  margin-right: 4px;
+  border-right: 1px solid #dbe3ee;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-right: 0;
+    margin-right: 0;
+    border-right: 0;
+  }
+`;
+
+export const FooterCertificationImage = styled.img`
+  display: block;
+  width: 92px;
+  height: auto;
+  object-fit: contain;
+`;
+
+export const FooterCertificationText = styled.span`
+  color: ${palette.blue};
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
 `;
 
 export const FooterBrandText = styled.div`

@@ -225,8 +225,18 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
             </S.HeaderContactGroup>
             <S.HeaderUtilityLinks>
               <S.HeaderUtilityLink to="/recruit">{t('채용', 'Recruit')}</S.HeaderUtilityLink>
-              <S.HeaderUtilityButton type="button" onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
-                {language === 'ko' ? 'KOR' : 'ENG'}
+              <S.HeaderUtilityButton type="button" aria-label={t('영문으로 보기', 'View in Korean')} onClick={() => setLanguage(language === 'ko' ? 'en' : 'ko')}>
+                <S.LanguageToggleIcon viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3.5 12h17" />
+                  <path d="M12 3c2.4 2.3 3.7 5.2 3.7 9S14.4 18.7 12 21" />
+                  <path d="M12 3c-2.4 2.3-3.7 5.2-3.7 9s1.3 6.7 3.7 9" />
+                  <path d="M5.7 6.2c1.6.9 3.7 1.4 6.3 1.4s4.7-.5 6.3-1.4" />
+                  <path d="M5.7 17.8c1.6-.9 3.7-1.4 6.3-1.4s4.7.5 6.3 1.4" />
+                </S.LanguageToggleIcon>
+                <S.LanguageToggleText data-active={language === 'ko' ? 'true' : undefined}>KR</S.LanguageToggleText>
+                <S.LanguageToggleDivider aria-hidden="true" />
+                <S.LanguageToggleText data-active={language === 'en' ? 'true' : undefined}>ENG</S.LanguageToggleText>
               </S.HeaderUtilityButton>
               <S.HeaderUtilityIconLink to="/location" aria-label={t('찾아오시는 길', 'Directions')}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
