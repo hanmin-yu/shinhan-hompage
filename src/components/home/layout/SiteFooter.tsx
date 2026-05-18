@@ -45,29 +45,27 @@ export function SiteFooter() {
 
           <S.FooterTopAside>
             <S.FooterCertificationMark>
-              <S.FooterCertificationImage src="/aeo-certification-mark.svg" alt={t('KOREA AEO 마크', 'KOREA AEO mark')} />
+              <S.FooterCertificationImage src="/aeo-certification-mark.png" alt={t('KOREA AEO 인증 기업 마크', 'KOREA AEO certified company mark')} />
             </S.FooterCertificationMark>
-            <S.FooterBottomAsideRow>
-              <S.FooterSocialGroup>
-                <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
-                <S.FooterSocialRow>
-                  {footerSocialLinks.map((item) => (
-                    <S.FooterSocialLink
-                      key={item.id}
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
-                    >
-                      <S.FooterSocialImage
-                        src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
-                        alt={tx(item.label)}
-                      />
-                    </S.FooterSocialLink>
-                  ))}
-                </S.FooterSocialRow>
-              </S.FooterSocialGroup>
-            </S.FooterBottomAsideRow>
+            <S.FooterSocialGroup>
+              <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
+              <S.FooterSocialRow>
+                {footerSocialLinks.map((item) => (
+                  <S.FooterSocialLink
+                    key={item.id}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
+                  >
+                    <S.FooterSocialImage
+                      src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
+                      alt={tx(item.label)}
+                    />
+                  </S.FooterSocialLink>
+                ))}
+              </S.FooterSocialRow>
+            </S.FooterSocialGroup>
           </S.FooterTopAside>
         </S.FooterBody>
       </S.FooterInner>

@@ -382,24 +382,21 @@ const SeminarQuickCopy = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 7px;
-  padding: 16px 18px;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 18px 13px;
 `;
 
 const SeminarRecruitingBadge = styled.span`
-  position: absolute;
-  left: 12px;
-  bottom: 10px;
-  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 24px;
-  padding: 0 10px;
+  min-height: 20px;
+  padding: 0 8px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   color: ${S.palette.blue};
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   font-weight: 900;
   letter-spacing: 0;
   box-shadow: 0 10px 18px rgba(3, 15, 34, 0.22);
@@ -500,10 +497,10 @@ export function HeroSection() {
           </HeroControls>
 
           <SeminarQuickCard to="/news/seminar">
-            {hasRecruitingSeminar ? <SeminarRecruitingBadge>{t('모집중', 'Open')}</SeminarRecruitingBadge> : null}
             <SeminarQuickCopy>
               <SeminarQuickTitle>Seminar</SeminarQuickTitle>
               <SeminarQuickText>{t('세미나/교육', 'Seminar / Training')}</SeminarQuickText>
+              {hasRecruitingSeminar ? <SeminarRecruitingBadge>{t('모집중', 'Open')}</SeminarRecruitingBadge> : null}
             </SeminarQuickCopy>
             <SeminarQuickArrow>›</SeminarQuickArrow>
           </SeminarQuickCard>

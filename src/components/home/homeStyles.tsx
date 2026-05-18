@@ -4204,29 +4204,31 @@ export const FooterBrandLogo = styled.img`
 `;
 
 export const FooterTopAside = styled.div`
+  position: absolute;
+  top: 44px;
+  right: 0;
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-areas:
-    '. mark'
-    'row row';
+  grid-template-columns: auto;
   align-items: center;
   justify-items: end;
-  gap: 12px clamp(18px, 2.6vw, 34px);
+  gap: 14px;
   margin-left: auto;
   flex: 0 0 auto;
 
   @media (max-width: 900px) {
+    position: static;
+    align-self: stretch;
     justify-items: start;
     margin-left: 0;
   }
 
   @media (max-width: 768px) {
+    gap: 18px;
     margin-left: 0;
   }
 `;
 
 export const FooterCertificationMark = styled.div`
-  grid-area: mark;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4238,7 +4240,6 @@ export const FooterCertificationMark = styled.div`
 `;
 
 export const FooterBottomAsideRow = styled.div`
-  grid-area: row;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
@@ -4252,7 +4253,7 @@ export const FooterBottomAsideRow = styled.div`
 
 export const FooterCertificationImage = styled.img`
   display: block;
-  width: 96px;
+  width: 128px;
   height: auto;
   object-fit: contain;
 `;
