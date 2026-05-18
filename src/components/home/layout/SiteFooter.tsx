@@ -44,29 +44,30 @@ export function SiteFooter() {
           </S.FooterInfo>
 
           <S.FooterTopAside>
-            <S.FooterCertification>
+            <S.FooterCertificationMark>
               <S.FooterCertificationImage src="/aeo-certification-mark.svg" alt={t('KOREA AEO 마크', 'KOREA AEO mark')} />
-              <S.FooterCertificationText>{t('AEO 인증기업', 'AEO Certified Company')}</S.FooterCertificationText>
-            </S.FooterCertification>
-            <S.FooterSocialGroup>
-              <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
-              <S.FooterSocialRow>
-                {footerSocialLinks.map((item) => (
-                  <S.FooterSocialLink
-                    key={item.id}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
-                  >
-                    <S.FooterSocialImage
-                      src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
-                      alt={tx(item.label)}
-                    />
-                  </S.FooterSocialLink>
-                ))}
-              </S.FooterSocialRow>
-            </S.FooterSocialGroup>
+            </S.FooterCertificationMark>
+            <S.FooterBottomAsideRow>
+              <S.FooterSocialGroup>
+                <S.FooterSocialLabel>SNS</S.FooterSocialLabel>
+                <S.FooterSocialRow>
+                  {footerSocialLinks.map((item) => (
+                    <S.FooterSocialLink
+                      key={item.id}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${t('신한관세법인', 'Shinhan Customs Service')} ${tx(item.label)}`}
+                    >
+                      <S.FooterSocialImage
+                        src={item.id === 'blog' ? '/social/naver-blog-badge.svg' : '/social/youtube-red-badge.svg'}
+                        alt={tx(item.label)}
+                      />
+                    </S.FooterSocialLink>
+                  ))}
+                </S.FooterSocialRow>
+              </S.FooterSocialGroup>
+            </S.FooterBottomAsideRow>
           </S.FooterTopAside>
         </S.FooterBody>
       </S.FooterInner>

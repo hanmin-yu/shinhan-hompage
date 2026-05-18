@@ -388,7 +388,7 @@ const SeminarQuickCopy = styled.span`
 
 const SeminarRecruitingBadge = styled.span`
   position: absolute;
-  right: 12px;
+  left: 12px;
   bottom: 10px;
   z-index: 2;
   display: inline-flex;

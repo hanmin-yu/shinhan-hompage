@@ -4204,15 +4204,19 @@ export const FooterBrandLogo = styled.img`
 `;
 
 export const FooterTopAside = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    '. mark'
+    'row row';
   align-items: center;
-  gap: clamp(18px, 2.6vw, 34px);
-  justify-content: flex-end;
+  justify-items: end;
+  gap: 12px clamp(18px, 2.6vw, 34px);
   margin-left: auto;
   flex: 0 0 auto;
 
   @media (max-width: 900px) {
-    align-items: flex-start;
+    justify-items: start;
     margin-left: 0;
   }
 
@@ -4221,33 +4225,28 @@ export const FooterTopAside = styled.div`
   }
 `;
 
-export const FooterCertification = styled.div`
-  position: relative;
+export const FooterCertificationMark = styled.div`
+  grid-area: mark;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   justify-content: center;
-  padding-right: clamp(18px, 2.4vw, 30px);
-
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 1px;
-    height: 38px;
-    transform: translateY(-50%);
-    background: #dbe3ee;
-  }
 
   @media (max-width: 768px) {
     width: 100%;
     justify-content: flex-start;
-    padding-right: 0;
+  }
+`;
 
-    &::after {
-      content: none;
-    }
+export const FooterBottomAsideRow = styled.div`
+  grid-area: row;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(18px, 2.6vw, 34px);
+  min-width: 0;
+
+  @media (max-width: 900px) {
+    justify-content: flex-start;
   }
 `;
 
@@ -4256,14 +4255,6 @@ export const FooterCertificationImage = styled.img`
   width: 96px;
   height: auto;
   object-fit: contain;
-`;
-
-export const FooterCertificationText = styled.span`
-  color: ${palette.blue};
-  font-size: 0.95rem;
-  font-weight: 800;
-  line-height: 1.2;
-  white-space: nowrap;
 `;
 
 export const FooterBrandText = styled.div`

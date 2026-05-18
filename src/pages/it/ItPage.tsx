@@ -177,6 +177,7 @@ const ContactProfileGrid = styled.div`
 const ContactProfileCard = styled.article<{ $accent: string }>`
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(142px, 170px);
   min-height: 210px;
   overflow: hidden;
   border-radius: 8px;
@@ -201,6 +202,7 @@ const ContactProfileCard = styled.article<{ $accent: string }>`
   }
 
   @media (max-width: 560px) {
+    grid-template-columns: 1fr;
     min-height: 176px;
   }
 `;
@@ -329,6 +331,82 @@ const ContactValue = styled.a`
   }
 `;
 
+const ContactPhotoPanel = styled.div<{ $accent: string }>`
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+  min-height: 210px;
+  overflow: hidden;
+  border-left: 1px solid rgba(26, 55, 91, 0.14);
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.84), transparent 52%),
+    linear-gradient(180deg, rgba(29, 95, 182, 0.08), rgba(29, 95, 182, 0.02));
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12px 10px;
+    z-index: 1;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+  }
+
+  @media (max-width: 560px) {
+    min-height: 180px;
+    border-left: 0;
+    border-top: 1px solid rgba(26, 55, 91, 0.14);
+  }
+`;
+
+const ContactPortraitFrame = styled.div`
+  position: absolute;
+  inset: 15px 13px;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 55, 91, 0.08);
+  background: #ffffff;
+  box-shadow:
+    0 18px 32px rgba(13, 35, 66, 0.09),
+    0 2px 8px rgba(13, 35, 66, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+
+  @media (max-width: 560px) {
+    inset: 10px 8px;
+    border-radius: 8px;
+  }
+`;
+
+const ContactPortrait = styled.img<{ $fit?: 'contain' | 'cover'; $position?: string }>`
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  object-fit: ${({ $fit }) => $fit ?? 'cover'};
+  object-position: ${({ $position }) => $position ?? '50% 18%'};
+  filter: saturate(1.01) contrast(1.02);
+`;
+
+const ContactInitialMark = styled.div`
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 28px;
+  border-radius: 50%;
+  background: #0c4e96;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 900;
+`;
+
 export function ItPage() {
   const { t, tx } = useI18n();
   const { content, findMemberById } = useSiteContent();
@@ -396,6 +474,20 @@ export function ItPage() {
                         ) : null}
                       </ContactMeta>
                     </ContactProfileBody>
+                    <ContactPhotoPanel $accent={accent}>
+                      {member?.image ? (
+                        <ContactPortraitFrame>
+                          <ContactPortrait
+                            src={member.image}
+                            alt={tx(member.name)}
+                            $fit={member.imageFit}
+                            $position={member.imagePosition}
+                          />
+                        </ContactPortraitFrame>
+                      ) : (
+                        <ContactInitialMark>{tx(member?.name ?? '').slice(0, 1)}</ContactInitialMark>
+                      )}
+                    </ContactPhotoPanel>
                   </ContactProfileCard>
                 );
               })}
