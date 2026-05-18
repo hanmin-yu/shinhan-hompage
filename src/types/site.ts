@@ -100,6 +100,10 @@ export type OfficeBranch = {
   naverMapUrl?: string;
   googleMapUrl?: string;
   googleMapEmbedUrl?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
   locations?: {
     id: string;
     label: string;

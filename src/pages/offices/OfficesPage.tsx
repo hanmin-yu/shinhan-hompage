@@ -36,7 +36,6 @@ type OfficeViewData = {
   naverMapUrl?: string;
   googleMapUrl: string;
   googleMapEmbedUrl: string;
-  mapFrameUrl: string;
   locations: OfficeLocationViewData[];
 };
 
@@ -50,7 +49,6 @@ type OfficeLocationViewData = {
   naverMapUrl?: string;
   googleMapUrl: string;
   googleMapEmbedUrl: string;
-  mapFrameUrl: string;
 };
 
 const primaryOfficeIds = new Set(['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi']);
@@ -79,7 +77,7 @@ function useOfficeViewData(): OfficeViewData[] {
               naverMapUrl: office.naverMapUrl,
               googleMapUrl: office.googleMapUrl,
               googleMapEmbedUrl: office.googleMapEmbedUrl,
-              coordinates: undefined,
+              coordinates: office.coordinates,
             },
           ];
       const locations = baseLocations.map((location) => {
@@ -108,7 +106,6 @@ function useOfficeViewData(): OfficeViewData[] {
           naverMapUrl,
           googleMapUrl,
           googleMapEmbedUrl,
-          mapFrameUrl: naverMapUrl ?? googleMapEmbedUrl,
         };
       });
       const primaryLocation = locations[0];
@@ -132,7 +129,6 @@ function useOfficeViewData(): OfficeViewData[] {
         naverMapUrl: primaryLocation?.naverMapUrl,
         googleMapUrl: office.googleMapUrl ?? primaryLocation?.googleMapUrl ?? getGoogleMapUrl(t(office.address, office.addressEn)),
         googleMapEmbedUrl: office.googleMapEmbedUrl ?? primaryLocation?.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
-        mapFrameUrl: primaryLocation?.mapFrameUrl ?? office.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
         locations,
       };
   });
@@ -361,7 +357,7 @@ export function OfficesPage() {
                           <MapFrameLabel>{t(location.label, location.labelEn)}</MapFrameLabel>
                         ) : null}
                         <iframe
-                          src={location.mapFrameUrl}
+                          src={location.googleMapEmbedUrl}
                           title={t(`${selectedOffice.label} ${location.label} 지도`, `${selectedOffice.labelEn} ${location.labelEn} Map`)}
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"

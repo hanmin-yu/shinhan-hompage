@@ -1073,6 +1073,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '서울시 강남구 논현로 704',
     mapQueryEn: '704 Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
     googleMapUrl: officeGoogleMapUrls.seoul,
+    coordinates: {
+      lat: 37.5146533,
+      lng: 127.0307242,
+    },
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/place/11535764?c=15.00,0,0,0,dh&placePath=/home?bk_query=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8&entry=bmp&from=map&fromPanelNum=2&timestamp=202605122236&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8',
     shortLabel: '본사',
@@ -1154,7 +1158,6 @@ const officeBranchItems: OfficeBranch[] = [
     labelEn: 'Incheon Airport Branch',
     mapQuery: '인천광역시 중구 햇내로27번길 14 304호',
     mapQueryEn: 'Suite 304, 14 Haennae-ro 27beon-gil, Jung-gu, Incheon, Korea',
-    googleMapUrl: officeGoogleMapUrls.airport,
     shortLabel: '공항',
     shortLabelEn: 'Airport',
     region: '인천공항 물류권역',
@@ -1181,6 +1184,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '인천광역시 연수구 인천타워대로 301 A동 906호',
     mapQueryEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
     googleMapUrl: officeGoogleMapUrls.incheon,
+    coordinates: {
+      lat: 37.398339,
+      lng: 126.6318444,
+    },
     shortLabel: '경기',
     shortLabelEn: 'Gyeonggi',
     region: '인천항 · 수도권',
@@ -1208,6 +1215,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '인천광역시 연수구 인천타워대로 301 A동 906호',
     mapQueryEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
     googleMapUrl: officeGoogleMapUrls.shFood,
+    coordinates: {
+      lat: 37.398339,
+      lng: 126.6318444,
+    },
     shortLabel: 'SH FOOD',
     shortLabelEn: 'SH FOOD',
     region: '인천경기지사',
@@ -1232,8 +1243,8 @@ const officeBranchItems: OfficeBranch[] = [
     id: 'busan',
     label: '부산지사',
     labelEn: 'Busan Branch',
-    mapQuery: '신한관세법인 부산지사',
-    mapQueryEn: 'Shinhan Customs Service Busan Branch',
+    mapQuery: '부산광역시 중구 충장대로 9번길 11 미광빌딩 501호',
+    mapQueryEn: 'Suite 501, Migwang Building, 11 Chungjang-daero 9beon-gil, Jung-gu, Busan, Korea',
     googleMapUrl: officeGoogleMapUrls.busan,
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC/place/34565304?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120005&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC',
@@ -1263,6 +1274,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '신한관세법인 청주지사',
     mapQueryEn: 'Shinhan Customs Service Cheongju Branch',
     googleMapUrl: officeGoogleMapUrls.cheongju,
+    coordinates: {
+      lat: 36.6432086,
+      lng: 127.4516157,
+    },
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%B2%AD%EC%A3%BC%EC%A7%80%EC%82%AC/place/19720232?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120004&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%B2%AD%EC%A3%BC%EC%A7%80%EC%82%AC',
     shortLabel: '청주',
@@ -1292,6 +1307,10 @@ const officeBranchItems: OfficeBranch[] = [
     mapQuery: '신한관세법인 구미지사',
     mapQueryEn: 'Shinhan Customs Service Gumi Branch',
     googleMapUrl: officeGoogleMapUrls.gumi,
+    coordinates: {
+      lat: 36.1016775,
+      lng: 128.3830107,
+    },
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EA%B5%AC%EB%AF%B8%EC%A7%80%EC%82%AC/place/11682223?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120004&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EA%B5%AC%EB%AF%B8%EC%A7%80%EC%82%AC',
     shortLabel: '구미',
