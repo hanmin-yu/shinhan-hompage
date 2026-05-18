@@ -148,6 +148,7 @@ export function OfficesPage() {
   const selectedOffice = offices.find((office) => office.id === selectedOfficeId) ?? offices[0];
   const primaryOffices = offices.filter((office) => primaryOfficeIds.has(office.id));
   const affiliateOffices = offices.filter((office) => !primaryOfficeIds.has(office.id));
+  const showGoogleMapButton = selectedOffice?.id === 'vietnam';
 
   useEffect(() => {
     if (!requestedOfficeId) return;
@@ -309,9 +310,11 @@ export function OfficesPage() {
                               {t('네이버 지도 열기', 'Open Naver Map')}
                             </PrimaryMapLink>
                           ) : null}
-                          <MapLink href={location.googleMapUrl} target="_blank" rel="noreferrer">
-                            {t('Google 지도 열기', 'Open Google Maps')}
-                          </MapLink>
+                          {showGoogleMapButton ? (
+                            <MapLink href={location.googleMapUrl} target="_blank" rel="noreferrer">
+                              {t('Google 지도 열기', 'Open Google Maps')}
+                            </MapLink>
+                          ) : null}
                         </MapActionGroup>
                       ))
                     ) : selectedOffice.showNaverMap && selectedOffice.naverMapUrl ? (
@@ -319,9 +322,11 @@ export function OfficesPage() {
                         <PrimaryMapLink href={selectedOffice.naverMapUrl} target="_blank" rel="noreferrer">
                           {t('네이버 지도 열기', 'Open Naver Map')}
                         </PrimaryMapLink>
-                        <MapLink href={selectedOffice.googleMapUrl} target="_blank" rel="noreferrer">
-                          {t('Google 지도 열기', 'Open Google Maps')}
-                        </MapLink>
+                        {showGoogleMapButton ? (
+                          <MapLink href={selectedOffice.googleMapUrl} target="_blank" rel="noreferrer">
+                            {t('Google 지도 열기', 'Open Google Maps')}
+                          </MapLink>
+                        ) : null}
                       </>
                     ) : (
                       <PrimaryMapLink href={selectedOffice.googleMapUrl} target="_blank" rel="noreferrer">
