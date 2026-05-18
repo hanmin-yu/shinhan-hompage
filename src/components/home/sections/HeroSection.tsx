@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
+import { useShinhanNewsRecords } from '../../../hooks/useNewsContent';
 import { useSiteContent } from '../../../hooks/useSiteContent';
 import { useI18n } from '../../../i18n/useI18n';
 import { useRotatingIndex } from '../../../hooks/useRotatingIndex';
+import { isSeminarRecruiting } from '../../../utils/seminar';
 import * as S from '../homeStyles';
 
 const HeroShell = styled.section`
@@ -384,6 +386,33 @@ const SeminarQuickCopy = styled.span`
   padding: 16px 18px;
 `;
 
+const SeminarRecruitingBadge = styled.span`
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: ${S.palette.blue};
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  box-shadow: 0 10px 18px rgba(3, 15, 34, 0.22);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: ${S.palette.blue};
+  }
+`;
+
 const SeminarQuickTitle = styled.strong`
   font-size: 1.12rem;
   font-weight: 900;
@@ -408,11 +437,13 @@ const SeminarQuickArrow = styled.span`
 export function HeroSection() {
   const { language, t } = useI18n();
   const { content } = useSiteContent();
+  const { items: shinhanNewsItems } = useShinhanNewsRecords();
   const heroSlides = content.home.heroSlides;
   const homeCopy = content.home.copy as Record<string, string | undefined>;
   const [activeSlide, setActiveSlide] = useRotatingIndex(heroSlides.length, 6200);
   const slide = heroSlides[activeSlide] ?? heroSlides[0];
   const progress = heroSlides.length > 0 ? ((activeSlide + 1) / heroSlides.length) * 100 : 0;
+  const hasRecruitingSeminar = shinhanNewsItems.some((item) => item.category === 'seminar' && isSeminarRecruiting(item.title));
 
   const moveSlide = (direction: 'prev' | 'next') => {
     setActiveSlide((current) => {
@@ -469,6 +500,7 @@ export function HeroSection() {
           </HeroControls>
 
           <SeminarQuickCard to="/news/seminar">
+            {hasRecruitingSeminar ? <SeminarRecruitingBadge>{t('모집중', 'Open')}</SeminarRecruitingBadge> : null}
             <SeminarQuickCopy>
               <SeminarQuickTitle>Seminar</SeminarQuickTitle>
               <SeminarQuickText>{t('세미나/교육', 'Seminar / Training')}</SeminarQuickText>

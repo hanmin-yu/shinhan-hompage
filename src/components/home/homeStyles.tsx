@@ -1772,7 +1772,14 @@ export const HeaderUtilityButton = styled.button`
   white-space: nowrap;
   word-break: keep-all;
   cursor: pointer;
-  ${headerUtilityInteractiveStyles}
+  color: ${palette.textBody};
+  transition: transform 0.18s ease;
+
+  &&:hover,
+  &&:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+  }
 
   [data-language='en'] & {
     padding-left: 9px;
@@ -1805,13 +1812,23 @@ export const LanguageToggleIcon = styled.svg`
 `;
 
 export const LanguageToggleText = styled.span`
-  color: currentColor;
+  color: ${palette.textBody};
   font-size: 1.03rem;
   font-weight: 900;
   line-height: 1;
   opacity: 0.58;
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease;
 
   &[data-active='true'] {
+    color: ${palette.textPrimary};
+    opacity: 1;
+  }
+
+  ${HeaderUtilityButton}:hover &:not([data-active='true']),
+  ${HeaderUtilityButton}:focus-visible &:not([data-active='true']) {
+    color: ${palette.blue};
     opacity: 1;
   }
 `;
@@ -4189,14 +4206,13 @@ export const FooterBrandLogo = styled.img`
 export const FooterTopAside = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: clamp(18px, 2.6vw, 34px);
   justify-content: flex-end;
   margin-left: auto;
   flex: 0 0 auto;
 
   @media (max-width: 900px) {
-    justify-content: flex-start;
+    align-items: flex-start;
     margin-left: 0;
   }
 
@@ -4206,32 +4222,45 @@ export const FooterTopAside = styled.div`
 `;
 
 export const FooterCertification = styled.div`
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 42px;
-  padding-right: 16px;
-  margin-right: 4px;
-  border-right: 1px solid #dbe3ee;
+  gap: 12px;
+  justify-content: center;
+  padding-right: clamp(18px, 2.4vw, 30px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 1px;
+    height: 38px;
+    transform: translateY(-50%);
+    background: #dbe3ee;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
+    justify-content: flex-start;
     padding-right: 0;
-    margin-right: 0;
-    border-right: 0;
+
+    &::after {
+      content: none;
+    }
   }
 `;
 
 export const FooterCertificationImage = styled.img`
   display: block;
-  width: 92px;
+  width: 96px;
   height: auto;
   object-fit: contain;
 `;
 
 export const FooterCertificationText = styled.span`
   color: ${palette.blue};
-  font-size: 0.84rem;
+  font-size: 0.95rem;
   font-weight: 800;
   line-height: 1.2;
   white-space: nowrap;
@@ -4283,12 +4312,19 @@ export const FooterSocialLabel = styled.span`
   text-transform: uppercase;
 `;
 
+export const FooterSocialGroup = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+`;
+
 export const FooterSocialRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   @media (max-width: 900px) {
     justify-content: flex-start;

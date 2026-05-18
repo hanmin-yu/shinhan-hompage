@@ -9,36 +9,13 @@ import { useSiteContent } from '../../hooks/useSiteContent';
 import { useShinhanNewsRecords } from '../../hooks/useNewsContent';
 import { useI18n } from '../../i18n/useI18n';
 import type { ShinhanNewsItem } from '../../types/site';
+import { isSeminarRecruiting } from '../../utils/seminar';
 import { NewsCompactHeroSection, NewsFlushPageSection, NewsPageContainer } from './newsLayout';
 
 const PAGE_SIZE = 20;
 
 function normalizeSearch(value: string) {
   return value.toLowerCase().replace(/\s+/g, '');
-}
-
-function getSeminarEventDate(title: string) {
-  const match = title.match(/\[(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
-
-  if (!match) {
-    return null;
-  }
-
-  const [, year, month, day] = match;
-  return new Date(Number(year), Number(month) - 1, Number(day), 23, 59, 59, 999);
-}
-
-function isSeminarRecruiting(title: string) {
-  const eventDate = getSeminarEventDate(title);
-
-  if (!eventDate) {
-    return false;
-  }
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  return eventDate >= today;
 }
 
 function compareSeminarItems(left: ShinhanNewsItem, right: ShinhanNewsItem) {
@@ -104,7 +81,7 @@ export function SeminarPage() {
                 {
                   label: t('모집중', 'Open'),
                   disabled: true,
-                  variant: 'recruiting' as const,
+                  variant: 'primary' as const,
                 },
                 {
                   label: t('상세 보기', 'View Detail'),

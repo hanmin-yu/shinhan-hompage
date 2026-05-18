@@ -432,7 +432,7 @@ const homeHeroSlideOrder = [0, 8, 20, 19, 13] as const;
 
 const homeHeroSlideOverrides: Partial<HeroSlide>[] = [
   {
-    headline: '가장 안전한 무역의 시작, 기업의\n성장을 돕는 든든한 관세 파트너',
+    headline: '가장 안전한 무역의 시작,\n기업의 성장을 돕는 든든한 관세 파트너',
     headlineEn: 'A safer start to trade,\na trusted customs partner for business growth',
   },
   {
