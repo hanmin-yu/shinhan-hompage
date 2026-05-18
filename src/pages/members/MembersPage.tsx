@@ -40,7 +40,6 @@ export function MembersPage() {
             summaryEn={membersSubnav.summaryEn}
             items={membersSubnav.items}
             matchAboutHero
-            hideVisualTitle
           />
         </P.PageContainer>
       </MembersHero>

@@ -4,14 +4,6 @@ export const issueReportsSnapshotGeneratedAt = '2026-04-27T09:00:00+09:00';
 
 const rows = [
   [
-    'issue-kita-101130',
-    '한국무역협회',
-    'Korea International Trade Association',
-    '2026.04.27',
-    '트럼프 "해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발"',
-    'https://www.kita.net/board/totalTradeNews/totalTradeNewsDetail.do?no=101130&siteId=2',
-  ],
-  [
     'issue-kita-101129',
     '한국무역협회',
     'Korea International Trade Association',

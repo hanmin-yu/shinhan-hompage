@@ -143,114 +143,65 @@ const ConfirmButton = styled.button`
   box-shadow: 0 12px 22px rgba(18, 63, 133, 0.22);
 `;
 
-function resolveDetailPath(item: IssueReport) {
-  return item.detailPath ?? `/trade-insights/details/${item.id}.json`;
+function hasRenderableDetail(detail?: IssueReportDetail | null) {
+  return Boolean(detail?.body?.length || detail?.attachments?.length);
 }
 
-function isGenericIssueSummary(summary?: string) {
-  if (!summary) {
-    return true;
-  }
-
-  return (
-    summary.includes('무역뉴스에서 수집한 기사입니다') ||
-    summary.includes('언론 스크랩에서 수집한 외부 기사입니다') ||
-    summary.includes('collected from')
-  );
-}
-
-function buildIssueSummaryParagraphs(item: IssueReport) {
-  const title = item.title;
-  const paragraphs = [`${title} 관련 무역동향입니다.`];
-
-  if (/해상봉쇄|이란|호르무즈|원유|나프타|헬륨|에너지/.test(title)) {
-    paragraphs.push(
-      '중동 정세와 해상 운송 리스크가 에너지 원자재, 운임, 보험료, 납기 변동으로 이어질 수 있어 수출입 계약과 물류 일정을 함께 점검할 필요가 있습니다.',
-    );
-  } else if (/환율|원화|달러|금융위기/.test(title)) {
-    paragraphs.push(
-      '환율 변동성이 커질 경우 수입 원가와 수출 채산성에 직접 영향을 줄 수 있으므로 결제 통화, 환헤지, 견적 유효기간 관리가 중요합니다.',
-    );
-  } else if (/관세|통관|전자상거래|지식재산권|관세청|분류|수입/.test(title)) {
-    paragraphs.push(
-      '관세·통관 제도와 품목 분류, 지식재산권 보호 이슈가 포함된 사안으로 수입 신고, HS Code, 원산지 및 사후관리 기준을 확인해야 합니다.',
-    );
-  } else if (/유턴기업|중기부|창업|기술사업화|지원|정책/.test(title)) {
-    paragraphs.push(
-      '정부 지원과 산업 정책 변화에 관한 내용으로 국내 생산 전환, 기술사업화, 지역 투자 계획을 검토하는 기업이 참고할 만한 이슈입니다.',
-    );
-  } else if (/개정안|특별법|본회의|법률안/.test(title)) {
-    paragraphs.push(
-      '법령 개정과 제도 변화가 기업 운영 기준에 영향을 줄 수 있는 내용으로 시행 시점, 적용 대상, 후속 고시를 확인하는 것이 좋습니다.',
-    );
-  } else if (/베트남|미얀마|중국|한-일|한-유럽|인도/.test(title)) {
-    paragraphs.push(
-      '주요 교역국의 정책·시장 변화와 관련된 내용으로 현지 통관, 인증, 공급망 및 거래 조건 변화를 함께 살펴볼 필요가 있습니다.',
-    );
-  } else {
-    paragraphs.push(
-      '수출입 기업이 정책 변화, 시장 흐름, 공급망 영향을 빠르게 확인할 수 있도록 핵심 이슈를 정리한 자료입니다.',
-    );
-  }
-
-  paragraphs.push('신한관세법인은 해당 이슈가 관세, 통관, 물류, 환율, 공급망에 미칠 영향을 중심으로 고객사의 대응 포인트를 검토합니다.');
-  return paragraphs;
-}
-
-function buildFallbackDetail(item: IssueReport): IssueReportDetail {
-  const body = isGenericIssueSummary(item.summary) ? buildIssueSummaryParagraphs(item) : [item.summary];
-
+function normalizeDetail(item: IssueReport, detail: IssueReportDetail): IssueReportDetail {
   return {
-    id: item.id,
-    title: item.title,
-    source: item.source,
-    registeredAt: item.publishedAt,
-    updatedAt: item.publishedAt,
-    body,
-    originalUrl: item.url,
+    ...detail,
+    id: detail.id ?? item.id,
+    title: detail.title ?? item.title,
+    source: detail.source ?? item.source,
+    registeredAt: detail.registeredAt ?? item.publishedAt,
+    updatedAt: detail.updatedAt ?? item.publishedAt,
+    originalUrl: detail.originalUrl ?? item.url,
   };
 }
 
 export function useIssueReportDetailModal() {
   const [selectedReport, setSelectedReport] = useState<IssueReport | null>(null);
   const [selectedDetail, setSelectedDetail] = useState<IssueReportDetail | null>(null);
-  const [detailLoading, setDetailLoading] = useState(false);
 
   async function openReportDetail(item: IssueReport) {
     if (item.status === 'placeholder') {
       return;
     }
 
-    setSelectedReport(item);
-    setSelectedDetail(item.detail ?? buildFallbackDetail(item));
-    setDetailLoading(Boolean(!item.detail));
+    if (hasRenderableDetail(item.detail)) {
+      setSelectedReport(item);
+      setSelectedDetail(normalizeDetail(item, item.detail!));
+      return;
+    }
 
-    if (!item.detail) {
-      try {
-        const response = await fetch(resolveDetailPath(item), { cache: 'no-store' });
+    if (!item.detailPath) {
+      return;
+    }
 
-        if (!response.ok) {
-          throw new Error(`Failed to load detail: ${response.status}`);
-        }
+    try {
+      const response = await fetch(item.detailPath, { cache: 'no-store' });
 
-        const detail = (await response.json()) as IssueReportDetail;
-        setSelectedDetail({
-          ...buildFallbackDetail(item),
-          ...detail,
-          originalUrl: detail.originalUrl ?? item.url,
-        });
-      } catch {
-        setSelectedDetail(buildFallbackDetail(item));
-      } finally {
-        setDetailLoading(false);
+      if (!response.ok) {
+        return;
       }
+
+      const detail = normalizeDetail(item, (await response.json()) as IssueReportDetail);
+
+      if (!hasRenderableDetail(detail)) {
+        return;
+      }
+
+      setSelectedReport(item);
+      setSelectedDetail(detail);
+    } catch {
+      setSelectedReport(null);
+      setSelectedDetail(null);
     }
   }
 
   function closeReportDetail() {
     setSelectedReport(null);
     setSelectedDetail(null);
-    setDetailLoading(false);
   }
 
   useEffect(() => {
@@ -271,7 +222,6 @@ export function useIssueReportDetailModal() {
   return {
     selectedReport,
     selectedDetail,
-    detailLoading,
     openReportDetail,
     closeReportDetail,
   };
@@ -282,7 +232,6 @@ type IssueReportDetailModalProps = ReturnType<typeof useIssueReportDetailModal>;
 export function IssueReportDetailModal({
   selectedReport,
   selectedDetail,
-  detailLoading,
   closeReportDetail,
 }: IssueReportDetailModalProps) {
   const { t } = useI18n();
@@ -319,8 +268,7 @@ export function IssueReportDetailModal({
           </CloseButton>
         </ModalHeader>
         <ModalBody>
-          {detailLoading ? <p>{t('요약 정보를 불러오는 중입니다.', 'Loading summary details.')}</p> : null}
-          {(selectedDetail?.body?.length ? selectedDetail.body : [selectedReport.summary]).map((paragraph, index) => (
+          {selectedDetail?.body?.map((paragraph, index) => (
             <p key={`${selectedReport.id}-${index}`}>{paragraph}</p>
           ))}
           {selectedDetail?.attachments?.length ? (

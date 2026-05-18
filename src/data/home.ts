@@ -1047,6 +1047,24 @@ const officeBranchOrder = [
 
 const officeBranchRank = new Map(officeBranchOrder.map((officeId, index) => [officeId, index]));
 
+const officeGoogleMapUrls = {
+  seoul:
+    'https://www.google.com/maps/place/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/data=!3m1!4b1!4m6!3m5!1s0x357ca3f4b48fa767:0xe3d657007b43400f!8m2!3d37.5146533!4d127.0307242!16s%2Fg%2F1tglkvnt?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  airport:
+    'https://www.google.com/maps/place/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/data=!3m1!4b1!4m6!3m5!1s0x357b788e9678a691:0xf4bff51a3f20f7a7!8m2!3d37.4688054!4d126.6245183!16s%2Fg%2F1w344k4t?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  incheon:
+    'https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%97%B0%EC%88%98%EA%B5%AC+%EC%9D%B8%EC%B2%9C%ED%83%80%EC%9B%8C%EB%8C%80%EB%A1%9C/data=!3m1!4b1!4m6!3m5!1s0x357b77b15dce8fbb:0x7577a0cf1a862fb2!8m2!3d37.398339!4d126.6318444!16s%2Fg%2F119v8_c08?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  shFood:
+    'https://www.google.com/maps/place/%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%97%B0%EC%88%98%EA%B5%AC+%EC%9D%B8%EC%B2%9C%ED%83%80%EC%9B%8C%EB%8C%80%EB%A1%9C/data=!4m6!3m5!1s0x357b77b15dce8fbb:0x7577a0cf1a862fb2!8m2!3d37.398339!4d126.6318444!16s%2Fg%2F119v8_c08?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  busan:
+    'https://www.google.com/maps/search/+%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C+%EC%A4%91%EA%B5%AC+%EC%B6%A9%EC%9E%A5%EB%8C%80%EB%A1%9C+9%EB%B2%88%EA%B8%B8+11+%EB%AF%B8%EA%B4%91%EB%B9%8C%EB%94%A9+501%ED%98%B8/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  cheongju:
+    'https://www.google.com/maps/place/%EC%B2%AD%EC%A3%BC%ED%85%8C%ED%81%AC%EB%85%B8S%ED%83%80%EC%9B%8C+%EC%A7%80%EC%8B%9D%EC%82%B0%EC%97%85%EC%84%BC%ED%84%B0/data=!3m1!4b1!4m6!3m5!1s0x3565294a9331a413:0xd40cecc93b911d28!8m2!3d36.6432086!4d127.4516157!16s%2Fg%2F11fppc58nn?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  gumi:
+    'https://www.google.com/maps/place/%EA%B8%88%EC%98%A4%EB%B9%8C%EB%94%A9/data=!3m1!4b1!4m6!3m5!1s0x3565c1488e475133:0xb89273b9a9914b57!8m2!3d36.1016775!4d128.3830107!16s%2Fg%2F1tdk30kh?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D',
+  invistaGochon: 'https://www.google.com/maps/search/?api=1&query=37.590850015737%2C126.78825829294',
+} as const;
+
 const officeBranchItems: OfficeBranch[] = [
   {
     id: 'seoul',
@@ -1054,6 +1072,7 @@ const officeBranchItems: OfficeBranch[] = [
     labelEn: 'Seoul HQ',
     mapQuery: '서울시 강남구 논현로 704',
     mapQueryEn: '704 Nonhyeon-ro, Gangnam-gu, Seoul, Korea',
+    googleMapUrl: officeGoogleMapUrls.seoul,
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8/place/11535764?c=15.00,0,0,0,dh&placePath=/home?bk_query=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8&entry=bmp&from=map&fromPanelNum=2&timestamp=202605122236&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8',
     shortLabel: '본사',
@@ -1133,8 +1152,9 @@ const officeBranchItems: OfficeBranch[] = [
     id: 'airport',
     label: '인천공항지사',
     labelEn: 'Incheon Airport Branch',
-    mapQuery: '신한관세법인 인천공항지사',
-    mapQueryEn: 'Shinhan Customs Service Incheon Airport Branch',
+    mapQuery: '인천광역시 중구 햇내로27번길 14 304호',
+    mapQueryEn: 'Suite 304, 14 Haennae-ro 27beon-gil, Jung-gu, Incheon, Korea',
+    googleMapUrl: officeGoogleMapUrls.airport,
     shortLabel: '공항',
     shortLabelEn: 'Airport',
     region: '인천공항 물류권역',
@@ -1158,8 +1178,9 @@ const officeBranchItems: OfficeBranch[] = [
     id: 'incheon',
     label: '인천경기지사',
     labelEn: 'Incheon-Gyeonggi Branch',
-    mapQuery: '신한관세법인 인천경기지사',
-    mapQueryEn: 'Shinhan Customs Service Incheon-Gyeonggi Branch',
+    mapQuery: '인천광역시 연수구 인천타워대로 301 A동 906호',
+    mapQueryEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
+    googleMapUrl: officeGoogleMapUrls.incheon,
     shortLabel: '경기',
     shortLabelEn: 'Gyeonggi',
     region: '인천항 · 수도권',
@@ -1184,8 +1205,9 @@ const officeBranchItems: OfficeBranch[] = [
     id: 'sh-food',
     label: 'SH FOOD 컨설팅',
     labelEn: 'SH FOOD Consulting',
-    mapQuery: '신한관세법인 인천경기지사',
-    mapQueryEn: 'Shinhan Customs Service Incheon-Gyeonggi Branch',
+    mapQuery: '인천광역시 연수구 인천타워대로 301 A동 906호',
+    mapQueryEn: 'Suite A-906, 301 Incheontaero, Yeonsu-gu, Incheon, Korea',
+    googleMapUrl: officeGoogleMapUrls.shFood,
     shortLabel: 'SH FOOD',
     shortLabelEn: 'SH FOOD',
     region: '인천경기지사',
@@ -1212,6 +1234,7 @@ const officeBranchItems: OfficeBranch[] = [
     labelEn: 'Busan Branch',
     mapQuery: '신한관세법인 부산지사',
     mapQueryEn: 'Shinhan Customs Service Busan Branch',
+    googleMapUrl: officeGoogleMapUrls.busan,
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC/place/34565304?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120005&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC',
     shortLabel: '부산',
@@ -1239,6 +1262,7 @@ const officeBranchItems: OfficeBranch[] = [
     labelEn: 'Cheongju Branch',
     mapQuery: '신한관세법인 청주지사',
     mapQueryEn: 'Shinhan Customs Service Cheongju Branch',
+    googleMapUrl: officeGoogleMapUrls.cheongju,
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%B2%AD%EC%A3%BC%EC%A7%80%EC%82%AC/place/19720232?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120004&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EC%B2%AD%EC%A3%BC%EC%A7%80%EC%82%AC',
     shortLabel: '청주',
@@ -1267,6 +1291,7 @@ const officeBranchItems: OfficeBranch[] = [
     labelEn: 'Gumi Branch',
     mapQuery: '신한관세법인 구미지사',
     mapQueryEn: 'Shinhan Customs Service Gumi Branch',
+    googleMapUrl: officeGoogleMapUrls.gumi,
     naverMapUrl:
       'https://map.naver.com/p/search/%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EA%B5%AC%EB%AF%B8%EC%A7%80%EC%82%AC/place/11682223?c=15.00,0,0,0,dh&isCorrectAnswer=true&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202605120004&locale=ko&svcName=map_pcv5&searchText=%EC%8B%A0%ED%95%9C%EA%B4%80%EC%84%B8%EB%B2%95%EC%9D%B8%20%EA%B5%AC%EB%AF%B8%EC%A7%80%EC%82%AC',
     shortLabel: '구미',
@@ -1301,8 +1326,9 @@ const officeBranchItems: OfficeBranch[] = [
         labelEn: 'Warehouse 1',
         address: '경기도 김포시 고촌읍 아라육로 95',
         addressEn: '95, Arayuk-ro, Gochon-eup, Gimpo-si, Gyeonggi-do, Korea',
-        mapQuery: '신한인비스타',
-        mapQueryEn: 'Shinhan Invista, Gimpo, Korea',
+        mapQuery: '경기도 김포시 고촌읍 아라육로 95',
+        mapQueryEn: '95, Arayuk-ro, Gochon-eup, Gimpo-si, Gyeonggi-do, Korea',
+        googleMapUrl: officeGoogleMapUrls.invistaGochon,
         coordinates: {
           lat: 37.590850015737,
           lng: 126.78825829294,

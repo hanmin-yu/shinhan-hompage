@@ -98,6 +98,8 @@ export type OfficeBranch = {
   mapQuery?: string;
   mapQueryEn?: string;
   naverMapUrl?: string;
+  googleMapUrl?: string;
+  googleMapEmbedUrl?: string;
   locations?: {
     id: string;
     label: string;
@@ -107,6 +109,8 @@ export type OfficeBranch = {
     mapQuery?: string;
     mapQueryEn?: string;
     naverMapUrl?: string;
+    googleMapUrl?: string;
+    googleMapEmbedUrl?: string;
     coordinates?: {
       lat: number;
       lng: number;

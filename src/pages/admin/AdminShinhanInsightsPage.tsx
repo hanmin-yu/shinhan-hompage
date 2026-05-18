@@ -139,6 +139,10 @@ export function AdminShinhanInsightsPage() {
   const [selectedId, setSelectedId] = useState('');
   const [form, setForm] = useState<ShinhanInsight>(() => createEmptyInsight());
   const [message, setMessage] = useState('');
+  const [nextPassword, setNextPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordSubmitting, setPasswordSubmitting] = useState(false);
 
   useEffect(() => {
     if (!session.isAuthenticated) {
@@ -270,6 +274,48 @@ export function AdminShinhanInsightsPage() {
       setMessage(t('저장되었습니다.', 'Saved.'));
     } catch (error) {
       setMessage(error instanceof Error ? error.message : t('저장에 실패했습니다.', 'Save failed.'));
+    }
+  };
+
+  const handlePasswordSave = async () => {
+    setPasswordMessage('');
+
+    if (nextPassword.length < 8) {
+      setPasswordMessage('새 비밀번호는 8자 이상으로 입력해주세요.');
+      return;
+    }
+
+    if (nextPassword !== confirmPassword) {
+      setPasswordMessage('새 비밀번호와 확인 입력이 일치하지 않습니다.');
+      return;
+    }
+
+    setPasswordSubmitting(true);
+
+    try {
+      const response = await fetch('/api/admin/password', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nextPassword,
+        }),
+      });
+      const payload = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.message ?? '비밀번호 변경에 실패했습니다.');
+      }
+
+      setNextPassword('');
+      setConfirmPassword('');
+      setPasswordMessage('비밀번호가 변경되었습니다.');
+    } catch (error) {
+      setPasswordMessage(error instanceof Error ? error.message : '비밀번호 변경에 실패했습니다.');
+    } finally {
+      setPasswordSubmitting(false);
     }
   };
 
@@ -411,6 +457,46 @@ export function AdminShinhanInsightsPage() {
               </AdminForm>
             </AdminPanel>
           </AdminSplitGrid>
+
+          <AdminPanel>
+            <P.Kicker>글쓰기 권한</P.Kicker>
+            <AdminMuted>신한 Insights 작성과 수정에 사용하는 관리자 비밀번호를 변경합니다.</AdminMuted>
+            <AdminForm
+              onSubmit={(event) => {
+                event.preventDefault();
+                void handlePasswordSave();
+              }}
+            >
+              <AdminFieldGrid>
+                <AdminField>
+                  <AdminLabel>새 비밀번호</AdminLabel>
+                  <AdminInput
+                    type="password"
+                    value={nextPassword}
+                    disabled={session.isReadOnly || passwordSubmitting}
+                    autoComplete="new-password"
+                    onChange={(event) => setNextPassword(event.target.value)}
+                  />
+                </AdminField>
+                <AdminField>
+                  <AdminLabel>새 비밀번호 확인</AdminLabel>
+                  <AdminInput
+                    type="password"
+                    value={confirmPassword}
+                    disabled={session.isReadOnly || passwordSubmitting}
+                    autoComplete="new-password"
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                  />
+                </AdminField>
+              </AdminFieldGrid>
+              <AdminActionRow>
+                <AdminButton type="submit" disabled={session.isReadOnly || passwordSubmitting}>
+                  {passwordSubmitting ? '변경 중...' : '비밀번호 변경'}
+                </AdminButton>
+              </AdminActionRow>
+              {passwordMessage ? <AdminHint>{passwordMessage}</AdminHint> : null}
+            </AdminForm>
+          </AdminPanel>
         </AdminPanel>
       </P.PageContainer>
     </P.PageSection>

@@ -367,7 +367,7 @@ const SeminarQuickCard = styled(Link)`
   width: 224px;
   min-height: 100px;
   overflow: hidden;
-  background: url('/hero/homepage/seminar-quick-card-ai.png') center / cover no-repeat;
+  background: url('/hero/homepage/seminar-quick-card-clean.png') center / cover no-repeat;
   color: #ffffff;
   box-shadow: 0 22px 44px rgba(3, 15, 34, 0.28);
 

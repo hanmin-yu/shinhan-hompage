@@ -36,6 +36,7 @@ type OfficeViewData = {
   naverMapUrl?: string;
   googleMapUrl: string;
   googleMapEmbedUrl: string;
+  mapFrameUrl: string;
   locations: OfficeLocationViewData[];
 };
 
@@ -49,6 +50,7 @@ type OfficeLocationViewData = {
   naverMapUrl?: string;
   googleMapUrl: string;
   googleMapEmbedUrl: string;
+  mapFrameUrl: string;
 };
 
 const primaryOfficeIds = new Set(['seoul', 'airport', 'incheon', 'busan', 'cheongju', 'gumi']);
@@ -75,6 +77,8 @@ function useOfficeViewData(): OfficeViewData[] {
               mapQuery: office.mapQuery,
               mapQueryEn: office.mapQueryEn,
               naverMapUrl: office.naverMapUrl,
+              googleMapUrl: office.googleMapUrl,
+              googleMapEmbedUrl: office.googleMapEmbedUrl,
               coordinates: undefined,
             },
           ];
@@ -86,6 +90,14 @@ function useOfficeViewData(): OfficeViewData[] {
           (isVietnamOffice ? location.addressEn : mapSearchQuery);
         const coordinates = location.coordinates;
 
+        const googleMapUrl = location.googleMapUrl ?? (coordinates ? getGoogleMapUrlByCoordinates(coordinates.lat, coordinates.lng) : getGoogleMapUrl(googleMapQuery));
+        const googleMapEmbedUrl =
+          location.googleMapEmbedUrl ??
+          (coordinates
+            ? getGoogleMapEmbedUrlByCoordinates(coordinates.lat, coordinates.lng)
+            : getGoogleMapEmbedUrl(googleMapQuery));
+        const naverMapUrl = isVietnamOffice ? undefined : location.naverMapUrl ?? getNaverMapUrl(mapSearchQuery);
+
         return {
           id: location.id,
           label: location.label,
@@ -93,11 +105,10 @@ function useOfficeViewData(): OfficeViewData[] {
           address: location.address,
           addressEn: location.addressEn,
           showNaverMap: !isVietnamOffice,
-          naverMapUrl: isVietnamOffice ? undefined : location.naverMapUrl ?? getNaverMapUrl(mapSearchQuery),
-          googleMapUrl: coordinates ? getGoogleMapUrlByCoordinates(coordinates.lat, coordinates.lng) : getGoogleMapUrl(googleMapQuery),
-          googleMapEmbedUrl: coordinates
-            ? getGoogleMapEmbedUrlByCoordinates(coordinates.lat, coordinates.lng)
-            : getGoogleMapEmbedUrl(googleMapQuery),
+          naverMapUrl,
+          googleMapUrl,
+          googleMapEmbedUrl,
+          mapFrameUrl: naverMapUrl ?? googleMapEmbedUrl,
         };
       });
       const primaryLocation = locations[0];
@@ -119,8 +130,9 @@ function useOfficeViewData(): OfficeViewData[] {
         websiteLabel: office.websiteLabel,
         showNaverMap: !isVietnamOffice,
         naverMapUrl: primaryLocation?.naverMapUrl,
-        googleMapUrl: primaryLocation?.googleMapUrl ?? getGoogleMapUrl(t(office.address, office.addressEn)),
-        googleMapEmbedUrl: primaryLocation?.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
+        googleMapUrl: office.googleMapUrl ?? primaryLocation?.googleMapUrl ?? getGoogleMapUrl(t(office.address, office.addressEn)),
+        googleMapEmbedUrl: office.googleMapEmbedUrl ?? primaryLocation?.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
+        mapFrameUrl: primaryLocation?.mapFrameUrl ?? office.googleMapEmbedUrl ?? getGoogleMapEmbedUrl(t(office.address, office.addressEn)),
         locations,
       };
   });
@@ -349,7 +361,7 @@ export function OfficesPage() {
                           <MapFrameLabel>{t(location.label, location.labelEn)}</MapFrameLabel>
                         ) : null}
                         <iframe
-                          src={location.googleMapEmbedUrl}
+                          src={location.mapFrameUrl}
                           title={t(`${selectedOffice.label} ${location.label} 지도`, `${selectedOffice.labelEn} ${location.labelEn} Map`)}
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"

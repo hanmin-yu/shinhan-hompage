@@ -1,19 +1,6 @@
 {
   "reports": [
     {
-      "id": "issue-kita-101130",
-      "source": "한국무역협회",
-      "sourceEn": "Korea International Trade Association",
-      "publishedAt": "2026.04.27",
-      "title": "트럼프 \"해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발\"",
-      "titleEn": "트럼프 \"해상봉쇄 효과적…이란 송유관 사흘후면 내부 폭발\"",
-      "summary": "한국무역협회 무역뉴스에서 수집한 기사입니다.",
-      "summaryEn": "An article collected from the KITA trade news feed.",
-      "url": "https://www.kita.net/board/totalTradeNews/totalTradeNewsDetail.do?no=101130&siteId=2",
-      "tags": ["한국무역협회"],
-      "status": "live"
-    },
-    {
       "id": "issue-kita-101129",
       "source": "한국무역협회",
       "sourceEn": "Korea International Trade Association",
@@ -23,6 +10,7 @@
       "summary": "한국무역협회 무역뉴스에서 수집한 기사입니다.",
       "summaryEn": "An article collected from the KITA trade news feed.",
       "url": "https://www.kita.net/board/totalTradeNews/totalTradeNewsDetail.do?no=101129&siteId=1",
+      "detailPath": "/trade-insights/details/issue-kita-101129.json",
       "tags": ["한국무역협회"],
       "status": "live"
     },

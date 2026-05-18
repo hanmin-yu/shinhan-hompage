@@ -19,6 +19,13 @@ type StoredShinhanNewsIndexEntry = Omit<ShinhanNewsRecord, 'bodyHtml'> & {
 
 type StoredNewsletterIndexEntry = NewsletterRecord;
 
+type StoredAdminCredentials = {
+  username: string;
+  passwordSalt: string;
+  passwordHash: string;
+  updatedAt: string;
+};
+
 type RequestWithSession = Request & {
   adminSession?: AdminSession;
 };
@@ -48,6 +55,7 @@ const NEWSLETTER_INDEX_PATH = path.join(NEWSLETTER_ROOT, 'index.json');
 const NEWSLETTER_FILES_ROOT = path.join(NEWSLETTER_ROOT, 'files');
 const SITE_ROOT = path.join(STORAGE_ROOT, 'site');
 const SITE_CONTENT_PATH = path.join(SITE_ROOT, 'content.json');
+const ADMIN_CREDENTIALS_PATH = path.join(SITE_ROOT, 'admin-credentials.json');
 const SITE_ASSETS_ROOT = path.join(SITE_ROOT, 'assets');
 const PUBLIC_ROOT = path.resolve(process.cwd(), 'public');
 
@@ -121,6 +129,40 @@ function parseCookies(request: Request) {
 function signSession(username: string) {
   const signature = createHmac('sha256', SESSION_SECRET).update(username).digest('hex');
   return `${username}.${signature}`;
+}
+
+function hashAdminPassword(password: string, salt: string) {
+  return createHmac('sha256', SESSION_SECRET).update(`${salt}:${password}`).digest('hex');
+}
+
+async function readAdminCredentials() {
+  return readJsonFile<StoredAdminCredentials>(ADMIN_CREDENTIALS_PATH);
+}
+
+async function verifyAdminCredentials(username: string, password: string) {
+  const storedCredentials = await readAdminCredentials();
+
+  if (!storedCredentials) {
+    return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
+  }
+
+  return (
+    username === storedCredentials.username &&
+    hashAdminPassword(password, storedCredentials.passwordSalt) === storedCredentials.passwordHash
+  );
+}
+
+async function writeAdminCredentials(username: string, password: string) {
+  const passwordSalt = randomUUID();
+  const credentials: StoredAdminCredentials = {
+    username,
+    passwordSalt,
+    passwordHash: hashAdminPassword(password, passwordSalt),
+    updatedAt: new Date().toISOString(),
+  };
+
+  await writeJsonFile(ADMIN_CREDENTIALS_PATH, credentials);
+  return credentials;
 }
 
 function verifySession(token?: string | null) {
@@ -728,7 +770,7 @@ app.get('/api/admin/session', (request: RequestWithSession, response) => {
   sendJson(response, 200, request.adminSession ?? buildSession(request));
 });
 
-app.post('/api/admin/login', (request, response) => {
+app.post('/api/admin/login', async (request, response) => {
   if (!ensureEnabled(response)) {
     return;
   }
@@ -736,7 +778,7 @@ app.post('/api/admin/login', (request, response) => {
   const username = typeof request.body?.username === 'string' ? request.body.username : '';
   const password = typeof request.body?.password === 'string' ? request.body.password : '';
 
-  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+  if (!(await verifyAdminCredentials(username, password))) {
     sendJson(response, 401, {
       message: '아이디 또는 비밀번호가 올바르지 않습니다.',
       code: 'NEWS_ADMIN_INVALID_CREDENTIALS',
@@ -751,6 +793,26 @@ app.post('/api/admin/login', (request, response) => {
     isReadOnly: false,
     username,
   } satisfies AdminSession);
+});
+
+app.post('/api/admin/password', requireAdmin, async (request: RequestWithSession, response) => {
+  if (!ensureEnabled(response)) {
+    return;
+  }
+
+  const nextPassword = typeof request.body?.nextPassword === 'string' ? request.body.nextPassword : '';
+  const username = request.adminSession?.username ?? ADMIN_USERNAME;
+
+  if (nextPassword.length < 8) {
+    sendJson(response, 400, {
+      message: '새 비밀번호는 8자 이상으로 입력해주세요.',
+      code: 'NEWS_ADMIN_WEAK_PASSWORD',
+    });
+    return;
+  }
+
+  await writeAdminCredentials(username, nextPassword);
+  sendJson(response, 200, { ok: true, updatedAt: new Date().toISOString() });
 });
 
 app.post('/api/admin/logout', (_request, response) => {
