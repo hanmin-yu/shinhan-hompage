@@ -9,7 +9,120 @@ import type {
 import type { ShinhanInsight } from '../data/shinhanInsights';
 
 export type SiteLanguage = 'ko' | 'en';
+export type VnLanguage = 'ko' | 'en' | 'vi';
 export type NewsAdminMode = 'readonly' | 'enabled';
+
+export type VnLocalizedText = {
+  ko: string;
+  en: string;
+  vi?: string;
+};
+
+export type VnNavItem = {
+  id: string;
+  label: VnLocalizedText;
+  path: string;
+  children?: VnNavItem[];
+};
+
+export type VnPerson = {
+  id: string;
+  name: VnLocalizedText;
+  role: VnLocalizedText;
+  group: 'executive' | 'expert';
+  team?: VnLocalizedText;
+  image?: string;
+  highlights: VnLocalizedText[];
+};
+
+export type VnService = {
+  id: string;
+  title: VnLocalizedText;
+  summary: VnLocalizedText;
+  manager?: string;
+  team?: VnLocalizedText;
+  details: VnLocalizedText[];
+};
+
+export type VnItSolution = {
+  id: string;
+  title: string;
+  summary: VnLocalizedText;
+  details: VnLocalizedText[];
+  image?: string;
+};
+
+export type VnNewsItem = {
+  id: string;
+  category: 'newsletter' | 'legal-update' | 'card-news';
+  title: VnLocalizedText;
+  summary: VnLocalizedText;
+  publishedAt: string;
+  href?: string;
+};
+
+export type VietnamContent = {
+  hero: {
+    eyebrow: VnLocalizedText;
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    image: string;
+    imagePosition: string;
+  };
+  navigation: VnNavItem[];
+  about: {
+    intro: {
+      title: VnLocalizedText;
+      body: VnLocalizedText[];
+      mission: VnLocalizedText;
+    };
+    message: {
+      title: VnLocalizedText;
+      body: VnLocalizedText[];
+      signer: VnLocalizedText;
+      image?: string;
+    };
+    history: {
+      year: string;
+      text: VnLocalizedText;
+    }[];
+    location: {
+      title: VnLocalizedText;
+      address: VnLocalizedText;
+      transport: VnLocalizedText;
+      googleMapUrl?: string;
+    };
+  };
+  people: {
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    members: VnPerson[];
+  };
+  services: {
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    items: VnService[];
+  };
+  itSolutions: {
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    items: VnItSolution[];
+  };
+  news: {
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    items: VnNewsItem[];
+  };
+  contact: {
+    title: VnLocalizedText;
+    summary: VnLocalizedText;
+    email: string;
+    phone: string;
+    onlineInquiryHref?: string;
+    naverBlogUrl?: string;
+    facebookUrl?: string;
+  };
+};
 
 export type LinkItem = {
   id: string;
@@ -535,6 +648,7 @@ export type SiteContentPayload = {
       ethics: EthicsPageCopy;
     };
   };
+  vietnam: VietnamContent;
   offices: {
     officeBranches: OfficeBranch[];
     copy: OfficesPageCopy;
@@ -570,6 +684,7 @@ export type SiteContentGroupKey =
   | 'services'
   | 'recruit'
   | 'contact'
+  | 'vietnam'
   | 'offices'
   | 'it'
   | 'members'

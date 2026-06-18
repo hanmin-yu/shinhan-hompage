@@ -59,7 +59,7 @@ const ADMIN_CREDENTIALS_PATH = path.join(SITE_ROOT, 'admin-credentials.json');
 const SITE_ASSETS_ROOT = path.join(SITE_ROOT, 'assets');
 const PUBLIC_ROOT = path.resolve(process.cwd(), 'public');
 
-const SITE_CONTENT_GROUPS: SiteContentGroupKey[] = ['global', 'home', 'news', 'about', 'services', 'recruit', 'contact', 'offices', 'it', 'members', 'legal'];
+const SITE_CONTENT_GROUPS: SiteContentGroupKey[] = ['global', 'home', 'news', 'about', 'services', 'recruit', 'contact', 'vietnam', 'offices', 'it', 'members', 'legal'];
 
 const staticShinhanNewsRecords: ShinhanNewsRecord[] = sortShinhanNewsRecords(
   shinhanNewsItems.map((item) => {
@@ -457,6 +457,7 @@ async function loadSiteContentPayload() {
     services: mergeStoredContent(defaults.services, stored.services),
     recruit: mergeStoredContent(defaults.recruit, stored.recruit),
     contact: mergeStoredContent(defaults.contact, stored.contact),
+    vietnam: mergeStoredContent(defaults.vietnam, stored.vietnam),
     offices: mergeStoredContent(defaults.offices, stored.offices),
     it: mergeStoredContent(defaults.it, stored.it),
     members: mergeStoredContent(defaults.members, stored.members),

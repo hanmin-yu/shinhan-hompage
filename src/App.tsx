@@ -14,6 +14,7 @@ import { AdminMembersPage } from './pages/admin/AdminMembersPage';
 import { AdminNewsletterPage } from './pages/admin/AdminNewsletterPage';
 import { AdminShinhanInsightsPage } from './pages/admin/AdminShinhanInsightsPage';
 import { AdminShinhanNewsPage } from './pages/admin/AdminShinhanNewsPage';
+import { AdminVietnamPage } from './pages/admin/AdminVietnamPage';
 import { AboutPage } from './pages/about/AboutPage';
 import { HistoryPage } from './pages/about/HistoryPage';
 import { DirectionsPage, LocationPage } from './pages/about/LocationPage';
@@ -40,6 +41,15 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { OfficesPage } from './pages/offices/OfficesPage';
 import { RecruitPage } from './pages/recruit/RecruitPage';
 import { ServiceDetailPage } from './pages/services/ServiceDetailPage';
+import {
+  VnAboutPage,
+  VnContactPage,
+  VnHomePage,
+  VnItPage,
+  VnMembersPage,
+  VnNewsPage,
+  VnServicePage,
+} from './pages/vietnam/VietnamSite';
 
 const serviceRoutes = [
   '/services/import-export',
@@ -73,6 +83,7 @@ function AppShell() {
   const location = useLocation();
   const previousPathname = useRef(location.pathname);
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isVietnamRoute = location.pathname === '/vn' || location.pathname.startsWith('/vn/');
 
   useRevealOnScroll(`${location.pathname}:${location.key}`);
 
@@ -127,7 +138,7 @@ function AppShell() {
       <SiteLanguageProvider>
         <SiteContentProvider>
           <S.Page>
-            {isAdminRoute ? null : (
+            {isAdminRoute || isVietnamRoute ? null : (
               <>
                 <SiteHeader mobileMenuOpen={mobileMenuOpen} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
                 <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
@@ -137,6 +148,30 @@ function AppShell() {
             <S.Main id="top">
               <Routes>
               <Route path="/" element={<HomePage />} />
+
+              <Route path="/vn" element={<VnHomePage />} />
+              <Route path="/vn/about" element={<VnAboutPage />} />
+              <Route path="/vn/about/message" element={<VnAboutPage detail="message" />} />
+              <Route path="/vn/about/history" element={<VnAboutPage detail="history" />} />
+              <Route path="/vn/about/location" element={<VnAboutPage detail="location" />} />
+              <Route path="/vn/members" element={<Navigate to="/vn/members/executives" replace />} />
+              <Route path="/vn/members/executives" element={<VnMembersPage group="executive" />} />
+              <Route path="/vn/members/experts" element={<VnMembersPage group="expert" />} />
+              <Route path="/vn/services" element={<Navigate to="/vn/services/fta-origin" replace />} />
+              <Route path="/vn/services/fta-origin" element={<VnServicePage serviceId="fta-origin" />} />
+              <Route path="/vn/services/import-export-requirements" element={<VnServicePage serviceId="import-export-requirements" />} />
+              <Route path="/vn/services/traceability-management" element={<VnServicePage serviceId="traceability-management" />} />
+              <Route path="/vn/services/customs-audit" element={<VnServicePage serviceId="customs-audit" />} />
+              <Route path="/vn/services/hs-classification" element={<VnServicePage serviceId="hs-classification" />} />
+              <Route path="/vn/services/legal-advisory" element={<VnServicePage serviceId="legal-advisory" />} />
+              <Route path="/vn/it" element={<Navigate to="/vn/it/kord-fta" replace />} />
+              <Route path="/vn/it/kord-fta" element={<VnItPage solutionId="kord-fta" />} />
+              <Route path="/vn/it/kord-liq" element={<VnItPage solutionId="kord-liq" />} />
+              <Route path="/vn/news" element={<Navigate to="/vn/news/newsletter" replace />} />
+              <Route path="/vn/news/newsletter" element={<VnNewsPage category="newsletter" />} />
+              <Route path="/vn/news/legal-updates" element={<VnNewsPage category="legal-update" />} />
+              <Route path="/vn/news/card-news" element={<VnNewsPage category="card-news" />} />
+              <Route path="/vn/contact" element={<VnContactPage />} />
 
               <Route path="/about" element={<AboutPage />} />
               <Route path="/about/history" element={<HistoryPage />} />
@@ -174,6 +209,7 @@ function AppShell() {
               <Route path="/admin" element={<Navigate to="/admin/content/home" replace />} />
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/content/:groupId" element={<AdminContentPage />} />
+              <Route path="/admin/vietnam" element={<AdminVietnamPage />} />
               <Route path="/admin/members" element={<AdminMembersPage />} />
               <Route path="/admin/news" element={<Navigate to="/admin/news/shinhan-news" replace />} />
               <Route path="/admin/news/shinhan-news" element={<AdminShinhanNewsPage />} />
@@ -195,11 +231,12 @@ function AppShell() {
               <Route path="/members/*" element={<Navigate to="/members/executives" replace />} />
               <Route path="/services/*" element={<Navigate to="/services/import-export" replace />} />
               <Route path="/news/*" element={<Navigate to="/news" replace />} />
+              <Route path="/vn/*" element={<Navigate to="/vn" replace />} />
               <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </S.Main>
 
-            {isAdminRoute ? null : <SiteFooter />}
+            {isAdminRoute || isVietnamRoute ? null : <SiteFooter />}
           </S.Page>
         </SiteContentProvider>
       </SiteLanguageProvider>

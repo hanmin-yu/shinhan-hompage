@@ -112,6 +112,15 @@ export const adminNavigationItems: {
     to: '/admin/news/shinhan-news',
   },
   {
+    id: 'vietnam',
+    label: '베트남 법인',
+    labelEn: 'Vietnam',
+    summary: '베트남 법인 홈페이지 콘텐츠를 별도 화면에서 수정합니다.',
+    summaryEn: 'Edit Vietnam site content in a dedicated admin screen.',
+    to: '/admin/vietnam',
+    groupId: 'vietnam',
+  },
+  {
     id: 'contact',
     label: '문의',
     labelEn: 'Contact',

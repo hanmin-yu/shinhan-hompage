@@ -36,7 +36,7 @@ import { shinhanInsights } from './shinhanInsights';
 import { headerNavigation, mobileQuickLinks } from '../config/navigation';
 import { sectionSubnav } from '../config/sectionSubnav';
 import { utilitySubnav } from '../config/utilitySubnav';
-import type { ManagedMember, ManagedMemberGroup, SiteContentPayload } from '../types/site';
+import type { ManagedMember, ManagedMemberGroup, SiteContentPayload, VietnamContent } from '../types/site';
 
 function createMemberId(name: string) {
   return `member-${name
@@ -203,6 +203,355 @@ function mapHighlightsToIds(entries: Record<string, Record<string, string[]>>) {
     ]),
   );
 }
+
+const vietnamContent: VietnamContent = {
+  hero: {
+    eyebrow: {
+      ko: 'Shinhan Customs Vietnam',
+      en: 'Shinhan Customs Vietnam',
+      vi: 'Shinhan Customs Vietnam',
+    },
+    title: {
+      ko: '베트남 현지에서 연결하는 통관, 원산지, 수책 관리',
+      en: 'Customs, origin, and liquidation support in Vietnam',
+      vi: 'Hỗ trợ hải quan, xuất xứ và quyết toán tại Việt Nam',
+    },
+    summary: {
+      ko: '하노이 법인을 중심으로 한국 관세 전문가와 베트남 현지 실무팀이 고객사의 베트남 무역 운영을 지원합니다.',
+      en: 'From Hanoi, our Korean customs specialists and local Vietnam team support practical trade operations.',
+      vi: 'Từ Hà Nội, đội ngũ chuyên gia Hàn Quốc và Việt Nam hỗ trợ hoạt động thương mại thực tế của khách hàng.',
+    },
+    image: '/hero/homepage/vietnam-hanoi-network-ai.png',
+    imagePosition: 'center 54%',
+  },
+  navigation: [
+    {
+      id: 'about',
+      label: { ko: '베트남법인 소개', en: 'About SCV', vi: 'Giới thiệu SCV' },
+      path: '/vn/about',
+      children: [
+        { id: 'about-overview', label: { ko: '회사소개', en: 'Overview', vi: 'Tổng quan' }, path: '/vn/about' },
+        { id: 'about-message', label: { ko: '인사말', en: 'Message', vi: 'Lời chào' }, path: '/vn/about/message' },
+        { id: 'about-history', label: { ko: '연혁', en: 'History', vi: 'Lịch sử' }, path: '/vn/about/history' },
+        { id: 'about-location', label: { ko: '오시는 길', en: 'Location', vi: 'Địa chỉ' }, path: '/vn/about/location' },
+      ],
+    },
+    {
+      id: 'people',
+      label: { ko: '구성원', en: 'People', vi: 'Nhân sự' },
+      path: '/vn/members/executives',
+      children: [
+        { id: 'executives', label: { ko: '임원진', en: 'Executives', vi: 'Ban lãnh đạo' }, path: '/vn/members/executives' },
+        { id: 'experts', label: { ko: '전문가', en: 'Experts', vi: 'Chuyên gia' }, path: '/vn/members/experts' },
+      ],
+    },
+    {
+      id: 'services',
+      label: { ko: '업무분야', en: 'Services', vi: 'Dịch vụ' },
+      path: '/vn/services/fta-origin',
+    },
+    {
+      id: 'it',
+      label: { ko: 'IT Solutions', en: 'IT Solutions', vi: 'Giải pháp IT' },
+      path: '/vn/it/kord-fta',
+    },
+    {
+      id: 'news',
+      label: { ko: '소식/자료', en: 'News & Resources', vi: 'Tin tức & Tài liệu' },
+      path: '/vn/news/newsletter',
+    },
+    {
+      id: 'contact',
+      label: { ko: '문의', en: 'Contact', vi: 'Liên hệ' },
+      path: '/vn/contact',
+    },
+  ],
+  about: {
+    intro: {
+      title: {
+        ko: '베트남 무역 현장을 가까이에서 지원하는 신한의 현지 법인',
+        en: 'A local Shinhan entity close to Vietnam trade operations',
+        vi: 'Pháp nhân Shinhan đồng hành cùng hoạt động thương mại tại Việt Nam',
+      },
+      body: [
+        {
+          ko: '신한베트남법인은 베트남에 진출한 한국 기업과 현지 고객을 위해 통관, 원산지, 수책, 법령 자문을 연결합니다.',
+          en: 'Shinhan Customs Vietnam connects customs clearance, origin management, liquidation, and regulatory advisory for Korean and local clients in Vietnam.',
+          vi: 'Shinhan Customs Vietnam kết nối dịch vụ thông quan, quản lý xuất xứ, quyết toán và tư vấn pháp lý cho khách hàng Hàn Quốc và Việt Nam.',
+        },
+        {
+          ko: '한국 본사의 관세 전문성과 베트남 현지 실행력을 함께 활용해 실무 중심의 대응 체계를 제공합니다.',
+          en: 'We combine Korean customs expertise with local execution capacity to provide practical support.',
+          vi: 'Chúng tôi kết hợp chuyên môn hải quan Hàn Quốc với năng lực thực thi tại Việt Nam để hỗ trợ thực tiễn.',
+        },
+      ],
+      mission: {
+        ko: '베트남 고객사의 무역 리스크를 줄이고 운영 효율을 높이는 현지 파트너가 되겠습니다.',
+        en: 'We aim to be the local partner that reduces trade risk and improves operational efficiency in Vietnam.',
+        vi: 'Chúng tôi hướng tới trở thành đối tác địa phương giúp giảm rủi ro thương mại và nâng cao hiệu quả vận hành tại Việt Nam.',
+      },
+    },
+    message: {
+      title: {
+        ko: '고객의 베트남 비즈니스가 안정적으로 성장하도록 돕겠습니다.',
+        en: 'We support stable growth for your Vietnam business.',
+        vi: 'Chúng tôi hỗ trợ doanh nghiệp của bạn phát triển ổn định tại Việt Nam.',
+      },
+      body: [
+        {
+          ko: '베트남은 제조, 물류, 원산지 관리가 빠르게 고도화되는 시장입니다. 신한베트남법인은 현지 제도와 고객사의 업무 흐름을 함께 이해하는 실무 파트너로 움직입니다.',
+          en: 'Vietnam is a market where manufacturing, logistics, and origin management continue to advance. Shinhan Customs Vietnam works as a practical partner that understands local rules and client workflows.',
+          vi: 'Việt Nam là thị trường mà sản xuất, logistics và quản lý xuất xứ đang phát triển nhanh. Shinhan Customs Vietnam là đối tác thực tiễn am hiểu quy định địa phương và quy trình của khách hàng.',
+        },
+      ],
+      signer: {
+        ko: '대표 장승희',
+        en: 'CEO Jang Seung Hee',
+        vi: 'Tổng giám đốc Jang Seung Hee',
+      },
+      image: '/members/executives/jang-seunghee.png',
+    },
+    history: [
+      {
+        year: '2026',
+        text: {
+          ko: '베트남 법인 홈페이지 구축 및 현지 고객 커뮤니케이션 강화',
+          en: 'Vietnam website launch and strengthened local client communication',
+          vi: 'Ra mắt website Việt Nam và tăng cường giao tiếp với khách hàng địa phương',
+        },
+      },
+      {
+        year: '2025',
+        text: {
+          ko: '베트남 통관, 원산지, 수책 관리 자문 서비스 확대',
+          en: 'Expanded Vietnam customs, origin, and liquidation advisory services',
+          vi: 'Mở rộng dịch vụ tư vấn hải quan, xuất xứ và quyết toán tại Việt Nam',
+        },
+      },
+    ],
+    location: {
+      title: { ko: '베트남 지사', en: 'Vietnam Branch', vi: 'Chi nhánh Việt Nam' },
+      address: {
+        ko: '베트남 하노이 중심 업무권역',
+        en: 'Central business district, Hanoi, Vietnam',
+        vi: 'Khu vực trung tâm kinh doanh, Hà Nội, Việt Nam',
+      },
+      transport: {
+        ko: '방문 전 담당자와 일정을 조율해 주세요. Google Maps와 교통편 안내를 제공합니다.',
+        en: 'Please coordinate your visit in advance. Google Maps and transport guidance are available.',
+        vi: 'Vui lòng sắp xếp lịch hẹn trước khi đến. Có hỗ trợ Google Maps và hướng dẫn di chuyển.',
+      },
+      googleMapUrl: 'https://www.google.com/maps',
+    },
+  },
+  people: {
+    title: { ko: '한국 전문가와 베트남 현지팀이 함께합니다.', en: 'Korean experts and local Vietnam teams work together.', vi: 'Chuyên gia Hàn Quốc và đội ngũ Việt Nam phối hợp cùng nhau.' },
+    summary: { ko: '임원진, 한국 관세사 그룹, 통관팀, 컨설팅팀이 분야별로 고객을 지원합니다.', en: 'Executives, Korean customs consultants, CD team, and consulting team support clients by specialty.', vi: 'Ban lãnh đạo, nhóm tư vấn hải quan Hàn Quốc, đội thông quan và đội tư vấn hỗ trợ khách hàng theo từng lĩnh vực.' },
+    members: [
+      {
+        id: 'jang-seunghee',
+        name: { ko: '장승희', en: 'Jang Seung Hee', vi: 'Jang Seung Hee' },
+        role: { ko: '대표님', en: 'Representative', vi: 'Đại diện' },
+        group: 'executive',
+        image: '/members/executives/jang-seunghee.png',
+        highlights: [
+          { ko: '베트남 법인 운영 총괄', en: 'Vietnam entity leadership', vi: 'Phụ trách pháp nhân Việt Nam' },
+        ],
+      },
+      {
+        id: 'mr-shin',
+        name: { ko: 'Mr Shin', en: 'Mr Shin', vi: 'Mr Shin' },
+        role: { ko: '한국 관세사 그룹', en: 'Korea Customs Consultant Group', vi: 'Nhóm tư vấn hải quan Hàn Quốc' },
+        group: 'expert',
+        team: { ko: '한국 관세사 그룹', en: 'Korea Customs Consultant Group', vi: 'Nhóm tư vấn hải quan Hàn Quốc' },
+        highlights: [
+          { ko: '원산지·통관 자문', en: 'Origin and customs advisory', vi: 'Tư vấn xuất xứ và hải quan' },
+        ],
+      },
+      {
+        id: 'ms-trang',
+        name: { ko: 'Ms Trang', en: 'Ms Trang', vi: 'Ms Trang' },
+        role: { ko: '통관팀', en: 'CD Team', vi: 'Đội thông quan' },
+        group: 'expert',
+        team: { ko: '통관팀', en: 'CD Team', vi: 'Đội thông quan' },
+        highlights: [
+          { ko: 'FTA 원산지 관리 및 수출입통관', en: 'FTA origin management and clearance', vi: 'Quản lý xuất xứ FTA và thông quan' },
+        ],
+      },
+      {
+        id: 'ms-nhung',
+        name: { ko: 'Ms Nhung', en: 'Ms Nhung', vi: 'Ms Nhung' },
+        role: { ko: '컨설팅팀', en: 'Consulting Team', vi: 'Đội tư vấn' },
+        group: 'expert',
+        team: { ko: '컨설팅팀', en: 'Consulting Team', vi: 'Đội tư vấn' },
+        highlights: [
+          { ko: '수책 관리, 세관 조사, 법령 자문', en: 'Liquidation, audit, and regulatory advisory', vi: 'Quyết toán, kiểm tra hải quan và tư vấn pháp lý' },
+        ],
+      },
+    ],
+  },
+  services: {
+    title: { ko: '베트남 법인 업무분야', en: 'Vietnam Services', vi: 'Dịch vụ tại Việt Nam' },
+    summary: {
+      ko: '원산지 관리부터 통관, 수책, 세관 조사, 품목분류, 법령 자문까지 베트남 현지 업무를 지원합니다.',
+      en: 'We support Vietnam operations from origin management to clearance, liquidation, audit, classification, and legal advisory.',
+      vi: 'Chúng tôi hỗ trợ quản lý xuất xứ, thông quan, quyết toán, kiểm tra hải quan, phân loại HS và tư vấn pháp lý tại Việt Nam.',
+    },
+    items: [
+      {
+        id: 'fta-origin',
+        title: { ko: 'FTA 원산지 관리', en: 'FTA Origin Management', vi: 'Quản lý xuất xứ FTA' },
+        summary: { ko: '원산지증명서 발급대행, 관리 프로세스 점검, FTA 교육과 검증 대응을 지원합니다.', en: 'Certificate issuance, origin process review, FTA training, and verification response.', vi: 'Hỗ trợ cấp C/O, kiểm tra quy trình xuất xứ, đào tạo FTA và ứng phó xác minh.' },
+        manager: 'Ms Trang',
+        team: { ko: '통관팀', en: 'CD Team', vi: 'Đội thông quan' },
+        details: [
+          { ko: '원산지증명서 발급 대행', en: 'Certificate of origin issuance support', vi: 'Hỗ trợ cấp giấy chứng nhận xuất xứ' },
+          { ko: '원산지 관리 프로세스 점검', en: 'Origin management process review', vi: 'Kiểm tra quy trình quản lý xuất xứ' },
+          { ko: 'FTA 교육 및 원산지 검증 대응', en: 'FTA training and verification response', vi: 'Đào tạo FTA và ứng phó xác minh xuất xứ' },
+        ],
+      },
+      {
+        id: 'import-export-requirements',
+        title: { ko: '수출입통관/요건', en: 'Import/Export Clearance & Requirements', vi: 'Thông quan XNK và điều kiện quản lý' },
+        summary: { ko: '수입통관, 수출통관, 내국수출입 대응과 요건 대행을 제공합니다.', en: 'Import/export clearance, local export/import handling, and requirement agency services.', vi: 'Thông quan nhập/xuất khẩu, xử lý XNK nội địa và đại diện thủ tục điều kiện.' },
+        manager: 'Ms Trang',
+        team: { ko: '통관팀', en: 'CD Team', vi: 'Đội thông quan' },
+        details: [
+          { ko: '수입통관 및 수출통관', en: 'Import and export clearance', vi: 'Thông quan nhập khẩu và xuất khẩu' },
+          { ko: '내국수출입 대응', en: 'Local export/import handling', vi: 'Xử lý xuất nhập khẩu nội địa' },
+          { ko: '요건 대행', en: 'Requirement agency support', vi: 'Đại diện xử lý điều kiện quản lý' },
+        ],
+      },
+      {
+        id: 'traceability-management',
+        title: { ko: '수책 관리', en: 'Liquidation Management', vi: 'Quản lý quyết toán' },
+        summary: { ko: '수책관리 프로세스 점검, 월간 데이터 분석 및 보고, 연간 수책보고 자문을 지원합니다.', en: 'Process review, monthly data analysis/reporting, and annual liquidation advisory.', vi: 'Kiểm tra quy trình, phân tích/báo cáo dữ liệu hàng tháng và tư vấn báo cáo quyết toán năm.' },
+        manager: 'Ms Nhung',
+        team: { ko: '컨설팅팀', en: 'Consulting Team', vi: 'Đội tư vấn' },
+        details: [
+          { ko: '월간 데이터 분석 및 보고', en: 'Monthly data analysis and reporting', vi: 'Phân tích và báo cáo dữ liệu hàng tháng' },
+          { ko: '연간 수책보고 자문', en: 'Annual liquidation report advisory', vi: 'Tư vấn báo cáo quyết toán năm' },
+        ],
+      },
+      {
+        id: 'customs-audit',
+        title: { ko: '세관 조사', en: 'Customs Audit', vi: 'Kiểm tra hải quan' },
+        summary: { ko: '세관 조사 대응과 세관 제기 이슈 대응논리 수립을 지원합니다.', en: 'Customs audit response and issue-position logic development.', vi: 'Hỗ trợ ứng phó kiểm tra hải quan và xây dựng lập luận xử lý vấn đề.' },
+        manager: 'Ms Nhung',
+        team: { ko: '컨설팅팀', en: 'Consulting Team', vi: 'Đội tư vấn' },
+        details: [
+          { ko: '세관 조사 대응', en: 'Customs audit response', vi: 'Ứng phó kiểm tra hải quan' },
+          { ko: '세관 제기 이슈 대응논리 수립', en: 'Response logic for customs issues', vi: 'Xây dựng lập luận ứng phó vấn đề hải quan' },
+        ],
+      },
+      {
+        id: 'hs-classification',
+        title: { ko: 'HS 품목 분류', en: 'HS Classification', vi: 'Phân loại mã HS' },
+        summary: { ko: '품목분류 자문, 사전심사, 미국 Ruling 대행을 지원합니다.', en: 'Classification advisory, advance ruling, and U.S. ruling support.', vi: 'Tư vấn phân loại, thẩm định trước và hỗ trợ ruling Hoa Kỳ.' },
+        manager: 'Ms Trang',
+        team: { ko: '통관팀', en: 'CD Team', vi: 'Đội thông quan' },
+        details: [
+          { ko: '품목분류 자문', en: 'Classification advisory', vi: 'Tư vấn phân loại' },
+          { ko: '품목분류 사전심사', en: 'Advance classification review', vi: 'Thẩm định trước phân loại' },
+          { ko: '미국 Ruling 대행', en: 'U.S. ruling support', vi: 'Hỗ trợ ruling Hoa Kỳ' },
+        ],
+      },
+      {
+        id: 'legal-advisory',
+        title: { ko: '법령 자문', en: 'Regulatory Advisory', vi: 'Tư vấn pháp lý' },
+        summary: { ko: '베트남 면세제도, 화학물질법, 수출입세법, 덤핑방지관세 제도와 당국 질의 대행을 지원합니다.', en: 'Vietnam duty exemption, chemical, import/export tax, anti-dumping advisory, and authority inquiries.', vi: 'Tư vấn miễn thuế, hóa chất, thuế XNK, chống bán phá giá và hỗ trợ hỏi đáp cơ quan chức năng.' },
+        manager: 'Ms Nhung',
+        team: { ko: '컨설팅팀', en: 'Consulting Team', vi: 'Đội tư vấn' },
+        details: [
+          { ko: '베트남 당국 질의 대행', en: 'Authority inquiry support', vi: 'Hỗ trợ gửi câu hỏi tới cơ quan chức năng' },
+          { ko: '수출입세법 및 덤핑방지관세 자문', en: 'Import/export tax and anti-dumping advisory', vi: 'Tư vấn thuế XNK và chống bán phá giá' },
+        ],
+      },
+    ],
+  },
+  itSolutions: {
+    title: { ko: 'IT Solutions', en: 'IT Solutions', vi: 'Giải pháp IT' },
+    summary: {
+      ko: 'FTA 원산지 관리와 수책보고 자동화를 위한 KORD 솔루션을 소개합니다.',
+      en: 'Introducing KORD solutions for FTA origin management and liquidation reporting automation.',
+      vi: 'Giới thiệu giải pháp KORD cho quản lý xuất xứ FTA và tự động hóa báo cáo quyết toán.',
+    },
+    items: [
+      {
+        id: 'kord-fta',
+        title: 'KORD FTA',
+        summary: {
+          ko: 'FTA 원산지관리 시스템 데모 영상, 도입 효과, 견적 문의를 제공합니다.',
+          en: 'Demo video, adoption benefits, and quotation inquiry for FTA origin management.',
+          vi: 'Video demo, hiệu quả triển khai và yêu cầu báo giá cho hệ thống quản lý xuất xứ FTA.',
+        },
+        image: '/it-systems/fta/fta-dashboard.png',
+        details: [
+          { ko: '원산지 판정 및 증빙 관리', en: 'Origin determination and evidence management', vi: 'Xác định xuất xứ và quản lý chứng từ' },
+          { ko: 'FTA 업무 이력 관리', en: 'FTA workflow history management', vi: 'Quản lý lịch sử nghiệp vụ FTA' },
+        ],
+      },
+      {
+        id: 'kord-liq',
+        title: 'KORD LIQ',
+        summary: {
+          ko: '수책보고 자동화 시스템 구조, 도입 효과, 임가공 수량 관리 모듈을 소개합니다.',
+          en: 'System structure, adoption benefits, and processing quantity management module for liquidation automation.',
+          vi: 'Cấu trúc hệ thống, hiệu quả triển khai và module quản lý số lượng gia công cho tự động hóa quyết toán.',
+        },
+        image: '/it-systems/liq/liq-dashboard.png',
+        details: [
+          { ko: '수책보고 데이터 자동 정리', en: 'Automated liquidation data organization', vi: 'Tự động tổng hợp dữ liệu quyết toán' },
+          { ko: '임가공 수량 관리 모듈', en: 'Processing quantity management module', vi: 'Module quản lý số lượng gia công' },
+        ],
+      },
+    ],
+  },
+  news: {
+    title: { ko: '베트남 소식/자료', en: 'Vietnam News & Resources', vi: 'Tin tức & Tài liệu Việt Nam' },
+    summary: {
+      ko: '뉴스레터, 법령 업데이트, 베트남 카드뉴스를 통해 현지 이슈를 공유합니다.',
+      en: 'We share local issues through newsletters, legal updates, and Vietnam card news.',
+      vi: 'Chúng tôi chia sẻ vấn đề địa phương qua bản tin, cập nhật pháp luật và tin ảnh Việt Nam.',
+    },
+    items: [
+      {
+        id: 'weekly-flash',
+        category: 'newsletter',
+        title: { ko: '주간 베트남 Shinhan Flash', en: 'Weekly Vietnam Shinhan Flash', vi: 'Shinhan Flash Việt Nam hàng tuần' },
+        summary: { ko: '주간 발행물 업로드 영역입니다.', en: 'Weekly publication upload area.', vi: 'Khu vực đăng tải bản tin hàng tuần.' },
+        publishedAt: '2026.06.08',
+      },
+      {
+        id: 'legal-updates',
+        category: 'legal-update',
+        title: { ko: '베트남 관세 법령 업데이트', en: 'Vietnam Customs Legal Updates', vi: 'Cập nhật pháp luật hải quan Việt Nam' },
+        summary: { ko: 'Decree, Circular, Decision 등 주요 법령 업데이트를 정리합니다.', en: 'Key updates including Decree, Circular, and Decision.', vi: 'Tổng hợp cập nhật quan trọng về Nghị định, Thông tư và Quyết định.' },
+        publishedAt: '2026.06.08',
+      },
+      {
+        id: 'facebook-card-news',
+        category: 'card-news',
+        title: { ko: '베트남 카드뉴스', en: 'Vietnam Card News', vi: 'Tin ảnh Việt Nam' },
+        summary: { ko: 'Facebook 연동 콘텐츠를 매주 업로드합니다.', en: 'Weekly Facebook-linked content.', vi: 'Nội dung liên kết Facebook hàng tuần.' },
+        publishedAt: '2026.06.08',
+      },
+    ],
+  },
+  contact: {
+    title: { ko: '문의', en: 'Contact', vi: 'Liên hệ' },
+    summary: {
+      ko: '베트남 법인 상담이 필요하시면 이메일, 대표번호, 온라인 문의 또는 소셜 채널을 이용해 주세요.',
+      en: 'For Vietnam consulting inquiries, contact us by email, phone, online inquiry, or social channels.',
+      vi: 'Nếu cần tư vấn tại Việt Nam, vui lòng liên hệ qua email, điện thoại, biểu mẫu trực tuyến hoặc kênh mạng xã hội.',
+    },
+    email: 'vietnam@shcs.kr',
+    phone: '+84-00-0000-0000',
+    onlineInquiryHref: 'mailto:vietnam@shcs.kr',
+    naverBlogUrl: '',
+    facebookUrl: '',
+  },
+};
 
 export const staticSiteContent: SiteContentPayload = {
   global: {
@@ -493,6 +842,7 @@ export const staticSiteContent: SiteContentPayload = {
       },
     },
   },
+  vietnam: vietnamContent,
   offices: {
     officeBranches,
     copy: {
