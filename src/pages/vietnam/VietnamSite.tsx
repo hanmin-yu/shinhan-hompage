@@ -423,13 +423,11 @@ export function VnAboutPage({ detail = 'overview' }: { detail?: string }) {
                 <VnMessageBody key={index}>{localize(paragraph, language)}</VnMessageBody>
               ))}
             </VnBodyStack>
-            <VnClosing>
-              <VnThanks>{localize(vietnam.about.message.signer, language)}</VnThanks>
-            </VnClosing>
           </VnMessageArticle>
           {representativePhoto ? (
             <VnCeoFigure>
               <VnCeoImage src={representativePhoto} alt={localize(representative?.name ?? vietnam.about.message.signer, language)} />
+              <VnCeoCaption>{localize(vietnam.about.message.signer, language)}</VnCeoCaption>
             </VnCeoFigure>
           ) : null}
         </VnMessageLayout>
@@ -3742,7 +3740,7 @@ const VnMessageStack = styled.div`
 
 const VnMessageLayout = styled.section`
   display: grid;
-  grid-template-columns: minmax(0, 0.48fr) minmax(420px, 0.52fr);
+  grid-template-columns: minmax(0, 0.56fr) minmax(340px, 0.44fr);
   gap: clamp(42px, 5.8vw, 104px);
   align-items: center;
 
@@ -3799,26 +3797,15 @@ const VnMessageBody = styled.p`
   line-height: 1.84;
 `;
 
-const VnClosing = styled.div`
-  padding-top: clamp(24px, 4vw, 44px);
-  border-top: 1px solid #d5e0ef;
-`;
-
-const VnThanks = styled.p`
-  margin: 0;
-  color: #172337;
-  font-size: clamp(1.52rem, 2.4vw, 2.02rem);
-  font-weight: 800;
-  line-height: 1.18;
-`;
-
 const VnCeoFigure = styled.figure`
+  position: relative;
+  z-index: 0;
   width: 100%;
   margin: 0;
   justify-self: end;
-  padding: clamp(14px, 1.8vw, 26px);
+  padding: clamp(12px, 1.6vw, 22px);
   background: linear-gradient(135deg, rgba(0, 88, 168, 0.08), rgba(18, 63, 133, 0.18));
-  box-shadow: 0 28px 68px rgba(23, 45, 78, 0.14);
+  box-shadow: 0 28px 68px rgba(23, 45, 78, 0.12);
 
   @media (max-width: 980px) {
     justify-self: stretch;
@@ -3828,10 +3815,20 @@ const VnCeoFigure = styled.figure`
 const VnCeoImage = styled.img`
   display: block;
   width: 100%;
-  aspect-ratio: 1.02 / 1;
-  object-fit: cover;
-  object-position: center top;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+  aspect-ratio: 1.24 / 1;
+  object-fit: contain;
+  object-position: center;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.84);
+`;
+
+const VnCeoCaption = styled.figcaption`
+  margin-top: clamp(16px, 2vw, 24px);
+  color: #172337;
+  font-size: clamp(1.32rem, 2vw, 1.72rem);
+  font-weight: 800;
+  line-height: 1.18;
+  text-align: right;
 `;
 
 const VnLegacyBand = styled.div`
