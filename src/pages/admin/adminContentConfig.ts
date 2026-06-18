@@ -52,10 +52,10 @@ export const adminContentGroups: { id: SiteContentGroupKey; label: string; label
   },
   {
     id: 'offices',
-    label: '오시는 길',
-    labelEn: 'Directions',
-    summary: '오시는 길 페이지 문구를 수정합니다.',
-    summaryEn: 'Edit office page copy.',
+    label: '본지사',
+    labelEn: 'Offices',
+    summary: '본지사 안내 문구와 각 본지사 정보를 수정합니다.',
+    summaryEn: 'Edit office page copy and branch information.',
   },
 ];
 
@@ -127,8 +127,8 @@ export const adminNavigationItems: {
   },
   {
     id: 'offices',
-    label: '오시는 길',
-    labelEn: 'Directions',
+    label: '본지사',
+    labelEn: 'Offices',
     to: '/admin/content/offices',
     groupId: 'offices',
   },

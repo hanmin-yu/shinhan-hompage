@@ -64,7 +64,9 @@ const SecondaryTabs = styled.nav`
   }
 `;
 
-const SecondaryLink = styled(Link)<{ $active: boolean }>`
+const SecondaryLink = styled(Link, {
+  shouldForwardProp: (prop) => prop !== '$active',
+})<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;

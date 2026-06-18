@@ -23,6 +23,9 @@ import {
   AdminSubnavLink,
   AdminTextarea,
   AdminTopRow,
+  AdminUploadBox,
+  AdminUploadMeta,
+  AdminUploadTitle,
 } from './AdminShared';
 import { adminContentGroups, adminNavigationItems } from './adminContentConfig';
 
@@ -33,6 +36,7 @@ type GroupResponse = {
 };
 
 type JsonPath = Array<string | number>;
+type UploadImageAtPath = (path: JsonPath, file: File) => void;
 type RecruitContent = SiteContentPayload['recruit'];
 type HomeContent = SiteContentPayload['home'];
 type ServicesContent = SiteContentPayload['services'];
@@ -367,6 +371,44 @@ const CompactInput = styled(AdminInput)`
   font-size: 0.84rem;
 `;
 
+type ImagePathFieldProps = {
+  label: string;
+  value: string;
+  disabled: boolean;
+  onChange: (value: string) => void;
+  onUpload: (file: File) => void;
+};
+
+function ImagePathField({ label, value, disabled, onChange, onUpload }: ImagePathFieldProps) {
+  const [selectedFileName, setSelectedFileName] = useState('');
+
+  return (
+    <AdminField as="div">
+      <AdminLabel>{label}</AdminLabel>
+      <AdminInput value={value} disabled={disabled} onChange={(event) => onChange(event.target.value)} />
+      <AdminUploadBox $active={Boolean(selectedFileName)} $disabled={disabled}>
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          disabled={disabled}
+          onChange={(event) => {
+            const file = event.target.files?.[0] ?? null;
+            setSelectedFileName(file?.name ?? '');
+
+            if (file) {
+              onUpload(file);
+            }
+
+            event.currentTarget.value = '';
+          }}
+        />
+        <AdminUploadTitle>{selectedFileName || '이미지 업로드'}</AdminUploadTitle>
+        <AdminUploadMeta>업로드 후 생성된 경로가 위 입력란에 자동 반영됩니다.</AdminUploadMeta>
+      </AdminUploadBox>
+    </AdminField>
+  );
+}
+
 const RecruitPreviewGrid = styled.div`
   display: grid;
   gap: 14px;
@@ -406,7 +448,7 @@ const previewPaths: Partial<Record<SiteContentGroupKey, string>> = {
   services: '/services',
   recruit: '/recruit',
   contact: '/contact',
-  offices: '/location',
+  offices: '/offices',
   it: '/it',
   members: '/members',
   legal: '/legal/privacy',
@@ -923,7 +965,8 @@ function getFirstAdminSectionKey(groupId: SiteContentGroupKey, content: unknown)
   }
 
   if (groupId === 'offices' && isOfficesContent(content)) {
-    return 'directionsInfo';
+    const firstOffice = content.officeBranches.find((office) => office.id === 'seoul') ?? content.officeBranches[0];
+    return firstOffice ? `office:${firstOffice.id}` : 'copy';
   }
 
   if (groupId === 'services' && isServicesContent(content)) {
@@ -940,6 +983,7 @@ type RecruitEditorProps = {
   addArrayItem: (path: JsonPath, arrayValue: unknown[]) => void;
   moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
   removeArrayItem: (path: JsonPath) => void;
+  uploadImageAtPath: UploadImageAtPath;
   t: (ko: string, en: string) => string;
 };
 
@@ -950,6 +994,7 @@ function RecruitContentEditor({
   addArrayItem,
   moveArrayItem,
   removeArrayItem,
+  uploadImageAtPath,
   t,
 }: RecruitEditorProps) {
   const copyFields: Array<keyof RecruitContent['copy']> = [
@@ -1102,14 +1147,13 @@ function RecruitContentEditor({
                     onChange={(event) => setValueAtPath(['recruitBenefitSummaryCards', index, 'accent'], event.target.value)}
                   />
                 </AdminField>
-                <AdminField>
-                  <AdminLabel>{t('이미지 경로', 'Image Path')}</AdminLabel>
-                  <AdminInput
-                    value={card.image}
-                    disabled={readOnly}
-                    onChange={(event) => setValueAtPath(['recruitBenefitSummaryCards', index, 'image'], event.target.value)}
-                  />
-                </AdminField>
+                <ImagePathField
+                  label={t('이미지 경로', 'Image Path')}
+                  value={card.image}
+                  disabled={readOnly}
+                  onChange={(value) => setValueAtPath(['recruitBenefitSummaryCards', index, 'image'], value)}
+                  onUpload={(file) => uploadImageAtPath(['recruitBenefitSummaryCards', index, 'image'], file)}
+                />
               </OperatorInline>
               <AdminField as="div">
                 <AdminLabel>{t('태그', 'Tags')}</AdminLabel>
@@ -1371,6 +1415,7 @@ function ItContentEditor({
   addArrayItem,
   moveArrayItem,
   removeArrayItem,
+  uploadImageAtPath,
 }: {
   content: ItContent;
   readOnly: boolean;
@@ -1378,6 +1423,7 @@ function ItContentEditor({
   addArrayItem: (path: JsonPath, arrayValue: unknown[]) => void;
   moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
   removeArrayItem: (path: JsonPath) => void;
+  uploadImageAtPath: UploadImageAtPath;
 }) {
   const copyFields: Array<keyof ItContent['copy']> = ['overviewTitle', 'overviewTitleEn', 'contactTitle', 'contactTitleEn'];
   const overviewFields: Array<keyof ItContent['itOverview']> = ['title', 'titleEn', 'summary', 'summaryEn', 'body', 'bodyEn'];
@@ -1492,7 +1538,14 @@ function ItContentEditor({
                         </MiniButton>
                       </OperatorItemHead>
                       <OperatorGrid>
-                        {(['src', 'alt', 'altEn'] as const).map((field) => (
+                        <ImagePathField
+                          label={formatLabel('src')}
+                          value={image.src}
+                          disabled={readOnly}
+                          onChange={(value) => setValueAtPath(['itServices', index, 'images', imageIndex, 'src'], value)}
+                          onUpload={(file) => uploadImageAtPath(['itServices', index, 'images', imageIndex, 'src'], file)}
+                        />
+                        {(['alt', 'altEn'] as const).map((field) => (
                           <AdminField key={field}>
                             <AdminLabel>{formatLabel(field)}</AdminLabel>
                             <AdminInput
@@ -1542,28 +1595,53 @@ function ItContentEditor({
 
 function OfficesDirectionsEditor({
   content,
+  activeSectionKey,
   readOnly,
   setValueAtPath,
 }: {
   content: OfficesContent;
+  activeSectionKey: string;
   readOnly: boolean;
   setValueAtPath: (path: JsonPath, nextValue: unknown) => void;
 }) {
+  const activeOfficeId = activeSectionKey.startsWith('office:') ? activeSectionKey.replace(/^office:/, '') : 'seoul';
+  const activeOfficeIndex = content.officeBranches.findIndex((office) => office.id === activeOfficeId);
   const seoulIndex = content.officeBranches.findIndex((office) => office.id === 'seoul');
-  const targetIndex = seoulIndex >= 0 ? seoulIndex : 0;
+  const targetIndex = activeOfficeIndex >= 0 ? activeOfficeIndex : seoulIndex >= 0 ? seoulIndex : 0;
   const office = content.officeBranches[targetIndex];
 
   if (!office) {
-    return <AdminHint>수정할 서울본사 정보가 없습니다.</AdminHint>;
+    return <AdminHint>수정할 본지사 정보가 없습니다.</AdminHint>;
   }
+
+  const setCoordinateValue = (axis: 'lat' | 'lng', rawValue: string) => {
+    const trimmed = rawValue.trim();
+
+    if (!trimmed) {
+      const nextCoordinates = { ...(office.coordinates ?? {}) };
+      delete nextCoordinates[axis];
+      setValueAtPath(['officeBranches', targetIndex, 'coordinates'], Object.keys(nextCoordinates).length ? nextCoordinates : undefined);
+      return;
+    }
+
+    const numericValue = Number(trimmed);
+    if (!Number.isFinite(numericValue)) {
+      return;
+    }
+
+    setValueAtPath(['officeBranches', targetIndex, 'coordinates'], {
+      ...(office.coordinates ?? {}),
+      [axis]: numericValue,
+    });
+  };
 
   return (
     <OperatorEditor>
       <OperatorSection>
         <OperatorSectionHead>
           <div>
-            <OperatorTitle>서울본사 정보</OperatorTitle>
-            <OperatorHelp>오시는 길 페이지에 표시되는 주소, 연락처, 지도 연결 정보만 수정합니다.</OperatorHelp>
+            <OperatorTitle>{office.label || '본지사 정보'}</OperatorTitle>
+            <OperatorHelp>본지사 안내 화면에 표시되는 지사별 소개, 주소, 연락처, 지도 연결 정보를 수정합니다.</OperatorHelp>
           </div>
         </OperatorSectionHead>
         <OperatorGrid>
@@ -1583,6 +1661,58 @@ function OfficesDirectionsEditor({
               onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'labelEn'], event.target.value)}
             />
           </AdminField>
+          <AdminField>
+            <AdminLabel>짧은 표기</AdminLabel>
+            <AdminInput
+              value={office.shortLabel}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'shortLabel'], event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>영문 짧은 표기</AdminLabel>
+            <AdminInput
+              value={office.shortLabelEn}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'shortLabelEn'], event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>지역</AdminLabel>
+            <AdminInput
+              value={office.region}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'region'], event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>영문 지역</AdminLabel>
+            <AdminInput
+              value={office.regionEn}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'regionEn'], event.target.value)}
+            />
+          </AdminField>
+          <OperatorItemWide>
+            <AdminField>
+              <AdminLabel>소개 문구</AdminLabel>
+              <AdminTextarea
+                value={office.summary}
+                disabled={readOnly}
+                onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'summary'], event.target.value)}
+              />
+            </AdminField>
+          </OperatorItemWide>
+          <OperatorItemWide>
+            <AdminField>
+              <AdminLabel>영문 소개 문구</AdminLabel>
+              <AdminTextarea
+                value={office.summaryEn}
+                disabled={readOnly}
+                onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'summaryEn'], event.target.value)}
+              />
+            </AdminField>
+          </OperatorItemWide>
           <AdminField>
             <AdminLabel>주소</AdminLabel>
             <AdminTextarea
@@ -1605,6 +1735,14 @@ function OfficesDirectionsEditor({
               value={office.tel}
               disabled={readOnly}
               onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'tel'], event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>이메일</AdminLabel>
+            <AdminInput
+              value={office.email ?? ''}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'email'], event.target.value)}
             />
           </AdminField>
           <AdminField>
@@ -1631,6 +1769,22 @@ function OfficesDirectionsEditor({
               onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'mapQueryEn'], event.target.value)}
             />
           </AdminField>
+          <AdminField>
+            <AdminLabel>위도</AdminLabel>
+            <AdminInput
+              value={office.coordinates?.lat ? String(office.coordinates.lat) : ''}
+              disabled={readOnly}
+              onChange={(event) => setCoordinateValue('lat', event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>경도</AdminLabel>
+            <AdminInput
+              value={office.coordinates?.lng ? String(office.coordinates.lng) : ''}
+              disabled={readOnly}
+              onChange={(event) => setCoordinateValue('lng', event.target.value)}
+            />
+          </AdminField>
           <OperatorItemWide>
             <AdminField>
               <AdminLabel>네이버 지도 링크</AdminLabel>
@@ -1641,8 +1795,133 @@ function OfficesDirectionsEditor({
               />
             </AdminField>
           </OperatorItemWide>
+          <OperatorItemWide>
+            <AdminField>
+              <AdminLabel>구글 지도 링크</AdminLabel>
+              <AdminInput
+                value={office.googleMapUrl ?? ''}
+                disabled={readOnly}
+                onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'googleMapUrl'], event.target.value)}
+              />
+            </AdminField>
+          </OperatorItemWide>
+          <OperatorItemWide>
+            <AdminField>
+              <AdminLabel>구글 지도 임베드 링크</AdminLabel>
+              <AdminInput
+                value={office.googleMapEmbedUrl ?? ''}
+                disabled={readOnly}
+                onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'googleMapEmbedUrl'], event.target.value)}
+              />
+            </AdminField>
+          </OperatorItemWide>
+          <AdminField>
+            <AdminLabel>외부 홈페이지 URL</AdminLabel>
+            <AdminInput
+              value={office.websiteUrl ?? ''}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'websiteUrl'], event.target.value)}
+            />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>외부 홈페이지 라벨</AdminLabel>
+            <AdminInput
+              value={office.websiteLabel ?? ''}
+              disabled={readOnly}
+              onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'websiteLabel'], event.target.value)}
+            />
+          </AdminField>
         </OperatorGrid>
       </OperatorSection>
+      {office.locations?.length ? (
+        <OperatorSection>
+          <OperatorSectionHead>
+            <div>
+              <OperatorTitle>세부 위치</OperatorTitle>
+              <OperatorHelp>창고처럼 한 지사 안에 여러 위치가 표시되는 경우 각 위치의 주소와 지도 정보를 수정합니다.</OperatorHelp>
+            </div>
+          </OperatorSectionHead>
+          <OperatorGrid>
+            {office.locations.map((location, locationIndex) => (
+              <OperatorItemWide key={location.id || `office-location-${locationIndex}`}>
+                <OperatorItemHead>
+                  <OperatorTitle>{location.label || `위치 ${locationIndex + 1}`}</OperatorTitle>
+                </OperatorItemHead>
+                <OperatorGrid>
+                  <AdminField>
+                    <AdminLabel>위치명</AdminLabel>
+                    <AdminInput
+                      value={location.label}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'label'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 위치명</AdminLabel>
+                    <AdminInput
+                      value={location.labelEn}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'labelEn'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>주소</AdminLabel>
+                    <AdminTextarea
+                      value={location.address}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'address'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 주소</AdminLabel>
+                    <AdminTextarea
+                      value={location.addressEn}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'addressEn'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>지도 검색어</AdminLabel>
+                    <AdminInput
+                      value={location.mapQuery ?? ''}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'mapQuery'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 지도 검색어</AdminLabel>
+                    <AdminInput
+                      value={location.mapQueryEn ?? ''}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'mapQueryEn'], event.target.value)}
+                    />
+                  </AdminField>
+                  <OperatorItemWide>
+                    <AdminField>
+                      <AdminLabel>네이버 지도 링크</AdminLabel>
+                      <AdminInput
+                        value={location.naverMapUrl ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'naverMapUrl'], event.target.value)}
+                      />
+                    </AdminField>
+                  </OperatorItemWide>
+                  <OperatorItemWide>
+                    <AdminField>
+                      <AdminLabel>구글 지도 링크</AdminLabel>
+                      <AdminInput
+                        value={location.googleMapUrl ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath(['officeBranches', targetIndex, 'locations', locationIndex, 'googleMapUrl'], event.target.value)}
+                      />
+                    </AdminField>
+                  </OperatorItemWide>
+                </OperatorGrid>
+              </OperatorItemWide>
+            ))}
+          </OperatorGrid>
+        </OperatorSection>
+      ) : null}
     </OperatorEditor>
   );
 }
@@ -1652,11 +1931,17 @@ function ContactContentEditor({
   activeSectionKey,
   readOnly,
   setValueAtPath,
+  addArrayItem,
+  moveArrayItem,
+  removeArrayItem,
 }: {
   content: ContactContent;
   activeSectionKey: string;
   readOnly: boolean;
   setValueAtPath: (path: JsonPath, nextValue: unknown) => void;
+  addArrayItem: (path: JsonPath, arrayValue: unknown[]) => void;
+  moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
+  removeArrayItem: (path: JsonPath) => void;
 }) {
   if (activeSectionKey === 'ethics') {
     const ethics = content.copy.ethics;
@@ -1671,7 +1956,24 @@ function ContactContentEditor({
             </div>
           </OperatorSectionHead>
           <OperatorGrid>
-            {(['title', 'lead', 'basisText', 'policyTitle', 'policyNotice', 'onlineTitle', 'onlineText'] as const).map((field) => (
+            {(
+              [
+                'title',
+                'titleEn',
+                'lead',
+                'leadEn',
+                'basisText',
+                'basisTextEn',
+                'policyTitle',
+                'policyTitleEn',
+                'policyNotice',
+                'policyNoticeEn',
+                'onlineTitle',
+                'onlineTitleEn',
+                'onlineText',
+                'onlineTextEn',
+              ] as const
+            ).map((field) => (
               <AdminField key={field}>
                 <AdminLabel>{formatLabel(field)}</AdminLabel>
                 {shouldUseTextarea(['copy', 'ethics', field], ethics[field]) ? (
@@ -1707,6 +2009,132 @@ function ContactContentEditor({
             </AdminField>
           </OperatorGrid>
         </OperatorSection>
+
+        <OperatorSection>
+          <OperatorSectionHead>
+            <div>
+              <OperatorTitle>접수 대상 목록</OperatorTitle>
+              <OperatorHelp>부정행위 접수창구 안내와 접수 유형 선택 항목에 표시되는 목록입니다.</OperatorHelp>
+            </div>
+            <AdminButton
+              type="button"
+              $secondary
+              onClick={() => addArrayItem(['copy', 'ethics', 'reportSubjects'], ethics.reportSubjects)}
+              disabled={readOnly}
+            >
+              항목 추가
+            </AdminButton>
+          </OperatorSectionHead>
+          <OperatorGrid>
+            {ethics.reportSubjects.map((subject, index) => (
+              <OperatorItem key={`ethics-subject-${index}`}>
+                <OperatorItemHead>
+                  <OperatorBadge>{String(index + 1).padStart(2, '0')}</OperatorBadge>
+                  <InlineActions>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem(['copy', 'ethics', 'reportSubjects'], index, index - 1)}
+                      disabled={readOnly || index === 0}
+                    >
+                      위로
+                    </MiniButton>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem(['copy', 'ethics', 'reportSubjects'], index, index + 1)}
+                      disabled={readOnly || index === ethics.reportSubjects.length - 1}
+                    >
+                      아래로
+                    </MiniButton>
+                    <MiniButton type="button" onClick={() => removeArrayItem(['copy', 'ethics', 'reportSubjects', index])} disabled={readOnly}>
+                      삭제
+                    </MiniButton>
+                  </InlineActions>
+                </OperatorItemHead>
+                <OperatorInline>
+                  <AdminField>
+                    <AdminLabel>국문 항목</AdminLabel>
+                    <AdminInput
+                      value={subject.ko}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['copy', 'ethics', 'reportSubjects', index, 'ko'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 항목</AdminLabel>
+                    <AdminInput
+                      value={subject.en}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['copy', 'ethics', 'reportSubjects', index, 'en'], event.target.value)}
+                    />
+                  </AdminField>
+                </OperatorInline>
+              </OperatorItem>
+            ))}
+          </OperatorGrid>
+        </OperatorSection>
+
+        <OperatorSection>
+          <OperatorSectionHead>
+            <div>
+              <OperatorTitle>윤리강령 항목</OperatorTitle>
+              <OperatorHelp>윤리강령 보기 모달에 표시되는 조항 목록입니다.</OperatorHelp>
+            </div>
+            <AdminButton
+              type="button"
+              $secondary
+              onClick={() => addArrayItem(['copy', 'ethics', 'ethicsCodeItems'], ethics.ethicsCodeItems)}
+              disabled={readOnly}
+            >
+              조항 추가
+            </AdminButton>
+          </OperatorSectionHead>
+          <OperatorGrid>
+            {ethics.ethicsCodeItems.map((item, index) => (
+              <OperatorItemWide key={`ethics-code-${index}`}>
+                <OperatorItemHead>
+                  <OperatorBadge>{String(index + 1).padStart(2, '0')}</OperatorBadge>
+                  <InlineActions>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem(['copy', 'ethics', 'ethicsCodeItems'], index, index - 1)}
+                      disabled={readOnly || index === 0}
+                    >
+                      위로
+                    </MiniButton>
+                    <MiniButton
+                      type="button"
+                      onClick={() => moveArrayItem(['copy', 'ethics', 'ethicsCodeItems'], index, index + 1)}
+                      disabled={readOnly || index === ethics.ethicsCodeItems.length - 1}
+                    >
+                      아래로
+                    </MiniButton>
+                    <MiniButton type="button" onClick={() => removeArrayItem(['copy', 'ethics', 'ethicsCodeItems', index])} disabled={readOnly}>
+                      삭제
+                    </MiniButton>
+                  </InlineActions>
+                </OperatorItemHead>
+                <OperatorInline>
+                  <AdminField>
+                    <AdminLabel>국문 조항</AdminLabel>
+                    <AdminTextarea
+                      value={item.ko}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['copy', 'ethics', 'ethicsCodeItems', index, 'ko'], event.target.value)}
+                    />
+                  </AdminField>
+                  <AdminField>
+                    <AdminLabel>영문 조항</AdminLabel>
+                    <AdminTextarea
+                      value={item.en}
+                      disabled={readOnly}
+                      onChange={(event) => setValueAtPath(['copy', 'ethics', 'ethicsCodeItems', index, 'en'], event.target.value)}
+                    />
+                  </AdminField>
+                </OperatorInline>
+              </OperatorItemWide>
+            ))}
+          </OperatorGrid>
+        </OperatorSection>
       </OperatorEditor>
     );
   }
@@ -1723,7 +2151,20 @@ function ContactContentEditor({
           </div>
         </OperatorSectionHead>
         <OperatorGrid>
-          {(['title', 'lead', 'mainContactTitle', 'inquiryTitle', 'inquiryText'] as const).map((field) => (
+          {(
+            [
+              'title',
+              'titleEn',
+              'lead',
+              'leadEn',
+              'mainContactTitle',
+              'mainContactTitleEn',
+              'inquiryTitle',
+              'inquiryTitleEn',
+              'inquiryText',
+              'inquiryTextEn',
+            ] as const
+          ).map((field) => (
             <AdminField key={field}>
               <AdminLabel>{formatLabel(field)}</AdminLabel>
               {shouldUseTextarea(['copy', 'contact', field], contact[field]) ? (
@@ -1811,6 +2252,7 @@ function HomeContentEditor({
   addArrayItem,
   moveArrayItem,
   removeArrayItem,
+  uploadImageAtPath,
   t,
 }: {
   content: HomeContent;
@@ -1820,6 +2262,7 @@ function HomeContentEditor({
   addArrayItem: (path: JsonPath, arrayValue: unknown[]) => void;
   moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
   removeArrayItem: (path: JsonPath) => void;
+  uploadImageAtPath: UploadImageAtPath;
   t: (ko: string, en: string) => string;
 }) {
   const copySectionFields: Record<string, Array<[keyof HomeContent['copy'] & string, string]>> = {
@@ -2009,18 +2452,20 @@ function HomeContentEditor({
               </AdminField>
             </OperatorInline>
             <OperatorInline>
-              <AdminField>
-                <AdminLabel>{t('이미지 경로', 'Image Path')}</AdminLabel>
-                <AdminInput value={slide.image} disabled={readOnly} onChange={(event) => setValueAtPath(['heroSlides', index, 'image'], event.target.value)} />
-              </AdminField>
-              <AdminField>
-                <AdminLabel>{t('모바일 이미지 경로', 'Mobile Image Path')}</AdminLabel>
-                <AdminInput
-                  value={slide.mobileImage ?? ''}
-                  disabled={readOnly}
-                  onChange={(event) => setValueAtPath(['heroSlides', index, 'mobileImage'], event.target.value)}
-                />
-              </AdminField>
+              <ImagePathField
+                label={t('이미지 경로', 'Image Path')}
+                value={slide.image}
+                disabled={readOnly}
+                onChange={(value) => setValueAtPath(['heroSlides', index, 'image'], value)}
+                onUpload={(file) => uploadImageAtPath(['heroSlides', index, 'image'], file)}
+              />
+              <ImagePathField
+                label={t('모바일 이미지 경로', 'Mobile Image Path')}
+                value={slide.mobileImage ?? ''}
+                disabled={readOnly}
+                onChange={(value) => setValueAtPath(['heroSlides', index, 'mobileImage'], value)}
+                onUpload={(file) => uploadImageAtPath(['heroSlides', index, 'mobileImage'], file)}
+              />
             </OperatorInline>
             <OperatorInline>
               <AdminField>
@@ -2107,6 +2552,7 @@ function ServicesContentEditor({
   insertItemAtPath,
   moveArrayItem,
   removeArrayItem,
+  uploadImageAtPath,
 }: {
   content: ServicesContent;
   activeSectionKey: string;
@@ -2115,6 +2561,7 @@ function ServicesContentEditor({
   insertItemAtPath: (path: JsonPath, item: unknown) => void;
   moveArrayItem: (path: JsonPath, fromIndex: number, toIndex: number) => void;
   removeArrayItem: (path: JsonPath) => void;
+  uploadImageAtPath: UploadImageAtPath;
 }) {
   if (activeSectionKey === 'serviceHubCards' || activeSectionKey === 'consultingHubCards') {
     const cards = content[activeSectionKey];
@@ -2261,10 +2708,13 @@ function ServicesContentEditor({
                     onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'primaryHref'], event.target.value)}
                   />
                 </AdminField>
-                <AdminField>
-                  <AdminLabel>이미지 경로</AdminLabel>
-                  <AdminInput value={group.image} disabled={readOnly} onChange={(event) => setValueAtPath(['serviceLandingGroups', groupIndex, 'image'], event.target.value)} />
-                </AdminField>
+                <ImagePathField
+                  label="이미지 경로"
+                  value={group.image}
+                  disabled={readOnly}
+                  onChange={(value) => setValueAtPath(['serviceLandingGroups', groupIndex, 'image'], value)}
+                  onUpload={(file) => uploadImageAtPath(['serviceLandingGroups', groupIndex, 'image'], file)}
+                />
                 <AdminField>
                   <AdminLabel>설명</AdminLabel>
                   <AdminTextarea
@@ -2421,6 +2871,10 @@ function ServicesContentEditor({
             <AdminInput value={detail.title} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'title'], event.target.value)} />
           </AdminField>
           <AdminField>
+            <AdminLabel>영문 페이지 제목</AdminLabel>
+            <AdminInput value={detail.titleEn ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'titleEn'], event.target.value)} />
+          </AdminField>
+          <AdminField>
             <AdminLabel>분류명</AdminLabel>
             <AdminInput value={detail.groupTitle} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'groupTitle'], event.target.value)} />
           </AdminField>
@@ -2428,21 +2882,36 @@ function ServicesContentEditor({
             <AdminLabel>영문 분류명</AdminLabel>
             <AdminInput value={detail.groupTitleEn} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'groupTitleEn'], event.target.value)} />
           </AdminField>
-          <AdminField>
-            <AdminLabel>히어로 이미지 경로</AdminLabel>
-            <AdminInput value={detail.heroImage ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'heroImage'], event.target.value)} />
-          </AdminField>
+          <ImagePathField
+            label="히어로 이미지 경로"
+            value={detail.heroImage ?? ''}
+            disabled={readOnly}
+            onChange={(value) => setValueAtPath([...basePath, 'heroImage'], value)}
+            onUpload={(file) => uploadImageAtPath([...basePath, 'heroImage'], file)}
+          />
           <AdminField>
             <AdminLabel>요약</AdminLabel>
             <AdminTextarea value={detail.summary} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'summary'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>영문 요약</AdminLabel>
+            <AdminTextarea value={detail.summaryEn ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'summaryEn'], event.target.value)} />
           </AdminField>
           <AdminField>
             <AdminLabel>부제목</AdminLabel>
             <AdminTextarea value={detail.subtitle ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'subtitle'], event.target.value)} />
           </AdminField>
           <AdminField>
+            <AdminLabel>영문 부제목</AdminLabel>
+            <AdminTextarea value={detail.subtitleEn ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'subtitleEn'], event.target.value)} />
+          </AdminField>
+          <AdminField>
             <AdminLabel>개요</AdminLabel>
             <AdminTextarea value={detail.overview} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'overview'], event.target.value)} />
+          </AdminField>
+          <AdminField>
+            <AdminLabel>영문 개요</AdminLabel>
+            <AdminTextarea value={detail.overviewEn ?? ''} disabled={readOnly} onChange={(event) => setValueAtPath([...basePath, 'overviewEn'], event.target.value)} />
           </AdminField>
         </OperatorGrid>
       </OperatorSection>
@@ -2466,9 +2935,29 @@ function ServicesContentEditor({
             removeArrayItem={removeArrayItem}
           />
           <TextArrayEditor
+            title="영문 주요 범위"
+            items={detail.scopeEn ?? []}
+            path={[...basePath, 'scopeEn']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+          <TextArrayEditor
             title="체크포인트"
             items={detail.checkpoints}
             path={[...basePath, 'checkpoints']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+          <TextArrayEditor
+            title="영문 체크포인트"
+            items={detail.checkpointsEn ?? []}
+            path={[...basePath, 'checkpointsEn']}
             readOnly={readOnly}
             setValueAtPath={setValueAtPath}
             insertItemAtPath={insertItemAtPath}
@@ -2542,6 +3031,16 @@ function ServicesContentEditor({
                   removeArrayItem={removeArrayItem}
                 />
                 <TextArrayEditor
+                  title="영문 본문 문단"
+                  items={section.bodyEn ?? []}
+                  path={[...sectionPath, 'bodyEn']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+                <TextArrayEditor
                   title="리스트"
                   items={section.list ?? []}
                   path={[...sectionPath, 'list']}
@@ -2552,9 +3051,29 @@ function ServicesContentEditor({
                   removeArrayItem={removeArrayItem}
                 />
                 <TextArrayEditor
+                  title="영문 리스트"
+                  items={section.listEn ?? []}
+                  path={[...sectionPath, 'listEn']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+                <TextArrayEditor
                   title="단계"
                   items={section.steps ?? []}
                   path={[...sectionPath, 'steps']}
+                  readOnly={readOnly}
+                  setValueAtPath={setValueAtPath}
+                  insertItemAtPath={insertItemAtPath}
+                  moveArrayItem={moveArrayItem}
+                  removeArrayItem={removeArrayItem}
+                />
+                <TextArrayEditor
+                  title="영문 단계"
+                  items={section.stepsEn ?? []}
+                  path={[...sectionPath, 'stepsEn']}
                   readOnly={readOnly}
                   setValueAtPath={setValueAtPath}
                   insertItemAtPath={insertItemAtPath}
@@ -2579,6 +3098,16 @@ function ServicesContentEditor({
             title="관련 전문가"
             items={detail.relatedExpertNames}
             path={[...basePath, 'relatedExpertNames']}
+            readOnly={readOnly}
+            setValueAtPath={setValueAtPath}
+            insertItemAtPath={insertItemAtPath}
+            moveArrayItem={moveArrayItem}
+            removeArrayItem={removeArrayItem}
+          />
+          <TextArrayEditor
+            title="영문 관련 전문가"
+            items={detail.relatedExpertNamesEn ?? []}
+            path={[...basePath, 'relatedExpertNamesEn']}
             readOnly={readOnly}
             setValueAtPath={setValueAtPath}
             insertItemAtPath={insertItemAtPath}
@@ -2623,11 +3152,27 @@ function ServicesContentEditor({
                       />
                     </AdminField>
                     <AdminField>
+                      <AdminLabel>영문 이름</AdminLabel>
+                      <AdminInput
+                        value={contact.nameEn ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'nameEn'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
                       <AdminLabel>직함/역할</AdminLabel>
                       <AdminInput
                         value={contact.role ?? ''}
                         disabled={readOnly}
                         onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'role'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>영문 직함/역할</AdminLabel>
+                      <AdminInput
+                        value={contact.roleEn ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'contactPoints', contactIndex, 'roleEn'], event.target.value)}
                       />
                     </AdminField>
                     <AdminField>
@@ -2677,6 +3222,14 @@ function ServicesContentEditor({
                       />
                     </AdminField>
                     <AdminField>
+                      <AdminLabel>영문 링크명</AdminLabel>
+                      <AdminInput
+                        value={resource.labelEn ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'relatedResources', resourceIndex, 'labelEn'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
                       <AdminLabel>주소</AdminLabel>
                       <AdminInput
                         value={resource.href}
@@ -2706,14 +3259,13 @@ function ServicesContentEditor({
                     </MiniButton>
                   </OperatorItemHead>
                   <OperatorInline>
-                    <AdminField>
-                      <AdminLabel>이미지 경로</AdminLabel>
-                      <AdminInput
-                        value={image.src}
-                        disabled={readOnly}
-                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'src'], event.target.value)}
-                      />
-                    </AdminField>
+                    <ImagePathField
+                      label="이미지 경로"
+                      value={image.src}
+                      disabled={readOnly}
+                      onChange={(value) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'src'], value)}
+                      onUpload={(file) => uploadImageAtPath([...basePath, 'documentImages', imageIndex, 'src'], file)}
+                    />
                     <AdminField>
                       <AdminLabel>이미지 설명</AdminLabel>
                       <AdminInput
@@ -2723,11 +3275,27 @@ function ServicesContentEditor({
                       />
                     </AdminField>
                     <AdminField>
+                      <AdminLabel>영문 이미지 설명</AdminLabel>
+                      <AdminInput
+                        value={image.altEn ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'altEn'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
                       <AdminLabel>캡션</AdminLabel>
                       <AdminInput
                         value={image.caption ?? ''}
                         disabled={readOnly}
                         onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'caption'], event.target.value)}
+                      />
+                    </AdminField>
+                    <AdminField>
+                      <AdminLabel>영문 캡션</AdminLabel>
+                      <AdminInput
+                        value={image.captionEn ?? ''}
+                        disabled={readOnly}
+                        onChange={(event) => setValueAtPath([...basePath, 'documentImages', imageIndex, 'captionEn'], event.target.value)}
                       />
                     </AdminField>
                   </OperatorInline>
@@ -2815,11 +3383,19 @@ export function AdminContentPage() {
       }
 
       if (group?.id === 'about' && copyRoot) {
-        return aboutOperatorSectionEntries.map(([key, label]) => [key, copyRoot[key], label] as [string, unknown, string]);
+        const aboutContent = draftContent as SiteContentPayload['about'];
+        return [
+          ...aboutOperatorSectionEntries.map(([key, label]) => [key, copyRoot[key], label] as [string, unknown, string]),
+          ['aboutTimeline', aboutContent.aboutTimeline, '상세 연혁'],
+          ['historyMilestones', aboutContent.historyMilestones, '주요 이정표'],
+          ['managementValues', aboutContent.managementValues, '경영이념'],
+          ['organizationUnits', aboutContent.organizationUnits, '조직 소개'],
+        ] satisfies Array<[string, unknown, string]>;
       }
 
       if (isServicesEditor) {
         return [
+          ['servicesLanding', draftContent.copy.servicesLanding, '업무분야 메인'],
           ...getOrderedServiceDetailEntries(draftContent),
           ['serviceLandingGroups', draftContent.serviceLandingGroups, '하부 메뉴 구성'],
           ['serviceHubCards', draftContent.serviceHubCards, '업무분야 카드'],
@@ -2837,8 +3413,10 @@ export function AdminContentPage() {
       }
 
       if (isOfficesEditor) {
-        const office = draftContent.officeBranches.find((item) => item.id === 'seoul') ?? draftContent.officeBranches[0] ?? draftContent;
-        return [['directionsInfo', office, '서울본사 정보']] satisfies Array<[string, unknown, string]>;
+        return [
+          ['copy', draftContent.copy, '본지사 안내 문구'],
+          ...draftContent.officeBranches.map((office) => [`office:${office.id}`, office, office.label || office.labelEn || office.id] as [string, unknown, string]),
+        ] satisfies Array<[string, unknown, string]>;
       }
 
       return copyRoot ? Object.entries(copyRoot) : [];
@@ -2849,6 +3427,8 @@ export function AdminContentPage() {
   const previewPath =
     isServicesEditor && activeSectionEntry?.[0].startsWith('detail:') && isPlainObject(activeSectionEntry[1]) && typeof activeSectionEntry[1].path === 'string'
       ? activeSectionEntry[1].path
+      : isOfficesEditor && activeSectionEntry?.[0].startsWith('office:')
+        ? `/offices?office=${encodeURIComponent(activeSectionEntry[0].replace(/^office:/, ''))}`
       : group?.id === 'about' && activeSectionEntry?.[0]
         ? aboutPreviewPaths[activeSectionEntry[0]] ?? previewPaths.about
       : group?.id === 'contact' && activeSectionEntry?.[0]
@@ -2856,7 +3436,7 @@ export function AdminContentPage() {
       : group
         ? previewPaths[group.id]
         : undefined;
-  const previewUrl = previewPath ? `${window.location.origin}${previewPath}?adminPreview=${previewVersion}` : undefined;
+  const previewUrl = previewPath ? `${window.location.origin}${previewPath}${previewPath.includes('?') ? '&' : '?'}adminPreview=${previewVersion}` : undefined;
 
   if (loading) {
     return (
@@ -2895,6 +3475,36 @@ export function AdminContentPage() {
 
   const removeArrayItem = (path: JsonPath) => {
     setDraftContent((current: unknown) => removeAtPath(current, path));
+  };
+
+  const uploadImageAtPath: UploadImageAtPath = (path, file) => {
+    if (session.isReadOnly) {
+      return;
+    }
+
+    void (async () => {
+      try {
+        const formData = new FormData();
+        formData.append('group', `site-${group.id}`);
+        formData.append('file', file);
+
+        const response = await fetch('/api/admin/assets/upload', {
+          method: 'POST',
+          credentials: 'same-origin',
+          body: formData,
+        });
+        const payload = (await response.json()) as { url?: string; message?: string };
+
+        if (!response.ok || !payload.url) {
+          throw new Error(payload.message ?? '이미지 업로드에 실패했습니다.');
+        }
+
+        setValueAtPath(path, payload.url);
+        setMessage(t('이미지가 업로드되었습니다. 저장 버튼을 눌러 반영해주세요.', 'Image uploaded. Press Save to apply it.'));
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : t('이미지 업로드에 실패했습니다.', 'Image upload failed.'));
+      }
+    })();
   };
 
   const handleSave = async () => {
@@ -3006,6 +3616,20 @@ export function AdminContentPage() {
     }
 
     const stringValue = typeof value === 'string' ? value : '';
+    const key = String(path[path.length - 1] ?? '');
+
+    if (/image|src/i.test(key)) {
+      return (
+        <ImagePathField
+          key={path.join('.')}
+          label={label}
+          value={stringValue}
+          disabled={session.isReadOnly}
+          onChange={(nextValue) => setValueAtPath(path, nextValue)}
+          onUpload={(file) => uploadImageAtPath(path, file)}
+        />
+      );
+    }
 
     return (
       <AdminField key={path.join('.')}>
@@ -3122,6 +3746,7 @@ export function AdminContentPage() {
                     addArrayItem={addArrayItem}
                     moveArrayItem={moveArrayItem}
                     removeArrayItem={removeArrayItem}
+                    uploadImageAtPath={uploadImageAtPath}
                     t={t}
                   />
                 ) : isServicesEditor ? (
@@ -3133,6 +3758,7 @@ export function AdminContentPage() {
                     insertItemAtPath={insertItemAtPath}
                     moveArrayItem={moveArrayItem}
                     removeArrayItem={removeArrayItem}
+                    uploadImageAtPath={uploadImageAtPath}
                   />
                 ) : isRecruitEditor ? (
                   <RecruitContentEditor
@@ -3142,6 +3768,7 @@ export function AdminContentPage() {
                     addArrayItem={addArrayItem}
                     moveArrayItem={moveArrayItem}
                     removeArrayItem={removeArrayItem}
+                    uploadImageAtPath={uploadImageAtPath}
                     t={t}
                   />
                 ) : isItEditor ? (
@@ -3152,10 +3779,19 @@ export function AdminContentPage() {
                     addArrayItem={addArrayItem}
                     moveArrayItem={moveArrayItem}
                     removeArrayItem={removeArrayItem}
+                    uploadImageAtPath={uploadImageAtPath}
                   />
+                ) : isOfficesEditor && activeSectionEntry?.[0] === 'copy' ? (
+                  renderEditor(
+                    activeSectionEntry[1],
+                    ['copy'],
+                    getAdminSectionLabel(activeSectionEntry[0], sectionLabels),
+                    0,
+                  )
                 ) : isOfficesEditor ? (
                   <OfficesDirectionsEditor
                     content={draftContent}
+                    activeSectionKey={activeSectionEntry?.[0] ?? 'office:seoul'}
                     readOnly={session.isReadOnly}
                     setValueAtPath={setValueAtPath}
                   />
@@ -3165,11 +3801,17 @@ export function AdminContentPage() {
                     activeSectionKey={activeSectionEntry?.[0] ?? 'contact'}
                     readOnly={session.isReadOnly}
                     setValueAtPath={setValueAtPath}
+                    addArrayItem={addArrayItem}
+                    moveArrayItem={moveArrayItem}
+                    removeArrayItem={removeArrayItem}
                   />
                 ) : activeSectionEntry ? (
                   renderEditor(
                     activeSectionEntry[1],
-                    ['copy', activeSectionEntry[0]],
+                    group.id === 'about' &&
+                      ['aboutTimeline', 'historyMilestones', 'managementValues', 'organizationUnits'].includes(activeSectionEntry[0])
+                      ? [activeSectionEntry[0]]
+                      : ['copy', activeSectionEntry[0]],
                     getAdminSectionLabel(activeSectionEntry[0], sectionLabels),
                     0,
                   )

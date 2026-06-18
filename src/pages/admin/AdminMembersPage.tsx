@@ -95,6 +95,30 @@ function toForm(member?: ManagedMember | null): MemberFormState {
   };
 }
 
+function toMemberPayload(form: MemberFormState) {
+  return {
+    id: form.id || undefined,
+    name: form.name,
+    phone: form.phone,
+    email: form.email,
+    title: form.title,
+    department: form.department,
+    practice: form.practice,
+    accent: form.accent,
+    image: form.image,
+    imageFit: form.imageFit,
+    imagePosition: form.imagePosition,
+    groups: form.groups
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean),
+    careerHighlights: form.careerHighlights
+      .split('\n')
+      .map((item) => item.trim())
+      .filter(Boolean),
+  };
+}
+
 export function AdminMembersPage() {
   const { t } = useI18n();
   const { session, loading, logout } = useAdminSession();
@@ -165,27 +189,7 @@ export function AdminMembersPage() {
   };
 
   const handleMemberSave = async () => {
-    const payload = {
-      id: form.id || undefined,
-      name: form.name,
-      phone: form.phone,
-      email: form.email,
-      title: form.title,
-      department: form.department,
-      practice: form.practice,
-      accent: form.accent,
-      image: form.image,
-      imageFit: form.imageFit,
-      imagePosition: form.imagePosition,
-      groups: form.groups
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean),
-      careerHighlights: form.careerHighlights
-        .split('\n')
-        .map((item) => item.trim())
-        .filter(Boolean),
-    };
+    const payload = toMemberPayload(form);
 
     const isUpdate = Boolean(form.id);
     const response = await fetch(isUpdate ? `/api/admin/members/${form.id}` : '/api/admin/members', {
@@ -280,12 +284,36 @@ export function AdminMembersPage() {
       return;
     }
 
-    setForm((current) => ({
-      ...current,
-      image: result.url ?? current.image,
-    }));
+    const nextForm = {
+      ...form,
+      image: result.url,
+    };
+
+    setForm(nextForm);
     setSelectedFile(null);
-    setMessage(`${t('업로드 완료', 'Uploaded')}: ${result.url}`);
+
+    if (!nextForm.id) {
+      setMessage(`${t('업로드 완료. 새 구성원은 구성원 저장을 눌러야 반영됩니다.', 'Uploaded. Save the new member to apply it.')}: ${result.url}`);
+      return;
+    }
+
+    const saveResponse = await fetch(`/api/admin/members/${nextForm.id}`, {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ member: toMemberPayload(nextForm) }),
+    });
+    const saveResult = (await saveResponse.json()) as { member?: ManagedMember; message?: string };
+
+    if (!saveResponse.ok || !saveResult.member) {
+      setMessage(saveResult.message ?? t('이미지는 업로드되었지만 구성원 정보 저장에 실패했습니다.', 'Image uploaded, but member save failed.'));
+      return;
+    }
+
+    upsertLocalMember(saveResult.member);
+    setMessage(`${t('이미지 업로드 및 구성원 저장 완료', 'Image uploaded and member saved')}: ${result.url}`);
   };
 
   return (
@@ -433,7 +461,12 @@ export function AdminMembersPage() {
                     onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
                   />
                   <AdminUploadTitle>{selectedFile ? selectedFile.name : t('프로필 이미지 선택', 'Select Profile Image')}</AdminUploadTitle>
-                  <AdminUploadMeta>{t('업로드 후 이미지 경로가 입력란에 반영됩니다.', 'Uploaded image path will be inserted into the field.')}</AdminUploadMeta>
+                  <AdminUploadMeta>
+                    {t(
+                      '기존 구성원은 업로드 후 바로 저장됩니다. 새 구성원은 구성원 저장을 눌러주세요.',
+                      'Existing members are saved immediately after upload. Save new members manually.',
+                    )}
+                  </AdminUploadMeta>
                 </AdminUploadBox>
                 <AdminActionRow>
                   <AdminButton type="button" onClick={() => void handleUpload()} disabled={session.isReadOnly || !selectedFile}>

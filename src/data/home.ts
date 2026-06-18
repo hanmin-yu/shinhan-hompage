@@ -467,7 +467,7 @@ export const members: Member[] = [
     department: '신한관세법인',
     practice: '기업심사, 조사 대응, 수출입 통관 총괄',
     accent: '#526f9e',
-    image: '/members/executives/장승희.png',
+    image: '/members/executives/jang-seunghee.png',
     imagePosition: '50% 16%',
   },
   {
@@ -478,7 +478,7 @@ export const members: Member[] = [
     department: '신한관세법인',
     practice: '기업심사 및 조사, 외환, FTA 자문',
     accent: '#7486a0',
-    image: '/members/executives/서영진.png',
+    image: '/members/executives/seo-youngjin.png',
     imagePosition: '50% 17%',
   },
   {
@@ -489,7 +489,7 @@ export const members: Member[] = [
     department: '서울본사 가치성장본부',
     practice: 'FTA 컨설팅, 베트남 관세 및 재고관리',
     accent: '#4e6987',
-    image: '/members/executives/최대규.png',
+    image: '/members/executives/choi-daegyu.png',
     imagePosition: '50% 17%',
   },
   {
@@ -500,7 +500,7 @@ export const members: Member[] = [
     department: '서울본사 통관본부 / 인천경기지사',
     practice: '기업심사 및 외환, FTA 지원',
     accent: '#637ca1',
-    image: '/members/executives/전무열.png',
+    image: '/members/executives/jeon-muyeol.png',
     imagePosition: '50% 22%',
   },
 ];
@@ -632,7 +632,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부',
     practice: 'FTA 컨설팅, 베트남 관세 및 재고정산(Liquidation) 컨설팅',
     accent: '#406182',
-    image: '/members/executives/최대규.png',
+    image: '/members/executives/choi-daegyu.png',
     imagePosition: '50% 17%',
   },
   {
@@ -643,7 +643,7 @@ export const expertMembers: Member[] = [
     department: '인천공항지사',
     practice: '수출입 통관 및 적정성 검토, 법률자문, 환급컨설팅, 검역/요건',
     accent: '#2f658f',
-    image: '/members/experts/오규태_정면.jpg',
+    image: '/members/experts/oh-gyutae-front.jpg',
   },
   {
     name: '김학현',
@@ -653,7 +653,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅, 관세환급, 통관',
     accent: '#406182',
-    image: '/members/experts/김학현_정면.png',
+    image: '/members/experts/kim-hakhyun-front.png',
   },
   {
     name: '신종호',
@@ -663,7 +663,7 @@ export const expertMembers: Member[] = [
     department: '신한 베트남관세법인',
     practice: '베트남 수출입통관 및 관세재고 관리 컨설팅, 베트남 세관 심사 대응 자문, 관세 이슈 사전 점검, FTA 원산지판정, FTA 원산지증명, 관세 자문 등',
     accent: '#4e6987',
-    image: '/members/experts/신종호_정면.jpg',
+    image: '/members/experts/shin-jongho-front.jpg',
   },
   {
     name: '홍동엽',
@@ -673,7 +673,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 AEO 컨설팅팀',
     practice: 'AEO컨설팅, 검역/요건, 통관',
     accent: '#5d7aa2',
-    image: '/members/experts/홍동엽_정면.jpg',
+    image: '/members/experts/hong-dongyeop-front.jpg',
   },
   {
     name: '강현우',
@@ -683,7 +683,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 AEO 컨설팅팀',
     practice: 'AEO 컨설팅(인증, 사후관리, 종합심사)',
     accent: '#526f9e',
-    image: '/members/experts/강현우_정면.jpg',
+    image: '/members/experts/kang-hyunwoo-front.jpg',
   },
   {
     name: '강민지',
@@ -693,7 +693,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅, 통관',
     accent: '#637ca1',
-    image: '/members/experts/강민지_정면.jpg',
+    image: '/members/experts/kang-minji-front.jpg',
   },
   {
     name: '이경심',
@@ -703,7 +703,7 @@ export const expertMembers: Member[] = [
     department: 'SH FOOD 컨설팅',
     practice: '요건/검역',
     accent: '#7486a0',
-    image: '/members/experts/이경심_정면_최신.jpg',
+    image: '/members/experts/lee-kyungsim-front-latest.jpg',
   },
   {
     name: '조원희',
@@ -713,7 +713,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: '수출입 통관',
     accent: '#455f84',
-    image: '/members/experts/조원희_정면.jpg',
+    image: '/members/experts/cho-wonhee-front.jpg',
   },
   {
     name: '손성곤',
@@ -723,7 +723,7 @@ export const expertMembers: Member[] = [
     department: '부산지사',
     practice: '통관, 검역/요건, FTA컨설팅',
     accent: '#345f97',
-    image: '/members/experts/손성곤_정면_formal.png',
+    image: '/members/experts/son-seonggon-front-formal.png',
   },
   {
     name: '김유경',
@@ -733,7 +733,7 @@ export const expertMembers: Member[] = [
     department: '신한인비스타',
     practice: '인사, 회계, 물류',
     accent: '#6a7ea0',
-    image: '/members/experts/김유경_정면.jpg',
+    image: '/members/experts/kim-yookyung-front.jpg',
   },
   {
     name: '서인석',
@@ -743,7 +743,7 @@ export const expertMembers: Member[] = [
     department: 'Process Innovation 팀',
     practice: '웹 개발 및 전산관리',
     accent: '#5b7597',
-    image: '/members/experts/서인석_정면.jpg',
+    image: '/members/experts/seo-inseok-front.jpg',
   },
   {
     name: '차미정',
@@ -753,7 +753,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 1팀',
     practice: '통관, 품목분류, 요건확인, 잠정/확정신고, 관세/물류 컨설팅',
     accent: '#2f658f',
-    image: '/members/experts/차미정_정면.jpg',
+    image: '/members/experts/cha-mijeong-front.jpg',
   },
   {
     name: '홍성훈',
@@ -763,7 +763,7 @@ export const expertMembers: Member[] = [
     department: 'Process Innovation 팀',
     practice: '웹 개발 및 전산관리',
     accent: '#4b6d9c',
-    image: '/members/experts/홍성훈_정면.jpg',
+    image: '/members/experts/hong-seonghun-front.jpg',
   },
   {
     name: '권민성',
@@ -773,7 +773,7 @@ export const expertMembers: Member[] = [
     department: '신한인비스타',
     practice: '국제물류, 창고, 3PL, 내륙운송',
     accent: '#406182',
-    image: '/members/experts/권민성_정면.jpg',
+    image: '/members/experts/kwon-minseong-front.jpg',
   },
   {
     name: '이미경',
@@ -783,7 +783,7 @@ export const expertMembers: Member[] = [
     department: '신한인비스타',
     practice: '국제물류, 창고, 3PL, 내륙운송',
     accent: '#58749a',
-    image: '/members/experts/이미경_정면.jpeg',
+    image: '/members/experts/lee-mikyung-front.jpeg',
   },
   {
     name: '조나현',
@@ -793,7 +793,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 1팀',
     practice: '수출입 통관 적정성 검토 및 법률자문, 검역/요건, 조세불복',
     accent: '#526f9e',
-    image: '/members/experts/조나현_정면.jpg',
+    image: '/members/experts/cho-nahyun-front.jpg',
   },
   {
     name: '나지원',
@@ -803,7 +803,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 1팀',
     practice: '관세불복, 수출입 통관 적정성 검토, 법률자문, 품목분류, 관세환급, AEO',
     accent: '#637ca1',
-    image: '/members/experts/나지원_정면.png',
+    image: '/members/experts/na-jiwon-front.png',
   },
   {
     name: '박성현',
@@ -813,7 +813,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅',
     accent: '#7486a0',
-    image: '/members/experts/박성현_정면.jpg',
+    image: '/members/experts/park-seonghyun-front.jpg',
   },
   {
     name: '이하나',
@@ -823,7 +823,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: '통관, 검역',
     accent: '#455f84',
-    image: '/members/experts/이하나_정면.jpg',
+    image: '/members/experts/lee-hana-front.jpg',
   },
   {
     name: '김정훈',
@@ -833,7 +833,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: '통관, 검역/요건',
     accent: '#526f9e',
-    image: '/members/experts/김정훈_정면.jpeg',
+    image: '/members/experts/kim-junghoon-front.jpeg',
     imagePosition: '50% 12%',
   },
   {
@@ -844,7 +844,7 @@ export const expertMembers: Member[] = [
     department: '신한 베트남관세법인',
     practice: '베트남 수출입통관 및 관세재고 관리 컨설팅, 베트남 세관 심사 대응 자문, 관세 이슈 사전 점검, FTA 원산지판정, FTA 원산지증명, 관세 자문 등',
     accent: '#345f97',
-    image: '/members/experts/김선웅.jpg',
+    image: '/members/experts/kim-seonwoong.jpg',
   },
   {
     name: '서정용',
@@ -854,7 +854,7 @@ export const expertMembers: Member[] = [
     department: 'SH FOOD 컨설팅',
     practice: '요건/검역',
     accent: '#6a7ea0',
-    image: '/members/experts/서정용-정면.jpg',
+    image: '/members/experts/seo-jeongyong-front.jpg',
   },
   {
     name: '김다혜',
@@ -864,7 +864,7 @@ export const expertMembers: Member[] = [
     department: 'KORD Partners',
     practice: '미국 FDA, 미국 수출 규제 검토',
     accent: '#5b7597',
-    image: '/members/experts/김다혜.jpeg',
+    image: '/members/experts/kim-dahye.jpeg',
   },
   {
     name: '엄동규',
@@ -874,7 +874,7 @@ export const expertMembers: Member[] = [
     department: 'KORD Partners',
     practice: '미국 FDA, 미국 수출 규제 검토',
     accent: '#2f658f',
-    image: '/members/experts/엄동규.png',
+    image: '/members/experts/um-donggyu.png',
   },
   {
     name: '김유진',
@@ -884,7 +884,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: '조세불복',
     accent: '#4b6d9c',
-    image: '/members/experts/김유진_정면.jpg',
+    image: '/members/experts/kim-yujin-front.jpg',
   },
   {
     name: '오보람',
@@ -894,7 +894,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅',
     accent: '#406182',
-    image: '/members/experts/오보람_정면.jpg',
+    image: '/members/experts/oh-boram-front.jpg',
   },
   {
     name: '조석현',
@@ -904,7 +904,7 @@ export const expertMembers: Member[] = [
     department: '서울본사 가치성장본부 2팀',
     practice: 'FTA 컨설팅',
     accent: '#526f9e',
-    image: '/members/experts/조석현_정면.jpg',
+    image: '/members/experts/cho-seokhyun-front.jpg',
   },
 ].map(withCareerHighlights);
 
@@ -917,7 +917,7 @@ export const executives: Member[] = [
     department: '신한관세법인',
     practice: '',
     accent: '#345f97',
-    image: '/members/executives/장승희.png',
+    image: '/members/executives/jang-seunghee.png',
     imagePosition: '50% 16%',
   },
   {
@@ -928,7 +928,7 @@ export const executives: Member[] = [
     department: '신한관세법인',
     practice: '기업심사 및 조사, 외환',
     accent: '#4b6d9c',
-    image: '/members/executives/서영진.png',
+    image: '/members/executives/seo-youngjin.png',
     imagePosition: '50% 17%',
   },
   {
@@ -939,7 +939,7 @@ export const executives: Member[] = [
     department: '서울본사 가치성장본부',
     practice: 'FTA 컨설팅, 베트남 관세 및 재고정산(Liquidation) 컨설팅',
     accent: '#406182',
-    image: '/members/executives/최대규.png',
+    image: '/members/executives/choi-daegyu.png',
     imagePosition: '50% 17%',
   },
   {
@@ -950,7 +950,7 @@ export const executives: Member[] = [
     department: '서울본사 컨설팅본부',
     practice: '기업심사, ACVA, FTA 검증 및 외환',
     accent: '#6a7ea0',
-    image: '/members/executives/김희정.png',
+    image: '/members/executives/kim-heejeong.png',
     imagePosition: '50% 20%',
   },
   {
@@ -961,7 +961,7 @@ export const executives: Member[] = [
     department: '서울본사 통관본부 / 인천경기지사',
     practice: '기업심사 및 외환, FTA지원',
     accent: '#5d7aa2',
-    image: '/members/executives/전무열.png',
+    image: '/members/executives/jeon-muyeol.png',
     imagePosition: '50% 22%',
   },
   {
@@ -972,7 +972,7 @@ export const executives: Member[] = [
     department: '부산지사',
     practice: '통관, 검역/요건, FTA컨설팅',
     accent: '#2f658f',
-    image: '/members/executives/강인성.png',
+    image: '/members/executives/kang-inseong.png',
     imagePosition: '50% 18%',
   },
   {
@@ -983,7 +983,7 @@ export const executives: Member[] = [
     department: '서울본사 통관본부',
     practice: '통관, 관세환급, 검역/요건',
     accent: '#455f84',
-    image: '/members/executives/최병한.png',
+    image: '/members/executives/choi-byeonghan.png',
     imagePosition: '50% 18%',
   },
   {
@@ -994,7 +994,7 @@ export const executives: Member[] = [
     department: '서울본사 가치성장본부',
     practice: '통관, 품목분류, 요건확인, 잠정/확정신고, 관세/물류 컨설팅',
     accent: '#5b7597',
-    image: '/members/executives/차미정.png',
+    image: '/members/executives/cha-mijeong.png',
     imagePosition: '50% 20%',
   },
 ].map(withCareerHighlights);
@@ -1008,7 +1008,7 @@ export const advisors: Member[] = [
     department: '서울본사',
     practice: '관세조사, 외환, 불복',
     accent: '#526f9e',
-    image: '/members/executives/김연종.png',
+    image: '/members/executives/kim-yeonjong.png',
     imagePosition: '50% 18%',
   },
   {

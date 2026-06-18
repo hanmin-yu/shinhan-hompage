@@ -207,7 +207,9 @@ const ActionAnchor = styled.a<{ $disabled?: boolean; $variant?: 'default' | 'pri
   }
 `;
 
-const ActionRouterLink = styled(Link)<{ $variant?: 'default' | 'primary' }>`
+const ActionRouterLink = styled(Link, {
+  shouldForwardProp: (prop) => prop !== '$variant',
+})<{ $variant?: 'default' | 'primary' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;

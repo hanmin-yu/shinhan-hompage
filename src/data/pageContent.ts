@@ -79,32 +79,45 @@ export type ServiceDetailContent = {
   groupTitle: string;
   groupTitleEn: string;
   title: string;
+  titleEn?: string;
   summary: string;
+  summaryEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   heroImage?: string;
   heroImageAlt?: string;
+  heroImageAltEn?: string;
   sectionImage?: string;
   overview: string;
+  overviewEn?: string;
   scope: string[];
+  scopeEn?: string[];
   checkpoints: string[];
+  checkpointsEn?: string[];
   contentSections?: ServiceDetailSection[];
   contactPoints?: ServiceContactPoint[];
   documentImages?: ServiceDocumentImage[];
   relatedExpertNames: string[];
-  relatedResources: { label: string; href: string }[];
+  relatedExpertNamesEn?: string[];
+  relatedResources: { label: string; labelEn?: string; href: string }[];
 };
 
 export type ServiceDetailSection = {
   heading: string;
   headingEn?: string;
   body?: string[];
+  bodyEn?: string[];
   list?: string[];
+  listEn?: string[];
   steps?: string[];
+  stepsEn?: string[];
 };
 
 export type ServiceContactPoint = {
   name: string;
+  nameEn?: string;
   role?: string;
+  roleEn?: string;
   phone?: string;
   email?: string;
 };
@@ -112,7 +125,9 @@ export type ServiceContactPoint = {
 export type ServiceDocumentImage = {
   src: string;
   alt: string;
+  altEn?: string;
   caption?: string;
+  captionEn?: string;
 };
 
 export const aboutStrengths: PointItem[] = [

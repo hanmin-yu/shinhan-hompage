@@ -248,6 +248,26 @@ const HeroStatement = styled.p`
   }
 `;
 
+const HeroSummary = styled.p`
+  max-width: 720px;
+  margin: -10px auto 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(0.98rem, 1.14vw, 1.14rem);
+  font-weight: 520;
+  line-height: 1.72;
+  letter-spacing: 0;
+  word-break: keep-all;
+  text-wrap: pretty;
+  white-space: pre-line;
+  text-shadow:
+    0 12px 34px rgba(3, 15, 34, 0.58),
+    0 2px 8px rgba(3, 15, 34, 0.34);
+
+  @supports not (text-wrap: pretty) {
+    text-wrap: balance;
+  }
+`;
+
 const HeroScroll = styled.span`
   position: absolute;
   left: 50%;
@@ -479,6 +499,7 @@ export function HeroSection() {
             <HeroStatement>
               {t(slide.headline, slide.headlineEn ?? slide.headline)}
             </HeroStatement>
+            {slide.summary ? <HeroSummary>{t(slide.summary, slide.summaryEn ?? slide.summary)}</HeroSummary> : null}
           </HeroCopy>
 
           <HeroControls aria-label={t('대표 이미지 슬라이드', 'Hero image slider')}>

@@ -168,7 +168,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
               >
                 <S.NavLink
                   to={item.to ?? item.href ?? '/'}
-                  hasChildren={Boolean(item.children?.length)}
+                  data-has-children={item.children?.length ? 'true' : undefined}
                   data-active={isActive(item.to ?? item.href)}
                   onClick={(event) => handlePrimaryNavClick(event, item.id, Boolean(item.children?.length))}
                 >
@@ -247,7 +247,7 @@ export function SiteHeader({ mobileMenuOpen, onToggleMobileMenu }: SiteHeaderPro
             </S.HeaderUtilityLinks>
             <S.MobileIconButton
               type="button"
-              kind="menu"
+              $kind="menu"
               aria-label={mobileMenuOpen ? t('메뉴 닫기', 'Close Menu') : t('메뉴', 'Menu')}
               aria-haspopup="dialog"
               aria-expanded={mobileMenuOpen}

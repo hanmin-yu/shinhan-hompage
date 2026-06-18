@@ -29,6 +29,7 @@ import {
   AdminSubnav,
   AdminSubnavLink,
   AdminTopRow,
+  AdminToast,
   AdminUploadBox,
   AdminUploadMeta,
   AdminUploadTitle,
@@ -55,6 +56,11 @@ type EditorImageUpload = {
   id: string;
   file: File;
   previewUrl: string;
+};
+
+type ToastState = {
+  tone: 'success' | 'error' | 'info';
+  text: string;
 };
 
 const emptyForm: NewsFormState = {
@@ -161,6 +167,9 @@ export function AdminShinhanNewsPage() {
   const [flashImagePreview, setFlashImagePreview] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [message, setMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const selectedItem = useMemo(() => items.find((item) => item.id === form.id) ?? null, [form.id, items]);
   const filteredItems = useMemo(() => {
@@ -224,6 +233,21 @@ export function AdminShinhanNewsPage() {
       ignore = true;
     };
   }, [session.isAuthenticated]);
+
+  useEffect(() => {
+    if (!toast) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setToast(null), 4500);
+
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  function notify(text: string, tone: ToastState['tone'] = 'info') {
+    setMessage(text);
+    setToast({ text, tone });
+  }
 
   function resolveFormCategory(item: ShinhanNewsRecord): NewsFormCategory {
     if (item.categoryLabel === '공지') {
@@ -356,12 +380,12 @@ export function AdminShinhanNewsPage() {
   }
 
   async function handleSave() {
-    if (session.isReadOnly) {
+    if (session.isReadOnly || saving) {
       return;
     }
 
     if (!form.title.trim() || !form.publishedAt.trim()) {
-      setMessage(t('제목과 게시일을 입력해주세요.', 'Please enter the title and published date.'));
+      notify(t('제목과 게시일을 입력해주세요.', 'Please enter the title and published date.'), 'error');
       return;
     }
 
@@ -371,12 +395,12 @@ export function AdminShinhanNewsPage() {
     const bodyHtmlForSave = getBodyHtmlForSave().trim();
 
     if (isNotice && !bodyHtmlForSave) {
-      setMessage(t('공지 본문을 입력해주세요.', 'Please enter the notice body.'));
+      notify(t('공지 본문을 입력해주세요.', 'Please enter the notice body.'), 'error');
       return;
     }
 
     if (isFlash && !form.id && !flashImage && !bodyHtmlForSave) {
-      setMessage(t('FLASH 이미지를 업로드해주세요.', 'Please upload a FLASH image.'));
+      notify(t('FLASH 이미지를 업로드해주세요.', 'Please upload a FLASH image.'), 'error');
       return;
     }
 
@@ -416,43 +440,60 @@ export function AdminShinhanNewsPage() {
       formData.append('flashImage', flashImage);
     }
 
-    const response = await fetch(url, {
-      method,
-      credentials: 'same-origin',
-      body: formData,
-    });
+    setSaving(true);
+    notify(t('글을 저장하는 중입니다.', 'Saving the post.'), 'info');
 
-    const payload = (await response.json()) as ShinhanNewsRecord | { message?: string };
+    try {
+      const response = await fetch(url, {
+        method,
+        credentials: 'same-origin',
+        body: formData,
+      });
 
-    if (!response.ok) {
-      setMessage('message' in payload ? payload.message ?? t('글 저장에 실패했습니다.', 'Failed to save the post.') : t('글 저장에 실패했습니다.', 'Failed to save the post.'));
-      return;
+      const payload = (await response.json()) as ShinhanNewsRecord | { message?: string };
+
+      if (!response.ok) {
+        notify('message' in payload ? payload.message ?? t('글 저장에 실패했습니다.', 'Failed to save the post.') : t('글 저장에 실패했습니다.', 'Failed to save the post.'), 'error');
+        return;
+      }
+
+      const nextItem = payload as ShinhanNewsRecord;
+      clearUploadState();
+      await reloadItems(nextItem.id);
+      notify(t('글 저장이 완료되었습니다. 공개 화면에 반영되었습니다.', 'The post has been saved and published.'), 'success');
+    } catch (error) {
+      notify(error instanceof Error ? error.message : t('글 저장에 실패했습니다.', 'Failed to save the post.'), 'error');
+    } finally {
+      setSaving(false);
     }
-
-    const nextItem = payload as ShinhanNewsRecord;
-    clearUploadState();
-    await reloadItems(nextItem.id);
-    setMessage(t('글 저장이 완료되었습니다.', 'The post has been saved.'));
   }
 
   async function handleDelete() {
-    if (session.isReadOnly || !form.id) {
+    if (session.isReadOnly || !form.id || deleting) {
       return;
     }
 
-    const response = await fetch(`/api/admin/news/shinhan-news/${form.id}`, {
-      method: 'DELETE',
-      credentials: 'same-origin',
-    });
+    setDeleting(true);
 
-    if (!response.ok) {
-      setMessage(t('글 삭제에 실패했습니다.', 'Failed to delete the post.'));
-      return;
+    try {
+      const response = await fetch(`/api/admin/news/shinhan-news/${form.id}`, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+      });
+
+      if (!response.ok) {
+        notify(t('글 삭제에 실패했습니다.', 'Failed to delete the post.'), 'error');
+        return;
+      }
+
+      await reloadItems(null);
+      setForm(emptyForm);
+      notify(t('선택한 글을 삭제했습니다.', 'The selected post has been deleted.'), 'success');
+    } catch (error) {
+      notify(error instanceof Error ? error.message : t('글 삭제에 실패했습니다.', 'Failed to delete the post.'), 'error');
+    } finally {
+      setDeleting(false);
     }
-
-    await reloadItems(null);
-    setForm(emptyForm);
-    setMessage(t('선택한 글을 삭제했습니다.', 'The selected post has been deleted.'));
   }
 
   if (loading) {
@@ -472,6 +513,11 @@ export function AdminShinhanNewsPage() {
   return (
     <P.PageSection tone="soft">
       <P.PageContainer data-reveal>
+        {toast ? (
+          <AdminToast role="status" aria-live="polite" $tone={toast.tone}>
+            {toast.text}
+          </AdminToast>
+        ) : null}
         <AdminPanel>
           <AdminTopRow>
             <div>
@@ -556,11 +602,11 @@ export function AdminShinhanNewsPage() {
               <EditorHeader>
                 <AdminSectionTitle>{t('글 작성 폼', 'Post Form')}</AdminSectionTitle>
                 <AdminActionRow>
-                  <AdminButton type="button" onClick={() => void handleSave()} disabled={session.isReadOnly}>
-                    {t('글 저장', 'Save Post')}
+                  <AdminButton type="button" onClick={() => void handleSave()} disabled={session.isReadOnly || saving}>
+                    {saving ? t('저장 중', 'Saving') : t('글 저장', 'Save Post')}
                   </AdminButton>
-                  <AdminButton type="button" $secondary onClick={() => void handleDelete()} disabled={session.isReadOnly || !form.id}>
-                    {t('글 삭제', 'Delete Post')}
+                  <AdminButton type="button" $secondary onClick={() => void handleDelete()} disabled={session.isReadOnly || !form.id || deleting}>
+                    {deleting ? t('삭제 중', 'Deleting') : t('글 삭제', 'Delete Post')}
                   </AdminButton>
                   <AdminButton type="button" $secondary onClick={resetForm}>
                     {t('새 글 작성', 'New Post')}

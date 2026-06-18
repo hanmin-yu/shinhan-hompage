@@ -421,6 +421,14 @@ export type EthicsPageCopy = {
   onlineTitleEn: string;
   onlineText: string;
   onlineTextEn: string;
+  reportSubjects: {
+    ko: string;
+    en: string;
+  }[];
+  ethicsCodeItems: {
+    ko: string;
+    en: string;
+  }[];
   reportEmail?: string;
   reportPhone?: string;
 };

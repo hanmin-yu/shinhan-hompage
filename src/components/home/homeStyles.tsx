@@ -1080,7 +1080,7 @@ export const NavItem = styled.div`
   }
 `;
 
-export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
+export const NavLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1145,9 +1145,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
       opacity 0.2s ease;
   }
 
-  ${({ hasChildren }) =>
-    hasChildren
-      ? `
+  &[data-has-children='true'] {
     &::after {
       content: '';
       width: 8px;
@@ -1158,8 +1156,7 @@ export const NavLink = styled(Link)<{ hasChildren?: boolean }>`
       transform: rotate(45deg);
       opacity: 0.65;
     }
-  `
-      : ''}
+  }
 
   &:hover {
     color: ${palette.blueDeep};
@@ -1826,8 +1823,8 @@ export const LanguageToggleText = styled.span`
     opacity: 1;
   }
 
-  ${HeaderUtilityButton}:hover &:not([data-active='true']),
-  ${HeaderUtilityButton}:focus-visible &:not([data-active='true']) {
+  button:hover &:not([data-active='true']),
+  button:focus-visible &:not([data-active='true']) {
     color: ${palette.blue};
     opacity: 1;
   }
@@ -1840,7 +1837,7 @@ export const LanguageToggleDivider = styled.span`
   opacity: 0.42;
 `;
 
-export const HeaderIconButton = styled.button<{ kind: 'pin' | 'menu' }>`
+export const HeaderIconButton = styled.button<{ $kind: 'pin' | 'menu' }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1865,8 +1862,8 @@ export const HeaderIconButton = styled.button<{ kind: 'pin' | 'menu' }>`
     display: block;
   }
 
-  ${({ kind }) =>
-    kind === 'pin'
+  ${({ $kind }) =>
+    $kind === 'pin'
       ? `
     &::before {
       width: 10px;
@@ -2004,7 +2001,7 @@ export const ContactButton = styled(Link)`
   }
 `;
 
-export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
+export const MobileIconButton = styled.button<{ $kind: 'search' | 'menu' }>`
   display: none;
 
   @media (max-width: 1400px) {
@@ -2034,8 +2031,8 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
       display: block;
     }
 
-    ${({ kind }) =>
-      kind === 'search'
+    ${({ $kind }) =>
+      $kind === 'search'
         ? `
       &::before {
         width: 12px;
@@ -2066,7 +2063,7 @@ export const MobileIconButton = styled.button<{ kind: 'search' | 'menu' }>`
   }
 `;
 
-export const MobileMenuOverlay = styled.div<{ open: boolean }>`
+export const MobileMenuOverlay = styled.div<{ $open: boolean }>`
   display: none;
 
   @media (max-width: 1320px) {
@@ -2074,9 +2071,9 @@ export const MobileMenuOverlay = styled.div<{ open: boolean }>`
     position: fixed;
     inset: 0;
     background: rgba(8, 18, 36, 0.56);
-    opacity: ${({ open }) => (open ? 1 : 0)};
-    visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
-    pointer-events: ${({ open }) => (open ? 'auto' : 'none')};
+    opacity: ${({ $open }) => ($open ? 1 : 0)};
+    visibility: ${({ $open }) => ($open ? 'visible' : 'hidden')};
+    pointer-events: ${({ $open }) => ($open ? 'auto' : 'none')};
     transition:
       opacity 0.22s ease,
       visibility 0.22s ease;
@@ -2084,7 +2081,7 @@ export const MobileMenuOverlay = styled.div<{ open: boolean }>`
   }
 `;
 
-export const MobileMenuPanel = styled.aside<{ open: boolean }>`
+export const MobileMenuPanel = styled.aside<{ $open: boolean }>`
   display: none;
 
   @media (max-width: 1320px) {
@@ -2099,7 +2096,7 @@ export const MobileMenuPanel = styled.aside<{ open: boolean }>`
     gap: 18px;
     background: ${palette.blueDeep};
     color: #ffffff;
-    transform: translateX(${({ open }) => (open ? '0' : '100%')});
+    transform: translateX(${({ $open }) => ($open ? '0' : '100%')});
     transition: transform 0.24s ease;
     z-index: 41;
     overflow-y: auto;

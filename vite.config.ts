@@ -5,6 +5,7 @@ import { issueReportsProxyPlugin } from './vite/issueReportsProxy';
 
 const adminApiProxy = {
   '/api/admin': 'http://localhost:4174',
+  '/api/content': 'http://localhost:4174',
   '/api/news': 'http://localhost:4174',
   '/managed-content': 'http://localhost:4174',
 };

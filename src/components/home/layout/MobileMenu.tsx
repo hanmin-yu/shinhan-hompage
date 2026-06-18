@@ -16,10 +16,10 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
 
   return (
     <>
-      <S.MobileMenuOverlay open={open} onClick={onClose} />
+      <S.MobileMenuOverlay $open={open} onClick={onClose} />
       <S.MobileMenuPanel
         id="site-mobile-menu"
-        open={open}
+        $open={open}
         aria-hidden={!open}
         aria-modal="true"
         role="dialog"

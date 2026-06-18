@@ -121,6 +121,22 @@ const PageImage = styled.img`
   box-shadow: 0 26px 50px rgba(14, 36, 77, 0.16);
 `;
 
+const PdfFrame = styled.iframe`
+  display: block;
+  width: 100%;
+  height: min(78vh, 920px);
+  min-height: 640px;
+  border: 1px solid rgba(20, 75, 157, 0.14);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 24px 44px rgba(14, 36, 77, 0.12);
+
+  @media (max-width: 820px) {
+    height: 68vh;
+    min-height: 520px;
+  }
+`;
+
 const ThumbnailRail = styled.div`
   display: grid;
   grid-auto-flow: column;
@@ -337,11 +353,18 @@ export function NewsletterDetailPage() {
                 </>
               ) : null}
 
-              {!loadingPreview && !imageUrls.length ? (
+              {!loadingPreview && !imageUrls.length && item?.downloadUrl ? (
+                <PdfFrame
+                  src={`${item.downloadUrl}#toolbar=1&navpanes=0`}
+                  title={t(item.title, item.titleEn)}
+                />
+              ) : null}
+
+              {!loadingPreview && !imageUrls.length && !item?.downloadUrl ? (
                 <P.CardText>
                   {t(
-                    '웹 미리보기 파일이 아직 준비되지 않았습니다. PDF 다운로드 버튼으로 확인해주세요.',
-                    'Web preview files are not available yet. Please use the PDF download button.',
+                    'PDF 파일이 아직 연결되지 않았습니다.',
+                    'The PDF file is not available yet.',
                   )}
                 </P.CardText>
               ) : null}

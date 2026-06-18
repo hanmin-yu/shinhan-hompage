@@ -1930,6 +1930,11 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
   }
 
   const heroImage = content.heroImage ?? '/hero/auto-parts.jpg';
+  const localizedText = (ko: string, en?: string) => t(ko, en?.trim() || tx(ko));
+  const localizedArray = (koItems: string[] = [], enItems?: string[]) =>
+    language === 'en' && enItems?.length ? enItems : koItems;
+  const localizedSectionText = (section: { heading: string; headingEn?: string }) =>
+    localizedText(section.heading, section.headingEn);
   const hasDocumentSections = Boolean(content.contentSections?.length);
   const hasContactPoints = Boolean(content.contactPoints?.length);
   const contentDetailSections = content.contentSections?.filter((section) => section.heading !== '개요') ?? [];
@@ -1940,11 +1945,11 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     : [
         {
           heading: t('지원 범위', 'Support Scope'),
-          list: content.scope,
+          list: localizedArray(content.scope, content.scopeEn),
         },
         {
           heading: t('절차 / 체크포인트', 'Process / Checkpoints'),
-          list: content.checkpoints,
+          list: localizedArray(content.checkpoints, content.checkpointsEn),
         },
       ];
   const contactPoints = content.contactPoints ?? [];
@@ -2402,8 +2407,8 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
     <>
       <EditorialPageHeader
         config={servicesSubnav}
-        title={tx(content.title)}
-        titleEn={tx(content.title)}
+        title={localizedText(content.title, content.titleEn)}
+        titleEn={localizedText(content.title, content.titleEn)}
         heroImage={heroImage}
         heroPosition="center 50%"
       />
@@ -2431,12 +2436,12 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
           <IntroStack>
             <HeroHeading>
               <HeroEyebrow>{t('업무 분야', 'Service Detail')}</HeroEyebrow>
-              <HeroTitle>{tx(content.title)}</HeroTitle>
+              <HeroTitle>{localizedText(content.title, content.titleEn)}</HeroTitle>
             </HeroHeading>
-            <OneLineSummary>{tx(content.subtitle ?? content.summary)}</OneLineSummary>
+            <OneLineSummary>{localizedText(content.subtitle ?? content.summary, content.subtitleEn ?? content.summaryEn)}</OneLineSummary>
             <OverviewBlock>
               <OverviewTitle>{t('개요', 'Overview')}</OverviewTitle>
-              <OverviewText>{tx(content.overview)}</OverviewText>
+              <OverviewText>{localizedText(content.overview, content.overviewEn)}</OverviewText>
             </OverviewBlock>
           </IntroStack>
         </HeroStatement>
@@ -2474,21 +2479,21 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
               return (
                 <DocumentSectionCard key={section.heading}>
                   <DocumentSectionTitle $alignWithStageCards={alignTitleWithStageCards}>
-                    {t(section.heading, section.headingEn ?? tx(section.heading))}
+                    {localizedSectionText(section)}
                   </DocumentSectionTitle>
                   <ItemBodyStack>
-                    {section.body?.length ? (
+                    {section.body?.length || section.bodyEn?.length ? (
                       <ParagraphStack>
-                        {section.body.map((paragraph) => (
+                        {localizedArray(section.body, section.bodyEn).map((paragraph) => (
                           <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
                         ))}
                       </ParagraphStack>
                     ) : null}
-                    {section.list?.length ? (
-                      renderItemsDiagram(section.list, section.heading)
+                    {section.list?.length || section.listEn?.length ? (
+                      renderItemsDiagram(localizedArray(section.list, section.listEn), localizedSectionText(section))
                     ) : null}
-                    {section.steps?.length ? (
-                      renderItemsDiagram(section.steps, section.heading, true)
+                    {section.steps?.length || section.stepsEn?.length ? (
+                      renderItemsDiagram(localizedArray(section.steps, section.stepsEn), localizedSectionText(section), true)
                     ) : null}
                   </ItemBodyStack>
                 </DocumentSectionCard>
@@ -2513,20 +2518,20 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
               : null}
             {deferredDetailSections.map((section) => (
               <DocumentSectionCard key={section.heading}>
-                <DocumentSectionTitle>{t(section.heading, section.headingEn ?? tx(section.heading))}</DocumentSectionTitle>
+                <DocumentSectionTitle>{localizedSectionText(section)}</DocumentSectionTitle>
                 <ItemBodyStack>
-                  {section.body?.length ? (
+                  {section.body?.length || section.bodyEn?.length ? (
                     <ParagraphStack>
-                      {section.body.map((paragraph) => (
+                      {localizedArray(section.body, section.bodyEn).map((paragraph) => (
                         <SectionParagraph key={paragraph}>{tx(paragraph)}</SectionParagraph>
                       ))}
                     </ParagraphStack>
                   ) : null}
-                  {section.list?.length ? (
-                    renderItemsDiagram(section.list, section.heading)
+                  {section.list?.length || section.listEn?.length ? (
+                    renderItemsDiagram(localizedArray(section.list, section.listEn), localizedSectionText(section))
                   ) : null}
-                  {section.steps?.length ? (
-                    renderItemsDiagram(section.steps, section.heading, true)
+                  {section.steps?.length || section.stepsEn?.length ? (
+                    renderItemsDiagram(localizedArray(section.steps, section.stepsEn), localizedSectionText(section), true)
                   ) : null}
                 </ItemBodyStack>
               </DocumentSectionCard>
@@ -2547,14 +2552,15 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                 {contactProfiles.map(({ contact, member }) => {
                   const phone = contact.phone ?? member?.phone;
                   const email = contact.email ?? member?.email;
-                  const role = contact.role ?? member?.title;
+                  const role = language === 'en' ? contact.roleEn ?? contact.role ?? member?.title : contact.role ?? member?.title;
                   const accent = member?.accent ?? '#1d5fb6';
+                  const contactName = localizedText(contact.name, contact.nameEn);
 
                   return (
                     <ContactProfileCard key={`${contact.name}-${phone ?? ''}-${email ?? ''}`} $accent={accent}>
                       <ContactProfileBody>
                         <ContactTitleRow>
-                          <ContactName>{tx(contact.name)}</ContactName>
+                          <ContactName>{contactName}</ContactName>
                           <ContactNameDivider aria-hidden="true" />
                           <ContactRoleStack>
                             {role ? <ContactRole>{tx(role)}</ContactRole> : null}
@@ -2581,14 +2587,14 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
                           <ContactPortraitFrame>
                             <ContactPortrait
                               src={member.image}
-                              alt={tx(contact.name)}
+                              alt={contactName}
                               loading="lazy"
                               $fit={member.imageFit}
                               $position={member.imagePosition}
                             />
                           </ContactPortraitFrame>
                         ) : (
-                          <ContactInitialMark>{tx(contact.name).slice(0, 1)}</ContactInitialMark>
+                          <ContactInitialMark>{contactName.slice(0, 1)}</ContactInitialMark>
                         )}
                       </ContactPhotoPanel>
                     </ContactProfileCard>
@@ -2597,7 +2603,7 @@ export function ServiceDetailPage({ path }: ServiceDetailPageProps) {
               </ContactProfileGrid>
             ) : (
               <P.BulletList>
-                {content.relatedExpertNames.map((name) => (
+                {localizedArray(content.relatedExpertNames, content.relatedExpertNamesEn).map((name) => (
                   <li key={name}>{tx(name)}</li>
                 ))}
               </P.BulletList>

@@ -469,6 +469,25 @@ export const staticSiteContent: SiteContentPayload = {
         onlineTitleEn: 'Submit Online',
         onlineText: '아래 항목을 작성해주시면 담당자가 내용을 확인합니다.',
         onlineTextEn: 'Complete the fields below and the responsible team will review your report.',
+        reportSubjects: [
+          { ko: '리베이트, 금품·향응 수수', en: 'Rebates, gifts, or entertainment' },
+          { ko: '회사 또는 고객 정보 오남용', en: 'Misuse of company or client information' },
+          { ko: '이해상충, 기타 윤리 위반 사항', en: 'Conflicts of interest or other ethics concerns' },
+        ],
+        ethicsCodeItems: [
+          {
+            ko: '우리는 근면과 성실한 자세로써 봉사정신을 드높인다.',
+            en: 'We uphold a spirit of service with diligence and sincerity.',
+          },
+          {
+            ko: '우리는 건전한 통관질서를 확립함으로써 관세행정 발전에 기여한다.',
+            en: 'We contribute to the development of customs administration by establishing sound clearance order.',
+          },
+          {
+            ko: '우리는 회원 상호간의 인화단결과 품위를 향상함으로써 직업윤리를 함양하고 명랑한 사회풍토를 조성한다.',
+            en: 'We cultivate professional ethics and a sound social climate by promoting harmony, unity, and dignity among members.',
+          },
+        ],
         reportEmail: 'compliance@shcs.kr',
         reportPhone: '02-3448-1181',
       },

@@ -407,6 +407,33 @@ function cloneStaticSiteContent() {
   return JSON.parse(JSON.stringify(staticSiteContent)) as SiteContentPayload;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function mergeStoredContent<T>(defaults: T, stored: unknown): T {
+  if (Array.isArray(defaults)) {
+    return Array.isArray(stored) ? (stored as T) : defaults;
+  }
+
+  if (!isRecord(defaults)) {
+    return (stored ?? defaults) as T;
+  }
+
+  if (!isRecord(stored)) {
+    return defaults;
+  }
+
+  return Object.fromEntries(
+    Object.entries(defaults).map(([key, defaultValue]) => [
+      key,
+      key in stored ? mergeStoredContent(defaultValue, stored[key]) : defaultValue,
+    ]).concat(
+      Object.entries(stored).filter(([key]) => !(key in defaults)),
+    ),
+  ) as T;
+}
+
 function isSiteContentGroupKey(value: string): value is SiteContentGroupKey {
   return SITE_CONTENT_GROUPS.includes(value as SiteContentGroupKey);
 }
@@ -423,20 +450,18 @@ async function loadSiteContentPayload() {
 
   const defaults = cloneStaticSiteContent();
   return {
-    ...defaults,
-    ...stored,
-    global: { ...defaults.global, ...stored.global },
-    home: { ...defaults.home, ...stored.home },
-    news: { ...defaults.news, ...stored.news },
-    about: { ...defaults.about, ...stored.about },
-    services: { ...defaults.services, ...stored.services },
-    recruit: { ...defaults.recruit, ...stored.recruit },
-    contact: { ...defaults.contact, ...stored.contact },
-    offices: { ...defaults.offices, ...stored.offices },
-    it: { ...defaults.it, ...stored.it },
-    members: { ...defaults.members, ...stored.members },
-    legal: { ...defaults.legal, ...stored.legal },
-  };
+    global: mergeStoredContent(defaults.global, stored.global),
+    home: mergeStoredContent(defaults.home, stored.home),
+    news: mergeStoredContent(defaults.news, stored.news),
+    about: mergeStoredContent(defaults.about, stored.about),
+    services: mergeStoredContent(defaults.services, stored.services),
+    recruit: mergeStoredContent(defaults.recruit, stored.recruit),
+    contact: mergeStoredContent(defaults.contact, stored.contact),
+    offices: mergeStoredContent(defaults.offices, stored.offices),
+    it: mergeStoredContent(defaults.it, stored.it),
+    members: mergeStoredContent(defaults.members, stored.members),
+    legal: mergeStoredContent(defaults.legal, stored.legal),
+  } satisfies SiteContentPayload;
 }
 
 async function saveSiteContentPayload(payload: SiteContentPayload) {
@@ -1007,8 +1032,9 @@ app.put('/api/admin/members/:memberId', requireAdmin, async (request, response) 
     department: payload?.department?.trim() ?? current.department,
     practice: payload?.practice?.trim() ?? current.practice,
     accent: payload?.accent?.trim() ?? current.accent,
-    image: payload?.image?.trim() || current.image,
-    imagePosition: payload?.imagePosition?.trim() || current.imagePosition,
+    image: payload?.image === undefined ? current.image : payload.image.trim() || undefined,
+    imageFit: payload?.imageFit ?? current.imageFit,
+    imagePosition: payload?.imagePosition === undefined ? current.imagePosition : payload.imagePosition.trim() || undefined,
     careerHighlights: Array.isArray(payload?.careerHighlights)
       ? payload!.careerHighlights!.map((item) => item.trim()).filter(Boolean)
       : current.careerHighlights,

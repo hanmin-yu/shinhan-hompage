@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
@@ -221,15 +221,13 @@ const Track = styled.div<{ $activeIndex: number }>`
   }
 `;
 
-const Card = styled(Link)<{ $accent: string; $visual: string }>`
+const Card = styled(Link)`
   position: relative;
   flex: 0 0 var(--card-width);
   height: 530px;
   color: #30343a;
   text-decoration: none;
   scroll-snap-align: start;
-  --accent: ${({ $accent }) => $accent};
-
   &::before {
     content: '';
     position: absolute;
@@ -239,7 +237,7 @@ const Card = styled(Link)<{ $accent: string; $visual: string }>`
     height: 178px;
     background:
       linear-gradient(90deg, color-mix(in srgb, var(--accent) 70%, #ffffff), rgba(255, 255, 255, 0.08)),
-      url(${({ $visual }) => $visual}) center / cover no-repeat;
+      var(--visual) center / cover no-repeat;
     filter: saturate(0.9);
   }
 
@@ -475,8 +473,12 @@ export function ShinhanUpdatesSection() {
                 <Card
                   key={`${item.href}-${index}`}
                   to={item.href}
-                  $accent={item.accent}
-                  $visual={item.visual}
+                  style={
+                    {
+                      '--accent': item.accent,
+                      '--visual': `url(${item.visual})`,
+                    } as CSSProperties
+                  }
                   aria-label={t(item.titleKo, item.titleEn)}
                 >
                   <CardPanel>

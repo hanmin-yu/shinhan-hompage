@@ -30,6 +30,7 @@ import {
   AdminSubnavLink,
   AdminTextarea,
   AdminTopRow,
+  AdminToast,
   AdminUploadBox,
   AdminUploadTitle,
 } from './AdminShared';
@@ -47,6 +48,11 @@ type NewsletterFormState = {
   title: string;
   summary: string;
   originalFile: File | null;
+};
+
+type ToastState = {
+  tone: 'success' | 'error' | 'info';
+  text: string;
 };
 
 const emptyForm: NewsletterFormState = {
@@ -106,6 +112,9 @@ export function AdminNewsletterPage() {
   const [dataLoading, setDataLoading] = useState(true);
   const [form, setForm] = useState<NewsletterFormState>(emptyForm);
   const [message, setMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(0);
   const [dragActive, setDragActive] = useState(false);
 
@@ -157,6 +166,21 @@ export function AdminNewsletterPage() {
     };
   }, [session.isAuthenticated]);
 
+  useEffect(() => {
+    if (!toast) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setToast(null), 4500);
+
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  function notify(text: string, tone: ToastState['tone'] = 'info') {
+    setMessage(text);
+    setToast({ text, tone });
+  }
+
   function selectItem(item: NewsletterRecord) {
     setForm({
       id: item.id,
@@ -183,7 +207,7 @@ export function AdminNewsletterPage() {
     }
 
     if (!isPdfFile(file)) {
-      setMessage(t('소식지는 PDF 파일만 업로드할 수 있습니다.', 'Only PDF files can be uploaded as newsletters.'));
+      notify(t('소식지는 PDF 파일만 업로드할 수 있습니다.', 'Only PDF files can be uploaded as newsletters.'), 'error');
       setFileInputKey((key) => key + 1);
       return;
     }
@@ -198,7 +222,7 @@ export function AdminNewsletterPage() {
       title: metadata.title,
       summary: metadata.summary,
     });
-    setMessage(null);
+    notify(t('PDF 파일이 선택되었습니다. 저장 버튼을 눌러 반영해주세요.', 'PDF selected. Press Save to apply it.'), 'info');
   }
 
   function handleUploadDrop(event: DragEvent<HTMLLabelElement>) {
@@ -236,22 +260,22 @@ export function AdminNewsletterPage() {
   }
 
   async function handleSave() {
-    if (session.isReadOnly) {
+    if (session.isReadOnly || saving) {
       return;
     }
 
     if (!form.id && !form.originalFile) {
-      setMessage(t('새 소식지는 PDF 파일을 선택해주세요.', 'Please select a PDF file for a new newsletter.'));
+      notify(t('새 소식지는 PDF 파일을 선택해주세요.', 'Please select a PDF file for a new newsletter.'), 'error');
       return;
     }
 
     if (form.originalFile && !isPdfFile(form.originalFile)) {
-      setMessage(t('소식지는 PDF 파일만 업로드할 수 있습니다.', 'Only PDF files can be uploaded as newsletters.'));
+      notify(t('소식지는 PDF 파일만 업로드할 수 있습니다.', 'Only PDF files can be uploaded as newsletters.'), 'error');
       return;
     }
 
     if (!form.title.trim() || !form.summary.trim() || !form.issue.trim() || !form.publishedAt.trim()) {
-      setMessage(t('PDF 파일명에서 제목/발행월을 확인하지 못했습니다. 제목, 요약, 발행월, 게시일을 입력해주세요.', 'Please enter title, summary, issue, and published date.'));
+      notify(t('PDF 파일명에서 제목/발행월을 확인하지 못했습니다. 제목, 요약, 발행월, 게시일을 입력해주세요.', 'Please enter title, summary, issue, and published date.'), 'error');
       return;
     }
 
@@ -272,44 +296,61 @@ export function AdminNewsletterPage() {
 
     const method = form.id ? 'PUT' : 'POST';
     const url = form.id ? `/api/admin/news/newsletters/${form.id}` : '/api/admin/news/newsletters';
-    const response = await fetch(url, {
-      method,
-      credentials: 'same-origin',
-      body: formData,
-    });
+    setSaving(true);
+    notify(t('소식지를 저장하는 중입니다.', 'Saving the newsletter.'), 'info');
 
-    const payload = (await response.json()) as NewsletterRecord | { message?: string };
+    try {
+      const response = await fetch(url, {
+        method,
+        credentials: 'same-origin',
+        body: formData,
+      });
 
-    if (!response.ok) {
-      setMessage('message' in payload ? payload.message ?? t('소식지 저장에 실패했습니다.', 'Failed to save the newsletter.') : t('소식지 저장에 실패했습니다.', 'Failed to save the newsletter.'));
-      return;
+      const payload = (await response.json()) as NewsletterRecord | { message?: string };
+
+      if (!response.ok) {
+        notify('message' in payload ? payload.message ?? t('소식지 저장에 실패했습니다.', 'Failed to save the newsletter.') : t('소식지 저장에 실패했습니다.', 'Failed to save the newsletter.'), 'error');
+        return;
+      }
+
+      const nextItem = payload as NewsletterRecord;
+      await reloadItems(nextItem.id);
+      setFileInputKey((key) => key + 1);
+      notify(t('소식지 저장이 완료되었습니다. 공개 화면에 반영되었습니다.', 'The newsletter has been saved and published.'), 'success');
+    } catch (error) {
+      notify(error instanceof Error ? error.message : t('소식지 저장에 실패했습니다.', 'Failed to save the newsletter.'), 'error');
+    } finally {
+      setSaving(false);
     }
-
-    const nextItem = payload as NewsletterRecord;
-    await reloadItems(nextItem.id);
-    setFileInputKey((key) => key + 1);
-    setMessage(t('소식지 저장이 완료되었습니다.', 'The newsletter has been saved.'));
   }
 
   async function handleDelete() {
-    if (session.isReadOnly || !form.id) {
+    if (session.isReadOnly || !form.id || deleting) {
       return;
     }
 
-    const response = await fetch(`/api/admin/news/newsletters/${form.id}`, {
-      method: 'DELETE',
-      credentials: 'same-origin',
-    });
+    setDeleting(true);
 
-    if (!response.ok) {
-      setMessage(t('소식지 삭제에 실패했습니다.', 'Failed to delete the newsletter.'));
-      return;
+    try {
+      const response = await fetch(`/api/admin/news/newsletters/${form.id}`, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+      });
+
+      if (!response.ok) {
+        notify(t('소식지 삭제에 실패했습니다.', 'Failed to delete the newsletter.'), 'error');
+        return;
+      }
+
+      await reloadItems(null);
+      setForm(emptyForm);
+      setFileInputKey((key) => key + 1);
+      notify(t('선택한 소식지를 삭제했습니다.', 'The selected newsletter has been deleted.'), 'success');
+    } catch (error) {
+      notify(error instanceof Error ? error.message : t('소식지 삭제에 실패했습니다.', 'Failed to delete the newsletter.'), 'error');
+    } finally {
+      setDeleting(false);
     }
-
-    await reloadItems(null);
-    setForm(emptyForm);
-    setFileInputKey((key) => key + 1);
-    setMessage(t('선택한 소식지를 삭제했습니다.', 'The selected newsletter has been deleted.'));
   }
 
   if (loading) {
@@ -329,6 +370,11 @@ export function AdminNewsletterPage() {
   return (
     <P.PageSection tone="soft">
       <P.PageContainer data-reveal>
+        {toast ? (
+          <AdminToast role="status" aria-live="polite" $tone={toast.tone}>
+            {toast.text}
+          </AdminToast>
+        ) : null}
         <AdminPanel>
           <AdminTopRow>
             <div>
@@ -475,11 +521,11 @@ export function AdminNewsletterPage() {
                   />
                 </AdminField>
                 <AdminActionRow>
-                  <AdminButton type="button" onClick={() => void handleSave()} disabled={session.isReadOnly || (!form.id && !form.originalFile)}>
-                    {form.id ? t('수정 저장', 'Save Changes') : t('새 소식지 업로드', 'Upload New Newsletter')}
+                  <AdminButton type="button" onClick={() => void handleSave()} disabled={session.isReadOnly || saving || (!form.id && !form.originalFile)}>
+                    {saving ? t('저장 중', 'Saving') : form.id ? t('수정 저장', 'Save Changes') : t('새 소식지 업로드', 'Upload New Newsletter')}
                   </AdminButton>
-                  <AdminButton type="button" $secondary onClick={() => void handleDelete()} disabled={session.isReadOnly || !form.id}>
-                    {t('소식지 삭제', 'Delete Newsletter')}
+                  <AdminButton type="button" $secondary onClick={() => void handleDelete()} disabled={session.isReadOnly || !form.id || deleting}>
+                    {deleting ? t('삭제 중', 'Deleting') : t('소식지 삭제', 'Delete Newsletter')}
                   </AdminButton>
                   <AdminButton type="button" $secondary onClick={resetForm}>
                     {t('새 등록으로 초기화', 'Reset for New Upload')}

@@ -49,7 +49,9 @@ export const AdminButton = styled.button<{ $secondary?: boolean }>`
   }
 `;
 
-export const AdminLinkButton = styled(Link)<{ $secondary?: boolean }>`
+export const AdminLinkButton = styled(Link, {
+  shouldForwardProp: (prop) => prop !== '$secondary',
+})<{ $secondary?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -103,6 +105,30 @@ export const AdminStatusPill = styled.span<{ $accent?: boolean }>`
   font-weight: 800;
 `;
 
+export const AdminToast = styled.div<{ $tone?: 'success' | 'error' | 'info' }>`
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 1000;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid
+    ${({ $tone = 'info' }) =>
+      $tone === 'success' ? 'rgba(23, 159, 150, 0.32)' : $tone === 'error' ? 'rgba(197, 72, 72, 0.3)' : 'rgba(20, 75, 157, 0.24)'};
+  background: ${({ $tone = 'info' }) =>
+    $tone === 'success'
+      ? 'rgba(232, 248, 247, 0.98)'
+      : $tone === 'error'
+        ? 'rgba(255, 242, 242, 0.98)'
+        : 'rgba(239, 246, 255, 0.98)'};
+  color: ${({ $tone = 'info' }) => ($tone === 'success' ? '#087b75' : $tone === 'error' ? '#a63a3a' : palette.blueDeep)};
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.5;
+  box-shadow: 0 18px 42px rgba(16, 53, 114, 0.16);
+`;
+
 export const AdminSubnav = styled.nav`
   display: flex;
   flex-wrap: wrap;
@@ -110,7 +136,9 @@ export const AdminSubnav = styled.nav`
   border-bottom: 1px solid ${palette.line};
 `;
 
-export const AdminSubnavLink = styled(Link)<{ $active?: boolean }>`
+export const AdminSubnavLink = styled(Link, {
+  shouldForwardProp: (prop) => prop !== '$active',
+})<{ $active?: boolean }>`
   display: inline-flex;
   align-items: center;
   min-height: 48px;
