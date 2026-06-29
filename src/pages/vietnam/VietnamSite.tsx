@@ -88,6 +88,28 @@ function localize(value: VnLocalizedText, language: VnLanguage) {
   return language === 'en' ? value.en || value.ko : value.ko;
 }
 
+function splitVnDetailText(text: string) {
+  const [title, ...bodyParts] = text.split(/[:：]/);
+  const body = bodyParts.join(':').trim();
+
+  if (!body || title.length > 54) {
+    return { title: text, body: '' };
+  }
+
+  return { title: title.trim(), body };
+}
+
+function getVnContactNames(manager?: string) {
+  return (manager ?? '')
+    .split(',')
+    .map((name) => name.trim())
+    .filter(Boolean);
+}
+
+function normalizeVnContactName(name: string) {
+  return name.replace(/\s*(관세사|법인장)\s*$/u, '').trim();
+}
+
 function getFormValue(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
 }
@@ -159,14 +181,33 @@ function getSectionNavItems(vietnam: VietnamContent, sectionId: VnSectionHeroPro
   return navItem?.children?.length ? navItem.children : navItem ? [navItem] : [];
 }
 
+function getVnHeaderNavigation(vietnam: VietnamContent): VnNavItem[] {
+  return vietnam.navigation
+    .filter((item) => item.id !== 'contact')
+    .map((item) => {
+      if (item.id !== 'services') {
+        return item;
+      }
+
+      return {
+        ...item,
+        children: vietnam.services.items.map((service) => ({
+          id: service.id,
+          label: service.title,
+          path: servicePathById[service.id] ?? '/vn/services/fta-origin',
+        })),
+      };
+    });
+}
+
 function VnLayout({ page = 'home', detail, children }: VnPageProps & { children: ReactNode }) {
   const { content } = useSiteContent();
   const { language, setLanguage } = useVnLanguage();
   const vietnam = content.vietnam;
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeMegaMenuId, setActiveMegaMenuId] = useState<string | null>(null);
-  const flatNav = useMemo(() => flattenNavigation(vietnam.navigation), [vietnam.navigation]);
-  const headerNavigation = useMemo(() => vietnam.navigation.filter((item) => item.id !== 'contact'), [vietnam.navigation]);
+  const headerNavigation = useMemo(() => getVnHeaderNavigation(vietnam), [vietnam]);
+  const flatNav = useMemo(() => flattenNavigation(headerNavigation), [headerNavigation]);
   const activePath = detail ? `/vn/${page}/${detail}` : page === 'home' ? '/vn' : `/vn/${page}`;
 
   useEffect(() => {
@@ -706,14 +747,22 @@ export function VnMembersPage({ group = 'executive' }: { group?: 'executive' | '
 }
 
 export function VnServicePage({ serviceId = 'fta-origin' }: { serviceId?: string }) {
-  const { content } = useSiteContent();
+  const { content, findMemberByName } = useSiteContent();
   const { language } = useVnLanguage();
   const vietnam = content.vietnam;
   const service = vietnam.services.items.find((item) => item.id === serviceId);
+  const contactCards = service
+    ? getVnContactNames(service.manager).map((name) => ({
+        name,
+        member: findMemberByName(normalizeVnContactName(name)),
+      }))
+    : [];
 
   if (!service) {
     return <Navigate to="/vn/services/fta-origin" replace />;
   }
+
+  const documentSections = service.sections?.filter((section) => section.title.en.toLowerCase() !== 'contact point') ?? [];
 
   return (
     <VnLayout page="services" detail={serviceId}>
@@ -725,7 +774,6 @@ export function VnServicePage({ serviceId = 'fta-origin' }: { serviceId?: string
               <VnDetailEyebrow>Vietnam Service</VnDetailEyebrow>
               <VnDetailTitle>{localize(service.title, language)}</VnDetailTitle>
             </VnDetailIntroHeading>
-            <VnDetailSummary>{localize(service.summary, language)}</VnDetailSummary>
             <VnOverviewBlock>
               <VnOverviewTitle>{language === 'ko' ? '개요' : language === 'en' ? 'Overview' : 'Tổng quan'}</VnOverviewTitle>
               <VnOverviewText>{localize(service.summary, language)}</VnOverviewText>
@@ -741,31 +789,91 @@ export function VnServicePage({ serviceId = 'fta-origin' }: { serviceId?: string
             <VnDetailSectionTitle>{language === 'ko' ? '주요 지원 내용' : language === 'en' ? 'Key Support' : 'Hỗ trợ chính'}</VnDetailSectionTitle>
           </VnDetailSectionHead>
           <VnDocumentStack>
-            <VnDocumentSectionCard>
-              <VnDocumentSectionTitle>{localize(service.title, language)}</VnDocumentSectionTitle>
-              <VnDetailList>
-                {service.details.map((item, index) => (
-                  <li key={index}>{localize(item, language)}</li>
-                ))}
-              </VnDetailList>
-            </VnDocumentSectionCard>
+            {documentSections.length ? (
+              documentSections.map((section, sectionIndex) => (
+                <VnDocumentSectionCard key={sectionIndex}>
+                  <VnDocumentSectionHeading>
+                    <VnDocumentSectionIndex>{String(sectionIndex + 1).padStart(2, '0')}</VnDocumentSectionIndex>
+                    <VnDocumentSectionTitle>{localize(section.title, language)}</VnDocumentSectionTitle>
+                  </VnDocumentSectionHeading>
+                  <VnDocumentSectionBody>
+                    {section.summary ? <VnDocumentSectionLead>{localize(section.summary, language)}</VnDocumentSectionLead> : null}
+                    <VnDetailList>
+                      {section.items.map((item, index) => (
+                        <VnDetailListItem key={index}>
+                          <VnDetailListNumber>{String(index + 1).padStart(2, '0')}</VnDetailListNumber>
+                          <VnDetailListCopy>
+                            <VnDetailListTitle>{localize(item.title, language)}</VnDetailListTitle>
+                            {item.body ? <VnDetailListText>{localize(item.body, language)}</VnDetailListText> : null}
+                            {item.bullets?.length ? (
+                              <VnDetailSubList>
+                                {item.bullets.map((bullet, bulletIndex) => (
+                                  <li key={bulletIndex}>{localize(bullet, language)}</li>
+                                ))}
+                              </VnDetailSubList>
+                            ) : null}
+                          </VnDetailListCopy>
+                        </VnDetailListItem>
+                      ))}
+                    </VnDetailList>
+                  </VnDocumentSectionBody>
+                </VnDocumentSectionCard>
+              ))
+            ) : (
+              <VnDocumentSectionCard>
+                <VnDocumentSectionTitle>{localize(service.title, language)}</VnDocumentSectionTitle>
+                <VnDetailList>
+                  {service.details.map((item, index) => {
+                    const detail = splitVnDetailText(localize(item, language));
+
+                    return (
+                      <VnDetailListItem key={index}>
+                        <VnDetailListNumber>{String(index + 1).padStart(2, '0')}</VnDetailListNumber>
+                        <VnDetailListCopy>
+                          <VnDetailListTitle>{detail.title}</VnDetailListTitle>
+                          {detail.body ? <VnDetailListText>{detail.body}</VnDetailListText> : null}
+                        </VnDetailListCopy>
+                      </VnDetailListItem>
+                    );
+                  })}
+                </VnDetailList>
+              </VnDocumentSectionCard>
+            )}
             {service.manager || service.team ? (
               <VnDocumentSectionCard>
                 <VnDocumentSectionTitle>{language === 'ko' ? '담당' : language === 'en' ? 'Contact' : 'Phụ trách'}</VnDocumentSectionTitle>
-                <VnDetailMetaGrid>
-                  {service.manager ? (
-                    <VnDetailMetaItem>
-                      <span>{language === 'ko' ? '담당자' : language === 'en' ? 'Manager' : 'Người phụ trách'}</span>
-                      <strong>{service.manager}</strong>
-                    </VnDetailMetaItem>
-                  ) : null}
-                  {service.team ? (
-                    <VnDetailMetaItem>
-                      <span>{language === 'ko' ? '팀' : language === 'en' ? 'Team' : 'Đội'}</span>
-                      <strong>{localize(service.team, language)}</strong>
-                    </VnDetailMetaItem>
-                  ) : null}
-                </VnDetailMetaGrid>
+                <VnContactCardGrid>
+                  {contactCards.map(({ name, member }) => {
+                    const displayName = member?.name ?? name;
+                    const phone = member?.phone;
+                    const email = member?.email;
+
+                    return (
+                      <VnContactCard key={name}>
+                        <VnContactCardBody>
+                          <VnContactName>{displayName}</VnContactName>
+                          <VnContactRole>
+                            {member?.title ?? (language === 'ko' ? '담당자' : language === 'en' ? 'Contact Point' : 'Người phụ trách')}
+                          </VnContactRole>
+                          <VnContactDepartment>{member?.department ?? (service.team ? localize(service.team, language) : '')}</VnContactDepartment>
+                          <VnContactMeta>
+                            {phone ? (
+                              <VnContactMetaLink href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</VnContactMetaLink>
+                            ) : null}
+                            {email ? <VnContactMetaLink href={`mailto:${email}`}>{email}</VnContactMetaLink> : null}
+                          </VnContactMeta>
+                        </VnContactCardBody>
+                        <VnContactPhotoPanel>
+                          {member?.image ? (
+                            <VnContactPortrait src={member.image} alt={displayName} loading="lazy" />
+                          ) : (
+                            <VnContactInitial>{displayName.slice(0, 1)}</VnContactInitial>
+                          )}
+                        </VnContactPhotoPanel>
+                      </VnContactCard>
+                    );
+                  })}
+                </VnContactCardGrid>
               </VnDocumentSectionCard>
             ) : null}
           </VnDocumentStack>
@@ -776,10 +884,17 @@ export function VnServicePage({ serviceId = 'fta-origin' }: { serviceId?: string
 }
 
 export function VnItPage({ solutionId = 'kord-fta' }: { solutionId?: string }) {
-  const { content } = useSiteContent();
+  const { content, findMemberByName } = useSiteContent();
   const { language } = useVnLanguage();
   const vietnam = content.vietnam;
   const solution = vietnam.itSolutions.items.find((item) => item.id === solutionId);
+  const documentSections = solution?.sections?.filter((section) => section.title.en.toLowerCase() !== 'contact point') ?? [];
+  const contactCards = solution
+    ? getVnContactNames(solution.manager).map((name) => ({
+        name,
+        member: findMemberByName(normalizeVnContactName(name)),
+      }))
+    : [];
 
   if (!solution) {
     return <Navigate to="/vn/it/kord-fta" replace />;
@@ -795,7 +910,6 @@ export function VnItPage({ solutionId = 'kord-fta' }: { solutionId?: string }) {
               <VnDetailEyebrow>IT Service</VnDetailEyebrow>
               <VnDetailTitle>{solution.title}</VnDetailTitle>
             </VnDetailIntroHeading>
-            <VnDetailSummary>{localize(solution.summary, language)}</VnDetailSummary>
             <VnOverviewBlock>
               <VnOverviewTitle>{language === 'ko' ? '개요' : language === 'en' ? 'Overview' : 'Tổng quan'}</VnOverviewTitle>
               <VnOverviewText>{localize(solution.summary, language)}</VnOverviewText>
@@ -811,14 +925,93 @@ export function VnItPage({ solutionId = 'kord-fta' }: { solutionId?: string }) {
             <VnDetailSectionTitle>{language === 'ko' ? '핵심 기능' : language === 'en' ? 'Core Modules' : 'Chức năng chính'}</VnDetailSectionTitle>
           </VnDetailSectionHead>
           <VnDocumentStack>
-            <VnDocumentSectionCard>
-              <VnDocumentSectionTitle>{solution.title}</VnDocumentSectionTitle>
-              <VnDetailList>
-                {solution.details.map((item, index) => (
-                  <li key={index}>{localize(item, language)}</li>
-                ))}
-              </VnDetailList>
-            </VnDocumentSectionCard>
+            {documentSections.length ? (
+              documentSections.map((section, sectionIndex) => (
+                <VnDocumentSectionCard key={sectionIndex}>
+                  <VnDocumentSectionHeading>
+                    <VnDocumentSectionIndex>{String(sectionIndex + 1).padStart(2, '0')}</VnDocumentSectionIndex>
+                    <VnDocumentSectionTitle>{localize(section.title, language)}</VnDocumentSectionTitle>
+                  </VnDocumentSectionHeading>
+                  <VnDocumentSectionBody>
+                    {section.summary ? <VnDocumentSectionLead>{localize(section.summary, language)}</VnDocumentSectionLead> : null}
+                    <VnDetailList>
+                      {section.items.map((item, index) => (
+                        <VnDetailListItem key={index}>
+                          <VnDetailListNumber>{String(index + 1).padStart(2, '0')}</VnDetailListNumber>
+                          <VnDetailListCopy>
+                            <VnDetailListTitle>{localize(item.title, language)}</VnDetailListTitle>
+                            {item.body ? <VnDetailListText>{localize(item.body, language)}</VnDetailListText> : null}
+                            {item.bullets?.length ? (
+                              <VnDetailSubList>
+                                {item.bullets.map((bullet, bulletIndex) => (
+                                  <li key={bulletIndex}>{localize(bullet, language)}</li>
+                                ))}
+                              </VnDetailSubList>
+                            ) : null}
+                          </VnDetailListCopy>
+                        </VnDetailListItem>
+                      ))}
+                    </VnDetailList>
+                  </VnDocumentSectionBody>
+                </VnDocumentSectionCard>
+              ))
+            ) : (
+              <VnDocumentSectionCard>
+                <VnDocumentSectionTitle>{solution.title}</VnDocumentSectionTitle>
+                <VnDetailList>
+                  {solution.details.map((item, index) => {
+                    const detail = splitVnDetailText(localize(item, language));
+
+                    return (
+                      <VnDetailListItem key={index}>
+                        <VnDetailListNumber>{String(index + 1).padStart(2, '0')}</VnDetailListNumber>
+                        <VnDetailListCopy>
+                          <VnDetailListTitle>{detail.title}</VnDetailListTitle>
+                          {detail.body ? <VnDetailListText>{detail.body}</VnDetailListText> : null}
+                        </VnDetailListCopy>
+                      </VnDetailListItem>
+                    );
+                  })}
+                </VnDetailList>
+              </VnDocumentSectionCard>
+            )}
+            {solution.manager || solution.team ? (
+              <VnDocumentSectionCard>
+                <VnDocumentSectionTitle>{language === 'ko' ? '담당' : language === 'en' ? 'Contact' : 'Phụ trách'}</VnDocumentSectionTitle>
+                <VnContactCardGrid>
+                  {contactCards.map(({ name, member }) => {
+                    const displayName = member?.name ?? name;
+                    const phone = member?.phone;
+                    const email = member?.email;
+
+                    return (
+                      <VnContactCard key={name}>
+                        <VnContactCardBody>
+                          <VnContactName>{displayName}</VnContactName>
+                          <VnContactRole>
+                            {member?.title ?? (language === 'ko' ? '담당자' : language === 'en' ? 'Contact Point' : 'Người phụ trách')}
+                          </VnContactRole>
+                          <VnContactDepartment>{member?.department ?? (solution.team ? localize(solution.team, language) : '')}</VnContactDepartment>
+                          <VnContactMeta>
+                            {phone ? (
+                              <VnContactMetaLink href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</VnContactMetaLink>
+                            ) : null}
+                            {email ? <VnContactMetaLink href={`mailto:${email}`}>{email}</VnContactMetaLink> : null}
+                          </VnContactMeta>
+                        </VnContactCardBody>
+                        <VnContactPhotoPanel>
+                          {member?.image ? (
+                            <VnContactPortrait src={member.image} alt={displayName} loading="lazy" />
+                          ) : (
+                            <VnContactInitial>{displayName.slice(0, 1)}</VnContactInitial>
+                          )}
+                        </VnContactPhotoPanel>
+                      </VnContactCard>
+                    );
+                  })}
+                </VnContactCardGrid>
+              </VnDocumentSectionCard>
+            ) : null}
           </VnDocumentStack>
         </VnDetailInner>
       </VnDetailSection>
@@ -1040,6 +1233,7 @@ const VnHeader = styled.header<{ $scrolled: boolean }>`
   box-shadow: ${({ $scrolled }) => ($scrolled ? '0 10px 28px rgba(18, 36, 60, 0.06)' : 'none')};
   overflow: visible;
   isolation: isolate;
+  font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   transition:
     background 0.24s ease,
     border-color 0.24s ease,
@@ -1251,12 +1445,35 @@ const NavLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 56px;
-  padding: 0 2px;
+  justify-content: center;
+  gap: 10px;
+  min-height: 88px;
+  padding: 0 22px;
   color: ${palette.textPrimary};
-  font-size: 1rem;
-  font-weight: 800;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
   white-space: nowrap;
+  word-break: keep-all;
+
+  @media (max-width: 1680px) {
+    gap: 8px;
+    padding: 0 18px;
+    font-size: 1.36rem;
+  }
+
+  @media (max-width: 1480px) {
+    padding: 0 12px;
+    font-size: 1.18rem;
+  }
+
+  @media (max-width: 1380px) {
+    min-height: 82px;
+    padding: 0 9px;
+    font-size: 1.05rem;
+  }
 
   &::before {
     content: '';
@@ -1448,6 +1665,7 @@ const MegaMenuLink = styled(Link)`
   border-bottom-color: rgba(15, 54, 112, 0.08);
   background: #ffffff;
   color: ${palette.blueInk};
+  font-family: inherit;
   font-size: 1.2rem;
   font-weight: 900;
   letter-spacing: 0;
@@ -1504,13 +1722,14 @@ const HeaderActions = styled.div`
 const VnContactButton = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   min-height: 38px;
-  padding: 0 13px 0 10px;
+  padding: 0 6px;
   color: ${palette.textBody};
-  font-size: 0.98rem;
+  font-family: inherit;
+  font-size: 0.95rem;
   font-weight: 900;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   white-space: nowrap;
   word-break: keep-all;
   transition: transform 0.18s ease;
@@ -1548,7 +1767,8 @@ const LanguageButton = styled.button`
   border: 0;
   background: transparent;
   color: inherit;
-  font-size: 1.03rem;
+  font-family: inherit;
+  font-size: 0.98rem;
   font-weight: 900;
   line-height: 1;
   opacity: 0.58;
@@ -2419,7 +2639,7 @@ const VnDetailSection = styled.section<{ $tone?: 'soft' }>`
   font-family: "NanumSquare", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   padding: clamp(72px, 8vw, 118px) max(20px, calc((100vw - 1280px) / 2));
   border-top: 1px solid ${({ $tone }) => ($tone === 'soft' ? '#d8dee8' : 'transparent')};
-  background: ${({ $tone }) => ($tone === 'soft' ? '#f6f7f9' : '#ffffff')};
+  background: ${({ $tone }) => ($tone === 'soft' ? 'linear-gradient(180deg, #f5f8fc 0%, #ffffff 100%)' : '#ffffff')};
 `;
 
 const VnDetailInner = styled.div`
@@ -2466,32 +2686,6 @@ const VnDetailTitle = styled.h1`
 
   @media (max-width: 640px) {
     letter-spacing: -0.035em;
-  }
-`;
-
-const VnDetailSummary = styled.p`
-  max-width: 1240px;
-  margin: 0;
-  color: #1f2937;
-  font-size: clamp(1.08rem, 1.48vw, 1.42rem);
-  font-weight: 700;
-  line-height: 1.42;
-  letter-spacing: -0.016em;
-  line-break: strict;
-  overflow-wrap: break-word;
-  text-wrap: pretty;
-  white-space: pre-line;
-  word-break: keep-all;
-
-  @supports not (text-wrap: pretty) {
-    text-wrap: balance;
-  }
-
-  @media (max-width: 640px) {
-    max-width: 100%;
-    font-size: 1.08rem;
-    letter-spacing: -0.018em;
-    line-height: 1.5;
   }
 `;
 
@@ -2554,15 +2748,36 @@ const VnDocumentStack = styled.div`
 
 const VnDocumentSectionCard = styled.article`
   display: grid;
-  grid-template-columns: minmax(120px, 0.18fr) minmax(0, 1fr);
-  gap: clamp(20px, 4vw, 56px);
-  padding: clamp(28px, 3.4vw, 46px) 0;
-  border-bottom: 1px solid #dbe0e8;
+  grid-template-columns: minmax(160px, 0.22fr) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 60px);
+  padding: clamp(30px, 3.6vw, 50px) 0;
+  border-bottom: 1px solid #dbe3ee;
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
+`;
+
+const VnDocumentSectionHeading = styled.div`
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+`;
+
+const VnDocumentSectionIndex = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 34px;
+  border-radius: 999px;
+  background: ${palette.blue};
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 900;
+  line-height: 1;
 `;
 
 const VnDocumentSectionTitle = styled.h3`
@@ -2572,22 +2787,119 @@ const VnDocumentSectionTitle = styled.h3`
   font-weight: 700;
   line-height: 1.34;
   letter-spacing: -0.025em;
+  word-break: keep-all;
+`;
+
+const VnDocumentSectionBody = styled.div`
+  display: grid;
+  gap: clamp(18px, 2.6vw, 28px);
+`;
+
+const VnDocumentSectionLead = styled.p`
+  max-width: 980px;
+  margin: 0;
+  color: #475569;
+  font-size: clamp(1.02rem, 1.28vw, 1.14rem);
+  line-height: 1.82;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
 `;
 
 const VnDetailList = styled.ul`
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const VnDetailListItem = styled.li`
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  min-height: 132px;
+  padding: 22px 24px;
+  border: 1px solid #dbe3ee;
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, rgba(33, 101, 193, 0.06), rgba(255, 255, 255, 0) 44%),
+    #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 43, 89, 0.06);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+
+  &:hover {
+    border-color: rgba(33, 101, 193, 0.34);
+    box-shadow: 0 24px 54px rgba(15, 43, 89, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    min-height: 0;
+    padding: 20px;
+  }
+`;
+
+const VnDetailListNumber = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(33, 101, 193, 0.1);
+  color: ${palette.blue};
+  font-size: 0.88rem;
+  font-weight: 900;
+  line-height: 1;
+`;
+
+const VnDetailListCopy = styled.span`
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+`;
+
+const VnDetailListTitle = styled.strong`
+  color: ${palette.blueInk};
+  font-size: clamp(1.04rem, 1.16vw, 1.18rem);
+  font-weight: 900;
+  line-height: 1.38;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+`;
+
+const VnDetailListText = styled.span`
+  color: #526375;
+  font-size: 1rem;
+  line-height: 1.72;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+`;
+
+const VnDetailSubList = styled.ul`
+  display: grid;
+  gap: 6px;
+  margin: 6px 0 0;
   padding: 0;
   list-style: none;
 
   li {
     position: relative;
-    margin: 0;
-    padding-left: 18px;
-    color: #475569;
-    font-size: 1.06rem;
-    line-height: 1.78;
+    padding-left: 14px;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.58;
+    letter-spacing: -0.01em;
     word-break: keep-all;
   }
 
@@ -2595,47 +2907,124 @@ const VnDetailList = styled.ul`
     content: '';
     position: absolute;
     left: 0;
-    top: 0.82em;
-    width: 6px;
-    height: 6px;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
     border-radius: 999px;
-    background: ${palette.blue};
+    background: rgba(33, 101, 193, 0.72);
   }
 `;
 
-const VnDetailMetaGrid = styled.div`
+const VnContactCardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px;
 
-  @media (max-width: 640px) {
+  @media (max-width: 980px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const VnDetailMetaItem = styled.div`
+const VnContactCard = styled.article`
   display: grid;
-  gap: 8px;
-  min-height: 112px;
-  align-content: center;
-  padding: 22px 24px;
-  border: 1px solid #d8dee8;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  min-height: 176px;
+  overflow: hidden;
+  border: 1px solid #dbe3ee;
   background: #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 43, 89, 0.06);
 
-  span {
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const VnContactCardBody = styled.div`
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 26px 28px;
+`;
+
+const VnContactName = styled.h4`
+  margin: 0;
+  color: ${palette.blueInk};
+  font-size: clamp(1.28rem, 1.55vw, 1.58rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  word-break: keep-all;
+`;
+
+const VnContactRole = styled.p`
+  margin: 0;
+  color: ${palette.blue};
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.4;
+`;
+
+const VnContactDepartment = styled.p`
+  margin: 0;
+  color: #64748b;
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.5;
+  word-break: keep-all;
+`;
+
+const VnContactMeta = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 8px;
+`;
+
+const VnContactMetaLink = styled.a`
+  color: #526375;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.4;
+
+  &:hover,
+  &:focus-visible {
     color: ${palette.blue};
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    outline: none;
   }
+`;
 
-  strong {
-    color: #172337;
-    font-size: clamp(1.08rem, 1.4vw, 1.28rem);
-    font-weight: 800;
-    line-height: 1.3;
+const VnContactPhotoPanel = styled.div`
+  display: grid;
+  place-items: center;
+  min-height: 176px;
+  background:
+    linear-gradient(150deg, rgba(33, 101, 193, 0.14), rgba(33, 101, 193, 0.04)),
+    #f5f8fc;
+
+  @media (max-width: 560px) {
+    min-height: 132px;
   }
+`;
+
+const VnContactPortrait = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+`;
+
+const VnContactInitial = styled.div`
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border-radius: 999px;
+  background: ${palette.blue};
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
 `;
 
 const VnNewsListSection = styled.section`

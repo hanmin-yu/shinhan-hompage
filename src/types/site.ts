@@ -18,6 +18,16 @@ export type VnLocalizedText = {
   vi?: string;
 };
 
+export type VnContentSection = {
+  title: VnLocalizedText;
+  summary?: VnLocalizedText;
+  items: {
+    title: VnLocalizedText;
+    body?: VnLocalizedText;
+    bullets?: VnLocalizedText[];
+  }[];
+};
+
 export type VnNavItem = {
   id: string;
   label: VnLocalizedText;
@@ -42,6 +52,7 @@ export type VnService = {
   manager?: string;
   team?: VnLocalizedText;
   details: VnLocalizedText[];
+  sections?: VnContentSection[];
 };
 
 export type VnItSolution = {
@@ -50,6 +61,9 @@ export type VnItSolution = {
   summary: VnLocalizedText;
   details: VnLocalizedText[];
   image?: string;
+  manager?: string;
+  team?: VnLocalizedText;
+  sections?: VnContentSection[];
 };
 
 export type VnNewsItem = {
